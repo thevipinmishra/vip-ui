@@ -1,0 +1,32 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-date-field",
+  "type": "registry:ui",
+  "title": "Date Field",
+  "description": "Enter a date one editable segment at a time.",
+  "dependencies": [
+    "@internationalized/date",
+    "react-aria-components",
+    "tailwind-variants"
+  ],
+  "files": [
+    {
+      "path": "src/lib/utils.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/utils.ts",
+      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
+    },
+    {
+      "path": "src/components/ui/date-segment.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/date-segment.tsx",
+      "content": "\"use client\";\n\nimport {\n  DateSegment as AriaDateSegment,\n  composeRenderProps,\n  type DateSegmentProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\n/** Keep the active segment legible across date and time fields and pickers. */\nexport function DateSegment({ className, ...props }: DateSegmentProps) {\n  return (\n    <AriaDateSegment\n      {...props}\n      data-slot=\"date-segment\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"rounded-md px-1 py-0.5 tabular-nums outline-none caret-transparent data-[placeholder]:text-muted-foreground data-[invalid]:text-destructive [&[data-type=literal]]:px-0 [&:focus]:bg-primary [&:focus]:text-primary-foreground forced-colors:[&:focus]:bg-[Highlight] forced-colors:[&:focus]:text-[HighlightText]\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n"
+    },
+    {
+      "path": "src/components/ui/date-field.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/date-field.tsx",
+      "content": "\"use client\";\n\nimport {\n  DateField as AriaDateField,\n  composeRenderProps,\n  type DateFieldProps,\n  DateInput,\n  type DateValue,\n  FieldError,\n  Label,\n  Text,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\nimport { DateSegment } from \"./date-segment\";\n\nexport function DateField<T extends DateValue>({\n  className,\n  label,\n  description,\n  children,\n  ...props\n}: DateFieldProps<T> &\n  React.RefAttributes<HTMLDivElement> & {\n    label?: string;\n    description?: string;\n  }) {\n  return (\n    <AriaDateField\n      {...props}\n      data-slot=\"date-field\"\n      className={composeRenderProps(className, (className) =>\n        cn(\"grid gap-2 data-[focus-visible]:outline-none\", className),\n      )}\n    >\n      {children ?? (\n        <>\n          {label && (\n            <Label\n              data-slot=\"date-field-label\"\n              className=\"text-[13px] font-medium\"\n            >\n              {label}\n            </Label>\n          )}\n          <DateInput\n            data-slot=\"date-field-input\"\n            className=\"flex min-h-12 items-center rounded-lg border border-input bg-card px-3 text-sm shadow-[var(--shadow-card)] hover:border-primary/45 focus-within:border-ring focus-within:ring-2 focus-within:ring-ring/20 data-[focus-visible]:outline-none data-[invalid]:border-destructive data-[disabled]:opacity-50 motion-safe:transition-[border-color,box-shadow] motion-safe:duration-150\"\n          >\n            {(segment) => <DateSegment segment={segment} />}\n          </DateInput>\n          {description && (\n            <Text\n              slot=\"description\"\n              data-slot=\"date-field-description\"\n              className=\"text-xs text-muted-foreground\"\n            >\n              {description}\n            </Text>\n          )}\n          <FieldError\n            data-slot=\"date-field-error\"\n            className=\"text-xs text-destructive\"\n          />\n        </>\n      )}\n    </AriaDateField>\n  );\n}\n"
+    }
+  ]
+}

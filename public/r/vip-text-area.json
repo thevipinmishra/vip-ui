@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-text-area",
+  "type": "registry:ui",
+  "title": "Text Area",
+  "description": "Enter a longer answer with a labeled field.",
+  "dependencies": ["react-aria-components", "tailwind-variants"],
+  "files": [
+    {
+      "path": "src/lib/utils.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/utils.ts",
+      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
+    },
+    {
+      "path": "src/components/ui/text-area.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/text-area.tsx",
+      "content": "\"use client\";\n\nimport {\n  TextArea as AriaTextArea,\n  TextField as AriaTextField,\n  type TextFieldProps as AriaTextFieldProps,\n  composeRenderProps,\n  FieldError,\n  Label,\n  Text,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport interface TextAreaProps\n  extends Omit<AriaTextFieldProps, \"className\" | \"children\"> {\n  label?: string;\n  description?: string;\n  placeholder?: string;\n  rows?: number;\n  ref?: React.Ref<HTMLDivElement>;\n  className?: AriaTextFieldProps[\"className\"];\n  children?: AriaTextFieldProps[\"children\"];\n}\n\nexport function TextArea({\n  label,\n  description,\n  placeholder,\n  rows = 4,\n  className,\n  children,\n  ...props\n}: TextAreaProps) {\n  return (\n    <AriaTextField\n      {...props}\n      data-slot=\"text-area\"\n      className={composeRenderProps(className, (className) =>\n        cn(\"flex w-full flex-col gap-2\", className),\n      )}\n    >\n      {children ?? (\n        <>\n          {label && <TextAreaLabel>{label}</TextAreaLabel>}\n          <TextAreaInput rows={rows} placeholder={placeholder} />\n          {description && (\n            <TextAreaDescription>{description}</TextAreaDescription>\n          )}\n          <TextAreaError />\n        </>\n      )}\n    </AriaTextField>\n  );\n}\n\nexport function TextAreaLabel({\n  className,\n  ...props\n}: React.ComponentProps<typeof Label>) {\n  return (\n    <Label\n      {...props}\n      data-slot=\"text-area-label\"\n      className={cn(\"text-[13px] font-medium text-foreground\", className)}\n    />\n  );\n}\n\nexport function TextAreaInput({\n  className,\n  ...props\n}: React.ComponentProps<typeof AriaTextArea>) {\n  return (\n    <AriaTextArea\n      {...props}\n      data-slot=\"text-area-input\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"min-h-28 w-full cursor-text resize-y rounded-lg border border-input bg-card px-3.5 py-3 text-base leading-6 text-foreground shadow-[var(--shadow-card)] outline-none data-[placeholder]:text-muted-foreground/80 hover:border-primary/45 motion-safe:transition-[border-color,box-shadow] motion-safe:duration-150 data-[focus-visible]:border-primary data-[focus-visible]:ring-3 data-[focus-visible]:ring-accent data-[invalid]:border-destructive data-[disabled]:cursor-not-allowed data-[disabled]:bg-muted data-[disabled]:opacity-60 sm:text-sm\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n\nexport function TextAreaDescription({\n  className,\n  ...props\n}: React.ComponentProps<typeof Text>) {\n  return (\n    <Text\n      {...props}\n      slot=\"description\"\n      data-slot=\"text-area-description\"\n      className={cn(\"text-xs leading-5 text-muted-foreground\", className)}\n    />\n  );\n}\n\nexport function TextAreaError({\n  className,\n  ...props\n}: React.ComponentProps<typeof FieldError>) {\n  return (\n    <FieldError\n      {...props}\n      data-slot=\"text-area-error\"\n      className={cn(\"text-xs leading-5 text-destructive\", className)}\n    />\n  );\n}\n"
+    }
+  ]
+}

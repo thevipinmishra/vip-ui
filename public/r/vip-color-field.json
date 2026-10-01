@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-color-field",
+  "type": "registry:ui",
+  "title": "Color Field",
+  "description": "Enter a color using a text value.",
+  "dependencies": ["react-aria-components", "tailwind-variants"],
+  "files": [
+    {
+      "path": "src/lib/utils.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/utils.ts",
+      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
+    },
+    {
+      "path": "src/components/ui/color-field.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/color-field.tsx",
+      "content": "\"use client\";\n\nimport {\n  ColorField as AriaColorField,\n  type ColorFieldProps,\n  composeRenderProps,\n  FieldError,\n  Input,\n  Label,\n  Text,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport function ColorField({\n  className,\n  label,\n  description,\n  children,\n  ...props\n}: ColorFieldProps &\n  React.RefAttributes<HTMLDivElement> & {\n    label?: string;\n    description?: string;\n  }) {\n  return (\n    <AriaColorField\n      {...props}\n      data-slot=\"color-field\"\n      className={composeRenderProps(className, (className) =>\n        cn(\"grid gap-2\", className),\n      )}\n    >\n      {children ?? (\n        <>\n          {label && (\n            <Label\n              data-slot=\"color-field-label\"\n              className=\"text-[13px] font-medium\"\n            >\n              {label}\n            </Label>\n          )}\n          <Input\n            data-slot=\"color-field-input\"\n            className=\"min-h-12 rounded-lg border border-input bg-card px-3.5 text-base text-foreground shadow-[var(--shadow-card)] outline-none motion-safe:transition-[border-color,box-shadow] motion-safe:duration-150 data-[focus-visible]:border-primary data-[focus-visible]:ring-3 data-[focus-visible]:ring-accent data-[invalid]:border-destructive sm:text-sm\"\n          />\n          {description && (\n            <Text\n              slot=\"description\"\n              data-slot=\"color-field-description\"\n              className=\"text-xs text-muted-foreground\"\n            >\n              {description}\n            </Text>\n          )}\n          <FieldError\n            data-slot=\"color-field-error\"\n            className=\"text-xs text-destructive\"\n          />\n        </>\n      )}\n    </AriaColorField>\n  );\n}\n"
+    }
+  ]
+}

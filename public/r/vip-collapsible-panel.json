@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-collapsible-panel",
+  "type": "registry:ui",
+  "title": "Collapsible Panel",
+  "description": "Animate a disclosure panel while keeping its content accessible.",
+  "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+  "files": [
+    {
+      "path": "src/lib/utils.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/utils.ts",
+      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
+    },
+    {
+      "path": "src/components/ui/collapsible-panel.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/collapsible-panel.tsx",
+      "content": "\"use client\";\n\nimport { type HTMLMotionProps, motion, useReducedMotion } from \"motion/react\";\nimport { createContext, type ReactNode, useContext } from \"react\";\nimport { DisclosureStateContext } from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport const CollapsibleIdsContext = createContext<{\n  triggerId: string;\n  panelId: string;\n} | null>(null);\n\ntype CollapsiblePanelProps = Omit<\n  HTMLMotionProps<\"div\">,\n  | \"animate\"\n  | \"initial\"\n  | \"transition\"\n  | \"id\"\n  | \"aria-hidden\"\n  | \"inert\"\n  | \"children\"\n> & { children?: ReactNode };\n\nexport function CollapsiblePanel({\n  children,\n  className,\n  role = \"group\",\n  ...props\n}: CollapsiblePanelProps) {\n  const ids = useContext(CollapsibleIdsContext);\n  const isExpanded = useContext(DisclosureStateContext)?.isExpanded;\n  const reduceMotion = useReducedMotion();\n  if (!ids) throw new Error(\"CollapsiblePanel must be inside a disclosure.\");\n\n  return (\n    <motion.div\n      data-slot=\"collapsible-panel\"\n      {...props}\n      id={ids.panelId}\n      role={role}\n      aria-labelledby={ids.triggerId}\n      aria-hidden={!isExpanded}\n      inert={!isExpanded}\n      className={cn(\"overflow-hidden\", className)}\n      initial={false}\n      animate={{ height: isExpanded ? \"auto\" : 0, opacity: isExpanded ? 1 : 0 }}\n      transition={{\n        height: { duration: reduceMotion ? 0 : 0.22, ease: [0.23, 1, 0.32, 1] },\n        opacity: { duration: reduceMotion ? 0 : 0.15, ease: \"easeOut\" },\n      }}\n    >\n      {children}\n    </motion.div>\n  );\n}\n"
+    }
+  ]
+}

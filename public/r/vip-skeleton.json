@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-skeleton",
+  "type": "registry:ui",
+  "title": "Skeleton",
+  "description": "Reserve space while content is loading.",
+  "dependencies": ["motion", "tailwind-variants"],
+  "files": [
+    {
+      "path": "src/lib/utils.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/utils.ts",
+      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
+    },
+    {
+      "path": "src/components/ui/skeleton.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/skeleton.tsx",
+      "content": "\"use client\";\n\nimport { motion, useReducedMotion } from \"motion/react\";\nimport type { HTMLAttributes } from \"react\";\nimport { cn } from \"./utils\";\n\nexport function Skeleton({\n  className,\n  children,\n  ...props\n}: HTMLAttributes<HTMLDivElement>) {\n  const reduceMotion = useReducedMotion();\n  return (\n    <div\n      {...props}\n      aria-hidden=\"true\"\n      data-slot=\"skeleton\"\n      className={cn(\"relative overflow-hidden rounded-md bg-muted\", className)}\n    >\n      {children}\n      {!reduceMotion && (\n        <motion.div\n          className=\"pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-card/55 to-transparent\"\n          initial={{ x: \"-100%\" }}\n          animate={{ x: \"100%\" }}\n          transition={{ duration: 1.8, ease: \"easeInOut\", repeat: Infinity }}\n        />\n      )}\n    </div>\n  );\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-badge",
+  "type": "registry:ui",
+  "title": "Badge",
+  "description": "Label an item with short status or metadata.",
+  "dependencies": ["reicon-react", "tailwind-variants"],
+  "files": [
+    {
+      "path": "src/lib/utils.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/utils.ts",
+      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
+    },
+    {
+      "path": "src/components/ui/badge.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/badge.tsx",
+      "content": "import type { HTMLAttributes } from \"react\";\nimport { tv, type VariantProps } from \"tailwind-variants\";\nimport { cn } from \"./utils\";\n\nconst badgeStyles = tv({\n  base: \"inline-flex min-h-7 items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium leading-4 tracking-normal shadow-[var(--shadow-card)] ring-1\",\n  variants: {\n    variant: {\n      neutral: \"bg-secondary text-secondary-foreground ring-border\",\n      accent: \"bg-accent text-accent-foreground ring-primary/15\",\n      success: \"bg-success-subtle text-success-foreground ring-success/15\",\n      warning: \"bg-warning-subtle text-warning-foreground ring-warning/20\",\n    },\n  },\n  defaultVariants: { variant: \"neutral\" },\n});\n\nexport interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {\n  variant?: NonNullable<VariantProps<typeof badgeStyles>[\"variant\"]>;\n  dot?: boolean;\n}\n\nexport function Badge({\n  variant = \"neutral\",\n  dot = false,\n  className,\n  children,\n  ...props\n}: BadgeProps) {\n  return (\n    <span\n      data-slot=\"badge\"\n      data-variant={variant}\n      className={badgeStyles({ variant, className })}\n      {...props}\n    >\n      {dot && <BadgeDot />}\n      {children}\n    </span>\n  );\n}\n\nexport function BadgeDot({\n  className,\n  ...props\n}: HTMLAttributes<HTMLSpanElement>) {\n  return (\n    <span\n      aria-hidden=\"true\"\n      {...props}\n      data-slot=\"badge-dot\"\n      className={cn(\"size-1.5 rounded-full bg-current\", className)}\n    />\n  );\n}\n"
+    }
+  ]
+}

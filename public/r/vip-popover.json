@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-popover",
+  "type": "registry:ui",
+  "title": "Popover",
+  "description": "Show contextual content anchored to a trigger.",
+  "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+  "files": [
+    {
+      "path": "src/lib/utils.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/utils.ts",
+      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
+    },
+    {
+      "path": "src/components/ui/popover.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/popover.tsx",
+      "content": "\"use client\";\n\nimport { type HTMLMotionProps, motion, useReducedMotion } from \"motion/react\";\nimport {\n  Popover as AriaPopover,\n  composeRenderProps,\n  type PopoverProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport function Popover({ className, ...props }: PopoverProps) {\n  const reduceMotion = useReducedMotion();\n  return (\n    <AriaPopover\n      {...props}\n      data-slot=\"popover\"\n      render={\n        props.render ??\n        ((domProps) => (\n          <motion.div\n            {...(domProps as HTMLMotionProps<\"div\">)}\n            initial={\n              reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.97 }\n            }\n            animate={{ opacity: 1, scale: 1 }}\n            transition={{ duration: reduceMotion ? 0 : 0.18, ease: \"easeOut\" }}\n          />\n        ))\n      }\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"max-w-[calc(100vw-2rem)] motion-safe:transition-opacity motion-safe:duration-150 motion-safe:ease-out motion-safe:data-[exiting]:opacity-0 rounded-xl border border-border bg-popover p-5 text-popover-foreground shadow-[var(--shadow-float)] outline-none\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n"
+    },
+    {
+      "path": "src/components/ui/button-styles.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/button-styles.tsx",
+      "content": "import { tv, type VariantProps } from \"tailwind-variants\";\n\nexport const buttonStyles = tv({\n  base: \"inline-flex shrink-0 cursor-default items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium tracking-[-0.01em] data-[disabled]:cursor-default data-[disabled]:opacity-50 data-[disabled]:shadow-none data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-3 data-[focus-visible]:outline-ring\",\n  variants: {\n    variant: {\n      default:\n        \"bg-primary text-primary-foreground shadow-[var(--shadow-card)] hover:bg-primary/90 data-[pressed]:bg-primary/90\",\n      secondary:\n        \"bg-secondary text-secondary-foreground hover:bg-border/70 data-[pressed]:bg-border/70\",\n      outline:\n        \"border border-border bg-card text-foreground shadow-[var(--shadow-card)] hover:bg-muted data-[pressed]:bg-muted\",\n      ghost: \"text-foreground hover:bg-muted data-[pressed]:bg-muted\",\n      destructive:\n        \"bg-destructive text-white shadow-[var(--shadow-card)] hover:brightness-95 data-[pressed]:brightness-95 dark:bg-destructive/60\",\n      nav: \"text-foreground hover:bg-muted aria-[pressed=true]:bg-accent aria-[pressed=true]:text-accent-foreground aria-[pressed=true]:hover:bg-accent\",\n    },\n    size: {\n      default: \"h-11 px-5 text-sm\",\n      sm: \"h-9 px-3.5 text-[13px]\",\n      lg: \"h-12 px-6 text-sm\",\n      icon: \"size-11 cursor-pointer p-0\",\n      nav: \"h-9 w-full justify-center px-0 text-xs sm:justify-start sm:px-2.5\",\n    },\n  },\n  defaultVariants: { variant: \"default\", size: \"default\" },\n});\n\nexport const buttonLinkStyles = tv({\n  extend: buttonStyles,\n  base: \"cursor-pointer\",\n});\n\nexport type ButtonVariant = NonNullable<\n  VariantProps<typeof buttonStyles>[\"variant\"]\n>;\nexport type ButtonSize = NonNullable<VariantProps<typeof buttonStyles>[\"size\"]>;\n"
+    },
+    {
+      "path": "src/components/ui/button.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/button.tsx",
+      "content": "\"use client\";\n\nimport { motion, useReducedMotion } from \"motion/react\";\nimport {\n  Button as AriaButton,\n  type ButtonProps as AriaButtonProps,\n  composeRenderProps,\n} from \"react-aria-components\";\nimport {\n  type ButtonSize,\n  type ButtonVariant,\n  buttonStyles,\n} from \"./button-styles\";\n\nexport interface ButtonProps\n  extends Omit<\n    AriaButtonProps,\n    | \"style\"\n    | \"onAnimationStart\"\n    | \"onAnimationEnd\"\n    | \"onAnimationIteration\"\n    | \"onHoverStart\"\n    | \"onHoverEnd\"\n  > {\n  ref?: React.Ref<HTMLButtonElement>;\n  variant?: ButtonVariant;\n  size?: ButtonSize;\n  static?: boolean;\n}\n\nconst MotionButton = motion.create(AriaButton);\n\nexport function Button({\n  className,\n  variant = \"default\",\n  size = \"default\",\n  static: isStatic = false,\n  ...props\n}: ButtonProps) {\n  const reduceMotion = useReducedMotion();\n  return (\n    <MotionButton\n      data-slot=\"button\"\n      data-variant={variant}\n      data-size={size}\n      whileTap={isStatic || reduceMotion ? undefined : { scale: 0.96 }}\n      transition={{ type: \"spring\", duration: 0.3, bounce: 0 }}\n      className={composeRenderProps(className, (className) =>\n        buttonStyles({ variant, size, className }),\n      )}\n      {...props}\n    />\n  );\n}\n"
+    }
+  ]
+}

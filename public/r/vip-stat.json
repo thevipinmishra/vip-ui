@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-stat",
+  "type": "registry:ui",
+  "title": "Stat",
+  "description": "Display a labeled value and its context.",
+  "dependencies": ["tailwind-variants"],
+  "files": [
+    {
+      "path": "src/lib/utils.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/utils.ts",
+      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
+    },
+    {
+      "path": "src/components/ui/stat.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/stat.tsx",
+      "content": "import type { HTMLAttributes } from \"react\";\nimport { cn } from \"./utils\";\n\nexport function Stat({ className, ...props }: HTMLAttributes<HTMLDivElement>) {\n  return (\n    <div\n      data-slot=\"stat\"\n      className={cn(\n        \"rounded-xl bg-card p-5 shadow-[var(--shadow-card)] ring-1 ring-border/70\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nexport function StatLabel({\n  className,\n  ...props\n}: HTMLAttributes<HTMLParagraphElement>) {\n  return (\n    <p\n      data-slot=\"stat-label\"\n      className={cn(\"text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  );\n}\n\nexport function StatValue({\n  className,\n  ...props\n}: HTMLAttributes<HTMLParagraphElement>) {\n  return (\n    <p\n      data-slot=\"stat-value\"\n      className={cn(\n        \"mt-2 text-3xl font-semibold tracking-[-0.045em] tabular-nums\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nexport function StatDetail({\n  className,\n  ...props\n}: HTMLAttributes<HTMLParagraphElement>) {\n  return (\n    <p\n      data-slot=\"stat-detail\"\n      className={cn(\"mt-2 text-xs leading-5 text-muted-foreground\", className)}\n      {...props}\n    />\n  );\n}\n"
+    }
+  ]
+}

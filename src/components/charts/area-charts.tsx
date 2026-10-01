@@ -1,0 +1,165 @@
+"use client";
+
+import { areaY, defineChart, lineY, stack } from "@tanstack/charts";
+import { decorative } from "@tanstack/charts/mark/decorative";
+import { Chart } from "@tanstack/charts/react/core";
+import { scaleLinear } from "@tanstack/charts/scales/linear";
+import { scalePoint } from "@tanstack/charts/scales/point";
+import { tooltip } from "@tanstack/charts/tooltip";
+import { ChartPlot, galleryRenderer } from "./chart-plot";
+
+const visits = [
+  { month: "Jan", value: 32 },
+  { month: "Feb", value: 41 },
+  { month: "Mar", value: 38 },
+  { month: "Apr", value: 56 },
+  { month: "May", value: 63 },
+  { month: "Jun", value: 78 },
+];
+const visitsChart = defineChart({
+  marks: [
+    decorative(
+      areaY(visits, {
+        x: "month",
+        y: "value",
+        fill: "var(--ts-chart-1)",
+        fillOpacity: 0.19,
+      }),
+    ),
+    lineY(visits, {
+      x: "month",
+      y: "value",
+      stroke: "var(--ts-chart-1)",
+      strokeWidth: 2.5,
+    }),
+  ],
+  scales: {
+    x: { scale: scalePoint },
+    y: { scale: scaleLinear, domain: [0, 90], grid: true },
+  },
+  tooltip,
+});
+
+const sources = [
+  { month: "Jan", direct: 18, search: 14 },
+  { month: "Feb", direct: 22, search: 19 },
+  { month: "Mar", direct: 26, search: 16 },
+  { month: "Apr", direct: 31, search: 25 },
+  { month: "May", direct: 34, search: 29 },
+  { month: "Jun", direct: 40, search: 38 },
+];
+const sourceRows = sources.flatMap(({ month, direct, search }) => [
+  { month, series: "Direct", value: direct },
+  { month, series: "Search", value: search },
+]);
+const sourcesChart = defineChart({
+  marks: [
+    areaY(sourceRows, {
+      x: "month",
+      y: "value",
+      z: "series",
+      color: "series",
+      layout: stack(),
+      fillOpacity: 0.82,
+    }),
+  ],
+  scales: {
+    x: { scale: scalePoint },
+    y: { scale: scaleLinear, domain: [0, 90], grid: true },
+  },
+  color: {
+    domain: ["Direct", "Search"],
+    range: ["var(--ts-chart-1)", "var(--ts-chart-2)"],
+  },
+  focus: "group-x",
+  tooltip,
+});
+
+const forecast = [
+  { month: "Jan", low: 22, value: 29, high: 35 },
+  { month: "Feb", low: 28, value: 34, high: 42 },
+  { month: "Mar", low: 30, value: 39, high: 46 },
+  { month: "Apr", low: 36, value: 43, high: 52 },
+  { month: "May", low: 40, value: 51, high: 60 },
+  { month: "Jun", low: 46, value: 57, high: 68 },
+];
+const forecastChart = defineChart({
+  marks: [
+    decorative(
+      areaY(forecast, {
+        x: "month",
+        y1: "low",
+        y2: "high",
+        fill: "var(--ts-chart-3)",
+        fillOpacity: 0.2,
+      }),
+    ),
+    lineY(forecast, {
+      x: "month",
+      y: "value",
+      stroke: "var(--ts-chart-3)",
+      strokeWidth: 2.5,
+    }),
+  ],
+  scales: {
+    x: { scale: scalePoint },
+    y: { scale: scaleLinear, domain: [0, 75], grid: true },
+  },
+  tooltip,
+});
+
+export function AreaVisits() {
+  return (
+    <ChartPlot
+      title="Workspace visits by month, in thousands"
+      columns={["Month", "Visits (thousands)"]}
+      rows={visits.map((r) => [r.month, r.value])}
+    >
+      <Chart
+        definition={visitsChart}
+        renderer={galleryRenderer}
+        height={222}
+        initialWidth={520}
+        ariaLabel="Monthly workspace visits, January to June, in thousands"
+      />
+    </ChartPlot>
+  );
+}
+export function AreaStacked() {
+  return (
+    <ChartPlot
+      title="Visits by channel, in thousands"
+      columns={["Month", "Direct", "Search"]}
+      rows={sources.map((r) => [r.month, r.direct, r.search])}
+      legend={[
+        { label: "Direct", color: "var(--ts-chart-1)" },
+        { label: "Search", color: "var(--ts-chart-2)" },
+      ]}
+    >
+      <Chart
+        definition={sourcesChart}
+        renderer={galleryRenderer}
+        height={222}
+        initialWidth={520}
+        ariaLabel="Direct and search visits by month, January to June, in thousands"
+      />
+    </ChartPlot>
+  );
+}
+export function AreaRange() {
+  return (
+    <ChartPlot
+      title="Forecast with low and high estimates, in thousands"
+      columns={["Month", "Low", "Forecast", "High"]}
+      rows={forecast.map((r) => [r.month, r.low, r.value, r.high])}
+    >
+      <Chart
+        definition={forecastChart}
+        renderer={galleryRenderer}
+        height={222}
+        initialWidth={520}
+        ariaLabel="Monthly signup forecast and low to high range, January to June, in thousands"
+      />
+    </ChartPlot>
+  );
+}
