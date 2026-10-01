@@ -1877,14 +1877,14 @@
       ],
       "files": [
         {
-          "path": "registry/generated/src/app/examples/business/customers/page.tsx",
-          "type": "registry:page",
-          "target": "src/app/examples/business/customers/page.tsx"
-        },
-        {
           "path": "registry/generated/src/app/examples/business/customers/[id]/page.tsx",
           "type": "registry:page",
           "target": "src/app/examples/business/customers/[id]/page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/examples/business/customers/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/examples/business/customers/page.tsx"
         },
         {
           "path": "registry/generated/src/app/examples/business/data.ts",
