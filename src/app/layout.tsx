@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         {children}
+        <Analytics />
         <Script id="theme-init" strategy="beforeInteractive">
           {`try{var theme=localStorage.getItem("vip-ui-theme");if(theme==="dark"||(!theme&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.classList.add("dark");var palette=localStorage.getItem("vip-ui-palette");if(["blue","orchid","lagoon","moss","clay"].includes(palette))document.documentElement.dataset.palette=palette}catch{}`}
         </Script>
