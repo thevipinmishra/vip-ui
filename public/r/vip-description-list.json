@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-description-list",
+  "type": "registry:ui",
+  "title": "Description List",
+  "description": "Pair labels with related values.",
+  "dependencies": ["tailwind-variants"],
+  "files": [
+    {
+      "path": "src/lib/utils.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/utils.ts",
+      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
+    },
+    {
+      "path": "src/components/ui/description-list.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/description-list.tsx",
+      "content": "import type { HTMLAttributes } from \"react\";\nimport { cn } from \"./utils\";\n\nexport function DescriptionList({\n  className,\n  ...props\n}: HTMLAttributes<HTMLDListElement>) {\n  return (\n    <dl\n      data-slot=\"description-list\"\n      className={cn(\n        \"grid gap-x-6 gap-y-4 sm:grid-cols-[minmax(0,10rem)_minmax(0,1fr)]\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nexport function DescriptionTerm({\n  className,\n  ...props\n}: HTMLAttributes<HTMLElement>) {\n  return (\n    <dt\n      data-slot=\"description-term\"\n      className={cn(\"text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  );\n}\n\nexport function DescriptionDetail({\n  className,\n  ...props\n}: HTMLAttributes<HTMLElement>) {\n  return (\n    <dd\n      data-slot=\"description-detail\"\n      className={cn(\n        \"min-w-0 text-sm font-medium text-foreground max-sm:-mt-3\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n"
+    }
+  ]
+}

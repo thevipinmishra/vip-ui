@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-color-swatch",
+  "type": "registry:ui",
+  "title": "Color Swatch",
+  "description": "Show a named color sample.",
+  "dependencies": ["react-aria-components", "tailwind-variants"],
+  "files": [
+    {
+      "path": "src/lib/utils.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/utils.ts",
+      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
+    },
+    {
+      "path": "src/components/ui/color-swatch.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/color-swatch.tsx",
+      "content": "\"use client\";\n\nimport {\n  ColorSwatch as AriaColorSwatch,\n  type ColorSwatchProps,\n  composeRenderProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport function ColorSwatch({ className, style, ...props }: ColorSwatchProps) {\n  return (\n    <AriaColorSwatch\n      {...props}\n      data-slot=\"color-swatch\"\n      className={composeRenderProps(className, (className) =>\n        cn(\"size-9 shrink-0 rounded-md ring-1 ring-foreground/10\", className),\n      )}\n      style={composeRenderProps(style, (style, { color }) => ({\n        background: `linear-gradient(${color}, ${color}), repeating-conic-gradient(var(--border) 0% 25%, var(--background) 0% 50%) 50% / 12px 12px`,\n        ...style,\n      }))}\n    />\n  );\n}\n"
+    },
+    {
+      "path": "src/components/ui/color-swatch-picker.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/color-swatch-picker.tsx",
+      "content": "\"use client\";\n\nimport {\n  ColorSwatchPicker as AriaColorSwatchPicker,\n  ColorSwatchPickerItem as AriaColorSwatchPickerItem,\n  type ColorSwatchPickerItemProps,\n  type ColorSwatchPickerProps,\n  composeRenderProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\nimport { ColorSwatch } from \"./color-swatch\";\n\nexport function ColorSwatchPicker({\n  className,\n  ...props\n}: ColorSwatchPickerProps) {\n  return (\n    <AriaColorSwatchPicker\n      {...props}\n      data-slot=\"color-swatch-picker\"\n      className={composeRenderProps(className, (className) =>\n        cn(\"flex flex-wrap gap-3\", className),\n      )}\n    />\n  );\n}\n\nexport function ColorSwatchPickerItem({\n  className,\n  children,\n  ...props\n}: ColorSwatchPickerItemProps) {\n  return (\n    <AriaColorSwatchPickerItem\n      {...props}\n      data-slot=\"color-swatch-picker-item\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"grid size-11 cursor-pointer place-items-center rounded-lg border-2 border-transparent hover:border-border data-[selected]:border-primary data-[disabled]:cursor-default data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring data-[disabled]:opacity-50\",\n          className,\n        ),\n      )}\n    >\n      {children ?? <ColorSwatch className=\"size-8\" />}\n    </AriaColorSwatchPickerItem>\n  );\n}\n"
+    }
+  ]
+}

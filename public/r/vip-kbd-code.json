@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-kbd-code",
+  "type": "registry:ui",
+  "title": "Kbd Code",
+  "description": "Display keyboard shortcuts and inline code.",
+  "dependencies": ["tailwind-variants"],
+  "files": [
+    {
+      "path": "src/lib/utils.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/utils.ts",
+      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
+    },
+    {
+      "path": "src/components/ui/kbd-code.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/kbd-code.tsx",
+      "content": "import type { HTMLAttributes } from \"react\";\nimport { cn } from \"./utils\";\n\nexport function Kbd({ className, ...props }: HTMLAttributes<HTMLElement>) {\n  return (\n    <kbd\n      data-slot=\"kbd\"\n      className={cn(\n        \"inline-flex min-h-6 items-center rounded border border-border bg-muted px-1.5 font-mono text-[11px] font-medium text-foreground shadow-[0_1px_0_var(--border)]\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nexport function InlineCode({\n  className,\n  ...props\n}: HTMLAttributes<HTMLElement>) {\n  return (\n    <code\n      data-slot=\"inline-code\"\n      className={cn(\n        \"break-words rounded bg-muted px-1.5 py-0.5 font-mono text-[0.85em] text-foreground\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+"use client";
+
+import { useState } from "react";
+import { FolderPlus, Search, Settings, UserAdd } from "reicon-react";
+import { Button } from "@/components/ui/button";
+import {
+  CommandPalette,
+  CommandPaletteItem,
+} from "@/components/ui/command-palette";
+
+export function CommandPaletteDemo() {
+  const [isOpen, setOpen] = useState(false);
+  const [lastAction, setLastAction] = useState("None yet");
+
+  return (
+    <div className="grid justify-items-start gap-3">
+      <Button variant="outline" onPress={() => setOpen(true)}>
+        <Search size={16} aria-hidden="true" /> Search commands
+      </Button>
+      <p className="text-xs text-muted-foreground">
+        Press Ctrl+K or ⌘K. Last action: {lastAction}.
+      </p>
+      <CommandPalette isOpen={isOpen} onOpenChange={setOpen}>
+        <CommandPaletteItem onAction={() => setLastAction("New project")}>
+          <FolderPlus
+            size={17}
+            aria-hidden="true"
+            className="text-muted-foreground"
+          />
+          New project
+        </CommandPaletteItem>
+        <CommandPaletteItem onAction={() => setLastAction("Open settings")}>
+          <Settings
+            size={17}
+            aria-hidden="true"
+            className="text-muted-foreground"
+          />
+          Open settings
+        </CommandPaletteItem>
+        <CommandPaletteItem onAction={() => setLastAction("Invite teammate")}>
+          <UserAdd
+            size={17}
+            aria-hidden="true"
+            className="text-muted-foreground"
+          />
+          Invite teammate
+        </CommandPaletteItem>
+      </CommandPalette>
+    </div>
+  );
+}

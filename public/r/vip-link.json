@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-link",
+  "type": "registry:ui",
+  "title": "Link",
+  "description": "Navigate with an accessible text link.",
+  "dependencies": ["react-aria-components", "tailwind-variants"],
+  "files": [
+    {
+      "path": "src/lib/utils.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/utils.ts",
+      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
+    },
+    {
+      "path": "src/components/ui/link.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/link.tsx",
+      "content": "\"use client\";\n\nimport {\n  Link as AriaLink,\n  composeRenderProps,\n  type LinkProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport function Link({ className, ...props }: LinkProps) {\n  return (\n    <AriaLink\n      {...props}\n      data-slot=\"link\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"cursor-pointer rounded-sm font-medium text-primary underline underline-offset-4 hover:text-primary/80 data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring data-[disabled]:cursor-default data-[disabled]:opacity-50\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n"
+    }
+  ]
+}

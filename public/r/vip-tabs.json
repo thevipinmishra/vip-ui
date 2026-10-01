@@ -1,0 +1,32 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-tabs",
+  "type": "registry:ui",
+  "title": "Tabs",
+  "description": "Switch between related content panels.",
+  "dependencies": [
+    "react-aria-components",
+    "reicon-react",
+    "tailwind-variants"
+  ],
+  "files": [
+    {
+      "path": "src/lib/utils.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/utils.ts",
+      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
+    },
+    {
+      "path": "src/components/ui/tabs.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/tabs.tsx",
+      "content": "\"use client\";\n\nimport {\n  Tab as AriaTab,\n  TabList as AriaTabList,\n  TabPanel as AriaTabPanel,\n  type TabPanelProps as AriaTabPanelProps,\n  type TabProps as AriaTabProps,\n  Tabs as AriaTabs,\n  type TabsProps as AriaTabsProps,\n  composeRenderProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport interface TabsProps extends AriaTabsProps {\n  defaultValue?: string;\n  value?: string;\n  onValueChange?: (value: string) => void;\n}\n\nexport function Tabs({\n  className,\n  defaultValue,\n  value,\n  onValueChange,\n  ...props\n}: TabsProps) {\n  return (\n    <AriaTabs\n      {...props}\n      {...(defaultValue !== undefined && { defaultSelectedKey: defaultValue })}\n      {...(value !== undefined && { selectedKey: value })}\n      onSelectionChange={(key) => {\n        props.onSelectionChange?.(key);\n        onValueChange?.(String(key));\n      }}\n      data-slot=\"tabs\"\n      className={composeRenderProps(className, (className) =>\n        cn(\"w-full\", className),\n      )}\n    />\n  );\n}\n\nexport function TabList({\n  className,\n  ...props\n}: React.ComponentProps<typeof AriaTabList>) {\n  return (\n    <AriaTabList\n      {...props}\n      data-slot=\"tabs-list\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"inline-flex max-w-full gap-1.5 overflow-x-auto rounded-xl bg-muted p-1.5 shadow-[var(--shadow-inset)] ring-1 ring-border/70\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n\nexport function Tab({ className, ...props }: AriaTabProps) {\n  return (\n    <AriaTab\n      {...props}\n      data-slot=\"tabs-trigger\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"min-h-11 cursor-pointer whitespace-nowrap sm:min-h-9 rounded-lg px-4 py-2 text-[13px] font-medium text-muted-foreground outline-none hover:bg-card/70 data-[selected]:bg-card data-[selected]:text-foreground data-[selected]:shadow-[var(--shadow-card)] data-[selected]:ring-1 data-[selected]:ring-border/70 data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring data-[disabled]:cursor-default data-[disabled]:opacity-50 motion-safe:transition-[background-color,color,box-shadow,scale] motion-safe:duration-150 motion-safe:active:scale-[0.96]\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n\nexport function TabPanel({ className, ...props }: AriaTabPanelProps) {\n  return (\n    <AriaTabPanel\n      {...props}\n      data-slot=\"tabs-content\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"mt-5 rounded-xl bg-card p-5 text-sm leading-6 text-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70 outline-none data-[focus-visible]:shadow-[inset_3px_0_0_var(--ring)] forced-colors:data-[focus-visible]:outline-2 forced-colors:data-[focus-visible]:outline-solid forced-colors:data-[focus-visible]:-outline-offset-2 forced-colors:data-[focus-visible]:outline-[Highlight]\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n\nexport const TabsList = TabList;\nexport function TabsTrigger({\n  value,\n  ...props\n}: Omit<AriaTabProps, \"id\"> & { id?: AriaTabProps[\"id\"]; value?: string }) {\n  return <Tab {...props} id={value ?? props.id} />;\n}\n\nexport function TabsContent({\n  value,\n  ...props\n}: Omit<AriaTabPanelProps, \"id\"> & {\n  id?: AriaTabPanelProps[\"id\"];\n  value?: string;\n}) {\n  return <TabPanel {...props} id={value ?? props.id} />;\n}\n"
+    },
+    {
+      "path": "src/components/ui/badge.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/badge.tsx",
+      "content": "import type { HTMLAttributes } from \"react\";\nimport { tv, type VariantProps } from \"tailwind-variants\";\nimport { cn } from \"./utils\";\n\nconst badgeStyles = tv({\n  base: \"inline-flex min-h-7 items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium leading-4 tracking-normal shadow-[var(--shadow-card)] ring-1\",\n  variants: {\n    variant: {\n      neutral: \"bg-secondary text-secondary-foreground ring-border\",\n      accent: \"bg-accent text-accent-foreground ring-primary/15\",\n      success: \"bg-success-subtle text-success-foreground ring-success/15\",\n      warning: \"bg-warning-subtle text-warning-foreground ring-warning/20\",\n    },\n  },\n  defaultVariants: { variant: \"neutral\" },\n});\n\nexport interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {\n  variant?: NonNullable<VariantProps<typeof badgeStyles>[\"variant\"]>;\n  dot?: boolean;\n}\n\nexport function Badge({\n  variant = \"neutral\",\n  dot = false,\n  className,\n  children,\n  ...props\n}: BadgeProps) {\n  return (\n    <span\n      data-slot=\"badge\"\n      data-variant={variant}\n      className={badgeStyles({ variant, className })}\n      {...props}\n    >\n      {dot && <BadgeDot />}\n      {children}\n    </span>\n  );\n}\n\nexport function BadgeDot({\n  className,\n  ...props\n}: HTMLAttributes<HTMLSpanElement>) {\n  return (\n    <span\n      aria-hidden=\"true\"\n      {...props}\n      data-slot=\"badge-dot\"\n      className={cn(\"size-1.5 rounded-full bg-current\", className)}\n    />\n  );\n}\n"
+    }
+  ]
+}

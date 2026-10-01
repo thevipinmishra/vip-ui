@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-list-box",
+  "type": "registry:ui",
+  "title": "List Box",
+  "description": "Select an option from a visible list.",
+  "dependencies": [
+    "motion",
+    "react-aria-components",
+    "reicon-react",
+    "tailwind-variants"
+  ],
+  "files": [
+    {
+      "path": "src/lib/utils.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/utils.ts",
+      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
+    },
+    {
+      "path": "src/components/ui/list-box.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/list-box.tsx",
+      "content": "\"use client\";\n\nimport { motion, useReducedMotion } from \"motion/react\";\nimport {\n  ListBox as AriaListBox,\n  ListBoxItem as AriaListBoxItem,\n  composeRenderProps,\n  type ListBoxItemProps,\n  type ListBoxProps,\n} from \"react-aria-components\";\nimport { Check } from \"reicon-react\";\nimport { cn } from \"./utils\";\n\nexport function ListBox<T extends object>({\n  className,\n  ...props\n}: ListBoxProps<T>) {\n  return (\n    <AriaListBox\n      {...props}\n      data-slot=\"list-box\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"grid max-h-72 w-full gap-1 overflow-y-auto rounded-lg border border-border bg-card p-1.5 shadow-[var(--shadow-card)] outline-none\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n\nexport function ListBoxItem({\n  className,\n  children,\n  ...props\n}: ListBoxItemProps) {\n  const reduceMotion = useReducedMotion();\n  return (\n    <AriaListBoxItem\n      {...props}\n      data-slot=\"list-box-item\"\n      textValue={\n        props.textValue ?? (typeof children === \"string\" ? children : undefined)\n      }\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-3 text-sm text-foreground outline-none hover:bg-muted data-[focused]:bg-muted data-[selected]:bg-accent data-[selected]:text-accent-foreground data-[disabled]:cursor-default data-[disabled]:opacity-50 data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-[-2px] data-[focus-visible]:outline-ring\",\n          className,\n        ),\n      )}\n    >\n      {composeRenderProps(children, (content, { isSelected }) => (\n        <>\n          {content}\n          <motion.span\n            aria-hidden=\"true\"\n            className=\"ms-auto shrink-0\"\n            initial={false}\n            animate={{ opacity: isSelected ? 1 : 0 }}\n            transition={{ duration: reduceMotion ? 0 : 0.15 }}\n          >\n            <Check size={16} />\n          </motion.span>\n        </>\n      ))}\n    </AriaListBoxItem>\n  );\n}\n"
+    }
+  ]
+}
