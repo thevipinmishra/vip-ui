@@ -12,6 +12,12 @@
   ],
   "files": [
     {
+      "path": "src/lib/utils.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/utils.ts",
+      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
+    },
+    {
       "path": "src/components/ui/button-styles.tsx",
       "type": "registry:file",
       "target": "@components/vip-ui/button-styles.tsx",
@@ -22,6 +28,12 @@
       "type": "registry:file",
       "target": "@components/vip-ui/button.tsx",
       "content": "\"use client\";\n\nimport { motion, useReducedMotion } from \"motion/react\";\nimport {\n  Button as AriaButton,\n  type ButtonProps as AriaButtonProps,\n  composeRenderProps,\n} from \"react-aria-components\";\nimport {\n  type ButtonSize,\n  type ButtonVariant,\n  buttonStyles,\n} from \"./button-styles\";\n\nexport interface ButtonProps\n  extends Omit<\n    AriaButtonProps,\n    | \"style\"\n    | \"onAnimationStart\"\n    | \"onAnimationEnd\"\n    | \"onAnimationIteration\"\n    | \"onHoverStart\"\n    | \"onHoverEnd\"\n  > {\n  ref?: React.Ref<HTMLButtonElement>;\n  variant?: ButtonVariant;\n  size?: ButtonSize;\n  static?: boolean;\n}\n\nconst MotionButton = motion.create(AriaButton);\n\nexport function Button({\n  className,\n  variant = \"default\",\n  size = \"default\",\n  static: isStatic = false,\n  ...props\n}: ButtonProps) {\n  const reduceMotion = useReducedMotion();\n  return (\n    <MotionButton\n      data-slot=\"button\"\n      data-variant={variant}\n      data-size={size}\n      whileTap={isStatic || reduceMotion ? undefined : { scale: 0.96 }}\n      transition={{ type: \"spring\", duration: 0.3, bounce: 0 }}\n      className={composeRenderProps(className, (className) =>\n        buttonStyles({ variant, size, className }),\n      )}\n      {...props}\n    />\n  );\n}\n"
+    },
+    {
+      "path": "src/components/ui/button-group.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/button-group.tsx",
+      "content": "import type { ComponentProps } from \"react\";\nimport { cn } from \"./utils\";\n\nexport interface ButtonGroupProps extends ComponentProps<\"div\"> {\n  orientation?: \"horizontal\" | \"vertical\";\n}\n\nexport function ButtonGroup({\n  orientation = \"horizontal\",\n  className,\n  ...props\n}: ButtonGroupProps) {\n  return (\n    // biome-ignore lint/a11y/useSemanticElements: Fieldset is for form controls; these are independent actions.\n    <div\n      {...props}\n      role=\"group\"\n      data-slot=\"button-group\"\n      data-orientation={orientation}\n      className={cn(\n        \"inline-flex w-fit max-w-full items-center gap-1 rounded-lg border border-border bg-card p-1 shadow-[var(--shadow-card)] data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-stretch\",\n        className,\n      )}\n    />\n  );\n}\n"
     }
   ]
 }

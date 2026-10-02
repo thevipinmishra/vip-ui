@@ -13,7 +13,7 @@ export default function AlertPage() {
       name="Alert"
       description="An inline message with a clear title and an icon that matches its intent. Use it for information the reader needs near the current task."
       preview={<AlertDemo />}
-      previewHint="Compare success, warning, and informational messages."
+      previewHint="Compare success, warning, error, info, and neutral messages."
       previewSourcePath="src/components/docs/alert-demo.tsx"
       sourcePath="src/components/ui/alert.tsx"
       previous={{ name: "Badge", href: "/components/badge" }}

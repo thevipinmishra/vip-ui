@@ -1,8 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ThemeToggle } from "@/components/docs/theme-toggle";
+import { SiteHeader } from "@/components/docs/site-header";
 
 export const metadata: Metadata = {
   title: "MIT license | vip/ui",
@@ -20,25 +19,7 @@ export default async function LicensePage() {
       >
         Skip to content
       </a>
-      <header className="border-b border-border/70 bg-card">
-        <nav
-          aria-label="Site navigation"
-          className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-5 sm:px-8"
-        >
-          <Link href="/" className="text-xl font-semibold tracking-[-0.055em]">
-            vip<span className="text-primary">/</span>ui
-          </Link>
-          <div className="flex items-center gap-4 text-sm">
-            <Link
-              href="/components"
-              className="text-muted-foreground hover:text-foreground"
-            >
-              Components
-            </Link>
-            <ThemeToggle />
-          </div>
-        </nav>
-      </header>
+      <SiteHeader />
       <main id="main" className="mx-auto max-w-4xl px-5 py-16 sm:px-8 sm:py-24">
         <h1 className="text-[clamp(2.8rem,5vw,4.5rem)] font-semibold tracking-[-0.065em]">
           MIT license

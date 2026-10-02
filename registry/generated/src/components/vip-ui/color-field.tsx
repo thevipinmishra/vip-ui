@@ -42,7 +42,7 @@ export function ColorField({
           )}
           <Input
             data-slot="color-field-input"
-            className="min-h-12 rounded-lg border border-input bg-card px-3.5 text-base text-foreground shadow-[var(--shadow-card)] outline-none motion-safe:transition-[border-color,box-shadow] motion-safe:duration-150 data-[focus-visible]:border-primary data-[focus-visible]:ring-3 data-[focus-visible]:ring-accent data-[invalid]:border-destructive sm:text-sm"
+            className="min-h-12 rounded-lg border border-input bg-card px-3.5 text-base text-foreground shadow-[var(--shadow-card)] outline-none motion-safe:transition-[border-color,box-shadow] motion-safe:duration-150 data-[focus-visible]:border-ring data-[focus-visible]:ring-3 data-[focus-visible]:ring-ring/50 data-[invalid]:border-destructive data-[invalid]:ring-3 data-[invalid]:ring-destructive/20 data-[disabled]:cursor-not-allowed data-[disabled]:bg-muted data-[disabled]:opacity-60 sm:text-sm"
           />
           {description && (
             <Text

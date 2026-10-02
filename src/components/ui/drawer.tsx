@@ -14,6 +14,7 @@ import {
   type HTMLAttributes,
   type ReactNode,
   type RefObject,
+  useCallback,
   useContext,
   useEffect,
   useLayoutEffect,
@@ -98,6 +99,9 @@ export function Drawer({
     if (next) setPresent(true);
     onOpenChange?.(next);
   };
+  const exitComplete = useCallback(() => {
+    if (!open) setPresent(false);
+  }, [open]);
 
   return (
     <DrawerContext.Provider
@@ -105,9 +109,7 @@ export function Drawer({
         open,
         present,
         close: () => changeOpen(false),
-        exitComplete: () => {
-          if (!open) setPresent(false);
-        },
+        exitComplete,
       }}
     >
       <AriaDialogTrigger {...props} isOpen={open} onOpenChange={changeOpen} />
@@ -131,8 +133,8 @@ export interface DrawerContentProps
   defaultSnapPoint?: number;
   snapPoint?: number;
   onSnapPointChange?: (point: number) => void;
-  /** Optional page wrapper to scale behind the overlay. Do not pass document.body. */
-  scaleTarget?: RefObject<HTMLElement | null>;
+  /** Page wrapper to scale behind the overlay (a ref or CSS selector). Never target document.body or a wrapper containing the portal. */
+  scaleTarget?: RefObject<HTMLElement | null> | string;
   overlayProps?: Omit<
     ModalOverlayProps,
     "children" | "isOpen" | "onOpenChange" | "isExiting" | "render"
@@ -159,7 +161,6 @@ export function DrawerContent({
   const dragControls = useDragControls();
   const wasOpen = useRef(false);
   const dragged = useRef(false);
-  const originalTransform = useRef<string | null>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const [viewport, setViewport] = useState({ height: 0, width: 0 });
@@ -186,11 +187,10 @@ export function DrawerContent({
   const vertical = placement === "bottom" || placement === "top";
   const offset = (points[points.length - 1] - point) * viewport.height;
   const closedSide = (placement === "left" ? -1 : 1) * sideWidth;
-  const shade = useTransform(
-    vertical ? y : x,
-    (value) =>
-      0.46 *
-      (1 -
+  const progress = useTransform(vertical ? y : x, (value) =>
+    Math.max(
+      0,
+      1 -
         Math.min(
           1,
           Math.abs(value) /
@@ -199,8 +199,10 @@ export function DrawerContent({
               : placement === "top"
                 ? topHeight || 1
                 : sideWidth || 1),
-        )),
+        ),
+    ),
   );
+  const shade = useTransform(progress, (value) => value * 0.46);
 
   useLayoutEffect(() => {
     const update = () =>
@@ -263,35 +265,34 @@ export function DrawerContent({
     exitComplete,
   ]);
 
-  // Restore the host's original transform when this drawer is removed.
-  useEffect(() => {
-    const target = scaleTarget?.current;
-    if (!target) return;
-    originalTransform.current = target.style.transform;
-    return () => {
-      target.style.transform = originalTransform.current ?? "";
-    };
-  }, [scaleTarget]);
-
-  // The page scale is opt-in because applications own their page wrapper.
-  useEffect(() => {
-    const target = scaleTarget?.current;
-    if (!target) return;
-    if (!open && !present) {
-      target.style.transform = originalTransform.current ?? "";
+  // Keep the page in step with opening, dragging, snapping, and closing.
+  // An individual CSS scale preserves any transforms already on the page wrapper.
+  useLayoutEffect(() => {
+    if (!present || !scaleTarget) return;
+    const target =
+      typeof scaleTarget === "string"
+        ? document.querySelector<HTMLElement>(scaleTarget)
+        : scaleTarget.current;
+    if (
+      !target ||
+      target === document.body ||
+      target === document.documentElement
+    )
       return;
-    }
-    const controls = animate(
-      target,
-      { scale: open && !reduceMotion ? 0.96 : 1 },
-      reduceMotion
-        ? { duration: 0 }
-        : open
-          ? spring
-          : { duration: 0.24, ease: "easeOut" },
-    );
-    return () => controls.stop();
-  }, [open, present, scaleTarget, reduceMotion]);
+    const originalScale = target.style.scale;
+    const originalOrigin = target.style.transformOrigin;
+    target.style.transformOrigin = "center top";
+    const update = (value: number) => {
+      target.style.scale = String(reduceMotion ? 1 : 1 - value * 0.04);
+    };
+    update(progress.get());
+    const unsubscribe = progress.on("change", update);
+    return () => {
+      unsubscribe();
+      target.style.scale = originalScale;
+      target.style.transformOrigin = originalOrigin;
+    };
+  }, [present, scaleTarget, reduceMotion, progress]);
 
   const selectPoint = (next: number) => {
     if (snapPoint === undefined) setInternalPoint(next);
@@ -378,11 +379,9 @@ export function DrawerContent({
     >
       <motion.div
         aria-hidden="true"
+        data-slot="drawer-backdrop"
         className="pointer-events-none absolute inset-0 bg-black"
         style={{ opacity: shade }}
-        initial={reduceMotion ? false : { scale: 1.03 }}
-        animate={{ scale: 1 }}
-        transition={reduceMotion ? { duration: 0 } : spring}
       />
       <Modal
         data-slot="drawer-modal"

@@ -50,7 +50,7 @@ export function NumberField({
           )}
           <Group
             data-slot="number-field-group"
-            className="flex min-h-12 items-center gap-1 rounded-lg border border-input bg-card p-1 shadow-[var(--shadow-card)] focus-within:border-primary focus-within:ring-3 focus-within:ring-accent disabled:opacity-50 invalid:border-destructive"
+            className="flex min-h-12 items-center gap-1 rounded-lg border border-input bg-card p-1 shadow-[var(--shadow-card)] has-[[data-focus-visible]]:border-ring has-[[data-focus-visible]]:ring-3 has-[[data-focus-visible]]:ring-ring/50 group-invalid:border-destructive group-invalid:has-[[data-focus-visible]]:ring-destructive/20 group-disabled:bg-muted group-disabled:opacity-60"
           >
             <PressButton
               slot="decrement"

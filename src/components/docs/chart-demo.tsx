@@ -39,7 +39,19 @@ const signupsChart = defineChart({
       axis: { label: "Signups" },
     },
   },
-  tooltip,
+  tooltip: {
+    use: tooltip,
+    content: ([point]) => ({
+      title: `${point.datum.month} 2026`,
+      rows: [
+        {
+          label: "New signups",
+          value: `${point.datum.signups} workspaces`,
+          color: point.color,
+        },
+      ],
+    }),
+  },
 });
 
 export function ChartDemo() {

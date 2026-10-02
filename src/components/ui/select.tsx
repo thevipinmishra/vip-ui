@@ -8,14 +8,15 @@ import {
   type SelectProps as AriaSelectProps,
   SelectValue as AriaSelectValue,
   composeRenderProps,
+  FieldError,
   Label,
   ListBox,
   ListBoxItem,
-  Popover,
   Text,
 } from "react-aria-components";
 import { Check, ChevronDown } from "reicon-react";
 import { cn } from "@/lib/utils";
+import { Popover } from "./popover";
 import { PressButton } from "./press-button";
 
 export interface SelectOption {
@@ -74,7 +75,7 @@ export function Select({
             )}
             <PressButton
               data-slot="select-trigger"
-              className="flex min-h-12 w-full cursor-pointer items-center justify-between gap-3 rounded-lg border border-input bg-card px-3.5 text-start text-sm text-foreground shadow-[var(--shadow-card)] hover:border-primary/45 hover:bg-muted/60 motion-safe:transition-[border-color,background-color,box-shadow] motion-safe:duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-50"
+              className="flex min-h-12 w-full cursor-pointer items-center justify-between gap-3 rounded-lg border border-input bg-card px-3.5 text-start text-sm text-foreground shadow-[var(--shadow-card)] hover:border-primary/45 hover:bg-muted/60 motion-safe:transition-[border-color,background-color,box-shadow] motion-safe:duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring group-invalid:border-destructive group-invalid:ring-3 group-invalid:ring-destructive/20 disabled:cursor-default disabled:bg-muted disabled:opacity-50"
             >
               <AriaSelectValue
                 data-slot="select-value"
@@ -104,50 +105,41 @@ export function Select({
                 {description}
               </Text>
             )}
+            <SelectError />
             <Popover
               data-slot="select-content"
               placement="bottom start"
               offset={7}
-              className="w-[var(--trigger-width)] motion-safe:transition-opacity motion-safe:duration-150 motion-safe:ease-out motion-safe:data-[exiting]:opacity-0 rounded-lg bg-popover p-1.5 text-popover-foreground shadow-[var(--shadow-float)] ring-1 ring-border/70 outline-none"
+              className="w-[var(--trigger-width)] rounded-lg border-0 p-1.5 ring-1 ring-border/70"
             >
-              <motion.div
-                initial={
-                  reduceMotion
-                    ? { opacity: 0 }
-                    : { opacity: 0, y: -6, scale: 0.98 }
-                }
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.18, ease: "easeOut" }}
+              <ListBox
+                data-slot="select-list-box"
+                items={options ?? []}
+                className="grid max-h-64 gap-1 overflow-y-auto outline-none"
               >
-                <ListBox
-                  data-slot="select-list-box"
-                  items={options ?? []}
-                  className="grid max-h-64 gap-1 overflow-y-auto outline-none"
-                >
-                  {(option) => (
-                    <ListBoxItem
-                      data-slot="select-item"
-                      id={option.id}
-                      textValue={option.name}
-                      className="group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted focus:bg-muted selected:bg-accent selected:text-accent-foreground focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-50"
-                    >
-                      <span className="min-w-0">
-                        <span className="block font-medium">{option.name}</span>
-                        {option.description && (
-                          <span className="mt-0.5 block text-xs text-muted-foreground">
-                            {option.description}
-                          </span>
-                        )}
-                      </span>
-                      <Check
-                        size={15}
-                        aria-hidden="true"
-                        className="shrink-0 opacity-0 group-selected/item:opacity-100"
-                      />
-                    </ListBoxItem>
-                  )}
-                </ListBox>
-              </motion.div>
+                {(option) => (
+                  <ListBoxItem
+                    data-slot="select-item"
+                    id={option.id}
+                    textValue={option.name}
+                    className="group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted focus:bg-muted selected:bg-accent selected:text-accent-foreground focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-50"
+                  >
+                    <span className="min-w-0">
+                      <span className="block font-medium">{option.name}</span>
+                      {option.description && (
+                        <span className="mt-0.5 block text-xs text-muted-foreground">
+                          {option.description}
+                        </span>
+                      )}
+                    </span>
+                    <Check
+                      size={15}
+                      aria-hidden="true"
+                      className="shrink-0 opacity-0 group-selected/item:opacity-100"
+                    />
+                  </ListBoxItem>
+                )}
+              </ListBox>
             </Popover>
           </>
         ))}
@@ -179,7 +171,7 @@ export function SelectTrigger({
       data-slot="select-trigger"
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex min-h-12 w-full cursor-pointer items-center justify-between gap-3 rounded-lg border border-input bg-card px-3.5 text-start text-sm text-foreground shadow-[var(--shadow-card)] hover:border-primary/45 hover:bg-muted/60 motion-safe:transition-[border-color,background-color,box-shadow] motion-safe:duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-50",
+          "flex min-h-12 w-full cursor-pointer items-center justify-between gap-3 rounded-lg border border-input bg-card px-3.5 text-start text-sm text-foreground shadow-[var(--shadow-card)] hover:border-primary/45 hover:bg-muted/60 motion-safe:transition-[border-color,background-color,box-shadow] motion-safe:duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring group-invalid:border-destructive group-invalid:ring-3 group-invalid:ring-destructive/20 disabled:cursor-default disabled:bg-muted disabled:opacity-50",
           className,
         ),
       )}
@@ -225,7 +217,6 @@ export function SelectContent({
   children,
   ...props
 }: React.ComponentProps<typeof Popover>) {
-  const reduceMotion = useReducedMotion();
   return (
     <Popover
       {...props}
@@ -234,25 +225,17 @@ export function SelectContent({
       offset={props.offset ?? 7}
       className={composeRenderProps(className, (className) =>
         cn(
-          "w-[var(--trigger-width)] motion-safe:transition-opacity motion-safe:duration-150 motion-safe:ease-out motion-safe:data-[exiting]:opacity-0 rounded-lg bg-popover p-1.5 text-popover-foreground shadow-[var(--shadow-float)] ring-1 ring-border/70 outline-none",
+          "w-[var(--trigger-width)] rounded-lg border-0 p-1.5 ring-1 ring-border/70",
           className,
         ),
       )}
     >
-      <motion.div
-        initial={
-          reduceMotion ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.98 }
-        }
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: reduceMotion ? 0 : 0.18, ease: "easeOut" }}
+      <ListBox
+        data-slot="select-list-box"
+        className="grid max-h-64 gap-1 overflow-y-auto outline-none"
       >
-        <ListBox
-          data-slot="select-list-box"
-          className="grid max-h-64 gap-1 overflow-y-auto outline-none"
-        >
-          {children}
-        </ListBox>
-      </motion.div>
+        {children}
+      </ListBox>
     </Popover>
   );
 }
@@ -282,6 +265,19 @@ export function SelectItem({
         className="ms-auto shrink-0 opacity-0 group-selected/item:opacity-100"
       />
     </ListBoxItem>
+  );
+}
+
+export function SelectError({
+  className,
+  ...props
+}: React.ComponentProps<typeof FieldError>) {
+  return (
+    <FieldError
+      {...props}
+      data-slot="select-error"
+      className={cn("text-xs leading-5 text-destructive", className)}
+    />
   );
 }
 

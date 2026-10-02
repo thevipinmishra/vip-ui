@@ -14,7 +14,7 @@ export default function BadgePage() {
       name="Badge"
       description="A compact label for status or metadata. The optional dot reinforces status without relying on color alone."
       preview={<BadgeDemo />}
-      previewHint="Compare neutral, accent, success, and warning styles."
+      previewHint="Compare neutral, accent, success, warning, error, and outline styles."
       previewSourcePath="src/components/docs/badge-demo.tsx"
       examples={[
         {

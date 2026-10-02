@@ -13,7 +13,7 @@ import { Chart } from "@tanstack/charts/react/core";
 import { scaleBand } from "@tanstack/charts/scales/band";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { tooltip } from "@tanstack/charts/tooltip";
-import { ChartPlot, galleryRenderer } from "./chart-plot";
+import { ChartPlot, galleryRenderer, valueTooltip } from "./chart-plot";
 
 const complete = 72;
 const progress = [
@@ -59,7 +59,18 @@ const progressChart = defineChart({
     domain: ["Complete", "Remaining"],
     range: ["var(--ts-chart-1)", "var(--muted)"],
   },
-  tooltip,
+  tooltip: {
+    use: tooltip,
+    content: ([point]) =>
+      valueTooltip(
+        point.datum.id,
+        "Onboarding",
+        "value" in point.datum
+          ? `${point.datum.value}%`
+          : `${complete}% complete`,
+        point.color,
+      ),
+  },
 });
 
 const channels = [
@@ -100,7 +111,16 @@ const channelsChart = defineChart({
       "var(--ts-chart-4)",
     ],
   },
-  tooltip,
+  tooltip: {
+    use: tooltip,
+    content: ([point]) =>
+      valueTooltip(
+        point.datum.name,
+        "Campaign reach",
+        `${point.datum.value} / 100`,
+        point.color,
+      ),
+  },
 });
 
 const goals = [
@@ -134,7 +154,16 @@ const goalsChart = defineChart({
     domain: goals.map((r) => r.goal),
     range: ["var(--ts-chart-1)", "var(--ts-chart-2)", "var(--ts-chart-3)"],
   },
-  tooltip,
+  tooltip: {
+    use: tooltip,
+    content: ([point]) =>
+      valueTooltip(
+        point.datum.goal,
+        "Completed",
+        `${point.datum.percent}%`,
+        point.color,
+      ),
+  },
 });
 
 export function RadialProgress() {

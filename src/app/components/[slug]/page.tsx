@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
+import { AnimatedNumberDemo } from "@/components/docs/animated-number-demo";
 import { AutocompleteDemo } from "@/components/docs/autocomplete-demo";
 import { AvatarDemo } from "@/components/docs/avatar-demo";
 import { BreadcrumbsDemo } from "@/components/docs/breadcrumbs-demo";
+import { ButtonGroupDemo } from "@/components/docs/button-group-demo";
 import { CalendarDemo } from "@/components/docs/calendar-demo";
 import { CalendarUnavailableDemo } from "@/components/docs/calendar-unavailable-demo";
 import { CardDemo } from "@/components/docs/card-demo";
@@ -25,6 +27,7 @@ import { DescriptionListDemo } from "@/components/docs/description-list-demo";
 import { DisclosureDemo } from "@/components/docs/disclosure-demo";
 import { DropZoneDemo } from "@/components/docs/drop-zone-demo";
 import { EmptyStateDemo } from "@/components/docs/empty-state-demo";
+import { FieldsetDemo } from "@/components/docs/fieldset-demo";
 import { FileTriggerDemo } from "@/components/docs/file-trigger-demo";
 import { FormDemo } from "@/components/docs/form-demo";
 import { FormValidationDemo } from "@/components/docs/form-validation-demo";
@@ -36,8 +39,10 @@ import { MeterDemo } from "@/components/docs/meter-demo";
 import { NumberFieldDemo } from "@/components/docs/number-field-demo";
 import { PaginationDemo } from "@/components/docs/pagination-demo";
 import { PopoverDemo } from "@/components/docs/popover-demo";
+import { PresenceListDemo } from "@/components/docs/presence-list-demo";
 import { PreviewTriggerDemo } from "@/components/docs/preview-trigger-demo";
 import { ProgressBarDemo } from "@/components/docs/progress-bar-demo";
+import { ProgressRingDemo } from "@/components/docs/progress-ring-demo";
 import { RangeCalendarDemo } from "@/components/docs/range-calendar-demo";
 import { RangeCalendarLimitsDemo } from "@/components/docs/range-calendar-limits-demo";
 import { SeparatorDemo } from "@/components/docs/separator-demo";
@@ -45,16 +50,20 @@ import { SkeletonDemo } from "@/components/docs/skeleton-demo";
 import { SpinnerDemo } from "@/components/docs/spinner-demo";
 import { SpinnerUsageDemo } from "@/components/docs/spinner-usage-demo";
 import { StatDemo } from "@/components/docs/stat-demo";
+import { StepperDemo } from "@/components/docs/stepper-demo";
 import { TableDemo } from "@/components/docs/table-demo";
 import { TableFilterDemo } from "@/components/docs/table-filter-demo";
 import { TableSortingDemo } from "@/components/docs/table-sorting-demo";
 import { TagGroupDemo } from "@/components/docs/tag-group-demo";
+import { TextSwapDemo } from "@/components/docs/text-swap-demo";
 import { TimeFieldDemo } from "@/components/docs/time-field-demo";
+import { TimelineDemo } from "@/components/docs/timeline-demo";
 import { ToggleButtonDemo } from "@/components/docs/toggle-button-demo";
 import { ToggleButtonGroupDemo } from "@/components/docs/toggle-button-group-demo";
 import { TokenFieldDemo } from "@/components/docs/token-field-demo";
 import { ToolbarDemo } from "@/components/docs/toolbar-demo";
 import { TreeDemo } from "@/components/docs/tree-demo";
+import { TypingIndicatorDemo } from "@/components/docs/typing-indicator-demo";
 
 const entries: {
   slug: string;
@@ -115,6 +124,14 @@ const entries: {
     demo: <ProgressBarDemo />,
   },
   {
+    slug: "progress-ring",
+    name: "Progress ring",
+    description:
+      "Show known or unknown progress in a compact circular indicator.",
+    hint: "Advance the upload; the connecting ring keeps running until its status changes.",
+    demo: <ProgressRingDemo />,
+  },
+  {
     slug: "meter",
     name: "Meter",
     description:
@@ -136,6 +153,13 @@ const entries: {
       "Switch a persistent action such as pinning an item on or off.",
     hint: "Press the button to pin and unpin the item.",
     demo: <ToggleButtonDemo />,
+  },
+  {
+    slug: "button-group",
+    name: "Button group",
+    description: "Place related independent actions in a labeled group.",
+    hint: "Zoom the preview in or out; each button remains a separate action.",
+    demo: <ButtonGroupDemo />,
   },
   {
     slug: "toggle-button-group",
@@ -167,6 +191,13 @@ const entries: {
       "Choose an option from a visible list using pointer or keyboard navigation.",
     hint: "Select a team with click or arrow keys.",
     demo: <ListBoxDemo />,
+  },
+  {
+    slug: "presence-list",
+    name: "Presence list",
+    description: "Animate items as they join or leave a plain list.",
+    hint: "Add and complete tasks to see the list update.",
+    demo: <PresenceListDemo />,
   },
   {
     slug: "color-swatch",
@@ -223,6 +254,13 @@ const entries: {
     description: "Collect and validate related inputs before submission.",
     hint: "Enter an email and submit the invitation.",
     demo: <FormDemo />,
+  },
+  {
+    slug: "fieldset",
+    name: "Fieldset",
+    description: "Group related form controls under a shared legend.",
+    hint: "Choose the updates for a weekly digest.",
+    demo: <FieldsetDemo />,
   },
   {
     slug: "link",
@@ -355,6 +393,13 @@ const entries: {
     demo: <PaginationDemo />,
   },
   {
+    slug: "timeline",
+    name: "Timeline",
+    description: "Show dated events as an ordered sequence.",
+    hint: "Read the project history from the most recent event back.",
+    demo: <TimelineDemo />,
+  },
+  {
     slug: "description-list",
     name: "Description list",
     description: "Pair labels with values in a record or summary.",
@@ -375,6 +420,35 @@ const entries: {
     hint: "Compare project count and storage usage without relying on color.",
     demo: <StatDemo />,
   },
+  {
+    slug: "animated-number",
+    name: "Animated number",
+    description:
+      "Update a numeric value without animating its accessible text.",
+    hint: "Change one task to see only the changed digit slide, or add 54 to update several digits.",
+    demo: <AnimatedNumberDemo />,
+  },
+  {
+    slug: "text-swap",
+    name: "Text swap",
+    description: "Transition a short label when its value changes.",
+    hint: "Change the review status to see the label update.",
+    demo: <TextSwapDemo />,
+  },
+  {
+    slug: "stepper",
+    name: "Stepper",
+    description: "Show the current and completed steps in a workflow.",
+    hint: "Use Back and Next to move through the setup steps.",
+    demo: <StepperDemo />,
+  },
+  {
+    slug: "typing-indicator",
+    name: "Typing indicator",
+    description: "Show who is composing a message in a conversation.",
+    hint: "Stop or restart the typing status.",
+    demo: <TypingIndicatorDemo />,
+  },
 ];
 
 const customSlugs = new Set([
@@ -388,6 +462,15 @@ const customSlugs = new Set([
   "kbd-code",
   "stat",
   "command-palette",
+  "fieldset",
+  "animated-number",
+  "progress-ring",
+  "presence-list",
+  "typing-indicator",
+  "button-group",
+  "timeline",
+  "text-swap",
+  "stepper",
 ]);
 
 export function generateStaticParams() {
@@ -418,12 +501,14 @@ export default async function NewComponentPage({
       name={entry.name}
       description={entry.description}
       reactAriaDocsHref={
-        customSlugs.has(slug)
-          ? undefined
-          : `https://react-aria.adobe.com/${slug
-              .split("-")
-              .map((part) => part[0].toUpperCase() + part.slice(1))
-              .join("")}`
+        slug === "progress-ring"
+          ? "https://react-aria.adobe.com/ProgressBar"
+          : customSlugs.has(slug)
+            ? undefined
+            : `https://react-aria.adobe.com/${slug
+                .split("-")
+                .map((part) => part[0].toUpperCase() + part.slice(1))
+                .join("")}`
       }
       preview={entry.demo}
       previewHint={entry.hint}

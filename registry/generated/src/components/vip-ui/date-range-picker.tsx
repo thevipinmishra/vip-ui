@@ -34,7 +34,7 @@ export function DateRangePicker<T extends DateValue>({
       {...props}
       data-slot="date-range-picker"
       className={composeRenderProps(className, (className) =>
-        cn("grid gap-2 data-[focus-visible]:outline-none", className),
+        cn("group grid gap-2 data-[focus-visible]:outline-none", className),
       )}
     >
       {children ?? (
@@ -49,7 +49,7 @@ export function DateRangePicker<T extends DateValue>({
           )}
           <Group
             data-slot="date-range-picker-group"
-            className="flex min-h-12 items-center rounded-lg border border-input bg-card shadow-[var(--shadow-card)] hover:border-primary/45 focus-within:border-ring focus-within:ring-2 focus-within:ring-ring/20 data-[focus-visible]:outline-none data-[invalid]:border-destructive data-[disabled]:opacity-50 motion-safe:transition-[border-color,box-shadow] motion-safe:duration-150"
+            className="flex min-h-12 min-w-0 items-center rounded-lg border border-input bg-card shadow-[var(--shadow-card)] hover:border-primary/45 has-[[data-focus-visible]]:border-ring has-[[data-focus-visible]]:ring-3 has-[[data-focus-visible]]:ring-ring/50 group-data-[invalid]:border-destructive group-data-[invalid]:has-[[data-focus-visible]]:ring-destructive/20 group-data-[disabled]:bg-muted group-data-[disabled]:opacity-60 data-[focus-visible]:outline-none motion-safe:transition-[border-color,box-shadow] motion-safe:duration-150"
           >
             <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-1 px-3 py-2 text-sm">
               <DateInput
@@ -75,7 +75,7 @@ export function DateRangePicker<T extends DateValue>({
               data-slot="date-range-picker-trigger"
               variant="ghost"
               size="icon"
-              className="shrink-0"
+              className="me-1 shrink-0"
             >
               <ChevronDown size={17} aria-hidden="true" />
             </Button>

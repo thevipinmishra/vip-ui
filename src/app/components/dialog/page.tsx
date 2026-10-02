@@ -16,7 +16,7 @@ export default function DialogPage() {
       reactAriaDocsHref="https://react-aria.adobe.com/Modal"
       description="A focused layer for a short task or a small amount of detail. Focus moves inside when it opens and returns to the trigger when it closes."
       preview={<DialogDemo />}
-      previewHint="Open the dialog, then close it with Escape, the close icon, or the button."
+      previewHint="Open the dialog, then click outside, press Escape, or use Close to dismiss it."
       previewSourcePath="src/components/docs/dialog-demo.tsx"
       examples={[
         {
@@ -29,7 +29,7 @@ export default function DialogPage() {
         {
           title: "Controlled open state",
           description:
-            "Open with the trigger or application state. Close with the button or Escape; both update the controlled value.",
+            "Open with the trigger or application state. Close by clicking outside, pressing Escape, or using the button; each updates the controlled value.",
           preview: <DialogControlledDemo />,
           sourcePath: "src/components/docs/dialog-controlled-demo.tsx",
         },

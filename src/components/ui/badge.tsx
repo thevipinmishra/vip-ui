@@ -10,6 +10,8 @@ const badgeStyles = tv({
       accent: "bg-accent text-accent-foreground ring-primary/15",
       success: "bg-success-subtle text-success-foreground ring-success/15",
       warning: "bg-warning-subtle text-warning-foreground ring-warning/20",
+      error: "bg-card text-destructive ring-destructive/25",
+      outline: "bg-transparent text-foreground ring-border",
     },
   },
   defaultVariants: { variant: "neutral" },

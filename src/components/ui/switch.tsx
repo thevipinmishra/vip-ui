@@ -44,7 +44,7 @@ export function Switch({
       data-slot="switch"
       className={composeRenderProps(className, (className) =>
         cn(
-          "group inline-flex min-h-11 cursor-pointer items-center justify-between gap-4 rounded-md text-sm text-foreground disabled:cursor-default disabled:opacity-50",
+          "group inline-flex min-h-11 cursor-pointer items-center justify-between gap-4 rounded-md text-sm text-foreground disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
           className,
         ),
       )}

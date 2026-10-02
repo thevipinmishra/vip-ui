@@ -1,8 +1,9 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import Link from "next/link";
+import { ArrowRight } from "reicon-react";
 import { CodeFrame } from "@/components/docs/code-frame";
 import { CodeSnippet } from "@/components/docs/code-snippet";
-import { ButtonLink } from "@/components/ui/button-link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { chartCategories } from "./catalog";
 import { ChartCopyButton } from "./chart-copy-button";
@@ -37,26 +38,29 @@ export async function ChartGallery({
 
   return (
     <>
-      <section className="mx-auto max-w-7xl px-5 pb-18 pt-24 text-center sm:px-8 sm:pt-32 lg:pt-36">
-        <h1 className="text-[clamp(3.5rem,7vw,6rem)] font-semibold leading-none tracking-[-0.07em] [text-wrap:balance]">
+      <section
+        id="gallery"
+        aria-labelledby="charts-title"
+        className="mx-auto max-w-7xl scroll-mt-28 px-5 pb-24 pt-14 sm:px-8 sm:pt-20"
+      >
+        <h1
+          id="charts-title"
+          className="text-[clamp(2.5rem,5vw,3.5rem)] font-semibold tracking-[-0.06em]"
+        >
           Charts
         </h1>
-        <p className="mx-auto mt-6 max-w-[620px] text-base leading-7 text-muted-foreground sm:text-lg">
-          Browse live TanStack chart examples. Open a chart to copy its source.
-        </p>
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <ButtonLink href="#gallery" size="lg">
-            Browse charts
-          </ButtonLink>
-          <ButtonLink href="#documentation" variant="outline" size="lg">
-            Chart documentation
-          </ButtonLink>
+        <div className="mb-10 mt-4 flex flex-wrap items-end justify-between gap-4">
+          <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
+            Browse live chart examples by type. Each preview has a copyable
+            source file and an accessible table of values.
+          </p>
+          <Link
+            href="#documentation"
+            className="inline-flex min-h-10 items-center gap-2 text-sm font-medium text-primary hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          >
+            Installation and usage <ArrowRight size={15} aria-hidden="true" />
+          </Link>
         </div>
-      </section>
-      <div
-        id="gallery"
-        className="mx-auto max-w-7xl scroll-mt-28 px-5 pb-28 sm:px-8"
-      >
         <ChartFilters
           categories={chartCategories.map(({ slug, label }) => ({
             slug,
@@ -75,7 +79,7 @@ export async function ChartGallery({
             ),
           }}
         />
-      </div>
+      </section>
       <ChartDocumentation />
     </>
   );
@@ -106,7 +110,7 @@ function ChartCategoryContent({
             key={example.name}
             className="relative z-0 flex min-w-0 flex-col rounded-[22px] hover:z-10 focus-within:z-10"
           >
-            <CardHeader className="flex items-center justify-between gap-3">
+            <CardHeader className="flex-row flex-wrap items-center justify-between gap-3">
               <CardTitle>{example.name}</CardTitle>
               <div className="flex shrink-0 items-center gap-2">
                 <ChartCopyButton

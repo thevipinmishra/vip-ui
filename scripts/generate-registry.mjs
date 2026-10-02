@@ -11,12 +11,16 @@ const demoDirectory = path.join(root, "src/components/docs");
 const descriptions = {
   accordion: "Reveal one or more sections of related content.",
   alert: "Show information, success, warning, or error messages.",
+  "animated-number":
+    "Animate a changing value while keeping its accessible text stable.",
   autocomplete: "Find suggestions as you type in a text field.",
   avatar: "Show a person with an image or initials.",
   badge: "Label an item with short status or metadata.",
   breadcrumbs: "Link back through a page hierarchy.",
   "button-link":
     "Style a navigation link like a button without tying it to a router.",
+  "button-group":
+    "Group related actions without turning them into a selection control.",
   "button-styles":
     "Shared variants and sizes used by vip/ui buttons and links.",
   button: "Trigger an action with primary, secondary, or destructive emphasis.",
@@ -43,9 +47,11 @@ const descriptions = {
   drawer: "Show a panel of content from the edge of the screen.",
   "drop-zone": "Accept files by drag and drop or file picker.",
   "empty-state": "Explain why a collection is empty and what to do next.",
+  fieldset: "Group related native form controls under a legend.",
   "file-trigger": "Open a file picker from an accessible trigger.",
   form: "Group fields and handle form validation.",
   "grid-list": "Select and act on rows with keyboard navigation.",
+  "input-group": "Combine an input with a prefix, suffix, or action.",
   "kbd-code": "Display keyboard shortcuts and inline code.",
   link: "Navigate with an accessible text link.",
   "list-box": "Select an option from a visible list.",
@@ -54,9 +60,11 @@ const descriptions = {
   "number-field": "Enter or step through numeric values.",
   pagination: "Navigate between pages of results.",
   popover: "Show contextual content anchored to a trigger.",
+  "presence-list": "Animate additions and removals in a semantic list.",
   "press-button": "Handle press interactions for shared button controls.",
   "preview-trigger": "Open a preview without leaving the current context.",
   "progress-bar": "Show progress for a task with a known completion point.",
+  "progress-ring": "Show known or unknown progress in a circular indicator.",
   "radio-group": "Choose one option from a visible set.",
   "range-calendar": "Select a start and end date in a calendar.",
   "search-field": "Search with a labeled input and clear control.",
@@ -66,12 +74,16 @@ const descriptions = {
   slider: "Adjust a value by dragging or with the keyboard.",
   spinner: "Indicate that a task is running without a known end time.",
   stat: "Display a labeled value and its context.",
+  stepper: "Show the current stage of a multi-step process.",
   switch: "Turn a setting on or off.",
   table: "Present rows and columns with sortable headers.",
   tabs: "Switch between related content panels.",
   "tag-group": "Navigate and remove tags with the keyboard.",
   "text-area": "Enter a longer answer with a labeled field.",
   "text-field": "Enter and validate a single line of text.",
+  "text-swap":
+    "Transition short changing labels without duplicating accessible text.",
+  timeline: "Show dated events in a semantic sequence.",
   "time-field": "Enter a time one editable segment at a time.",
   toast: "Show feedback after an action without interrupting the page.",
   "toggle-button-group": "Choose one or more persistent actions in a group.",
@@ -80,6 +92,7 @@ const descriptions = {
   toolbar: "Group related actions with arrow-key navigation.",
   tooltip: "Show short supplementary help on hover or focus.",
   tree: "Browse and select items in a nested collection.",
+  "typing-indicator": "Show that someone is composing a message.",
 };
 const demos = new Map(
   await Promise.all(

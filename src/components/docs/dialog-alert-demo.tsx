@@ -19,10 +19,7 @@ export function DialogAlertDemo() {
     <div className="flex w-full max-w-sm flex-col items-start gap-4">
       <Dialog>
         <DialogTrigger>Archive project</DialogTrigger>
-        <DialogContent
-          role="alertdialog"
-          overlayProps={{ isDismissable: false }}
-        >
+        <DialogContent role="alertdialog">
           <DialogHeader>
             <DialogTitle>Archive Studio North?</DialogTitle>
           </DialogHeader>

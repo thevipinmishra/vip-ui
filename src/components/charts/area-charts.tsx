@@ -6,7 +6,12 @@ import { Chart } from "@tanstack/charts/react/core";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
-import { ChartPlot, galleryRenderer } from "./chart-plot";
+import {
+  ChartPlot,
+  galleryRenderer,
+  groupTooltip,
+  valueTooltip,
+} from "./chart-plot";
 
 const visits = [
   { month: "Jan", value: 32 },
@@ -37,7 +42,16 @@ const visitsChart = defineChart({
     x: { scale: scalePoint },
     y: { scale: scaleLinear, domain: [0, 90], grid: true },
   },
-  tooltip,
+  tooltip: {
+    use: tooltip,
+    content: ([point]) =>
+      valueTooltip(
+        point.datum.month,
+        "Visits",
+        `${point.datum.value}k visits`,
+        point.color,
+      ),
+  },
 });
 
 const sources = [
@@ -72,7 +86,17 @@ const sourcesChart = defineChart({
     range: ["var(--ts-chart-1)", "var(--ts-chart-2)"],
   },
   focus: "group-x",
-  tooltip,
+  tooltip: {
+    use: tooltip,
+    sort: "color-domain",
+    content: (points, { primaryPoint }) =>
+      groupTooltip<(typeof sourceRows)[number]>(
+        points[0].datum.month,
+        points,
+        (row) => `${row.value}k visits`,
+        primaryPoint,
+      ),
+  },
 });
 
 const forecast = [
@@ -105,7 +129,27 @@ const forecastChart = defineChart({
     x: { scale: scalePoint },
     y: { scale: scaleLinear, domain: [0, 75], grid: true },
   },
-  tooltip,
+  tooltip: {
+    use: tooltip,
+    content: ([point], { pinned }) => ({
+      title: point.datum.month,
+      rows: [
+        {
+          label: "Forecast",
+          value: `${point.datum.value}k`,
+          color: point.color,
+        },
+        ...(pinned
+          ? [
+              {
+                label: "Estimate range",
+                value: `${point.datum.low}–${point.datum.high}k`,
+              },
+            ]
+          : []),
+      ],
+    }),
+  },
 });
 
 export function AreaVisits() {

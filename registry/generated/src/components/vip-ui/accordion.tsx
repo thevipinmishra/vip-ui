@@ -1,7 +1,13 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import { type ComponentProps, type ReactNode, useContext, useId } from "react";
+import {
+  type ComponentProps,
+  createContext,
+  type ReactNode,
+  useContext,
+  useId,
+} from "react";
 import {
   Button,
   type ButtonProps,
@@ -17,18 +23,31 @@ import { ChevronDown } from "reicon-react";
 import { cn } from "./utils";
 import { CollapsibleIdsContext, CollapsiblePanel } from "./collapsible-panel";
 
+export type AccordionVariant = "card" | "divided";
+
+const AccordionVariantContext = createContext<AccordionVariant>("card");
+
 export function Accordion({
+  variant = "card",
   className,
   ...props
-}: DisclosureGroupProps & React.RefAttributes<HTMLDivElement>) {
+}: DisclosureGroupProps &
+  React.RefAttributes<HTMLDivElement> & { variant?: AccordionVariant }) {
   return (
-    <DisclosureGroup
-      {...props}
-      data-slot="accordion"
-      className={composeRenderProps(className, (className) =>
-        cn("grid gap-2", className),
-      )}
-    />
+    <AccordionVariantContext.Provider value={variant}>
+      <DisclosureGroup
+        {...props}
+        data-slot="accordion"
+        data-variant={variant}
+        className={composeRenderProps(className, (className) =>
+          cn(
+            "grid",
+            variant === "divided" ? "divide-y divide-border/70" : "gap-2",
+            className,
+          ),
+        )}
+      />
+    </AccordionVariantContext.Provider>
   );
 }
 
@@ -45,6 +64,7 @@ export function AccordionItem({
   ...props
 }: AccordionItemProps) {
   const id = useId();
+  const variant = useContext(AccordionVariantContext);
   return (
     <CollapsibleIdsContext.Provider
       value={{ triggerId: `${id}-trigger`, panelId: `${id}-panel` }}
@@ -54,7 +74,8 @@ export function AccordionItem({
         data-slot="accordion-item"
         className={composeRenderProps(className, (className) =>
           cn(
-            "overflow-hidden rounded-lg bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70",
+            variant === "card" &&
+              "overflow-hidden rounded-lg bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70",
             className,
           ),
         )}
@@ -79,6 +100,7 @@ export function AccordionTrigger({
 }: Omit<ButtonProps, "children"> & { children: ReactNode }) {
   const isExpanded = useContext(DisclosureStateContext)?.isExpanded;
   const ids = useContext(CollapsibleIdsContext);
+  const variant = useContext(AccordionVariantContext);
   const reduceMotion = useReducedMotion();
   return (
     <Heading className="m-0 text-sm font-medium">
@@ -90,7 +112,8 @@ export function AccordionTrigger({
         aria-controls={ids?.panelId}
         className={composeRenderProps(className, (className) =>
           cn(
-            "flex min-h-12 w-full cursor-pointer items-center justify-between gap-4 px-4 py-3 text-start text-foreground outline-none data-[disabled]:cursor-default data-[disabled]:opacity-50 hover:bg-muted/60 data-[focus-visible]:outline-2 data-[focus-visible]:-outline-offset-2 data-[focus-visible]:outline-ring",
+            "flex min-h-12 w-full cursor-pointer items-center justify-between gap-4 py-3 text-start text-foreground outline-none data-[disabled]:cursor-default data-[disabled]:opacity-50 hover:bg-muted/60 data-[focus-visible]:outline-2 data-[focus-visible]:-outline-offset-2 data-[focus-visible]:outline-ring",
+            variant === "card" ? "px-4" : "px-0",
             className,
           ),
         )}
@@ -119,13 +142,20 @@ export function AccordionContent({
   children,
   ...props
 }: ComponentProps<typeof CollapsiblePanel>) {
+  const variant = useContext(AccordionVariantContext);
   return (
     <CollapsiblePanel
       {...props}
       data-slot="accordion-content"
       className={cn("text-[13px] leading-6 text-muted-foreground", className)}
     >
-      <div className="border-t border-border/70 px-4 py-3">{children}</div>
+      <div
+        className={
+          variant === "card" ? "border-t border-border/70 px-4 py-3" : "pb-4"
+        }
+      >
+        {children}
+      </div>
     </CollapsiblePanel>
   );
 }

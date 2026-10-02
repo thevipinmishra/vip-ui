@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-timeline",
+  "type": "registry:ui",
+  "title": "Timeline",
+  "description": "Show dated events in a semantic sequence.",
+  "dependencies": ["tailwind-variants"],
+  "files": [
+    {
+      "path": "src/lib/utils.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/utils.ts",
+      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
+    },
+    {
+      "path": "src/components/ui/timeline.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/timeline.tsx",
+      "content": "import type { ComponentProps } from \"react\";\nimport { cn } from \"./utils\";\n\nexport function Timeline({ className, ...props }: ComponentProps<\"ol\">) {\n  return (\n    <ol {...props} data-slot=\"timeline\" className={cn(\"w-full\", className)} />\n  );\n}\n\nexport function TimelineItem({\n  children,\n  className,\n  ...props\n}: ComponentProps<\"li\">) {\n  return (\n    <li\n      {...props}\n      data-slot=\"timeline-item\"\n      className={cn(\n        \"relative min-w-0 pb-7 pl-9 before:absolute before:top-5 before:-bottom-1.5 before:left-[0.4375rem] before:w-px before:bg-border last:pb-0 last:before:hidden\",\n        className,\n      )}\n    >\n      <span\n        aria-hidden=\"true\"\n        className=\"absolute top-1 left-0 grid size-4 place-items-center rounded-full bg-card ring-1 ring-border\"\n      >\n        <span className=\"size-1.5 rounded-full bg-primary\" />\n      </span>\n      {children}\n    </li>\n  );\n}\n\nexport function TimelineTitle({ className, ...props }: ComponentProps<\"h3\">) {\n  return (\n    <h3\n      {...props}\n      data-slot=\"timeline-title\"\n      className={cn(\n        \"text-sm font-semibold leading-6 text-foreground\",\n        className,\n      )}\n    />\n  );\n}\n\nexport function TimelineTime({ className, ...props }: ComponentProps<\"time\">) {\n  return (\n    <time\n      {...props}\n      data-slot=\"timeline-time\"\n      className={cn(\"block text-xs leading-5 text-muted-foreground\", className)}\n    />\n  );\n}\n\nexport function TimelineDescription({\n  className,\n  ...props\n}: ComponentProps<\"p\">) {\n  return (\n    <p\n      {...props}\n      data-slot=\"timeline-description\"\n      className={cn(\"mt-1 text-sm leading-6 text-muted-foreground\", className)}\n    />\n  );\n}\n"
+    }
+  ]
+}

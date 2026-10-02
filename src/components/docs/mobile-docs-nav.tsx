@@ -29,12 +29,8 @@ export function MobileDocsNav() {
   return (
     <div className="lg:hidden">
       <Drawer isOpen={open} onOpenChange={setOpen}>
-        <DrawerTrigger
-          variant="ghost"
-          size="icon"
-          aria-label="Open documentation menu"
-        >
-          <Menu size={20} aria-hidden="true" />
+        <DrawerTrigger variant="outline" size="sm">
+          <Menu size={17} aria-hidden="true" /> Browse docs
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHandle />

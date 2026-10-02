@@ -22,7 +22,12 @@ export function DrawerDemo() {
   return (
     <Drawer>
       <DrawerTrigger>Review order</DrawerTrigger>
-      <DrawerContent snapPoints={snapPoints} onSnapPointChange={setSnap}>
+      {/* Wrap page content in an element with id="drawer-page" outside the overlay portal. */}
+      <DrawerContent
+        snapPoints={snapPoints}
+        onSnapPointChange={setSnap}
+        scaleTarget="#drawer-page"
+      >
         <DrawerHandle />
         <DrawerHeader className="flex items-start justify-between gap-4">
           <div>
