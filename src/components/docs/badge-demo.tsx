@@ -13,6 +13,10 @@ export function BadgeDemo() {
       <Badge variant="warning">
         <BadgeDot /> Needs review
       </Badge>
+      <Badge variant="error">
+        <BadgeDot /> Sync failed
+      </Badge>
+      <Badge variant="outline">Internal</Badge>
     </div>
   );
 }

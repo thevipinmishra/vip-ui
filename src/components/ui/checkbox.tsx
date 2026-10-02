@@ -60,7 +60,8 @@ export function Checkbox({
       data-slot="checkbox"
       className={composeRenderProps(className, (className) =>
         cn(
-          "group inline-flex min-h-11 cursor-pointer items-start gap-3 rounded-md text-sm text-foreground disabled:cursor-default disabled:opacity-50",
+          "group inline-flex min-h-11 cursor-pointer items-start gap-3 rounded-md text-sm text-foreground disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+          typeof children === "string" && !description && "items-center",
           className,
         ),
       )}

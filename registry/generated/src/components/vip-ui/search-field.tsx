@@ -85,7 +85,7 @@ export function SearchFieldInput({
       data-slot="search-field-input"
       className={composeRenderProps(className, (className) =>
         cn(
-          "min-h-12 w-full cursor-text rounded-lg border border-input bg-card ps-10 pe-12 text-base text-foreground shadow-[var(--shadow-card)] outline-none data-[placeholder]:text-muted-foreground/80 hover:border-primary/45 motion-safe:transition-[border-color,box-shadow] motion-safe:duration-150 data-[focus-visible]:border-primary data-[focus-visible]:ring-3 data-[focus-visible]:ring-accent data-[invalid]:border-destructive data-[disabled]:cursor-not-allowed data-[disabled]:bg-muted data-[disabled]:opacity-60 sm:text-sm [&::-webkit-search-cancel-button]:hidden",
+          "min-h-12 w-full cursor-text rounded-lg border border-input bg-card ps-10 pe-12 text-base text-foreground shadow-[var(--shadow-card)] outline-none data-[placeholder]:text-muted-foreground/80 hover:border-primary/45 motion-safe:transition-[border-color,box-shadow] motion-safe:duration-150 data-[focus-visible]:border-ring data-[focus-visible]:ring-3 data-[focus-visible]:ring-ring/50 data-[invalid]:border-destructive data-[invalid]:ring-3 data-[invalid]:ring-destructive/20 data-[disabled]:cursor-not-allowed data-[disabled]:bg-muted data-[disabled]:opacity-60 sm:text-sm [&::-webkit-search-cancel-button]:hidden",
           className,
         ),
       )}
@@ -105,7 +105,7 @@ export function SearchFieldClear({
       aria-label={props["aria-label"] ?? "Clear search"}
       className={composeRenderProps(className, (className) =>
         cn(
-          "absolute end-1 grid size-11 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none data-[disabled]:cursor-default data-[disabled]:opacity-50 hover:bg-muted hover:text-foreground data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring group-data-[empty]:hidden",
+          "absolute inset-y-0 end-1 my-auto grid size-11 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none data-[disabled]:cursor-default data-[disabled]:opacity-50 hover:bg-muted hover:text-foreground data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring group-data-[empty]:hidden",
           className,
         ),
       )}

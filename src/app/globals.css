@@ -305,6 +305,8 @@
 @layer base {
   * {
     border-color: var(--border);
+    scrollbar-color: var(--input) transparent;
+    scrollbar-width: thin;
   }
   body {
     background: var(--background);
@@ -318,10 +320,39 @@
     background: var(--accent);
     color: var(--accent-foreground);
   }
-  :focus-visible,
-  [data-focus-visible] {
+  /* React Aria can set data-focus-visible on containers with focus within.
+     Style that state on the actual control, not across the whole page. */
+  :focus-visible {
     outline: 2px solid var(--ring);
     outline-offset: 3px;
+  }
+}
+
+/* Older WebKit browsers need the scrollbar pseudo-elements instead. */
+@supports not (scrollbar-color: auto) {
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background: var(--input);
+    background-clip: padding-box;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: var(--muted-foreground);
+    background-clip: padding-box;
+  }
+}
+
+@media (forced-colors: active) {
+  * {
+    scrollbar-color: auto;
+    scrollbar-width: auto;
   }
 }
 

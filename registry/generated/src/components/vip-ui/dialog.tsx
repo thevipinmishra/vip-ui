@@ -97,52 +97,62 @@ export function DialogContent({
   return (
     <ModalOverlay
       {...overlayProps}
+      isDismissable={
+        props.role === "alertdialog"
+          ? false
+          : (overlayProps?.isDismissable ?? true)
+      }
       isExiting={animation === "hidden"}
-      render={(domProps) => (
-        <motion.div
-          {...(domProps as HTMLMotionProps<"div">)}
-          variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
-          initial="hidden"
-          animate={animation === "unmounted" ? "hidden" : animation}
-          transition={{
-            duration: reduceMotion ? 0 : 0.22,
-            ease: [0.23, 1, 0.32, 1],
-          }}
-          onAnimationComplete={complete}
-        />
-      )}
       data-slot="dialog-overlay"
       className={composeRenderProps(overlayProps?.className, (className) =>
         cn(
-          "fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-black/45 p-4",
+          "fixed inset-0 z-50 grid place-items-center overflow-y-auto p-4",
           className,
         ),
       )}
     >
+      <motion.div
+        aria-hidden="true"
+        data-slot="dialog-backdrop"
+        className="pointer-events-none fixed inset-0 bg-black/50"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: animation === "hidden" ? 0 : 1 }}
+        transition={{
+          duration: reduceMotion ? 0.12 : animation === "hidden" ? 0.16 : 0.24,
+          ease: [0.23, 1, 0.32, 1],
+        }}
+      />
       <Modal
         {...modalProps}
         render={(domProps) => (
           <motion.div
             {...(domProps as HTMLMotionProps<"div">)}
             initial={
-              reduceMotion ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.98 }
+              reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.96 }
             }
             animate={
               animation === "hidden"
                 ? reduceMotion
                   ? { opacity: 0 }
-                  : { opacity: 0, y: 5, scale: 0.99 }
+                  : { opacity: 0, y: 6, scale: 0.985 }
                 : { opacity: 1, y: 0, scale: 1 }
             }
             transition={{
-              duration: reduceMotion ? 0 : animation === "hidden" ? 0.16 : 0.22,
+              duration: reduceMotion
+                ? 0.12
+                : animation === "hidden"
+                  ? 0.18
+                  : 0.26,
               ease: [0.23, 1, 0.32, 1],
+            }}
+            onAnimationComplete={() => {
+              if (animation === "hidden") complete("hidden");
             }}
           />
         )}
         data-slot={modalSlot}
         className={cn(
-          "w-full max-w-md rounded-xl bg-card p-6 text-card-foreground shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70 sm:p-7",
+          "relative w-full max-w-md max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-xl bg-card p-6 text-card-foreground shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70 sm:p-7",
           modalProps?.className,
         )}
       >

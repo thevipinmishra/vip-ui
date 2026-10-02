@@ -1,5 +1,6 @@
 "use client";
 
+import type { ChartPoint, ChartTooltipContent } from "@tanstack/charts";
 import { motion } from "@tanstack/charts/motion";
 import type { ReactNode } from "react";
 import { ChartCaption, ChartFrame, ChartTitle } from "@/components/ui/chart";
@@ -10,6 +11,32 @@ export const galleryRenderer = motion({
   initial: false,
   transition: { type: "spring", stiffness: 420, damping: 38 },
 });
+
+export function valueTooltip(
+  title: string,
+  label: string,
+  value: string,
+  color?: string,
+): ChartTooltipContent {
+  return { title, rows: [{ label, value, color }] };
+}
+
+export function groupTooltip<TDatum>(
+  title: string,
+  points: readonly ChartPoint<TDatum>[],
+  value: (datum: TDatum) => string,
+  primary?: ChartPoint,
+): ChartTooltipContent {
+  return {
+    title,
+    rows: points.map((point) => ({
+      label: point.groupLabel,
+      value: value(point.datum),
+      color: point.color,
+      active: point === primary,
+    })),
+  };
+}
 
 export function ChartPlot({
   title,

@@ -39,7 +39,19 @@ const responseChart = defineChart({
       axis: { label: "Minutes" },
     },
   },
-  tooltip,
+  tooltip: {
+    use: tooltip,
+    content: ([point]) => ({
+      title: point.datum.week,
+      rows: [
+        {
+          label: "Median response",
+          value: `${point.datum.minutes} min`,
+          color: point.color,
+        },
+      ],
+    }),
+  },
 });
 
 export function ChartLineDemo() {

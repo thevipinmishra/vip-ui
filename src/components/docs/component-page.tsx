@@ -29,6 +29,205 @@ function htmlPart(component: string, element: string): ApiProp {
 }
 
 const customComponentApi: Record<string, ApiProp[]> = {
+  "button-group": [
+    {
+      component: "ButtonGroup",
+      prop: "orientation",
+      type: '"horizontal" | "vertical"',
+      defaultValue: '"horizontal"',
+      description: "Lay out independent actions in a row or column.",
+    },
+    {
+      component: "ButtonGroup",
+      prop: "aria-label / aria-labelledby",
+      type: "string",
+      defaultValue: "—",
+      description:
+        "Name the group when the purpose is not clear from nearby text.",
+    },
+  ],
+  timeline: [
+    htmlPart("Timeline", "HTMLOListElement"),
+    htmlPart("TimelineItem", "HTMLLIElement"),
+    htmlPart("TimelineTitle", "HTMLHeadingElement"),
+    {
+      component: "TimelineTime",
+      prop: "dateTime",
+      type: "string",
+      defaultValue: "—",
+      description: "Machine-readable date or time for a displayed timestamp.",
+    },
+    htmlPart("TimelineDescription", "HTMLParagraphElement"),
+  ],
+  "text-swap": [
+    {
+      component: "TextSwap",
+      prop: "value",
+      type: "string",
+      defaultValue: "required",
+      description:
+        "The latest visible and accessible text; changes animate without an initial entrance.",
+    },
+    {
+      component: "TextSwap",
+      prop: "aria-live",
+      type: '"polite" | "assertive" | "off"',
+      defaultValue: "off",
+      description:
+        "Opt in to announcements when the updated label must be spoken.",
+    },
+  ],
+  stepper: [
+    {
+      component: "Stepper",
+      prop: "steps",
+      type: "readonly { label: string; description?: string }[]",
+      defaultValue: "required",
+      description:
+        "Steps in display order. Keep labels short; descriptions are optional.",
+    },
+    {
+      component: "Stepper",
+      prop: "currentStep",
+      type: "number (zero-based)",
+      defaultValue: "required",
+      description: "Index of the current step; earlier steps show as complete.",
+    },
+    {
+      component: "Stepper",
+      prop: "ol attributes",
+      type: 'ComponentProps<"ol">',
+      defaultValue: "—",
+      description:
+        "Name multiple sequences. Lists with over three steps can receive focus for keyboard scrolling when they overflow.",
+    },
+  ],
+  fieldset: [
+    {
+      component: "Fieldset",
+      prop: "fieldset attributes",
+      type: "FieldsetHTMLAttributes<HTMLFieldSetElement>",
+      defaultValue: "—",
+      description: "Native fieldset, including disabled and aria-describedby.",
+    },
+    htmlPart("FieldsetLegend", "HTMLLegendElement"),
+    htmlPart("FieldsetDescription", "HTMLParagraphElement"),
+  ],
+  "animated-number": [
+    {
+      component: "AnimatedNumber",
+      prop: "value",
+      type: "number",
+      defaultValue: "required",
+      description:
+        "Target value. The displayed number animates; accessible text uses the target immediately.",
+    },
+    {
+      component: "AnimatedNumber",
+      prop: "variant",
+      type: '"count" | "slide"',
+      defaultValue: '"count"',
+      description:
+        "Count toward the new value or slide only changed digits up on an increase and down on a decrease.",
+    },
+    {
+      component: "AnimatedNumber",
+      prop: "locale / formatOptions",
+      type: "string / Intl.NumberFormatOptions",
+      defaultValue: '"en-US" / whole numbers',
+      description:
+        "Format both displayed and accessible values with Intl.NumberFormat.",
+    },
+  ],
+  "progress-ring": [
+    {
+      component: "ProgressRing",
+      prop: "label",
+      type: "string",
+      defaultValue: "required",
+      description: "Visible name for the React Aria progressbar.",
+    },
+    {
+      component: "ProgressRing",
+      prop: "value / isIndeterminate",
+      type: "number / boolean",
+      defaultValue: "0 / false",
+      description:
+        "Set a known value or show unknown progress. Supports minValue and maxValue.",
+    },
+    {
+      component: "ProgressRing",
+      prop: "size / showValue",
+      type: '"sm" | "md" | "lg" / boolean',
+      defaultValue: '"md" / true',
+      description: "Set the ring size and optionally hide the center value.",
+    },
+  ],
+  "presence-list": [
+    {
+      component: "PresenceList",
+      prop: "items / getKey",
+      type: "readonly T[] / (item: T) => string | number",
+      defaultValue: "required",
+      description:
+        "Pass items with stable unique keys so exit animations track the right rows.",
+    },
+    {
+      component: "PresenceList",
+      prop: "children",
+      type: "(item: T) => ReactNode",
+      defaultValue: "required",
+      description: "Render each item's contents inside a semantic list item.",
+    },
+  ],
+  "typing-indicator": [
+    {
+      component: "TypingIndicator",
+      prop: "label",
+      type: "string",
+      defaultValue: '"Typing"',
+      description: "Visible status text announced when the indicator appears.",
+    },
+    {
+      ...htmlPart("TypingIndicator", "HTMLOutputElement"),
+      description:
+        "Accepts output attributes and className; its dots are decorative.",
+    },
+  ],
+  "input-group": [
+    {
+      component: "InputGroup",
+      prop: "isDisabled / isInvalid",
+      type: "boolean",
+      defaultValue: "from parent field",
+      description:
+        "React Aria Group picks up disabled and invalid states from TextField or TextArea. Its border also responds to focus within.",
+    },
+    {
+      component: "InputGroupInput",
+      prop: "Input props",
+      type: "ComponentProps<typeof Input>",
+      defaultValue: "—",
+      description:
+        "A single-line React Aria input. Use inside InputGroup within a labeled TextField.",
+    },
+    {
+      component: "InputGroupTextArea",
+      prop: "TextArea props",
+      type: "ComponentProps<typeof TextArea>",
+      defaultValue: "—",
+      description:
+        "A multiline React Aria input. Use inside InputGroup within a labeled TextArea.",
+    },
+    {
+      component: "InputGroupAddon",
+      prop: "align",
+      type: '"inline" | "block-end"',
+      defaultValue: '"inline"',
+      description:
+        "Place text, an icon, or a button beside the input, or in a full-width row below a textarea.",
+    },
+  ],
   "command-palette": [
     {
       component: "CommandPalette",
@@ -223,6 +422,16 @@ const customComponentApi: Record<string, ApiProp[]> = {
     htmlPart("StatValue", "HTMLParagraphElement"),
     htmlPart("StatDetail", "HTMLParagraphElement"),
   ],
+  accordion: [
+    {
+      component: "Accordion",
+      prop: "variant",
+      type: '"card" | "divided"',
+      defaultValue: '"card"',
+      description:
+        "Show separate cards or a flat list with dividers between rows.",
+    },
+  ],
   alert: [
     {
       component: "Alert",
@@ -235,7 +444,7 @@ const customComponentApi: Record<string, ApiProp[]> = {
     {
       component: "Alert",
       prop: "variant",
-      type: '"info" | "success" | "warning"',
+      type: '"info" | "success" | "warning" | "error" | "neutral"',
       defaultValue: '"info"',
       description: "Selects the alert color and icon.",
     },
@@ -278,6 +487,24 @@ const customComponentApi: Record<string, ApiProp[]> = {
         "Description content and div attributes, including className.",
     },
   ],
+  dialog: [
+    {
+      component: "DialogContent",
+      prop: "role",
+      type: '"dialog" | "alertdialog"',
+      defaultValue: '"dialog"',
+      description:
+        "Alert dialogs require an explicit action and do not close on outside press.",
+    },
+    {
+      component: "DialogContent",
+      prop: "overlayProps",
+      type: "ModalOverlayProps",
+      defaultValue: "outside press enabled for ordinary dialogs",
+      description:
+        "Pass React Aria overlay options such as isDismissable and isKeyboardDismissDisabled. Alert dialogs always ignore outside press.",
+    },
+  ],
   drawer: [
     {
       component: "Drawer",
@@ -290,7 +517,7 @@ const customComponentApi: Record<string, ApiProp[]> = {
     {
       component: "DrawerContent",
       prop: "placement",
-      type: '"bottom" | "left" | "right"',
+      type: '"bottom" | "top" | "left" | "right"',
       defaultValue: '"bottom"',
       description:
         "Choose the edge. Side drawers swipe to dismiss; only bottom drawers use snap points.",
@@ -314,10 +541,10 @@ const customComponentApi: Record<string, ApiProp[]> = {
     {
       component: "DrawerContent",
       prop: "scaleTarget",
-      type: "RefObject<HTMLElement | null>",
+      type: "RefObject<HTMLElement | null> | string",
       defaultValue: "undefined",
       description:
-        "Optional page wrapper that scales to 0.96 while open; omit to leave the page unchanged. Never pass document.body.",
+        "Wrap the entire page outside the overlay portal and pass its ref or CSS selector. It scales with opening, dragging, and closing (up to 0.96 at full height). Never target body or the portal.",
     },
     {
       component: "DrawerContent",
@@ -348,7 +575,7 @@ const customComponentApi: Record<string, ApiProp[]> = {
     {
       component: "Badge",
       prop: "variant",
-      type: '"neutral" | "accent" | "success" | "warning"',
+      type: '"neutral" | "accent" | "success" | "warning" | "error" | "outline"',
       defaultValue: '"neutral"',
       description: "Sets the badge color role.",
     },
@@ -378,6 +605,30 @@ const customComponentApi: Record<string, ApiProp[]> = {
 };
 
 const customGuidance: Record<string, string> = {
+  "button-group":
+    "Group independent actions with Button or ButtonLink. Each action stays in the normal tab order. Use Toggle button group for a persistent selection and Toolbar for arrow-key navigation; give an unlabeled group an accessible name.",
+  dialog:
+    'Ordinary dialogs close on outside press or Escape. Use role="alertdialog" for confirmations that must ignore outside press; provide a visible Cancel or confirm action. Escape remains available. Set overlayProps.isDismissable=false to disable outside press on an ordinary dialog.',
+  timeline:
+    "Put events in chronological or reverse-chronological order. Use a real time element with dateTime for timestamps and keep descriptions optional. Timeline is a plain ordered list, not a keyboard-managed control.",
+  "text-swap":
+    "Use TextSwap for short labels that change after an action. Its accessible text switches immediately; the outgoing visual text is hidden from screen readers. Set aria-live=polite only when the update needs announcing, not for constantly changing values.",
+  stepper:
+    "Pass a zero-based currentStep within the steps array. The ordered list marks the active item with aria-current=step and earlier items as complete. It shows progress but does not navigate: place real Button controls beside it if people can move through the workflow.",
+  fieldset:
+    "Use Fieldset for related native form controls and put FieldsetLegend first. Connect FieldsetDescription with aria-describedby. For a single React Aria selection group, use Radio group or Checkbox group instead; they already own their labels and keyboard behavior.",
+  "animated-number":
+    'Use AnimatedNumber for values that change after an action, not for a constantly updating timer. The default counts toward the new value; variant="slide" moves changed digits up for increases and down for decreases. Reduced motion shows the final value without movement. Its accessible text changes once per value change; add a live region only if the change needs to be announced.',
+  accordion:
+    'Use variant="divided" to place a single divider between rows without a card around each item. The trigger keeps its expanded cue, keyboard focus, and panel relationship in both variants.',
+  "progress-ring":
+    "Pass a visible label and use value for known progress. Use isIndeterminate when the amount remaining is unknown; the reduced-motion version keeps a static partial arc. For a long valueLabel, set showValue to false and display the detail nearby. Use Meter for a measurement rather than task progress.",
+  "presence-list":
+    "Use stable keys from your data, not array indexes. The component renders a plain ul; use Grid list or List box for keyboard-managed collections. Exiting rows become inert. If a removed row contains the focused control, move focus to a remaining control before removing it.",
+  "typing-indicator":
+    "Mount the indicator only while someone is composing. Pass a specific label such as 'Maya is typing'. It reuses Spinner's dots and remains readable without motion; do not use it for a task with measurable progress.",
+  "input-group":
+    "Use InputGroup inside TextField or TextArea, with a visible field label. React Aria keeps the label, description, error, and value attached to the input. The group supplies the shared border; it does not submit the form or disable independent buttons. Give icon-only actions an accessible name and mark decorative icons aria-hidden.",
   button:
     "Button and ButtonLink share the typed buttonStyles recipe in button-styles.tsx. Add a reusable variant or size there; use className for one-off layout changes, not a second button color or radius.",
   "checkbox-group":

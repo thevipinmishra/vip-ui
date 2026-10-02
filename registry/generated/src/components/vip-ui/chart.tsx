@@ -14,8 +14,8 @@ const chartStyle = {
   "--ts-chart-tooltip-color": "var(--popover-foreground)",
   "--ts-chart-tooltip-border": "1px solid var(--border)",
   "--ts-chart-tooltip-border-radius": "calc(var(--radius) - 0.375rem)",
-  "--ts-chart-tooltip-max-width": "min(20rem, 90%)",
-  "--ts-chart-tooltip-padding": "0.75rem 1rem",
+  "--ts-chart-tooltip-max-width": "min(18rem, 90%)",
+  "--ts-chart-tooltip-padding": "0.5rem 0.75rem",
   "--ts-chart-tooltip-font":
     "400 0.8125rem/1.5 var(--font-sans, system-ui, sans-serif)",
   "--ts-chart-tooltip-active-row-font-weight": "600",
@@ -35,7 +35,7 @@ export function ChartFrame({
     <figure
       data-slot="chart-frame"
       className={cn(
-        "min-w-0 rounded-xl bg-card p-4 text-card-foreground sm:p-6 [&_[class^=ts-chart-tooltip][class$=rows]]:grid [&_[class^=ts-chart-tooltip][class$=rows]]:gap-0.5 [&_[class^=ts-chart-tooltip][class$=row]]:-mx-2 [&_[class^=ts-chart-tooltip][class$=row]]:px-2 [&_[class^=ts-chart-tooltip][class$=row]]:py-1 [&_[class^=ts-chart-tooltip][class$=title]]:text-muted-foreground",
+        "min-w-0 rounded-xl bg-card p-4 text-card-foreground sm:p-6 [&_.ts-chart:is(:focus):not(:focus-visible)]:outline-none [&_.ts-chart:focus-visible]:outline-2 [&_.ts-chart:focus-visible]:outline-ring [&_.ts-chart:focus-visible]:outline-offset-2 [&_.ts-chart-tooltip__title]:text-xs [&_.ts-chart-tooltip__title]:text-muted-foreground [&_.ts-chart-tooltip__rows]:grid [&_.ts-chart-tooltip__rows]:gap-0.5 [&_.ts-chart-tooltip__row]:-mx-1.5 [&_.ts-chart-tooltip__row]:px-1.5 [&_.ts-chart-tooltip__row]:py-0.5 [&_.ts-chart-tooltip__row>span:nth-child(2)]:text-muted-foreground [&_.ts-chart-tooltip__row>span:last-child]:font-semibold",
         className,
       )}
       style={{ ...chartStyle, ...style }}

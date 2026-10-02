@@ -19,7 +19,7 @@ export default function DrawerPage() {
       name="Drawer"
       description="A modal sheet for details or a longer task. Open from any edge, drag the handle to dismiss, or use bottom snap points. Focus returns to the trigger on close."
       preview={<DrawerDemo />}
-      previewHint="Drag the handle, or focus it and press Up, Down, Home, or End. Escape, the backdrop, and Close dismiss the drawer."
+      previewHint="Watch the page shrink as the drawer opens. Drag the handle to resize it, or focus the handle and press Up, Down, Home, or End. Escape, the backdrop, and Close dismiss it."
       previewSourcePath="src/components/docs/drawer-demo.tsx"
       examples={[
         {

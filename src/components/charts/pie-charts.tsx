@@ -4,7 +4,7 @@ import { defineChart } from "@tanstack/charts";
 import { pie, polar, radialArc } from "@tanstack/charts/polar";
 import { Chart } from "@tanstack/charts/react/core";
 import { tooltip } from "@tanstack/charts/tooltip";
-import { ChartPlot, galleryRenderer } from "./chart-plot";
+import { ChartPlot, galleryRenderer, valueTooltip } from "./chart-plot";
 
 const devices = [
   { device: "Desktop", share: 48 },
@@ -31,7 +31,16 @@ const devicesChart = defineChart({
     domain: devices.map((r) => r.device),
     range: ["var(--ts-chart-1)", "var(--ts-chart-2)", "var(--ts-chart-3)"],
   },
-  tooltip,
+  tooltip: {
+    use: tooltip,
+    content: ([point]) =>
+      valueTooltip(
+        point.datum.device,
+        "Visit share",
+        `${point.datum.share}%`,
+        point.color,
+      ),
+  },
 });
 
 const plans = [
@@ -59,7 +68,16 @@ const plansChart = defineChart({
     domain: plans.map((r) => r.plan),
     range: ["var(--ts-chart-2)", "var(--ts-chart-1)", "var(--ts-chart-4)"],
   },
-  tooltip,
+  tooltip: {
+    use: tooltip,
+    content: ([point]) =>
+      valueTooltip(
+        point.datum.plan,
+        "Subscriptions",
+        `${point.datum.share}%`,
+        point.color,
+      ),
+  },
 });
 
 const budget = [
@@ -93,7 +111,16 @@ const budgetChart = defineChart({
       "var(--ts-chart-4)",
     ],
   },
-  tooltip,
+  tooltip: {
+    use: tooltip,
+    content: ([point]) =>
+      valueTooltip(
+        point.datum.item,
+        "Budget share",
+        `${point.datum.share}%`,
+        point.color,
+      ),
+  },
 });
 
 export function PieDevices() {

@@ -1,6 +1,5 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 import {
   Button as AriaButton,
@@ -12,11 +11,11 @@ import {
   Label,
   ListBox,
   ListBoxItem,
-  Popover,
   Text,
 } from "react-aria-components";
 import { Check, ChevronDown } from "reicon-react";
 import { cn } from "@/lib/utils";
+import { Popover } from "./popover";
 
 export interface ComboBoxOption {
   id: string;
@@ -50,7 +49,6 @@ export function ComboBox({
   onValueChange,
   ...props
 }: ComboBoxProps) {
-  const reduceMotion = useReducedMotion();
   return (
     <AriaComboBox
       {...props}
@@ -80,54 +78,41 @@ export function ComboBox({
             data-slot="combo-box-content"
             placement="bottom start"
             offset={7}
-            className="w-[var(--trigger-width)] motion-safe:transition-opacity motion-safe:duration-150 motion-safe:ease-out motion-safe:data-[exiting]:opacity-0 rounded-lg bg-popover p-1.5 text-popover-foreground shadow-[var(--shadow-float)] ring-1 ring-border/70 outline-none"
+            className="w-[var(--trigger-width)] rounded-lg border-0 p-1.5 ring-1 ring-border/70"
           >
-            <motion.div
-              initial={
-                reduceMotion
-                  ? { opacity: 0 }
-                  : { opacity: 0, y: -6, scale: 0.98 }
-              }
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{
-                duration: reduceMotion ? 0 : 0.18,
-                ease: "easeOut",
-              }}
+            <ListBox
+              data-slot="combo-box-list-box"
+              items={options ?? []}
+              renderEmptyState={() => (
+                <div className="px-3 py-3 text-[13px] text-muted-foreground">
+                  No matching options.
+                </div>
+              )}
+              className="grid max-h-64 gap-1 overflow-y-auto outline-none"
             >
-              <ListBox
-                data-slot="combo-box-list-box"
-                items={options ?? []}
-                renderEmptyState={() => (
-                  <div className="px-3 py-3 text-[13px] text-muted-foreground">
-                    No matching options.
-                  </div>
-                )}
-                className="grid max-h-64 gap-1 overflow-y-auto outline-none"
-              >
-                {(option) => (
-                  <ListBoxItem
-                    data-slot="combo-box-item"
-                    id={option.id}
-                    textValue={option.name}
-                    className="group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted focus:bg-muted focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-ring selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50"
-                  >
-                    <span className="min-w-0">
-                      <span className="block font-medium">{option.name}</span>
-                      {option.description && (
-                        <span className="mt-0.5 block text-xs text-muted-foreground">
-                          {option.description}
-                        </span>
-                      )}
-                    </span>
-                    <Check
-                      size={15}
-                      aria-hidden="true"
-                      className="shrink-0 opacity-0 group-selected/item:opacity-100"
-                    />
-                  </ListBoxItem>
-                )}
-              </ListBox>
-            </motion.div>
+              {(option) => (
+                <ListBoxItem
+                  data-slot="combo-box-item"
+                  id={option.id}
+                  textValue={option.name}
+                  className="group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted focus:bg-muted focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-ring selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50"
+                >
+                  <span className="min-w-0">
+                    <span className="block font-medium">{option.name}</span>
+                    {option.description && (
+                      <span className="mt-0.5 block text-xs text-muted-foreground">
+                        {option.description}
+                      </span>
+                    )}
+                  </span>
+                  <Check
+                    size={15}
+                    aria-hidden="true"
+                    className="shrink-0 opacity-0 group-selected/item:opacity-100"
+                  />
+                </ListBoxItem>
+              )}
+            </ListBox>
           </Popover>
         </>
       )}
@@ -158,7 +143,7 @@ export function ComboBoxInput({
       data-slot="combo-box-input"
       className={composeRenderProps(className, (className) =>
         cn(
-          "min-h-12 w-full cursor-text rounded-lg border border-input bg-card ps-3.5 pe-12 text-base text-foreground shadow-[var(--shadow-card)] outline-none placeholder:text-muted-foreground/80 hover:border-primary/45 motion-safe:transition-[border-color,box-shadow] motion-safe:duration-150 focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-accent invalid:border-destructive disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 sm:text-sm",
+          "min-h-12 w-full cursor-text rounded-lg border border-input bg-card ps-3.5 pe-12 text-base text-foreground shadow-[var(--shadow-card)] outline-none placeholder:text-muted-foreground/80 hover:border-primary/45 motion-safe:transition-[border-color,box-shadow] motion-safe:duration-150 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 invalid:border-destructive invalid:ring-3 invalid:ring-destructive/20 disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 sm:text-sm",
           className,
         ),
       )}
@@ -178,7 +163,7 @@ export function ComboBoxTrigger({
       aria-label={props["aria-label"] ?? "Show options"}
       className={composeRenderProps(className, (className) =>
         cn(
-          "absolute end-1 grid size-11 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none disabled:cursor-default disabled:opacity-50 hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring",
+          "absolute inset-y-0 end-1 my-auto grid size-11 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none disabled:cursor-default disabled:opacity-50 hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring",
           className,
         ),
       )}
@@ -193,7 +178,6 @@ export function ComboBoxContent({
   children,
   ...props
 }: React.ComponentProps<typeof Popover>) {
-  const reduceMotion = useReducedMotion();
   return (
     <Popover
       {...props}
@@ -202,30 +186,22 @@ export function ComboBoxContent({
       offset={props.offset ?? 7}
       className={composeRenderProps(className, (className) =>
         cn(
-          "w-[var(--trigger-width)] motion-safe:transition-opacity motion-safe:duration-150 motion-safe:ease-out motion-safe:data-[exiting]:opacity-0 rounded-lg bg-popover p-1.5 text-popover-foreground shadow-[var(--shadow-float)] ring-1 ring-border/70 outline-none",
+          "w-[var(--trigger-width)] rounded-lg border-0 p-1.5 ring-1 ring-border/70",
           className,
         ),
       )}
     >
-      <motion.div
-        initial={
-          reduceMotion ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.98 }
-        }
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: reduceMotion ? 0 : 0.18, ease: "easeOut" }}
+      <ListBox
+        data-slot="combo-box-list-box"
+        className="grid max-h-64 gap-1 overflow-y-auto outline-none"
+        renderEmptyState={() => (
+          <div className="px-3 py-3 text-[13px] text-muted-foreground">
+            No matching options.
+          </div>
+        )}
       >
-        <ListBox
-          data-slot="combo-box-list-box"
-          className="grid max-h-64 gap-1 overflow-y-auto outline-none"
-          renderEmptyState={() => (
-            <div className="px-3 py-3 text-[13px] text-muted-foreground">
-              No matching options.
-            </div>
-          )}
-        >
-          {children}
-        </ListBox>
-      </motion.div>
+        {children}
+      </ListBox>
     </Popover>
   );
 }

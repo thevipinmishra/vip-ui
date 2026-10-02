@@ -5,7 +5,12 @@ import { Chart } from "@tanstack/charts/react/core";
 import { scaleBand } from "@tanstack/charts/scales/band";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { tooltip } from "@tanstack/charts/tooltip";
-import { ChartPlot, galleryRenderer } from "./chart-plot";
+import {
+  ChartPlot,
+  galleryRenderer,
+  groupTooltip,
+  valueTooltip,
+} from "./chart-plot";
 
 const orders = [
   { month: "Jan", value: 124 },
@@ -29,7 +34,16 @@ const ordersChart = defineChart({
     x: { scale: () => scaleBand().padding(0.1) },
     y: { scale: scaleLinear, domain: [0, 260], grid: true },
   },
-  tooltip,
+  tooltip: {
+    use: tooltip,
+    content: ([point]) =>
+      valueTooltip(
+        point.datum.month,
+        "Orders",
+        `${point.datum.value} orders`,
+        point.color,
+      ),
+  },
 });
 
 const regions = [
@@ -52,7 +66,16 @@ const regionsChart = defineChart({
     x: { scale: scaleLinear, domain: [0, 100], grid: true },
     y: { scale: () => scaleBand().padding(0.1) },
   },
-  tooltip,
+  tooltip: {
+    use: tooltip,
+    content: ([point]) =>
+      valueTooltip(
+        point.datum.region,
+        "Active projects",
+        `${point.datum.value} projects`,
+        point.color,
+      ),
+  },
 });
 
 const requests = [
@@ -87,7 +110,17 @@ const requestsChart = defineChart({
     range: ["var(--ts-chart-1)", "var(--ts-chart-4)"],
   },
   focus: "group-x",
-  tooltip,
+  tooltip: {
+    use: tooltip,
+    sort: "color-domain",
+    content: (points, { primaryPoint }) =>
+      groupTooltip<(typeof requestRows)[number]>(
+        points[0].datum.day,
+        points,
+        (row) => `${row.value} requests`,
+        primaryPoint,
+      ),
+  },
 });
 
 export function BarOrders() {

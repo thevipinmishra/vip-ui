@@ -24,6 +24,35 @@ export const anatomy: Record<string, string> = {
   <FileTrigger onSelect={handleFiles} label="Browse files" />
 </DropZone>`,
   "color-picker": `<ColorPicker label="Accent color" value={color} onChange={setColor} />`,
+  fieldset: `<Fieldset aria-describedby="updates-help">
+  <FieldsetLegend>Weekly digest</FieldsetLegend>
+  <FieldsetDescription id="updates-help">Choose your updates.</FieldsetDescription>
+  <Checkbox>Project activity</Checkbox>
+</Fieldset>`,
+  "animated-number": `<StatValue><AnimatedNumber value={count} /></StatValue>`,
+  "text-swap": `<Badge variant="success"><TextSwap value={status} aria-live="polite" /></Badge>`,
+  "button-group": `<ButtonGroup aria-label="Preview zoom">
+  <Button variant="ghost" size="icon" aria-label="Zoom out" onPress={zoomOut}>
+    <Minus aria-hidden="true" />
+  </Button>
+  <output aria-label="Zoom level">{zoom}%</output>
+  <Button variant="ghost" size="icon" aria-label="Zoom in" onPress={zoomIn}>
+    <Plus aria-hidden="true" />
+  </Button>
+</ButtonGroup>`,
+  timeline: `<Timeline aria-label="Project activity">
+  <TimelineItem>
+    <TimelineTitle>Design approved</TimelineTitle>
+    <TimelineTime dateTime="2025-10-18">October 18</TimelineTime>
+    <TimelineDescription>Layouts are ready for release.</TimelineDescription>
+  </TimelineItem>
+</Timeline>`,
+  stepper: `<Stepper steps={steps} currentStep={currentStep} aria-label="Setup progress" />`,
+  "progress-ring": `<ProgressRing label="Uploading" value={progress} />`,
+  "presence-list": `<PresenceList items={tasks} getKey={(task) => task.id} aria-label="Tasks">
+  {(task) => <span>{task.title}</span>}
+</PresenceList>`,
+  "typing-indicator": `<TypingIndicator label="Maya is typing" />`,
   card: `<Card>
   <CardHeader>
     <CardTitle>Studio North</CardTitle>
@@ -236,6 +265,15 @@ export const anatomy: Record<string, string> = {
   "text-field": `<TextField name="projectName">
   <TextFieldLabel>Project name</TextFieldLabel>
   <TextFieldInput />
+  <TextFieldError />
+</TextField>`,
+  "input-group": `<TextField name="projectName">
+  <TextFieldLabel>Project name</TextFieldLabel>
+  <InputGroup>
+    <InputGroupAddon aria-hidden="true">@</InputGroupAddon>
+    <InputGroupInput placeholder="studio-north" />
+    <InputGroupAddon>example.com</InputGroupAddon>
+  </InputGroup>
   <TextFieldError />
 </TextField>`,
   "time-field": `<TimeField label="Start time" />`,

@@ -4,7 +4,7 @@ import { connection } from "next/server";
 import { Suspense } from "react";
 import { ArrowRight, BranchUp, ChartBar } from "reicon-react";
 import { PackageManagerCommand } from "@/components/docs/package-manager-command";
-import { ThemeToggle } from "@/components/docs/theme-toggle";
+import { SiteHeader } from "@/components/docs/site-header";
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -58,37 +58,13 @@ export default function ExamplesPage() {
       >
         Skip to content
       </a>
-      <header className="border-b border-border/70 bg-card">
-        <nav
-          aria-label="Site navigation"
-          className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-5 sm:px-8"
-        >
-          <Link href="/" className="text-xl font-semibold tracking-[-0.055em]">
-            vip<span className="text-primary">/</span>ui
-          </Link>
-          <div className="flex items-center gap-3 text-sm sm:gap-5">
-            <Link
-              href="/components"
-              className="text-muted-foreground hover:text-foreground"
-            >
-              Components
-            </Link>
-            <Link
-              href="/components/installation"
-              className="hidden text-muted-foreground hover:text-foreground sm:inline"
-            >
-              Installation
-            </Link>
-            <ThemeToggle />
-          </div>
-        </nav>
-      </header>
+      <SiteHeader />
       <main
         id="main"
         className="mx-auto max-w-6xl px-5 pb-24 pt-14 sm:px-8 sm:pt-20"
       >
         <h1 className="max-w-3xl text-[clamp(2.8rem,5vw,4.5rem)] font-semibold leading-[1.04] tracking-[-0.065em]">
-          Follow the issue. Trace the invoice.
+          Examples
         </h1>
 
         <section aria-labelledby="repository-title" className="mt-12">

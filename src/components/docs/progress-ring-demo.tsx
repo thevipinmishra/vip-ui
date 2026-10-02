@@ -1,0 +1,26 @@
+"use client";
+
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { ProgressRing } from "@/components/ui/progress-ring";
+
+export function ProgressRingDemo() {
+  const [value, setValue] = useState(40);
+  return (
+    <div className="grid justify-items-center gap-5">
+      <div className="flex items-center gap-8">
+        <ProgressRing label="Uploading" value={value} />
+        <ProgressRing label="Connecting" isIndeterminate showValue={false} />
+      </div>
+      <Button
+        variant="secondary"
+        size="sm"
+        onPress={() =>
+          setValue((current) => (current >= 100 ? 0 : current + 20))
+        }
+      >
+        {value >= 100 ? "Restart upload" : "Add 20%"}
+      </Button>
+    </div>
+  );
+}

@@ -1,5 +1,5 @@
 import type { HTMLAttributes, ReactNode } from "react";
-import { CheckCircle, InfoCircle, Warning } from "reicon-react";
+import { CheckCircle, CloseCircle, InfoCircle, Warning } from "reicon-react";
 import { tv, type VariantProps } from "tailwind-variants";
 import { cn } from "@/lib/utils";
 
@@ -10,6 +10,8 @@ const alertStyles = tv({
       info: "bg-accent text-accent-foreground ring-primary/15",
       success: "bg-success-subtle text-success-foreground ring-success/15",
       warning: "bg-warning-subtle text-warning-foreground ring-warning/20",
+      error: "bg-destructive/10 text-foreground ring-destructive/20",
+      neutral: "bg-card text-card-foreground ring-border/70",
     },
   },
   defaultVariants: { variant: "info" },
@@ -74,7 +76,7 @@ export function AlertIcon({
         <>
           <InfoCircle
             size={20}
-            className="hidden group-data-[variant=info]/alert:block"
+            className="hidden group-data-[variant=info]/alert:block group-data-[variant=neutral]/alert:block group-data-[variant=neutral]/alert:text-muted-foreground"
           />
           <CheckCircle
             size={20}
@@ -83,6 +85,10 @@ export function AlertIcon({
           <Warning
             size={20}
             className="hidden group-data-[variant=warning]/alert:block"
+          />
+          <CloseCircle
+            size={20}
+            className="hidden group-data-[variant=error]/alert:block group-data-[variant=error]/alert:text-destructive"
           />
         </>
       )}

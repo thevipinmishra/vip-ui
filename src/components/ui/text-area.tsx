@@ -76,7 +76,7 @@ export function TextAreaInput({
       data-slot="text-area-input"
       className={composeRenderProps(className, (className) =>
         cn(
-          "min-h-28 w-full cursor-text resize-y rounded-lg border border-input bg-card px-3.5 py-3 text-base leading-6 text-foreground shadow-[var(--shadow-card)] outline-none placeholder:text-muted-foreground/80 hover:border-primary/45 motion-safe:transition-[border-color,box-shadow] motion-safe:duration-150 focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-accent invalid:border-destructive disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 sm:text-sm",
+          "min-h-28 w-full cursor-text resize-y rounded-lg border border-input bg-card px-3.5 py-3 text-base leading-6 text-foreground shadow-[var(--shadow-card)] outline-none placeholder:text-muted-foreground/80 hover:border-primary/45 motion-safe:transition-[border-color,box-shadow] motion-safe:duration-150 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 invalid:border-destructive invalid:ring-3 invalid:ring-destructive/20 disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 sm:text-sm",
           className,
         ),
       )}

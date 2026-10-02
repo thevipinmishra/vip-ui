@@ -85,7 +85,7 @@ export function SearchFieldInput({
       data-slot="search-field-input"
       className={composeRenderProps(className, (className) =>
         cn(
-          "min-h-12 w-full cursor-text rounded-lg border border-input bg-card ps-10 pe-12 text-base text-foreground shadow-[var(--shadow-card)] outline-none placeholder:text-muted-foreground/80 hover:border-primary/45 motion-safe:transition-[border-color,box-shadow] motion-safe:duration-150 focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-accent invalid:border-destructive disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 sm:text-sm [&::-webkit-search-cancel-button]:hidden",
+          "min-h-12 w-full cursor-text rounded-lg border border-input bg-card ps-10 pe-12 text-base text-foreground shadow-[var(--shadow-card)] outline-none placeholder:text-muted-foreground/80 hover:border-primary/45 motion-safe:transition-[border-color,box-shadow] motion-safe:duration-150 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 invalid:border-destructive invalid:ring-3 invalid:ring-destructive/20 disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 sm:text-sm [&::-webkit-search-cancel-button]:hidden",
           className,
         ),
       )}
@@ -105,7 +105,7 @@ export function SearchFieldClear({
       aria-label={props["aria-label"] ?? "Clear search"}
       className={composeRenderProps(className, (className) =>
         cn(
-          "absolute end-1 grid size-11 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none disabled:cursor-default disabled:opacity-50 hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring group-empty:hidden",
+          "absolute inset-y-0 end-1 my-auto grid size-11 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none disabled:cursor-default disabled:opacity-50 hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring group-empty:hidden",
           className,
         ),
       )}

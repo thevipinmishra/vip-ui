@@ -1,6 +1,5 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
 import {
   Menu as AriaMenu,
   MenuItem as AriaMenuItem,
@@ -8,11 +7,11 @@ import {
   type MenuItemProps,
   type MenuProps,
   MenuTrigger,
-  Popover,
   Separator,
   type SeparatorProps,
 } from "react-aria-components";
 import { cn } from "@/lib/utils";
+import { Popover } from "./popover";
 
 export { MenuTrigger };
 
@@ -29,7 +28,6 @@ export function MenuPopover({
   children,
   ...props
 }: React.ComponentProps<typeof Popover>) {
-  const reduceMotion = useReducedMotion();
   return (
     <Popover
       {...props}
@@ -38,22 +36,12 @@ export function MenuPopover({
       offset={props.offset ?? 7}
       className={composeRenderProps(className, (className) =>
         cn(
-          "min-w-44 motion-safe:transition-opacity motion-safe:duration-150 motion-safe:ease-out motion-safe:data-[exiting]:opacity-0 max-w-[calc(100vw-2rem)] rounded-lg bg-popover p-1.5 text-popover-foreground shadow-[var(--shadow-float)] ring-1 ring-border/70 outline-none",
+          "min-w-44 max-w-[calc(100vw-2rem)] rounded-lg border-0 p-1.5 ring-1 ring-border/70",
           className,
         ),
       )}
     >
-      {(renderProps) => (
-        <motion.div
-          initial={
-            reduceMotion ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.98 }
-          }
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: reduceMotion ? 0 : 0.18, ease: "easeOut" }}
-        >
-          {typeof children === "function" ? children(renderProps) : children}
-        </motion.div>
-      )}
+      {children}
     </Popover>
   );
 }

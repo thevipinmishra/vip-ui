@@ -21,8 +21,8 @@ export function DialogDemo() {
           <DialogClose aria-label="Close dialog" />
         </DialogHeader>
         <DialogDescription>
-          A dialog keeps a short task in context. Press Escape or use Close to
-          return to the page.
+          A dialog keeps a short task in context. Click outside, press Escape,
+          or use Close to return to the page.
         </DialogDescription>
         <dl className="mt-6 grid grid-cols-[auto_1fr] gap-x-6 gap-y-3 rounded-lg bg-muted p-4 text-[13px]">
           <dt className="text-muted-foreground">Project</dt>

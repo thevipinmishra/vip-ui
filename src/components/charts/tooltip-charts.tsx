@@ -7,7 +7,12 @@ import { scaleBand } from "@tanstack/charts/scales/band";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
-import { ChartPlot, galleryRenderer } from "./chart-plot";
+import {
+  ChartPlot,
+  galleryRenderer,
+  groupTooltip,
+  valueTooltip,
+} from "./chart-plot";
 
 const revenue = [
   { month: "Jan", amount: 42 },
@@ -33,7 +38,13 @@ const revenueChart = defineChart({
   },
   tooltip: {
     use: tooltip,
-    format: (point) => `${point.datum.month}: $${point.datum.amount}k`,
+    content: ([point]) =>
+      valueTooltip(
+        point.datum.month,
+        "Revenue",
+        `$${point.datum.amount}k`,
+        point.color,
+      ),
   },
 });
 
@@ -68,7 +79,17 @@ const signupsChart = defineChart({
     range: ["var(--ts-chart-1)", "var(--ts-chart-3)"],
   },
   focus: "group-x",
-  tooltip,
+  tooltip: {
+    use: tooltip,
+    sort: "color-domain",
+    content: (points, { primaryPoint }) =>
+      groupTooltip<(typeof signupRows)[number]>(
+        points[0].datum.week,
+        points,
+        (row) => `${row.value} signups`,
+        primaryPoint,
+      ),
+  },
 });
 
 const conversion = [
@@ -93,7 +114,16 @@ const conversionChart = defineChart({
     x: { scale: scalePoint },
     y: { scale: scaleLinear, domain: [0, 5], grid: true },
   },
-  tooltip,
+  tooltip: {
+    use: tooltip,
+    content: ([point]) =>
+      valueTooltip(
+        point.datum.month,
+        "Conversion rate",
+        `${point.datum.rate}%`,
+        point.color,
+      ),
+  },
 });
 
 export function TooltipValue() {
@@ -148,10 +178,10 @@ export function TooltipCustom() {
         initialWidth={520}
         ariaLabel="Monthly conversion rate January to June, in percent; activate a point to pin its tooltip"
         renderTooltipBody={({ defaultBody, pinned }) => (
-          <div className="space-y-2">
+          <div>
             {defaultBody}
             {pinned && (
-              <p className="border-t border-border/70 pt-2 text-xs text-muted-foreground">
+              <p className="mt-2 border-t border-border/70 pt-2 text-xs text-muted-foreground">
                 Pinned for closer inspection. Press Escape to close.
               </p>
             )}

@@ -9,9 +9,9 @@ export function CatalogCard({ children }: { children: ReactNode }) {
   return (
     <motion.div
       className="h-full"
-      whileHover={reduceMotion ? undefined : { y: -3 }}
-      whileTap={reduceMotion ? undefined : { scale: 0.96 }}
-      transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+      whileHover={reduceMotion ? undefined : { y: -5, scale: 1.015 }}
+      whileTap={reduceMotion ? undefined : { y: 0, scale: 0.985 }}
+      transition={{ type: "spring", stiffness: 420, damping: 30 }}
     >
       {children}
     </motion.div>

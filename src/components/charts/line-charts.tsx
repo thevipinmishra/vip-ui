@@ -6,7 +6,12 @@ import { Chart } from "@tanstack/charts/react/core";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
-import { ChartPlot, galleryRenderer } from "./chart-plot";
+import {
+  ChartPlot,
+  galleryRenderer,
+  groupTooltip,
+  valueTooltip,
+} from "./chart-plot";
 
 const response = [
   { week: "W1", minutes: 44 },
@@ -29,7 +34,16 @@ const responseChart = defineChart({
     x: { scale: scalePoint },
     y: { scale: scaleLinear, domain: [0, 55], grid: true },
   },
-  tooltip,
+  tooltip: {
+    use: tooltip,
+    content: ([point]) =>
+      valueTooltip(
+        point.datum.week,
+        "Median response",
+        `${point.datum.minutes} min`,
+        point.color,
+      ),
+  },
 });
 
 const retention = [
@@ -63,7 +77,17 @@ const retentionChart = defineChart({
     range: ["var(--ts-chart-1)", "var(--ts-chart-3)"],
   },
   focus: "group-x",
-  tooltip,
+  tooltip: {
+    use: tooltip,
+    sort: "color-domain",
+    content: (points, { primaryPoint }) =>
+      groupTooltip<(typeof retentionRows)[number]>(
+        points[0].datum.week,
+        points,
+        (row) => `${row.percent}% retained`,
+        primaryPoint,
+      ),
+  },
 });
 
 const uptime = [
@@ -93,7 +117,16 @@ const uptimeChart = defineChart({
     x: { scale: scalePoint },
     y: { scale: scaleLinear, domain: [90, 100], grid: true },
   },
-  tooltip,
+  tooltip: {
+    use: tooltip,
+    content: ([point], { pinned }) => ({
+      title: point.datum.day,
+      rows: [
+        { label: "Uptime", value: `${point.datum.value}%`, color: point.color },
+        ...(pinned ? [{ label: "Target", value: "97%" }] : []),
+      ],
+    }),
+  },
 });
 
 export function LineResponse() {

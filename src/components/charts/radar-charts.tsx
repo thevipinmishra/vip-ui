@@ -3,6 +3,7 @@
 import { defineChart } from "@tanstack/charts";
 import {
   angleGrid,
+  focusGroupAngle,
   polar,
   radialArea,
   radialDot,
@@ -13,7 +14,12 @@ import { Chart } from "@tanstack/charts/react/core";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
-import { ChartPlot, galleryRenderer } from "./chart-plot";
+import {
+  ChartPlot,
+  galleryRenderer,
+  groupTooltip,
+  valueTooltip,
+} from "./chart-plot";
 
 const metrics = ["Speed", "Quality", "Reach", "Support", "Reliability"];
 const guides = [
@@ -61,7 +67,16 @@ const profileChart = defineChart({
     }),
   ],
   scales: { x: null, y: null },
-  tooltip,
+  tooltip: {
+    use: tooltip,
+    content: ([point]) =>
+      valueTooltip(
+        point.datum.metric,
+        "Team score",
+        `${point.datum.score} / 100`,
+        point.color,
+      ),
+  },
 });
 
 const comparison = [
@@ -101,7 +116,18 @@ const comparisonChart = defineChart({
     domain: ["Current", "Previous"],
     range: ["var(--ts-chart-1)", "var(--ts-chart-3)"],
   },
-  tooltip,
+  focus: focusGroupAngle,
+  tooltip: {
+    use: tooltip,
+    sort: "color-domain",
+    content: (points, { primaryPoint }) =>
+      groupTooltip<(typeof comparison)[number]>(
+        points[0].datum.metric,
+        points,
+        (row) => `${row.score} / 100`,
+        primaryPoint,
+      ),
+  },
 });
 
 const benchmarks = [
@@ -142,7 +168,16 @@ const benchmarksChart = defineChart({
     }),
   ],
   scales: { x: null, y: null },
-  tooltip,
+  tooltip: {
+    use: tooltip,
+    content: ([point]) =>
+      valueTooltip(
+        point.datum.metric,
+        "Benchmark score",
+        `${point.datum.score} / 100`,
+        point.color,
+      ),
+  },
 });
 
 export function RadarProfile() {
