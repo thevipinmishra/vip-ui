@@ -12,22 +12,26 @@ import {
 export function TextFieldDemo() {
   const [value, setValue] = useState("");
   return (
-    <div className="w-full max-w-sm space-y-5 rounded-xl bg-card p-5 shadow-[var(--shadow-card)] ring-1 ring-border/70 sm:p-6">
-      <div>
-        <p className="text-sm font-semibold">Workspace details</p>
-        <p className="mt-1 text-xs text-muted-foreground">
-          Give your project a name you will recognize.
-        </p>
-      </div>
+    <div className="grid w-full max-w-sm gap-5 rounded-xl bg-card p-5 shadow-[var(--shadow-card)] ring-1 ring-border/70 sm:p-6">
       <TextField name="projectName" value={value} onChange={setValue}>
         <TextFieldLabel>Project name</TextFieldLabel>
         <TextFieldInput placeholder="e.g. Studio North" />
-        <TextFieldDescription>You can change this later.</TextFieldDescription>
+        <TextFieldDescription>
+          This name appears in your project list.
+        </TextFieldDescription>
         <TextFieldError />
       </TextField>
-      <output className="block text-xs text-muted-foreground">
-        {value ? `Preview: ${value}` : "Your project name will appear here."}
-      </output>
+      <div className="border-t border-border pt-4">
+        <p className="text-xs text-muted-foreground">Project list preview</p>
+        <div className="mt-3 flex items-center justify-between gap-3 text-sm">
+          <output className="min-w-0 truncate font-semibold">
+            {value.trim() || "Untitled project"}
+          </output>
+          <span className="shrink-0 text-xs text-muted-foreground">
+            Draft · Maya Chen
+          </span>
+        </div>
+      </div>
     </div>
   );
 }

@@ -14,19 +14,18 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 
-const snapPoints = [0.4, 0.85];
+const snapPoints = [0.4, 0.6];
 
 export function DrawerDemo() {
-  const [snap, setSnap] = useState(0.4);
+  const [snap, setSnap] = useState(snapPoints[1]);
 
   return (
     <Drawer>
       <DrawerTrigger>Review order</DrawerTrigger>
-      {/* Wrap page content in an element with id="drawer-page" outside the overlay portal. */}
       <DrawerContent
         snapPoints={snapPoints}
+        defaultSnapPoint={snapPoints[1]}
         onSnapPointChange={setSnap}
-        scaleTarget="#drawer-page"
       >
         <DrawerHandle />
         <DrawerHeader className="flex items-start justify-between gap-4">

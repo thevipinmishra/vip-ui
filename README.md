@@ -17,6 +17,7 @@ Open <http://localhost:3000/components> for the catalog. Run `pnpm lint` and `pn
 | --- | --- | --- |
 | Button | An action with clear priority | `/components/button` |
 | Text field | Labeled text entry and validation | `/components/text-field` |
+| Input group | A field with a prefix, suffix, or action | `/components/input-group` |
 | Select | One choice from a longer list | `/components/select` |
 | Checkbox | Independent choices in a form | `/components/checkbox` |
 | Switch | A setting that takes effect immediately | `/components/switch` |

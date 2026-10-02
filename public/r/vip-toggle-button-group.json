@@ -4,7 +4,12 @@
   "type": "registry:ui",
   "title": "Toggle Button Group",
   "description": "Choose one or more persistent actions in a group.",
-  "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+  "dependencies": [
+    "motion",
+    "react-aria-components",
+    "reicon-react",
+    "tailwind-variants"
+  ],
   "files": [
     {
       "path": "src/lib/utils.ts",

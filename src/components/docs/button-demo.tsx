@@ -1,62 +1,93 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, Plus } from "reicon-react";
+import { Check, Save, Trash } from "reicon-react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export function ButtonDemo() {
-  const [action, setAction] = useState("");
+  const [revision, setRevision] = useState(3);
+  const [status, setStatus] = useState<"draft" | "published" | "archived">(
+    "draft",
+  );
 
   return (
-    <div className="flex w-full max-w-[590px] flex-col items-center gap-7">
-      <div className="flex flex-wrap items-center justify-center gap-3">
-        <Button onPress={() => setAction("Created a project")}>
-          Create project <ArrowRight size={16} aria-hidden="true" />
-        </Button>
-        <Button
-          variant="secondary"
-          onPress={() => setAction("Saved your changes")}
-        >
-          Save changes
-        </Button>
-        <Button variant="outline" onPress={() => setAction("Opened settings")}>
-          Open settings
-        </Button>
-        <Button variant="ghost" onPress={() => setAction("Viewed details")}>
-          View details
-        </Button>
-      </div>
-      <div className="flex flex-wrap items-center justify-center gap-3 border-t border-border/70 pt-6">
-        <Button size="sm" onPress={() => setAction("Added an item")}>
-          Add item
-        </Button>
-        <Button
-          size="lg"
-          variant="outline"
-          onPress={() => setAction("Continued")}
-        >
-          Continue
-        </Button>
-        <Button
-          size="icon"
-          variant="outline"
-          aria-label="Add new item"
-          onPress={() => setAction("Added a new item")}
-        >
-          <Plus size={17} aria-hidden="true" />
-        </Button>
-        <Button
-          variant="destructive"
-          size="sm"
-          onPress={() => setAction("Delete requested")}
-        >
-          Delete item
-        </Button>
-        <Button isDisabled>Unavailable</Button>
-      </div>
-      <output className="block min-h-5 text-xs text-muted-foreground">
-        {action || "Choose an action to try the buttons."}
-      </output>
-    </div>
+    <Card className="w-full max-w-md">
+      <CardHeader>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <CardTitle>Autumn campaign</CardTitle>
+          <Badge
+            variant={
+              status === "published"
+                ? "success"
+                : status === "archived"
+                  ? "neutral"
+                  : "warning"
+            }
+            dot
+          >
+            {status === "published"
+              ? "Published"
+              : status === "archived"
+                ? "Archived"
+                : "Draft"}
+          </Badge>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <dl className="grid grid-cols-2 gap-4 text-sm">
+          <div>
+            <dt className="text-muted-foreground">Owner</dt>
+            <dd className="mt-1 font-medium">Maya Chen</dd>
+          </div>
+          <div>
+            <dt className="text-muted-foreground">Saved revision</dt>
+            <dd className="mt-1 font-medium tabular-nums">v{revision}</dd>
+          </div>
+        </dl>
+      </CardContent>
+      <CardFooter className="flex-wrap gap-2">
+        {status === "archived" ? (
+          <Button
+            variant="secondary"
+            size="sm"
+            onPress={() => setStatus("draft")}
+          >
+            Restore draft
+          </Button>
+        ) : (
+          <>
+            <Button
+              size="sm"
+              isDisabled={status === "published"}
+              onPress={() => setStatus("published")}
+            >
+              <Check size={16} aria-hidden="true" /> Publish
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onPress={() => setRevision((value) => value + 1)}
+            >
+              <Save size={16} aria-hidden="true" /> Save revision
+            </Button>
+            <Button
+              variant="destructive"
+              size="sm"
+              onPress={() => setStatus("archived")}
+            >
+              <Trash size={16} aria-hidden="true" /> Archive
+            </Button>
+          </>
+        )}
+      </CardFooter>
+    </Card>
   );
 }

@@ -7,9 +7,11 @@ import { Check, Copy } from "reicon-react";
 export function CopyButton({
   code,
   label = "Copy code",
+  text = "Copy",
 }: {
   code: string;
   label?: string;
+  text?: string;
 }) {
   const [copied, setCopied] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -48,7 +50,7 @@ export function CopyButton({
         ) : (
           <Copy size={13} aria-hidden="true" />
         )}
-        {copied ? "Copied" : failed ? "Retry copy" : "Copy"}
+        {copied ? "Copied" : failed ? "Retry copy" : text}
       </motion.button>
       <output className="sr-only">
         {copied ? "Code copied" : failed ? "Copy failed. Try again." : ""}

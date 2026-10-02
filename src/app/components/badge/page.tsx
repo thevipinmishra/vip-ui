@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BadgeBasicDemo } from "@/components/docs/badge-basic-demo";
 import { BadgeDemo } from "@/components/docs/badge-demo";
 import { BadgeQueueDemo } from "@/components/docs/badge-queue-demo";
 import { ComponentPage } from "@/components/docs/component-page";
@@ -13,10 +14,17 @@ export default function BadgePage() {
     <ComponentPage
       name="Badge"
       description="A compact label for status or metadata. The optional dot reinforces status without relying on color alone."
-      preview={<BadgeDemo />}
-      previewHint="Compare neutral, accent, success, warning, error, and outline styles."
-      previewSourcePath="src/components/docs/badge-demo.tsx"
+      preview={<BadgeBasicDemo />}
+      previewHint="Use a short label that still makes sense without its color."
+      previewSourcePath="src/components/docs/badge-basic-demo.tsx"
       examples={[
+        {
+          title: "Status variants",
+          description:
+            "Compare the statuses used across a release workflow, including outline metadata.",
+          preview: <BadgeDemo />,
+          sourcePath: "src/components/docs/badge-demo.tsx",
+        },
         {
           title: "Release queue",
           description:

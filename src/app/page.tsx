@@ -8,7 +8,6 @@ import { CheckboxBasicDemo } from "@/components/docs/checkbox-basic-demo";
 import { DialogDemo } from "@/components/docs/dialog-demo";
 import { HomeReveal } from "@/components/docs/home-page-motion";
 import { MenuDemo } from "@/components/docs/menu-demo";
-import { PalettePicker } from "@/components/docs/palette-picker";
 import { PopoverDemo } from "@/components/docs/popover-demo";
 import { ProgressBarDemo } from "@/components/docs/progress-bar-demo";
 import { SelectDemo } from "@/components/docs/select-demo";
@@ -110,9 +109,13 @@ export default function Home() {
               Browse components
             </ButtonLink>
           </div>
-          <div className="mx-auto mt-6 flex flex-col items-center gap-3">
-            <p className="text-sm font-medium">Try a color theme</p>
-            <PalettePicker />
+          <div className="mt-6">
+            <Link
+              href="/themes"
+              className="inline-flex min-h-11 items-center gap-2 rounded-md text-sm font-medium text-primary hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            >
+              Explore official themes <ArrowRight size={15} aria-hidden="true" />
+            </Link>
           </div>
         </section>
 
@@ -264,6 +267,9 @@ export default function Home() {
               className="hover:text-foreground"
             >
               Installation
+            </Link>
+            <Link href="/themes" className="hover:text-foreground">
+              Themes
             </Link>
             <Link href="/charts" className="hover:text-foreground">
               Charts

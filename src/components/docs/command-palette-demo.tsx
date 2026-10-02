@@ -10,16 +10,18 @@ import {
 
 export function CommandPaletteDemo() {
   const [isOpen, setOpen] = useState(false);
-  const [lastAction, setLastAction] = useState("None yet");
+  const [lastAction, setLastAction] = useState("");
 
   return (
     <div className="grid justify-items-start gap-3">
       <Button variant="outline" onPress={() => setOpen(true)}>
         <Search size={16} aria-hidden="true" /> Search commands
       </Button>
-      <p className="text-xs text-muted-foreground">
-        Press Ctrl+K or ⌘K. Last action: {lastAction}.
-      </p>
+      {lastAction && (
+        <output className="text-xs text-muted-foreground">
+          Selected: {lastAction}
+        </output>
+      )}
       <CommandPalette isOpen={isOpen} onOpenChange={setOpen}>
         <CommandPaletteItem onAction={() => setLastAction("New project")}>
           <FolderPlus

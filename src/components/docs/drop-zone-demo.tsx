@@ -50,11 +50,6 @@ export function DropZoneDemo() {
           </li>
         ))}
       </ul>
-      {files.length === 0 && (
-        <p className="text-xs text-muted-foreground">
-          Files stay in this browser preview; nothing is uploaded.
-        </p>
-      )}
     </div>
   );
 }

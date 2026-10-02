@@ -31,9 +31,6 @@ export function TreeDemo() {
           }
         />
       </Tree>
-      <p className="mt-3 text-xs text-muted-foreground">
-        Use the arrow keys to move, expand folders, and select a file.
-      </p>
     </div>
   );
 }

@@ -114,7 +114,7 @@ export function DialogContent({
       <motion.div
         aria-hidden="true"
         data-slot="dialog-backdrop"
-        className="pointer-events-none fixed inset-0 bg-black/50"
+        className="pointer-events-none fixed inset-0 bg-foreground/40 backdrop-blur-sm dark:bg-foreground/20"
         initial={{ opacity: 0 }}
         animate={{ opacity: animation === "hidden" ? 0 : 1 }}
         transition={{
