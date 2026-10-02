@@ -13,7 +13,6 @@ import {
   createContext,
   type HTMLAttributes,
   type ReactNode,
-  type RefObject,
   useCallback,
   useContext,
   useEffect,
@@ -133,8 +132,6 @@ export interface DrawerContentProps
   defaultSnapPoint?: number;
   snapPoint?: number;
   onSnapPointChange?: (point: number) => void;
-  /** Page wrapper to scale behind the overlay (a ref or CSS selector). Never target document.body or a wrapper containing the portal. */
-  scaleTarget?: RefObject<HTMLElement | null> | string;
   overlayProps?: Omit<
     ModalOverlayProps,
     "children" | "isOpen" | "onOpenChange" | "isExiting" | "render"
@@ -152,7 +149,6 @@ export function DrawerContent({
   defaultSnapPoint,
   snapPoint,
   onSnapPointChange,
-  scaleTarget,
   overlayProps,
   ...props
 }: DrawerContentProps) {
@@ -202,7 +198,6 @@ export function DrawerContent({
         ),
     ),
   );
-  const shade = useTransform(progress, (value) => value * 0.46);
 
   useLayoutEffect(() => {
     const update = () =>
@@ -264,35 +259,6 @@ export function DrawerContent({
     y,
     exitComplete,
   ]);
-
-  // Keep the page in step with opening, dragging, snapping, and closing.
-  // An individual CSS scale preserves any transforms already on the page wrapper.
-  useLayoutEffect(() => {
-    if (!present || !scaleTarget) return;
-    const target =
-      typeof scaleTarget === "string"
-        ? document.querySelector<HTMLElement>(scaleTarget)
-        : scaleTarget.current;
-    if (
-      !target ||
-      target === document.body ||
-      target === document.documentElement
-    )
-      return;
-    const originalScale = target.style.scale;
-    const originalOrigin = target.style.transformOrigin;
-    target.style.transformOrigin = "center top";
-    const update = (value: number) => {
-      target.style.scale = String(reduceMotion ? 1 : 1 - value * 0.04);
-    };
-    update(progress.get());
-    const unsubscribe = progress.on("change", update);
-    return () => {
-      unsubscribe();
-      target.style.scale = originalScale;
-      target.style.transformOrigin = originalOrigin;
-    };
-  }, [present, scaleTarget, reduceMotion, progress]);
 
   const selectPoint = (next: number) => {
     if (snapPoint === undefined) setInternalPoint(next);
@@ -380,8 +346,8 @@ export function DrawerContent({
       <motion.div
         aria-hidden="true"
         data-slot="drawer-backdrop"
-        className="pointer-events-none absolute inset-0 bg-black"
-        style={{ opacity: shade }}
+        className="pointer-events-none absolute inset-0 bg-foreground/40 backdrop-blur-sm dark:bg-foreground/20"
+        style={{ opacity: progress }}
       />
       <Modal
         data-slot="drawer-modal"

@@ -16,6 +16,7 @@ export function CodeFrame({
   filename,
   language,
   children,
+  copyText,
   header,
   codeLabel,
   expandable = false,
@@ -26,6 +27,7 @@ export function CodeFrame({
   filename: string;
   language: string;
   children: ReactNode;
+  copyText?: string;
   header?: ReactNode;
   codeLabel?: string;
   expandable?: boolean;
@@ -70,7 +72,12 @@ export function CodeFrame({
           </div>
         )}
         <div className="flex shrink-0 items-center gap-1.5">
-          <CopyButton key={code} code={code.trim()} />
+          <CopyButton
+            key={code}
+            code={code.trim()}
+            label={copyText}
+            text={copyText}
+          />
         </div>
       </div>
       <div className={cn(canExpand && !expanded && "max-h-80 overflow-hidden")}>

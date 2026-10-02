@@ -17,20 +17,20 @@ export default function ButtonPage() {
       description="Use Button for actions. Choose a variant for priority and a size for context. onPress handles pointer and keyboard activation."
       reactAriaDocsHref="https://react-aria.adobe.com/Button"
       preview={<ButtonBasicDemo />}
-      previewHint="Press the button to see its feedback."
+      previewHint="Press to save; the label confirms the action without adding a separate message."
       previewSourcePath="src/components/docs/button-basic-demo.tsx"
       examples={[
         {
-          title: "Actions and feedback",
+          title: "Project actions",
           description:
-            "Use the appropriate visual priority and confirm the result of an action.",
+            "Publish a draft, save another revision, or archive it. The status and revision update in the project card.",
           preview: <ButtonDemo />,
           sourcePath: "src/components/docs/button-demo.tsx",
         },
         {
-          title: "Variants, sizes, and disabled",
+          title: "Variants and sizes",
           description:
-            "Choose the visual priority and size that fits the action. Disabled buttons cannot be pressed.",
+            "Use visual priority for actions and size for placement. Name icon-only actions and disable unavailable ones.",
           preview: <ButtonVariantsDemo />,
           sourcePath: "src/components/docs/button-variants-demo.tsx",
         },

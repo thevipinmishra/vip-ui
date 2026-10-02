@@ -48,10 +48,6 @@ export function SwitchDemo() {
           </SwitchControl>
         </Switch>
       </div>
-      <output className="mt-3 block text-xs text-muted-foreground">
-        Profile is {publicProfile ? "public" : "private"}; activity is{" "}
-        {activity ? "visible" : "hidden"}.
-      </output>
     </div>
   );
 }

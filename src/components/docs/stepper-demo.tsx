@@ -20,10 +20,7 @@ export function StepperDemo() {
         currentStep={currentStep}
         aria-label="Project setup progress"
       />
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="text-sm tabular-nums text-muted-foreground">
-          Step {currentStep + 1} of {steps.length}
-        </p>
+      <div className="flex justify-end">
         <div className="flex gap-2">
           <Button
             size="sm"

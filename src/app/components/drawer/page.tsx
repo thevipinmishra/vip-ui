@@ -10,7 +10,7 @@ import {
 export const metadata: Metadata = {
   title: "Drawer | vip/ui",
   description:
-    "An accessible draggable drawer with snap points and optional page scaling.",
+    "An accessible draggable drawer with snap points and a blurred backdrop.",
 };
 
 export default function DrawerPage() {
@@ -19,7 +19,7 @@ export default function DrawerPage() {
       name="Drawer"
       description="A modal sheet for details or a longer task. Open from any edge, drag the handle to dismiss, or use bottom snap points. Focus returns to the trigger on close."
       preview={<DrawerDemo />}
-      previewHint="Watch the page shrink as the drawer opens. Drag the handle to resize it, or focus the handle and press Up, Down, Home, or End. Escape, the backdrop, and Close dismiss it."
+      previewHint="Drag the handle to resize the drawer, or focus the handle and press Up, Down, Home, or End. Escape, the backdrop, and Close dismiss it."
       previewSourcePath="src/components/docs/drawer-demo.tsx"
       examples={[
         {

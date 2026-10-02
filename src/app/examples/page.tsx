@@ -2,12 +2,24 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { connection } from "next/server";
 import { Suspense } from "react";
-import { ArrowRight, BranchUp, ChartBar } from "reicon-react";
+import {
+  ArrowRight,
+  BranchUp,
+  ChartBar,
+  FolderOpen,
+  MessageCircle,
+} from "reicon-react";
 import { PackageManagerCommand } from "@/components/docs/package-manager-command";
 import { SiteHeader } from "@/components/docs/site-header";
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button-link";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { registryUrl } from "@/lib/registry-docs";
 import { customerById, invoices, money, monthlyRevenue } from "./business/data";
 import { repository } from "./repository/config";
@@ -16,7 +28,7 @@ import { getPulls } from "./repository/data";
 export const metadata: Metadata = {
   title: "Examples | vip/ui",
   description:
-    "Explore repository operations and subscription billing built with vip/ui.",
+    "Explore repository operations, subscription billing, a local chat workspace, and an asset studio built with vip/ui.",
 };
 
 async function OpenPullRequests() {
@@ -49,6 +61,8 @@ export default function ExamplesPage() {
   const overdue = invoices.filter((invoice) => invoice.status === "overdue");
   const installRepository = registryUrl("example-repository");
   const installBusiness = registryUrl("example-business");
+  const installChat = registryUrl("example-chat");
+  const installStudio = registryUrl("example-studio");
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -217,6 +231,85 @@ export default function ExamplesPage() {
           </Card>
         </section>
 
+        <div className="mt-8 grid gap-8 md:grid-cols-2">
+          <section aria-labelledby="chat-title">
+            <Card className="flex h-full flex-col">
+              <CardHeader>
+                <CardTitle
+                  as="h2"
+                  id="chat-title"
+                  className="flex items-center gap-2 text-xl"
+                >
+                  <MessageCircle
+                    size={20}
+                    className="text-primary"
+                    aria-hidden="true"
+                  />{" "}
+                  Chat workspace
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="flex-1">
+                <p className="text-sm leading-7 text-muted-foreground">
+                  Browse scripted conversations, search your history, and
+                  compose a reply. Messages stay in this browser; there is no AI
+                  service.
+                </p>
+                <div className="mt-5 rounded-lg bg-muted/60 p-4 text-sm">
+                  <p className="font-medium">
+                    Weekly project update · 4 messages
+                  </p>
+                  <p className="mt-2 text-muted-foreground">
+                    Onboarding screens are approved and ready for
+                    implementation.
+                  </p>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <ButtonLink as={Link} href="/examples/chat" variant="outline">
+                  Open chat workspace{" "}
+                  <ArrowRight size={16} aria-hidden="true" />
+                </ButtonLink>
+              </CardFooter>
+            </Card>
+          </section>
+          <section aria-labelledby="studio-title">
+            <Card className="flex h-full flex-col">
+              <CardHeader>
+                <CardTitle
+                  as="h2"
+                  id="studio-title"
+                  className="flex items-center gap-2 text-xl"
+                >
+                  <FolderOpen
+                    size={20}
+                    className="text-primary"
+                    aria-hidden="true"
+                  />{" "}
+                  Asset studio
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="flex-1">
+                <p className="text-sm leading-7 text-muted-foreground">
+                  Browse a campaign tree, add local files, edit tags and color,
+                  or jump to an action with the command palette. Nothing is
+                  uploaded.
+                </p>
+                <div className="mt-5 rounded-lg bg-muted/60 p-4 text-sm">
+                  <p className="font-medium">Campaign / Cover.png</p>
+                  <p className="mt-2 text-muted-foreground">
+                    Brief.pdf · Inbox · 2 campaign tags
+                  </p>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <ButtonLink as={Link} href="/examples/studio" variant="outline">
+                  Open asset studio <ArrowRight size={16} aria-hidden="true" />
+                </ButtonLink>
+              </CardFooter>
+            </Card>
+          </section>
+        </div>
+
         <section
           aria-labelledby="install-title"
           className="mt-20 border-t border-border/70 pt-12"
@@ -279,6 +372,44 @@ export default function ExamplesPage() {
                   <PackageManagerCommand
                     action="run"
                     args={`shadcn@latest add ${installBusiness}`}
+                  />
+                </div>
+              )}
+            </div>
+            <div className="min-w-0">
+              <h3 className="text-base font-semibold">Chat workspace</h3>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                Installs the chat routes under{" "}
+                <code className="font-mono text-foreground">
+                  src/app/examples/chat/
+                </code>
+                . Replies are scripted and conversations use browser storage.
+                Connect a service before using it for live chat.
+              </p>
+              {installChat && (
+                <div className="mt-5">
+                  <PackageManagerCommand
+                    action="run"
+                    args={`shadcn@latest add ${installChat}`}
+                  />
+                </div>
+              )}
+            </div>
+            <div className="min-w-0">
+              <h3 className="text-base font-semibold">Asset studio</h3>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                Installs the studio routes under{" "}
+                <code className="font-mono text-foreground">
+                  src/app/examples/studio/
+                </code>
+                . Added files are held locally for the session, not uploaded or
+                persisted.
+              </p>
+              {installStudio && (
+                <div className="mt-5">
+                  <PackageManagerCommand
+                    action="run"
+                    args={`shadcn@latest add ${installStudio}`}
                   />
                 </div>
               )}

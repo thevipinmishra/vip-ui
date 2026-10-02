@@ -211,6 +211,11 @@
           "path": "registry/generated/src/components/vip-ui/button.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/badge.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/badge.tsx"
         }
       ]
     },
@@ -273,6 +278,16 @@
           "path": "registry/generated/src/components/vip-ui/button.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/badge.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/badge.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/card.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/card.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/button-group.tsx",
@@ -1302,6 +1317,21 @@
           "path": "registry/generated/src/components/vip-ui/number-field.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/number-field.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/badge.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/badge.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button.tsx"
         }
       ]
     },
@@ -1435,7 +1465,12 @@
       "type": "registry:ui",
       "title": "Progress Bar",
       "description": "Show progress for a task with a known completion point.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "motion",
+        "react-aria-components",
+        "reicon-react",
+        "tailwind-variants"
+      ],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1446,6 +1481,11 @@
           "path": "registry/generated/src/components/vip-ui/progress-bar.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/progress-bar.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/badge.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/badge.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
@@ -1868,7 +1908,7 @@
       "type": "registry:ui",
       "title": "Text Area",
       "description": "Enter a longer answer with a labeled field.",
-      "dependencies": ["react-aria-components", "tailwind-variants"],
+      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1879,6 +1919,21 @@
           "path": "registry/generated/src/components/vip-ui/text-area.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/text-area.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/form.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/form.tsx"
         }
       ]
     },
@@ -2013,6 +2068,11 @@
           "path": "registry/generated/src/components/vip-ui/button.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/badge.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/badge.tsx"
         }
       ]
     },
@@ -2021,7 +2081,12 @@
       "type": "registry:ui",
       "title": "Toggle Button Group",
       "description": "Choose one or more persistent actions in a group.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "motion",
+        "react-aria-components",
+        "reicon-react",
+        "tailwind-variants"
+      ],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2045,7 +2110,12 @@
       "type": "registry:ui",
       "title": "Toggle Button",
       "description": "Turn a persistent action on or off.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "motion",
+        "react-aria-components",
+        "reicon-react",
+        "tailwind-variants"
+      ],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2061,6 +2131,11 @@
           "path": "registry/generated/src/components/vip-ui/toggle-button-group.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/toggle-button-group.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/badge.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/badge.tsx"
         }
       ]
     },
@@ -2153,6 +2228,11 @@
           "path": "registry/generated/src/components/vip-ui/tooltip.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/tooltip.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/badge.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/badge.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
@@ -2417,6 +2497,16 @@
           "target": "@components/vip-ui/button.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/badge.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/badge.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/card.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/card.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/button-group.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/button-group.tsx"
@@ -2432,16 +2522,6 @@
           "target": "@components/vip-ui/avatar.tsx"
         },
         {
-          "path": "registry/generated/src/components/vip-ui/card.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/card.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/badge.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/badge.tsx"
-        },
-        {
           "path": "registry/generated/src/components/vip-ui/search-field.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/search-field.tsx"
@@ -2450,6 +2530,11 @@
           "path": "registry/generated/src/components/vip-ui/text-area.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/text-area.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/form.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/form.tsx"
         },
         {
           "path": "registry/generated/src/app/examples/chat/workspace.tsx",
@@ -2528,6 +2613,11 @@
           "target": "@components/vip-ui/button.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/card.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/card.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/button-group.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/button-group.tsx"
@@ -2591,11 +2681,6 @@
           "path": "registry/generated/src/app/examples/repository/navigation.tsx",
           "type": "registry:file",
           "target": "src/app/examples/repository/navigation.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/card.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/card.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/stat.tsx",
@@ -2698,6 +2783,16 @@
           "target": "@components/vip-ui/button.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/badge.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/badge.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/card.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/card.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/button-group.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/button-group.tsx"
@@ -2706,16 +2801,6 @@
           "path": "registry/generated/src/app/examples/studio/theme-toggle.tsx",
           "type": "registry:file",
           "target": "src/app/examples/studio/theme-toggle.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/card.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/card.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/badge.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/badge.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/color-field.tsx",

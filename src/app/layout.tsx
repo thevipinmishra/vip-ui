@@ -19,15 +19,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${GeistSans.variable} ${GeistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <div
-          id="drawer-page"
-          className="flex min-h-full flex-1 flex-col bg-background"
-        >
+        <div className="flex min-h-full flex-1 flex-col bg-background">
           {children}
         </div>
         <Analytics />
         <Script id="theme-init" strategy="beforeInteractive">
-          {`try{var theme=localStorage.getItem("vip-ui-theme");if(theme==="dark"||(!theme&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.classList.add("dark");var palette=localStorage.getItem("vip-ui-palette");if(["blue","orchid","lagoon","moss","clay"].includes(palette))document.documentElement.dataset.palette=palette}catch{}`}
+          {`try{var theme=localStorage.getItem("vip-ui-theme");if(theme==="dark"||(!theme&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.classList.add("dark");}catch{}`}
         </Script>
       </body>
     </html>

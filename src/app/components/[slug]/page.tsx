@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
+import { AnimatedNumberBasicDemo } from "@/components/docs/animated-number-basic-demo";
 import { AnimatedNumberDemo } from "@/components/docs/animated-number-demo";
 import { AutocompleteDemo } from "@/components/docs/autocomplete-demo";
+import { AvatarBasicDemo } from "@/components/docs/avatar-basic-demo";
 import { AvatarDemo } from "@/components/docs/avatar-demo";
 import { BreadcrumbsDemo } from "@/components/docs/breadcrumbs-demo";
 import { ButtonGroupDemo } from "@/components/docs/button-group-demo";
+import { ButtonGroupVerticalDemo } from "@/components/docs/button-group-vertical-demo";
 import { CalendarDemo } from "@/components/docs/calendar-demo";
 import { CalendarUnavailableDemo } from "@/components/docs/calendar-unavailable-demo";
 import { CardDemo } from "@/components/docs/card-demo";
@@ -16,7 +19,10 @@ import { ColorPickerDemo } from "@/components/docs/color-picker-demo";
 import { ColorSwatchDemo } from "@/components/docs/color-swatch-demo";
 import { ColorSwatchPickerDemo } from "@/components/docs/color-swatch-picker-demo";
 import { CommandPaletteDemo } from "@/components/docs/command-palette-demo";
-import { ComponentPage } from "@/components/docs/component-page";
+import {
+  type ComponentExample,
+  ComponentPage,
+} from "@/components/docs/component-page";
 import { DateFieldDemo } from "@/components/docs/date-field-demo";
 import { DatePickerControlledDemo } from "@/components/docs/date-picker-controlled-demo";
 import { DatePickerDemo } from "@/components/docs/date-picker-demo";
@@ -37,16 +43,20 @@ import { LinkDemo } from "@/components/docs/link-demo";
 import { ListBoxDemo } from "@/components/docs/list-box-demo";
 import { MeterDemo } from "@/components/docs/meter-demo";
 import { NumberFieldDemo } from "@/components/docs/number-field-demo";
+import { NumberFieldSeatsDemo } from "@/components/docs/number-field-seats-demo";
 import { PaginationDemo } from "@/components/docs/pagination-demo";
 import { PopoverDemo } from "@/components/docs/popover-demo";
 import { PresenceListDemo } from "@/components/docs/presence-list-demo";
 import { PreviewTriggerDemo } from "@/components/docs/preview-trigger-demo";
+import { ProgressBarBasicDemo } from "@/components/docs/progress-bar-basic-demo";
 import { ProgressBarDemo } from "@/components/docs/progress-bar-demo";
+import { ProgressRingBasicDemo } from "@/components/docs/progress-ring-basic-demo";
 import { ProgressRingDemo } from "@/components/docs/progress-ring-demo";
 import { RangeCalendarDemo } from "@/components/docs/range-calendar-demo";
 import { RangeCalendarLimitsDemo } from "@/components/docs/range-calendar-limits-demo";
 import { SeparatorDemo } from "@/components/docs/separator-demo";
 import { SkeletonDemo } from "@/components/docs/skeleton-demo";
+import { SpinnerBasicDemo } from "@/components/docs/spinner-basic-demo";
 import { SpinnerDemo } from "@/components/docs/spinner-demo";
 import { SpinnerUsageDemo } from "@/components/docs/spinner-usage-demo";
 import { StatDemo } from "@/components/docs/stat-demo";
@@ -60,6 +70,8 @@ import { TimeFieldDemo } from "@/components/docs/time-field-demo";
 import { TimelineDemo } from "@/components/docs/timeline-demo";
 import { ToggleButtonDemo } from "@/components/docs/toggle-button-demo";
 import { ToggleButtonGroupDemo } from "@/components/docs/toggle-button-group-demo";
+import { ToggleButtonGroupEditorDemo } from "@/components/docs/toggle-button-group-editor-demo";
+import { ToggleButtonProjectsDemo } from "@/components/docs/toggle-button-projects-demo";
 import { TokenFieldDemo } from "@/components/docs/token-field-demo";
 import { ToolbarDemo } from "@/components/docs/toolbar-demo";
 import { TreeDemo } from "@/components/docs/tree-demo";
@@ -165,7 +177,7 @@ const entries: {
     slug: "toggle-button-group",
     name: "Toggle button group",
     description: "Choose one or more options in a compact group of buttons.",
-    hint: "Switch calendar views, or combine text styles in the second group.",
+    hint: "Switch between day, week, and month with the arrow keys.",
     demo: <ToggleButtonGroupDemo />,
   },
   {
@@ -451,6 +463,121 @@ const entries: {
   },
 ];
 
+const basicPreviews: Record<
+  string,
+  { demo: ReactNode; source: string; hint: string }
+> = {
+  avatar: {
+    demo: <AvatarBasicDemo />,
+    source: "avatar-basic-demo.tsx",
+    hint: "The name supplies both the accessible label and fallback initials.",
+  },
+  spinner: {
+    demo: <SpinnerBasicDemo />,
+    source: "spinner-basic-demo.tsx",
+    hint: "Name a standalone loading indicator; use decorative when nearby text already announces the wait.",
+  },
+  "animated-number": {
+    demo: <AnimatedNumberBasicDemo />,
+    source: "animated-number-basic-demo.tsx",
+    hint: "Add a task to see the value change; assistive technology receives the target value immediately.",
+  },
+  "progress-bar": {
+    demo: <ProgressBarBasicDemo />,
+    source: "progress-bar-basic-demo.tsx",
+    hint: "Set a label and value when the amount of work is known.",
+  },
+  "progress-ring": {
+    demo: <ProgressRingBasicDemo />,
+    source: "progress-ring-basic-demo.tsx",
+    hint: "Set a label and value for a task with known progress.",
+  },
+};
+
+const featuredExamples: Record<string, ComponentExample[]> = {
+  "button-group": [
+    {
+      title: "Vertical document actions",
+      description:
+        "Stack independent actions beside a document and update its review state.",
+      preview: <ButtonGroupVerticalDemo />,
+      sourcePath: "src/components/docs/button-group-vertical-demo.tsx",
+    },
+  ],
+  avatar: [
+    {
+      title: "Assigned reviewers",
+      description:
+        "Group named fallbacks when several people own the same review.",
+      preview: <AvatarDemo />,
+      sourcePath: "src/components/docs/avatar-demo.tsx",
+    },
+  ],
+  spinner: [
+    {
+      title: "Loading patterns",
+      description:
+        "Compare all seven variants before choosing one for the space available.",
+      preview: <SpinnerDemo />,
+      sourcePath: "src/components/docs/spinner-demo.tsx",
+    },
+  ],
+  "animated-number": [
+    {
+      title: "Task counter variants",
+      description:
+        "Complete or add tasks to compare the count and digit-slide transitions.",
+      preview: <AnimatedNumberDemo />,
+      sourcePath: "src/components/docs/animated-number-demo.tsx",
+    },
+  ],
+  "progress-bar": [
+    {
+      title: "Campaign asset upload",
+      description:
+        "Advance the file upload while preview preparation stays indeterminate until the upload completes.",
+      preview: <ProgressBarDemo />,
+      sourcePath: "src/components/docs/progress-bar-demo.tsx",
+    },
+  ],
+  "progress-ring": [
+    {
+      title: "Known and unknown progress",
+      description:
+        "Advance a determinate upload while the connection remains indeterminate.",
+      preview: <ProgressRingDemo />,
+      sourcePath: "src/components/docs/progress-ring-demo.tsx",
+    },
+  ],
+  "toggle-button": [
+    {
+      title: "Pinned projects",
+      description:
+        "Pin a project to mark it for quick access. The badge repeats the state without relying on color.",
+      preview: <ToggleButtonProjectsDemo />,
+      sourcePath: "src/components/docs/toggle-button-projects-demo.tsx",
+    },
+  ],
+  "number-field": [
+    {
+      title: "Team seat estimate",
+      description:
+        "Adjust seats within a plan limit and see the monthly estimate before saving the new count.",
+      preview: <NumberFieldSeatsDemo />,
+      sourcePath: "src/components/docs/number-field-seats-demo.tsx",
+    },
+  ],
+  "toggle-button-group": [
+    {
+      title: "Multiple text styles",
+      description:
+        "Combine formatting options and see the resulting text without leaving the editor.",
+      preview: <ToggleButtonGroupEditorDemo />,
+      sourcePath: "src/components/docs/toggle-button-group-editor-demo.tsx",
+    },
+  ],
+};
+
 const customSlugs = new Set([
   "card",
   "avatar",
@@ -496,6 +623,7 @@ export default async function NewComponentPage({
   const entry = entries[index];
   const previous = entries[index - 1];
   const next = entries[index + 1];
+  const basic = basicPreviews[slug];
   return (
     <ComponentPage
       name={entry.name}
@@ -510,16 +638,17 @@ export default async function NewComponentPage({
                 .map((part) => part[0].toUpperCase() + part.slice(1))
                 .join("")}`
       }
-      preview={entry.demo}
-      previewHint={entry.hint}
-      previewSourcePath={`src/components/docs/${slug}-demo.tsx`}
-      examples={
-        slug === "spinner"
+      preview={basic?.demo ?? entry.demo}
+      previewHint={basic?.hint ?? entry.hint}
+      previewSourcePath={`src/components/docs/${basic?.source ?? `${slug}-demo.tsx`}`}
+      examples={[
+        ...(featuredExamples[slug] ?? []),
+        ...(slug === "spinner"
           ? [
               {
-                title: "In context",
+                title: "Loading in context",
                 description:
-                  "Use a compact ring in a button, or pair a larger indicator with a spoken status for a waiting screen.",
+                  "Use a compact ring in a disabled button, or pair a larger indicator with a spoken status for a waiting screen.",
                 preview: <SpinnerUsageDemo />,
                 sourcePath: "src/components/docs/spinner-usage-demo.tsx",
               },
@@ -617,8 +746,8 @@ export default async function NewComponentPage({
                                 "src/components/docs/form-validation-demo.tsx",
                             },
                           ]
-                        : []
-      }
+                        : []),
+      ]}
       sourcePath={`src/components/ui/${slug}.tsx`}
       previous={
         previous

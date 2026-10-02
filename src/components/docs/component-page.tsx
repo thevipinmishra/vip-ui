@@ -540,14 +540,6 @@ const customComponentApi: Record<string, ApiProp[]> = {
     },
     {
       component: "DrawerContent",
-      prop: "scaleTarget",
-      type: "RefObject<HTMLElement | null> | string",
-      defaultValue: "undefined",
-      description:
-        "Wrap the entire page outside the overlay portal and pass its ref or CSS selector. It scales with opening, dragging, and closing (up to 0.96 at full height). Never target body or the portal.",
-    },
-    {
-      component: "DrawerContent",
       prop: "overlayProps",
       type: "ModalOverlayProps",
       defaultValue: "isDismissable: true",
@@ -818,10 +810,6 @@ export async function ComponentPage({
           {customGuidance[componentSlug] && (
             <p>{customGuidance[componentSlug]}</p>
           )}
-          <p>
-            This is a minimal composition. Open the Code tab in the preview
-            above for a complete example with imports.
-          </p>
         </div>
         <CodeBlock
           code={anatomy[componentSlug]}

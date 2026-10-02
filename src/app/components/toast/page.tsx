@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { ComponentPage } from "@/components/docs/component-page";
 import { ToastDemo } from "@/components/docs/toast-demo";
+import { ToastStatusDemo } from "@/components/docs/toast-status-demo";
+import { ToastViewport } from "@/components/ui/toast";
 
 export const metadata: Metadata = {
   title: "Toast | vip/ui",
@@ -9,16 +11,28 @@ export const metadata: Metadata = {
 
 export default function ToastPage() {
   return (
-    <ComponentPage
-      name="Toast"
-      reactAriaDocsHref="https://react-aria.adobe.com/Toast"
-      description="Confirm an action without interrupting the current task. Toasts stack in one region and offer a clear dismiss button."
-      preview={<ToastDemo />}
-      previewHint="Show a saved message that closes after five seconds, or a warning that stays until dismissed."
-      previewSourcePath="src/components/docs/toast-demo.tsx"
-      sourcePath="src/components/ui/toast.tsx"
-      previous={{ name: "Tooltip", href: "/components/tooltip" }}
-      next={{ name: "Separator", href: "/components/separator" }}
-    />
+    <>
+      <ComponentPage
+        name="Toast"
+        reactAriaDocsHref="https://react-aria.adobe.com/Toast"
+        description="Confirm an action without interrupting the current task. Toasts stack in one region and offer a clear dismiss button."
+        preview={<ToastDemo />}
+        previewHint="Save a draft to show a confirmation that closes after five seconds."
+        previewSourcePath="src/components/docs/toast-demo.tsx"
+        examples={[
+          {
+            title: "Upload notifications",
+            description:
+              "Simulate an upload to compare informational, success, and persistent warning toasts. Mount ToastViewport once for the page.",
+            preview: <ToastStatusDemo />,
+            sourcePath: "src/components/docs/toast-status-demo.tsx",
+          },
+        ]}
+        sourcePath="src/components/ui/toast.tsx"
+        previous={{ name: "Tooltip", href: "/components/tooltip" }}
+        next={{ name: "Separator", href: "/components/separator" }}
+      />
+      <ToastViewport />
+    </>
   );
 }

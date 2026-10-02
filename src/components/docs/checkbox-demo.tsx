@@ -46,11 +46,6 @@ export function CheckboxDemo() {
           </span>
         </Checkbox>
       </div>
-      <output className="mt-4 block border-t border-border pt-3 text-xs text-muted-foreground">
-        {[email && "Product updates", digest && "Weekly digest"]
-          .filter(Boolean)
-          .join(" · ") || "No optional emails selected"}
-      </output>
     </div>
   );
 }
