@@ -10,6 +10,12 @@ import {
   Text,
 } from "react-aria-components";
 import { cn } from "./utils";
+import {
+  fieldDescriptionStyles,
+  fieldErrorStyles,
+  fieldInputStyles,
+  fieldLabelStyles,
+} from "./field-styles";
 
 export interface TextFieldProps
   extends Omit<AriaTextFieldProps, "className" | "children"> {
@@ -59,7 +65,7 @@ export function TextFieldLabel({
     <Label
       {...props}
       data-slot="text-field-label"
-      className={cn("text-[13px] font-medium text-foreground", className)}
+      className={cn(fieldLabelStyles, className)}
     />
   );
 }
@@ -73,10 +79,7 @@ export function TextFieldInput({
       {...props}
       data-slot="text-field-input"
       className={composeRenderProps(className, (className) =>
-        cn(
-          "min-h-12 w-full cursor-text rounded-lg border border-input bg-card px-3.5 text-base text-foreground shadow-[var(--shadow-card)] outline-none data-[placeholder]:text-muted-foreground/80 hover:border-primary/45 motion-safe:transition-[border-color,box-shadow] motion-safe:duration-150 data-[focus-visible]:border-ring data-[focus-visible]:ring-3 data-[focus-visible]:ring-ring/50 data-[invalid]:border-destructive data-[invalid]:ring-3 data-[invalid]:ring-destructive/20 data-[disabled]:cursor-not-allowed data-[disabled]:bg-muted data-[disabled]:opacity-60 sm:text-sm",
-          className,
-        ),
+        cn(fieldInputStyles, "px-3.5", className),
       )}
     />
   );
@@ -91,7 +94,7 @@ export function TextFieldDescription({
       {...props}
       slot="description"
       data-slot="text-field-description"
-      className={cn("text-xs leading-5 text-muted-foreground", className)}
+      className={cn(fieldDescriptionStyles, className)}
     />
   );
 }
@@ -104,7 +107,7 @@ export function TextFieldError({
     <FieldError
       {...props}
       data-slot="text-field-error"
-      className={cn("text-xs leading-5 text-destructive", className)}
+      className={cn(fieldErrorStyles, className)}
     />
   );
 }

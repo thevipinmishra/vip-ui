@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -17,10 +16,9 @@ const frameworks = [
 ];
 
 export function SelectDescriptionsDemo() {
-  const [selected, setSelected] = useState("next");
   return (
-    <div className="w-full max-w-[340px] space-y-4">
-      <Select value={selected} onValueChange={setSelected}>
+    <div className="w-full max-w-[340px]">
+      <Select defaultValue="next">
         <SelectLabel>Framework</SelectLabel>
         <SelectTrigger />
         <SelectDescription>
@@ -43,12 +41,6 @@ export function SelectDescriptionsDemo() {
           ))}
         </SelectContent>
       </Select>
-      <output className="block rounded-[9px] border border-border bg-background px-3 py-2.5 text-xs text-muted-foreground">
-        Selected{" "}
-        <span className="font-medium text-foreground">
-          {frameworks.find((item) => item.id === selected)?.name}
-        </span>
-      </output>
     </div>
   );
 }

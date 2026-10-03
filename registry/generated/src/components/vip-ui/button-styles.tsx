@@ -12,12 +12,12 @@ export const buttonStyles = tv({
         "border border-border bg-card text-foreground shadow-[var(--shadow-card)] hover:bg-muted data-[pressed]:bg-muted",
       ghost: "text-foreground hover:bg-muted data-[pressed]:bg-muted",
       destructive:
-        "bg-destructive text-white shadow-[var(--shadow-card)] hover:brightness-95 data-[pressed]:brightness-95 dark:bg-destructive/60",
+        "bg-destructive text-background shadow-[var(--shadow-card)] hover:bg-destructive/90 data-[pressed]:bg-destructive/90",
       nav: "text-foreground hover:bg-muted aria-[pressed=true]:bg-accent aria-[pressed=true]:text-accent-foreground aria-[pressed=true]:hover:bg-accent",
     },
     size: {
       default: "h-11 px-5 text-sm",
-      sm: "h-9 px-3.5 text-[13px]",
+      sm: "h-9 px-3.5 text-sm",
       lg: "h-12 px-6 text-sm",
       icon: "size-11 cursor-pointer p-0",
       nav: "h-9 w-full justify-center px-0 text-xs sm:justify-start sm:px-2.5",

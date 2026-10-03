@@ -40,7 +40,7 @@ const visitsChart = defineChart({
   ],
   scales: {
     x: { scale: scalePoint },
-    y: { scale: scaleLinear, domain: [0, 90], grid: true },
+    y: { scale: scaleLinear().domain([0, 90]), grid: true },
   },
   tooltip: {
     use: tooltip,
@@ -79,7 +79,7 @@ const sourcesChart = defineChart({
   ],
   scales: {
     x: { scale: scalePoint },
-    y: { scale: scaleLinear, domain: [0, 90], grid: true },
+    y: { scale: scaleLinear().domain([0, 90]), grid: true },
   },
   color: {
     domain: ["Direct", "Search"],
@@ -127,7 +127,7 @@ const forecastChart = defineChart({
   ],
   scales: {
     x: { scale: scalePoint },
-    y: { scale: scaleLinear, domain: [0, 75], grid: true },
+    y: { scale: scaleLinear().domain([0, 75]), grid: true },
   },
   tooltip: {
     use: tooltip,

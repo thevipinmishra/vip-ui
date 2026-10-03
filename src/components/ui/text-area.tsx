@@ -10,6 +10,12 @@ import {
   Text,
 } from "react-aria-components";
 import { cn } from "@/lib/utils";
+import {
+  fieldDescriptionStyles,
+  fieldErrorStyles,
+  fieldInputStyles,
+  fieldLabelStyles,
+} from "./field-styles";
 
 export interface TextAreaProps
   extends Omit<AriaTextFieldProps, "className" | "children"> {
@@ -61,7 +67,7 @@ export function TextAreaLabel({
     <Label
       {...props}
       data-slot="text-area-label"
-      className={cn("text-[13px] font-medium text-foreground", className)}
+      className={cn(fieldLabelStyles, className)}
     />
   );
 }
@@ -76,7 +82,8 @@ export function TextAreaInput({
       data-slot="text-area-input"
       className={composeRenderProps(className, (className) =>
         cn(
-          "min-h-28 w-full cursor-text resize-y rounded-lg border border-input bg-card px-3.5 py-3 text-base leading-6 text-foreground shadow-[var(--shadow-card)] outline-none placeholder:text-muted-foreground/80 hover:border-primary/45 motion-safe:transition-[border-color,box-shadow] motion-safe:duration-150 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 invalid:border-destructive invalid:ring-3 invalid:ring-destructive/20 disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 sm:text-sm",
+          fieldInputStyles,
+          "min-h-28 resize-y px-3.5 py-3 leading-6",
           className,
         ),
       )}
@@ -93,7 +100,7 @@ export function TextAreaDescription({
       {...props}
       slot="description"
       data-slot="text-area-description"
-      className={cn("text-xs leading-5 text-muted-foreground", className)}
+      className={cn(fieldDescriptionStyles, className)}
     />
   );
 }
@@ -106,7 +113,7 @@ export function TextAreaError({
     <FieldError
       {...props}
       data-slot="text-area-error"
-      className={cn("text-xs leading-5 text-destructive", className)}
+      className={cn(fieldErrorStyles, className)}
     />
   );
 }

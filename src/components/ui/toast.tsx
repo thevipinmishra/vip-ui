@@ -163,7 +163,7 @@ export function ToastDescription({
       slot="description"
       data-slot="toast-description"
       className={cn(
-        "mt-1 block text-[13px] leading-5 text-muted-foreground",
+        "mt-1 block text-sm leading-5 text-muted-foreground",
         className,
       )}
     />

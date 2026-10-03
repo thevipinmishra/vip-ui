@@ -3,6 +3,7 @@ import { ComponentPage } from "@/components/docs/component-page";
 import { SelectDemo } from "@/components/docs/select-demo";
 import { SelectDescriptionsDemo } from "@/components/docs/select-descriptions-demo";
 import { SelectDisabledDemo } from "@/components/docs/select-disabled-demo";
+import { SelectInvalidDemo } from "@/components/docs/select-invalid-demo";
 
 export const metadata: Metadata = {
   title: "Select | vip/ui",
@@ -21,7 +22,7 @@ export default function SelectPage() {
       previewSourcePath="src/components/docs/select-demo.tsx"
       examples={[
         {
-          title: "Options with descriptions",
+          title: "Described options",
           description:
             "Keep supporting details in the menu while the trigger shows only the selected name.",
           preview: <SelectDescriptionsDemo />,
@@ -33,6 +34,13 @@ export default function SelectPage() {
             "Show the existing value when a field can no longer be changed.",
           preview: <SelectDisabledDemo />,
           sourcePath: "src/components/docs/select-disabled-demo.tsx",
+        },
+        {
+          title: "Invalid selection",
+          description:
+            "Mark a required choice invalid until an option is selected. The error clears when the user chooses a workspace.",
+          preview: <SelectInvalidDemo />,
+          sourcePath: "src/components/docs/select-invalid-demo.tsx",
         },
       ]}
       sourcePath="src/components/ui/select.tsx"

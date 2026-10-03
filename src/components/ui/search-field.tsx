@@ -12,6 +12,12 @@ import {
 } from "react-aria-components";
 import { Search, X } from "reicon-react";
 import { cn } from "@/lib/utils";
+import {
+  fieldDescriptionStyles,
+  fieldErrorStyles,
+  fieldInputStyles,
+  fieldLabelStyles,
+} from "./field-styles";
 
 export interface SearchFieldProps
   extends Omit<AriaSearchFieldProps, "children" | "className"> {
@@ -70,7 +76,7 @@ export function SearchFieldLabel({
     <Label
       {...props}
       data-slot="search-field-label"
-      className={cn("text-[13px] font-medium text-foreground", className)}
+      className={cn(fieldLabelStyles, className)}
     />
   );
 }
@@ -85,7 +91,8 @@ export function SearchFieldInput({
       data-slot="search-field-input"
       className={composeRenderProps(className, (className) =>
         cn(
-          "min-h-12 w-full cursor-text rounded-lg border border-input bg-card ps-10 pe-12 text-base text-foreground shadow-[var(--shadow-card)] outline-none placeholder:text-muted-foreground/80 hover:border-primary/45 motion-safe:transition-[border-color,box-shadow] motion-safe:duration-150 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 invalid:border-destructive invalid:ring-3 invalid:ring-destructive/20 disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 sm:text-sm [&::-webkit-search-cancel-button]:hidden",
+          fieldInputStyles,
+          "ps-10 pe-12 [&::-webkit-search-cancel-button]:hidden",
           className,
         ),
       )}
@@ -124,7 +131,7 @@ export function SearchFieldDescription({
       {...props}
       slot="description"
       data-slot="search-field-description"
-      className={cn("text-xs leading-5 text-muted-foreground", className)}
+      className={cn(fieldDescriptionStyles, className)}
     />
   );
 }
@@ -137,7 +144,7 @@ export function SearchFieldError({
     <FieldError
       {...props}
       data-slot="search-field-error"
-      className={cn("text-xs leading-5 text-destructive", className)}
+      className={cn(fieldErrorStyles, className)}
     />
   );
 }

@@ -71,7 +71,7 @@ export function InputGroupAddon({
       data-slot="input-group-addon"
       data-align={align}
       className={cn(
-        "inline-flex shrink-0 items-center gap-2 text-[13px] text-muted-foreground",
+        "inline-flex shrink-0 items-center gap-2 text-sm text-muted-foreground",
         align === "block-end" &&
           "w-full justify-end border-t border-border/70 py-2",
         className,

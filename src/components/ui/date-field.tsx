@@ -12,6 +12,12 @@ import {
 } from "react-aria-components";
 import { cn } from "@/lib/utils";
 import { DateSegment } from "./date-segment";
+import {
+  fieldDescriptionStyles,
+  fieldErrorStyles,
+  fieldLabelStyles,
+  segmentedFieldStyles,
+} from "./field-styles";
 
 export function DateField<T extends DateValue>({
   className,
@@ -35,16 +41,16 @@ export function DateField<T extends DateValue>({
       {children ?? (
         <>
           {label && (
-            <Label
-              data-slot="date-field-label"
-              className="text-[13px] font-medium"
-            >
+            <Label data-slot="date-field-label" className={fieldLabelStyles}>
               {label}
             </Label>
           )}
           <DateInput
             data-slot="date-field-input"
-            className="flex min-h-12 items-center rounded-lg border border-input bg-card px-3 text-sm shadow-[var(--shadow-card)] hover:border-primary/45 has-[[data-focus-visible]]:border-ring has-[[data-focus-visible]]:ring-3 has-[[data-focus-visible]]:ring-ring/50 group-invalid:border-destructive group-invalid:has-[[data-focus-visible]]:ring-destructive/20 group-disabled:bg-muted group-disabled:opacity-60 data-[focus-visible]:outline-none motion-safe:transition-[border-color,box-shadow] motion-safe:duration-150"
+            className={cn(
+              segmentedFieldStyles,
+              "px-3 text-sm data-[focus-visible]:outline-none",
+            )}
           >
             {(segment) => <DateSegment segment={segment} />}
           </DateInput>
@@ -52,14 +58,14 @@ export function DateField<T extends DateValue>({
             <Text
               slot="description"
               data-slot="date-field-description"
-              className="text-xs text-muted-foreground"
+              className={fieldDescriptionStyles}
             >
               {description}
             </Text>
           )}
           <FieldError
             data-slot="date-field-error"
-            className="text-xs text-destructive"
+            className={fieldErrorStyles}
           />
         </>
       )}

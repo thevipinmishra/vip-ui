@@ -147,7 +147,7 @@ export function AccordionContent({
     <CollapsiblePanel
       {...props}
       data-slot="accordion-content"
-      className={cn("text-[13px] leading-6 text-muted-foreground", className)}
+      className={cn("text-sm leading-6 text-muted-foreground", className)}
     >
       <div
         className={

@@ -23,6 +23,7 @@ export function PreviewTabs({
 
   return (
     <Tabs
+      data-slot="component-preview"
       selectedKey={selectedKey}
       onSelectionChange={(key) => setSelectedKey(String(key))}
       className="min-w-0 overflow-hidden rounded-xl bg-card text-card-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70"
@@ -69,14 +70,20 @@ export function PreviewTabs({
         </TabList>
       </div>
       <TabPanel id="preview" className="docs-tab-panel outline-none">
-        <div className="relative flex min-h-64 items-center justify-center px-5 py-14 sm:px-10">
+        <div className="relative flex min-h-72 items-center justify-center px-5 py-10 sm:px-10">
           <div className="relative z-10 flex w-full justify-center">
             {preview}
           </div>
         </div>
       </TabPanel>
       <TabPanel id="code" className="docs-tab-panel min-w-0 outline-none">
-        <CodeFrame code={code} filename={filename} language="tsx" embedded>
+        <CodeFrame
+          code={code}
+          filename={filename}
+          language="tsx"
+          expandable
+          embedded
+        >
           {source}
         </CodeFrame>
       </TabPanel>

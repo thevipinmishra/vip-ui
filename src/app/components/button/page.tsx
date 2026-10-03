@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ButtonBasicDemo } from "@/components/docs/button-basic-demo";
 import { ButtonDemo } from "@/components/docs/button-demo";
+import { ButtonSizesDemo } from "@/components/docs/button-sizes-demo";
 import { ButtonVariantsDemo } from "@/components/docs/button-variants-demo";
 import { ComponentPage } from "@/components/docs/component-page";
 
@@ -21,18 +22,25 @@ export default function ButtonPage() {
       previewSourcePath="src/components/docs/button-basic-demo.tsx"
       examples={[
         {
+          title: "Variants",
+          description:
+            "Choose a variant to match the action's priority. Use destructive for actions that remove data.",
+          preview: <ButtonVariantsDemo />,
+          sourcePath: "src/components/docs/button-variants-demo.tsx",
+        },
+        {
+          title: "Sizes",
+          description:
+            "Use size for placement. Give an icon-only button an accessible name.",
+          preview: <ButtonSizesDemo />,
+          sourcePath: "src/components/docs/button-sizes-demo.tsx",
+        },
+        {
           title: "Project actions",
           description:
             "Publish a draft, save another revision, or archive it. The status and revision update in the project card.",
           preview: <ButtonDemo />,
           sourcePath: "src/components/docs/button-demo.tsx",
-        },
-        {
-          title: "Variants and sizes",
-          description:
-            "Use visual priority for actions and size for placement. Name icon-only actions and disable unavailable ones.",
-          preview: <ButtonVariantsDemo />,
-          sourcePath: "src/components/docs/button-variants-demo.tsx",
         },
       ]}
       sourcePath="src/components/ui/button.tsx"

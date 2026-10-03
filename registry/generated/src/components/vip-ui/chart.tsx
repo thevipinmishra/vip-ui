@@ -13,17 +13,17 @@ const chartStyle = {
   "--ts-chart-tooltip-background": "var(--popover)",
   "--ts-chart-tooltip-color": "var(--popover-foreground)",
   "--ts-chart-tooltip-border": "1px solid var(--border)",
-  "--ts-chart-tooltip-border-radius": "calc(var(--radius) - 0.375rem)",
+  "--ts-chart-tooltip-border-radius": "var(--radius-md, var(--radius))",
   "--ts-chart-tooltip-max-width": "min(18rem, 90%)",
   "--ts-chart-tooltip-padding": "0.5rem 0.75rem",
   "--ts-chart-tooltip-font":
     "400 0.8125rem/1.5 var(--font-sans, system-ui, sans-serif)",
   "--ts-chart-tooltip-active-row-font-weight": "600",
   "--ts-chart-tooltip-active-row-background": "var(--muted)",
-  "--ts-chart-tooltip-active-row-border-radius": "0.375rem",
+  "--ts-chart-tooltip-active-row-border-radius":
+    "var(--radius-sm, var(--radius))",
   "--ts-chart-tooltip-active-row-shadow": "none",
-  "--ts-chart-tooltip-shadow":
-    "var(--shadow-float, 0 8px 24px rgb(0 0 0 / 0.12))",
+  "--ts-chart-tooltip-shadow": "var(--shadow-float, var(--shadow-lg))",
 } as CSSProperties;
 
 export function ChartFrame({

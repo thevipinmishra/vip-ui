@@ -97,7 +97,7 @@ export function TokenFieldLabel({
     <Label
       {...props}
       data-slot="token-field-label"
-      className={cn("text-[13px] font-medium", className)}
+      className={cn("text-sm font-medium", className)}
     />
   );
 }
@@ -118,7 +118,7 @@ export function TokenFieldInput<T extends TokenFieldValue = TokenFieldValue>({
       data-placeholder={placeholder}
       className={composeRenderProps(className, (className) =>
         cn(
-          "min-h-12 cursor-text rounded-lg border border-input bg-card px-3 py-2.5 text-sm leading-7 shadow-[var(--shadow-card)] outline-none empty:before:pointer-events-none empty:before:text-muted-foreground empty:before:content-[attr(data-placeholder)] hover:border-primary/45 data-[focused]:border-primary data-[focused]:ring-3 data-[focused]:ring-accent data-[disabled]:cursor-not-allowed data-[disabled]:bg-muted data-[disabled]:opacity-60",
+          "min-h-12 cursor-text rounded-lg border border-input bg-card px-3 py-2.5 text-sm leading-7 shadow-[var(--shadow-card)] outline-none empty:before:pointer-events-none empty:before:text-muted-foreground empty:before:content-[attr(data-placeholder)] hover:border-primary/45 data-[focused]:border-ring data-[focused]:ring-3 data-[focused]:ring-ring/50 data-[disabled]:cursor-not-allowed data-[disabled]:bg-muted data-[disabled]:opacity-60",
           className,
         ),
       )}

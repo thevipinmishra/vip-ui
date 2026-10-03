@@ -34,7 +34,7 @@ const revenueChart = defineChart({
   ],
   scales: {
     x: { scale: () => scaleBand().padding(0.1) },
-    y: { scale: scaleLinear, domain: [0, 110], grid: true },
+    y: { scale: scaleLinear().domain([0, 110]), grid: true },
   },
   tooltip: {
     use: tooltip,
@@ -72,7 +72,7 @@ const signupsChart = defineChart({
   ],
   scales: {
     x: { scale: scalePoint },
-    y: { scale: scaleLinear, domain: [0, 80], grid: true },
+    y: { scale: scaleLinear().domain([0, 80]), grid: true },
   },
   color: {
     domain: ["Organic", "Paid"],
@@ -112,7 +112,7 @@ const conversionChart = defineChart({
   ],
   scales: {
     x: { scale: scalePoint },
-    y: { scale: scaleLinear, domain: [0, 5], grid: true },
+    y: { scale: scaleLinear().domain([0, 5]), grid: true },
   },
   tooltip: {
     use: tooltip,

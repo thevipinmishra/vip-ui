@@ -6,7 +6,6 @@ import { CodeFrame } from "@/components/docs/code-frame";
 import { CodeSnippet } from "@/components/docs/code-snippet";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { chartCategories } from "./catalog";
-import { ChartCopyButton } from "./chart-copy-button";
 import { ChartDocumentation } from "./chart-documentation";
 import { ChartFilters } from "./chart-filters";
 import { ChartSourceDrawer } from "./chart-source-drawer";
@@ -51,8 +50,8 @@ export async function ChartGallery({
         </h1>
         <div className="mb-10 mt-4 flex flex-wrap items-end justify-between gap-4">
           <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
-            Browse live chart examples by type. Each preview has a copyable
-            source file and an accessible table of values.
+            Choose a chart type, then open View code to copy its source files.
+            Screen readers can access exact values in a table for each chart.
           </p>
           <Link
             href="#documentation"
@@ -98,46 +97,42 @@ function ChartCategoryContent({
 }) {
   return (
     <section aria-labelledby="category-title" className="pt-10">
-      <h2
-        id="category-title"
-        className="text-[clamp(2rem,4vw,3.4rem)] font-semibold tracking-[-0.055em]"
-      >
-        {category.title}
-      </h2>
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <h2
+          id="category-title"
+          className="text-[clamp(2rem,4vw,3.4rem)] font-semibold tracking-[-0.055em]"
+        >
+          {category.title}
+        </h2>
+        <ChartSourceDrawer title={category.title}>
+          <CodeFrame
+            code={shared}
+            filename="src/components/charts/chart-plot.tsx"
+            language="tsx"
+            embedded
+            scrollable
+          >
+            <CodeSnippet code={shared} />
+          </CodeFrame>
+          <CodeFrame
+            code={source}
+            filename={sourcePath}
+            language="tsx"
+            embedded
+            scrollable
+          >
+            <CodeSnippet code={source} />
+          </CodeFrame>
+        </ChartSourceDrawer>
+      </div>
       <div className="mt-8 grid gap-5 lg:grid-cols-2">
         {category.examples.map((example) => (
           <Card
             key={example.name}
             className="relative z-0 flex min-w-0 flex-col rounded-[22px] hover:z-10 focus-within:z-10"
           >
-            <CardHeader className="flex-row flex-wrap items-center justify-between gap-3">
+            <CardHeader>
               <CardTitle>{example.name}</CardTitle>
-              <div className="flex shrink-0 items-center gap-2">
-                <ChartCopyButton
-                  code={source}
-                  label={`Copy ${category.label.toLowerCase()} chart source`}
-                />
-                <ChartSourceDrawer title={example.name}>
-                  <CodeFrame
-                    code={shared}
-                    filename="src/components/charts/chart-plot.tsx"
-                    language="tsx"
-                    embedded
-                    scrollable
-                  >
-                    <CodeSnippet code={shared} />
-                  </CodeFrame>
-                  <CodeFrame
-                    code={source}
-                    filename={sourcePath}
-                    language="tsx"
-                    embedded
-                    scrollable
-                  >
-                    <CodeSnippet code={source} />
-                  </CodeFrame>
-                </ChartSourceDrawer>
-              </div>
             </CardHeader>
             <CardContent className="min-w-0 flex-1 pb-6 pt-5">
               {example.preview}

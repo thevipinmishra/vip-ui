@@ -35,7 +35,9 @@ export function ChartSourceDrawer({
           <div>
             <DrawerTitle>{title}</DrawerTitle>
             <DrawerDescription>
-              Copy the chart frame and category source to use this example.
+              Install the vip/ui chart frame from the documentation, then copy
+              both files into the same folder. Install any other vip/ui imports
+              in the category file, then import the example you need.
             </DrawerDescription>
           </div>
           <DrawerClose />

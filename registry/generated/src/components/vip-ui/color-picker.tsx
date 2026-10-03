@@ -59,7 +59,7 @@ export function ColorPicker({
                 channel="hue"
                 className="grid gap-2"
               >
-                <Label className="text-[13px] font-medium">Hue</Label>
+                <Label className="text-sm font-medium">Hue</Label>
                 <SliderTrack className="relative h-5 rounded-full">
                   <ColorThumb
                     data-slot="color-picker-hue-thumb"

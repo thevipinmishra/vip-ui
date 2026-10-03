@@ -14,6 +14,7 @@ import { Chart } from "@tanstack/charts/react/core";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
+import { curveLinearClosed } from "d3-shape";
 import {
   ChartPlot,
   galleryRenderer,
@@ -54,12 +55,14 @@ const profileChart = defineChart({
         radialArea(profile, {
           angle: "metric",
           radius: "score",
+          curve: curveLinearClosed,
           fill: "var(--ts-chart-1)",
           fillOpacity: 0.18,
         }),
         radialLine(profile, {
           angle: "metric",
           radius: "score",
+          curve: curveLinearClosed,
           stroke: "var(--ts-chart-1)",
           strokeWidth: 2.5,
         }),
@@ -104,6 +107,7 @@ const comparisonChart = defineChart({
         radialLine(comparison, {
           angle: "metric",
           radius: "score",
+          curve: curveLinearClosed,
           z: "team",
           color: "team",
           strokeWidth: 2.5,
