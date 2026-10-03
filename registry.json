@@ -96,6 +96,55 @@
       ]
     },
     {
+      "name": "vip-attachment",
+      "type": "registry:ui",
+      "title": "Attachment",
+      "description": "Preview and manage files before or during an upload.",
+      "dependencies": [
+        "motion",
+        "react-aria-components",
+        "reicon-react",
+        "tailwind-variants"
+      ],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/progress-bar.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/progress-bar.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/attachment.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/attachment.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/drop-zone.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/drop-zone.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/file-trigger.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/file-trigger.tsx"
+        }
+      ]
+    },
+    {
       "name": "vip-autocomplete",
       "type": "registry:ui",
       "title": "Autocomplete",
@@ -228,9 +277,14 @@
           "target": "@components/vip-ui/button.tsx"
         },
         {
-          "path": "registry/generated/src/components/vip-ui/badge.tsx",
+          "path": "registry/generated/src/components/vip-ui/popover.tsx",
           "type": "registry:file",
-          "target": "@components/vip-ui/badge.tsx"
+          "target": "@components/vip-ui/popover.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/menu.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/menu.tsx"
         }
       ]
     },
@@ -308,6 +362,16 @@
           "path": "registry/generated/src/components/vip-ui/button-group.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/button-group.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/popover.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/popover.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/menu.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/menu.tsx"
         }
       ]
     },
@@ -702,6 +766,35 @@
           "path": "registry/generated/src/components/vip-ui/command-palette.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/command-palette.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-copy-button",
+      "type": "registry:ui",
+      "title": "Copy Button",
+      "description": "Copy a value with success and failure feedback.",
+      "dependencies": [
+        "motion",
+        "react-aria-components",
+        "reicon-react",
+        "tailwind-variants"
+      ],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/copy-button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/copy-button.tsx"
         }
       ]
     },
@@ -1219,6 +1312,16 @@
           "target": "@components/vip-ui/input-group.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/text-field.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/text-field.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/button-styles.tsx"
@@ -1232,16 +1335,6 @@
           "path": "registry/generated/src/components/vip-ui/form.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/form.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/field-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/text-field.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/text-field.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/text-area.tsx",
@@ -1347,6 +1440,65 @@
       ]
     },
     {
+      "name": "vip-message",
+      "type": "registry:ui",
+      "title": "Message",
+      "description": "Display an entry in a conversation.",
+      "dependencies": [
+        "motion",
+        "react-aria-components",
+        "reicon-react",
+        "tailwind-variants"
+      ],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/message.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/message.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/avatar.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/avatar.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/copy-button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/copy-button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/presence-list.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/presence-list.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/text-area.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/text-area.tsx"
+        }
+      ]
+    },
+    {
       "name": "vip-meter",
       "type": "registry:ui",
       "title": "Meter",
@@ -1367,6 +1519,50 @@
           "path": "registry/generated/src/components/vip-ui/slider.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/slider.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-native-select",
+      "type": "registry:ui",
+      "title": "Native Select",
+      "description": "Choose an option with the device's native select menu.",
+      "dependencies": [
+        "motion",
+        "react-aria-components",
+        "reicon-react",
+        "tailwind-variants"
+      ],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/native-select.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/native-select.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/form.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/form.tsx"
         }
       ]
     },
@@ -1435,6 +1631,60 @@
           "path": "registry/generated/src/components/vip-ui/pagination.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/pagination.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-password-field",
+      "type": "registry:ui",
+      "title": "Password Field",
+      "description": "Enter a password and toggle its visibility.",
+      "dependencies": [
+        "motion",
+        "react-aria-components",
+        "reicon-react",
+        "tailwind-variants"
+      ],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/input-group.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/input-group.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/text-field.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/text-field.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/password-field.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/password-field.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/form.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/form.tsx"
         }
       ]
     },
@@ -1536,6 +1786,11 @@
           "path": "registry/generated/src/components/vip-ui/button.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-link.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-link.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/popover.tsx",
@@ -2385,40 +2640,6 @@
       ]
     },
     {
-      "name": "vip-typing-indicator",
-      "type": "registry:ui",
-      "title": "Typing Indicator",
-      "description": "Show that someone is composing a message.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
-      "files": [
-        {
-          "path": "registry/generated/src/components/vip-ui/utils.ts",
-          "type": "registry:file",
-          "target": "@components/vip-ui/utils.ts"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/spinner.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/spinner.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/typing-indicator.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/typing-indicator.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
-        }
-      ]
-    },
-    {
       "name": "vip-example-business",
       "type": "registry:block",
       "title": "business example",
@@ -2527,6 +2748,16 @@
           "target": "@components/vip-ui/button-group.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/popover.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/popover.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/menu.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/menu.tsx"
+        },
+        {
           "path": "registry/generated/src/app/examples/business/theme-toggle.tsx",
           "type": "registry:file",
           "target": "src/app/examples/business/theme-toggle.tsx"
@@ -2550,11 +2781,6 @@
           "path": "registry/generated/src/components/vip-ui/search-field.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/search-field.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/popover.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/popover.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/press-button.tsx",
@@ -2630,6 +2856,16 @@
           "path": "registry/generated/src/components/vip-ui/button-group.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/button-group.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/popover.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/popover.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/menu.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/menu.tsx"
         },
         {
           "path": "registry/generated/src/app/examples/chat/theme-toggle.tsx",
@@ -2748,6 +2984,16 @@
           "target": "@components/vip-ui/button-group.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/popover.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/popover.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/menu.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/menu.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/calendar.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/calendar.tsx"
@@ -2761,11 +3007,6 @@
           "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/field-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/popover.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/popover.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/date-picker.tsx",
@@ -2928,6 +3169,16 @@
           "target": "@components/vip-ui/button-group.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/popover.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/popover.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/menu.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/menu.tsx"
+        },
+        {
           "path": "registry/generated/src/app/examples/studio/theme-toggle.tsx",
           "type": "registry:file",
           "target": "src/app/examples/studio/theme-toggle.tsx"
@@ -2948,11 +3199,6 @@
           "target": "@components/vip-ui/color-swatch.tsx"
         },
         {
-          "path": "registry/generated/src/components/vip-ui/popover.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/popover.tsx"
-        },
-        {
           "path": "registry/generated/src/components/vip-ui/color-picker.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/color-picker.tsx"
@@ -2971,11 +3217,6 @@
           "path": "registry/generated/src/components/vip-ui/kbd-code.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/kbd-code.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/menu.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/menu.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/search-field.tsx",

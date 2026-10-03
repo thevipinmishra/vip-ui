@@ -21,19 +21,21 @@ const projects = [
 ];
 
 function subscribe(callback: () => void) {
-  window.addEventListener("hashchange", callback);
-  return () => window.removeEventListener("hashchange", callback);
+  window.addEventListener("popstate", callback);
+  return () => window.removeEventListener("popstate", callback);
 }
 
 function currentPage() {
-  const match = /^#page-([1-3])$/.exec(window.location.hash);
+  const match = /^([1-3])$/.exec(
+    new URLSearchParams(window.location.search).get("page") ?? "",
+  );
   return match ? Number(match[1]) : 1;
 }
 
 export function PaginationDemo() {
   const page = useSyncExternalStore(subscribe, currentPage, () => 1);
   return (
-    <div className="w-full max-w-md space-y-5">
+    <div className="grid w-full max-w-md gap-5">
       <ul className="divide-y divide-border rounded-lg border border-border px-4 text-sm">
         {projects.slice((page - 1) * 3, page * 3).map((project) => (
           <li className="py-3" key={project}>
@@ -45,7 +47,7 @@ export function PaginationDemo() {
         <PaginationList>
           {page > 1 && (
             <PaginationItem>
-              <PaginationLink href={`#page-${page - 1}`}>
+              <PaginationLink href={`?page=${page - 1}#preview`}>
                 Previous
               </PaginationLink>
             </PaginationItem>
@@ -53,7 +55,7 @@ export function PaginationDemo() {
           {[1, 2, 3].map((number) => (
             <PaginationItem key={number}>
               <PaginationLink
-                href={`#page-${number}`}
+                href={`?page=${number}#preview`}
                 isCurrent={number === page}
                 aria-label={`Page ${number}`}
               >
@@ -63,7 +65,9 @@ export function PaginationDemo() {
           ))}
           {page < 3 && (
             <PaginationItem>
-              <PaginationLink href={`#page-${page + 1}`}>Next</PaginationLink>
+              <PaginationLink href={`?page=${page + 1}#preview`}>
+                Next
+              </PaginationLink>
             </PaginationItem>
           )}
         </PaginationList>

@@ -1,59 +1,33 @@
 "use client";
 
 import { useState } from "react";
-import { Archive, Check } from "reicon-react";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 
 export function ButtonGroupVerticalDemo() {
-  const [status, setStatus] = useState<"draft" | "review" | "archived">(
-    "draft",
-  );
+  const [status, setStatus] = useState("Draft");
 
   return (
-    <div className="flex w-full max-w-md flex-wrap items-center justify-between gap-5 rounded-xl bg-card p-5 ring-1 ring-border/70">
-      <div className="min-w-0">
-        <p className="text-sm font-semibold">Homepage copy</p>
-        <p className="mt-1 text-xs text-muted-foreground">
-          Autumn campaign · Maya Chen
-        </p>
-        <div className="mt-3">
-          <Badge variant={status === "review" ? "accent" : "neutral"} dot>
-            {status === "review"
-              ? "Ready for review"
-              : status === "archived"
-                ? "Archived"
-                : "Draft"}
-          </Badge>
-        </div>
-      </div>
-      <ButtonGroup orientation="vertical" aria-label="Homepage copy actions">
+    <div className="grid justify-items-center gap-3">
+      <ButtonGroup orientation="vertical" aria-label="Draft actions">
         <Button
-          size="sm"
           variant="ghost"
-          isDisabled={status === "review"}
-          onPress={() => setStatus("review")}
+          isDisabled={status === "Ready for review"}
+          onPress={() => setStatus("Ready for review")}
         >
-          <Check size={16} aria-hidden="true" /> Mark for review
+          Mark for review
         </Button>
         <Button
-          size="sm"
           variant="ghost"
-          isDisabled={status === "archived"}
-          onPress={() => setStatus("archived")}
+          isDisabled={status === "Archived"}
+          onPress={() => setStatus("Archived")}
         >
-          <Archive size={16} aria-hidden="true" /> Archive draft
-        </Button>
-        <Button
-          size="sm"
-          variant="ghost"
-          isDisabled={status === "draft"}
-          onPress={() => setStatus("draft")}
-        >
-          Restore draft
+          Archive draft
         </Button>
       </ButtonGroup>
+      <output className="text-sm text-muted-foreground">
+        Status: {status}
+      </output>
     </div>
   );
 }

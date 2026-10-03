@@ -13,7 +13,7 @@ export default function TextFieldPage() {
     <ComponentPage
       name="Text field"
       reactAriaDocsHref="https://react-aria.adobe.com/TextField"
-      description="Use Text field for a single line of text. Add help text when the expected value needs explanation and show errors near the input."
+      description="A field for entering a single line of text."
       preview={<TextFieldBasicDemo />}
       previewHint="A visible label identifies the input even when its placeholder disappears."
       previewSourcePath="src/components/docs/text-field-basic-demo.tsx"

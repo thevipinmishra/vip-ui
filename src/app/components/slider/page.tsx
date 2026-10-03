@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ComponentPage } from "@/components/docs/component-page";
 import { SliderDemo } from "@/components/docs/slider-demo";
+import { SliderDisabledDemo } from "@/components/docs/slider-disabled-demo";
 import { SliderRangeDemo } from "@/components/docs/slider-range-demo";
 
 export const metadata: Metadata = {
@@ -13,17 +14,24 @@ export default function SliderPage() {
     <ComponentPage
       name="Slider"
       reactAriaDocsHref="https://react-aria.adobe.com/Slider"
-      description="Choose a value in a bounded range. The current value stays beside the label while the thumb responds to pointer and keyboard input."
+      description="A control for choosing a value or range on a track."
       preview={<SliderDemo />}
       previewHint="Drag the thumb or use arrow keys to change the volume."
       previewSourcePath="src/components/docs/slider-demo.tsx"
       examples={[
         {
-          title: "Range and disabled",
+          title: "Price range",
           description:
-            "Use two thumbs to set a minimum and maximum, or lock a value when it cannot be edited.",
+            "Use two thumbs to set a minimum and maximum. The value updates as you move either thumb.",
           preview: <SliderRangeDemo />,
           sourcePath: "src/components/docs/slider-range-demo.tsx",
+        },
+        {
+          title: "Disabled slider",
+          description:
+            "Keep the current volume visible when it cannot be changed.",
+          preview: <SliderDisabledDemo />,
+          sourcePath: "src/components/docs/slider-disabled-demo.tsx",
         },
       ]}
       sourcePath="src/components/ui/slider.tsx"

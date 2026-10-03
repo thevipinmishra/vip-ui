@@ -14,7 +14,7 @@ export default function CheckboxPage() {
     <ComponentPage
       name="Checkbox"
       reactAriaDocsHref="https://react-aria.adobe.com/Checkbox"
-      description="Use Checkbox for an independent choice. The label is part of the press target; Space toggles the selection."
+      description="A control for selecting or clearing a single option."
       preview={<CheckboxBasicDemo />}
       previewHint="Toggle a single email preference with Space or a pointer."
       previewSourcePath="src/components/docs/checkbox-basic-demo.tsx"

@@ -1,47 +1,42 @@
 "use client";
 
 import { useState } from "react";
-import { Minus, Plus } from "reicon-react";
+import { More } from "reicon-react";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
+import {
+  MenuContent,
+  MenuItem,
+  MenuPopover,
+  MenuTrigger,
+} from "@/components/ui/menu";
 
 export function ButtonGroupDemo() {
-  const [zoom, setZoom] = useState(100);
+  const [status, setStatus] = useState("Draft ready to save.");
 
   return (
-    <div className="flex w-full max-w-sm flex-col items-start gap-5">
-      <ButtonGroup aria-label="Preview zoom">
-        <Button
-          size="icon"
-          variant="ghost"
-          aria-label="Zoom out"
-          isDisabled={zoom === 75}
-          onPress={() => setZoom((value) => Math.max(75, value - 25))}
-        >
-          <Minus size={17} aria-hidden="true" />
+    <div className="grid justify-items-center gap-3">
+      <ButtonGroup aria-label="Draft actions">
+        <Button variant="ghost" onPress={() => setStatus("Draft saved.")}>
+          Save draft
         </Button>
-        <output
-          aria-label="Zoom level"
-          className="min-w-14 px-1 text-center text-sm font-medium tabular-nums"
-        >
-          {zoom}%
-        </output>
-        <Button
-          size="icon"
-          variant="ghost"
-          aria-label="Zoom in"
-          isDisabled={zoom === 150}
-          onPress={() => setZoom((value) => Math.min(150, value + 25))}
-        >
-          <Plus size={17} aria-hidden="true" />
-        </Button>
+        <MenuTrigger>
+          <Button variant="ghost" size="icon" aria-label="More draft actions">
+            <More size={18} aria-hidden="true" />
+          </Button>
+          <MenuPopover>
+            <MenuContent>
+              <MenuItem onAction={() => setStatus("Draft duplicated.")}>
+                Duplicate draft
+              </MenuItem>
+              <MenuItem onAction={() => setStatus("Draft archived.")}>
+                Archive draft
+              </MenuItem>
+            </MenuContent>
+          </MenuPopover>
+        </MenuTrigger>
       </ButtonGroup>
-      <p
-        className="font-semibold text-foreground"
-        style={{ fontSize: `${zoom / 100}rem` }}
-      >
-        Project overview
-      </p>
+      <output className="text-sm text-muted-foreground">{status}</output>
     </div>
   );
 }

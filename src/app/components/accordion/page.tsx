@@ -15,7 +15,7 @@ export default function AccordionPage() {
     <ComponentPage
       name="Accordion"
       reactAriaDocsHref="https://react-aria.adobe.com/DisclosureGroup"
-      description="A set of questions that expands in place. Each heading remains available as a keyboard accessible button."
+      description="Displays collapsible sections of related content."
       preview={<AccordionDemo />}
       previewHint="Open a question to read its answer."
       previewSourcePath="src/components/docs/accordion-demo.tsx"

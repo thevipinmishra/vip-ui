@@ -14,6 +14,7 @@ const descriptions = {
   "animated-number":
     "Animate a changing value while keeping its accessible text stable.",
   autocomplete: "Find suggestions as you type in a text field.",
+  attachment: "Preview and manage files before or during an upload.",
   avatar: "Show a person with an image or initials.",
   badge: "Label an item with short status or metadata.",
   breadcrumbs: "Link back through a page hierarchy.",
@@ -35,6 +36,7 @@ const descriptions = {
   "color-picker": "Choose a color with visual controls and a hex field.",
   "color-swatch-picker": "Choose from a set of color swatches.",
   "color-swatch": "Show a named color sample.",
+  "copy-button": "Copy a value with success and failure feedback.",
   "combo-box": "Filter and select from a collection of options.",
   "command-palette": "Find and run actions with keyboard search.",
   "date-field": "Enter a date one editable segment at a time.",
@@ -57,9 +59,12 @@ const descriptions = {
   link: "Navigate with an accessible text link.",
   "list-box": "Select an option from a visible list.",
   menu: "Choose an action from a popover menu.",
+  message: "Display an entry in a conversation.",
   meter: "Display a measured value against a known range.",
   "number-field": "Enter or step through numeric values.",
+  "native-select": "Choose an option with the device's native select menu.",
   pagination: "Navigate between pages of results.",
+  "password-field": "Enter a password and toggle its visibility.",
   popover: "Show contextual content anchored to a trigger.",
   "presence-list": "Animate additions and removals in a semantic list.",
   "press-button": "Handle press interactions for shared button controls.",
@@ -93,7 +98,6 @@ const descriptions = {
   toolbar: "Group related actions with arrow-key navigation.",
   tooltip: "Show short supplementary help on hover or focus.",
   tree: "Browse and select items in a nested collection.",
-  "typing-indicator": "Show that someone is composing a message.",
 };
 const demos = new Map(
   await Promise.all(

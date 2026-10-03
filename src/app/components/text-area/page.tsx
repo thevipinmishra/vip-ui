@@ -13,7 +13,7 @@ export default function TextAreaPage() {
     <ComponentPage
       name="Text area"
       reactAriaDocsHref="https://react-aria.adobe.com/TextField#textarea"
-      description="A field for longer answers, with a visible label, optional guidance, and room to resize."
+      description="A field for entering multiline text."
       preview={<TextAreaBasicDemo />}
       previewHint="Use a visible label for a longer answer."
       previewSourcePath="src/components/docs/text-area-basic-demo.tsx"

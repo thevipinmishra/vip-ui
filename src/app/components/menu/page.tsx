@@ -15,7 +15,7 @@ export default function MenuPage() {
     <ComponentPage
       name="Menu"
       reactAriaDocsHref="https://react-aria.adobe.com/Menu"
-      description="Offer several actions from one trigger without crowding the page. The menu handles focus, arrow keys, typeahead, and Escape."
+      description="Displays a list of actions or choices from a trigger."
       preview={<MenuDemo />}
       previewHint="Open the menu, move with the arrow keys, and choose an action."
       previewSourcePath="src/components/docs/menu-demo.tsx"

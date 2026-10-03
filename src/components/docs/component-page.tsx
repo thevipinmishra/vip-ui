@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "reicon-react";
 import { readRegistryItem, registryUrl } from "@/lib/registry-docs";
 import { CodeBlock } from "./code-block";
+import { ComponentComposition } from "./component-composition";
 import { compositions } from "./component-compositions";
 import { InstallTabs } from "./install-tabs";
 import { PackageManagerCommand } from "./package-manager-command";
@@ -29,13 +30,154 @@ function htmlPart(component: string, element: string): ApiProp {
 }
 
 const customComponentApi: Record<string, ApiProp[]> = {
+  attachment: [
+    {
+      component: "AttachmentList",
+      prop: "children",
+      type: "ReactNode",
+      defaultValue: "required",
+      description: "Place keyed Attachment items in this semantic list.",
+    },
+    {
+      component: "Attachment",
+      prop: "name / size / previewUrl",
+      type: "string / number / string",
+      defaultValue: "required / — / —",
+      description:
+        "Display the filename, optional byte size, and an image preview URL supplied by the app.",
+    },
+    {
+      component: "Attachment",
+      prop: "status / progress / errorMessage",
+      type: '"ready" | "uploading" | "uploaded" | "error" / number / string',
+      defaultValue: '"ready" / — / —',
+      description:
+        "Show app-owned upload state and a progress bar for known or unknown progress.",
+    },
+    {
+      component: "Attachment",
+      prop: "onRemove / onRetry",
+      type: "() => void",
+      defaultValue: "—",
+      description:
+        "Supply the actions that remove a file or retry a failed upload.",
+    },
+  ],
+  "native-select": [
+    {
+      component: "NativeSelect",
+      prop: "label / children",
+      type: "string / ReactNode",
+      defaultValue: "required",
+      description:
+        "Associate a visible label with native option or optgroup children.",
+    },
+    {
+      component: "NativeSelect",
+      prop: "description / error / isInvalid",
+      type: "string / string / boolean",
+      defaultValue: "— / — / false",
+      description:
+        "Connect help and validation text to the select via aria-describedby.",
+    },
+    {
+      component: "NativeSelect",
+      prop: "placeholder / containerClassName",
+      type: "string / string",
+      defaultValue: "—",
+      description: "Add an empty option or change the outer field layout.",
+    },
+    {
+      component: "NativeSelect",
+      prop: "select attributes",
+      type: 'ComponentProps<"select">',
+      defaultValue: "—",
+      description:
+        "Use value, defaultValue, onChange, required, disabled, and native form submission.",
+    },
+  ],
+  message: [
+    {
+      component: "Message",
+      prop: "sender / side",
+      type: 'string / "incoming" | "outgoing" | "system"',
+      defaultValue: 'required / "incoming"',
+      description: "Name the author and choose how the entry is aligned.",
+    },
+    {
+      component: "Message",
+      prop: "avatar / timestamp / dateTime / status",
+      type: "ReactNode / string / string / string",
+      defaultValue: "—",
+      description:
+        "Show identity, a visible time, a machine-readable time, or delivery status.",
+    },
+    {
+      component: "Message",
+      prop: "children / actions",
+      type: "ReactNode",
+      defaultValue: "required / —",
+      description:
+        "Render plain or rich message content and optional independent actions.",
+    },
+  ],
+  "password-field": [
+    {
+      component: "PasswordField",
+      prop: "label / description / placeholder",
+      type: "string",
+      defaultValue: "label required",
+      description:
+        "Name the field and optionally give guidance near its input.",
+    },
+    {
+      component: "PasswordField",
+      prop: "autoComplete",
+      type: "string",
+      defaultValue: '"current-password"',
+      description: "Use new-password when creating a credential.",
+    },
+    {
+      component: "PasswordField",
+      prop: "TextField props",
+      type: "TextFieldProps",
+      defaultValue: "—",
+      description:
+        "Pass name, value, onChange, isRequired, minLength, isDisabled, and validation state through to TextField.",
+    },
+  ],
+  "copy-button": [
+    {
+      component: "CopyButton",
+      prop: "value",
+      type: "string",
+      defaultValue: "required",
+      description: "The exact text written to the clipboard.",
+    },
+    {
+      component: "CopyButton",
+      prop: "label / text",
+      type: "string",
+      defaultValue: '"Copy" / "Copy"',
+      description: "Accessible action name and visible idle label.",
+    },
+    {
+      component: "CopyButton",
+      prop: "Button props",
+      type: "ButtonProps",
+      defaultValue: 'variant="outline", size="default"',
+      description:
+        "Use a shared button variant or size and pass disabled or other Button props.",
+    },
+  ],
   "button-group": [
     {
       component: "ButtonGroup",
       prop: "orientation",
       type: '"horizontal" | "vertical"',
       defaultValue: '"horizontal"',
-      description: "Lay out independent actions in a row or column.",
+      description:
+        "Joins adjacent buttons in a row or column without changing their Tab order.",
     },
     {
       component: "ButtonGroup",
@@ -178,20 +320,6 @@ const customComponentApi: Record<string, ApiProp[]> = {
       type: "(item: T) => ReactNode",
       defaultValue: "required",
       description: "Render each item's contents inside a semantic list item.",
-    },
-  ],
-  "typing-indicator": [
-    {
-      component: "TypingIndicator",
-      prop: "label",
-      type: "string",
-      defaultValue: '"Typing"',
-      description: "Visible status text announced when the indicator appears.",
-    },
-    {
-      ...htmlPart("TypingIndicator", "HTMLOutputElement"),
-      description:
-        "Accepts output attributes and className; its dots are decorative.",
     },
   ],
   "input-group": [
@@ -597,10 +725,20 @@ const customComponentApi: Record<string, ApiProp[]> = {
 };
 
 const customGuidance: Record<string, string> = {
+  attachment:
+    "Attachment displays files but does not select, validate, or upload them. Combine it with FileTrigger or DropZone. Keep File objects, preview URLs, upload requests, and progress in your app; revoke preview URLs after removal and on unmount. Restore focus before removing a focused attachment action.",
+  "native-select":
+    "NativeSelect uses a real HTML select, including the operating system's picker on touch devices. Add option or optgroup children; use Select when options need descriptions or custom content. Keep a placeholder option empty so required validation can reject it.",
+  message:
+    "Use Message for a conversation entry, not an entire chat app. Provide a sender and optional visible timestamp or delivery status. Actions must remain visible on touch; add PresenceList to animate new entries, and use a labeled log for a live conversation. Keep the composer as an application composition of TextArea and Button.",
+  "password-field":
+    "Use current-password for sign-in and new-password for creation. The reveal control stays separately focusable and never changes the field value. Keep validation next to the field, and do not log or display submitted credentials.",
+  "copy-button":
+    "CopyButton writes value only after a press. It shows Copied on success or Retry on failure; keep the source value readable so a user can select it when clipboard access is unavailable.",
   "button-group":
-    "Group independent actions with Button or ButtonLink. Each action stays in the normal tab order. Use Toggle button group for a persistent selection and Toolbar for arrow-key navigation; give an unlabeled group an accessible name.",
+    "Place independent actions in ButtonGroup, such as a Save button followed by a MenuTrigger with an icon Button. Use a ghost variant for joined edges, and name both the group and icon action. Each button stays in the normal Tab order; use Toggle button group for persistent selection or Toolbar for arrow-key navigation.",
   dialog:
-    'Ordinary dialogs close on outside press or Escape. Use role="alertdialog" for confirmations that must ignore outside press; provide a visible Cancel or confirm action. Escape remains available. Set overlayProps.isDismissable=false to disable outside press on an ordinary dialog.',
+    'Dialogs attach to the bottom edge and slide in on narrow screens, without a drag handle or snap points. Use Drawer when people need to drag or resize the panel. Ordinary dialogs close on outside press or Escape. Use role="alertdialog" for confirmations that must ignore outside press; provide a visible Cancel or confirm action. Escape remains available. Set overlayProps.isDismissable=false to disable outside press on an ordinary dialog.',
   timeline:
     "Put events in chronological or reverse-chronological order. Use a real time element with dateTime for timestamps and keep descriptions optional. Timeline is a plain ordered list, not a keyboard-managed control.",
   "text-swap":
@@ -617,8 +755,6 @@ const customGuidance: Record<string, string> = {
     "Pass a visible label and use value for known progress. Use isIndeterminate when the amount remaining is unknown; the reduced-motion version keeps a static partial arc. For a long valueLabel, set showValue to false and display the detail nearby. Use Meter for a measurement rather than task progress.",
   "presence-list":
     "Use stable keys from your data, not array indexes. The component renders a plain ul; use Grid list or List box for keyboard-managed collections. Exiting rows become inert. If a removed row contains the focused control, move focus to a remaining control before removing it.",
-  "typing-indicator":
-    "Mount the indicator only while someone is composing. Pass a specific label such as 'Maya is typing'. It reuses Spinner's dots and remains readable without motion; do not use it for a task with measurable progress.",
   "input-group":
     "Use InputGroup inside TextField or TextArea, with a visible field label. React Aria keeps the label, description, error, and value attached to the input. The group supplies the shared border; it does not submit the form or disable independent buttons. Give icon-only actions an accessible name and mark decorative icons aria-hidden.",
   button:
@@ -718,24 +854,17 @@ export async function ComponentPage({
   const customApi = customComponentApi[componentSlug];
   return (
     <article>
-      <nav
-        aria-label="Breadcrumb"
-        className="mb-8 flex items-center gap-2 text-xs text-muted-foreground"
-      >
-        <Link href="/components" className="rounded-sm hover:text-foreground">
-          Components
-        </Link>
-        <span aria-hidden="true">/</span>
-        <span className="text-foreground">{name}</span>
-      </nav>
       <h1 className="text-[clamp(2.25rem,4vw,3.5rem)] font-semibold leading-[1.08] tracking-[-0.055em] [text-wrap:balance]">
         {name}
       </h1>
       <section
         id="preview"
         aria-label={`${name} preview`}
-        className="mt-8 scroll-mt-24"
+        className="mt-6 scroll-mt-24"
       >
+        <p className="mb-5 max-w-[670px] text-sm leading-7 text-muted-foreground">
+          {description}
+        </p>
         <PreviewPanel
           code={previewSource}
           filename={path.basename(previewSourcePath)}
@@ -808,12 +937,11 @@ export async function ComponentPage({
 
       <section id="usage" className="mt-14 scroll-mt-24">
         <SectionHeading title="Usage" />
-        <div className="mb-5 max-w-[670px] space-y-3 text-sm leading-7 text-muted-foreground">
-          <p>{description}</p>
-          {customGuidance[componentSlug] && (
-            <p>{customGuidance[componentSlug]}</p>
-          )}
-        </div>
+        {customGuidance[componentSlug] && (
+          <p className="mb-5 max-w-[670px] text-sm leading-7 text-muted-foreground">
+            {customGuidance[componentSlug]}
+          </p>
+        )}
         <CodeBlock
           code={previewSource}
           filename={path.basename(previewSourcePath)}
@@ -823,14 +951,7 @@ export async function ComponentPage({
       {compositions[componentSlug] && (
         <section id="composition" className="mt-14 scroll-mt-24">
           <SectionHeading title="Composition" />
-          <ul className="grid max-w-[670px] gap-3 text-sm leading-6 text-muted-foreground">
-            {compositions[componentSlug].map(({ part, purpose }) => (
-              <li key={part}>
-                <code className="font-mono text-foreground">{part}</code>:{" "}
-                {purpose}
-              </li>
-            ))}
-          </ul>
+          <ComponentComposition {...compositions[componentSlug]} />
         </section>
       )}
 

@@ -13,7 +13,7 @@ export default function SearchFieldPage() {
     <ComponentPage
       name="Search field"
       reactAriaDocsHref="https://react-aria.adobe.com/SearchField"
-      description="Find something in a collection. A visible label names the search, while the clear button gives you a quick way back to the full list."
+      description="A field for entering a search query."
       preview={<SearchFieldBasicDemo />}
       previewHint="Type a project name, then use the clear button to start over."
       previewSourcePath="src/components/docs/search-field-basic-demo.tsx"

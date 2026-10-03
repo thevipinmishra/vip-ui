@@ -14,7 +14,7 @@ export default function SwitchPage() {
     <ComponentPage
       name="Switch"
       reactAriaDocsHref="https://react-aria.adobe.com/Switch"
-      description="A direct on or off control for settings that apply at once. The moving thumb and track make each state clear."
+      description="A control for turning a setting on or off."
       preview={<SwitchBasicDemo />}
       previewHint="Turn the setting on or off with Space or a pointer."
       previewSourcePath="src/components/docs/switch-basic-demo.tsx"

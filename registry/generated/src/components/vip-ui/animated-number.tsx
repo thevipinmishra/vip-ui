@@ -119,7 +119,7 @@ function SlidingDigit({
   animateOnMount: boolean;
 }) {
   return (
-    <span className="inline-grid overflow-hidden align-baseline">
+    <span className="-mx-[0.06em] inline-grid overflow-hidden px-[0.06em] align-baseline">
       <AnimatePresence initial={animateOnMount} custom={direction}>
         <motion.span
           key={digit}

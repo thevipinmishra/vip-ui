@@ -1,7 +1,13 @@
 "use client";
 
 import { type HTMLMotionProps, motion, useReducedMotion } from "motion/react";
-import { createContext, type ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import {
   Dialog as AriaDialog,
   type DialogProps as AriaDialogProps,
@@ -21,6 +27,18 @@ import { cn } from "@/lib/utils";
 import { Button, type ButtonProps } from "./button";
 
 type DialogAnimation = "unmounted" | "hidden" | "visible";
+
+const mobileQuery = "(max-width: 639px)";
+
+function subscribeToMobile(onChange: () => void) {
+  const media = window.matchMedia(mobileQuery);
+  media.addEventListener("change", onChange);
+  return () => media.removeEventListener("change", onChange);
+}
+
+function isMobileViewport() {
+  return window.matchMedia(mobileQuery).matches;
+}
 
 const CloseContext = createContext<(() => void) | null>(null);
 const DialogAnimationContext = createContext<{
@@ -93,6 +111,11 @@ export function DialogContent({
   ...props
 }: DialogContentProps) {
   const reduceMotion = useReducedMotion();
+  const isMobile = useSyncExternalStore(
+    subscribeToMobile,
+    isMobileViewport,
+    () => false,
+  );
   const { animation, complete } = useContext(DialogAnimationContext);
   return (
     <ModalOverlay
@@ -106,7 +129,7 @@ export function DialogContent({
       data-slot="dialog-overlay"
       className={composeRenderProps(overlayProps?.className, (className) =>
         cn(
-          "fixed inset-0 z-50 grid place-items-center overflow-y-auto p-4",
+          "fixed inset-0 z-50 grid items-end overflow-hidden sm:place-items-center sm:overflow-y-auto sm:p-4",
           className,
         ),
       )}
@@ -128,21 +151,31 @@ export function DialogContent({
           <motion.div
             {...(domProps as HTMLMotionProps<"div">)}
             initial={
-              reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.96 }
+              reduceMotion
+                ? { opacity: 0 }
+                : isMobile
+                  ? { opacity: 0, y: "100%" }
+                  : { opacity: 0, y: 12, scale: 0.96 }
             }
             animate={
               animation === "hidden"
                 ? reduceMotion
                   ? { opacity: 0 }
-                  : { opacity: 0, y: 6, scale: 0.985 }
-                : { opacity: 1, y: 0, scale: 1 }
+                  : isMobile
+                    ? { opacity: 0, y: "100%", scale: 1 }
+                    : { opacity: 0, y: 6, scale: 0.985 }
+                : { opacity: 1, y: isMobile ? "0%" : 0, scale: 1 }
             }
             transition={{
               duration: reduceMotion
                 ? 0.12
-                : animation === "hidden"
-                  ? 0.18
-                  : 0.26,
+                : isMobile
+                  ? animation === "hidden"
+                    ? 0.24
+                    : 0.32
+                  : animation === "hidden"
+                    ? 0.18
+                    : 0.26,
               ease: [0.23, 1, 0.32, 1],
             }}
             onAnimationComplete={() => {
@@ -152,7 +185,7 @@ export function DialogContent({
         )}
         data-slot={modalSlot}
         className={cn(
-          "relative w-full max-w-md max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-xl bg-card p-6 text-card-foreground shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70 sm:p-7",
+          "relative w-full max-h-[calc(100dvh-1rem)] overflow-y-auto overscroll-contain rounded-t-2xl bg-card p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] text-card-foreground shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70 sm:max-h-[calc(100dvh-2rem)] sm:max-w-md sm:rounded-xl sm:p-7",
           modalProps?.className,
         )}
       >

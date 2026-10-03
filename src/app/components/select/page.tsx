@@ -16,7 +16,7 @@ export default function SelectPage() {
     <ComponentPage
       name="Select"
       reactAriaDocsHref="https://react-aria.adobe.com/Select"
-      description="Use Select for one choice from a list people can scan. For searchable lists, use Combo box. Arrow keys navigate the open list."
+      description="Displays a list of options for choosing one item."
       preview={<SelectDemo />}
       previewHint="Open the menu, move with the arrow keys, and press Enter to choose."
       previewSourcePath="src/components/docs/select-demo.tsx"

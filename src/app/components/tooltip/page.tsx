@@ -13,7 +13,7 @@ export default function TooltipPage() {
     <ComponentPage
       name="Tooltip"
       reactAriaDocsHref="https://react-aria.adobe.com/Tooltip"
-      description="Add a brief hint to a control. It appears on hover or keyboard focus, so the hint can be found without a mouse."
+      description="Displays a short hint when its trigger is hovered or focused."
       preview={<TooltipDemo />}
       previewHint="Hover over a control or focus it with Tab to read its hint."
       previewSourcePath="src/components/docs/tooltip-demo.tsx"

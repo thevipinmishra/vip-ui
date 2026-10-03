@@ -14,7 +14,7 @@ export default function ComboBoxPage() {
     <ComponentPage
       name="Combo box"
       reactAriaDocsHref="https://react-aria.adobe.com/ComboBox"
-      description="Filter a longer set of options as you type, then choose one. Use Select when the list is short enough to scan without search."
+      description="A searchable list for choosing an option."
       preview={<ComboBoxBasicDemo />}
       previewHint="Type a framework name, use the arrow keys, and press Enter to select."
       previewSourcePath="src/components/docs/combo-box-basic-demo.tsx"

@@ -13,7 +13,7 @@ export default function BadgePage() {
   return (
     <ComponentPage
       name="Badge"
-      description="A compact label for status or metadata. The optional dot reinforces status without relying on color alone."
+      description="Displays a badge or a component that looks like a badge."
       preview={<BadgeBasicDemo />}
       previewHint="Use a short label that still makes sense without its color."
       previewSourcePath="src/components/docs/badge-basic-demo.tsx"

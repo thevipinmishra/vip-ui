@@ -13,7 +13,7 @@ export default function RadioGroupPage() {
     <ComponentPage
       name="Radio group"
       reactAriaDocsHref="https://react-aria.adobe.com/RadioGroup"
-      description="Use Radio group when only one option can be selected. Keep every option visible; use the arrow keys to change the selection."
+      description="Groups options for choosing one item."
       preview={<RadioGroupDemo />}
       previewHint="Select a plan with a pointer or use Tab and the arrow keys."
       previewSourcePath="src/components/docs/radio-group-demo.tsx"
