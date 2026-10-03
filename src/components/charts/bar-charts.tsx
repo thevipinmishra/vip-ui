@@ -5,6 +5,8 @@ import { Chart } from "@tanstack/charts/react/core";
 import { scaleBand } from "@tanstack/charts/scales/band";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { tooltip } from "@tanstack/charts/tooltip";
+import { useMemo, useState } from "react";
+import { Button } from "@/components/ui/button";
 import {
   ChartPlot,
   galleryRenderer,
@@ -32,7 +34,7 @@ const ordersChart = defineChart({
   ],
   scales: {
     x: { scale: () => scaleBand().padding(0.1) },
-    y: { scale: scaleLinear, domain: [0, 260], grid: true },
+    y: { scale: scaleLinear().domain([0, 260]), grid: true },
   },
   tooltip: {
     use: tooltip,
@@ -63,7 +65,7 @@ const regionsChart = defineChart({
     }),
   ],
   scales: {
-    x: { scale: scaleLinear, domain: [0, 100], grid: true },
+    x: { scale: scaleLinear().domain([0, 100]), grid: true },
     y: { scale: () => scaleBand().padding(0.1) },
   },
   tooltip: {
@@ -103,7 +105,7 @@ const requestsChart = defineChart({
   ],
   scales: {
     x: { scale: () => scaleBand().padding(0.1) },
-    y: { scale: scaleLinear, domain: [0, 55], grid: true },
+    y: { scale: scaleLinear().domain([0, 55]), grid: true },
   },
   color: {
     domain: ["Resolved", "Pending"],
@@ -122,6 +124,84 @@ const requestsChart = defineChart({
       ),
   },
 });
+
+const comparisonOrders = {
+  "2025": [
+    { month: "Jan", value: 108 },
+    { month: "Feb", value: 137 },
+    { month: "Mar", value: 126 },
+    { month: "Apr", value: 153 },
+    { month: "May", value: 178 },
+    { month: "Jun", value: 190 },
+  ],
+  "2026": orders,
+};
+
+export function BarUpdates() {
+  const [year, setYear] = useState<"2025" | "2026">("2026");
+  const rows = comparisonOrders[year];
+  const definition = useMemo(
+    () =>
+      defineChart({
+        marks: [
+          barY(rows, {
+            id: "orders-by-month",
+            x: "month",
+            y: "value",
+            key: "month",
+            fill: "var(--ts-chart-2)",
+            inset: 5,
+            radius: { end: 5 },
+          }),
+        ],
+        scales: {
+          x: { scale: () => scaleBand().padding(0.1) },
+          y: { scale: scaleLinear().domain([0, 260]), grid: true },
+        },
+        tooltip: {
+          use: tooltip,
+          content: ([point]) =>
+            valueTooltip(
+              `${point.datum.month} ${year}`,
+              "Orders",
+              `${point.datum.value} orders`,
+              point.color,
+            ),
+        },
+      }),
+    [rows, year],
+  );
+
+  return (
+    <ChartPlot
+      title={`Monthly orders in ${year}`}
+      columns={["Month", "Orders"]}
+      rows={rows.map((row) => [row.month, row.value])}
+    >
+      <Chart
+        definition={definition}
+        renderer={galleryRenderer}
+        height={222}
+        initialWidth={520}
+        ariaLabel={`Monthly orders from January to June ${year}`}
+      />
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-border/70 pt-4">
+        <output className="text-xs text-muted-foreground">
+          Showing {year} orders
+        </output>
+        <Button
+          variant="secondary"
+          size="sm"
+          onPress={() =>
+            setYear((current) => (current === "2026" ? "2025" : "2026"))
+          }
+        >
+          Show {year === "2026" ? "2025" : "2026"}
+        </Button>
+      </div>
+    </ChartPlot>
+  );
+}
 
 export function BarOrders() {
   return (

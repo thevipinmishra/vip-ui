@@ -203,7 +203,7 @@ export function DialogDescription({ className, ...props }: TextProps) {
       slot="description"
       data-slot="dialog-description"
       className={cn(
-        "mt-2 block text-[13px] leading-6 text-muted-foreground",
+        "mt-2 block text-sm leading-6 text-muted-foreground",
         className,
       )}
     />

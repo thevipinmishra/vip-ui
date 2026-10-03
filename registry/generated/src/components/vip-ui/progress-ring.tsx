@@ -84,7 +84,7 @@ export function ProgressRing({
             </motion.svg>
             {showValue && (
               <span
-                className="absolute inset-0 grid place-items-center text-[10px] font-semibold tabular-nums"
+                className="absolute inset-0 grid place-items-center text-xs font-semibold tabular-nums"
                 aria-hidden="true"
               >
                 {isIndeterminate ? "…" : valueText}

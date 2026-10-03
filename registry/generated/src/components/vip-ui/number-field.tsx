@@ -12,6 +12,12 @@ import {
 } from "react-aria-components";
 import { Minus, Plus } from "reicon-react";
 import { cn } from "./utils";
+import {
+  fieldDescriptionStyles,
+  fieldErrorStyles,
+  fieldLabelStyles,
+  segmentedFieldStyles,
+} from "./field-styles";
 import { PressButton } from "./press-button";
 
 export interface NumberFieldProps
@@ -41,16 +47,13 @@ export function NumberField({
       {children ?? (
         <>
           {label && (
-            <Label
-              data-slot="number-field-label"
-              className="text-[13px] font-medium"
-            >
+            <Label data-slot="number-field-label" className={fieldLabelStyles}>
               {label}
             </Label>
           )}
           <Group
             data-slot="number-field-group"
-            className="flex min-h-12 items-center gap-1 rounded-lg border border-input bg-card p-1 shadow-[var(--shadow-card)] has-[[data-focus-visible]]:border-ring has-[[data-focus-visible]]:ring-3 has-[[data-focus-visible]]:ring-ring/50 group-data-[invalid]:border-destructive group-data-[invalid]:has-[[data-focus-visible]]:ring-destructive/20 group-data-[disabled]:bg-muted group-data-[disabled]:opacity-60"
+            className={cn(segmentedFieldStyles, "gap-1 p-1")}
           >
             <PressButton
               slot="decrement"
@@ -77,14 +80,14 @@ export function NumberField({
             <Text
               slot="description"
               data-slot="number-field-description"
-              className="text-xs text-muted-foreground"
+              className={fieldDescriptionStyles}
             >
               {description}
             </Text>
           )}
           <FieldError
             data-slot="number-field-error"
-            className="text-xs text-destructive"
+            className={fieldErrorStyles}
           />
         </>
       )}

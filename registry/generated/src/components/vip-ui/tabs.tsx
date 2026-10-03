@@ -1,6 +1,13 @@
 "use client";
 
 import {
+  type HTMLMotionProps,
+  LayoutGroup,
+  motion,
+  useReducedMotion,
+} from "motion/react";
+import { useId } from "react";
+import {
   Tab as AriaTab,
   TabList as AriaTabList,
   TabPanel as AriaTabPanel,
@@ -25,20 +32,26 @@ export function Tabs({
   onValueChange,
   ...props
 }: TabsProps) {
+  const groupId = useId();
+
   return (
-    <AriaTabs
-      {...props}
-      {...(defaultValue !== undefined && { defaultSelectedKey: defaultValue })}
-      {...(value !== undefined && { selectedKey: value })}
-      onSelectionChange={(key) => {
-        props.onSelectionChange?.(key);
-        onValueChange?.(String(key));
-      }}
-      data-slot="tabs"
-      className={composeRenderProps(className, (className) =>
-        cn("w-full", className),
-      )}
-    />
+    <LayoutGroup id={groupId}>
+      <AriaTabs
+        {...props}
+        {...(defaultValue !== undefined && {
+          defaultSelectedKey: defaultValue,
+        })}
+        {...(value !== undefined && { selectedKey: value })}
+        onSelectionChange={(key) => {
+          props.onSelectionChange?.(key);
+          onValueChange?.(String(key));
+        }}
+        data-slot="tabs"
+        className={composeRenderProps(className, (className) =>
+          cn("min-w-0 w-full", className),
+        )}
+      />
+    </LayoutGroup>
   );
 }
 
@@ -50,9 +63,15 @@ export function TabList({
     <AriaTabList
       {...props}
       data-slot="tabs-list"
+      render={
+        props.render ??
+        ((domProps) => (
+          <motion.div {...(domProps as HTMLMotionProps<"div">)} layoutScroll />
+        ))
+      }
       className={composeRenderProps(className, (className) =>
         cn(
-          "inline-flex max-w-full gap-1.5 overflow-x-auto rounded-xl bg-muted p-1.5 shadow-[var(--shadow-inset)] ring-1 ring-border/70",
+          "inline-flex min-w-0 max-w-full gap-1.5 overflow-x-auto overflow-y-hidden rounded-xl bg-muted p-1.5 shadow-[var(--shadow-inset)] ring-1 ring-border/70",
           className,
         ),
       )}
@@ -60,18 +79,39 @@ export function TabList({
   );
 }
 
-export function Tab({ className, ...props }: AriaTabProps) {
+export function Tab({ className, children, ...props }: AriaTabProps) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <AriaTab
       {...props}
       data-slot="tabs-trigger"
       className={composeRenderProps(className, (className) =>
         cn(
-          "min-h-11 cursor-pointer whitespace-nowrap sm:min-h-9 rounded-lg px-4 py-2 text-[13px] font-medium text-muted-foreground outline-none hover:bg-card/70 data-[selected]:bg-card data-[selected]:text-foreground data-[selected]:shadow-[var(--shadow-card)] data-[selected]:ring-1 data-[selected]:ring-border/70 data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring data-[disabled]:cursor-default data-[disabled]:opacity-50 motion-safe:transition-[background-color,color,box-shadow,scale] motion-safe:duration-150 motion-safe:active:scale-[0.96]",
+          "relative isolate min-h-11 shrink-0 cursor-pointer whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium text-muted-foreground outline-none hover:bg-card/70 data-[selected]:hover:bg-transparent data-[selected]:text-foreground data-[focus-visible]:outline-2 data-[focus-visible]:-outline-offset-2 data-[focus-visible]:outline-ring data-[disabled]:cursor-default data-[disabled]:opacity-50 sm:min-h-9 motion-safe:transition-[background-color,color,scale] motion-safe:duration-150 motion-safe:active:scale-[0.96]",
           className,
         ),
       )}
-    />
+    >
+      {composeRenderProps(children, (content, { isSelected }) => (
+        <>
+          {isSelected && (
+            <motion.span
+              layoutId="tabs-selection"
+              initial={false}
+              aria-hidden="true"
+              transition={
+                reduceMotion
+                  ? { duration: 0 }
+                  : { type: "spring", duration: 0.28, bounce: 0 }
+              }
+              className="pointer-events-none absolute inset-0 -z-10 rounded-lg bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70 forced-colors:border forced-colors:border-[Highlight]"
+            />
+          )}
+          {content}
+        </>
+      ))}
+    </AriaTab>
   );
 }
 

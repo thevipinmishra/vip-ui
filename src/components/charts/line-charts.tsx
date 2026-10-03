@@ -32,7 +32,7 @@ const responseChart = defineChart({
   ],
   scales: {
     x: { scale: scalePoint },
-    y: { scale: scaleLinear, domain: [0, 55], grid: true },
+    y: { scale: scaleLinear().domain([0, 55]), grid: true },
   },
   tooltip: {
     use: tooltip,
@@ -70,7 +70,7 @@ const retentionChart = defineChart({
   ],
   scales: {
     x: { scale: scalePoint },
-    y: { scale: scaleLinear, domain: [0, 100], grid: true },
+    y: { scale: scaleLinear().domain([0, 100]), grid: true },
   },
   color: {
     domain: ["Free", "Pro"],
@@ -115,7 +115,7 @@ const uptimeChart = defineChart({
   ],
   scales: {
     x: { scale: scalePoint },
-    y: { scale: scaleLinear, domain: [90, 100], grid: true },
+    y: { scale: scaleLinear().domain([90, 100]), grid: true },
   },
   tooltip: {
     use: tooltip,
@@ -181,6 +181,9 @@ export function LineTarget() {
         initialWidth={520}
         ariaLabel="Daily uptime Monday to Saturday in percent, with 97 percent target"
       />
+      <p className="mt-2 text-center text-xs text-muted-foreground">
+        Dashed line: 97% uptime target
+      </p>
     </ChartPlot>
   );
 }

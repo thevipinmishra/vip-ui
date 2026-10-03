@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AlertActionDemo } from "@/components/docs/alert-action-demo";
 import { AlertBasicDemo } from "@/components/docs/alert-basic-demo";
 import { AlertDemo } from "@/components/docs/alert-demo";
 import { ComponentPage } from "@/components/docs/component-page";
@@ -17,6 +18,13 @@ export default function AlertPage() {
       previewHint="Keep the message next to the task it explains."
       previewSourcePath="src/components/docs/alert-basic-demo.tsx"
       examples={[
+        {
+          title: "Action",
+          description:
+            "Place ButtonLink beside the message for a navigation action. Keep the link outside the title and description so it remains a separate control.",
+          preview: <AlertActionDemo />,
+          sourcePath: "src/components/docs/alert-action-demo.tsx",
+        },
         {
           title: "Status messages",
           description:

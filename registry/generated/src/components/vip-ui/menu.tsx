@@ -71,7 +71,7 @@ export function MenuItem<T extends object>({
       data-slot="menu-item"
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex min-h-11 cursor-pointer items-center gap-2.5 rounded-md px-3 py-2 text-[13px] text-foreground outline-none hover:bg-muted data-[focused]:bg-muted data-[focus-visible]:-outline-offset-2 data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring data-[selected]:bg-accent data-[selected]:text-accent-foreground data-[disabled]:cursor-default data-[disabled]:opacity-50",
+          "flex min-h-11 cursor-pointer items-center gap-2.5 rounded-md px-3 py-2 text-sm text-foreground outline-none hover:bg-muted data-[focused]:bg-muted data-[focus-visible]:-outline-offset-2 data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring data-[selected]:bg-accent data-[selected]:text-accent-foreground data-[disabled]:cursor-default data-[disabled]:opacity-50",
           className,
         ),
       )}

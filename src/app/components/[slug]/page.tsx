@@ -14,10 +14,13 @@ import { CalendarUnavailableDemo } from "@/components/docs/calendar-unavailable-
 import { CardDemo } from "@/components/docs/card-demo";
 import { CardInvoiceDemo } from "@/components/docs/card-invoice-demo";
 import { CheckboxGroupDemo } from "@/components/docs/checkbox-group-demo";
+import { CheckboxGroupRequiredDemo } from "@/components/docs/checkbox-group-required-demo";
 import { ColorFieldDemo } from "@/components/docs/color-field-demo";
 import { ColorPickerDemo } from "@/components/docs/color-picker-demo";
+import { ColorSwatchBasicDemo } from "@/components/docs/color-swatch-basic-demo";
 import { ColorSwatchDemo } from "@/components/docs/color-swatch-demo";
 import { ColorSwatchPickerDemo } from "@/components/docs/color-swatch-picker-demo";
+import { CommandPaletteBasicDemo } from "@/components/docs/command-palette-basic-demo";
 import { CommandPaletteDemo } from "@/components/docs/command-palette-demo";
 import {
   type ComponentExample,
@@ -33,19 +36,26 @@ import { DescriptionListDemo } from "@/components/docs/description-list-demo";
 import { DisclosureDemo } from "@/components/docs/disclosure-demo";
 import { DropZoneDemo } from "@/components/docs/drop-zone-demo";
 import { EmptyStateDemo } from "@/components/docs/empty-state-demo";
+import { EmptyStateNoActionDemo } from "@/components/docs/empty-state-no-action-demo";
 import { FieldsetDemo } from "@/components/docs/fieldset-demo";
+import { FileTriggerBasicDemo } from "@/components/docs/file-trigger-basic-demo";
 import { FileTriggerDemo } from "@/components/docs/file-trigger-demo";
 import { FormDemo } from "@/components/docs/form-demo";
 import { FormValidationDemo } from "@/components/docs/form-validation-demo";
 import { GridListDemo } from "@/components/docs/grid-list-demo";
+import { GridListDisabledDemo } from "@/components/docs/grid-list-disabled-demo";
 import { KbdCodeDemo } from "@/components/docs/kbd-code-demo";
 import { LinkDemo } from "@/components/docs/link-demo";
 import { ListBoxDemo } from "@/components/docs/list-box-demo";
+import { ListBoxMultipleDemo } from "@/components/docs/list-box-multiple-demo";
+import { MeterBasicDemo } from "@/components/docs/meter-basic-demo";
 import { MeterDemo } from "@/components/docs/meter-demo";
 import { NumberFieldDemo } from "@/components/docs/number-field-demo";
 import { NumberFieldSeatsDemo } from "@/components/docs/number-field-seats-demo";
 import { PaginationDemo } from "@/components/docs/pagination-demo";
 import { PopoverDemo } from "@/components/docs/popover-demo";
+import { PopoverPlacementDemo } from "@/components/docs/popover-placement-demo";
+import { PresenceListBasicDemo } from "@/components/docs/presence-list-basic-demo";
 import { PresenceListDemo } from "@/components/docs/presence-list-demo";
 import { PreviewTriggerDemo } from "@/components/docs/preview-trigger-demo";
 import { ProgressBarBasicDemo } from "@/components/docs/progress-bar-basic-demo";
@@ -55,11 +65,13 @@ import { ProgressRingDemo } from "@/components/docs/progress-ring-demo";
 import { RangeCalendarDemo } from "@/components/docs/range-calendar-demo";
 import { RangeCalendarLimitsDemo } from "@/components/docs/range-calendar-limits-demo";
 import { SeparatorDemo } from "@/components/docs/separator-demo";
+import { SeparatorVerticalDemo } from "@/components/docs/separator-vertical-demo";
 import { SkeletonDemo } from "@/components/docs/skeleton-demo";
 import { SpinnerBasicDemo } from "@/components/docs/spinner-basic-demo";
 import { SpinnerDemo } from "@/components/docs/spinner-demo";
 import { SpinnerUsageDemo } from "@/components/docs/spinner-usage-demo";
 import { StatDemo } from "@/components/docs/stat-demo";
+import { StepperBasicDemo } from "@/components/docs/stepper-basic-demo";
 import { StepperDemo } from "@/components/docs/stepper-demo";
 import { TableDemo } from "@/components/docs/table-demo";
 import { TableFilterDemo } from "@/components/docs/table-filter-demo";
@@ -72,8 +84,11 @@ import { ToggleButtonDemo } from "@/components/docs/toggle-button-demo";
 import { ToggleButtonGroupDemo } from "@/components/docs/toggle-button-group-demo";
 import { ToggleButtonGroupEditorDemo } from "@/components/docs/toggle-button-group-editor-demo";
 import { ToggleButtonProjectsDemo } from "@/components/docs/toggle-button-projects-demo";
+import { TokenFieldBasicDemo } from "@/components/docs/token-field-basic-demo";
 import { TokenFieldDemo } from "@/components/docs/token-field-demo";
+import { ToolbarBasicDemo } from "@/components/docs/toolbar-basic-demo";
 import { ToolbarDemo } from "@/components/docs/toolbar-demo";
+import { TreeBasicDemo } from "@/components/docs/tree-basic-demo";
 import { TreeDemo } from "@/components/docs/tree-demo";
 import { TypingIndicatorDemo } from "@/components/docs/typing-indicator-demo";
 
@@ -472,6 +487,51 @@ const basicPreviews: Record<
     source: "avatar-basic-demo.tsx",
     hint: "The name supplies both the accessible label and fallback initials.",
   },
+  "command-palette": {
+    demo: <CommandPaletteBasicDemo />,
+    source: "command-palette-basic-demo.tsx",
+    hint: "Open the commands and choose one, or use Ctrl+K or Command+K.",
+  },
+  "token-field": {
+    demo: <TokenFieldBasicDemo />,
+    source: "token-field-basic-demo.tsx",
+    hint: "Type a tag and press comma or Enter to add it.",
+  },
+  "presence-list": {
+    demo: <PresenceListBasicDemo />,
+    source: "presence-list-basic-demo.tsx",
+    hint: "Complete the tasks to see them leave; restore them to see them return.",
+  },
+  toolbar: {
+    demo: <ToolbarBasicDemo />,
+    source: "toolbar-basic-demo.tsx",
+    hint: "Move between formatting choices with the arrow keys.",
+  },
+  stepper: {
+    demo: <StepperBasicDemo />,
+    source: "stepper-basic-demo.tsx",
+    hint: "The second step is current; completed and upcoming steps remain visible.",
+  },
+  "color-swatch": {
+    demo: <ColorSwatchBasicDemo />,
+    source: "color-swatch-basic-demo.tsx",
+    hint: "Give the color an accessible name even when the sample stands alone.",
+  },
+  "file-trigger": {
+    demo: <FileTriggerBasicDemo />,
+    source: "file-trigger-basic-demo.tsx",
+    hint: "Choose one image to see its filename. The file stays on this device.",
+  },
+  meter: {
+    demo: <MeterBasicDemo />,
+    source: "meter-basic-demo.tsx",
+    hint: "Use a meter for a measured amount, not for task progress.",
+  },
+  tree: {
+    demo: <TreeBasicDemo />,
+    source: "tree-basic-demo.tsx",
+    hint: "Expand a folder or select a file with the arrow keys.",
+  },
   spinner: {
     demo: <SpinnerBasicDemo />,
     source: "spinner-basic-demo.tsx",
@@ -495,6 +555,141 @@ const basicPreviews: Record<
 };
 
 const featuredExamples: Record<string, ComponentExample[]> = {
+  "command-palette": [
+    {
+      title: "Commands with icons",
+      description:
+        "Keep one palette on the page. Give each action a readable label and show the result after selection.",
+      preview: <CommandPaletteDemo />,
+      sourcePath: "src/components/docs/command-palette-demo.tsx",
+    },
+  ],
+  "token-field": [
+    {
+      title: "Project tags",
+      description:
+        "Compose the label, input, and description when tags need context. Count committed tokens without counting unfinished text.",
+      preview: <TokenFieldDemo />,
+      sourcePath: "src/components/docs/token-field-demo.tsx",
+    },
+  ],
+  "presence-list": [
+    {
+      title: "Release checklist",
+      description:
+        "Keep stable task keys while adding and completing rows so each exit follows the right item.",
+      preview: <PresenceListDemo />,
+      sourcePath: "src/components/docs/presence-list-demo.tsx",
+    },
+  ],
+  toolbar: [
+    {
+      title: "Formatting toolbar",
+      description:
+        "Combine text styles in one toolbar and separate Clear from the selection group.",
+      preview: <ToolbarDemo />,
+      sourcePath: "src/components/docs/toolbar-demo.tsx",
+    },
+  ],
+  stepper: [
+    {
+      title: "Setup workflow",
+      description:
+        "Keep currentStep in application state when Back and Next controls move through the workflow.",
+      preview: <StepperDemo />,
+      sourcePath: "src/components/docs/stepper-demo.tsx",
+    },
+  ],
+  "color-swatch": [
+    {
+      title: "Named palette",
+      description:
+        "Pair each sample with a visible name when people need to compare several colors.",
+      preview: <ColorSwatchDemo />,
+      sourcePath: "src/components/docs/color-swatch-demo.tsx",
+    },
+  ],
+  "file-trigger": [
+    {
+      title: "Multiple images",
+      description:
+        "Use allowsMultiple for a batch of files. Restrict accepted types and list the selected filenames before uploading anything.",
+      preview: <FileTriggerDemo />,
+      sourcePath: "src/components/docs/file-trigger-demo.tsx",
+    },
+  ],
+  meter: [
+    {
+      title: "Updating a reading",
+      description:
+        "Connect a value to application state when a measurement changes. The slider only simulates a storage reading in this example.",
+      preview: <MeterDemo />,
+      sourcePath: "src/components/docs/meter-demo.tsx",
+    },
+  ],
+  tree: [
+    {
+      title: "Custom row content",
+      description:
+        "Use content for visible row details while the title remains the text used for keyboard typeahead.",
+      preview: <TreeDemo />,
+      sourcePath: "src/components/docs/tree-demo.tsx",
+    },
+  ],
+  "checkbox-group": [
+    {
+      title: "Required choice",
+      description:
+        "Mark the group invalid until at least one channel is selected. Keep the error beside the choices so the fix is clear.",
+      preview: <CheckboxGroupRequiredDemo />,
+      sourcePath: "src/components/docs/checkbox-group-required-demo.tsx",
+    },
+  ],
+  "list-box": [
+    {
+      title: "Multiple selection",
+      description:
+        "Use multiple selection when people may choose more than one team. Selections remain highlighted while navigating the list.",
+      preview: <ListBoxMultipleDemo />,
+      sourcePath: "src/components/docs/list-box-multiple-demo.tsx",
+    },
+  ],
+  "grid-list": [
+    {
+      title: "Unavailable row",
+      description:
+        "Keep an unavailable file visible and explain why it cannot be selected.",
+      preview: <GridListDisabledDemo />,
+      sourcePath: "src/components/docs/grid-list-disabled-demo.tsx",
+    },
+  ],
+  separator: [
+    {
+      title: "Vertical separator",
+      description:
+        "Set orientation to vertical between adjacent labels. The parent row supplies the separator's height.",
+      preview: <SeparatorVerticalDemo />,
+      sourcePath: "src/components/docs/separator-vertical-demo.tsx",
+    },
+  ],
+  popover: [
+    {
+      title: "Placement",
+      description:
+        "Use placement to put the popover above its trigger. It can flip when there is not enough room.",
+      preview: <PopoverPlacementDemo />,
+      sourcePath: "src/components/docs/popover-placement-demo.tsx",
+    },
+  ],
+  "empty-state": [
+    {
+      title: "No matching results",
+      description:
+        "Omit the action when the user can resolve the empty result by changing an existing search instead.",
+      preview: <EmptyStateNoActionDemo />,
+      sourcePath: "src/components/docs/empty-state-no-action-demo.tsx",
+    },
+  ],
   "button-group": [
     {
       title: "Vertical document actions",

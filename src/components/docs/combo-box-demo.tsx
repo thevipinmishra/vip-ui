@@ -29,7 +29,7 @@ export function ComboBoxDemo() {
   const selectedName = frameworks.find((item) => item.id === selected)?.name;
 
   return (
-    <div className="w-full max-w-[340px] space-y-4">
+    <div className="grid w-full max-w-[340px] gap-4">
       <ComboBox
         value={selected ?? undefined}
         onValueChange={(value) => setSelected(value || null)}
@@ -60,7 +60,7 @@ export function ComboBoxDemo() {
           ))}
         </ComboBoxContent>
       </ComboBox>
-      <output className="block rounded-[9px] border border-border bg-background px-3 py-2.5 text-xs text-muted-foreground">
+      <output className="block rounded-md border border-border bg-background px-3 py-2.5 text-xs text-muted-foreground">
         {selectedName ? (
           <>
             Selected{" "}

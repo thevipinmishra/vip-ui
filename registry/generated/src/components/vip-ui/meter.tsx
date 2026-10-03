@@ -1,5 +1,6 @@
 "use client";
 
+import { motion, useReducedMotion } from "motion/react";
 import {
   Meter as AriaMeter,
   type MeterProps as AriaMeterProps,
@@ -17,6 +18,7 @@ export interface MeterProps
 }
 
 export function Meter({ label, className, children, ...props }: MeterProps) {
+  const reduceMotion = useReducedMotion();
   return (
     <AriaMeter
       {...props}
@@ -28,7 +30,7 @@ export function Meter({ label, className, children, ...props }: MeterProps) {
       {children ??
         (({ percentage, valueText }) => (
           <>
-            <div className="flex justify-between gap-3 text-[13px]">
+            <div className="flex justify-between gap-3 text-sm">
               {label && (
                 <Label data-slot="meter-label" className="font-medium">
                   {label}
@@ -45,10 +47,15 @@ export function Meter({ label, className, children, ...props }: MeterProps) {
               data-slot="meter-track"
               className="h-2 overflow-hidden rounded-full bg-secondary shadow-[var(--shadow-inset)]"
             >
-              <div
+              <motion.div
                 data-slot="meter-fill"
                 className="h-full rounded-full bg-primary"
-                style={{ width: `${percentage}%` }}
+                initial={false}
+                animate={{ width: `${percentage}%` }}
+                transition={{
+                  duration: reduceMotion ? 0 : 0.2,
+                  ease: "easeOut",
+                }}
               />
             </div>
           </>

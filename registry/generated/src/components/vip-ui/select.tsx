@@ -16,8 +16,20 @@ import {
 } from "react-aria-components";
 import { Check, ChevronDown } from "reicon-react";
 import { cn } from "./utils";
+import {
+  fieldDescriptionStyles,
+  fieldErrorStyles,
+  fieldLabelStyles,
+} from "./field-styles";
 import { Popover } from "./popover";
 import { PressButton } from "./press-button";
+
+const selectTriggerStyles =
+  "flex min-h-12 w-full cursor-pointer items-center justify-between gap-3 rounded-lg border border-input bg-card px-3.5 text-start text-sm text-foreground shadow-[var(--shadow-card)] hover:border-primary/45 hover:bg-muted/60 motion-safe:transition-[border-color,background-color,box-shadow] motion-safe:duration-150 data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring group-data-[invalid]:border-destructive group-data-[invalid]:ring-3 group-data-[invalid]:ring-destructive/20 data-[disabled]:cursor-default data-[disabled]:bg-muted data-[disabled]:opacity-50";
+const selectItemStyles =
+  "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted data-[focused]:bg-muted data-[selected]:bg-accent data-[selected]:text-accent-foreground data-[focus-visible]:-outline-offset-2 data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring data-[disabled]:cursor-default data-[disabled]:opacity-50";
+const selectPopoverStyles =
+  "w-[var(--trigger-width)] rounded-lg border-0 p-1.5 ring-1 ring-border/70";
 
 export interface SelectOption {
   id: string;
@@ -69,13 +81,13 @@ export function Select({
         (({ isOpen }) => (
           <>
             {label && (
-              <Label className="text-[13px] font-medium text-foreground">
+              <Label data-slot="select-label" className={fieldLabelStyles}>
                 {label}
               </Label>
             )}
             <PressButton
               data-slot="select-trigger"
-              className="flex min-h-12 w-full cursor-pointer items-center justify-between gap-3 rounded-lg border border-input bg-card px-3.5 text-start text-sm text-foreground shadow-[var(--shadow-card)] hover:border-primary/45 hover:bg-muted/60 motion-safe:transition-[border-color,background-color,box-shadow] motion-safe:duration-150 data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring group-data-[invalid]:border-destructive group-data-[invalid]:ring-3 group-data-[invalid]:ring-destructive/20 data-[disabled]:cursor-default data-[disabled]:bg-muted data-[disabled]:opacity-50"
+              className={selectTriggerStyles}
             >
               <AriaSelectValue
                 data-slot="select-value"
@@ -90,8 +102,12 @@ export function Select({
                 }
               </AriaSelectValue>
               <motion.span
-                animate={{ rotate: isOpen && !reduceMotion ? 180 : 0 }}
-                transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+                initial={false}
+                animate={{ rotate: isOpen ? 180 : 0 }}
+                transition={{
+                  duration: reduceMotion ? 0 : 0.2,
+                  ease: "easeOut",
+                }}
                 className="shrink-0 text-muted-foreground"
               >
                 <ChevronDown size={16} aria-hidden="true" />
@@ -100,7 +116,8 @@ export function Select({
             {description && (
               <Text
                 slot="description"
-                className="text-xs leading-5 text-muted-foreground"
+                data-slot="select-description"
+                className={fieldDescriptionStyles}
               >
                 {description}
               </Text>
@@ -110,7 +127,7 @@ export function Select({
               data-slot="select-content"
               placement="bottom start"
               offset={7}
-              className="w-[var(--trigger-width)] rounded-lg border-0 p-1.5 ring-1 ring-border/70"
+              className={selectPopoverStyles}
             >
               <ListBox
                 data-slot="select-list-box"
@@ -122,12 +139,12 @@ export function Select({
                     data-slot="select-item"
                     id={option.id}
                     textValue={option.name}
-                    className="group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted data-[focused]:bg-muted data-[selected]:bg-accent data-[selected]:text-accent-foreground data-[focus-visible]:-outline-offset-2 data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring data-[disabled]:cursor-default data-[disabled]:opacity-50"
+                    className={selectItemStyles}
                   >
                     <span className="min-w-0">
                       <span className="block font-medium">{option.name}</span>
                       {option.description && (
-                        <span className="mt-0.5 block text-xs text-muted-foreground">
+                        <span className="mt-0.5 block text-xs text-muted-foreground group-data-[selected]/item:text-accent-foreground">
                           {option.description}
                         </span>
                       )}
@@ -155,7 +172,7 @@ export function SelectLabel({
     <Label
       {...props}
       data-slot="select-label"
-      className={cn("text-[13px] font-medium text-foreground", className)}
+      className={cn(fieldLabelStyles, className)}
     />
   );
 }
@@ -170,10 +187,7 @@ export function SelectTrigger({
       {...props}
       data-slot="select-trigger"
       className={composeRenderProps(className, (className) =>
-        cn(
-          "flex min-h-12 w-full cursor-pointer items-center justify-between gap-3 rounded-lg border border-input bg-card px-3.5 text-start text-sm text-foreground shadow-[var(--shadow-card)] hover:border-primary/45 hover:bg-muted/60 motion-safe:transition-[border-color,background-color,box-shadow] motion-safe:duration-150 data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring group-data-[invalid]:border-destructive group-data-[invalid]:ring-3 group-data-[invalid]:ring-destructive/20 data-[disabled]:cursor-default data-[disabled]:bg-muted data-[disabled]:opacity-50",
-          className,
-        ),
+        cn(selectTriggerStyles, className),
       )}
     >
       {children ?? (
@@ -182,7 +196,7 @@ export function SelectTrigger({
           <ChevronDown
             size={16}
             aria-hidden="true"
-            className="shrink-0 text-muted-foreground"
+            className="shrink-0 text-muted-foreground motion-safe:transition-transform motion-safe:duration-200 group-data-[open]:rotate-180"
           />
         </>
       )}
@@ -224,10 +238,7 @@ export function SelectContent({
       placement={props.placement ?? "bottom start"}
       offset={props.offset ?? 7}
       className={composeRenderProps(className, (className) =>
-        cn(
-          "w-[var(--trigger-width)] rounded-lg border-0 p-1.5 ring-1 ring-border/70",
-          className,
-        ),
+        cn(selectPopoverStyles, className),
       )}
     >
       <ListBox
@@ -252,10 +263,7 @@ export function SelectItem({
       {...props}
       data-slot="select-item"
       className={composeRenderProps(className, (className) =>
-        cn(
-          "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted data-[focused]:bg-muted data-[selected]:bg-accent data-[selected]:text-accent-foreground data-[focus-visible]:-outline-offset-2 data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring data-[disabled]:cursor-default data-[disabled]:opacity-50",
-          className,
-        ),
+        cn(selectItemStyles, className),
       )}
     >
       {children}
@@ -276,7 +284,7 @@ export function SelectError({
     <FieldError
       {...props}
       data-slot="select-error"
-      className={cn("text-xs leading-5 text-destructive", className)}
+      className={cn(fieldErrorStyles, className)}
     />
   );
 }
@@ -290,7 +298,7 @@ export function SelectDescription({
       {...props}
       slot="description"
       data-slot="select-description"
-      className={cn("text-xs leading-5 text-muted-foreground", className)}
+      className={cn(fieldDescriptionStyles, className)}
     />
   );
 }

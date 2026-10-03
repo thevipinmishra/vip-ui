@@ -48,10 +48,10 @@ const drawerSurfaceStyles = tv({
   base: "absolute flex flex-col overflow-hidden bg-card text-card-foreground shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70",
   variants: {
     placement: {
-      bottom: "inset-x-0 mx-auto w-full max-w-2xl bottom-0 rounded-t-2xl",
-      top: "inset-x-0 mx-auto w-full max-w-2xl top-0 rounded-b-2xl",
-      left: "inset-y-0 w-[min(26rem,100vw)] left-0 rounded-r-2xl",
-      right: "inset-y-0 w-[min(26rem,100vw)] right-0 rounded-l-2xl",
+      bottom: "inset-x-0 mx-auto w-full max-w-2xl bottom-0 rounded-t-xl",
+      top: "inset-x-0 mx-auto w-full max-w-2xl top-0 rounded-b-xl",
+      left: "inset-y-0 w-[min(26rem,100vw)] left-0 rounded-r-xl",
+      right: "inset-y-0 w-[min(26rem,100vw)] right-0 rounded-l-xl",
     },
   },
   defaultVariants: { placement: "bottom" },
@@ -519,7 +519,7 @@ export function DrawerDescription({ className, ...props }: TextProps) {
       slot="description"
       data-slot="drawer-description"
       className={cn(
-        "mt-2 block text-[13px] leading-6 text-muted-foreground",
+        "mt-2 block text-sm leading-6 text-muted-foreground",
         className,
       )}
     />

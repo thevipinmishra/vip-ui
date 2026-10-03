@@ -31,7 +31,7 @@ export function Slider({ label, className, children, ...props }: SliderProps) {
     >
       {children ?? (
         <>
-          <div className="flex items-center justify-between gap-4 text-[13px]">
+          <div className="flex items-center justify-between gap-4 text-sm">
             {label && <SliderLabel>{label}</SliderLabel>}
             <SliderValue />
           </div>

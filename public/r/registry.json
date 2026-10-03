@@ -48,6 +48,16 @@
           "path": "registry/generated/src/components/vip-ui/alert.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/alert.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-link.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-link.tsx"
         }
       ]
     },
@@ -111,6 +121,11 @@
           "path": "registry/generated/src/components/vip-ui/list-box.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/list-box.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/search-field.tsx",
@@ -479,6 +494,11 @@
           "target": "@components/vip-ui/utils.ts"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/color-field.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/color-field.tsx"
@@ -506,6 +526,11 @@
           "path": "registry/generated/src/components/vip-ui/button.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/color-field.tsx",
@@ -595,6 +620,11 @@
           "target": "@components/vip-ui/utils.ts"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/popover.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/popover.tsx"
@@ -659,6 +689,11 @@
           "target": "@components/vip-ui/menu.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/search-field.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/search-field.tsx"
@@ -690,6 +725,11 @@
           "path": "registry/generated/src/components/vip-ui/date-segment.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/date-segment.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/date-field.tsx",
@@ -737,6 +777,11 @@
           "target": "@components/vip-ui/date-segment.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/popover.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/popover.tsx"
@@ -780,6 +825,11 @@
           "path": "registry/generated/src/components/vip-ui/date-segment.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/date-segment.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/popover.tsx",
@@ -947,6 +997,11 @@
           "target": "@components/vip-ui/checkbox-group.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/text-area.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/text-area.tsx"
@@ -1013,6 +1068,20 @@
           "path": "registry/generated/src/components/vip-ui/button-link.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/button-link.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-field-styles",
+      "type": "registry:ui",
+      "title": "Field Styles",
+      "description": "Shared theme-aware styling for text and segmented fields.",
+      "dependencies": [],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
         }
       ]
     },
@@ -1097,6 +1166,11 @@
           "target": "@components/vip-ui/button.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/text-field.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/text-field.tsx"
@@ -1158,6 +1232,11 @@
           "path": "registry/generated/src/components/vip-ui/form.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/form.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/text-field.tsx",
@@ -1272,7 +1351,7 @@
       "type": "registry:ui",
       "title": "Meter",
       "description": "Display a measured value against a known range.",
-      "dependencies": ["react-aria-components", "tailwind-variants"],
+      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1307,6 +1386,11 @@
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/press-button.tsx",
@@ -1604,6 +1688,11 @@
           "target": "@components/vip-ui/utils.ts"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/search-field.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/search-field.tsx"
@@ -1631,6 +1720,11 @@
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/popover.tsx",
@@ -1825,6 +1919,11 @@
           "target": "@components/vip-ui/badge.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/search-field.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/search-field.tsx"
@@ -1852,6 +1951,7 @@
       "title": "Tabs",
       "description": "Switch between related content panels.",
       "dependencies": [
+        "motion",
         "react-aria-components",
         "reicon-react",
         "tailwind-variants"
@@ -1916,6 +2016,11 @@
           "target": "@components/vip-ui/utils.ts"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/text-area.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/text-area.tsx"
@@ -1948,6 +2053,11 @@
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/text-field.tsx",
@@ -2010,6 +2120,11 @@
           "path": "registry/generated/src/components/vip-ui/date-segment.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/date-segment.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/time-field.tsx",
@@ -2181,6 +2296,16 @@
           "target": "@components/vip-ui/toolbar.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/toggle-button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/toggle-button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/toggle-button-group.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/toggle-button-group.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/button-styles.tsx"
@@ -2194,16 +2319,6 @@
           "path": "registry/generated/src/components/vip-ui/separator.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/separator.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/toggle-button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/toggle-button.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/toggle-button-group.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/toggle-button-group.tsx"
         }
       ]
     },
@@ -2422,6 +2537,11 @@
           "target": "@components/vip-ui/form.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/text-field.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/text-field.tsx"
@@ -2520,6 +2640,11 @@
           "path": "registry/generated/src/components/vip-ui/avatar.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/avatar.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/search-field.tsx",
@@ -2631,6 +2756,11 @@
           "path": "registry/generated/src/components/vip-ui/date-segment.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/date-segment.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/popover.tsx",
@@ -2801,6 +2931,11 @@
           "path": "registry/generated/src/app/examples/studio/theme-toggle.tsx",
           "type": "registry:file",
           "target": "src/app/examples/studio/theme-toggle.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/color-field.tsx",

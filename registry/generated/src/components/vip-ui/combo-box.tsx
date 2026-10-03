@@ -15,7 +15,18 @@ import {
 } from "react-aria-components";
 import { Check, ChevronDown } from "reicon-react";
 import { cn } from "./utils";
+import {
+  fieldDescriptionStyles,
+  fieldErrorStyles,
+  fieldInputStyles,
+  fieldLabelStyles,
+} from "./field-styles";
 import { Popover } from "./popover";
+
+const comboBoxPopoverStyles =
+  "w-[var(--trigger-width)] rounded-lg border-0 p-1.5 ring-1 ring-border/70";
+const comboBoxItemStyles =
+  "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted data-[focused]:bg-muted data-[focus-visible]:-outline-offset-2 data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring data-[selected]:bg-accent data-[selected]:text-accent-foreground data-[disabled]:cursor-default data-[disabled]:opacity-50";
 
 export interface ComboBoxOption {
   id: string;
@@ -78,13 +89,13 @@ export function ComboBox({
             data-slot="combo-box-content"
             placement="bottom start"
             offset={7}
-            className="w-[var(--trigger-width)] rounded-lg border-0 p-1.5 ring-1 ring-border/70"
+            className={comboBoxPopoverStyles}
           >
             <ListBox
               data-slot="combo-box-list-box"
               items={options ?? []}
               renderEmptyState={() => (
-                <div className="px-3 py-3 text-[13px] text-muted-foreground">
+                <div className="px-3 py-3 text-sm text-muted-foreground">
                   No matching options.
                 </div>
               )}
@@ -95,12 +106,12 @@ export function ComboBox({
                   data-slot="combo-box-item"
                   id={option.id}
                   textValue={option.name}
-                  className="group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted data-[focused]:bg-muted data-[focus-visible]:-outline-offset-2 data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring data-[selected]:bg-accent data-[selected]:text-accent-foreground data-[disabled]:cursor-default data-[disabled]:opacity-50"
+                  className={comboBoxItemStyles}
                 >
                   <span className="min-w-0">
                     <span className="block font-medium">{option.name}</span>
                     {option.description && (
-                      <span className="mt-0.5 block text-xs text-muted-foreground">
+                      <span className="mt-0.5 block text-xs text-muted-foreground group-data-[selected]/item:text-accent-foreground">
                         {option.description}
                       </span>
                     )}
@@ -128,7 +139,7 @@ export function ComboBoxLabel({
     <Label
       {...props}
       data-slot="combo-box-label"
-      className={cn("text-[13px] font-medium text-foreground", className)}
+      className={cn(fieldLabelStyles, className)}
     />
   );
 }
@@ -142,10 +153,7 @@ export function ComboBoxInput({
       {...props}
       data-slot="combo-box-input"
       className={composeRenderProps(className, (className) =>
-        cn(
-          "min-h-12 w-full cursor-text rounded-lg border border-input bg-card ps-3.5 pe-12 text-base text-foreground shadow-[var(--shadow-card)] outline-none data-[placeholder]:text-muted-foreground/80 hover:border-primary/45 motion-safe:transition-[border-color,box-shadow] motion-safe:duration-150 data-[focus-visible]:border-ring data-[focus-visible]:ring-3 data-[focus-visible]:ring-ring/50 data-[invalid]:border-destructive data-[invalid]:ring-3 data-[invalid]:ring-destructive/20 data-[disabled]:cursor-not-allowed data-[disabled]:bg-muted data-[disabled]:opacity-60 sm:text-sm",
-          className,
-        ),
+        cn(fieldInputStyles, "ps-3.5 pe-12", className),
       )}
     />
   );
@@ -185,17 +193,14 @@ export function ComboBoxContent({
       placement={props.placement ?? "bottom start"}
       offset={props.offset ?? 7}
       className={composeRenderProps(className, (className) =>
-        cn(
-          "w-[var(--trigger-width)] rounded-lg border-0 p-1.5 ring-1 ring-border/70",
-          className,
-        ),
+        cn(comboBoxPopoverStyles, className),
       )}
     >
       <ListBox
         data-slot="combo-box-list-box"
         className="grid max-h-64 gap-1 overflow-y-auto outline-none"
         renderEmptyState={() => (
-          <div className="px-3 py-3 text-[13px] text-muted-foreground">
+          <div className="px-3 py-3 text-sm text-muted-foreground">
             No matching options.
           </div>
         )}
@@ -218,10 +223,7 @@ export function ComboBoxItem({
       {...props}
       data-slot="combo-box-item"
       className={composeRenderProps(className, (className) =>
-        cn(
-          "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted data-[focused]:bg-muted data-[focus-visible]:-outline-offset-2 data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring data-[selected]:bg-accent data-[selected]:text-accent-foreground data-[disabled]:cursor-default data-[disabled]:opacity-50",
-          className,
-        ),
+        cn(comboBoxItemStyles, className),
       )}
     >
       {children}
@@ -243,7 +245,7 @@ export function ComboBoxDescription({
       {...props}
       slot="description"
       data-slot="combo-box-description"
-      className={cn("text-xs leading-5 text-muted-foreground", className)}
+      className={cn(fieldDescriptionStyles, className)}
     />
   );
 }
@@ -256,7 +258,7 @@ export function ComboBoxError({
     <FieldError
       {...props}
       data-slot="combo-box-error"
-      className={cn("text-xs leading-5 text-destructive", className)}
+      className={cn(fieldErrorStyles, className)}
     />
   );
 }

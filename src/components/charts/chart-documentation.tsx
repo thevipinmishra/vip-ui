@@ -1,23 +1,64 @@
-import { readFile } from "node:fs/promises";
-import path from "node:path";
 import Link from "next/link";
-import { ChartDemo } from "@/components/docs/chart-demo";
-import { ChartLineDemo } from "@/components/docs/chart-line-demo";
 import { CodeBlock } from "@/components/docs/code-block";
 import { InstallTabs } from "@/components/docs/install-tabs";
 import { PackageManagerCommand } from "@/components/docs/package-manager-command";
-import { PreviewPanel } from "@/components/docs/preview-panel";
 import { readRegistryItem, registryUrl } from "@/lib/registry-docs";
 
-const anatomy = `<ChartFrame>
-  <ChartCaption>
-    <ChartTitle>New workspace signups</ChartTitle>
-    <ChartDescription>Monthly signups, January to June 2026</ChartDescription>
-  </ChartCaption>
-  <Chart definition={signupsChart} height={260}
-    ariaLabel="Monthly workspace signups from January to June 2026" />
-  {/* Keep an accessible table from the same rows for exact values. */}
-</ChartFrame>`;
+const usage = `"use client";
+
+import { barY, defineChart } from "@tanstack/charts";
+import { Chart } from "@tanstack/charts/react";
+import { scaleBand } from "@tanstack/charts/scales/band";
+import { scaleLinear } from "@tanstack/charts/scales/linear";
+import {
+  ChartCaption,
+  ChartDescription,
+  ChartFrame,
+  ChartTitle,
+} from "@/components/vip-ui/chart";
+
+const rows = [
+  { month: "Jan", signups: 48 },
+  { month: "Feb", signups: 62 },
+  { month: "Mar", signups: 55 },
+];
+
+const definition = defineChart({
+  marks: [barY(rows, { x: "month", y: "signups", fill: "var(--ts-chart-1)" })],
+  scales: {
+    x: { scale: () => scaleBand().padding(0.12) },
+    y: { scale: scaleLinear().domain([0, 70]), grid: true },
+  },
+});
+
+export function SignupsChart() {
+  return (
+    <ChartFrame>
+      <ChartCaption>
+        <ChartTitle>New workspace signups</ChartTitle>
+        <ChartDescription>January to March 2026</ChartDescription>
+      </ChartCaption>
+      <Chart
+        definition={definition}
+        height={260}
+        initialWidth={600}
+        ariaLabel="Monthly workspace signups, January to March 2026"
+      />
+      <table className="sr-only">
+        <caption>Monthly workspace signups, January to March 2026</caption>
+        <thead><tr><th scope="col">Month</th><th scope="col">Signups</th></tr></thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row.month}>
+              <th scope="row">{row.month}</th>
+              <td>{row.signups}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </ChartFrame>
+  );
+}`;
 
 const api = [
   [
@@ -49,36 +90,16 @@ const api = [
     "Accepts children, className, and native HTML attributes.",
   ],
   [
-    "TanStack Chart",
-    "definition",
-    "ChartDefinition",
-    "required",
-    "Compose marks, scales, tooltips, and keyboard behavior with TanStack Charts.",
-  ],
-  [
-    "TanStack Chart",
-    "ariaLabel",
-    "string",
-    "required",
-    "Name the metric and comparison for assistive technology.",
+    "ChartFrame",
+    "style",
+    "CSSProperties",
+    "—",
+    "Override the chart palette or tooltip variables for this frame.",
   ],
 ] as const;
 
-async function demoSource(filename: string) {
-  return (
-    await readFile(
-      path.join(process.cwd(), "src/components/docs", filename),
-      "utf8",
-    )
-  ).replaceAll("@/components/ui/", "@/components/vip-ui/");
-}
-
 export async function ChartDocumentation() {
-  const [item, barSource, lineSource] = await Promise.all([
-    readRegistryItem("chart"),
-    demoSource("chart-demo.tsx"),
-    demoSource("chart-line-demo.tsx"),
-  ]);
+  const item = await readRegistryItem("chart");
   const cliUrl = registryUrl("chart");
   const packages = item.dependencies.filter((pkg) => pkg !== "cn");
 
@@ -96,65 +117,6 @@ export async function ChartDocumentation() {
           Chart documentation
         </h2>
         <div className="mt-12 max-w-4xl space-y-16">
-          <section aria-labelledby="documentation-examples">
-            <h3
-              id="documentation-examples"
-              className="mb-6 text-2xl font-semibold tracking-[-0.04em]"
-            >
-              Examples
-            </h3>
-            <div className="space-y-8">
-              <div>
-                <h4 className="mb-4 text-base font-semibold">Bar chart</h4>
-                <PreviewPanel
-                  code={barSource}
-                  filename="src/components/docs/chart-demo.tsx"
-                >
-                  <ChartDemo />
-                </PreviewPanel>
-              </div>
-              <div>
-                <h4 className="mb-4 text-base font-semibold">
-                  Trend over time
-                </h4>
-                <PreviewPanel
-                  code={lineSource}
-                  filename="src/components/docs/chart-line-demo.tsx"
-                >
-                  <ChartLineDemo />
-                </PreviewPanel>
-              </div>
-            </div>
-          </section>
-          <section aria-labelledby="chart-guidance">
-            <h3
-              id="chart-guidance"
-              className="mb-4 text-2xl font-semibold tracking-[-0.04em]"
-            >
-              Usage guidance
-            </h3>
-            <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
-              Define marks, axes, and tooltips with TanStack Charts. ChartFrame
-              supplies theme colors and a caption, so it works with different
-              chart types. Give each chart a specific ariaLabel and keep an
-              accessible table from the same rows when exact values matter.
-              Override <code>--chart-1</code> through <code>--chart-5</code> in
-              your theme to change the palette.
-            </p>
-          </section>
-          <section
-            id="anatomy"
-            aria-labelledby="chart-anatomy"
-            className="scroll-mt-28"
-          >
-            <h3
-              id="chart-anatomy"
-              className="mb-6 text-2xl font-semibold tracking-[-0.04em]"
-            >
-              Anatomy
-            </h3>
-            <CodeBlock code={anatomy} filename="chart-anatomy.tsx" />
-          </section>
           <section
             id="installation"
             aria-labelledby="chart-installation"
@@ -210,6 +172,8 @@ export async function ChartDocumentation() {
                       @components/
                     </code>{" "}
                     placeholder represents your configured components alias.
+                    Review existing files before replacing them, and adjust the
+                    import in Usage if your alias differs.
                   </p>
                   {packages.length > 0 && (
                     <PackageManagerCommand
@@ -229,6 +193,44 @@ export async function ChartDocumentation() {
             />
           </section>
           <section
+            id="usage"
+            aria-labelledby="chart-usage"
+            className="scroll-mt-28"
+          >
+            <h3
+              id="chart-usage"
+              className="mb-6 text-2xl font-semibold tracking-[-0.04em]"
+            >
+              Usage
+            </h3>
+            <p className="mb-5 max-w-2xl text-sm leading-7 text-muted-foreground">
+              Compose TanStack marks and scales inside the installed vip/ui
+              frame. <code>ChartFrame</code> maps shadcn&apos;s chart palette
+              and tooltip styles; <code>Chart</code> comes from TanStack, not
+              vip/ui. Keep static definitions outside render, memoize
+              definitions that capture changing rows, and supply a specific{" "}
+              <code>ariaLabel</code> and a table when exact values matter.
+            </p>
+            <CodeBlock code={usage} filename="signups-chart.tsx" />
+            <p className="mt-5 max-w-2xl text-sm leading-7 text-muted-foreground">
+              Change <code>--chart-1</code> through <code>--chart-5</code> in
+              both themes, or set <code>--ts-chart-1</code> on one frame via its{" "}
+              <code>style</code> prop. The gallery above shows grouped tooltips,
+              polar marks, and keyed motion. Each View code drawer includes the
+              shared plot helper and category file. Keep them side by side, then
+              import the example you need. Install{" "}
+              <Link
+                href="/components/button#installation"
+                className="text-primary underline underline-offset-4"
+              >
+                vip/ui Button
+              </Link>{" "}
+              before copying the Bar category source. The Radar category also
+              needs <code>d3-shape</code> and its TypeScript types,{" "}
+              <code>@types/d3-shape</code>.
+            </p>
+          </section>
+          <section
             id="api"
             aria-labelledby="chart-api"
             className="scroll-mt-28"
@@ -239,6 +241,24 @@ export async function ChartDocumentation() {
             >
               API reference
             </h3>
+            <p className="mb-5 max-w-2xl text-sm leading-7 text-muted-foreground">
+              These are vip/ui frame parts. TanStack owns the chart definition,
+              renderer, sizing, tooltip, and keyboard behavior. See the{" "}
+              <a
+                href="https://tanstack.com/charts/latest/docs/framework/react/adapter"
+                className="text-primary underline underline-offset-4"
+              >
+                React adapter
+              </a>{" "}
+              and{" "}
+              <a
+                href="https://tanstack.com/charts/latest/docs/reference/chart-definitions"
+                className="text-primary underline underline-offset-4"
+              >
+                definition API
+              </a>{" "}
+              for their props.
+            </p>
             <div className="overflow-x-auto rounded-xl bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70">
               <table className="w-full min-w-[650px] border-collapse text-left text-[12px]">
                 <thead className="bg-muted/60 text-muted-foreground">

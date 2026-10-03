@@ -18,13 +18,7 @@ import { TabsDemo } from "@/components/docs/tabs-demo";
 import { ToastDemo } from "@/components/docs/toast-demo";
 import { TooltipDemo } from "@/components/docs/tooltip-demo";
 import { ButtonLink } from "@/components/ui/button-link";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 function Showcase({
@@ -43,34 +37,32 @@ function Showcase({
   return (
     <HomeReveal className={cn("min-w-0", className)}>
       <Card className="relative z-0 flex h-full min-w-0 flex-col rounded-2xl p-1 hover:z-10 focus-within:z-10">
-        <CardHeader className="px-4 pt-4 sm:px-5 sm:pt-5">
-          <CardTitle as="h3" className="text-base tracking-[-0.025em]">
+        <CardHeader className="flex-row items-center justify-between gap-3 px-3 pt-2 sm:px-4 sm:pt-3">
+          <CardTitle as="h3" className="min-w-0 text-base tracking-[-0.025em]">
             {title}
           </CardTitle>
+          <Link
+            href={href}
+            className="group inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-md text-sm font-medium text-muted-foreground transition-colors duration-200 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          >
+            View docs<span className="sr-only"> for {title}</span>
+            <ArrowRight
+              size={15}
+              aria-hidden="true"
+              className="motion-safe:transition-transform motion-safe:duration-200 motion-safe:group-hover:translate-x-1 motion-safe:group-focus-visible:translate-x-1"
+            />
+          </Link>
         </CardHeader>
-        <CardContent className="flex min-w-0 flex-1 items-stretch px-3 py-3 sm:px-4">
+        <CardContent className="flex min-w-0 flex-1 items-stretch px-2 pb-2 pt-1 sm:px-3 sm:pb-3">
           <div
             className={cn(
-              "flex w-full min-w-0 flex-1 items-center justify-center rounded-xl bg-muted/50 p-4",
-              featured ? "min-h-52" : "min-h-32",
+              "flex w-full min-w-0 flex-1 items-center justify-center rounded-xl bg-muted/50 p-3",
+              featured ? "min-h-44" : "min-h-28",
             )}
           >
             {children}
           </div>
         </CardContent>
-        <CardFooter className="px-4 pb-4 sm:px-5 sm:pb-5">
-          <Link
-            href={href}
-            className="group inline-flex min-h-10 items-center gap-2 rounded-md text-sm font-medium text-foreground hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-          >
-            View {title.toLowerCase()}
-            <ArrowRight
-              size={15}
-              aria-hidden="true"
-              className="motion-safe:transition-transform motion-safe:duration-200 motion-safe:group-hover:translate-x-1"
-            />
-          </Link>
-        </CardFooter>
       </Card>
     </HomeReveal>
   );
@@ -108,14 +100,6 @@ export default function Home() {
             >
               Browse components
             </ButtonLink>
-          </div>
-          <div className="mt-6">
-            <Link
-              href="/themes"
-              className="inline-flex min-h-11 items-center gap-2 rounded-md text-sm font-medium text-primary hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-            >
-              Explore official themes <ArrowRight size={15} aria-hidden="true" />
-            </Link>
           </div>
         </section>
 

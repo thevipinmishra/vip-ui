@@ -48,6 +48,7 @@ const descriptions = {
   "drop-zone": "Accept files by drag and drop or file picker.",
   "empty-state": "Explain why a collection is empty and what to do next.",
   fieldset: "Group related native form controls under a legend.",
+  "field-styles": "Shared theme-aware styling for text and segmented fields.",
   "file-trigger": "Open a file picker from an accessible trigger.",
   form: "Group fields and handle form validation.",
   "grid-list": "Select and act on rows with keyboard navigation.",
@@ -107,8 +108,10 @@ const demos = new Map(
 export function portableSource(source) {
   // React Aria exposes these states as data attributes on its elements.
   // Unlike the site's shorthand variants, these work without a Tailwind plugin.
+  // `placeholder:` on native inputs styles ::placeholder, not a React Aria state.
+  // React Aria placeholder states use the explicit `data-[placeholder]:` selector.
   const states =
-    "selection-start|selection-end|outside-month|focus-visible|unavailable|placeholder|selected|pressed|invalid|indeterminate|disabled|dragging|empty";
+    "selection-start|selection-end|outside-month|focus-visible|unavailable|selected|pressed|invalid|indeterminate|disabled|dragging|empty";
   return source
     .replace(/\r\n/g, "\n")
     .replaceAll('from "@/lib/utils"', 'from "./utils"')
@@ -186,6 +189,9 @@ export function createItem(name, sources) {
       }
     }
   }
+  // The frame is renderer-agnostic, but its documented examples need Charts.
+  // Keep the install dependency even when no chart demo file is registered.
+  if (name === "chart") dependencies.add("@tanstack/charts");
   if (needsUtils) {
     for (const specifier of importsFrom(utilsSource))
       dependencies.add(packageName(specifier));

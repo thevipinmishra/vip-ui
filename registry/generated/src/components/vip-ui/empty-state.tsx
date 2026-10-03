@@ -27,7 +27,7 @@ export function EmptyStateIcon({
       aria-hidden="true"
       data-slot="empty-state-icon"
       className={cn(
-        "grid size-11 place-items-center rounded-lg bg-accent text-primary",
+        "grid size-11 place-items-center rounded-lg bg-accent text-accent-foreground",
         className,
       )}
     />

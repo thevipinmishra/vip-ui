@@ -31,7 +31,7 @@ export function TagGroupLabel({
     <Label
       {...props}
       data-slot="tag-group-label"
-      className={cn("text-[13px] font-medium", className)}
+      className={cn("text-sm font-medium", className)}
     />
   );
 }
@@ -61,7 +61,7 @@ export function Tag({ className, children, ...props }: TagProps) {
       }
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex min-h-11 cursor-pointer items-center gap-1 rounded-lg bg-card ps-3 pe-1 text-[13px] font-medium shadow-[var(--shadow-card)] ring-1 ring-border/80 hover:bg-muted selected:bg-accent selected:text-accent-foreground selected:ring-primary/35 disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-safe:transition-[background-color,box-shadow,scale] motion-safe:duration-150 motion-safe:active:scale-[0.96]",
+          "flex min-h-11 cursor-pointer items-center gap-1 rounded-lg bg-card ps-3 pe-1 text-sm font-medium shadow-[var(--shadow-card)] ring-1 ring-border/80 hover:bg-muted selected:bg-accent selected:text-accent-foreground selected:ring-primary/35 disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-safe:transition-[background-color,box-shadow,scale] motion-safe:duration-150 motion-safe:active:scale-[0.96]",
           className,
         ),
       )}

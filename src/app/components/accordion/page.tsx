@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { AccordionDemo } from "@/components/docs/accordion-demo";
+import { AccordionDisabledDemo } from "@/components/docs/accordion-disabled-demo";
 import { AccordionDividedDemo } from "@/components/docs/accordion-divided-demo";
+import { AccordionMultipleDemo } from "@/components/docs/accordion-multiple-demo";
 import { ComponentPage } from "@/components/docs/component-page";
 
 export const metadata: Metadata = {
@@ -18,6 +20,20 @@ export default function AccordionPage() {
       previewHint="Open a question to read its answer."
       previewSourcePath="src/components/docs/accordion-demo.tsx"
       examples={[
+        {
+          title: "Multiple open items",
+          description:
+            "Use allowsMultipleExpanded to keep more than one answer open. Both answers start expanded; close one without affecting the other.",
+          preview: <AccordionMultipleDemo />,
+          sourcePath: "src/components/docs/accordion-multiple-demo.tsx",
+        },
+        {
+          title: "Disabled item",
+          description:
+            "Set isDisabled on an AccordionItem when its answer is not available. The other item still opens normally.",
+          preview: <AccordionDisabledDemo />,
+          sourcePath: "src/components/docs/accordion-disabled-demo.tsx",
+        },
         {
           title: "Divided",
           description:

@@ -1,10 +1,11 @@
 import type { ReactNode } from "react";
 import { AreaRange, AreaStacked, AreaVisits } from "./area-charts";
-import { BarHorizontal, BarOrders, BarStacked } from "./bar-charts";
+import { BarHorizontal, BarOrders, BarStacked, BarUpdates } from "./bar-charts";
 import { LineComparison, LineResponse, LineTarget } from "./line-charts";
 import { PieDevices, PieDonut, PieRounded } from "./pie-charts";
 import { RadarBenchmarks, RadarCompare, RadarProfile } from "./radar-charts";
 import { RadialChannels, RadialGoals, RadialProgress } from "./radial-charts";
+import { TooltipCustom, TooltipGrouped, TooltipValue } from "./tooltip-charts";
 
 type Example = { name: string; preview: ReactNode };
 type Category = {
@@ -54,6 +55,10 @@ export const chartCategories: Category[] = [
         name: "Support requests",
         preview: <BarStacked />,
       },
+      {
+        name: "Animated orders",
+        preview: <BarUpdates />,
+      },
     ],
   },
   {
@@ -73,6 +78,26 @@ export const chartCategories: Category[] = [
       {
         name: "Uptime target",
         preview: <LineTarget />,
+      },
+    ],
+  },
+  {
+    slug: "tooltip",
+    label: "Tooltips",
+    title: "Chart tooltips",
+    source: "tooltip-charts.tsx",
+    examples: [
+      {
+        name: "Single value",
+        preview: <TooltipValue />,
+      },
+      {
+        name: "Grouped values",
+        preview: <TooltipGrouped />,
+      },
+      {
+        name: "Pinned detail",
+        preview: <TooltipCustom />,
       },
     ],
   },

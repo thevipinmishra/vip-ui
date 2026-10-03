@@ -21,7 +21,7 @@ export function Breadcrumbs<T extends object>({
     <AriaBreadcrumbs
       {...props}
       data-slot="breadcrumbs"
-      className={cn("flex flex-wrap items-center gap-2 text-[13px]", className)}
+      className={cn("flex flex-wrap items-center gap-2 text-sm", className)}
     />
   );
 }

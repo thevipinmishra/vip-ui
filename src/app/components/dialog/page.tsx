@@ -3,6 +3,7 @@ import { ComponentPage } from "@/components/docs/component-page";
 import { DialogAlertDemo } from "@/components/docs/dialog-alert-demo";
 import { DialogControlledDemo } from "@/components/docs/dialog-controlled-demo";
 import { DialogDemo } from "@/components/docs/dialog-demo";
+import { DialogScrollableDemo } from "@/components/docs/dialog-scrollable-demo";
 
 export const metadata: Metadata = {
   title: "Dialog | vip/ui",
@@ -25,6 +26,13 @@ export default function DialogPage() {
             "Ask for confirmation before archiving. Outside clicks do not dismiss the alert; Cancel leaves the project unchanged.",
           preview: <DialogAlertDemo />,
           sourcePath: "src/components/docs/dialog-alert-demo.tsx",
+        },
+        {
+          title: "Scrollable content",
+          description:
+            "Keep long content inside the dialog. On a short viewport, scroll the checklist while the page underneath remains inactive.",
+          preview: <DialogScrollableDemo />,
+          sourcePath: "src/components/docs/dialog-scrollable-demo.tsx",
         },
         {
           title: "Controlled open state",

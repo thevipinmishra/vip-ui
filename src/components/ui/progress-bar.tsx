@@ -35,7 +35,7 @@ export function ProgressBar({
       {children ??
         (({ percentage, valueText, isIndeterminate }) => (
           <>
-            <div className="flex justify-between gap-3 text-[13px]">
+            <div className="flex justify-between gap-3 text-sm">
               {label && (
                 <Label
                   data-slot="progress-bar-label"
@@ -65,14 +65,20 @@ export function ProgressBar({
                   isIndeterminate
                     ? {
                         width: "33.333%",
-                        opacity: reduceMotion ? 1 : [0.5, 1, 0.5],
+                        x: reduceMotion ? "0%" : ["0%", "200%"],
+                        opacity: reduceMotion ? 1 : [0.65, 1, 0.65],
                       }
-                    : { width: `${percentage}%`, opacity: 1 }
+                    : { width: `${percentage}%`, x: "0%", opacity: 1 }
                 }
                 transition={
                   isIndeterminate && !reduceMotion
                     ? {
                         opacity: {
+                          duration: 1.5,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        },
+                        x: {
                           duration: 1.5,
                           repeat: Infinity,
                           ease: "easeInOut",

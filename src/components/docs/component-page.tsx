@@ -4,8 +4,8 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "reicon-react";
 import { readRegistryItem, registryUrl } from "@/lib/registry-docs";
-import { anatomy } from "./anatomy";
 import { CodeBlock } from "./code-block";
+import { compositions } from "./component-compositions";
 import { InstallTabs } from "./install-tabs";
 import { PackageManagerCommand } from "./package-manager-command";
 import { PreviewPanel } from "./preview-panel";
@@ -736,7 +736,10 @@ export async function ComponentPage({
         aria-label={`${name} preview`}
         className="mt-8 scroll-mt-24"
       >
-        <PreviewPanel code={previewSource} filename={previewSourcePath}>
+        <PreviewPanel
+          code={previewSource}
+          filename={path.basename(previewSourcePath)}
+        >
           {preview}
         </PreviewPanel>
         <p className="mt-3 text-[13px] leading-6 text-muted-foreground">
@@ -745,7 +748,7 @@ export async function ComponentPage({
       </section>
 
       <section id="installation" className="mt-14 scroll-mt-24">
-        <SectionHeading title="Install" />
+        <SectionHeading title="Installation" />
         <InstallTabs
           cliAvailable={Boolean(cliUrl)}
           cli={
@@ -812,32 +815,46 @@ export async function ComponentPage({
           )}
         </div>
         <CodeBlock
-          code={anatomy[componentSlug]}
-          filename={`${componentSlug}-usage.tsx`}
+          code={previewSource}
+          filename={path.basename(previewSourcePath)}
         />
       </section>
 
-      {examples.length > 0 && (
-        <section id="examples" className="mt-14 scroll-mt-24">
-          <SectionHeading title="Examples" />
-          <div className="space-y-10">
-            {examples.map((example, index) => (
-              <div key={`${example.sourcePath}:${example.title}`}>
-                <ExampleHeading title={example.title} />
-                <PreviewPanel
-                  code={exampleSources[index]}
-                  filename={example.sourcePath}
-                >
-                  {example.preview}
-                </PreviewPanel>
-                <p className="mt-3 text-[13px] leading-6 text-muted-foreground">
-                  {example.description}
-                </p>
-              </div>
+      {compositions[componentSlug] && (
+        <section id="composition" className="mt-14 scroll-mt-24">
+          <SectionHeading title="Composition" />
+          <ul className="grid max-w-[670px] gap-3 text-sm leading-6 text-muted-foreground">
+            {compositions[componentSlug].map(({ part, purpose }) => (
+              <li key={part}>
+                <code className="font-mono text-foreground">{part}</code>:{" "}
+                {purpose}
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
       )}
+
+      {examples.map((example, index) => (
+        <section
+          key={example.sourcePath}
+          id={`example-${example.title
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/-$/, "")}`}
+          className="mt-14 scroll-mt-24"
+        >
+          <SectionHeading title={example.title} />
+          <p className="mb-5 max-w-[670px] text-sm leading-7 text-muted-foreground">
+            {example.description}
+          </p>
+          <PreviewPanel
+            code={exampleSources[index]}
+            filename={path.basename(example.sourcePath)}
+          >
+            {example.preview}
+          </PreviewPanel>
+        </section>
+      ))}
 
       <section id="api" className="mt-14 scroll-mt-24">
         <SectionHeading title="API reference" />
@@ -974,12 +991,6 @@ export async function ComponentPage({
         )}
       </nav>
     </article>
-  );
-}
-
-function ExampleHeading({ title }: { title: string }) {
-  return (
-    <h3 className="mb-4 text-base font-semibold tracking-[-0.02em]">{title}</h3>
   );
 }
 
