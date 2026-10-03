@@ -16,7 +16,7 @@ export function TextSwapDemo() {
   const status = statuses[index];
 
   return (
-    <div className="flex flex-wrap items-center gap-5">
+    <div className="grid justify-items-center gap-5">
       <Badge variant={status.variant} dot>
         <TextSwap value={status.label} aria-live="polite" />
       </Badge>

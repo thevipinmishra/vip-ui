@@ -18,11 +18,14 @@ Open <http://localhost:3000/components> for the catalog. Run `pnpm lint` and `pn
 | Button | An action with clear priority | `/components/button` |
 | Text field | Labeled text entry and validation | `/components/text-field` |
 | Input group | A field with a prefix, suffix, or action | `/components/input-group` |
+| Password field | Entering a password with a reveal control | `/components/password-field` |
 | Select | One choice from a longer list | `/components/select` |
+| Native select | One choice using the device's picker | `/components/native-select` |
 | Checkbox | Independent choices in a form | `/components/checkbox` |
 | Switch | A setting that takes effect immediately | `/components/switch` |
 | Badge | Brief status or metadata | `/components/badge` |
 | Alert | Information beside the task it affects | `/components/alert` |
+| Message | A readable entry in a conversation | `/components/message` |
 | Radio group | One choice from a short visible list | `/components/radio-group` |
 | Text area | Longer answers with guidance | `/components/text-area` |
 | Slider | A value within a bounded range | `/components/slider` |
@@ -41,6 +44,8 @@ Open <http://localhost:3000/components> for the catalog. Run `pnpm lint` and `pn
 | Toast | Feedback after an action | `/components/toast` |
 | Date field | Entering a known date one segment at a time | `/components/date-field` |
 | File trigger | Choosing files from an accessible button | `/components/file-trigger` |
+| Attachment | Reviewing files and upload states | `/components/attachment` |
+| Copy button | Copying a value with success or failure feedback | `/components/copy-button` |
 | Card | Grouping related content and actions | `/components/card` |
 | Avatar | Showing a person with an image or initials | `/components/avatar` |
 | Skeleton | Reserving space while content loads | `/components/skeleton` |
@@ -103,7 +108,7 @@ export function PlanChoice() {
 }
 ```
 
-Use a radio group when people need to compare a few choices at once. Use Select when the list is longer. Use Checkbox when more than one option can be selected.
+Use a radio group when people need to compare a few choices at once. Use Native select when text-only options should open the device's picker; use Select when options need descriptions or a custom menu. Use Checkbox when more than one option can be selected.
 
 ## Install a complete example
 

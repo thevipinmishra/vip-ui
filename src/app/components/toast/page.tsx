@@ -15,7 +15,7 @@ export default function ToastPage() {
       <ComponentPage
         name="Toast"
         reactAriaDocsHref="https://react-aria.adobe.com/Toast"
-        description="Confirm an action without interrupting the current task. Toasts stack in one region and offer a clear dismiss button."
+        description="Displays a brief notification."
         preview={<ToastDemo />}
         previewHint="Save a draft to show a confirmation that closes after five seconds."
         previewSourcePath="src/components/docs/toast-demo.tsx"

@@ -73,6 +73,7 @@ import { SpinnerUsageDemo } from "@/components/docs/spinner-usage-demo";
 import { StatDemo } from "@/components/docs/stat-demo";
 import { StepperBasicDemo } from "@/components/docs/stepper-basic-demo";
 import { StepperDemo } from "@/components/docs/stepper-demo";
+import { TableBasicDemo } from "@/components/docs/table-basic-demo";
 import { TableDemo } from "@/components/docs/table-demo";
 import { TableFilterDemo } from "@/components/docs/table-filter-demo";
 import { TableSortingDemo } from "@/components/docs/table-sorting-demo";
@@ -90,7 +91,6 @@ import { ToolbarBasicDemo } from "@/components/docs/toolbar-basic-demo";
 import { ToolbarDemo } from "@/components/docs/toolbar-demo";
 import { TreeBasicDemo } from "@/components/docs/tree-basic-demo";
 import { TreeDemo } from "@/components/docs/tree-demo";
-import { TypingIndicatorDemo } from "@/components/docs/typing-indicator-demo";
 
 const entries: {
   slug: string;
@@ -102,74 +102,72 @@ const entries: {
   {
     slug: "command-palette",
     name: "Command palette",
-    description: "Find and run actions from a searchable keyboard menu.",
+    description: "Displays a searchable menu for finding and running commands.",
     hint: "Open the palette, type a command, and press Enter; Ctrl+K or ⌘K opens it from anywhere.",
     demo: <CommandPaletteDemo />,
   },
   {
     slug: "token-field",
     name: "Token field",
-    description: "Enter and edit several tags in one text field.",
+    description: "A field for entering and editing multiple text tokens.",
     hint: "Type a tag followed by a comma or Enter. Select a tag and delete it with the keyboard.",
     demo: <TokenFieldDemo />,
   },
   {
     slug: "tree",
     name: "Tree",
-    description: "Browse and select items in a nested collection.",
+    description:
+      "Displays hierarchical items that can be expanded and selected.",
     hint: "Use arrow keys to move through files and expand or collapse folders.",
     demo: <TreeDemo />,
   },
   {
     slug: "drop-zone",
     name: "Drop zone",
-    description: "Accept files by drag and drop or the file picker.",
+    description:
+      "A target for dropping files or choosing them from a file picker.",
     hint: "Drop a PNG, JPEG, or PDF, or use Browse files. This demo does not upload files.",
     demo: <DropZoneDemo />,
   },
   {
     slug: "color-picker",
     name: "Color picker",
-    description: "Choose a color with a visual area, hue slider, or hex field.",
+    description: "A control for choosing a color with visual and text inputs.",
     hint: "Drag the color thumb, adjust the hue, or type a hex value. Use arrow keys for fine adjustments.",
     demo: <ColorPickerDemo />,
   },
   {
     slug: "separator",
     name: "Separator",
-    description:
-      "Divide related groups of content without adding another heading.",
+    description: "Visually separates sections of content.",
     hint: "A horizontal rule separates account settings from notifications.",
     demo: <SeparatorDemo />,
   },
   {
     slug: "progress-bar",
     name: "Progress bar",
-    description:
-      "Show how much of a task has finished while it is still running.",
+    description: "Displays the progress of a task in a horizontal bar.",
     hint: "Press the button to move the upload forward.",
     demo: <ProgressBarDemo />,
   },
   {
     slug: "progress-ring",
     name: "Progress ring",
-    description:
-      "Show known or unknown progress in a compact circular indicator.",
+    description: "Displays the progress of a task in a circular indicator.",
     hint: "Advance the upload; the connecting ring keeps running until its status changes.",
     demo: <ProgressRingDemo />,
   },
   {
     slug: "meter",
     name: "Meter",
-    description:
-      "Show a measured quantity against a known range, such as storage used.",
+    description: "Displays a value within a known range.",
     hint: "Move the slider to change the storage reading.",
     demo: <MeterDemo />,
   },
   {
     slug: "number-field",
     name: "Number field",
-    description: "Enter a precise number or adjust it one step at a time.",
+    description: "A field for entering and adjusting numeric values.",
     hint: "Type a number or use the stepper buttons and arrow keys.",
     demo: <NumberFieldDemo />,
   },
@@ -177,304 +175,291 @@ const entries: {
     slug: "toggle-button",
     name: "Toggle button",
     description:
-      "Switch a persistent action such as pinning an item on or off.",
+      "A button that switches between selected and unselected states.",
     hint: "Press the button to pin and unpin the item.",
     demo: <ToggleButtonDemo />,
   },
   {
     slug: "button-group",
     name: "Button group",
-    description: "Place related independent actions in a labeled group.",
-    hint: "Zoom the preview in or out; each button remains a separate action.",
+    description:
+      "Joins related actions with shared edges while keeping each button independently focusable.",
+    hint: "Save the draft, or open the icon menu for more actions. Each button has its own Tab stop.",
     demo: <ButtonGroupDemo />,
   },
   {
     slug: "toggle-button-group",
     name: "Toggle button group",
-    description: "Choose one or more options in a compact group of buttons.",
+    description: "Groups toggle buttons for selecting one or more options.",
     hint: "Switch between day, week, and month with the arrow keys.",
     demo: <ToggleButtonGroupDemo />,
   },
   {
     slug: "breadcrumbs",
     name: "Breadcrumbs",
-    description:
-      "Show a page's place in a hierarchy with links back to its ancestors.",
+    description: "Displays a path of links to the current page.",
     hint: "Follow an ancestor link to go back up the hierarchy.",
     demo: <BreadcrumbsDemo />,
   },
   {
     slug: "tag-group",
     name: "Tag group",
-    description:
-      "Display a set of tags that users can navigate and remove with the keyboard.",
+    description: "Displays a collection of tags that can be removed.",
     hint: "Remove a topic using its close button or the Delete key.",
     demo: <TagGroupDemo />,
   },
   {
     slug: "list-box",
     name: "List box",
-    description:
-      "Choose an option from a visible list using pointer or keyboard navigation.",
+    description: "Displays a list of options for selection.",
     hint: "Select a team with click or arrow keys.",
     demo: <ListBoxDemo />,
   },
   {
     slug: "presence-list",
     name: "Presence list",
-    description: "Animate items as they join or leave a plain list.",
+    description: "Displays a list with animated item additions and removals.",
     hint: "Add and complete tasks to see the list update.",
     demo: <PresenceListDemo />,
   },
   {
     slug: "color-swatch",
     name: "Color swatch",
-    description: "Show a color sample alongside a readable name.",
+    description: "Displays a sample of a color.",
     hint: "Compare the four named colors, including their accessible descriptions.",
     demo: <ColorSwatchDemo />,
   },
   {
     slug: "checkbox-group",
     name: "Checkbox group",
-    description: "Select any number of related options in a labeled group.",
+    description: "Groups checkboxes for selecting multiple options.",
     hint: "Choose which email updates to receive.",
     demo: <CheckboxGroupDemo />,
   },
   {
     slug: "disclosure",
     name: "Disclosure",
-    description: "Reveal optional details without leaving the current page.",
+    description: "Shows or hides a section of content.",
     hint: "Open and close the details with the trigger.",
     demo: <DisclosureDemo />,
   },
   {
     slug: "popover",
     name: "Popover",
-    description: "Show contextual content anchored to a trigger.",
+    description: "Displays content in a panel anchored to a trigger.",
     hint: "Open the project details and dismiss with Escape.",
     demo: <PopoverDemo />,
   },
   {
     slug: "toolbar",
     name: "Toolbar",
-    description: "Group related actions with arrow-key navigation.",
+    description: "Groups related controls in a keyboard-navigable row.",
     hint: "Toggle a text style, then use Clear to reset the preview.",
     demo: <ToolbarDemo />,
   },
   {
     slug: "grid-list",
     name: "Grid list",
-    description: "Navigate and select interactive rows with a keyboard.",
+    description: "Displays a collection of interactive rows.",
     hint: "Choose a file using click or arrow keys.",
     demo: <GridListDemo />,
   },
   {
     slug: "color-field",
     name: "Color field",
-    description: "Edit a color using a text value.",
+    description: "A text field for entering a color value.",
     hint: "Type a new hex value into the field.",
     demo: <ColorFieldDemo />,
   },
   {
     slug: "form",
     name: "Form",
-    description: "Collect and validate related inputs before submission.",
+    description: "Groups fields and handles validation and submission.",
     hint: "Enter an email and submit the invitation.",
     demo: <FormDemo />,
   },
   {
     slug: "fieldset",
     name: "Fieldset",
-    description: "Group related form controls under a shared legend.",
+    description: "Groups related form controls under a legend.",
     hint: "Choose the updates for a weekly digest.",
     demo: <FieldsetDemo />,
   },
   {
     slug: "link",
     name: "Link",
-    description:
-      "Navigate to another page with a keyboard-accessible text link.",
+    description: "Displays a link to another page or location.",
     hint: "Follow the link back to the catalog.",
     demo: <LinkDemo />,
   },
   {
     slug: "color-swatch-picker",
     name: "Color swatch picker",
-    description: "Choose one color from a visible set of swatches.",
+    description: "Displays a set of swatches for choosing a color.",
     hint: "Select an accent color with pointer or arrow keys.",
     demo: <ColorSwatchPickerDemo />,
   },
   {
     slug: "date-field",
     name: "Date field",
-    description: "Enter a date one segment at a time with the keyboard.",
+    description: "A field for entering a date in editable segments.",
     hint: "Adjust the delivery date with arrow keys or type into each segment.",
     demo: <DateFieldDemo />,
   },
   {
     slug: "file-trigger",
     name: "File trigger",
-    description: "Open the file chooser from an accessible button.",
+    description: "Opens a file picker from a button or other trigger.",
     hint: "Choose PNG or JPEG images and review their names below the button.",
     demo: <FileTriggerDemo />,
   },
   {
     slug: "calendar",
     name: "Calendar",
-    description: "Browse months and choose a single day.",
+    description: "Displays a calendar for selecting a date.",
     hint: "Use the arrow keys to move between days or the buttons to change months.",
     demo: <CalendarDemo />,
   },
   {
     slug: "range-calendar",
     name: "Range calendar",
-    description: "Choose a start and end date from a calendar grid.",
+    description: "Displays a calendar for selecting a date range.",
     hint: "Select a start date, then select an end date.",
     demo: <RangeCalendarDemo />,
   },
   {
     slug: "date-picker",
     name: "Date picker",
-    description: "Type a date or choose one from a calendar popover.",
+    description: "A field for entering a date or choosing one from a calendar.",
     hint: "Edit the segments or open the calendar with the button.",
     demo: <DatePickerDemo />,
   },
   {
     slug: "date-range-picker",
     name: "Date range picker",
-    description: "Enter two dates or select a range in a popover.",
+    description: "A field for entering or selecting a date range.",
     hint: "Edit either date or select the start and end in the calendar.",
     demo: <DateRangePickerDemo />,
   },
   {
     slug: "preview-trigger",
     name: "Preview trigger",
-    description: "Show an interactive preview on hover, focus, or long press.",
+    description:
+      "Displays a preview when its trigger is hovered, focused, or long-pressed.",
     hint: "Focus or hover the button, then Tab into the preview or press Escape.",
     demo: <PreviewTriggerDemo />,
   },
   {
     slug: "table",
     name: "Table",
-    description:
-      "Read structured data by row and column, with optional selection.",
+    description: "Displays data in rows and columns.",
     hint: "Use arrow keys to explore rows; select a row with the keyboard or pointer.",
     demo: <TableDemo />,
   },
   {
     slug: "autocomplete",
     name: "Autocomplete",
-    description: "Filter a visible collection as you type.",
+    description: "Filters a list of options as you type.",
     hint: "Type a topic to narrow the list; use arrow keys to move through matches.",
     demo: <AutocompleteDemo />,
   },
   {
     slug: "time-field",
     name: "Time field",
-    description: "Enter a time with individually editable segments.",
+    description: "A field for entering a time in editable segments.",
     hint: "Use arrow keys to adjust hours and minutes.",
     demo: <TimeFieldDemo />,
   },
   {
     slug: "card",
     name: "Card",
-    description: "Group related content and actions in one section.",
+    description: "Displays a card with header, content, and footer.",
     hint: "A project summary shows the header, content, and footer together.",
     demo: <CardDemo />,
   },
   {
     slug: "avatar",
     name: "Avatar",
-    description: "Show a person with an image or named initials fallback.",
+    description: "Displays an image or initials for a person.",
     hint: "A group of members shows initials when no images are available.",
     demo: <AvatarDemo />,
   },
   {
     slug: "skeleton",
     name: "Skeleton",
-    description: "Reserve the shape of content while it loads.",
+    description: "Displays a placeholder while content loads.",
     hint: "A project card skeleton has a spoken loading label on its container.",
     demo: <SkeletonDemo />,
   },
   {
     slug: "spinner",
     name: "Spinner",
-    description:
-      "Show that work is still in progress when the duration is unknown.",
+    description: "Displays an indeterminate loading indicator.",
     hint: "Compare loading patterns and finish a simulated assistant response.",
     demo: <SpinnerDemo />,
   },
   {
     slug: "empty-state",
     name: "Empty state",
-    description:
-      "Explain why a collection is empty and offer a useful next step.",
+    description: "Displays a message when there is no content to show.",
     hint: "An empty saved list offers a link back to the catalog.",
     demo: <EmptyStateDemo />,
   },
   {
     slug: "pagination",
     name: "Pagination",
-    description: "Move between pages of a long collection with ordinary links.",
+    description: "Displays links for navigating a paginated collection.",
     hint: "Choose a page or use Previous and Next to change the visible projects.",
     demo: <PaginationDemo />,
   },
   {
     slug: "timeline",
     name: "Timeline",
-    description: "Show dated events as an ordered sequence.",
+    description: "Displays events in a time-ordered sequence.",
     hint: "Read the project history from the most recent event back.",
     demo: <TimelineDemo />,
   },
   {
     slug: "description-list",
     name: "Description list",
-    description: "Pair labels with values in a record or summary.",
+    description: "Displays pairs of terms and descriptions.",
     hint: "Read workspace details as terms and their values.",
     demo: <DescriptionListDemo />,
   },
   {
     slug: "kbd-code",
     name: "Kbd & code",
-    description: "Distinguish keyboard shortcuts and inline code from prose.",
+    description: "Displays keyboard keys and inline code in text.",
     hint: "Read a shortcut and an inline attribute in context.",
     demo: <KbdCodeDemo />,
   },
   {
     slug: "stat",
     name: "Stat",
-    description: "Show a key value with its label and plain-language context.",
+    description: "Displays a labeled value with supporting details.",
     hint: "Compare project count and storage usage without relying on color.",
     demo: <StatDemo />,
   },
   {
     slug: "animated-number",
     name: "Animated number",
-    description:
-      "Update a numeric value without animating its accessible text.",
-    hint: "Change one task to see only the changed digit slide, or add 54 to update several digits.",
+    description: "Displays a number that animates when its value changes.",
+    hint: "Add tasks to see the count animate; compare it with the digit-slide variant below.",
     demo: <AnimatedNumberDemo />,
   },
   {
     slug: "text-swap",
     name: "Text swap",
-    description: "Transition a short label when its value changes.",
+    description: "Displays text that transitions when its value changes.",
     hint: "Change the review status to see the label update.",
     demo: <TextSwapDemo />,
   },
   {
     slug: "stepper",
     name: "Stepper",
-    description: "Show the current and completed steps in a workflow.",
+    description: "Displays the current step in a sequence.",
     hint: "Use Back and Next to move through the setup steps.",
     demo: <StepperDemo />,
-  },
-  {
-    slug: "typing-indicator",
-    name: "Typing indicator",
-    description: "Show who is composing a message in a conversation.",
-    hint: "Stop or restart the typing status.",
-    demo: <TypingIndicatorDemo />,
   },
 ];
 
@@ -506,6 +491,11 @@ const basicPreviews: Record<
     demo: <ToolbarBasicDemo />,
     source: "toolbar-basic-demo.tsx",
     hint: "Move between formatting choices with the arrow keys.",
+  },
+  table: {
+    demo: <TableBasicDemo />,
+    source: "table-basic-demo.tsx",
+    hint: "Read the project and owner columns; use arrow keys to move between cells.",
   },
   stepper: {
     demo: <StepperBasicDemo />,
@@ -540,7 +530,7 @@ const basicPreviews: Record<
   "animated-number": {
     demo: <AnimatedNumberBasicDemo />,
     source: "animated-number-basic-demo.tsx",
-    hint: "Add a task to see the value change; assistive technology receives the target value immediately.",
+    hint: "Add 125 tasks to see the count move across several digits. Assistive technology receives the target value immediately.",
   },
   "progress-bar": {
     demo: <ProgressBarBasicDemo />,
@@ -690,11 +680,20 @@ const featuredExamples: Record<string, ComponentExample[]> = {
       sourcePath: "src/components/docs/empty-state-no-action-demo.tsx",
     },
   ],
+  table: [
+    {
+      title: "Selectable projects",
+      description:
+        "Add single-row selection when the user needs to choose a project. Keep status readable in every row.",
+      preview: <TableDemo />,
+      sourcePath: "src/components/docs/table-demo.tsx",
+    },
+  ],
   "button-group": [
     {
-      title: "Vertical document actions",
+      title: "Vertical draft actions",
       description:
-        "Stack independent actions beside a document and update its review state.",
+        "Stack two actions in a column. Each button stays in the Tab order and changes the draft status.",
       preview: <ButtonGroupVerticalDemo />,
       sourcePath: "src/components/docs/button-group-vertical-demo.tsx",
     },
@@ -721,7 +720,7 @@ const featuredExamples: Record<string, ComponentExample[]> = {
     {
       title: "Task counter variants",
       description:
-        "Complete or add tasks to compare the count and digit-slide transitions.",
+        "Change each total separately. Count moves between totals; digit slide rolls the changed places in both directions.",
       preview: <AnimatedNumberDemo />,
       sourcePath: "src/components/docs/animated-number-demo.tsx",
     },
@@ -788,7 +787,6 @@ const customSlugs = new Set([
   "animated-number",
   "progress-ring",
   "presence-list",
-  "typing-indicator",
   "button-group",
   "timeline",
   "text-swap",

@@ -31,7 +31,9 @@ export function TooltipActionsDemo() {
               <Check size={17} aria-hidden="true" />
             </Button>
             <TooltipContent>
-              {reviewed ? "Reopen review" : "Mark as reviewed"}
+              {reviewed
+                ? "Return this draft to the review queue."
+                : "Finish reviewing this draft."}
             </TooltipContent>
           </TooltipTrigger>
           <TooltipTrigger>
@@ -51,8 +53,8 @@ export function TooltipActionsDemo() {
             </Button>
             <TooltipContent>
               {showDetails
-                ? "Hide assignment details"
-                : "Show assignment details"}
+                ? "Collapse the reviewer and comment count."
+                : "See the reviewer and comment count."}
             </TooltipContent>
           </TooltipTrigger>
         </div>

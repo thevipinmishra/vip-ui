@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { ComponentPage } from "@/components/docs/component-page";
+import { DrawerBasicDemo } from "@/components/docs/drawer-basic-demo";
 import { DrawerDemo } from "@/components/docs/drawer-demo";
-import {
-  DrawerLeftDemo,
-  DrawerSideDemo,
-  DrawerTopDemo,
-} from "@/components/docs/drawer-side-demo";
+import { DrawerLeftDemo } from "@/components/docs/drawer-left-demo";
+import { DrawerSideDemo } from "@/components/docs/drawer-side-demo";
+import { DrawerTopDemo } from "@/components/docs/drawer-top-demo";
 
 export const metadata: Metadata = {
   title: "Drawer | vip/ui",
@@ -17,11 +16,18 @@ export default function DrawerPage() {
   return (
     <ComponentPage
       name="Drawer"
-      description="A modal sheet for details or a longer task. Open from any edge, drag the handle to dismiss, or use bottom snap points. Focus returns to the trigger on close."
-      preview={<DrawerDemo />}
-      previewHint="Drag the handle to resize the drawer, or focus the handle and press Up, Down, Home, or End. Escape, the backdrop, and Close dismiss it."
-      previewSourcePath="src/components/docs/drawer-demo.tsx"
+      description="Displays a panel that slides in from the edge of the screen."
+      preview={<DrawerBasicDemo />}
+      previewHint="Open the order summary, then close it with Close, Escape, or the backdrop."
+      previewSourcePath="src/components/docs/drawer-basic-demo.tsx"
       examples={[
+        {
+          title: "Snap points",
+          description:
+            "Drag the handle or use Up, Down, Home, and End to resize the order summary.",
+          preview: <DrawerDemo />,
+          sourcePath: "src/components/docs/drawer-demo.tsx",
+        },
         {
           title: "Right: project filters",
           description:
@@ -34,14 +40,14 @@ export default function DrawerPage() {
           description:
             "Browse collections, then select one or swipe left to close.",
           preview: <DrawerLeftDemo />,
-          sourcePath: "src/components/docs/drawer-side-demo.tsx",
+          sourcePath: "src/components/docs/drawer-left-demo.tsx",
         },
         {
           title: "Top: quick announcement",
           description:
             "Write a note, then pull the bottom handle up to dismiss.",
           preview: <DrawerTopDemo />,
-          sourcePath: "src/components/docs/drawer-side-demo.tsx",
+          sourcePath: "src/components/docs/drawer-top-demo.tsx",
         },
       ]}
       sourcePath="src/components/ui/drawer.tsx"

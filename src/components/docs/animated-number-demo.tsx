@@ -3,51 +3,44 @@
 import { useState } from "react";
 import { AnimatedNumber } from "@/components/ui/animated-number";
 import { Button } from "@/components/ui/button";
-import { Stat, StatDetail, StatLabel, StatValue } from "@/components/ui/stat";
+import { Stat, StatLabel, StatValue } from "@/components/ui/stat";
 
 export function AnimatedNumberDemo() {
-  const [count, setCount] = useState(248);
+  const [completed, setCompleted] = useState(1240);
+  const [open, setOpen] = useState(198);
+
   return (
-    <div className="grid w-full max-w-xl gap-4">
-      <div className="grid gap-3 sm:grid-cols-2">
-        <Stat>
-          <StatLabel>Open tasks, count up</StatLabel>
-          <StatValue>
-            <AnimatedNumber value={count} />
-          </StatValue>
-          <StatDetail>Across your workspace</StatDetail>
-        </Stat>
-        <Stat>
-          <StatLabel>Open tasks, digit slide</StatLabel>
-          <StatValue>
-            <AnimatedNumber value={count} variant="slide" />
-          </StatValue>
-          <StatDetail>Across your workspace</StatDetail>
-        </Stat>
-      </div>
-      <div className="flex flex-wrap gap-2">
-        <Button
-          variant="secondary"
-          size="sm"
-          onPress={() => setCount((n) => Math.max(0, n - 1))}
-        >
-          Complete 1
-        </Button>
-        <Button
-          variant="secondary"
-          size="sm"
-          onPress={() => setCount((n) => n + 1)}
-        >
-          Add 1
-        </Button>
-        <Button
-          variant="secondary"
-          size="sm"
-          onPress={() => setCount((n) => n + 54)}
-        >
-          Add 54
-        </Button>
-      </div>
+    <div className="grid w-full max-w-xl gap-4 sm:grid-cols-2">
+      <Stat className="flex min-w-0 flex-col">
+        <StatLabel>Count · completed tasks</StatLabel>
+        <StatValue className="text-4xl">
+          <AnimatedNumber value={completed} />
+        </StatValue>
+        <div className="mt-auto pt-6">
+          <Button
+            variant="secondary"
+            size="sm"
+            onPress={() => setCompleted((value) => value + 375)}
+          >
+            Complete 375 tasks
+          </Button>
+        </div>
+      </Stat>
+      <Stat className="flex min-w-0 flex-col">
+        <StatLabel>Digit slide · open tasks</StatLabel>
+        <StatValue className="text-4xl">
+          <AnimatedNumber value={open} variant="slide" />
+        </StatValue>
+        <div className="mt-auto pt-6">
+          <Button
+            variant="secondary"
+            size="sm"
+            onPress={() => setOpen((value) => (value === 198 ? 205 : 198))}
+          >
+            {open === 198 ? "Add 7 tasks" : "Complete 7 tasks"}
+          </Button>
+        </div>
+      </Stat>
     </div>
   );
 }

@@ -15,7 +15,7 @@ export default function ButtonPage() {
   return (
     <ComponentPage
       name="Button"
-      description="Use Button for actions. Choose a variant for priority and a size for context. onPress handles pointer and keyboard activation."
+      description="Displays a button or a component that looks like a button."
       reactAriaDocsHref="https://react-aria.adobe.com/Button"
       preview={<ButtonBasicDemo />}
       previewHint="Press to save; the label confirms the action without adding a separate message."

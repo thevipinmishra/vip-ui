@@ -26,14 +26,14 @@ import { DateRangePickerDemo } from "@/components/docs/date-range-picker-demo";
 import { DescriptionListDemo } from "@/components/docs/description-list-demo";
 import { DialogDemo } from "@/components/docs/dialog-demo";
 import { DisclosureDemo } from "@/components/docs/disclosure-demo";
-import { DrawerDemo } from "@/components/docs/drawer-demo";
+import { DrawerBasicDemo } from "@/components/docs/drawer-basic-demo";
 import { DropZoneDemo } from "@/components/docs/drop-zone-demo";
 import { EmptyStateDemo } from "@/components/docs/empty-state-demo";
 import { FieldsetDemo } from "@/components/docs/fieldset-demo";
 import { FileTriggerDemo } from "@/components/docs/file-trigger-demo";
 import { FormDemo } from "@/components/docs/form-demo";
 import { GridListDemo } from "@/components/docs/grid-list-demo";
-import { InputGroupDemo } from "@/components/docs/input-group-demo";
+import { InputGroupBasicDemo } from "@/components/docs/input-group-basic-demo";
 import { KbdCodeDemo } from "@/components/docs/kbd-code-demo";
 import { LinkDemo } from "@/components/docs/link-demo";
 import { ListBoxDemo } from "@/components/docs/list-box-demo";
@@ -55,8 +55,8 @@ import { SpinnerBasicDemo } from "@/components/docs/spinner-basic-demo";
 import { StatDemo } from "@/components/docs/stat-demo";
 import { StepperDemo } from "@/components/docs/stepper-demo";
 import { SwitchBasicDemo } from "@/components/docs/switch-basic-demo";
-import { TableDemo } from "@/components/docs/table-demo";
-import { TabsDemo } from "@/components/docs/tabs-demo";
+import { TableBasicDemo } from "@/components/docs/table-basic-demo";
+import { TabsBasicDemo } from "@/components/docs/tabs-basic-demo";
 import { TagGroupDemo } from "@/components/docs/tag-group-demo";
 import { TextAreaBasicDemo } from "@/components/docs/text-area-basic-demo";
 import { TextFieldBasicDemo } from "@/components/docs/text-field-basic-demo";
@@ -70,7 +70,6 @@ import { TokenFieldDemo } from "@/components/docs/token-field-demo";
 import { ToolbarDemo } from "@/components/docs/toolbar-demo";
 import { TooltipDemo } from "@/components/docs/tooltip-demo";
 import { TreeDemo } from "@/components/docs/tree-demo";
-import { TypingIndicatorDemo } from "@/components/docs/typing-indicator-demo";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SearchField } from "@/components/ui/search-field";
 
@@ -83,14 +82,14 @@ const examples: { title: string; Demo: ComponentType; wide?: boolean }[] = [
   { title: "Text field", Demo: TextFieldBasicDemo },
   { title: "Select", Demo: SelectDemo },
   { title: "Dialog", Demo: DialogDemo },
-  { title: "Drawer", Demo: DrawerDemo },
+  { title: "Drawer", Demo: DrawerBasicDemo },
   { title: "Toast", Demo: ToastDemo },
   { title: "Badge", Demo: BadgeBasicDemo },
   { title: "Bar chart", Demo: BarOrders, wide: true },
   { title: "Line chart", Demo: LineResponse, wide: true },
   { title: "Checkbox", Demo: CheckboxBasicDemo },
   { title: "Switch", Demo: SwitchBasicDemo },
-  { title: "Tabs", Demo: TabsDemo },
+  { title: "Tabs", Demo: TabsBasicDemo },
   { title: "Combo box", Demo: ComboBoxBasicDemo },
   { title: "Text area", Demo: TextAreaBasicDemo },
   { title: "Search field", Demo: SearchPreview },
@@ -105,14 +104,14 @@ const examples: { title: string; Demo: ComponentType; wide?: boolean }[] = [
   { title: "Slider", Demo: SliderDemo },
   { title: "Radio group", Demo: RadioGroupDemo },
   { title: "Date picker", Demo: DatePickerDemo },
-  { title: "Table", Demo: TableDemo, wide: true },
+  { title: "Table", Demo: TableBasicDemo, wide: true },
   { title: "Avatar", Demo: AvatarBasicDemo },
   { title: "Progress bar", Demo: ProgressBarBasicDemo },
   { title: "Checkbox group", Demo: CheckboxGroupDemo },
   { title: "Date range picker", Demo: DateRangePickerDemo },
   { title: "Command palette", Demo: CommandPaletteDemo },
   { title: "Button group", Demo: ButtonGroupDemo },
-  { title: "Input group", Demo: InputGroupDemo },
+  { title: "Input group", Demo: InputGroupBasicDemo },
   { title: "Number field", Demo: NumberFieldDemo },
   { title: "Toggle button", Demo: ToggleButtonDemo },
   { title: "Toggle button group", Demo: ToggleButtonGroupDemo },
@@ -144,7 +143,6 @@ const examples: { title: string; Demo: ComponentType; wide?: boolean }[] = [
   { title: "Disclosure", Demo: DisclosureDemo },
   { title: "Animated number", Demo: AnimatedNumberBasicDemo },
   { title: "Presence list", Demo: PresenceListDemo },
-  { title: "Typing indicator", Demo: TypingIndicatorDemo },
   { title: "Spinner", Demo: SpinnerBasicDemo },
   { title: "Breadcrumbs", Demo: BreadcrumbsDemo },
   { title: "Kbd and code", Demo: KbdCodeDemo },

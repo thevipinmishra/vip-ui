@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { type CodeLanguage, CodeSnippet } from "./code-snippet";
-import { PreviewTabs } from "./preview-tabs";
+import { PreviewCode } from "./preview-code";
 
 export async function PreviewPanel({
   children,
@@ -14,7 +14,7 @@ export async function PreviewPanel({
   language?: CodeLanguage;
 }) {
   return (
-    <PreviewTabs
+    <PreviewCode
       code={code.trim()}
       filename={filename}
       preview={children}

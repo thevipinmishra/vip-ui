@@ -13,7 +13,7 @@ export default function AlertPage() {
   return (
     <ComponentPage
       name="Alert"
-      description="An inline message with a clear title and an icon that matches its intent. Use it for information the reader needs near the current task."
+      description="Displays an inline message about a status or event."
       preview={<AlertBasicDemo />}
       previewHint="Keep the message next to the task it explains."
       previewSourcePath="src/components/docs/alert-basic-demo.tsx"

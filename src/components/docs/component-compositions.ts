@@ -1,159 +1,512 @@
-export const compositions: Record<string, { part: string; purpose: string }[]> =
-  {
-    accordion: [
-      { part: "Accordion", purpose: "Owns the expansion state and layout." },
-      { part: "AccordionItem", purpose: "Identifies each section." },
-      { part: "AccordionTrigger", purpose: "Opens or closes its section." },
-      { part: "AccordionContent", purpose: "Contains the section's answer." },
+export interface CompositionPart {
+  part: string;
+  purpose: string;
+  children?: CompositionPart[];
+}
+
+export interface Composition {
+  parts: CompositionPart[];
+  helper?: CompositionPart;
+}
+
+export const compositions: Record<string, Composition> = {
+  attachment: {
+    parts: [
+      {
+        part: "AttachmentList",
+        purpose:
+          "Groups keyed file rows and handles their entrance and exit motion.",
+        children: [
+          {
+            part: "Attachment",
+            purpose:
+              "Displays one file and the app-supplied status or actions.",
+          },
+        ],
+      },
     ],
-    alert: [
-      { part: "Alert", purpose: "Sets the message variant." },
-      { part: "AlertIcon", purpose: "Shows the variant icon." },
-      { part: "AlertTitle", purpose: "Names the message." },
-      { part: "AlertDescription", purpose: "Gives the detail or next step." },
+  },
+  accordion: {
+    parts: [
+      {
+        part: "Accordion",
+        purpose: "Owns the expansion state and layout.",
+        children: [
+          {
+            part: "AccordionItem",
+            purpose: "Identifies each section. Repeat for each section.",
+            children: [
+              {
+                part: "AccordionTrigger",
+                purpose: "Opens or closes its section.",
+              },
+              {
+                part: "AccordionContent",
+                purpose: "Contains the section's answer.",
+              },
+            ],
+          },
+        ],
+      },
     ],
-    "button-group": [
-      { part: "ButtonGroup", purpose: "Groups independent actions." },
-      { part: "Button", purpose: "Performs each action." },
+  },
+  alert: {
+    parts: [
+      {
+        part: "Alert",
+        purpose: "Sets the message variant.",
+        children: [
+          { part: "AlertIcon", purpose: "Shows the variant icon." },
+          { part: "AlertTitle", purpose: "Names the message." },
+          {
+            part: "AlertDescription",
+            purpose: "Gives the detail or next step.",
+          },
+        ],
+      },
     ],
-    select: [
-      { part: "Select", purpose: "Owns the value and field state." },
-      { part: "SelectLabel", purpose: "Names the field." },
-      { part: "SelectTrigger", purpose: "Opens the options." },
-      { part: "SelectContent", purpose: "Contains SelectItem options." },
+  },
+  "button-group": {
+    parts: [
+      {
+        part: "ButtonGroup",
+        purpose: "Joins the edges of two or more independent actions.",
+        children: [
+          {
+            part: "Button",
+            purpose:
+              "Performs an action. Each button remains separately focusable.",
+          },
+        ],
+      },
     ],
-    dialog: [
-      { part: "Dialog", purpose: "Owns the open state." },
-      { part: "DialogTrigger", purpose: "Opens the dialog." },
-      { part: "DialogContent", purpose: "Contains the modal task." },
-      { part: "DialogHeader", purpose: "Groups the title and close control." },
-      { part: "DialogTitle", purpose: "Names the modal task." },
-      { part: "DialogDescription", purpose: "Explains the task." },
-      { part: "DialogFooter", purpose: "Groups the task actions." },
+  },
+  select: {
+    parts: [
+      {
+        part: "Select",
+        purpose: "Owns the value and field state.",
+        children: [
+          { part: "SelectLabel", purpose: "Names the field." },
+          { part: "SelectTrigger", purpose: "Opens the options." },
+          {
+            part: "SelectDescription",
+            purpose: "Adds help below the trigger.",
+          },
+          {
+            part: "SelectContent",
+            purpose: "Contains the options.",
+            children: [
+              {
+                part: "SelectItem",
+                purpose: "Defines one option. Repeat for each choice.",
+              },
+            ],
+          },
+        ],
+      },
     ],
-    menu: [
-      { part: "MenuTrigger", purpose: "Connects the button to the menu." },
-      { part: "MenuPopover", purpose: "Positions the menu." },
-      { part: "MenuContent", purpose: "Owns focus and selection." },
-      { part: "MenuItem", purpose: "Runs an action or selects an option." },
+  },
+  dialog: {
+    parts: [
+      {
+        part: "Dialog",
+        purpose: "Owns the open state.",
+        children: [
+          { part: "DialogTrigger", purpose: "Opens the dialog." },
+          {
+            part: "DialogContent",
+            purpose: "Contains the modal task.",
+            children: [
+              {
+                part: "DialogHeader",
+                purpose: "Groups the title and close control.",
+                children: [
+                  { part: "DialogTitle", purpose: "Names the modal task." },
+                ],
+              },
+              { part: "DialogDescription", purpose: "Explains the task." },
+              { part: "DialogFooter", purpose: "Groups the task actions." },
+            ],
+          },
+        ],
+      },
     ],
-    "search-field": [
-      { part: "SearchField", purpose: "Owns the query and submission state." },
-      { part: "SearchFieldLabel", purpose: "Names the search." },
-      { part: "SearchFieldInput", purpose: "Accepts the query." },
-      { part: "SearchFieldClear", purpose: "Resets the query." },
+  },
+  menu: {
+    parts: [
+      {
+        part: "MenuTrigger",
+        purpose: "Connects the button to the menu.",
+        children: [
+          { part: "Button", purpose: "Opens the menu." },
+          {
+            part: "MenuPopover",
+            purpose: "Positions the menu.",
+            children: [
+              {
+                part: "MenuContent",
+                purpose: "Owns focus and selection.",
+                children: [
+                  {
+                    part: "MenuItem",
+                    purpose:
+                      "Runs an action or selects an option. Repeat for each action.",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
     ],
-    "text-field": [
-      { part: "TextField", purpose: "Owns the value and validation state." },
-      { part: "TextFieldLabel", purpose: "Names the input." },
-      { part: "TextFieldInput", purpose: "Accepts the value." },
-      { part: "TextFieldError", purpose: "Explains an invalid value." },
+  },
+  "search-field": {
+    parts: [
+      {
+        part: "SearchField",
+        purpose: "Owns the query and submission state.",
+        children: [
+          { part: "SearchFieldLabel", purpose: "Names the search." },
+          { part: "SearchFieldInput", purpose: "Accepts the query." },
+          { part: "SearchFieldClear", purpose: "Resets the query." },
+        ],
+      },
     ],
-    "text-area": [
-      { part: "TextArea", purpose: "Owns the value and validation state." },
-      { part: "TextAreaLabel", purpose: "Names the input." },
-      { part: "TextAreaInput", purpose: "Accepts multiline text." },
-      { part: "TextAreaError", purpose: "Explains an invalid value." },
+  },
+  "text-field": {
+    parts: [
+      {
+        part: "TextField",
+        purpose: "Owns the value and validation state.",
+        children: [
+          { part: "TextFieldLabel", purpose: "Names the input." },
+          { part: "TextFieldInput", purpose: "Accepts the value." },
+          { part: "TextFieldDescription", purpose: "Adds input guidance." },
+          { part: "TextFieldError", purpose: "Explains an invalid value." },
+        ],
+      },
     ],
-    "input-group": [
+  },
+  "text-area": {
+    parts: [
+      {
+        part: "TextArea",
+        purpose: "Owns the value and validation state.",
+        children: [
+          { part: "TextAreaLabel", purpose: "Names the input." },
+          { part: "TextAreaInput", purpose: "Accepts multiline text." },
+          { part: "TextAreaDescription", purpose: "Adds input guidance." },
+          { part: "TextAreaError", purpose: "Explains an invalid value." },
+        ],
+      },
+    ],
+  },
+  "input-group": {
+    parts: [
       {
         part: "TextField or TextArea",
-        purpose: "Owns the label and validation state.",
+        purpose: "Owns the label and validation state. Choose one.",
+        children: [
+          {
+            part: "InputGroup",
+            purpose: "Shares a border between the input and addons.",
+            children: [
+              {
+                part: "InputGroupInput",
+                purpose: "Accepts a single-line value in TextField.",
+              },
+              {
+                part: "InputGroupTextArea",
+                purpose: "Accepts multiline text in TextArea instead.",
+              },
+              {
+                part: "InputGroupAddon",
+                purpose: "Places text or an action beside the input.",
+              },
+            ],
+          },
+        ],
       },
+    ],
+  },
+  "combo-box": {
+    parts: [
       {
-        part: "InputGroup",
-        purpose: "Shares a border between the input and addons.",
+        part: "ComboBox",
+        purpose: "Owns the search and selected value.",
+        children: [
+          { part: "ComboBoxLabel", purpose: "Names the field." },
+          { part: "ComboBoxInput", purpose: "Filters the choices." },
+          { part: "ComboBoxTrigger", purpose: "Opens the choices." },
+          {
+            part: "ComboBoxDescription",
+            purpose: "Adds help below the input.",
+          },
+          {
+            part: "ComboBoxContent",
+            purpose: "Contains the options.",
+            children: [
+              {
+                part: "ComboBoxItem",
+                purpose: "Defines one option. Repeat for each choice.",
+              },
+            ],
+          },
+        ],
       },
-      { part: "InputGroupInput", purpose: "Accepts a single-line value." },
+    ],
+  },
+  "checkbox-group": {
+    parts: [
       {
-        part: "InputGroupAddon",
-        purpose: "Places text or an action beside the input.",
+        part: "CheckboxGroup",
+        purpose: "Owns the selected values.",
+        children: [
+          { part: "CheckboxGroupLabel", purpose: "Names the group." },
+          {
+            part: "CheckboxGroupItems",
+            purpose: "Contains the choices.",
+            children: [
+              {
+                part: "Checkbox",
+                purpose: "Defines one choice. Repeat for each option.",
+              },
+            ],
+          },
+          {
+            part: "CheckboxGroupError",
+            purpose: "Explains invalid selection.",
+          },
+        ],
       },
     ],
-    "combo-box": [
-      { part: "ComboBox", purpose: "Owns the search and selected value." },
-      { part: "ComboBoxLabel", purpose: "Names the field." },
-      { part: "ComboBoxInput", purpose: "Filters the choices." },
-      { part: "ComboBoxTrigger", purpose: "Opens the choices." },
-      { part: "ComboBoxContent", purpose: "Contains ComboBoxItem options." },
-    ],
-    "checkbox-group": [
-      { part: "CheckboxGroup", purpose: "Owns the selected values." },
-      { part: "CheckboxGroupLabel", purpose: "Names the group." },
-      { part: "CheckboxGroupItems", purpose: "Contains Checkbox choices." },
-      { part: "CheckboxGroupError", purpose: "Explains invalid selection." },
-    ],
-    "radio-group": [
-      { part: "RadioGroup", purpose: "Owns the single selected value." },
-      { part: "Radio", purpose: "Defines one choice." },
-    ],
-    tabs: [
-      { part: "Tabs", purpose: "Owns the selected panel." },
-      { part: "TabsList", purpose: "Groups the tab triggers." },
-      { part: "TabsTrigger", purpose: "Selects a panel by value." },
+  },
+  "radio-group": {
+    parts: [
       {
-        part: "TabsContent",
-        purpose: "Shows the content with the matching value.",
+        part: "RadioGroup",
+        purpose: "Owns the single selected value.",
+        children: [
+          {
+            part: "Radio",
+            purpose: "Defines one choice. Repeat for each option.",
+          },
+        ],
       },
     ],
-    drawer: [
-      { part: "Drawer", purpose: "Owns the open state." },
-      { part: "DrawerTrigger", purpose: "Opens the sheet." },
-      { part: "DrawerContent", purpose: "Contains the sheet's task." },
-      { part: "DrawerHandle", purpose: "Resizes or dismisses a bottom sheet." },
-      { part: "DrawerBody", purpose: "Holds scrollable content." },
-      { part: "DrawerClose", purpose: "Dismisses the sheet." },
-    ],
-    "token-field": [
-      { part: "TagFieldValue", purpose: "Tokenizes comma-separated tags." },
-      { part: "TokenField", purpose: "Owns the value and editing state." },
-      { part: "TokenFieldLabel", purpose: "Names the field." },
-      { part: "TokenFieldInput", purpose: "Edits text and tokens." },
-    ],
-    "tag-group": [
-      { part: "TagGroup", purpose: "Owns removal behavior." },
-      { part: "TagGroupLabel", purpose: "Names the collection." },
-      { part: "TagListView", purpose: "Renders the collection." },
-      { part: "Tag", purpose: "Displays a removable item." },
-    ],
-    "empty-state": [
-      { part: "EmptyState", purpose: "Groups the empty message." },
-      { part: "EmptyStateTitle", purpose: "Names what is missing." },
-      { part: "EmptyStateDescription", purpose: "Explains what to do next." },
+  },
+  tabs: {
+    parts: [
       {
-        part: "EmptyStateActions",
-        purpose: "Holds actions when they are useful.",
+        part: "Tabs",
+        purpose: "Owns the selected panel.",
+        children: [
+          {
+            part: "TabsList",
+            purpose: "Groups the tab triggers.",
+            children: [
+              {
+                part: "TabsTrigger",
+                purpose: "Selects a panel by value. Repeat for each tab.",
+              },
+            ],
+          },
+          {
+            part: "TabsContent",
+            purpose:
+              "Shows the content with the matching value. Repeat for each tab.",
+          },
+        ],
       },
     ],
-    pagination: [
-      { part: "Pagination", purpose: "Names the navigation landmark." },
-      { part: "PaginationList", purpose: "Orders the page links." },
-      { part: "PaginationLink", purpose: "Navigates to a page URL." },
-      { part: "PaginationEllipsis", purpose: "Marks omitted pages." },
+  },
+  drawer: {
+    parts: [
+      {
+        part: "Drawer",
+        purpose: "Owns the open state.",
+        children: [
+          { part: "DrawerTrigger", purpose: "Opens the sheet." },
+          {
+            part: "DrawerContent",
+            purpose: "Contains the sheet's task.",
+            children: [
+              {
+                part: "DrawerHandle",
+                purpose: "Resizes or dismisses a bottom sheet.",
+              },
+              {
+                part: "DrawerHeader",
+                purpose: "Groups the sheet's heading and close control.",
+                children: [
+                  { part: "DrawerTitle", purpose: "Names the sheet." },
+                  { part: "DrawerDescription", purpose: "Explains the task." },
+                ],
+              },
+              { part: "DrawerBody", purpose: "Holds scrollable content." },
+              {
+                part: "DrawerFooter",
+                purpose: "Groups the task actions.",
+                children: [
+                  {
+                    part: "DrawerClose",
+                    purpose: "Dismisses the sheet. Can also go in the header.",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
     ],
-    disclosure: [
-      { part: "Disclosure", purpose: "Owns the expanded state." },
-      { part: "DisclosureHeader", purpose: "Toggles the panel." },
-      { part: "DisclosurePanel", purpose: "Contains the revealed details." },
+  },
+  "token-field": {
+    parts: [
+      {
+        part: "TokenField",
+        purpose: "Owns the value and editing state.",
+        children: [
+          { part: "TokenFieldLabel", purpose: "Names the field." },
+          { part: "TokenFieldInput", purpose: "Edits text and tokens." },
+          { part: "TokenFieldDescription", purpose: "Adds input guidance." },
+        ],
+      },
     ],
-    "color-swatch-picker": [
-      { part: "ColorSwatchPicker", purpose: "Owns the selected color." },
-      { part: "ColorSwatchPickerItem", purpose: "Defines a labeled swatch." },
+    helper: {
+      part: "TagFieldValue",
+      purpose:
+        "Tokenizes comma-separated tags. Pass an instance as the value prop; it is not a JSX child.",
+    },
+  },
+  "tag-group": {
+    parts: [
+      {
+        part: "TagGroup",
+        purpose: "Owns removal behavior.",
+        children: [
+          { part: "TagGroupLabel", purpose: "Names the collection." },
+          {
+            part: "TagListView",
+            purpose: "Renders the collection.",
+            children: [
+              {
+                part: "Tag",
+                purpose: "Displays a removable item. Repeat for each tag.",
+              },
+            ],
+          },
+        ],
+      },
     ],
-    "drop-zone": [
+  },
+  "empty-state": {
+    parts: [
+      {
+        part: "EmptyState",
+        purpose: "Groups the empty message.",
+        children: [
+          {
+            part: "EmptyStateIcon",
+            purpose: "Adds an optional decorative icon.",
+          },
+          { part: "EmptyStateTitle", purpose: "Names what is missing." },
+          {
+            part: "EmptyStateDescription",
+            purpose: "Explains what to do next.",
+          },
+          {
+            part: "EmptyStateActions",
+            purpose: "Holds actions when they are useful.",
+          },
+        ],
+      },
+    ],
+  },
+  pagination: {
+    parts: [
+      {
+        part: "Pagination",
+        purpose: "Names the navigation landmark.",
+        children: [
+          {
+            part: "PaginationList",
+            purpose: "Orders the page links.",
+            children: [
+              {
+                part: "PaginationItem",
+                purpose: "Wraps each entry. Repeat for each page or gap.",
+                children: [
+                  {
+                    part: "PaginationLink",
+                    purpose: "Navigates to a page URL.",
+                  },
+                  {
+                    part: "PaginationEllipsis",
+                    purpose: "Marks omitted pages instead of a link.",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  disclosure: {
+    parts: [
+      {
+        part: "Disclosure",
+        purpose: "Owns the expanded state.",
+        children: [
+          { part: "DisclosureHeader", purpose: "Toggles the panel." },
+          {
+            part: "DisclosurePanel",
+            purpose: "Contains the revealed details.",
+          },
+        ],
+      },
+    ],
+  },
+  "color-swatch-picker": {
+    parts: [
+      {
+        part: "ColorSwatchPicker",
+        purpose: "Owns the selected color.",
+        children: [
+          {
+            part: "ColorSwatchPickerItem",
+            purpose: "Defines a labeled swatch. Repeat for each color.",
+          },
+        ],
+      },
+    ],
+  },
+  "drop-zone": {
+    parts: [
       {
         part: "DropZone",
         purpose: "Receives files and validates the drop operation.",
+        children: [
+          { part: "DropZoneLabel", purpose: "Names the target." },
+          {
+            part: "FileTrigger",
+            purpose: "Offers a file picker as an alternative.",
+          },
+        ],
       },
-      { part: "DropZoneLabel", purpose: "Names the target." },
+    ],
+  },
+  fieldset: {
+    parts: [
       {
-        part: "FileTrigger",
-        purpose: "Offers a file picker as an alternative.",
+        part: "Fieldset",
+        purpose: "Groups related native controls.",
+        children: [
+          { part: "FieldsetLegend", purpose: "Names the group." },
+          { part: "FieldsetDescription", purpose: "Adds shared guidance." },
+        ],
       },
     ],
-    fieldset: [
-      { part: "Fieldset", purpose: "Groups related native controls." },
-      { part: "FieldsetLegend", purpose: "Names the group." },
-      { part: "FieldsetDescription", purpose: "Adds shared guidance." },
-    ],
-  };
+  },
+};

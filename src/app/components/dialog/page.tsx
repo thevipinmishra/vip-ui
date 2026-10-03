@@ -15,9 +15,9 @@ export default function DialogPage() {
     <ComponentPage
       name="Dialog"
       reactAriaDocsHref="https://react-aria.adobe.com/Modal"
-      description="A focused layer for a short task or a small amount of detail. Focus moves inside when it opens and returns to the trigger when it closes."
+      description="Displays a modal window for a focused task."
       preview={<DialogDemo />}
-      previewHint="Open the dialog, then click outside, press Escape, or use Close to dismiss it."
+      previewHint="On a narrow screen, the dialog rises from the bottom without a drag handle. Click outside, press Escape, or use Close to dismiss it."
       previewSourcePath="src/components/docs/dialog-demo.tsx"
       examples={[
         {
