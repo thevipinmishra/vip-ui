@@ -19,7 +19,7 @@ export function CopyButton({
       value={code}
       aria-label={label}
       variant="outline"
-      size={iconOnly ? "icon" : "default"}
+      size={iconOnly ? "icon" : "sm"}
     >
       {iconOnly || text === "Copy"
         ? undefined
