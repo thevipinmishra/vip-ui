@@ -111,7 +111,7 @@ export function ThemeStudio({ children }: { children: ReactNode }) {
           filename={`${theme.slug}.css`}
           language="css"
           copyText="Copy CSS"
-          expandable
+          previewCode
         >
           <pre className="min-w-max p-5 font-mono text-xs leading-6">{css}</pre>
         </CodeFrame>

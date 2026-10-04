@@ -85,8 +85,8 @@ export default function Home() {
             Accessible components <span className="text-primary">you own.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
-            Copy React components into your project. Try the controls below,
-            then change the source and the theme to fit your app.
+            React components built with React Aria, Tailwind CSS, and Motion.
+            Inspired by shadcn/ui.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <ButtonLink as={Link} href="/components/installation" size="lg">

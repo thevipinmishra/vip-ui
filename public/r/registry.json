@@ -670,7 +670,7 @@
       "name": "vip-combo-box",
       "type": "registry:ui",
       "title": "Combo Box",
-      "description": "Filter and select from a collection of options.",
+      "description": "Filter and select one or several options.",
       "dependencies": [
         "motion",
         "react-aria-components",
@@ -692,6 +692,16 @@
           "path": "registry/generated/src/components/vip-ui/popover.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/popover.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/press-button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/press-button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/tag-group.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/tag-group.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/combo-box.tsx",
@@ -770,6 +780,45 @@
       ]
     },
     {
+      "name": "vip-context-menu",
+      "type": "registry:ui",
+      "title": "Context Menu",
+      "description": "Open actions beside an item with pointer, touch, or keyboard.",
+      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/popover.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/popover.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/menu.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/menu.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/context-menu.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/context-menu.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button.tsx"
+        }
+      ]
+    },
+    {
       "name": "vip-copy-button",
       "type": "registry:ui",
       "title": "Copy Button",
@@ -781,6 +830,11 @@
         "tailwind-variants"
       ],
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
           "type": "registry:file",
@@ -2415,6 +2469,7 @@
       "dependencies": [
         "motion",
         "react-aria-components",
+        "react-dom",
         "reicon-react",
         "tailwind-variants"
       ],
@@ -2622,6 +2677,7 @@
       "title": "Tree",
       "description": "Browse and select items in a nested collection.",
       "dependencies": [
+        "motion",
         "react-aria-components",
         "reicon-react",
         "tailwind-variants"

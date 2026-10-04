@@ -34,7 +34,8 @@ Open <http://localhost:3000/components> for the catalog. Run `pnpm lint` and `pn
 | Dialog | A short focused task above the page | `/components/dialog` |
 | Search field | Finding items by a typed query | `/components/search-field` |
 | Menu | Several actions from one trigger | `/components/menu` |
-| Combo box | Filtering and selecting from a longer list | `/components/combo-box` |
+| Context menu | Actions beside an item, opened by right-click, long press, or keyboard | `/components/context-menu` |
+| Combo box | Filtering and selecting one or several options | `/components/combo-box` |
 | Token field | Entering editable tags | `/components/token-field` |
 | Tree | Browsing nested files | `/components/tree` |
 | Drop zone | Adding local files by drag or picker | `/components/drop-zone` |

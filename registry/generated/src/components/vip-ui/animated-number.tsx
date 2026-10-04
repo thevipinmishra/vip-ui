@@ -112,15 +112,16 @@ const slideVariants = {
 function SlidingDigit({
   digit,
   direction,
-  animateOnMount,
 }: {
   digit: string;
   direction: number;
-  animateOnMount: boolean;
 }) {
   return (
-    <span className="-mx-[0.06em] inline-grid overflow-hidden px-[0.06em] align-baseline">
-      <AnimatePresence initial={animateOnMount} custom={direction}>
+    <span
+      data-slot="animated-number-digit"
+      className="-mx-[0.06em] inline-grid overflow-hidden px-[0.06em] align-baseline"
+    >
+      <AnimatePresence initial={false} custom={direction}>
         <motion.span
           key={digit}
           custom={direction}
@@ -128,7 +129,7 @@ function SlidingDigit({
           initial="enter"
           animate="center"
           exit="exit"
-          transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.24, ease: [0.23, 1, 0.32, 1] }}
           className="col-start-1 row-start-1"
         >
           {digit}
@@ -146,13 +147,11 @@ function SlidingNumber({
   const [change, setChange] = useState({
     value,
     direction: 1,
-    hasChanged: false,
   });
   if (value !== change.value) {
     setChange({
       value,
       direction: value > change.value ? 1 : -1,
-      hasChanged: true,
     });
   }
 
@@ -205,12 +204,7 @@ function SlidingNumber({
     >
       {segments.map(({ key, text, isDigit }) =>
         isDigit ? (
-          <SlidingDigit
-            key={key}
-            digit={text}
-            direction={change.direction}
-            animateOnMount={change.hasChanged}
-          />
+          <SlidingDigit key={key} digit={text} direction={change.direction} />
         ) : (
           <span key={key}>{text}</span>
         ),

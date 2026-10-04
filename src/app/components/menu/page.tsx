@@ -44,7 +44,7 @@ export default function MenuPage() {
       ]}
       sourcePath="src/components/ui/menu.tsx"
       previous={{ name: "Search field", href: "/components/search-field" }}
-      next={{ name: "Combo box", href: "/components/combo-box" }}
+      next={{ name: "Context menu", href: "/components/context-menu" }}
     />
   );
 }

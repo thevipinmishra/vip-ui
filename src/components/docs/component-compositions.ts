@@ -133,6 +133,31 @@ export const compositions: Record<string, Composition> = {
       },
     ],
   },
+  "context-menu": {
+    parts: [
+      {
+        part: "ContextMenuTrigger",
+        purpose:
+          "Opens the menu from right-click, long press, or a keyboard shortcut.",
+        children: [
+          {
+            part: "Button",
+            purpose: "Provides a focusable target and a primary action.",
+          },
+          {
+            part: "ContextMenu",
+            purpose: "Positions the menu and manages keyboard focus.",
+            children: [
+              {
+                part: "ContextMenuItem",
+                purpose: "Runs an action. Repeat for each available action.",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   menu: {
     parts: [
       {
@@ -239,6 +264,11 @@ export const compositions: Record<string, Composition> = {
           { part: "ComboBoxLabel", purpose: "Names the field." },
           { part: "ComboBoxInput", purpose: "Filters the choices." },
           { part: "ComboBoxTrigger", purpose: "Opens the choices." },
+          {
+            part: "ComboBoxTags",
+            purpose:
+              "Shows removable selections in multiple mode. The default layout includes it.",
+          },
           {
             part: "ComboBoxDescription",
             purpose: "Adds help below the input.",

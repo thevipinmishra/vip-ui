@@ -21,9 +21,9 @@ export function Skeleton({
       {!reduceMotion && (
         <motion.div
           className="pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-card/55 to-transparent"
-          initial={{ x: "-100%" }}
-          animate={{ x: "100%" }}
-          transition={{ duration: 1.8, ease: "easeInOut", repeat: Infinity }}
+          initial={{ transform: "translateX(-100%)" }}
+          animate={{ transform: "translateX(100%)" }}
+          transition={{ duration: 1.6, ease: "linear", repeat: Infinity }}
         />
       )}
     </div>

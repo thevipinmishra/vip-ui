@@ -1,6 +1,11 @@
 "use client";
 
-import { LayoutGroup, motion, useReducedMotion } from "motion/react";
+import {
+  AnimatePresence,
+  LayoutGroup,
+  motion,
+  useReducedMotion,
+} from "motion/react";
 import { type ComponentProps, useId } from "react";
 import { Check } from "reicon-react";
 import { cn } from "@/lib/utils";
@@ -69,7 +74,23 @@ export function Stepper({
                       className="pointer-events-none absolute -inset-1 rounded-full ring-2 ring-primary/25"
                     />
                   )}
-                  {completed ? <Check size={15} /> : index + 1}
+                  <AnimatePresence initial={false}>
+                    <motion.span
+                      key={completed ? "complete" : "number"}
+                      className="col-start-1 row-start-1 grid place-items-center"
+                      initial={
+                        reduceMotion ? false : { opacity: 0, scale: 0.9 }
+                      }
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: reduceMotion ? 1 : 0.9 }}
+                      transition={{
+                        duration: reduceMotion ? 0 : 0.16,
+                        ease: [0.23, 1, 0.32, 1],
+                      }}
+                    >
+                      {completed ? <Check size={15} /> : index + 1}
+                    </motion.span>
+                  </AnimatePresence>
                 </span>
                 {index < steps.length - 1 && (
                   <span

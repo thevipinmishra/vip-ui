@@ -7,6 +7,7 @@ export const catalogGroups = [
       "button-group",
       "link",
       "menu",
+      "context-menu",
       "toggle-button",
       "toggle-button-group",
       "toolbar",

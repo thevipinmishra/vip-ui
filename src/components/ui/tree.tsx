@@ -1,5 +1,6 @@
 "use client";
 
+import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 import {
   Button as AriaButton,
@@ -10,7 +11,7 @@ import {
   type TreeItemProps,
   type TreeProps,
 } from "react-aria-components";
-import { ChevronRight } from "reicon-react";
+import { ChevronRight, FileText, Folder, FolderOpen } from "reicon-react";
 import { cn } from "@/lib/utils";
 
 export function Tree<T extends object>({ className, ...props }: TreeProps<T>) {
@@ -31,6 +32,7 @@ export function Tree<T extends object>({ className, ...props }: TreeProps<T>) {
 export function TreeItem({
   title,
   content,
+  icon,
   children,
   className,
   ...props
@@ -39,8 +41,11 @@ export function TreeItem({
   title: string;
   /** Visible row content. `title` remains the accessible text value for typeahead. */
   content?: ReactNode;
+  /** Overrides the default folder or file icon. */
+  icon?: ReactNode;
   children?: ReactNode;
 }) {
+  const reducedMotion = useReducedMotion();
   return (
     <AriaTreeItem
       {...props}
@@ -48,38 +53,63 @@ export function TreeItem({
       textValue={props.textValue ?? title}
       className={composeRenderProps(className, (className) =>
         cn(
-          "group/tree-item rounded-md text-foreground outline-none hover:bg-muted focus:bg-muted selected:bg-accent selected:text-accent-foreground focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring",
+          "group/tree-item rounded-md text-foreground outline-none transition-colors duration-150 hover:bg-muted focus:bg-muted pressed:bg-muted selected:bg-accent selected:text-accent-foreground selected:font-medium selected:ring-1 selected:ring-primary/15 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring disabled:opacity-50 motion-reduce:transition-none",
           className,
         ),
       )}
     >
       <AriaTreeItemContent data-slot="tree-item-content">
-        <div
-          className="flex min-h-11 items-center gap-2 px-2"
-          style={{
-            paddingInlineStart:
-              "calc(0.5rem + (var(--tree-item-level) - 1) * 1rem)",
-          }}
-        >
-          {children ? (
-            <AriaButton
-              slot="chevron"
-              data-slot="tree-item-chevron"
-              className="grid size-11 shrink-0 place-items-center rounded-md text-muted-foreground outline-none hover:bg-accent focus-visible:outline-2 focus-visible:outline-ring"
+        {({ hasChildItems, isExpanded }) => (
+          <div
+            className="flex min-h-11 items-center gap-2 pe-3"
+            style={{
+              paddingInlineStart:
+                "calc(0.25rem + (var(--tree-item-level) - 1) * 1rem)",
+            }}
+          >
+            {hasChildItems ? (
+              <AriaButton
+                slot="chevron"
+                data-slot="tree-item-chevron"
+                className="grid size-9 shrink-0 place-items-center rounded-md text-muted-foreground outline-none hover:bg-accent hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring"
+              >
+                <motion.span
+                  aria-hidden="true"
+                  className="grid place-items-center"
+                  initial={false}
+                  animate={{ rotate: isExpanded ? 90 : 0 }}
+                  transition={{
+                    duration: reducedMotion ? 0 : 0.2,
+                    ease: [0.23, 1, 0.32, 1],
+                  }}
+                >
+                  <ChevronRight size={16} />
+                </motion.span>
+              </AriaButton>
+            ) : (
+              <span aria-hidden="true" className="size-9 shrink-0" />
+            )}
+            <span
+              data-slot="tree-item-icon"
+              aria-hidden="true"
+              className="shrink-0 text-muted-foreground group-selected/tree-item:text-accent-foreground"
             >
-              <ChevronRight
-                size={16}
-                aria-hidden="true"
-                className="transition-transform group-data-[expanded]/tree-item:rotate-90 motion-reduce:transition-none"
-              />
-            </AriaButton>
-          ) : (
-            <span aria-hidden="true" className="size-11 shrink-0" />
-          )}
-          <div data-slot="tree-item-label" className="min-w-0 flex-1">
-            {content ?? <span className="block truncate">{title}</span>}
+              {icon ??
+                (hasChildItems ? (
+                  isExpanded ? (
+                    <FolderOpen size={16} />
+                  ) : (
+                    <Folder size={16} />
+                  )
+                ) : (
+                  <FileText size={16} />
+                ))}
+            </span>
+            <div data-slot="tree-item-label" className="min-w-0 flex-1">
+              {content ?? <span className="block truncate">{title}</span>}
+            </div>
           </div>
-        </div>
+        )}
       </AriaTreeItemContent>
       {children}
     </AriaTreeItem>

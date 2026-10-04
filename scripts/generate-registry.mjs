@@ -37,7 +37,9 @@ const descriptions = {
   "color-swatch-picker": "Choose from a set of color swatches.",
   "color-swatch": "Show a named color sample.",
   "copy-button": "Copy a value with success and failure feedback.",
-  "combo-box": "Filter and select from a collection of options.",
+  "combo-box": "Filter and select one or several options.",
+  "context-menu":
+    "Open actions beside an item with pointer, touch, or keyboard.",
   "command-palette": "Find and run actions with keyboard search.",
   "date-field": "Enter a date one editable segment at a time.",
   "date-picker": "Choose a single date from a field and calendar.",

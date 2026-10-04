@@ -6,7 +6,7 @@ import {
   useIsPresent,
   useReducedMotion,
 } from "motion/react";
-import type { ComponentProps, ReactNode } from "react";
+import { type ComponentProps, forwardRef, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 export interface PresenceListProps<T>
@@ -16,29 +16,31 @@ export interface PresenceListProps<T>
   children: (item: T) => ReactNode;
 }
 
-function PresenceListRow({
-  children,
-  reducedMotion,
-}: {
-  children: ReactNode;
-  reducedMotion: boolean;
-}) {
+const PresenceListRow = forwardRef<
+  HTMLLIElement,
+  { children: ReactNode; reducedMotion: boolean }
+>(function PresenceListRow({ children, reducedMotion }, ref) {
   const isPresent = useIsPresent();
   return (
     <motion.li
+      ref={ref}
       data-slot="presence-list-item"
       inert={!isPresent}
       aria-hidden={!isPresent || undefined}
       layout={reducedMotion ? false : "position"}
-      initial={reducedMotion ? false : { opacity: 0, y: 6 }}
+      initial={reducedMotion ? false : { opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={reducedMotion ? { opacity: 1 } : { opacity: 0, y: -6 }}
-      transition={{ duration: reducedMotion ? 0 : 0.2, ease: "easeOut" }}
+      exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
+      transition={{
+        layout: { type: "spring", stiffness: 420, damping: 38 },
+        opacity: { duration: reducedMotion ? 0 : 0.16 },
+        y: { duration: reducedMotion ? 0 : 0.22, ease: [0.23, 1, 0.32, 1] },
+      }}
     >
       {children}
     </motion.li>
   );
-}
+});
 
 export function PresenceList<T>({
   items,
@@ -52,9 +54,9 @@ export function PresenceList<T>({
     <ul
       {...props}
       data-slot="presence-list"
-      className={cn("grid gap-2", className)}
+      className={cn("relative grid gap-2", className)}
     >
-      <AnimatePresence initial={false}>
+      <AnimatePresence initial={false} mode="popLayout">
         {items.map((item) => (
           <PresenceListRow key={getKey(item)} reducedMotion={reducedMotion}>
             {children(item)}

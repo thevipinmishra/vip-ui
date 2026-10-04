@@ -71,20 +71,28 @@ export function PackageManagerTabs({
         filename=""
         language="bash"
         codeLabel={`${selected} command`}
+        iconOnlyCopy
         header={
-          <div className="flex min-w-0 items-center gap-4">
-            <TerminalSquare size={15} aria-hidden="true" className="shrink-0" />
+          <div className="flex min-w-0 flex-1 items-center gap-2">
+            <TerminalSquare
+              size={15}
+              aria-hidden="true"
+              className="hidden shrink-0 text-muted-foreground sm:block"
+            />
             <TabList
               aria-label="Package manager"
-              className="flex min-w-0 items-center gap-0.5 overflow-x-auto"
+              className="grid min-w-0 w-full grid-cols-4 gap-1 rounded-lg bg-muted/70 p-1 sm:w-fit"
             >
               {managers.map((manager) => (
                 <Tab
                   key={manager}
                   id={manager}
-                  className="inline-flex min-h-9 shrink-0 cursor-pointer items-center gap-1.5 rounded-md px-2.5 text-xs font-medium text-muted-foreground outline-none hover:bg-card/70 selected:bg-card selected:text-foreground selected:shadow-[var(--shadow-card)] selected:ring-1 selected:ring-border/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                  className="inline-flex min-h-11 min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-md px-1 text-xs font-medium text-muted-foreground outline-none hover:bg-card/70 selected:bg-card selected:text-foreground selected:shadow-[var(--shadow-card)] selected:ring-1 selected:ring-border/70 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring sm:min-h-9 sm:gap-1.5 sm:px-2.5"
                 >
-                  <PackageManagerIcon manager={manager} className="size-3.5" />
+                  <PackageManagerIcon
+                    manager={manager}
+                    className="hidden size-3.5 sm:block"
+                  />
                   {manager}
                 </Tab>
               ))}

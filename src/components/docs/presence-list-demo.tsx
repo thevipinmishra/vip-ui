@@ -22,8 +22,15 @@ export function PresenceListDemo() {
         aria-label="Release checklist"
       >
         {(item) => (
-          <span className="block rounded-lg bg-card px-4 py-3 text-sm shadow-[var(--shadow-card)] ring-1 ring-border/70">
-            {item.title}
+          <span className="flex min-w-0 items-center gap-3 rounded-lg bg-card px-4 py-3 text-sm shadow-[var(--shadow-card)] ring-1 ring-border/70">
+            <span
+              aria-hidden="true"
+              className="size-2 shrink-0 rounded-full bg-primary"
+            />
+            <span className="min-w-0 flex-1 truncate">{item.title}</span>
+            <span className="shrink-0 text-xs text-muted-foreground">
+              To do
+            </span>
           </span>
         )}
       </PresenceList>
@@ -46,6 +53,19 @@ export function PresenceListDemo() {
           }}
         >
           Add task
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          isDisabled={items.length < 2}
+          onPress={() =>
+            setItems((current) => [
+              current[current.length - 1],
+              ...current.slice(0, -1),
+            ])
+          }
+        >
+          Move last to top
         </Button>
       </div>
     </div>

@@ -58,7 +58,7 @@ export function MessageDemo() {
             actions={
               <CopyButton
                 value={entry.text}
-                label={`Copy ${entry.sender}'s message`}
+                aria-label={`Copy ${entry.sender}'s message`}
                 variant="ghost"
               />
             }
