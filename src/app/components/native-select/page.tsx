@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
-import { ComponentPage } from "@/components/docs/component-page";
+import {
+  ComponentPage,
+  withExamplePreviews,
+} from "@/components/docs/component-page";
 import { NativeSelectDemo } from "@/components/docs/native-select-demo";
 import { NativeSelectGroupedDemo } from "@/components/docs/native-select-grouped-demo";
+import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Native select | vip/ui",
@@ -10,25 +14,17 @@ export const metadata: Metadata = {
 };
 
 export default function NativeSelectPage() {
+  const page = componentPageData["native-select"];
   return (
     <ComponentPage
       name="Native select"
-      description="Chooses one option with a native HTML select."
+      description={page.description}
       preview={<NativeSelectDemo />}
-      previewHint="Open the picker on a phone to use the device's own selection controls."
-      previewSourcePath="src/components/docs/native-select-demo.tsx"
-      examples={[
-        {
-          title: "Grouped choices and validation",
-          description:
-            "Group teams under their departments, leave a full team disabled, and explain an empty required choice beside the field.",
-          preview: <NativeSelectGroupedDemo />,
-          sourcePath: "src/components/docs/native-select-grouped-demo.tsx",
-        },
-      ]}
+      previewSourcePath={page.usage}
+      examples={withExamplePreviews(page.examples, [
+        <NativeSelectGroupedDemo key="example-1" />,
+      ])}
       sourcePath="src/components/ui/native-select.tsx"
-      previous={{ name: "Attachment", href: "/components/attachment" }}
-      next={{ name: "Message", href: "/components/message" }}
     />
   );
 }

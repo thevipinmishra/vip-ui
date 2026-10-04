@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
-import { ComponentPage } from "@/components/docs/component-page";
+import {
+  ComponentPage,
+  withExamplePreviews,
+} from "@/components/docs/component-page";
 import { DialogAlertDemo } from "@/components/docs/dialog-alert-demo";
 import { DialogControlledDemo } from "@/components/docs/dialog-controlled-demo";
 import { DialogDemo } from "@/components/docs/dialog-demo";
 import { DialogScrollableDemo } from "@/components/docs/dialog-scrollable-demo";
+import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Dialog | vip/ui",
@@ -11,40 +15,26 @@ export const metadata: Metadata = {
 };
 
 export default function DialogPage() {
+  const page = componentPageData.dialog;
+
   return (
     <ComponentPage
       name="Dialog"
-      reactAriaDocsHref="https://react-aria.adobe.com/Modal"
-      description="Displays a modal window for a focused task."
-      preview={<DialogDemo />}
-      previewHint="On a narrow screen, the dialog rises from the bottom without a drag handle. Click outside, press Escape, or use Close to dismiss it."
-      previewSourcePath="src/components/docs/dialog-demo.tsx"
-      examples={[
+      description={page.description}
+      descriptionLinks={[
         {
-          title: "Alert dialog",
-          description:
-            "Ask for confirmation before archiving. Outside clicks do not dismiss the alert; Cancel leaves the project unchanged.",
-          preview: <DialogAlertDemo />,
-          sourcePath: "src/components/docs/dialog-alert-demo.tsx",
-        },
-        {
-          title: "Scrollable content",
-          description:
-            "Keep long content inside the dialog. On a short viewport, scroll the checklist while the page underneath remains inactive.",
-          preview: <DialogScrollableDemo />,
-          sourcePath: "src/components/docs/dialog-scrollable-demo.tsx",
-        },
-        {
-          title: "Controlled open state",
-          description:
-            "Open with the trigger or application state. Close by clicking outside, pressing Escape, or using the button; each updates the controlled value.",
-          preview: <DialogControlledDemo />,
-          sourcePath: "src/components/docs/dialog-controlled-demo.tsx",
+          label: "Jump to Alert dialog",
+          href: "#example-alert-dialog",
         },
       ]}
+      preview={<DialogDemo />}
+      previewSourcePath={page.usage}
+      examples={withExamplePreviews(page.examples, [
+        <DialogAlertDemo key="alert-dialog" />,
+        <DialogScrollableDemo key="scrollable-content" />,
+        <DialogControlledDemo key="controlled-open-state" />,
+      ])}
       sourcePath="src/components/ui/dialog.tsx"
-      previous={{ name: "Accordion", href: "/components/accordion" }}
-      next={{ name: "Search field", href: "/components/search-field" }}
     />
   );
 }

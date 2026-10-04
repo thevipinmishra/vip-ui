@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
-import { ComponentPage } from "@/components/docs/component-page";
+import {
+  ComponentPage,
+  withExamplePreviews,
+} from "@/components/docs/component-page";
 import { TextAreaBasicDemo } from "@/components/docs/text-area-basic-demo";
 import { TextAreaDemo } from "@/components/docs/text-area-demo";
+import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Text area | vip/ui",
@@ -9,26 +13,17 @@ export const metadata: Metadata = {
 };
 
 export default function TextAreaPage() {
+  const page = componentPageData["text-area"];
   return (
     <ComponentPage
       name="Text area"
-      reactAriaDocsHref="https://react-aria.adobe.com/TextField#textarea"
-      description="A field for entering multiline text."
+      description={page.description}
       preview={<TextAreaBasicDemo />}
-      previewHint="Use a visible label for a longer answer."
-      previewSourcePath="src/components/docs/text-area-basic-demo.tsx"
-      examples={[
-        {
-          title: "Review thread",
-          description:
-            "Add a note to a project review with a character limit. The new note appears with the existing discussion.",
-          preview: <TextAreaDemo />,
-          sourcePath: "src/components/docs/text-area-demo.tsx",
-        },
-      ]}
+      previewSourcePath={page.usage}
+      examples={withExamplePreviews(page.examples, [
+        <TextAreaDemo key="example-1" />,
+      ])}
       sourcePath="src/components/ui/text-area.tsx"
-      previous={{ name: "Radio group", href: "/components/radio-group" }}
-      next={{ name: "Slider", href: "/components/slider" }}
     />
   );
 }

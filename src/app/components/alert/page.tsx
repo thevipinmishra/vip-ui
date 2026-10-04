@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 import { AlertActionDemo } from "@/components/docs/alert-action-demo";
 import { AlertBasicDemo } from "@/components/docs/alert-basic-demo";
 import { AlertDemo } from "@/components/docs/alert-demo";
-import { ComponentPage } from "@/components/docs/component-page";
+import {
+  ComponentPage,
+  withExamplePreviews,
+} from "@/components/docs/component-page";
+import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Alert | vip/ui",
@@ -10,32 +14,18 @@ export const metadata: Metadata = {
 };
 
 export default function AlertPage() {
+  const page = componentPageData.alert;
   return (
     <ComponentPage
       name="Alert"
-      description="Displays an inline message about a status or event."
+      description={page.description}
       preview={<AlertBasicDemo />}
-      previewHint="Keep the message next to the task it explains."
-      previewSourcePath="src/components/docs/alert-basic-demo.tsx"
-      examples={[
-        {
-          title: "Action",
-          description:
-            "Place ButtonLink beside the message for a navigation action. Keep the link outside the title and description so it remains a separate control.",
-          preview: <AlertActionDemo />,
-          sourcePath: "src/components/docs/alert-action-demo.tsx",
-        },
-        {
-          title: "Status messages",
-          description:
-            "Choose a message variant that matches the outcome, and include the next step when attention is needed.",
-          preview: <AlertDemo />,
-          sourcePath: "src/components/docs/alert-demo.tsx",
-        },
-      ]}
+      previewSourcePath={page.usage}
+      examples={withExamplePreviews(page.examples, [
+        <AlertActionDemo key="example-1" />,
+        <AlertDemo key="example-2" />,
+      ])}
       sourcePath="src/components/ui/alert.tsx"
-      previous={{ name: "Badge", href: "/components/badge" }}
-      next={{ name: "Radio group", href: "/components/radio-group" }}
     />
   );
 }

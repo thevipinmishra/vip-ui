@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
-import { ComponentPage } from "@/components/docs/component-page";
+import {
+  ComponentPage,
+  withExamplePreviews,
+} from "@/components/docs/component-page";
 import { ContextMenuDemo } from "@/components/docs/context-menu-demo";
 import { ContextMenuGroupedDemo } from "@/components/docs/context-menu-grouped-demo";
+import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Context menu | vip/ui",
@@ -9,26 +13,17 @@ export const metadata: Metadata = {
 };
 
 export default function ContextMenuPage() {
+  const page = componentPageData["context-menu"];
   return (
     <ComponentPage
       name="Context menu"
-      reactAriaDocsHref="https://react-aria.adobe.com/Menu"
-      description="Actions available beside the item you are working with."
+      description={page.description}
       preview={<ContextMenuDemo />}
-      previewHint="Right-click or long-press the file. For the keyboard, use Shift+F10 on Windows/Linux or Control+Enter on macOS. A regular press opens the file."
-      previewSourcePath="src/components/docs/context-menu-demo.tsx"
-      examples={[
-        {
-          title: "Grouped actions",
-          description:
-            "Compose the popover and menu when you need separators or disabled actions. The trigger keeps the same keyboard and touch behavior.",
-          preview: <ContextMenuGroupedDemo />,
-          sourcePath: "src/components/docs/context-menu-grouped-demo.tsx",
-        },
-      ]}
+      previewSourcePath={page.usage}
+      examples={withExamplePreviews(page.examples, [
+        <ContextMenuGroupedDemo key="example-1" />,
+      ])}
       sourcePath="src/components/ui/context-menu.tsx"
-      previous={{ name: "Menu", href: "/components/menu" }}
-      next={{ name: "Combo box", href: "/components/combo-box" }}
     />
   );
 }

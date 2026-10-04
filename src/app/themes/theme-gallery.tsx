@@ -98,6 +98,7 @@ const examples: { title: string; Demo: ComponentType; wide?: boolean }[] = [
   { title: "Popover", Demo: PopoverDemo },
   { title: "Tooltip", Demo: TooltipDemo },
   { title: "Alert", Demo: AlertBasicDemo },
+  { title: "Avatar", Demo: AvatarBasicDemo },
   { title: "Area chart", Demo: AreaVisits, wide: true },
   { title: "Donut chart", Demo: PieDonut, wide: true },
   { title: "Accordion", Demo: AccordionDemo },
@@ -105,7 +106,6 @@ const examples: { title: string; Demo: ComponentType; wide?: boolean }[] = [
   { title: "Radio group", Demo: RadioGroupDemo },
   { title: "Date picker", Demo: DatePickerDemo },
   { title: "Table", Demo: TableBasicDemo, wide: true },
-  { title: "Avatar", Demo: AvatarBasicDemo },
   { title: "Progress bar", Demo: ProgressBarBasicDemo },
   { title: "Checkbox group", Demo: CheckboxGroupDemo },
   { title: "Date range picker", Demo: DateRangePickerDemo },
@@ -154,7 +154,7 @@ const examples: { title: string; Demo: ComponentType; wide?: boolean }[] = [
 
 export function ThemeGallery() {
   return (
-    <div className="grid min-w-0 grid-cols-1 items-start gap-[var(--theme-space)] md:grid-cols-2 xl:grid-cols-3">
+    <div className="grid min-w-0 grid-cols-1 items-start gap-[var(--theme-space)] md:grid-cols-2">
       {examples.map(({ title, Demo, wide }) => (
         <Card
           key={title}

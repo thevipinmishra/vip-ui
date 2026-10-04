@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
-import { ComponentPage } from "@/components/docs/component-page";
+import {
+  ComponentPage,
+  withExamplePreviews,
+} from "@/components/docs/component-page";
 import { SwitchBasicDemo } from "@/components/docs/switch-basic-demo";
 import { SwitchDemo } from "@/components/docs/switch-demo";
 import { SwitchStatesDemo } from "@/components/docs/switch-states-demo";
+import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Switch | vip/ui",
@@ -10,33 +14,18 @@ export const metadata: Metadata = {
 };
 
 export default function SwitchPage() {
+  const page = componentPageData.switch;
   return (
     <ComponentPage
       name="Switch"
-      reactAriaDocsHref="https://react-aria.adobe.com/Switch"
-      description="A control for turning a setting on or off."
+      description={page.description}
       preview={<SwitchBasicDemo />}
-      previewHint="Turn the setting on or off with Space or a pointer."
-      previewSourcePath="src/components/docs/switch-basic-demo.tsx"
-      examples={[
-        {
-          title: "Privacy settings",
-          description:
-            "Compose a group of switches with supporting descriptions and live feedback.",
-          preview: <SwitchDemo />,
-          sourcePath: "src/components/docs/switch-demo.tsx",
-        },
-        {
-          title: "Descriptions and disabled state",
-          description:
-            "Add context to a setting or show when it is managed elsewhere.",
-          preview: <SwitchStatesDemo />,
-          sourcePath: "src/components/docs/switch-states-demo.tsx",
-        },
-      ]}
+      previewSourcePath={page.usage}
+      examples={withExamplePreviews(page.examples, [
+        <SwitchDemo key="example-1" />,
+        <SwitchStatesDemo key="example-2" />,
+      ])}
       sourcePath="src/components/ui/switch.tsx"
-      previous={{ name: "Checkbox", href: "/components/checkbox" }}
-      next={{ name: "Badge", href: "/components/badge" }}
     />
   );
 }

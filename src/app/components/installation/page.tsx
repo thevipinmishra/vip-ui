@@ -43,7 +43,18 @@ export default async function InstallationPage() {
         </h2>
         <div className="mt-4 grid max-w-[670px] gap-4 text-sm leading-7 text-muted-foreground">
           <p>
-            Follow the{" "}
+            Already have shadcn in a TypeScript app with Tailwind CSS v4 and
+            CSS-variable theming? Skip to{" "}
+            <Link
+              href="#theme"
+              className="text-primary underline underline-offset-4"
+            >
+              Add the theme styles
+            </Link>
+            .
+          </p>
+          <p>
+            Starting from an existing React app without shadcn? Follow the{" "}
             <Link
               href="https://ui.shadcn.com/docs/installation"
               className="text-primary underline underline-offset-4"
@@ -51,11 +62,31 @@ export default async function InstallationPage() {
               shadcn installation guide
             </Link>{" "}
             for your framework. vip/ui works in React apps and is not tied to
-            Next.js. Use the CLI to initialize shadcn in an existing app if it
-            does not already have a{" "}
-            <code className="font-mono text-foreground">components.json</code>:
+            Next.js. If your app does not have a{" "}
+            <code className="font-mono text-foreground">components.json</code>,
+            initialize shadcn with the CLI:
           </p>
           <PackageManagerCommand action="run" args="shadcn@latest init" />
+          <p>
+            Using Vite with shadcn, TypeScript, Tailwind v4, and CSS variables?
+            The CLI install path works as written, and the manual path drops the
+            same files under your components alias. The only Next.js-specific
+            code is documentation and example-page glue; no component under{" "}
+            <code className="font-mono text-foreground">vip-ui/</code> imports
+            from <code className="font-mono text-foreground">next/</code>. In
+            Vite, keep the <code className="font-mono text-foreground">@/</code>{" "}
+            alias or adjust the component imports to your alias, and keep the
+            theme styles in the global stylesheet named by{" "}
+            <code className="font-mono text-foreground">components.json</code>.
+            The complete workspaces on{" "}
+            <Link
+              href="/examples"
+              className="text-primary underline underline-offset-4"
+            >
+              Examples
+            </Link>{" "}
+            are Next.js App Router routes and stay Next.js-only.
+          </p>
           <p>
             Keep the generated configuration. Check that{" "}
             <code className="font-mono text-foreground">tsx</code> and{" "}
@@ -125,6 +156,15 @@ export default async function InstallationPage() {
             Import from the installed folder. If you use a custom components
             alias, adjust the path to match your project.
           </p>
+          <p>
+            Items are demo-inclusive: a component item also includes the vip/ui
+            files its documentation examples import. Button, for example,
+            installs eight files because its page shows Badge, Card, Button
+            group, Popover, and Menu states alongside the button itself. The
+            component file still works on its own; delete example-only files you
+            do not use, or review the list on the component page before running
+            the command.
+          </p>
         </div>
         <div className="mt-5">
           <CodeBlock code={usage} filename="example.tsx" />
@@ -137,8 +177,9 @@ export default async function InstallationPage() {
         </h2>
         <div className="mt-4 grid max-w-[670px] gap-4 text-sm leading-7 text-muted-foreground">
           <p>
-            You can skip the CLI. On each component page, the Custom tab lists
-            its packages and every file to copy, including a local{" "}
+            The manual path needs no registry URL and no CLI. On each component
+            page, the Custom tab lists its packages and the current content of
+            every file to copy, including a local{" "}
             <code className="font-mono text-foreground">utils.ts</code> where
             needed. Put the files in{" "}
             <code className="font-mono text-foreground">vip-ui/</code> under
@@ -176,8 +217,52 @@ export default async function InstallationPage() {
           >
             shadcn theming guide
           </Link>{" "}
-          for standard color roles.
+          for standard color roles. Ready-made palettes and their CSS are on{" "}
+          <Link
+            href="/themes"
+            className="text-primary underline underline-offset-4"
+          >
+            Themes
+          </Link>
+          .
         </p>
+      </section>
+
+      <section id="portals" className="mt-14 scroll-mt-28">
+        <h2 className="text-[23px] font-semibold tracking-[-0.045em]">
+          Portals and theming
+        </h2>
+        <div className="mt-4 grid max-w-[670px] gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            Menus, popovers, selects, dialogs, drawers, tooltips, and toasts
+            render in a portal on{" "}
+            <code className="font-mono text-foreground">document.body</code> by
+            default. That is why tokens live on{" "}
+            <code className="font-mono text-foreground">:root</code> and{" "}
+            <code className="font-mono text-foreground">.dark</code> rather than
+            on a wrapper element: portal content must inherit the same colors,
+            radius, and shadows as the trigger. Put the dark class on{" "}
+            <code className="font-mono text-foreground">html</code> and switch
+            tokens there.
+          </p>
+          <p>
+            If you scope theme tokens to a subtree instead, pass that subtree as
+            the portal container with React Aria&apos;s{" "}
+            <code className="font-mono text-foreground">
+              UNSAFE_PortalProvider
+            </code>{" "}
+            so overlay content stays inside the scoped tokens. The{" "}
+            <Link
+              href="/themes"
+              className="text-primary underline underline-offset-4"
+            >
+              Themes
+            </Link>{" "}
+            preview uses this pattern. Keep portal content inside your
+            app&apos;s root stacking context when you adjust z-index, and verify
+            open overlays in both themes after changing token scope.
+          </p>
+        </div>
       </section>
     </article>
   );

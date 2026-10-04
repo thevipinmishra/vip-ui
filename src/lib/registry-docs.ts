@@ -9,6 +9,8 @@ interface RegistryFile {
 
 export interface RegistryItem {
   name: string;
+  title?: string;
+  description?: string;
   dependencies: string[];
   files: RegistryFile[];
 }
@@ -24,6 +26,12 @@ export async function readRegistryItem(slug: string): Promise<RegistryItem> {
   ) as RegistryItem;
 }
 
+/**
+ * CLI install URL for a component item. Reads only `NEXT_PUBLIC_REGISTRY_URL`
+ * on purpose: incomplete registry configuration must hide the install command
+ * rather than assume `NEXT_PUBLIC_SITE_URL` is a registry. The localhost
+ * fallback applies to development only.
+ */
 export function registryUrl(slug: string) {
   const base =
     process.env.NEXT_PUBLIC_REGISTRY_URL ||

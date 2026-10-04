@@ -53,7 +53,9 @@ export function ChartFilters({
         </div>
       </div>
       <output className="sr-only">Showing {active.label} charts</output>
-      <div id="chart-results">{active.content}</div>
+      <section id="examples" data-toc-label="Examples">
+        <div id="chart-results">{active.content}</div>
+      </section>
     </>
   );
 }

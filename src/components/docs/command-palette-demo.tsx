@@ -8,7 +8,11 @@ import {
   CommandPaletteItem,
 } from "@/components/ui/command-palette";
 
-export function CommandPaletteDemo() {
+export function CommandPaletteDemo({
+  shortcut = true,
+}: {
+  shortcut?: boolean;
+}) {
   const [isOpen, setOpen] = useState(false);
   const [lastAction, setLastAction] = useState("");
 
@@ -22,7 +26,11 @@ export function CommandPaletteDemo() {
           Selected: {lastAction}
         </output>
       )}
-      <CommandPalette isOpen={isOpen} onOpenChange={setOpen}>
+      <CommandPalette
+        isOpen={isOpen}
+        onOpenChange={setOpen}
+        shortcut={shortcut}
+      >
         <CommandPaletteItem onAction={() => setLastAction("New project")}>
           <FolderPlus
             size={17}
