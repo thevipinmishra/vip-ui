@@ -1,6 +1,5 @@
 "use client";
 
-import { type HTMLMotionProps, motion, useReducedMotion } from "motion/react";
 import {
   Button as AriaButton,
   UNSTABLE_Toast as AriaToast,
@@ -11,17 +10,45 @@ import {
   type ToastOptions,
   UNSTABLE_ToastQueue as ToastQueue,
 } from "react-aria-components";
+import { flushSync } from "react-dom";
 import { CheckCircle, InfoCircle, Warning, X } from "reicon-react";
 import { tv } from "tailwind-variants";
 import { cn } from "@/lib/utils";
 
+const toastMotionStyles = `
+@keyframes vip-toast-enter {
+  from { opacity: 0; transform: translateY(12px); }
+}
+@keyframes vip-toast-exit {
+  to { opacity: 0; transform: translateY(8px); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+  ::view-transition-group(.vip-toast) {
+    animation-duration: 260ms;
+    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  ::view-transition-new(.vip-toast):only-child {
+    animation: vip-toast-enter 260ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  }
+  ::view-transition-old(.vip-toast):only-child {
+    animation: vip-toast-exit 180ms ease-in both;
+  }
+  @supports not (view-transition-name: none) {
+    [data-slot="toast"] {
+      animation: vip-toast-enter 260ms cubic-bezier(0.23, 1, 0.32, 1) both;
+    }
+  }
+}
+`;
+
 const toastIconStyles = tv({
-  base: "mt-0.5 shrink-0",
+  base: "grid size-9 shrink-0 place-items-center rounded-lg",
   variants: {
     variant: {
-      info: "text-primary",
-      success: "text-success",
-      warning: "text-warning",
+      info: "bg-accent text-accent-foreground",
+      success: "bg-success-subtle text-success-foreground",
+      warning: "bg-warning-subtle text-warning-foreground",
     },
   },
   defaultVariants: { variant: "info" },
@@ -33,7 +60,20 @@ export interface ToastMessage {
   variant?: "info" | "success" | "warning";
 }
 
-export const toastQueue = new ToastQueue<ToastMessage>({ maxVisibleToasts: 3 });
+export const toastQueue = new ToastQueue<ToastMessage>({
+  maxVisibleToasts: 3,
+  wrapUpdate(fn) {
+    if (
+      typeof document !== "undefined" &&
+      document.startViewTransition &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      document.startViewTransition(() => flushSync(fn));
+    } else {
+      fn();
+    }
+  },
+});
 
 export function showToast(message: ToastMessage, options?: ToastOptions) {
   const timeout =
@@ -47,74 +87,68 @@ export function ToastViewport({
   className?: React.ComponentProps<typeof AriaToastRegion>["className"];
 }) {
   return (
-    <AriaToastRegion
-      queue={toastQueue}
-      data-slot="toast-viewport"
-      aria-label="Notifications"
-      className={composeRenderProps(className, (className) =>
-        cn(
-          "fixed inset-x-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-50 flex flex-col gap-3 outline-none sm:inset-x-auto sm:end-4 sm:w-90",
-          className,
-        ),
-      )}
-    >
-      {({ toast }) => {
-        const variant = toast.content.variant ?? "info";
-        const Icon =
-          variant === "success"
-            ? CheckCircle
-            : variant === "warning"
-              ? Warning
-              : InfoCircle;
-        return (
-          <Toast toast={toast}>
-            <Icon
-              size={18}
-              aria-hidden="true"
-              className={toastIconStyles({ variant })}
-            />
-            <ToastContent>
-              <ToastTitle>{toast.content.title}</ToastTitle>
-              {toast.content.description && (
-                <ToastDescription>{toast.content.description}</ToastDescription>
-              )}
-            </ToastContent>
-            <ToastClose />
-          </Toast>
-        );
-      }}
-    </AriaToastRegion>
+    <>
+      <style>{toastMotionStyles}</style>
+      <AriaToastRegion
+        queue={toastQueue}
+        data-slot="toast-viewport"
+        aria-label="Notifications"
+        className={composeRenderProps(className, (className) =>
+          cn(
+            "fixed inset-x-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-50 flex flex-col-reverse gap-2 outline-none focus-visible:outline-2 focus-visible:outline-ring sm:inset-x-auto sm:end-4 sm:w-96",
+            className,
+          ),
+        )}
+      >
+        {({ toast }) => {
+          const variant = toast.content.variant ?? "info";
+          const Icon =
+            variant === "success"
+              ? CheckCircle
+              : variant === "warning"
+                ? Warning
+                : InfoCircle;
+          return (
+            <Toast toast={toast}>
+              <Icon
+                size={18}
+                aria-hidden="true"
+                className={toastIconStyles({ variant })}
+              />
+              <ToastContent>
+                <ToastTitle>{toast.content.title}</ToastTitle>
+                {toast.content.description && (
+                  <ToastDescription>
+                    {toast.content.description}
+                  </ToastDescription>
+                )}
+              </ToastContent>
+              <ToastClose />
+            </Toast>
+          );
+        }}
+      </AriaToastRegion>
+    </>
   );
 }
 
 export function Toast({
   className,
   children,
+  style,
   ...props
 }: React.ComponentProps<typeof AriaToast>) {
-  const reduceMotion = useReducedMotion();
   return (
     <AriaToast
       {...props}
       data-slot="toast"
-      render={
-        props.render ??
-        ((domProps) => (
-          <motion.div
-            {...(domProps as HTMLMotionProps<"div">)}
-            initial={reduceMotion ? false : { opacity: 0, x: 12, scale: 0.98 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            transition={{
-              type: "spring",
-              duration: reduceMotion ? 0 : 0.3,
-              bounce: 0,
-            }}
-          />
-        ))
-      }
+      style={composeRenderProps(style, (style) => ({
+        ...style,
+        viewTransitionName: props.toast.key,
+      }))}
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex gap-3 rounded-xl bg-popover p-4 text-popover-foreground shadow-[var(--shadow-float)] ring-1 ring-border/70 outline-none focus-visible:outline-2 focus-visible:outline-ring",
+          "flex items-start gap-3 rounded-xl bg-popover p-4 text-popover-foreground shadow-[var(--shadow-float)] ring-1 ring-border/70 outline-none focus-visible:outline-2 focus-visible:outline-ring [view-transition-class:vip-toast] forced-colors:border",
           className,
         ),
       )}
@@ -183,7 +217,7 @@ export function ToastClose({
       aria-label={props["aria-label"] ?? "Dismiss notification"}
       className={composeRenderProps(className, (className) =>
         cn(
-          "grid size-11 shrink-0 cursor-pointer place-items-center rounded-sm text-muted-foreground outline-none hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring",
+          "-m-1 grid size-11 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none transition-colors duration-150 hover:bg-muted hover:text-foreground pressed:bg-muted focus-visible:outline-2 focus-visible:outline-ring motion-reduce:transition-none",
           className,
         ),
       )}

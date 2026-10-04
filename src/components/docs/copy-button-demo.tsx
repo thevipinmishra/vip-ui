@@ -11,7 +11,7 @@ export function CopyButtonDemo() {
           INV-2026-0472
         </code>
       </div>
-      <CopyButton value="INV-2026-0472" label="Copy invoice number" />
+      <CopyButton value="INV-2026-0472" aria-label="Copy invoice number" />
     </div>
   );
 }

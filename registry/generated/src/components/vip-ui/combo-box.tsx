@@ -5,6 +5,7 @@ import {
   Button as AriaButton,
   ComboBox as AriaComboBox,
   type ComboBoxProps as AriaComboBoxProps,
+  ComboBoxValue as AriaComboBoxValue,
   composeRenderProps,
   FieldError,
   Input,
@@ -22,6 +23,7 @@ import {
   fieldLabelStyles,
 } from "./field-styles";
 import { Popover } from "./popover";
+import { Tag, TagGroup, TagListView } from "./tag-group";
 
 const comboBoxPopoverStyles =
   "w-[var(--trigger-width)] rounded-lg border-0 p-1.5 ring-1 ring-border/70";
@@ -34,21 +36,40 @@ export interface ComboBoxOption {
   description?: string;
 }
 
-export interface ComboBoxProps
-  extends Omit<AriaComboBoxProps<ComboBoxOption>, "children" | "className"> {
+type ComboBoxBaseProps<M extends "single" | "multiple"> = Omit<
+  AriaComboBoxProps<ComboBoxOption, M>,
+  "children" | "className"
+> & {
   label?: string;
   description?: string;
   options?: ComboBoxOption[];
   placeholder?: string;
-  ref?: React.Ref<HTMLDivElement>;
-  className?: AriaComboBoxProps<ComboBoxOption>["className"];
-  children?: AriaComboBoxProps<ComboBoxOption>["children"];
+  className?: AriaComboBoxProps<ComboBoxOption, M>["className"];
+  children?: AriaComboBoxProps<ComboBoxOption, M>["children"];
+};
+
+export interface ComboBoxProps extends ComboBoxBaseProps<"single"> {
+  selectionMode?: "single";
   value?: string;
   defaultValue?: string;
   onValueChange?: (value: string) => void;
 }
 
-export function ComboBox({
+export interface MultiSelectComboBoxProps
+  extends ComboBoxBaseProps<"multiple"> {
+  selectionMode: "multiple";
+}
+
+export function ComboBox(props: ComboBoxProps): React.ReactElement;
+export function ComboBox(props: MultiSelectComboBoxProps): React.ReactElement;
+export function ComboBox(props: ComboBoxProps | MultiSelectComboBoxProps) {
+  if (props.selectionMode === "multiple") {
+    return <MultipleComboBox {...props} />;
+  }
+  return <SingleComboBox {...props} />;
+}
+
+function SingleComboBox({
   label,
   description,
   options,
@@ -75,59 +96,155 @@ export function ComboBox({
       )}
     >
       {children ?? (
-        <>
-          {label && <ComboBoxLabel>{label}</ComboBoxLabel>}
-          <div className="relative flex items-center">
-            <ComboBoxInput placeholder={placeholder} />
-            <ComboBoxTrigger />
-          </div>
-          {description && (
-            <ComboBoxDescription>{description}</ComboBoxDescription>
-          )}
-          <ComboBoxError />
-          <Popover
-            data-slot="combo-box-content"
-            placement="bottom start"
-            offset={7}
-            className={comboBoxPopoverStyles}
-          >
-            <ListBox
-              data-slot="combo-box-list-box"
-              items={options ?? []}
-              renderEmptyState={() => (
-                <div className="px-3 py-3 text-sm text-muted-foreground">
-                  No matching options.
-                </div>
-              )}
-              className="grid max-h-64 gap-1 overflow-y-auto outline-none"
-            >
-              {(option) => (
-                <ListBoxItem
-                  data-slot="combo-box-item"
-                  id={option.id}
-                  textValue={option.name}
-                  className={comboBoxItemStyles}
-                >
-                  <span className="min-w-0">
-                    <span className="block font-medium">{option.name}</span>
-                    {option.description && (
-                      <span className="mt-0.5 block text-xs text-muted-foreground group-data-[selected]/item:text-accent-foreground">
-                        {option.description}
-                      </span>
-                    )}
-                  </span>
-                  <Check
-                    size={15}
-                    aria-hidden="true"
-                    className="shrink-0 opacity-0 group-data-[selected]/item:opacity-100"
-                  />
-                </ListBoxItem>
-              )}
-            </ListBox>
-          </Popover>
-        </>
+        <ComboBoxDefaults
+          label={label}
+          description={description}
+          options={options}
+          placeholder={placeholder}
+        />
       )}
     </AriaComboBox>
+  );
+}
+
+function MultipleComboBox({
+  label,
+  description,
+  options,
+  placeholder = "Search options",
+  className,
+  children,
+  ...props
+}: MultiSelectComboBoxProps) {
+  return (
+    <AriaComboBox
+      {...props}
+      data-slot="combo-box"
+      className={composeRenderProps(className, (className) =>
+        cn("flex w-full flex-col gap-2", className),
+      )}
+    >
+      {children ?? (
+        <ComboBoxDefaults
+          label={label}
+          description={description}
+          options={options}
+          placeholder={placeholder}
+          multiple
+        />
+      )}
+    </AriaComboBox>
+  );
+}
+
+function ComboBoxDefaults({
+  label,
+  description,
+  options,
+  placeholder,
+  multiple = false,
+}: {
+  label?: string;
+  description?: string;
+  options?: ComboBoxOption[];
+  placeholder: string;
+  multiple?: boolean;
+}) {
+  return (
+    <>
+      {label && <ComboBoxLabel>{label}</ComboBoxLabel>}
+      <div className="relative flex items-center">
+        <ComboBoxInput placeholder={placeholder} />
+        <ComboBoxTrigger />
+      </div>
+      {multiple && <ComboBoxTags />}
+      {description && <ComboBoxDescription>{description}</ComboBoxDescription>}
+      <ComboBoxError />
+      <Popover
+        data-slot="combo-box-content"
+        placement="bottom start"
+        offset={7}
+        className={comboBoxPopoverStyles}
+      >
+        <ListBox
+          data-slot="combo-box-list-box"
+          items={options ?? []}
+          renderEmptyState={() => (
+            <div className="px-3 py-3 text-sm text-muted-foreground">
+              No matching options.
+            </div>
+          )}
+          className="grid max-h-64 gap-1 overflow-y-auto outline-none"
+        >
+          {(option) => (
+            <ListBoxItem
+              data-slot="combo-box-item"
+              id={option.id}
+              textValue={option.name}
+              className={comboBoxItemStyles}
+            >
+              <span className="min-w-0">
+                <span className="block font-medium">{option.name}</span>
+                {option.description && (
+                  <span className="mt-0.5 block text-xs text-muted-foreground group-data-[selected]/item:text-accent-foreground">
+                    {option.description}
+                  </span>
+                )}
+              </span>
+              <Check
+                size={15}
+                aria-hidden="true"
+                className="shrink-0 opacity-0 group-data-[selected]/item:opacity-100"
+              />
+            </ListBoxItem>
+          )}
+        </ListBox>
+      </Popover>
+    </>
+  );
+}
+
+export function ComboBoxTags({
+  className,
+  label = "Selected options",
+  emptyText = "No options selected.",
+}: {
+  className?: string;
+  label?: string;
+  emptyText?: string;
+}) {
+  return (
+    <AriaComboBoxValue<ComboBoxOption>
+      data-slot="combo-box-tags"
+      className={cn("min-w-0", className)}
+    >
+      {({ state }) => (
+        <TagGroup
+          aria-label={label}
+          onRemove={(keys) => {
+            if (Array.isArray(state.value)) {
+              state.setValue(state.value.filter((key) => !keys.has(key)));
+            }
+          }}
+        >
+          <TagListView
+            items={state.selectedItems.map((item) => ({
+              id: item.key,
+              name: item.textValue,
+            }))}
+            renderEmptyState={() => (
+              <span className="text-sm text-muted-foreground">{emptyText}</span>
+            )}
+          >
+            {(item) => (
+              <Tag id={item.id} textValue={item.name}>
+                {item.name}
+              </Tag>
+            )}
+          </TagListView>
+        </TagGroup>
+      )}
+    </AriaComboBoxValue>
   );
 }
 

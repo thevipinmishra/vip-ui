@@ -17,7 +17,7 @@ export async function CodeBlock({
       code={code}
       filename={filename ?? (language === "bash" ? "terminal" : "example.tsx")}
       language={language}
-      expandable
+      previewCode
     >
       <CodeSnippet code={code} language={language} />
     </CodeFrame>

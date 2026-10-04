@@ -15,7 +15,11 @@ export function PresenceListBasicDemo() {
   return (
     <div className="grid w-full max-w-sm gap-4">
       <PresenceList items={items} getKey={(item) => item.id} aria-label="Tasks">
-        {(item) => <span className="text-sm">{item.title}</span>}
+        {(item) => (
+          <span className="block rounded-lg bg-card px-4 py-3 text-sm ring-1 ring-border/70">
+            {item.title}
+          </span>
+        )}
       </PresenceList>
       <Button
         variant="secondary"

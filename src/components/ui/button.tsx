@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { type MotionProps, motion, useReducedMotion } from "motion/react";
 import {
   Button as AriaButton,
   type ButtonProps as AriaButtonProps,
@@ -26,6 +26,7 @@ export interface ButtonProps
   variant?: ButtonVariant;
   size?: ButtonSize;
   static?: boolean;
+  layout?: MotionProps["layout"];
 }
 
 const MotionButton = motion.create(AriaButton);
@@ -35,6 +36,7 @@ export function Button({
   variant = "default",
   size = "default",
   static: isStatic = false,
+  layout,
   ...props
 }: ButtonProps) {
   const reduceMotion = useReducedMotion();
@@ -43,8 +45,9 @@ export function Button({
       data-slot="button"
       data-variant={variant}
       data-size={size}
+      layout={reduceMotion ? false : layout}
       whileTap={isStatic || reduceMotion ? undefined : { scale: 0.96 }}
-      transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+      transition={{ duration: 0.14, ease: [0.23, 1, 0.32, 1] }}
       className={composeRenderProps(className, (className) =>
         buttonStyles({ variant, size, className }),
       )}

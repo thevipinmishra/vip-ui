@@ -9,13 +9,15 @@ const storageKey = "vip-ui-theme";
 
 export function ThemeToggle() {
   const [isDark, setIsDark] = useState(false);
+  const [animateIcon, setAnimateIcon] = useState(false);
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     setIsDark(document.documentElement.classList.contains("dark"));
   }, []);
 
-  function toggleTheme() {
+  function toggleTheme(event: React.MouseEvent<HTMLButtonElement>) {
+    setAnimateIcon(event.detail > 0);
     const next = !isDark;
     updateSiteTheme((root) => root.classList.toggle("dark", next));
     try {
@@ -34,13 +36,43 @@ export function ThemeToggle() {
       title={`Switch to ${isDark ? "light" : "dark"} theme`}
       className="grid size-10 shrink-0 cursor-pointer place-items-center rounded-full bg-muted text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
       whileTap={reduceMotion ? undefined : { scale: 0.96 }}
-      transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+      transition={{ duration: 0.14, ease: [0.23, 1, 0.32, 1] }}
     >
-      {isDark ? (
-        <Sun size={17} aria-hidden="true" />
-      ) : (
-        <Moon size={17} aria-hidden="true" />
-      )}
+      <span
+        className="relative grid size-5 place-items-center"
+        aria-hidden="true"
+      >
+        <motion.span
+          className="col-start-1 row-start-1"
+          initial={false}
+          animate={{
+            opacity: isDark ? 1 : 0,
+            scale: isDark ? 1 : 0.9,
+            rotate: isDark ? 0 : -12,
+          }}
+          transition={{
+            duration: reduceMotion || !animateIcon ? 0 : 0.16,
+            ease: [0.23, 1, 0.32, 1],
+          }}
+        >
+          <Sun size={17} />
+        </motion.span>
+        <motion.span
+          className="col-start-1 row-start-1"
+          initial={false}
+          animate={{
+            opacity: isDark ? 0 : 1,
+            scale: isDark ? 0.9 : 1,
+            rotate: isDark ? 12 : 0,
+          }}
+          transition={{
+            duration: reduceMotion || !animateIcon ? 0 : 0.16,
+            ease: [0.23, 1, 0.32, 1],
+          }}
+        >
+          <Moon size={17} />
+        </motion.span>
+      </span>
     </motion.button>
   );
 }

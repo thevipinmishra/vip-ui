@@ -49,12 +49,12 @@ export function Meter({ label, className, children, ...props }: MeterProps) {
             >
               <motion.div
                 data-slot="meter-fill"
-                className="h-full rounded-full bg-primary"
+                className="h-full w-full origin-left rounded-full bg-primary"
                 initial={false}
-                animate={{ width: `${percentage}%` }}
+                animate={{ scaleX: percentage / 100 }}
                 transition={{
                   duration: reduceMotion ? 0 : 0.2,
-                  ease: "easeOut",
+                  ease: [0.23, 1, 0.32, 1],
                 }}
               />
             </div>

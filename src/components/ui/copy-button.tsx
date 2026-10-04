@@ -1,40 +1,83 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
+import { composeRenderProps } from "react-aria-components";
 import { Check, Copy, Warning } from "reicon-react";
+import { cn } from "@/lib/utils";
 import { Button, type ButtonProps } from "./button";
 
+export type CopyButtonStatus = "idle" | "copied" | "failed";
+
 export interface CopyButtonProps
-  extends Omit<ButtonProps, "children" | "onPress" | "type"> {
+  extends Omit<
+    ButtonProps,
+    "children" | "onPress" | "type" | "value" | "layout"
+  > {
   value: string;
-  label?: string;
-  text?: string;
+  children?: ReactNode | ((status: CopyButtonStatus) => ReactNode);
 }
+
+const feedbackEase = [0.23, 1, 0.32, 1] as const;
 
 export function CopyButton({
   value,
-  label = "Copy",
-  text = "Copy",
+  children,
   variant = "outline",
   size = "default",
+  "aria-label": ariaLabel = "Copy",
+  className,
   ...props
 }: CopyButtonProps) {
-  const [state, setState] = useState<"idle" | "copied" | "failed">("idle");
+  const [status, setStatus] = useState<CopyButtonStatus>("idle");
+  const resetTimer = useRef<number | null>(null);
+  const requestId = useRef(0);
+  const reduceMotion = useReducedMotion();
 
-  useEffect(() => {
-    if (state === "idle") return;
-    const timeout = window.setTimeout(() => setState("idle"), 2000);
-    return () => window.clearTimeout(timeout);
-  }, [state]);
+  useEffect(
+    () => () => {
+      requestId.current++;
+      if (resetTimer.current !== null) window.clearTimeout(resetTimer.current);
+    },
+    [],
+  );
 
   async function copy() {
+    if (resetTimer.current !== null) window.clearTimeout(resetTimer.current);
+    const id = ++requestId.current;
+    setStatus("idle");
+
+    let result: CopyButtonStatus;
     try {
       await navigator.clipboard.writeText(value);
-      setState("copied");
+      result = "copied";
     } catch {
-      setState("failed");
+      result = "failed";
     }
+
+    if (id !== requestId.current) return;
+    setStatus(result);
+    resetTimer.current = window.setTimeout(() => setStatus("idle"), 2000);
   }
+
+  const content = typeof children === "function" ? children(status) : children;
+  const defaultContent = (
+    <>
+      {status === "copied" ? (
+        <Check size={16} />
+      ) : status === "failed" ? (
+        <Warning size={16} />
+      ) : (
+        <Copy size={16} />
+      )}
+      {size !== "icon" &&
+        (status === "copied"
+          ? "Copied"
+          : status === "failed"
+            ? "Retry"
+            : "Copy")}
+    </>
+  );
 
   return (
     <>
@@ -42,30 +85,42 @@ export function CopyButton({
         {...props}
         type="button"
         data-slot="copy-button"
+        data-status={status}
         variant={variant}
         size={size}
-        aria-label={
-          state === "copied"
-            ? "Copied to clipboard"
-            : state === "failed"
-              ? "Copy failed. Try again"
-              : label
-        }
+        layout
+        className={composeRenderProps(className, (className) =>
+          cn("relative", className),
+        )}
+        aria-label={ariaLabel}
         onPress={() => void copy()}
       >
-        {state === "copied" ? (
-          <Check size={16} aria-hidden="true" />
-        ) : state === "failed" ? (
-          <Warning size={16} aria-hidden="true" />
-        ) : (
-          <Copy size={16} aria-hidden="true" />
-        )}
-        {state === "copied" ? "Copied" : state === "failed" ? "Retry" : text}
+        <AnimatePresence initial={false} mode="popLayout">
+          <motion.span
+            key={
+              typeof children === "function" || children == null
+                ? status
+                : "static"
+            }
+            layout={reduceMotion ? false : "position"}
+            aria-hidden="true"
+            initial={reduceMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: reduceMotion ? 1 : 0 }}
+            transition={{
+              duration: reduceMotion ? 0 : 0.16,
+              ease: feedbackEase,
+            }}
+            className="inline-flex items-center justify-center gap-2 whitespace-nowrap"
+          >
+            {children == null ? defaultContent : content}
+          </motion.span>
+        </AnimatePresence>
       </Button>
-      <output className="sr-only" aria-live="polite">
-        {state === "copied"
+      <output className="sr-only" aria-live="polite" aria-atomic="true">
+        {status === "copied"
           ? "Copied to clipboard"
-          : state === "failed"
+          : status === "failed"
             ? "Copy failed. Try again."
             : ""}
       </output>

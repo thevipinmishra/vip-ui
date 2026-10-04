@@ -159,18 +159,17 @@ export function RadioIndicator({
       aria-hidden="true"
       data-slot="radio-indicator"
       className={cn(
-        "grid size-5 shrink-0 place-items-center rounded-full border border-input bg-card group-selected:border-primary",
+        "grid size-5 shrink-0 place-items-center rounded-full border border-input bg-card group-selected:border-primary motion-safe:transition-colors motion-safe:duration-150",
         className,
       )}
     >
       <motion.span
         initial={false}
-        animate={{ scale: isSelected ? 1 : 0.25, opacity: isSelected ? 1 : 0 }}
-        transition={
-          reduceMotion
-            ? { duration: 0 }
-            : { type: "spring", duration: 0.3, bounce: 0 }
-        }
+        animate={{ scale: isSelected ? 1 : 0.86, opacity: isSelected ? 1 : 0 }}
+        transition={{
+          duration: reduceMotion ? 0 : 0.16,
+          ease: [0.23, 1, 0.32, 1],
+        }}
         className="size-2 rounded-full bg-primary"
       />
     </span>

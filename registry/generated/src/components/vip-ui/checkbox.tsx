@@ -108,22 +108,20 @@ export function CheckboxIndicator({
       aria-hidden="true"
       data-slot="checkbox-indicator"
       className={cn(
-        "mt-0.5 grid size-5 shrink-0 place-items-center rounded-md border border-input bg-card shadow-[var(--shadow-inset)] group-hover:border-primary/60 group-data-[selected]:border-primary group-data-[selected]:bg-primary group-data-[indeterminate]:border-primary group-data-[indeterminate]:bg-primary",
+        "mt-0.5 grid size-5 shrink-0 place-items-center rounded-md border border-input bg-card shadow-[var(--shadow-inset)] group-hover:border-primary/60 group-data-[selected]:border-primary group-data-[selected]:bg-primary group-data-[indeterminate]:border-primary group-data-[indeterminate]:bg-primary motion-safe:transition-[border-color,background-color] motion-safe:duration-150",
         className,
       )}
     >
       <motion.span
         initial={false}
         animate={{
-          scale: isChecked ? 1 : 0.25,
+          scale: isChecked ? 1 : 0.86,
           opacity: isChecked ? 1 : 0,
-          filter: isChecked ? "blur(0px)" : "blur(4px)",
         }}
-        transition={
-          reduceMotion
-            ? { duration: 0 }
-            : { type: "spring", duration: 0.3, bounce: 0 }
-        }
+        transition={{
+          duration: reduceMotion ? 0 : 0.16,
+          ease: [0.23, 1, 0.32, 1],
+        }}
         className="text-primary-foreground"
       >
         {isIndeterminate ? (

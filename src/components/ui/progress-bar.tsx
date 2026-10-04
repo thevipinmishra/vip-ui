@@ -57,37 +57,32 @@ export function ProgressBar({
               data-slot="progress-bar-track"
               className="h-2 overflow-hidden rounded-full bg-secondary shadow-[var(--shadow-inset)]"
             >
-              <motion.div
-                data-slot="progress-bar-fill"
-                className="h-full rounded-full bg-primary"
-                initial={false}
-                animate={
-                  isIndeterminate
-                    ? {
-                        width: "33.333%",
-                        x: reduceMotion ? "0%" : ["0%", "200%"],
-                        opacity: reduceMotion ? 1 : [0.65, 1, 0.65],
-                      }
-                    : { width: `${percentage}%`, x: "0%", opacity: 1 }
-                }
-                transition={
-                  isIndeterminate && !reduceMotion
-                    ? {
-                        opacity: {
-                          duration: 1.5,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        },
-                        x: {
-                          duration: 1.5,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        },
-                        width: { duration: 0 },
-                      }
-                    : { duration: reduceMotion ? 0 : 0.2 }
-                }
-              />
+              {isIndeterminate ? (
+                <motion.div
+                  key="indeterminate"
+                  data-slot="progress-bar-fill"
+                  className="h-full w-1/3 rounded-full bg-primary forced-colors:bg-[Highlight]"
+                  initial={false}
+                  animate={{ x: reduceMotion ? "100%" : ["-100%", "300%"] }}
+                  transition={
+                    reduceMotion
+                      ? { duration: 0 }
+                      : { duration: 1.6, repeat: Infinity, ease: "linear" }
+                  }
+                />
+              ) : (
+                <motion.div
+                  key="determinate"
+                  data-slot="progress-bar-fill"
+                  className="h-full w-full origin-left rounded-full bg-primary forced-colors:bg-[Highlight]"
+                  initial={false}
+                  animate={{ scaleX: (percentage ?? 0) / 100 }}
+                  transition={{
+                    duration: reduceMotion ? 0 : 0.22,
+                    ease: [0.23, 1, 0.32, 1],
+                  }}
+                />
+              )}
             </div>
           </>
         ))}

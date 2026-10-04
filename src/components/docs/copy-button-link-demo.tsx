@@ -14,9 +14,18 @@ export function CopyButtonLinkDemo() {
       <div>
         <CopyButton
           value={link}
-          label="Copy release notes link"
-          text="Copy link"
-        />
+          aria-label="Copy release notes link"
+          variant="secondary"
+          size="sm"
+        >
+          {(status) =>
+            status === "copied"
+              ? "Link copied"
+              : status === "failed"
+                ? "Try again"
+                : "Copy release notes link"
+          }
+        </CopyButton>
       </div>
     </div>
   );

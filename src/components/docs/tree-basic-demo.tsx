@@ -8,6 +8,7 @@ export function TreeBasicDemo() {
       aria-label="Project files"
       selectionMode="single"
       defaultExpandedKeys={["design"]}
+      defaultSelectedKeys={["wireframes"]}
       className="w-full max-w-sm"
     >
       <TreeItem id="design" title="Design">

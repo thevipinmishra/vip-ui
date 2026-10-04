@@ -31,13 +31,21 @@ export function AnimatedNumberDemo() {
         <StatValue className="text-4xl">
           <AnimatedNumber value={open} variant="slide" />
         </StatValue>
-        <div className="mt-auto pt-6">
+        <div className="mt-auto flex flex-wrap gap-2 pt-6">
           <Button
             variant="secondary"
             size="sm"
-            onPress={() => setOpen((value) => (value === 198 ? 205 : 198))}
+            onPress={() => setOpen((value) => value + 1)}
           >
-            {open === 198 ? "Add 7 tasks" : "Complete 7 tasks"}
+            Add task
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            isDisabled={open === 0}
+            onPress={() => setOpen((value) => Math.max(0, value - 1))}
+          >
+            Complete task
           </Button>
         </div>
       </Stat>

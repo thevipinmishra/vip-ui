@@ -17,13 +17,13 @@ export default function ToastPage() {
         reactAriaDocsHref="https://react-aria.adobe.com/Toast"
         description="Displays a brief notification."
         preview={<ToastDemo />}
-        previewHint="Save a draft to show a confirmation that closes after five seconds."
+        previewHint="Save several times to see the newest three notifications stack in one corner. Each closes after five seconds."
         previewSourcePath="src/components/docs/toast-demo.tsx"
         examples={[
           {
             title: "Upload notifications",
             description:
-              "Simulate an upload to compare informational, success, and persistent warning toasts. Mount ToastViewport once for the page.",
+              "Start, complete, or pause an upload to compare notification states. Mount ToastViewport once for the page.",
             preview: <ToastStatusDemo />,
             sourcePath: "src/components/docs/toast-status-demo.tsx",
           },

@@ -1,5 +1,6 @@
 "use client";
 
+import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 import { Eye, EyeOff } from "reicon-react";
 import { Button } from "./button";
@@ -26,6 +27,12 @@ export function PasswordField({
   ...props
 }: PasswordFieldProps) {
   const [visible, setVisible] = useState(false);
+  const [pointerReveal, setPointerReveal] = useState(false);
+  const reduceMotion = useReducedMotion();
+  const iconTransition = {
+    duration: reduceMotion || !pointerReveal ? 0 : 0.16,
+    ease: [0.23, 1, 0.32, 1] as const,
+  };
 
   return (
     <TextField
@@ -45,13 +52,36 @@ export function PasswordField({
             isDisabled={isDisabled}
             aria-label={visible ? "Hide password" : "Show password"}
             aria-pressed={visible}
-            onPress={() => setVisible((current) => !current)}
+            onPress={(event) => {
+              setPointerReveal(
+                event.pointerType === "mouse" ||
+                  event.pointerType === "touch" ||
+                  event.pointerType === "pen",
+              );
+              setVisible((current) => !current);
+            }}
           >
-            {visible ? (
-              <EyeOff size={18} aria-hidden="true" />
-            ) : (
-              <Eye size={18} aria-hidden="true" />
-            )}
+            <span
+              className="relative grid size-5 place-items-center"
+              aria-hidden="true"
+            >
+              <motion.span
+                className="col-start-1 row-start-1"
+                initial={false}
+                animate={{ opacity: visible ? 0 : 1, scale: visible ? 0.9 : 1 }}
+                transition={iconTransition}
+              >
+                <Eye size={18} />
+              </motion.span>
+              <motion.span
+                className="col-start-1 row-start-1"
+                initial={false}
+                animate={{ opacity: visible ? 1 : 0, scale: visible ? 1 : 0.9 }}
+                transition={iconTransition}
+              >
+                <EyeOff size={18} />
+              </motion.span>
+            </span>
           </Button>
         </InputGroupAddon>
       </InputGroup>

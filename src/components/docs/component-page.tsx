@@ -30,6 +30,55 @@ function htmlPart(component: string, element: string): ApiProp {
 }
 
 const customComponentApi: Record<string, ApiProp[]> = {
+  "context-menu": [
+    {
+      component: "ContextMenuTrigger",
+      prop: "children",
+      type: "ReactNode",
+      defaultValue: "required",
+      description:
+        "Wrap a focusable React Aria trigger and either ContextMenu or the ContextMenuPopover/ContextMenuContent composition.",
+    },
+    {
+      component: "ContextMenuItem",
+      prop: "onAction / isDisabled",
+      type: "() => void / boolean",
+      defaultValue: "— / false",
+      description: "Run an action or keep an unavailable action visible.",
+    },
+  ],
+  "combo-box": [
+    {
+      component: "ComboBox",
+      prop: "selectionMode",
+      type: '"single" | "multiple"',
+      defaultValue: '"single"',
+      description:
+        "Select one option or several options from the filtered list.",
+    },
+    {
+      component: "ComboBox",
+      prop: "value / defaultValue / onValueChange",
+      type: "string / string / (key: string) => void",
+      defaultValue: "—",
+      description: "Convenience props for single selection.",
+    },
+    {
+      component: "ComboBox",
+      prop: "value / defaultValue / onChange",
+      type: "Key[] / Key[] / (keys: Key[]) => void",
+      defaultValue: "—",
+      description: "Use these React Aria props for multiple selection.",
+    },
+    {
+      component: "ComboBoxTags",
+      prop: "className / label / emptyText",
+      type: "string / string / string",
+      defaultValue: '— / "Selected options" / "No options selected."',
+      description:
+        "Show and remove selected options in multiple mode. Included in the default options layout; add it yourself in a custom composition.",
+    },
+  ],
   attachment: [
     {
       component: "AttachmentList",
@@ -156,18 +205,19 @@ const customComponentApi: Record<string, ApiProp[]> = {
     },
     {
       component: "CopyButton",
-      prop: "label / text",
-      type: "string",
-      defaultValue: '"Copy" / "Copy"',
-      description: "Accessible action name and visible idle label.",
+      prop: "children",
+      type: "ReactNode | (status: CopyButtonStatus) => ReactNode",
+      defaultValue: "Copy / Copied / Retry with icons",
+      description:
+        "Render content for idle, copied, or failed. Omit for the default label and icon; size=icon shows just the icon.",
     },
     {
       component: "CopyButton",
-      prop: "Button props",
-      type: "ButtonProps",
-      defaultValue: 'variant="outline", size="default"',
+      prop: "aria-label / Button props",
+      type: "string / ButtonProps",
+      defaultValue: '"Copy" / variant="outline", size="default"',
       description:
-        "Use a shared button variant or size and pass disabled or other Button props.",
+        "Name the copied value, especially for icon buttons. Use shared button variants and sizes, plus disabled and other Button props.",
     },
   ],
   "button-group": [
@@ -725,6 +775,10 @@ const customComponentApi: Record<string, ApiProp[]> = {
 };
 
 const customGuidance: Record<string, string> = {
+  "context-menu":
+    "Keep the trigger focusable and give it a primary action for ordinary presses. React Aria opens the context menu from right-click, touch long press, and platform keyboard shortcuts, and restores focus when it closes. Use Menu for actions opened by an ordinary button press. ContextMenu reuses Menu's styles and parts.",
+  "combo-box":
+    "Use selectionMode=multiple for several choices. In this mode value, defaultValue, and onChange use an array of keys; the single-select value and onValueChange convenience props remain unchanged. The default layout includes removable tags. If you compose children yourself, include ComboBoxTags after the input. Keep a visible label or provide aria-label.",
   attachment:
     "Attachment displays files but does not select, validate, or upload them. Combine it with FileTrigger or DropZone. Keep File objects, preview URLs, upload requests, and progress in your app; revoke preview URLs after removal and on unmount. Restore focus before removing a focused attachment action.",
   "native-select":
@@ -734,7 +788,7 @@ const customGuidance: Record<string, string> = {
   "password-field":
     "Use current-password for sign-in and new-password for creation. The reveal control stays separately focusable and never changes the field value. Keep validation next to the field, and do not log or display submitted credentials.",
   "copy-button":
-    "CopyButton writes value only after a press. It shows Copied on success or Retry on failure; keep the source value readable so a user can select it when clipboard access is unavailable.",
+    "CopyButton writes value only after a press. Its default content shows Copy, Copied, or Retry; pass a status-rendered child for custom content or size=icon for an icon-only action. Keep the source value readable so a user can select it when clipboard access is unavailable.",
   "button-group":
     "Place independent actions in ButtonGroup, such as a Save button followed by a MenuTrigger with an icon Button. Use a ghost variant for joined edges, and name both the group and icon action. Each button stays in the normal Tab order; use Toggle button group for persistent selection or Toolbar for arrow-key navigation.",
   dialog:
@@ -763,7 +817,7 @@ const customGuidance: Record<string, string> = {
     "Pass label and description for the ready-made layout, or compose CheckboxGroupLabel, CheckboxGroupItems, CheckboxGroupDescription, and CheckboxGroupError as children. Keep a visible label or supply aria-label.",
   "token-field":
     "TagFieldValue turns text into tokens when you type a comma or paste a newline. Wire onSubmit to value.commit() if Enter should add a tag. Compose TokenFieldLabel, TokenFieldInput, and TokenFieldDescription as children when you need a custom layout; keep a label or supply aria-label. Use TokenFieldValue for free-form text or extend it for a different syntax. The field does not upload or submit tags by itself.",
-  tree: "Give each item a stable id and a text title for typeahead. Pass content to customize the visible row without using children, which holds nested items. React Aria manages expansion, keyboard navigation, and selection; use Tree for nested data and List box for a flat collection.",
+  tree: "Give each item a stable id and a text title for typeahead. Folders and files have default icons; pass icon or content to customize the row without using children, which holds nested items. React Aria manages expansion, keyboard navigation, and selection; use Tree for nested data and List box for a flat collection.",
   "drop-zone":
     "Restrict supported formats with getDropOperation and validate the files again in onDrop. Add FileTrigger for people who cannot drag files. Dropping a file does not upload it.",
   "color-picker":
