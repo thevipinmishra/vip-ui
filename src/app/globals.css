@@ -214,6 +214,14 @@
   );
 }
 
+.preview-canvas {
+  background-image: radial-gradient(
+    color-mix(in oklab, var(--muted-foreground) 20%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 18px 18px;
+}
+
 @keyframes home-arrive {
   from {
     opacity: 0;

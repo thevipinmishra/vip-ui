@@ -15,6 +15,14 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: "/components/:slug.md",
+        destination: "/components/:slug/markdown",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

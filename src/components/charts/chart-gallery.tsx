@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import Link from "next/link";
-import { ArrowRight } from "reicon-react";
+import { ArrowRight, Link2 } from "reicon-react";
 import { CodeFrame } from "@/components/docs/code-frame";
 import { CodeSnippet } from "@/components/docs/code-snippet";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -40,7 +40,8 @@ export async function ChartGallery({
       <section
         id="gallery"
         aria-labelledby="charts-title"
-        className="mx-auto max-w-7xl scroll-mt-28 px-5 pb-24 pt-14 sm:px-8 sm:pt-20"
+        data-toc-skip
+        className="scroll-mt-28 pb-24 pt-14 sm:pt-20"
       >
         <h1
           id="charts-title"
@@ -126,20 +127,40 @@ function ChartCategoryContent({
         </ChartSourceDrawer>
       </div>
       <div className="mt-8 grid gap-5 lg:grid-cols-2">
-        {category.examples.map((example) => (
-          <Card
-            key={example.name}
-            className="relative z-0 flex min-w-0 flex-col rounded-[22px] hover:z-10 focus-within:z-10"
-          >
-            <CardHeader>
-              <CardTitle>{example.name}</CardTitle>
-            </CardHeader>
-            <CardContent className="min-w-0 flex-1 pb-6 pt-5">
-              {example.preview}
-            </CardContent>
-          </Card>
-        ))}
+        {category.examples.map((example) => {
+          const anchor = chartExampleAnchor(category.slug, example.name);
+          return (
+            <Card
+              key={example.name}
+              id={anchor}
+              className="relative z-0 flex min-w-0 scroll-mt-28 flex-col rounded-[22px] hover:z-10 focus-within:z-10"
+            >
+              <CardHeader className="flex-row items-center justify-between gap-3">
+                <CardTitle>{example.name}</CardTitle>
+                <a
+                  href={`#${anchor}`}
+                  aria-label={`Link to ${example.name}`}
+                  className="grid size-8 shrink-0 place-items-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring"
+                >
+                  <Link2 size={15} aria-hidden="true" />
+                </a>
+              </CardHeader>
+              <CardContent className="min-w-0 flex-1 pb-6 pt-5">
+                {example.preview}
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
     </section>
   );
+}
+
+/** Stable deep link for one chart example, for example `bar-monthly-orders`. */
+function chartExampleAnchor(categorySlug: string, name: string) {
+  const exampleSlug = name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+  return `${categorySlug}-${exampleSlug}`;
 }

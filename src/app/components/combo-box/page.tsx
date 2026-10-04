@@ -3,7 +3,11 @@ import { ComboBoxBasicDemo } from "@/components/docs/combo-box-basic-demo";
 import { ComboBoxDemo } from "@/components/docs/combo-box-demo";
 import { ComboBoxDisabledDemo } from "@/components/docs/combo-box-disabled-demo";
 import { ComboBoxMultipleDemo } from "@/components/docs/combo-box-multiple-demo";
-import { ComponentPage } from "@/components/docs/component-page";
+import {
+  ComponentPage,
+  withExamplePreviews,
+} from "@/components/docs/component-page";
+import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Combo box | vip/ui",
@@ -11,40 +15,19 @@ export const metadata: Metadata = {
 };
 
 export default function ComboBoxPage() {
+  const page = componentPageData["combo-box"];
   return (
     <ComponentPage
       name="Combo box"
-      reactAriaDocsHref="https://react-aria.adobe.com/ComboBox"
-      description="A searchable list for choosing an option."
+      description={page.description}
       preview={<ComboBoxBasicDemo />}
-      previewHint="Type a framework name, use the arrow keys, and press Enter to select."
-      previewSourcePath="src/components/docs/combo-box-basic-demo.tsx"
-      examples={[
-        {
-          title: "Descriptive results",
-          description:
-            "Filter options with supporting details and show the current selection.",
-          preview: <ComboBoxDemo />,
-          sourcePath: "src/components/docs/combo-box-demo.tsx",
-        },
-        {
-          title: "Multiple selection",
-          description:
-            "Filter teams, select more than one, and remove selections from the tags below the input. The array of selected keys is controlled by the app.",
-          preview: <ComboBoxMultipleDemo />,
-          sourcePath: "src/components/docs/combo-box-multiple-demo.tsx",
-        },
-        {
-          title: "Disabled",
-          description:
-            "Keep the selected value visible when the field cannot be edited.",
-          preview: <ComboBoxDisabledDemo />,
-          sourcePath: "src/components/docs/combo-box-disabled-demo.tsx",
-        },
-      ]}
+      previewSourcePath={page.usage}
+      examples={withExamplePreviews(page.examples, [
+        <ComboBoxDemo key="example-1" />,
+        <ComboBoxMultipleDemo key="example-2" />,
+        <ComboBoxDisabledDemo key="example-3" />,
+      ])}
       sourcePath="src/components/ui/combo-box.tsx"
-      previous={{ name: "Context menu", href: "/components/context-menu" }}
-      next={{ name: "Tooltip", href: "/components/tooltip" }}
     />
   );
 }

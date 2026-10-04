@@ -1,3 +1,5 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { connection } from "next/server";
@@ -9,7 +11,11 @@ import {
   FolderOpen,
   MessageCircle,
 } from "reicon-react";
+import { CodeBlock } from "@/components/docs/code-block";
+import { ExampleFileAssetRecipe } from "@/components/docs/example-file-asset-recipe";
+import { ExampleProjectStatusRecipe } from "@/components/docs/example-project-status-recipe";
 import { PackageManagerCommand } from "@/components/docs/package-manager-command";
+import { SiteFooter } from "@/components/docs/site-footer";
 import { SiteHeader } from "@/components/docs/site-header";
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -30,6 +36,20 @@ export const metadata: Metadata = {
   description:
     "Explore repository operations, subscription billing, a local chat workspace, and an asset studio built with vip/ui.",
 };
+
+const docLinkClass =
+  "font-medium text-primary underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
+
+async function readRecipeSource(filename: string) {
+  return (
+    await readFile(
+      path.join(process.cwd(), "src/components/docs", filename),
+      "utf8",
+    )
+  )
+    .replaceAll("@/components/ui/", "@/components/vip-ui/")
+    .trim();
+}
 
 async function OpenPullRequests() {
   await connection();
@@ -57,15 +77,21 @@ async function OpenPullRequests() {
   );
 }
 
-export default function ExamplesPage() {
+export default async function ExamplesPage() {
   const overdue = invoices.filter((invoice) => invoice.status === "overdue");
   const installRepository = registryUrl("example-repository");
   const installBusiness = registryUrl("example-business");
   const installChat = registryUrl("example-chat");
   const installStudio = registryUrl("example-studio");
+  const projectStatusSource = await readRecipeSource(
+    "example-project-status-recipe.tsx",
+  );
+  const fileAssetSource = await readRecipeSource(
+    "example-file-asset-recipe.tsx",
+  );
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <a
         href="#main"
         className="sr-only fixed start-4 top-4 z-50 rounded-md bg-primary px-4 py-2 text-primary-foreground focus:not-sr-only"
@@ -75,7 +101,7 @@ export default function ExamplesPage() {
       <SiteHeader />
       <main
         id="main"
-        className="mx-auto max-w-6xl px-5 pb-24 pt-14 sm:px-8 sm:pt-20"
+        className="mx-auto w-full max-w-6xl flex-1 px-5 pb-24 pt-14 sm:px-8 sm:pt-20"
       >
         <h1 className="max-w-3xl text-[clamp(2.8rem,5vw,4.5rem)] font-semibold leading-[1.04] tracking-[-0.065em]">
           Examples
@@ -311,6 +337,237 @@ export default function ExamplesPage() {
         </div>
 
         <section
+          aria-labelledby="recipes-title"
+          className="mt-20 border-t border-border/70 pt-12"
+        >
+          <h2
+            id="recipes-title"
+            className="text-2xl font-semibold tracking-[-0.04em]"
+          >
+            Start from a task
+          </h2>
+          <p className="mt-5 max-w-2xl text-sm leading-7 text-muted-foreground">
+            Two short recipes show a starting state, the action you take, and
+            the result. Copy the composition, follow the component links, or
+            install the full workspace below. Snippets use the consumer import
+            path{" "}
+            <code className="font-mono text-foreground">
+              @/components/vip-ui/
+            </code>
+            , and each component page lists the packages its install adds.
+          </p>
+
+          <div className="mt-12 grid gap-16">
+            <section
+              id="recipe-project-status"
+              aria-labelledby="recipe-project-status-title"
+              className="scroll-mt-24"
+            >
+              <h3
+                id="recipe-project-status-title"
+                className="text-xl font-semibold tracking-[-0.035em]"
+              >
+                Retry a failed payment
+              </h3>
+              <div className="mt-6 grid gap-8 lg:grid-cols-2 lg:items-start">
+                <div className="min-w-0 rounded-xl bg-muted/40 p-4 sm:p-8">
+                  <div className="flex justify-center">
+                    <ExampleProjectStatusRecipe />
+                  </div>
+                </div>
+                <div className="min-w-0 text-sm leading-7 text-muted-foreground">
+                  <p>
+                    The card starts on the overdue invoice for Meridian Health
+                    with a failed payment attempt. Choose an invoice in the
+                    select, then press{" "}
+                    <strong className="font-semibold text-foreground">
+                      Retry payment
+                    </strong>
+                    . The badge switches to paid and the result appears; the
+                    button stays disabled until you choose another invoice.
+                  </p>
+                  <p className="mt-4">
+                    Built with{" "}
+                    <Link
+                      href="/components/select#example-invalid-selection"
+                      className={docLinkClass}
+                    >
+                      Select
+                    </Link>
+                    ,{" "}
+                    <Link
+                      href="/components/button#example-project-actions"
+                      className={docLinkClass}
+                    >
+                      Button
+                    </Link>
+                    ,{" "}
+                    <Link
+                      href="/components/badge#example-status-variants"
+                      className={docLinkClass}
+                    >
+                      Badge
+                    </Link>
+                    ,{" "}
+                    <Link
+                      href="/components/alert#example-status-messages"
+                      className={docLinkClass}
+                    >
+                      Alert
+                    </Link>
+                    , and{" "}
+                    <Link href="/components/form" className={docLinkClass}>
+                      Form
+                    </Link>
+                    . The records live in{" "}
+                    <code className="font-mono text-xs text-foreground">
+                      @/app/examples/business/data.ts
+                    </code>
+                    , which ships with the Billing operations workspace.
+                  </p>
+                  <p className="mt-4">
+                    Simulated: the ledger is fictional and retrying only updates
+                    this card. No charge, email, or invoice is sent.
+                  </p>
+                  <div className="mt-6 flex flex-wrap items-center gap-3">
+                    <ButtonLink
+                      as={Link}
+                      href="/examples/business"
+                      variant="outline"
+                      size="sm"
+                    >
+                      Open Billing operations{" "}
+                      <ArrowRight size={16} aria-hidden="true" />
+                    </ButtonLink>
+                  </div>
+                  {installBusiness && (
+                    <p className="mt-4">
+                      Install the full workspace with{" "}
+                      <code className="break-all font-mono text-xs text-foreground">
+                        npx shadcn@latest add {installBusiness}
+                      </code>
+                      .{" "}
+                      <a href="#install-title" className={docLinkClass}>
+                        See what the install adds
+                      </a>
+                      .
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div className="mt-8">
+                <CodeBlock
+                  code={projectStatusSource}
+                  filename="example-project-status-recipe.tsx"
+                />
+              </div>
+            </section>
+
+            <section
+              id="recipe-file-asset"
+              aria-labelledby="recipe-file-asset-title"
+              className="scroll-mt-24"
+            >
+              <h3
+                id="recipe-file-asset-title"
+                className="text-xl font-semibold tracking-[-0.035em]"
+              >
+                Add and classify a local asset
+              </h3>
+              <div className="mt-6 grid gap-8 lg:grid-cols-2 lg:items-start">
+                <div className="min-w-0 rounded-xl bg-muted/40 p-4 sm:p-8">
+                  <div className="flex justify-center">
+                    <ExampleFileAssetRecipe />
+                  </div>
+                </div>
+                <div className="min-w-0 text-sm leading-7 text-muted-foreground">
+                  <p>
+                    The drop zone starts empty. Drop a PNG, JPEG, or PDF, or
+                    pick one from the file trigger. Choose a category tag and
+                    press{" "}
+                    <strong className="font-semibold text-foreground">
+                      Save classification
+                    </strong>
+                    ; removing the attachment returns the recipe to its starting
+                    state.
+                  </p>
+                  <p className="mt-4">
+                    Built with{" "}
+                    <Link
+                      href="/components/attachment#example-add-files-to-a-request"
+                      className={docLinkClass}
+                    >
+                      Attachment
+                    </Link>
+                    ,{" "}
+                    <Link
+                      href="/components/drop-zone#example-accepted-file-types"
+                      className={docLinkClass}
+                    >
+                      Drop zone
+                    </Link>
+                    ,{" "}
+                    <Link
+                      href="/components/file-trigger#example-multiple-images"
+                      className={docLinkClass}
+                    >
+                      File trigger
+                    </Link>
+                    ,{" "}
+                    <Link href="/components/tag-group" className={docLinkClass}>
+                      Tag group
+                    </Link>
+                    , and{" "}
+                    <Link
+                      href="/components/button#example-project-actions"
+                      className={docLinkClass}
+                    >
+                      Button
+                    </Link>
+                    .
+                  </p>
+                  <p className="mt-4">
+                    Local only: the file is read in this browser tab and the
+                    classification is component state. Nothing is uploaded,
+                    persisted, or sent anywhere.
+                  </p>
+                  <div className="mt-6 flex flex-wrap items-center gap-3">
+                    <ButtonLink
+                      as={Link}
+                      href="/examples/studio"
+                      variant="outline"
+                      size="sm"
+                    >
+                      Open Asset studio{" "}
+                      <ArrowRight size={16} aria-hidden="true" />
+                    </ButtonLink>
+                  </div>
+                  {installStudio && (
+                    <p className="mt-4">
+                      Install the full workspace with{" "}
+                      <code className="break-all font-mono text-xs text-foreground">
+                        npx shadcn@latest add {installStudio}
+                      </code>
+                      .{" "}
+                      <a href="#install-title" className={docLinkClass}>
+                        See what the install adds
+                      </a>
+                      .
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div className="mt-8">
+                <CodeBlock
+                  code={fileAssetSource}
+                  filename="example-file-asset-recipe.tsx"
+                />
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section
           aria-labelledby="install-title"
           className="mt-20 border-t border-border/70 pt-12"
         >
@@ -417,6 +674,7 @@ export default function ExamplesPage() {
           </div>
         </section>
       </main>
+      <SiteFooter />
     </div>
   );
 }

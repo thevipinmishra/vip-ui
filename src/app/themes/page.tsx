@@ -1,20 +1,27 @@
 import type { Metadata } from "next";
+import { officialThemes } from "./official-themes";
 import { ThemeGallery } from "./theme-gallery";
 import { ThemeStudio } from "./theme-studio";
 
 export const metadata: Metadata = {
   title: "Themes | vip/ui",
   description:
-    "Compare six vip/ui themes on live components. Switch the light or dark preview and copy the CSS for your app.",
+    "Preview six vip/ui themes on live components and copy the CSS. Light and dark follow the site theme switcher.",
 };
 
-export default function ThemesPage() {
+export default async function ThemesPage({
+  searchParams,
+}: PageProps<"/themes">) {
+  const { theme } = await searchParams;
+  const initialTheme =
+    typeof theme === "string" &&
+    officialThemes.some((item) => item.slug === theme)
+      ? theme
+      : undefined;
+
   return (
-    <article className="grid min-w-0 gap-10">
-      <h1 className="text-[clamp(3rem,7vw,5.5rem)] font-semibold leading-none tracking-[-0.07em]">
-        Themes
-      </h1>
-      <ThemeStudio>
+    <article className="min-w-0">
+      <ThemeStudio initialTheme={initialTheme}>
         <ThemeGallery />
       </ThemeStudio>
     </article>

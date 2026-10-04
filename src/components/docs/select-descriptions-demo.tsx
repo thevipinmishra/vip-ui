@@ -33,7 +33,7 @@ export function SelectDescriptionsDemo() {
             >
               <span className="min-w-0">
                 <span className="block font-medium">{framework.name}</span>
-                <span className="block text-xs text-muted-foreground">
+                <span className="block text-xs text-muted-foreground group-selected/item:text-accent-foreground">
                   {framework.description}
                 </span>
               </span>

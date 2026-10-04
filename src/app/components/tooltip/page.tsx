@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
-import { ComponentPage } from "@/components/docs/component-page";
+import {
+  ComponentPage,
+  withExamplePreviews,
+} from "@/components/docs/component-page";
 import { TooltipActionsDemo } from "@/components/docs/tooltip-actions-demo";
 import { TooltipDemo } from "@/components/docs/tooltip-demo";
+import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Tooltip | vip/ui",
@@ -9,26 +13,17 @@ export const metadata: Metadata = {
 };
 
 export default function TooltipPage() {
+  const page = componentPageData.tooltip;
   return (
     <ComponentPage
       name="Tooltip"
-      reactAriaDocsHref="https://react-aria.adobe.com/Tooltip"
-      description="Displays a short hint when its trigger is hovered or focused."
+      description={page.description}
       preview={<TooltipDemo />}
-      previewHint="Hover over a control or focus it with Tab to read its hint."
-      previewSourcePath="src/components/docs/tooltip-demo.tsx"
-      examples={[
-        {
-          title: "Review actions",
-          description:
-            "Keep icon-only buttons named without the tooltip. Hover or focus for extra context, then try the actions.",
-          preview: <TooltipActionsDemo />,
-          sourcePath: "src/components/docs/tooltip-actions-demo.tsx",
-        },
-      ]}
+      previewSourcePath={page.usage}
+      examples={withExamplePreviews(page.examples, [
+        <TooltipActionsDemo key="example-1" />,
+      ])}
       sourcePath="src/components/ui/tooltip.tsx"
-      previous={{ name: "Combo box", href: "/components/combo-box" }}
-      next={{ name: "Toast", href: "/components/toast" }}
     />
   );
 }

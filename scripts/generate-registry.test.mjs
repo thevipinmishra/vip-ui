@@ -29,13 +29,16 @@ test("package subpaths resolve to installable package names", () => {
   assert.equal(packageName("react-aria-components"), "react-aria-components");
   assert.deepEqual(createItem("chart", sources).dependencies, [
     "@tanstack/charts",
-    "cn",
+    "tailwind-variants",
   ]);
 });
 
 test("every component has a current, complete registry item", async () => {
   const items = (await readdir(path.join(root, "public/r"))).filter(
-    (file) => file.endsWith(".json") && !file.startsWith("vip-example-"),
+    (file) =>
+      file.startsWith("vip-") &&
+      file.endsWith(".json") &&
+      !file.startsWith("vip-example-"),
   );
   assert.equal(items.length, sources.size);
   for (const name of sources.keys()) {
@@ -57,7 +60,7 @@ test("every component has a current, complete registry item", async () => {
     for (const file of generated.files) {
       assert.doesNotMatch(
         file.content,
-        /\b(group-)?(selection-start|selection-end|outside-month|unavailable|placeholder|selected|pressed|invalid|indeterminate|disabled|empty):/,
+        /\b(group-)?(selection-start|selection-end|outside-month|unavailable|selected|pressed|invalid|indeterminate|disabled|empty):/,
       );
       assert.doesNotMatch(file.content, /vip-(primary|radius|shadow)/);
       for (const [, specifier] of file.content.matchAll(
@@ -76,19 +79,41 @@ test("every component has a current, complete registry item", async () => {
   }
 });
 
-test("consumer setup includes the site's skeleton and overlay behavior", async () => {
+test("consumer setup mirrors the site's status roles", async () => {
   const site = (
     await readFile(path.join(root, "src/app/globals.css"), "utf8")
   ).replace(/\r\n/g, "\n");
   const setup = (
     await readFile(path.join(root, "public/r/setup.css"), "utf8")
   ).replace(/\r\n/g, "\n");
-  assert.equal(
-    setup.slice(setup.indexOf(".ui-skeleton {")).trim(),
-    site
-      .slice(site.indexOf(".ui-skeleton {"), site.indexOf("\n:root {"))
-      .trim(),
-  );
+  const statusRoles = (source, block) => {
+    const start = source.indexOf(block);
+    const end = source.indexOf("\n}", start);
+    return new Map(
+      source
+        .slice(start, end)
+        .split("\n")
+        .map((line) => line.trim())
+        .filter((line) => /^--(success|warning)[\w-]*:/.test(line))
+        .map((line) => [
+          line.slice(0, line.indexOf(":")),
+          line.slice(line.indexOf(":") + 1).trim(),
+        ]),
+    );
+  };
+  for (const block of [":root {", ".dark {"]) {
+    const siteRoles = statusRoles(site, block);
+    const setupRoles = statusRoles(setup, block);
+    assert.ok(siteRoles.size > 0, `globals.css ${block} has no status roles`);
+    assert.ok(setupRoles.size > 0, `setup.css ${block} has no status roles`);
+    for (const [property, value] of setupRoles) {
+      assert.equal(
+        siteRoles.get(property),
+        value,
+        `setup.css ${block} does not match globals.css for ${property}`,
+      );
+    }
+  }
 });
 
 test("the repository example installs its routes and component dependencies", async () => {
@@ -262,7 +287,7 @@ test("dependent components bring their files and packages", () => {
   assert.ok(item.dependencies.includes("react-aria-components"));
   assert.ok(item.dependencies.includes("reicon-react"));
   assert.ok(
-    item.dependencies.includes("cn"),
+    item.dependencies.includes("tailwind-variants"),
     "the scoped helper must be self-contained",
   );
   assert.ok(targets.includes("utils.ts"));
@@ -277,7 +302,11 @@ test("the portable source uses React Aria data states and shadcn tokens", () => 
   assert.match(output, /data-\[disabled\]:opacity-50/);
   assert.match(output, /data-\[selection-start\]:rounded-s-md/);
   assert.match(output, /data-\[selection-end\]:rounded-e-md/);
-  assert.match(output, /data-\[placeholder\]:text-muted-foreground/);
+  // `placeholder:` stays native so `::placeholder` on the installed inputs and
+  // textareas keeps working without the site's React Aria Tailwind plugin.
+  // Components that need the React Aria state write `data-[placeholder]:`.
+  assert.match(output, /placeholder:text-muted-foreground/);
+  assert.doesNotMatch(output, /data-\[placeholder\]:text-muted-foreground/);
   assert.match(output, /rounded-md/);
   assert.match(output, /var\(--shadow-card\)/);
   assert.match(

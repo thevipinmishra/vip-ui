@@ -3,7 +3,11 @@ import { AccordionDemo } from "@/components/docs/accordion-demo";
 import { AccordionDisabledDemo } from "@/components/docs/accordion-disabled-demo";
 import { AccordionDividedDemo } from "@/components/docs/accordion-divided-demo";
 import { AccordionMultipleDemo } from "@/components/docs/accordion-multiple-demo";
-import { ComponentPage } from "@/components/docs/component-page";
+import {
+  ComponentPage,
+  withExamplePreviews,
+} from "@/components/docs/component-page";
+import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Accordion | vip/ui",
@@ -11,40 +15,19 @@ export const metadata: Metadata = {
 };
 
 export default function AccordionPage() {
+  const page = componentPageData.accordion;
   return (
     <ComponentPage
       name="Accordion"
-      reactAriaDocsHref="https://react-aria.adobe.com/DisclosureGroup"
-      description="Displays collapsible sections of related content."
+      description={page.description}
       preview={<AccordionDemo />}
-      previewHint="Open a question to read its answer."
-      previewSourcePath="src/components/docs/accordion-demo.tsx"
-      examples={[
-        {
-          title: "Multiple open items",
-          description:
-            "Use allowsMultipleExpanded to keep more than one answer open. Both answers start expanded; close one without affecting the other.",
-          preview: <AccordionMultipleDemo />,
-          sourcePath: "src/components/docs/accordion-multiple-demo.tsx",
-        },
-        {
-          title: "Disabled item",
-          description:
-            "Set isDisabled on an AccordionItem when its answer is not available. The other item still opens normally.",
-          preview: <AccordionDisabledDemo />,
-          sourcePath: "src/components/docs/accordion-disabled-demo.tsx",
-        },
-        {
-          title: "Divided",
-          description:
-            'Use variant="divided" for rows separated by a single line, without individual cards. Open either row to see the content expand.',
-          preview: <AccordionDividedDemo />,
-          sourcePath: "src/components/docs/accordion-divided-demo.tsx",
-        },
-      ]}
+      previewSourcePath={page.usage}
+      examples={withExamplePreviews(page.examples, [
+        <AccordionMultipleDemo key="example-1" />,
+        <AccordionDisabledDemo key="example-2" />,
+        <AccordionDividedDemo key="example-3" />,
+      ])}
       sourcePath="src/components/ui/accordion.tsx"
-      previous={{ name: "Tabs", href: "/components/tabs" }}
-      next={{ name: "Dialog", href: "/components/dialog" }}
     />
   );
 }

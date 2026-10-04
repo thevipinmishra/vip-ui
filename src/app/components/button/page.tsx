@@ -3,7 +3,11 @@ import { ButtonBasicDemo } from "@/components/docs/button-basic-demo";
 import { ButtonDemo } from "@/components/docs/button-demo";
 import { ButtonSizesDemo } from "@/components/docs/button-sizes-demo";
 import { ButtonVariantsDemo } from "@/components/docs/button-variants-demo";
-import { ComponentPage } from "@/components/docs/component-page";
+import {
+  ComponentPage,
+  withExamplePreviews,
+} from "@/components/docs/component-page";
+import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Button | vip/ui",
@@ -12,39 +16,30 @@ export const metadata: Metadata = {
 };
 
 export default function ButtonPage() {
+  const page = componentPageData.button;
+
   return (
     <ComponentPage
       name="Button"
-      description="Displays a button or a component that looks like a button."
-      reactAriaDocsHref="https://react-aria.adobe.com/Button"
-      preview={<ButtonBasicDemo />}
-      previewHint="Press to save; the label confirms the action without adding a separate message."
-      previewSourcePath="src/components/docs/button-basic-demo.tsx"
-      examples={[
+      description={page.description}
+      descriptionLinks={[
         {
-          title: "Variants",
-          description:
-            "Choose a variant to match the action's priority. Use destructive for actions that remove data.",
-          preview: <ButtonVariantsDemo />,
-          sourcePath: "src/components/docs/button-variants-demo.tsx",
+          label: "Jump to Project actions",
+          href: "#example-project-actions",
         },
         {
-          title: "Sizes",
-          description:
-            "Use size for placement. Give an icon-only button an accessible name.",
-          preview: <ButtonSizesDemo />,
-          sourcePath: "src/components/docs/button-sizes-demo.tsx",
-        },
-        {
-          title: "Project actions",
-          description:
-            "Publish a draft, save another revision, or archive it. The status and revision update in the project card.",
-          preview: <ButtonDemo />,
-          sourcePath: "src/components/docs/button-demo.tsx",
+          label: "Project status recipe",
+          href: "/examples#recipe-project-status",
         },
       ]}
+      preview={<ButtonBasicDemo />}
+      previewSourcePath={page.usage}
+      examples={withExamplePreviews(page.examples, [
+        <ButtonVariantsDemo key="variants" />,
+        <ButtonSizesDemo key="sizes" />,
+        <ButtonDemo key="project-actions" />,
+      ])}
       sourcePath="src/components/ui/button.tsx"
-      next={{ name: "Text field", href: "/components/text-field" }}
     />
   );
 }

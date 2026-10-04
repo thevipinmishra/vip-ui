@@ -3,9 +3,11 @@ import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import Script from "next/script";
+import { siteUrl } from "@/lib/site-url";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl()),
   title: "vip/ui | Copyable React components",
   description:
     "Live examples and copyable React components built with React Aria, Tailwind CSS, and Motion.",

@@ -195,14 +195,16 @@ try {
     "utf8",
   );
   assert.match(installedCss, /--primary: #123456/);
-  for (const selector of [
-    ".ui-skeleton::after",
-    ".ui-tooltip[data-entering]",
-    ".aria-overlay-exit[data-exiting]",
+  // `public/r/setup.css` is static theme input. Component styling now lives in
+  // Tailwind classes and Motion, so verify the appended status-role mappings.
+  for (const marker of [
+    "--color-success: var(--success)",
+    "--color-warning: var(--warning)",
+    "--color-success-subtle: var(--success-subtle)",
   ]) {
     assert.ok(
-      installedCss.includes(selector),
-      `Missing installed style ${selector}`,
+      installedCss.includes(marker),
+      `Missing installed style ${marker}`,
     );
   }
   assert.match(
@@ -249,9 +251,9 @@ async function check(file) {
     "rounded-md",
     "bg-primary",
     "bg-accent[data-selected]",
-    ".ui-skeleton::after",
-    ".ui-tooltip[data-entering]",
-    ".aria-overlay-exit[data-exiting]",
+    "bg-linear-to-r",
+    "opacity-0[data-entering]",
+    "opacity-0[data-exiting]",
   ]) {
     if (!css.css.includes(rule)) throw new Error(file + " is missing " + rule);
   }

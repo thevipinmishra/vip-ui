@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
-import { ComponentPage } from "@/components/docs/component-page";
+import {
+  ComponentPage,
+  withExamplePreviews,
+} from "@/components/docs/component-page";
 import { SearchFieldBasicDemo } from "@/components/docs/search-field-basic-demo";
 import { SearchFieldDemo } from "@/components/docs/search-field-demo";
+import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Search field | vip/ui",
@@ -9,26 +13,17 @@ export const metadata: Metadata = {
 };
 
 export default function SearchFieldPage() {
+  const page = componentPageData["search-field"];
   return (
     <ComponentPage
       name="Search field"
-      reactAriaDocsHref="https://react-aria.adobe.com/SearchField"
-      description="A field for entering a search query."
+      description={page.description}
       preview={<SearchFieldBasicDemo />}
-      previewHint="Type a project name, then use the clear button to start over."
-      previewSourcePath="src/components/docs/search-field-basic-demo.tsx"
-      examples={[
-        {
-          title: "Filter projects",
-          description:
-            "Connect a controlled search field to a collection. Type a project or owner to filter, press Enter to submit, or clear the query to see every project again.",
-          preview: <SearchFieldDemo />,
-          sourcePath: "src/components/docs/search-field-demo.tsx",
-        },
-      ]}
+      previewSourcePath={page.usage}
+      examples={withExamplePreviews(page.examples, [
+        <SearchFieldDemo key="example-1" />,
+      ])}
       sourcePath="src/components/ui/search-field.tsx"
-      previous={{ name: "Dialog", href: "/components/dialog" }}
-      next={{ name: "Menu", href: "/components/menu" }}
     />
   );
 }

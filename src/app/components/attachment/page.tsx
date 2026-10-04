@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { AttachmentBasicDemo } from "@/components/docs/attachment-basic-demo";
 import { AttachmentDemo } from "@/components/docs/attachment-demo";
-import { ComponentPage } from "@/components/docs/component-page";
+import {
+  ComponentPage,
+  withExamplePreviews,
+} from "@/components/docs/component-page";
+import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Attachment | vip/ui",
@@ -9,25 +13,17 @@ export const metadata: Metadata = {
 };
 
 export default function AttachmentPage() {
+  const page = componentPageData.attachment;
   return (
     <ComponentPage
       name="Attachment"
-      description="Displays a file's name, size, preview, and current state."
+      description={page.description}
       preview={<AttachmentBasicDemo />}
-      previewHint="Long filenames wrap so the full name stays available at phone width."
-      previewSourcePath="src/components/docs/attachment-basic-demo.tsx"
-      examples={[
-        {
-          title: "Add files to a request",
-          description:
-            "Drop a PNG, JPEG, or PDF, or browse on a touch device. Remove a file before submitting; selections stay local and no upload is started.",
-          preview: <AttachmentDemo />,
-          sourcePath: "src/components/docs/attachment-demo.tsx",
-        },
-      ]}
+      previewSourcePath={page.usage}
+      examples={withExamplePreviews(page.examples, [
+        <AttachmentDemo key="example-1" />,
+      ])}
       sourcePath="src/components/ui/attachment.tsx"
-      previous={{ name: "File trigger", href: "/components/file-trigger" }}
-      next={{ name: "Native select", href: "/components/native-select" }}
     />
   );
 }

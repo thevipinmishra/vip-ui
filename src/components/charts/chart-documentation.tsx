@@ -107,7 +107,8 @@ export async function ChartDocumentation() {
     <section
       id="documentation"
       aria-labelledby="documentation-title"
-      className="mx-auto max-w-7xl scroll-mt-28 px-5 pb-28 sm:px-8"
+      data-toc-skip
+      className="scroll-mt-28 pb-28"
     >
       <div className="border-t border-border/70 pt-16">
         <h2

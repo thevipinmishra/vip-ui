@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "vip-ui",
-  "homepage": "http://localhost:3000",
+  "homepage": "https://vip-ui.vercel.app",
   "items": [
     {
       "name": "vip-accordion",
