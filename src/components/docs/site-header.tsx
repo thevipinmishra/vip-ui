@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu } from "reicon-react";
 import {
   Drawer,
@@ -26,15 +26,21 @@ const links = [
   { href: "/examples", label: "Examples" },
 ] as const;
 
-export function SiteHeader() {
+export function SiteHeader({ wide = false }: { wide?: boolean }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const active =
-    pathname === "/components/installation"
-      ? "/components/installation"
-      : pathname.startsWith("/components")
-        ? "/components"
-        : links.find((link) => pathname.startsWith(link.href))?.href;
+  const active = links.findLast(
+    ({ href }) => pathname === href || pathname.startsWith(`${href}/`),
+  )?.href;
+
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 768px)");
+    const closeOnDesktop = (event: MediaQueryListEvent) => {
+      if (event.matches) setOpen(false);
+    };
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => desktop.removeEventListener("change", closeOnDesktop);
+  }, []);
 
   const renderMobileLink = (href: string, label: string) => {
     const isActive = href === "/" ? pathname === "/" : active === href;
@@ -43,12 +49,14 @@ export function SiteHeader() {
         key={href}
         href={href}
         onNavigate={() => setOpen(false)}
-        aria-current={isActive ? "page" : undefined}
+        aria-current={
+          isActive ? (pathname === href ? "page" : "location") : undefined
+        }
         className={cn(
-          "flex min-h-12 items-center rounded-lg px-4 text-sm font-medium transition-colors duration-200 hover:bg-muted focus-visible:outline-2 focus-visible:outline-ring",
+          "flex min-h-12 items-center rounded-lg px-4 text-sm font-medium transition-colors duration-200 hover:bg-muted focus-visible:outline-2 focus-visible:outline-ring motion-reduce:transition-none",
           isActive
             ? "bg-accent text-accent-foreground"
-            : "text-muted-foreground",
+            : "text-muted-foreground hover:text-foreground",
         )}
       >
         {label}
@@ -57,66 +65,80 @@ export function SiteHeader() {
   };
 
   return (
-    <header className="sticky top-0 z-30 px-5 pt-3 sm:px-8 sm:pt-4">
-      <nav
-        aria-label="Site navigation"
-        className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-2 rounded-full bg-card/95 p-2 shadow-[var(--shadow-float)] ring-1 ring-border/60 backdrop-blur-xl sm:p-3"
+    <header className="border-b border-border/70 bg-card">
+      <div
+        className={cn(
+          "mx-auto flex min-h-16 w-full items-center justify-between gap-4 px-5 sm:px-8 lg:grid lg:grid-cols-[224px_minmax(0,1fr)] lg:gap-14 xl:grid-cols-[224px_minmax(0,1fr)_160px] xl:gap-8",
+          wide ? "max-w-[90rem]" : "max-w-7xl",
+        )}
       >
         <Link
           href="/"
           aria-label="vip/ui home"
-          className="inline-flex min-h-10 shrink-0 items-center rounded-full px-2 transition-colors duration-200 hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          aria-current={pathname === "/" ? "page" : undefined}
+          className="inline-flex min-h-10 shrink-0 items-center rounded-md transition-colors duration-200 hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:transition-none"
         >
           <SiteLogo />
         </Link>
-        <div className="flex items-center gap-0.5 sm:gap-1">
-          <div className="hidden items-center gap-0.5 md:flex">
+        <div className="flex min-w-0 flex-1 items-center justify-end gap-2 lg:col-start-2 xl:col-span-2">
+          <nav
+            aria-label="Main navigation"
+            className="mr-auto hidden h-16 items-center gap-1 md:flex"
+          >
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                aria-current={active === link.href ? "page" : undefined}
-                className={cn(
-                  "inline-flex min-h-10 items-center rounded-full px-3 text-sm font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+                aria-current={
                   active === link.href
-                    ? "bg-accent text-accent-foreground hover:bg-accent/70"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                    ? pathname === link.href
+                      ? "page"
+                      : "location"
+                    : undefined
+                }
+                className={cn(
+                  "inline-flex h-full items-center border-b-2 px-2 text-sm font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring motion-reduce:transition-none",
+                  active === link.href
+                    ? "border-primary text-foreground"
+                    : "border-transparent text-muted-foreground hover:border-border hover:text-foreground",
                 )}
               >
                 {link.label}
               </Link>
             ))}
-          </div>
-          <DocsSearch />
-          <ThemeToggle />
-          <div className="md:hidden">
-            <Drawer isOpen={open} onOpenChange={setOpen}>
-              <DrawerTrigger
-                variant="ghost"
-                size="icon"
-                aria-label="Open site navigation"
-                className="size-10 rounded-full text-muted-foreground transition-colors duration-200 hover:text-foreground"
-              >
-                <Menu size={20} aria-hidden="true" />
-              </DrawerTrigger>
-              <DrawerContent placement="right">
-                <DrawerHeader className="flex items-center justify-between gap-4 border-b border-border/70 pb-4">
-                  <DrawerTitle>Navigate</DrawerTitle>
-                  <DrawerClose />
-                </DrawerHeader>
-                <DrawerBody className="pb-[max(1.25rem,env(safe-area-inset-bottom))]">
-                  <div className="grid gap-1">
-                    {renderMobileLink("/", "Home")}
-                    {links.map((link) =>
-                      renderMobileLink(link.href, link.label),
-                    )}
-                  </div>
-                </DrawerBody>
-              </DrawerContent>
-            </Drawer>
+          </nav>
+          <div className="flex shrink-0 items-center gap-1">
+            <DocsSearch />
+            <ThemeToggle />
+            <div className="md:hidden">
+              <Drawer isOpen={open} onOpenChange={setOpen}>
+                <DrawerTrigger
+                  variant="ghost"
+                  size="icon"
+                  aria-label="Open site navigation"
+                  className="size-10 rounded-md text-muted-foreground transition-colors duration-200 hover:text-foreground"
+                >
+                  <Menu size={20} aria-hidden="true" />
+                </DrawerTrigger>
+                <DrawerContent placement="right">
+                  <DrawerHeader className="flex items-center justify-between gap-4 border-b border-border/70 pb-4">
+                    <DrawerTitle>Navigate</DrawerTitle>
+                    <DrawerClose />
+                  </DrawerHeader>
+                  <DrawerBody className="pb-[max(1.25rem,env(safe-area-inset-bottom))]">
+                    <nav aria-label="Mobile navigation" className="grid gap-1">
+                      {renderMobileLink("/", "Home")}
+                      {links.map((link) =>
+                        renderMobileLink(link.href, link.label),
+                      )}
+                    </nav>
+                  </DrawerBody>
+                </DrawerContent>
+              </Drawer>
+            </div>
           </div>
         </div>
-      </nav>
+      </div>
     </header>
   );
 }

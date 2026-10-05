@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Badge",
   "description": "Label an item with short status or metadata.",
-  "dependencies": ["reicon-react", "tailwind-variants"],
+  "dependencies": ["tailwind-variants"],
   "files": [
     {
       "path": "src/lib/utils.ts",

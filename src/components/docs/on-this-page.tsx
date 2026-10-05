@@ -79,9 +79,8 @@ export function OnThisPage() {
         setVisibleIds(nextVisible);
         if (nextVisible[0]) setCurrentId(nextVisible[0]);
       },
-      // Keep the sticky header out of the reading area, and ignore sections
-      // that only peek in at the very bottom of the viewport.
-      { rootMargin: "-88px 0px -12% 0px", threshold: 0 },
+      // Ignore sections that only peek in at the viewport edges.
+      { rootMargin: "-24px 0px -12% 0px", threshold: 0 },
     );
 
     for (const node of nodes) observer.observe(node);

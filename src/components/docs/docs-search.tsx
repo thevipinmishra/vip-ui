@@ -17,7 +17,6 @@ import {
   CommandPalette,
   CommandPaletteItem,
 } from "@/components/ui/command-palette";
-import { Kbd } from "@/components/ui/kbd-code";
 import { catalogComponents } from "@/lib/catalog";
 
 /**
@@ -51,11 +50,10 @@ export function DocsSearch() {
         variant="ghost"
         aria-label="Search components and pages"
         onPress={() => setOpen(true)}
-        className="h-10 gap-2 rounded-full px-2.5 text-muted-foreground transition-colors duration-200 hover:text-foreground lg:px-3"
+        className="size-10 gap-2 rounded-md p-0 text-muted-foreground transition-colors duration-200 hover:text-foreground lg:w-auto lg:px-3"
       >
         <Search size={17} aria-hidden="true" />
         <span className="hidden lg:inline">Search</span>
-        <Kbd className="hidden font-sans lg:inline-flex">⌘K</Kbd>
       </Button>
       <CommandPalette
         isOpen={open}

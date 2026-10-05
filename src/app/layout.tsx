@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import Script from "next/script";
 import { siteUrl } from "@/lib/site-url";
+import { AppToastViewport } from "./toast-viewport";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <div className="flex min-h-full flex-1 flex-col bg-background">
           {children}
         </div>
+        <AppToastViewport />
         <Analytics />
         <Script id="theme-init" strategy="beforeInteractive">
           {`try{var theme=localStorage.getItem("vip-ui-theme");if(theme==="dark"||(!theme&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.classList.add("dark");}catch{}`}

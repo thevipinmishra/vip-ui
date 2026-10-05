@@ -79,7 +79,7 @@ export function CatalogBrowser() {
                     <CatalogCard key={component.slug}>
                       <Link
                         href={`/components/${component.slug}`}
-                        className="flex min-h-16 flex-col justify-center rounded-xl bg-card px-5 py-4 text-card-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70 motion-safe:transition-[box-shadow,background-color] motion-safe:duration-200 hover:bg-accent hover:shadow-[var(--shadow-float)] focus-visible:bg-accent focus-visible:shadow-[var(--shadow-float)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                        className="flex h-full min-h-16 flex-col rounded-xl bg-card px-5 py-4 text-card-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70 motion-safe:transition-[box-shadow,background-color] motion-safe:duration-200 hover:bg-accent hover:shadow-[var(--shadow-float)] focus-visible:bg-accent focus-visible:shadow-[var(--shadow-float)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                       >
                         <span className="text-base font-medium tracking-[-0.025em]">
                           {component.name}

@@ -1,4 +1,4 @@
-import type { ApiProp } from "./component-api";
+import { type ApiProp, groupApiProps } from "./component-api";
 import type { RegistryItem } from "./registry-docs";
 
 export interface ComponentMarkdownInput {
@@ -9,12 +9,12 @@ export interface ComponentMarkdownInput {
   site: string;
   registryItem: RegistryItem;
   cliUrl?: string | null;
+  /** Primary preview source, rendered once before Installation. */
   usage?: { code: string; filename: string };
-  guidance?: string;
   api?: ApiProp[];
   examples?: {
     title: string;
-    description: string;
+    description?: string;
     /** Example source, already rewritten to the consumer import path. */
     code?: string;
     filename?: string;
@@ -24,13 +24,9 @@ export interface ComponentMarkdownInput {
   reactAriaDocsHref?: string;
 }
 
-function cell(value: string) {
-  return value.replaceAll("|", "\\|").replaceAll("\n", " ").trim();
-}
-
 /**
- * Builds the Markdown version of a component page. Used by the Copy page
- * button and served from `/components/<slug>.md` for agents.
+ * Builds the Markdown version of a component page, served from
+ * `/components/<slug>.md` for agents.
  */
 export function buildComponentMarkdown({
   slug,
@@ -40,13 +36,23 @@ export function buildComponentMarkdown({
   registryItem,
   cliUrl,
   usage,
-  guidance,
   api,
   examples,
   reactAriaDocsHref,
 }: ComponentMarkdownInput): string {
   const pageUrl = `${site}/components/${slug}`;
   const lines: string[] = [`# ${name}`, "", description.trim()];
+
+  if (usage) {
+    lines.push(
+      "",
+      "```tsx",
+      usage.code.trim(),
+      "```",
+      "",
+      `Source: \`${usage.filename}\``,
+    );
+  }
 
   lines.push(
     "",
@@ -55,9 +61,6 @@ export function buildComponentMarkdown({
     `- [Documentation](${pageUrl})`,
     `- [Installation](${site}/components/installation)`,
   );
-  if (reactAriaDocsHref) {
-    lines.push(`- [React Aria API](${reactAriaDocsHref})`);
-  }
   lines.push(
     `- [Registry item](${cliUrl ?? `${site}/r/vip-${slug}.json`})`,
     "",
@@ -73,39 +76,27 @@ export function buildComponentMarkdown({
     );
   }
 
-  lines.push("", "This adds:", "");
-  for (const file of registryItem.files) {
-    lines.push(`- \`${file.target}\``);
+  if (!cliUrl) {
+    lines.push("", "Copy these files:", "");
+    for (const file of registryItem.files) {
+      lines.push(`- \`${file.target}\``);
+    }
+    if (registryItem.dependencies.length > 0) {
+      lines.push(
+        "",
+        `Dependencies: ${registryItem.dependencies
+          .map((dependency) => `\`${dependency}\``)
+          .join(", ")}.`,
+      );
+    }
   }
-  if (registryItem.dependencies.length > 0) {
-    lines.push(
-      "",
-      `Dependencies: ${registryItem.dependencies
-        .map((dependency) => `\`${dependency}\``)
-        .join(", ")}.`,
-    );
-  }
-
-  if (usage) {
-    lines.push(
-      "",
-      "## Usage",
-      "",
-      "```tsx",
-      usage.code.trim(),
-      "```",
-      "",
-      `Source: \`${usage.filename}\``,
-    );
-  }
-
-  if (guidance) lines.push("", guidance.trim());
 
   if (examples && examples.length > 0) {
-    lines.push("", "## Examples", "");
-    examples.forEach((example, index) => {
-      if (index > 0) lines.push("");
-      lines.push(`### ${example.title}`, "", example.description.trim());
+    examples.forEach((example) => {
+      lines.push("", `## ${example.title}`);
+      if (example.description) {
+        lines.push("", example.description.trim());
+      }
       if (example.code) {
         lines.push("", "```tsx", example.code.trim(), "```");
         if (example.filename) {
@@ -118,34 +109,35 @@ export function buildComponentMarkdown({
     });
   }
 
-  if (api && api.length > 0) {
-    lines.push(
-      "",
-      "## API reference",
-      "",
-      "| Component | Prop | Type | Default | Description |",
-      "| --- | --- | --- | --- | --- |",
-    );
-    for (const row of api) {
-      lines.push(
-        `| ${[
-          row.component,
-          row.prop,
-          row.type,
-          row.defaultValue,
-          row.description,
-        ]
-          .map(cell)
-          .join(" | ")} |`,
-      );
+  if ((api && api.length > 0) || reactAriaDocsHref) {
+    lines.push("", "## API reference");
+    if (reactAriaDocsHref) {
+      lines.push("", `[React Aria props](${reactAriaDocsHref})`);
     }
-  } else if (reactAriaDocsHref) {
-    lines.push(
-      "",
-      "## API reference",
-      "",
-      `Props and behavior are inherited from [React Aria](${reactAriaDocsHref}).`,
-    );
+    if (api?.length) {
+      const groups = groupApiProps(api);
+      for (const { component, props } of groups) {
+        if (
+          groups.length > 1 ||
+          component.toLowerCase() !== slug.replaceAll("-", "")
+        ) {
+          lines.push("", `### ${component}`);
+        } else {
+          lines.push("");
+        }
+        for (const row of props) {
+          const defaultText =
+            row.defaultValue === "—"
+              ? ""
+              : row.defaultValue === "required"
+                ? "; required"
+                : `; default: \`${row.defaultValue}\``;
+          lines.push(
+            `- \`${row.prop}\` (\`${row.type}\`${defaultText}): ${row.description}`,
+          );
+        }
+      }
+    }
   }
 
   return `${lines.join("\n").trimEnd()}\n`;

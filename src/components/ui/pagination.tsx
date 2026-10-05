@@ -3,7 +3,7 @@ import { tv } from "tailwind-variants";
 import { cn } from "@/lib/utils";
 
 const paginationLinkStyles = tv({
-  base: "inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-lg px-3 text-sm font-medium text-foreground hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-safe:transition-[background-color,color,box-shadow,scale] motion-safe:duration-150 motion-safe:active:scale-[0.96]",
+  base: "inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-lg px-3 text-sm font-medium text-foreground hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-safe:transition-[background-color,color,box-shadow,scale] motion-safe:duration-150 motion-safe:active:scale-[0.96] aria-disabled:hover:bg-transparent aria-disabled:motion-safe:active:scale-100",
   variants: {
     isCurrent: {
       true: "bg-card text-primary shadow-[var(--shadow-card)] ring-1 ring-primary/25 hover:bg-card",
@@ -58,19 +58,33 @@ export interface PaginationLinkProps
   extends AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string;
   isCurrent?: boolean;
+  isDisabled?: boolean;
 }
 
 export function PaginationLink({
   isCurrent = false,
+  isDisabled = false,
   className,
+  href,
+  onClick,
   ...props
 }: PaginationLinkProps) {
   return (
     <a
       {...props}
+      href={isDisabled ? undefined : href}
       aria-current={isCurrent ? "page" : undefined}
+      aria-disabled={isDisabled || undefined}
+      tabIndex={isDisabled ? -1 : props.tabIndex}
+      onClick={isDisabled ? (event) => event.preventDefault() : onClick}
       data-slot="pagination-link"
-      className={paginationLinkStyles({ isCurrent, className })}
+      className={paginationLinkStyles({
+        isCurrent,
+        className: cn(
+          isDisabled && "cursor-default text-muted-foreground/60",
+          className,
+        ),
+      })}
     />
   );
 }

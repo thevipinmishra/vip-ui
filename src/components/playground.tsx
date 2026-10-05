@@ -41,7 +41,7 @@ export function Playground() {
       </div>
 
       <div className="flex min-h-[410px] sm:min-h-[465px]">
-        <aside className="flex w-14 shrink-0 flex-col items-center gap-1 border-r border-border bg-background/70 px-1.5 py-5 sm:w-44 sm:items-stretch sm:px-3">
+        <aside className="flex w-16 shrink-0 flex-col items-center gap-1 border-r border-border bg-background/70 px-1.5 py-5 sm:w-44 sm:items-stretch sm:px-3">
           <div className="mb-7 flex items-center justify-center gap-2 px-1 sm:justify-start sm:px-2">
             <span className="grid size-7 place-items-center rounded-[8px] bg-primary text-primary-foreground">
               <Sparkle size={15} aria-hidden="true" />
@@ -54,8 +54,9 @@ export function Playground() {
             Workspace
           </p>
           <Button
-            variant="nav"
-            size="nav"
+            variant="ghost"
+            size="sm"
+            className="w-full min-w-0 sm:justify-start"
             onPress={() => setView("overview")}
             aria-label="Show overview"
             aria-pressed={view === "overview"}
@@ -64,8 +65,9 @@ export function Playground() {
             <span className="hidden sm:inline">Overview</span>
           </Button>
           <Button
-            variant="nav"
-            size="nav"
+            variant="ghost"
+            size="sm"
+            className="w-full min-w-0 sm:justify-start"
             onPress={() => setView("tokens")}
             aria-label="Show tokens"
             aria-pressed={view === "tokens"}

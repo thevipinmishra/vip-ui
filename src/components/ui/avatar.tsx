@@ -63,7 +63,9 @@ export function AvatarGroup({
   ...props
 }: HTMLAttributes<HTMLDivElement>) {
   return (
+    // biome-ignore lint/a11y/useSemanticElements: Avatars are not form controls.
     <div
+      role="group"
       data-slot="avatar-group"
       className={cn(
         "flex items-center -space-x-2 rtl:space-x-reverse [&_[data-slot=avatar]]:ring-2 [&_[data-slot=avatar]]:ring-background",

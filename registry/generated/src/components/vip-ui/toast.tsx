@@ -61,7 +61,6 @@ export interface ToastMessage {
 }
 
 export const toastQueue = new ToastQueue<ToastMessage>({
-  maxVisibleToasts: 3,
   wrapUpdate(fn) {
     if (
       typeof document !== "undefined" &&
@@ -95,7 +94,7 @@ export function ToastViewport({
         aria-label="Notifications"
         className={composeRenderProps(className, (className) =>
           cn(
-            "fixed inset-x-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-50 flex flex-col-reverse gap-2 outline-none data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring sm:inset-x-auto sm:end-4 sm:w-96",
+            "fixed inset-x-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-50 flex max-h-[min(70dvh,32rem)] flex-col-reverse gap-2 overflow-y-auto overscroll-contain rounded-xl outline-none data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring sm:inset-x-auto sm:end-4 sm:w-96",
             className,
           ),
         )}
@@ -148,7 +147,7 @@ export function Toast({
       }))}
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex items-start gap-3 rounded-xl bg-popover p-4 text-popover-foreground shadow-[var(--shadow-float)] ring-1 ring-border/70 outline-none data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring [view-transition-class:vip-toast] forced-colors:border",
+          "flex shrink-0 items-start gap-3 rounded-xl bg-popover p-4 text-popover-foreground shadow-[var(--shadow-float)] ring-1 ring-border/70 outline-none data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring [view-transition-class:vip-toast] forced-colors:border",
           className,
         ),
       )}

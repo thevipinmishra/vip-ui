@@ -22,16 +22,6 @@ export default function SelectPage() {
     <ComponentPage
       name="Select"
       description={page.description}
-      descriptionLinks={[
-        {
-          label: "Jump to Invalid selection",
-          href: "#example-invalid-selection",
-        },
-        {
-          label: "Project status recipe",
-          href: "/examples#recipe-project-status",
-        },
-      ]}
       preview={<SelectDemo />}
       previewSourcePath={page.usage}
       examples={withExamplePreviews(page.examples, [

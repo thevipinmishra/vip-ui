@@ -1,8 +1,8 @@
 "use client";
 
-import { Save } from "reicon-react";
+import { InfoCircle } from "reicon-react";
 import { Button } from "@/components/ui/button";
-import { showToast, ToastViewport } from "@/components/ui/toast";
+import { showToast } from "@/components/ui/toast";
 
 export function ToastDemo() {
   return (
@@ -10,25 +10,16 @@ export function ToastDemo() {
       onPress={() =>
         showToast(
           {
-            title: "Draft saved",
-            description: "Studio North is ready for your next edit.",
-            variant: "success",
+            title: "Update available",
+            description: "A new version is ready to install.",
           },
           { timeout: 5000 },
         )
       }
     >
-      <Save size={16} aria-hidden="true" /> Save draft
+      <InfoCircle size={16} aria-hidden="true" /> Show notification
     </Button>
   );
 }
 
-// Put the viewport once near the app root. The docs page mounts it outside the previews.
-export function ToastExample() {
-  return (
-    <>
-      <ToastDemo />
-      <ToastViewport />
-    </>
-  );
-}
+// Mount <ToastViewport /> once in your app layout, outside the demos.

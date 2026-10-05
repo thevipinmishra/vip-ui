@@ -1,9 +1,4 @@
-/**
- * vip/ui-specific API tables and usage guidance shown under each component
- * page's API reference. Kept out of the page component so the Markdown routes
- * can build the same content.
- */
-
+/** vip/ui-specific props shared by component pages and their Markdown exports. */
 export interface ApiProp {
   component: string;
   prop: string;
@@ -12,64 +7,66 @@ export interface ApiProp {
   description: string;
 }
 
-function htmlPart(component: string, element: string): ApiProp {
-  return {
-    component,
-    prop: "HTML attributes",
-    type: `HTMLAttributes<${element}>`,
-    defaultValue: "—",
-    description: "Accepts children, className, and native HTML attributes.",
-  };
+export function groupApiProps(api: readonly ApiProp[]) {
+  const groups = new Map<string, ApiProp[]>();
+  for (const prop of api) {
+    const group = groups.get(prop.component);
+    if (group) group.push(prop);
+    else groups.set(prop.component, [prop]);
+  }
+  return Array.from(groups, ([component, props]) => ({ component, props }));
 }
 
 export const customComponentApi: Record<string, ApiProp[]> = {
-  "context-menu": [
-    {
-      component: "ContextMenuTrigger",
-      prop: "children",
-      type: "ReactNode",
-      defaultValue: "required",
-      description:
-        "Wrap a focusable React Aria trigger and either ContextMenu or the ContextMenuPopover/ContextMenuContent composition.",
-    },
-    {
-      component: "ContextMenuItem",
-      prop: "onAction / isDisabled",
-      type: "() => void / boolean",
-      defaultValue: "— / false",
-      description: "Run an action or keep an unavailable action visible.",
-    },
-  ],
   "combo-box": [
     {
       component: "ComboBox",
-      prop: "selectionMode",
-      type: '"single" | "multiple"',
-      defaultValue: '"single"',
-      description:
-        "Select one option or several options from the filtered list.",
+      prop: "options",
+      type: "ComboBoxOption[]",
+      defaultValue: "—",
+      description: "Options for the default list layout.",
     },
     {
       component: "ComboBox",
-      prop: "value / defaultValue / onValueChange",
-      type: "string / string / (key: string) => void",
+      prop: "label / description",
+      type: "string",
       defaultValue: "—",
-      description: "Convenience props for single selection.",
+      description: "Label and help text in the default layout.",
     },
     {
       component: "ComboBox",
-      prop: "value / defaultValue / onChange",
-      type: "Key[] / Key[] / (keys: Key[]) => void",
+      prop: "placeholder",
+      type: "string",
+      defaultValue: '"Search options"',
+      description: "Input placeholder in the default layout.",
+    },
+    {
+      component: "ComboBox",
+      prop: "value / defaultValue",
+      type: "string",
       defaultValue: "—",
-      description: "Use these React Aria props for multiple selection.",
+      description: "Selected option id in single-selection mode.",
+    },
+    {
+      component: "ComboBox",
+      prop: "onValueChange",
+      type: "(value: string) => void",
+      defaultValue: "—",
+      description: "Receives the selected id in single-selection mode.",
     },
     {
       component: "ComboBoxTags",
-      prop: "className / label / emptyText",
-      type: "string / string / string",
-      defaultValue: '— / "Selected options" / "No options selected."',
-      description:
-        "Show and remove selected options in multiple mode. Included in the default options layout; add it yourself in a custom composition.",
+      prop: "label",
+      type: "string",
+      defaultValue: '"Selected options"',
+      description: "Accessible name for the selected tags.",
+    },
+    {
+      component: "ComboBoxTags",
+      prop: "emptyText",
+      type: "string",
+      defaultValue: '"No options selected."',
+      description: "Text shown when no tags are selected.",
     },
   ],
   attachment: [
@@ -82,60 +79,96 @@ export const customComponentApi: Record<string, ApiProp[]> = {
     },
     {
       component: "Attachment",
-      prop: "name / size / previewUrl",
-      type: "string / number / string",
-      defaultValue: "required / — / —",
-      description:
-        "Display the filename, optional byte size, and an image preview URL supplied by the app.",
+      prop: "name",
+      type: "string",
+      defaultValue: "required",
+      description: "Filename shown in the row.",
     },
     {
       component: "Attachment",
-      prop: "status / progress / errorMessage",
-      type: '"ready" | "uploading" | "uploaded" | "error" / number / string',
-      defaultValue: '"ready" / — / —',
-      description:
-        "Show app-owned upload state and a progress bar for known or unknown progress.",
+      prop: "size",
+      type: "number",
+      defaultValue: "—",
+      description: "File size in bytes.",
     },
     {
       component: "Attachment",
-      prop: "onRemove / onRetry",
+      prop: "previewUrl",
+      type: "string",
+      defaultValue: "—",
+      description: "Image preview URL; otherwise shows a file icon.",
+    },
+    {
+      component: "Attachment",
+      prop: "status",
+      type: '"ready" | "uploading" | "uploaded" | "error"',
+      defaultValue: '"ready"',
+      description: "App-provided upload state.",
+    },
+    {
+      component: "Attachment",
+      prop: "progress",
+      type: "number",
+      defaultValue: "—",
+      description: "Upload percentage; omitted progress is indeterminate.",
+    },
+    {
+      component: "Attachment",
+      prop: "errorMessage",
+      type: "string",
+      defaultValue: '"Could not upload"',
+      description: "Message shown when status is error.",
+    },
+    {
+      component: "Attachment",
+      prop: "onRemove",
       type: "() => void",
       defaultValue: "—",
-      description:
-        "Supply the actions that remove a file or retry a failed upload.",
+      description: "Shows a remove button and handles its press.",
+    },
+    {
+      component: "Attachment",
+      prop: "onRetry",
+      type: "() => void",
+      defaultValue: "—",
+      description: "Shows a retry button when status is error.",
     },
   ],
   "native-select": [
     {
       component: "NativeSelect",
-      prop: "label / children",
-      type: "string / ReactNode",
+      prop: "label",
+      type: "string",
       defaultValue: "required",
-      description:
-        "Associate a visible label with native option or optgroup children.",
+      description: "Visible label for the select.",
     },
     {
       component: "NativeSelect",
-      prop: "description / error / isInvalid",
-      type: "string / string / boolean",
-      defaultValue: "— / — / false",
-      description:
-        "Connect help and validation text to the select via aria-describedby.",
-    },
-    {
-      component: "NativeSelect",
-      prop: "placeholder / containerClassName",
-      type: "string / string",
+      prop: "description / error",
+      type: "string",
       defaultValue: "—",
-      description: "Add an empty option or change the outer field layout.",
+      description: "Help and validation text linked to the select.",
     },
     {
       component: "NativeSelect",
-      prop: "select attributes",
-      type: 'ComponentProps<"select">',
+      prop: "isInvalid",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Marks the select invalid.",
+    },
+    {
+      component: "NativeSelect",
+      prop: "placeholder",
+      type: "string",
       defaultValue: "—",
-      description:
-        "Use value, defaultValue, onChange, required, disabled, and native form submission.",
+      description: "Adds an empty option.",
+    },
+    {
+      component: "NativeSelect",
+      prop: "containerClassName",
+      type: "string",
+      defaultValue: "—",
+      description: "Classes for the outer field layout.",
     },
   ],
   select: [
@@ -175,36 +208,61 @@ export const customComponentApi: Record<string, ApiProp[]> = {
   message: [
     {
       component: "Message",
-      prop: "sender / side",
-      type: 'string / "incoming" | "outgoing" | "system"',
-      defaultValue: 'required / "incoming"',
-      description: "Name the author and choose how the entry is aligned.",
+      prop: "sender",
+      type: "string",
+      defaultValue: "required",
+      description: "Author's name and default accessible label.",
     },
     {
       component: "Message",
-      prop: "avatar / timestamp / dateTime / status",
-      type: "ReactNode / string / string / string",
-      defaultValue: "—",
-      description:
-        "Show identity, a visible time, a machine-readable time, or delivery status.",
+      prop: "side",
+      type: '"incoming" | "outgoing" | "system"',
+      defaultValue: '"incoming"',
+      description: "Aligns and styles the message.",
     },
     {
       component: "Message",
-      prop: "children / actions",
+      prop: "avatar",
       type: "ReactNode",
-      defaultValue: "required / —",
-      description:
-        "Render plain or rich message content and optional independent actions.",
+      defaultValue: "—",
+      description: "Shown beside incoming messages.",
+    },
+    {
+      component: "Message",
+      prop: "timestamp / dateTime",
+      type: "string",
+      defaultValue: "—",
+      description: "Visible timestamp and its machine-readable value.",
+    },
+    {
+      component: "Message",
+      prop: "status",
+      type: "string",
+      defaultValue: "—",
+      description: "Delivery status shown below the message.",
+    },
+    {
+      component: "Message",
+      prop: "actions",
+      type: "ReactNode",
+      defaultValue: "—",
+      description: "Actions displayed below the message.",
     },
   ],
   "password-field": [
     {
       component: "PasswordField",
-      prop: "label / description / placeholder",
+      prop: "label",
       type: "string",
-      defaultValue: "label required",
-      description:
-        "Name the field and optionally give guidance near its input.",
+      defaultValue: "required",
+      description: "Visible label for the field.",
+    },
+    {
+      component: "PasswordField",
+      prop: "description / placeholder",
+      type: "string",
+      defaultValue: "—",
+      description: "Help text and input placeholder.",
     },
     {
       component: "PasswordField",
@@ -212,14 +270,6 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "string",
       defaultValue: '"current-password"',
       description: "Use new-password when creating a credential.",
-    },
-    {
-      component: "PasswordField",
-      prop: "TextField props",
-      type: "TextFieldProps",
-      defaultValue: "—",
-      description:
-        "Pass name, value, onChange, isRequired, minLength, isDisabled, and validation state through to TextField.",
     },
   ],
   "copy-button": [
@@ -234,17 +284,8 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       component: "CopyButton",
       prop: "children",
       type: "ReactNode | (status: CopyButtonStatus) => ReactNode",
-      defaultValue: "Copy / Copied / Retry with icons",
-      description:
-        "Render content for idle, copied, or failed. Omit for the default label and icon; size=icon shows just the icon.",
-    },
-    {
-      component: "CopyButton",
-      prop: "aria-label / Button props",
-      type: "string / ButtonProps",
-      defaultValue: '"Copy" / variant="outline", size="default"',
-      description:
-        "Name the copied value, especially for icon buttons. Use shared button variants and sizes, plus disabled and other Button props.",
+      defaultValue: "Copy / Copied / Retry",
+      description: "Custom content can render from the copy status.",
     },
   ],
   "button-group": [
@@ -253,30 +294,8 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "orientation",
       type: '"horizontal" | "vertical"',
       defaultValue: '"horizontal"',
-      description:
-        "Joins adjacent buttons in a row or column without changing their Tab order.",
+      description: "Joins buttons in a row or column.",
     },
-    {
-      component: "ButtonGroup",
-      prop: "aria-label / aria-labelledby",
-      type: "string",
-      defaultValue: "—",
-      description:
-        "Name the group when the purpose is not clear from nearby text.",
-    },
-  ],
-  timeline: [
-    htmlPart("Timeline", "HTMLOListElement"),
-    htmlPart("TimelineItem", "HTMLLIElement"),
-    htmlPart("TimelineTitle", "HTMLHeadingElement"),
-    {
-      component: "TimelineTime",
-      prop: "dateTime",
-      type: "string",
-      defaultValue: "—",
-      description: "Machine-readable date or time for a displayed timestamp.",
-    },
-    htmlPart("TimelineDescription", "HTMLParagraphElement"),
   ],
   "text-swap": [
     {
@@ -286,14 +305,6 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       defaultValue: "required",
       description:
         "The latest visible and accessible text; changes animate without an initial entrance.",
-    },
-    {
-      component: "TextSwap",
-      prop: "aria-live",
-      type: '"polite" | "assertive" | "off"',
-      defaultValue: "off",
-      description:
-        "Opt in to announcements when the updated label must be spoken.",
     },
   ],
   stepper: [
@@ -312,25 +323,6 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       defaultValue: "required",
       description: "Index of the current step; earlier steps show as complete.",
     },
-    {
-      component: "Stepper",
-      prop: "ol attributes",
-      type: 'ComponentProps<"ol">',
-      defaultValue: "—",
-      description:
-        "Name multiple sequences. Lists with over three steps can receive focus for keyboard scrolling when they overflow.",
-    },
-  ],
-  fieldset: [
-    {
-      component: "Fieldset",
-      prop: "fieldset attributes",
-      type: "FieldsetHTMLAttributes<HTMLFieldSetElement>",
-      defaultValue: "—",
-      description: "Native fieldset, including disabled and aria-describedby.",
-    },
-    htmlPart("FieldsetLegend", "HTMLLegendElement"),
-    htmlPart("FieldsetDescription", "HTMLParagraphElement"),
   ],
   "animated-number": [
     {
@@ -351,11 +343,17 @@ export const customComponentApi: Record<string, ApiProp[]> = {
     },
     {
       component: "AnimatedNumber",
-      prop: "locale / formatOptions",
-      type: "string / Intl.NumberFormatOptions",
-      defaultValue: '"en-US" / whole numbers',
-      description:
-        "Format both displayed and accessible values with Intl.NumberFormat.",
+      prop: "locale",
+      type: "string",
+      defaultValue: '"en-US"',
+      description: "Locale for displayed and accessible numbers.",
+    },
+    {
+      component: "AnimatedNumber",
+      prop: "formatOptions",
+      type: "Intl.NumberFormatOptions",
+      defaultValue: "{ maximumFractionDigits: 0 }",
+      description: "Formatting options for both number representations.",
     },
   ],
   "progress-ring": [
@@ -368,28 +366,33 @@ export const customComponentApi: Record<string, ApiProp[]> = {
     },
     {
       component: "ProgressRing",
-      prop: "value / isIndeterminate",
-      type: "number / boolean",
-      defaultValue: "0 / false",
-      description:
-        "Set a known value or show unknown progress. Supports minValue and maxValue.",
+      prop: "size",
+      type: '"sm" | "md" | "lg"',
+      defaultValue: '"md"',
+      description: "Diameter of the ring.",
     },
     {
       component: "ProgressRing",
-      prop: "size / showValue",
-      type: '"sm" | "md" | "lg" / boolean',
-      defaultValue: '"md" / true',
-      description: "Set the ring size and optionally hide the center value.",
+      prop: "showValue",
+      type: "boolean",
+      defaultValue: "true",
+      description: "Shows the value in the center of the ring.",
     },
   ],
   "presence-list": [
     {
       component: "PresenceList",
-      prop: "items / getKey",
-      type: "readonly T[] / (item: T) => string | number",
+      prop: "items",
+      type: "readonly T[]",
       defaultValue: "required",
-      description:
-        "Pass items with stable unique keys so exit animations track the right rows.",
+      description: "Items to render in the list.",
+    },
+    {
+      component: "PresenceList",
+      prop: "getKey",
+      type: "(item: T) => string | number",
+      defaultValue: "required",
+      description: "Stable unique key for each item and its exit animation.",
     },
     {
       component: "PresenceList",
@@ -400,30 +403,6 @@ export const customComponentApi: Record<string, ApiProp[]> = {
     },
   ],
   "input-group": [
-    {
-      component: "InputGroup",
-      prop: "isDisabled / isInvalid",
-      type: "boolean",
-      defaultValue: "from parent field",
-      description:
-        "React Aria Group picks up disabled and invalid states from TextField or TextArea. Its border also responds to focus within.",
-    },
-    {
-      component: "InputGroupInput",
-      prop: "Input props",
-      type: "ComponentProps<typeof Input>",
-      defaultValue: "—",
-      description:
-        "A single-line React Aria input. Use inside InputGroup within a labeled TextField.",
-    },
-    {
-      component: "InputGroupTextArea",
-      prop: "TextArea props",
-      type: "ComponentProps<typeof TextArea>",
-      defaultValue: "—",
-      description:
-        "A multiline React Aria input. Use inside InputGroup within a labeled TextArea.",
-    },
     {
       component: "InputGroupAddon",
       prop: "align",
@@ -436,11 +415,17 @@ export const customComponentApi: Record<string, ApiProp[]> = {
   "command-palette": [
     {
       component: "CommandPalette",
-      prop: "isOpen / onOpenChange",
-      type: "boolean / (open: boolean) => void",
+      prop: "isOpen",
+      type: "boolean",
       defaultValue: "required",
-      description:
-        "Control visibility. Escape and outside press close the dialog.",
+      description: "Controls the dialog's visibility.",
+    },
+    {
+      component: "CommandPalette",
+      prop: "onOpenChange",
+      type: "(open: boolean) => void",
+      defaultValue: "required",
+      description: "Receives requests to open or close the dialog.",
     },
     {
       component: "CommandPalette",
@@ -452,33 +437,38 @@ export const customComponentApi: Record<string, ApiProp[]> = {
     },
     {
       component: "CommandPalette",
-      prop: "title / placeholder / emptyMessage",
+      prop: "title",
       type: "string",
-      defaultValue: "built-in labels",
-      description:
-        "Name the dialog, search input, and empty results for the task.",
+      defaultValue: '"Commands"',
+      description: "Accessible dialog name.",
     },
     {
-      component: "CommandPaletteItem",
-      prop: "onAction / textValue",
-      type: "MenuItemProps",
-      defaultValue: "—",
-      description:
-        "Run an action on selection; provide textValue when the content is not plain text.",
+      component: "CommandPalette",
+      prop: "placeholder",
+      type: "string",
+      defaultValue: '"Search commands"',
+      description: "Search input placeholder and label.",
+    },
+    {
+      component: "CommandPalette",
+      prop: "emptyMessage",
+      type: "string",
+      defaultValue: '"No matching commands."',
+      description: "Text shown when search has no results.",
     },
   ],
   button: [
     {
       component: "Button",
       prop: "variant",
-      type: '"default" | "secondary" | "outline" | "ghost" | "destructive" | "nav"',
+      type: '"default" | "secondary" | "outline" | "ghost" | "destructive"',
       defaultValue: '"default"',
       description: "Choose the action's visual priority.",
     },
     {
       component: "Button",
       prop: "size",
-      type: '"default" | "sm" | "lg" | "icon" | "nav"',
+      type: '"default" | "sm" | "lg" | "icon"',
       defaultValue: '"default"',
       description:
         "Set the button's height and padding. Name icon-only buttons with aria-label.",
@@ -501,19 +491,13 @@ export const customComponentApi: Record<string, ApiProp[]> = {
     },
   ],
   card: [
-    htmlPart("Card", "HTMLDivElement"),
-    htmlPart("CardHeader", "HTMLDivElement"),
-    htmlPart("CardTitle", "HTMLHeadingElement"),
     {
       component: "CardTitle",
       prop: "as",
       type: '"h2" | "h3" | "h4"',
       defaultValue: '"h3"',
-      description: "Match the card heading to the surrounding page hierarchy.",
+      description: "Heading level for the card title.",
     },
-    htmlPart("CardDescription", "HTMLParagraphElement"),
-    htmlPart("CardContent", "HTMLDivElement"),
-    htmlPart("CardFooter", "HTMLDivElement"),
   ],
   avatar: [
     {
@@ -537,15 +521,6 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       defaultValue: "derived from name",
       description: "Overrides the displayed initials.",
     },
-    htmlPart("Avatar", "HTMLSpanElement"),
-    htmlPart("AvatarGroup", "HTMLDivElement"),
-  ],
-  skeleton: [
-    {
-      ...htmlPart("Skeleton", "HTMLDivElement"),
-      description:
-        "Decorative placeholder. Put a loading label on the surrounding status container.",
-    },
   ],
   spinner: [
     {
@@ -553,8 +528,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "variant",
       type: '"orbit" | "ring" | "pulse" | "dots" | "bars" | "spark" | "segments"',
       defaultValue: '"orbit"',
-      description:
-        "Choose a pattern to fit the context: compact controls, waiting screens, or AI activity.",
+      description: "Selects the indicator animation.",
     },
     {
       component: "Spinner",
@@ -571,69 +545,32 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       description:
         "Hide the indicator from assistive technology when adjacent text already reports progress.",
     },
-    {
-      component: "Spinner",
-      prop: "aria-label",
-      type: "string",
-      defaultValue: '"Loading"',
-      description: "Name the status when the spinner stands alone.",
-    },
-  ],
-  "empty-state": [
-    htmlPart("EmptyState", "HTMLDivElement"),
-    htmlPart("EmptyStateIcon", "HTMLDivElement"),
-    htmlPart("EmptyStateTitle", "HTMLHeadingElement"),
-    htmlPart("EmptyStateDescription", "HTMLParagraphElement"),
-    htmlPart("EmptyStateActions", "HTMLDivElement"),
   ],
   pagination: [
-    {
-      ...htmlPart("Pagination", "HTMLElement"),
-      description:
-        "Navigation landmark; set aria-label when there are multiple paginations.",
-    },
-    htmlPart("PaginationList", "HTMLOListElement"),
-    htmlPart("PaginationItem", "HTMLLIElement"),
-    {
-      component: "PaginationLink",
-      prop: "href",
-      type: "string",
-      defaultValue: "required",
-      description:
-        "URL of the destination page; use real URLs for reload and keyboard navigation.",
-    },
     {
       component: "PaginationLink",
       prop: "isCurrent",
       type: "boolean",
       defaultValue: "false",
-      description:
-        "Marks the current link with aria-current=page and a visible background.",
+      description: "Marks the current page with aria-current=page.",
     },
     {
-      ...htmlPart("PaginationLink", "HTMLAnchorElement"),
+      component: "PaginationLink",
+      prop: "isDisabled",
+      type: "boolean",
+      defaultValue: "false",
       description:
-        "Accepts standard anchor attributes, including aria-label and className.",
+        "Keeps the link in place but removes navigation when unavailable.",
     },
+  ],
+  timeline: [
     {
-      ...htmlPart("PaginationEllipsis", "HTMLSpanElement"),
-      description: "Noninteractive marker for omitted pages.",
+      component: "TimelineItem",
+      prop: "status",
+      type: '"latest" | "complete"',
+      defaultValue: '"complete"',
+      description: "Marks the newest event separately from earlier events.",
     },
-  ],
-  "description-list": [
-    htmlPart("DescriptionList", "HTMLDListElement"),
-    htmlPart("DescriptionTerm", "HTMLElement"),
-    htmlPart("DescriptionDetail", "HTMLElement"),
-  ],
-  "kbd-code": [
-    htmlPart("Kbd", "HTMLElement"),
-    htmlPart("InlineCode", "HTMLElement"),
-  ],
-  stat: [
-    htmlPart("Stat", "HTMLDivElement"),
-    htmlPart("StatLabel", "HTMLParagraphElement"),
-    htmlPart("StatValue", "HTMLParagraphElement"),
-    htmlPart("StatDetail", "HTMLParagraphElement"),
   ],
   accordion: [
     {
@@ -669,46 +606,8 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       description:
         "Content of the alert; used as the description when title is set.",
     },
-    {
-      component: "Alert",
-      prop: "HTML div attributes",
-      type: 'Omit<HTMLAttributes<HTMLDivElement>, "title">',
-      defaultValue: "—",
-      description:
-        "Standard div attributes, including className and aria-* attributes.",
-    },
-    {
-      component: "AlertIcon",
-      prop: "className",
-      type: "string",
-      defaultValue: "undefined",
-      description: "Additional classes for the decorative variant icon.",
-    },
-    {
-      component: "AlertTitle",
-      prop: "HTML heading attributes",
-      type: "HTMLAttributes<HTMLHeadingElement>",
-      defaultValue: "—",
-      description: "Heading content and h3 attributes, including className.",
-    },
-    {
-      component: "AlertDescription",
-      prop: "HTML div attributes",
-      type: "HTMLAttributes<HTMLDivElement>",
-      defaultValue: "—",
-      description:
-        "Description content and div attributes, including className.",
-    },
   ],
   dialog: [
-    {
-      component: "DialogContent",
-      prop: "role",
-      type: '"dialog" | "alertdialog"',
-      defaultValue: '"dialog"',
-      description:
-        "Alert dialogs require an explicit action and do not close on outside press.",
-    },
     {
       component: "DialogContent",
       prop: "overlayProps",
@@ -719,22 +618,20 @@ export const customComponentApi: Record<string, ApiProp[]> = {
     },
     {
       component: "DialogClose",
-      prop: "variant / size / aria-label",
+      prop: "children",
+      type: "ReactNode",
+      defaultValue: "close icon",
+      description: "Replace the default icon with a labeled close action.",
+    },
+    {
+      component: "DialogClose",
+      prop: "variant / size",
       type: "ButtonProps",
-      defaultValue: '"ghost" / "icon" (without children) / "Close dialog"',
-      description:
-        "Uses the shared Button and closes the enclosing dialog. Pass children for a labeled action instead of the default close icon.",
+      defaultValue: '"ghost" / "icon"',
+      description: "Button appearance; labeled children use the default size.",
     },
   ],
   drawer: [
-    {
-      component: "Drawer",
-      prop: "isOpen / defaultOpen / onOpenChange",
-      type: "DialogTriggerProps",
-      defaultValue: "false",
-      description:
-        "Control the drawer or let the trigger manage open state. Escape and outside press request closure.",
-    },
     {
       component: "DrawerContent",
       prop: "placement",
@@ -753,11 +650,18 @@ export const customComponentApi: Record<string, ApiProp[]> = {
     },
     {
       component: "DrawerContent",
-      prop: "snapPoint / defaultSnapPoint / onSnapPointChange",
-      type: "number / number / (point: number) => void",
+      prop: "snapPoint / defaultSnapPoint",
+      type: "number",
       defaultValue: "first snap point",
       description:
-        "Control or observe the bottom drawer height. Values outside the list resolve to the closest point.",
+        "Bottom drawer height as a controlled or initial snap point.",
+    },
+    {
+      component: "DrawerContent",
+      prop: "onSnapPointChange",
+      type: "(point: number) => void",
+      defaultValue: "—",
+      description: "Receives the new bottom drawer snap point.",
     },
     {
       component: "DrawerContent",
@@ -766,14 +670,6 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       defaultValue: "isDismissable: true",
       description:
         "Pass React Aria overlay options such as isDismissable and isKeyboardDismissDisabled.",
-    },
-    {
-      component: "DrawerHandle",
-      prop: "keyboard",
-      type: "Up / Down / Home / End",
-      defaultValue: "—",
-      description:
-        "On bottom drawers, arrows move between snap points, Home expands, and End closes. Escape works anywhere inside the dialog.",
     },
     {
       component: "DrawerClose",
@@ -798,21 +694,6 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "boolean",
       defaultValue: "false",
       description: "Adds a BadgeDot before the content.",
-    },
-    {
-      component: "Badge",
-      prop: "HTML span attributes",
-      type: "HTMLAttributes<HTMLSpanElement>",
-      defaultValue: "—",
-      description: "Badge text, className, and standard span attributes.",
-    },
-    {
-      component: "BadgeDot",
-      prop: "HTML span attributes",
-      type: "HTMLAttributes<HTMLSpanElement>",
-      defaultValue: "—",
-      description:
-        "Additional attributes for the decorative dot, including className.",
     },
   ],
   checkbox: [
@@ -975,8 +856,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "label",
       type: "string",
       defaultValue: "—",
-      description:
-        "Renders a visible label beside the bar. Use isIndeterminate when the remaining amount is unknown.",
+      description: "Visible label beside the bar.",
     },
   ],
   "number-field": [
@@ -1046,29 +926,42 @@ export const customComponentApi: Record<string, ApiProp[]> = {
     },
     {
       component: "RadioGroup",
-      prop: "value / onValueChange",
-      type: "string / (value: string) => void",
+      prop: "onValueChange",
+      type: "(value: string) => void",
       defaultValue: "—",
       description:
-        "String convenience for selectedKey / onSelectionChange. Use React Aria's props when values are not strings.",
+        "Receives the selected value. React Aria's onChange also runs.",
     },
     {
       component: "Radio",
-      prop: "label / description / variant",
-      type: 'string / string / "default" | "card"',
-      defaultValue: '— / — / "default"',
-      description:
-        'Renders the radio label and supporting text. variant="card" adds the selectable card surface.',
+      prop: "label / description",
+      type: "string",
+      defaultValue: "—",
+      description: "Text for the default radio layout.",
+    },
+    {
+      component: "Radio",
+      prop: "variant",
+      type: '"default" | "card"',
+      defaultValue: '"default"',
+      description: "Selects the plain or card appearance.",
     },
   ],
   toast: [
     {
       component: "showToast",
-      prop: "message / options",
-      type: "ToastMessage / ToastOptions",
+      prop: "message",
+      type: "ToastMessage",
+      defaultValue: "required",
+      description: "Title and optional description for the toast.",
+    },
+    {
+      component: "showToast",
+      prop: "options",
+      type: "ToastOptions",
       defaultValue: "—",
       description:
-        'Queues a toast with the given title, optional description and variant ("info" | "success" | "warning"), and an optional timeout; timeouts under 5 seconds are raised to 5000 ms.',
+        "Optional timeout and onClose callback. Timeouts under 5 seconds become 5000 ms; omit timeout for a persistent toast.",
     },
   ],
   "toggle-button": [
@@ -1091,72 +984,4 @@ export const customComponentApi: Record<string, ApiProp[]> = {
         "Convenience props for the token input's label, supporting text, and placeholder. Keep a label or supply aria-label.",
     },
   ],
-};
-
-export const customGuidance: Record<string, string> = {
-  "context-menu":
-    "Keep the trigger focusable and give it a primary action for ordinary presses. React Aria opens the context menu from right-click, touch long press, and platform keyboard shortcuts, and restores focus when it closes. Use Menu for actions opened by an ordinary button press. ContextMenu reuses Menu's styles and parts.",
-  "combo-box":
-    "Use selectionMode=multiple for several choices. In this mode value, defaultValue, and onChange use an array of keys; the single-select value and onValueChange convenience props remain unchanged. The default layout includes removable tags. If you compose children yourself, include ComboBoxTags after the input. Keep a visible label or provide aria-label.",
-  attachment:
-    "Attachment displays files but does not select, validate, or upload them. Combine it with FileTrigger or DropZone. Keep File objects, preview URLs, upload requests, and progress in your app; revoke preview URLs after removal and on unmount. Restore focus before removing a focused attachment action.",
-  "native-select":
-    "NativeSelect uses a real HTML select, including the operating system's picker on touch devices. Add option or optgroup children; use Select when options need descriptions or custom content. Keep a placeholder option empty so required validation can reject it.",
-  message:
-    "Use Message for a conversation entry, not an entire chat app. Provide a sender and optional visible timestamp or delivery status. Actions must remain visible on touch; add PresenceList to animate new entries, and use a labeled log for a live conversation. Keep the composer as an application composition of TextArea and Button.",
-  "password-field":
-    "Use current-password for sign-in and new-password for creation. The reveal control stays separately focusable and never changes the field value. Keep validation next to the field, and do not log or display submitted credentials.",
-  "copy-button":
-    "CopyButton writes value only after a press. Its default content shows Copy, Copied, or Retry; pass a status-rendered child for custom content or size=icon for an icon-only action. Keep the source value readable so a user can select it when clipboard access is unavailable.",
-  "button-group":
-    "Place independent actions in ButtonGroup, such as a Save button followed by a MenuTrigger with an icon Button. Use a ghost variant for joined edges, and name both the group and icon action. Each button stays in the normal Tab order; use Toggle button group for persistent selection or Toolbar for arrow-key navigation.",
-  dialog:
-    'Dialogs attach to the bottom edge and slide in on narrow screens, without a drag handle or snap points. Use Drawer when people need to drag or resize the panel. Ordinary dialogs close on outside press or Escape. Use role="alertdialog" for confirmations that must ignore outside press; provide a visible Cancel or confirm action. Escape remains available. Set overlayProps.isDismissable=false to disable outside press on an ordinary dialog.',
-  timeline:
-    "Put events in chronological or reverse-chronological order. Use a real time element with dateTime for timestamps and keep descriptions optional. Timeline is a plain ordered list, not a keyboard-managed control.",
-  "text-swap":
-    "Use TextSwap for short labels that change after an action. Its accessible text switches immediately; the outgoing visual text is hidden from screen readers. Set aria-live=polite only when the update needs announcing, not for constantly changing values.",
-  stepper:
-    "Pass a zero-based currentStep within the steps array. The ordered list marks the active item with aria-current=step and earlier items as complete. It shows progress but does not navigate: place real Button controls beside it if people can move through the workflow.",
-  fieldset:
-    "Use Fieldset for related native form controls and put FieldsetLegend first. Connect FieldsetDescription with aria-describedby. For a single React Aria selection group, use Radio group or Checkbox group instead; they already own their labels and keyboard behavior.",
-  "animated-number":
-    'Use AnimatedNumber for values that change after an action, not for a constantly updating timer. The default counts toward the new value; variant="slide" moves changed digits up for increases and down for decreases. Reduced motion shows the final value without movement. Its accessible text changes once per value change; add a live region only if the change needs to be announced.',
-  accordion:
-    'Use variant="divided" to place a single divider between rows without a card around each item. The trigger keeps its expanded cue, keyboard focus, and panel relationship in both variants.',
-  "progress-ring":
-    "Pass a visible label and use value for known progress. Use isIndeterminate when the amount remaining is unknown; the reduced-motion version keeps a static partial arc. For a long valueLabel, set showValue to false and display the detail nearby. Use Meter for a measurement rather than task progress.",
-  "presence-list":
-    "Use stable keys from your data, not array indexes. The component renders a plain ul; use Grid list or List box for keyboard-managed collections. Exiting rows become inert. If a removed row contains the focused control, move focus to a remaining control before removing it.",
-  "input-group":
-    "Use InputGroup inside TextField or TextArea, with a visible field label. React Aria keeps the label, description, error, and value attached to the input. The group supplies the shared border; it does not submit the form or disable independent buttons. Give icon-only actions an accessible name and mark decorative icons aria-hidden.",
-  button:
-    "Button and ButtonLink share the typed buttonStyles recipe in button-styles.tsx. Add a reusable variant or size there; use className for one-off layout changes, not a second button color or radius.",
-  "checkbox-group":
-    "Pass label and description for the ready-made layout, or compose CheckboxGroupLabel, CheckboxGroupItems, CheckboxGroupDescription, and CheckboxGroupError as children. Keep a visible label or supply aria-label.",
-  "token-field":
-    "TagFieldValue turns text into tokens when you type a comma or paste a newline. Wire onSubmit to value.commit() if Enter should add a tag. Compose TokenFieldLabel, TokenFieldInput, and TokenFieldDescription as children when you need a custom layout; keep a label or supply aria-label. Use TokenFieldValue for free-form text or extend it for a different syntax. The field does not upload or submit tags by itself.",
-  tree: "Give each item a stable id and a text title for typeahead. Folders and files have default icons; pass icon or content to customize the row without using children, which holds nested items. React Aria manages expansion, keyboard navigation, and selection; use Tree for nested data and List box for a flat collection.",
-  "drop-zone":
-    "Restrict supported formats with getDropOperation and validate the files again in onDrop. Add FileTrigger for people who cannot drag files. Dropping a file does not upload it.",
-  "color-picker":
-    "Use value and onChange for a controlled picker, or defaultValue for an uncontrolled one. The swatch, color area, hue slider, and hex field share one React Aria color value.",
-  "command-palette":
-    "Mount one shortcut-enabled palette per page. Pass MenuItem actions as children; CommandPaletteItem uses the shared menu styles and closes the palette after an action. Escape and outside press dismiss it.",
-  card: "Use Card to group one topic. Keep actions inside the card rather than making the entire card clickable when it contains other controls.",
-  avatar:
-    "Always pass a person's name. If the image is missing or fails, initials appear while assistive technology still reads the full name.",
-  skeleton:
-    "Match the space and shape of the content that will replace it. Skeleton is decorative; put a loading message in a stable status container and remove it when content arrives.",
-  spinner:
-    "Use ring or segments for small controls, dots or bars for inline activity, orbit or pulse for longer waits, and spark for AI responses. Set decorative when visible text already names the task; otherwise give the spinner a specific aria-label. Reduced motion keeps every variant visible without movement. Use Progress bar for measurable work.",
-  "empty-state":
-    "Say what is missing and give an action that resolves it when possible. The icon is decorative; the title and description carry the message.",
-  pagination:
-    "Link to actual page URLs and derive isCurrent from the active page. Omit Previous or Next at the ends. Use Ellipsis only when pages really have been omitted.",
-  "description-list":
-    "Keep each DescriptionTerm immediately before its DescriptionDetail so screen readers can associate labels and values. Use a table for comparable rows of records.",
-  "kbd-code":
-    "Use Kbd for a physical key and InlineCode for identifiers or short commands. Explain shortcuts in prose and adjust modifier names for the platform when needed.",
-  stat: "Give each value a label and timeframe or denominator when it matters. Spell out changes in StatDetail instead of using color or arrows alone.",
 };

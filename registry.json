@@ -48,16 +48,6 @@
           "path": "registry/generated/src/components/vip-ui/alert.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/alert.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-link.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-link.tsx"
         }
       ]
     },
@@ -66,7 +56,7 @@
       "type": "registry:ui",
       "title": "Animated Number",
       "description": "Animate a changing value while keeping its accessible text stable.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": ["motion", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -77,21 +67,6 @@
           "path": "registry/generated/src/components/vip-ui/animated-number.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/animated-number.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/stat.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/stat.tsx"
         }
       ]
     },
@@ -131,16 +106,6 @@
           "path": "registry/generated/src/components/vip-ui/attachment.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/attachment.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/drop-zone.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/drop-zone.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/file-trigger.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/file-trigger.tsx"
         }
       ]
     },
@@ -149,37 +114,12 @@
       "type": "registry:ui",
       "title": "Autocomplete",
       "description": "Find suggestions as you type in a text field.",
-      "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
-      ],
+      "dependencies": ["react-aria-components"],
       "files": [
-        {
-          "path": "registry/generated/src/components/vip-ui/utils.ts",
-          "type": "registry:file",
-          "target": "@components/vip-ui/utils.ts"
-        },
         {
           "path": "registry/generated/src/components/vip-ui/autocomplete.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/autocomplete.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/list-box.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/list-box.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/field-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/search-field.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/search-field.tsx"
         }
       ]
     },
@@ -207,7 +147,7 @@
       "type": "registry:ui",
       "title": "Badge",
       "description": "Label an item with short status or metadata.",
-      "dependencies": ["reicon-react", "tailwind-variants"],
+      "dependencies": ["tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -249,12 +189,7 @@
       "type": "registry:ui",
       "title": "Button Group",
       "description": "Group related actions without turning them into a selection control.",
-      "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
-      ],
+      "dependencies": ["tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -265,26 +200,6 @@
           "path": "registry/generated/src/components/vip-ui/button-group.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/button-group.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/popover.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/popover.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/menu.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/menu.tsx"
         }
       ]
     },
@@ -326,18 +241,8 @@
       "type": "registry:ui",
       "title": "Button",
       "description": "Trigger an action with primary, secondary, or destructive emphasis.",
-      "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
-      ],
+      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
       "files": [
-        {
-          "path": "registry/generated/src/components/vip-ui/utils.ts",
-          "type": "registry:file",
-          "target": "@components/vip-ui/utils.ts"
-        },
         {
           "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
           "type": "registry:file",
@@ -347,31 +252,6 @@
           "path": "registry/generated/src/components/vip-ui/button.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/button.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/badge.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/badge.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/card.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/card.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-group.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-group.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/popover.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/popover.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/menu.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/menu.tsx"
         }
       ]
     },
@@ -381,7 +261,6 @@
       "title": "Calendar",
       "description": "Choose a date in a keyboard-accessible calendar.",
       "dependencies": [
-        "@internationalized/date",
         "motion",
         "react-aria-components",
         "reicon-react",
@@ -415,12 +294,7 @@
       "type": "registry:ui",
       "title": "Card",
       "description": "Group related content, actions, and metadata.",
-      "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
-      ],
+      "dependencies": ["tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -431,21 +305,6 @@
           "path": "registry/generated/src/components/vip-ui/card.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/card.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/badge.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/badge.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
         }
       ]
     },
@@ -473,12 +332,7 @@
       "type": "registry:ui",
       "title": "Checkbox Group",
       "description": "Select any number of related options in a form.",
-      "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
-      ],
+      "dependencies": ["react-aria-components", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -489,11 +343,6 @@
           "path": "registry/generated/src/components/vip-ui/checkbox-group.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/checkbox-group.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/checkbox.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/checkbox.tsx"
         }
       ]
     },
@@ -518,11 +367,6 @@
           "path": "registry/generated/src/components/vip-ui/checkbox.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/checkbox.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/checkbox-group.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/checkbox-group.tsx"
         }
       ]
     },
@@ -658,11 +502,6 @@
           "path": "registry/generated/src/components/vip-ui/color-swatch.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/color-swatch.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/color-swatch-picker.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/color-swatch-picker.tsx"
         }
       ]
     },
@@ -805,16 +644,6 @@
           "path": "registry/generated/src/components/vip-ui/context-menu.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/context-menu.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
         }
       ]
     },
@@ -857,11 +686,7 @@
       "type": "registry:ui",
       "title": "Date Field",
       "description": "Enter a date one editable segment at a time.",
-      "dependencies": [
-        "@internationalized/date",
-        "react-aria-components",
-        "tailwind-variants"
-      ],
+      "dependencies": ["react-aria-components", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -891,7 +716,6 @@
       "title": "Date Picker",
       "description": "Choose a single date from a field and calendar.",
       "dependencies": [
-        "@internationalized/date",
         "motion",
         "react-aria-components",
         "reicon-react",
@@ -946,7 +770,6 @@
       "title": "Date Range Picker",
       "description": "Choose a start and end date from a field and calendar.",
       "dependencies": [
-        "@internationalized/date",
         "motion",
         "react-aria-components",
         "reicon-react",
@@ -1132,26 +955,6 @@
           "path": "registry/generated/src/components/vip-ui/drawer.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/drawer.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/checkbox.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/checkbox.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/checkbox-group.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/checkbox-group.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/field-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/text-area.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/text-area.tsx"
         }
       ]
     },
@@ -1160,7 +963,7 @@
       "type": "registry:ui",
       "title": "Drop Zone",
       "description": "Accept files by drag and drop or file picker.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": ["react-aria-components", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1171,21 +974,6 @@
           "path": "registry/generated/src/components/vip-ui/drop-zone.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/drop-zone.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/file-trigger.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/file-trigger.tsx"
         }
       ]
     },
@@ -1194,7 +982,7 @@
       "type": "registry:ui",
       "title": "Empty State",
       "description": "Explain why a collection is empty and what to do next.",
-      "dependencies": ["reicon-react", "tailwind-variants"],
+      "dependencies": ["tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1205,16 +993,6 @@
           "path": "registry/generated/src/components/vip-ui/empty-state.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/empty-state.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-link.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-link.tsx"
         }
       ]
     },
@@ -1237,12 +1015,7 @@
       "type": "registry:ui",
       "title": "Fieldset",
       "description": "Group related native form controls under a legend.",
-      "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
-      ],
+      "dependencies": ["tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1253,11 +1026,6 @@
           "path": "registry/generated/src/components/vip-ui/fieldset.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/fieldset.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/checkbox.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/checkbox.tsx"
         }
       ]
     },
@@ -1290,7 +1058,7 @@
       "type": "registry:ui",
       "title": "Form",
       "description": "Group fields and handle form validation.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": ["react-aria-components", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1301,26 +1069,6 @@
           "path": "registry/generated/src/components/vip-ui/form.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/form.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/field-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/text-field.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/text-field.tsx"
         }
       ]
     },
@@ -1348,12 +1096,7 @@
       "type": "registry:ui",
       "title": "Input Group",
       "description": "Combine an input with a prefix, suffix, or action.",
-      "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
-      ],
+      "dependencies": ["react-aria-components", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1364,36 +1107,6 @@
           "path": "registry/generated/src/components/vip-ui/input-group.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/input-group.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/field-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/text-field.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/text-field.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/form.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/form.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/text-area.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/text-area.tsx"
         }
       ]
     },
@@ -1480,16 +1193,6 @@
           "path": "registry/generated/src/components/vip-ui/menu.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/menu.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
         }
       ]
     },
@@ -1498,12 +1201,7 @@
       "type": "registry:ui",
       "title": "Message",
       "description": "Display an entry in a conversation.",
-      "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
-      ],
+      "dependencies": ["tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1514,41 +1212,6 @@
           "path": "registry/generated/src/components/vip-ui/message.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/message.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/avatar.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/avatar.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/copy-button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/copy-button.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/presence-list.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/presence-list.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/field-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/text-area.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/text-area.tsx"
         }
       ]
     },
@@ -1568,11 +1231,6 @@
           "path": "registry/generated/src/components/vip-ui/meter.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/meter.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/slider.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/slider.tsx"
         }
       ]
     },
@@ -1581,12 +1239,7 @@
       "type": "registry:ui",
       "title": "Native Select",
       "description": "Choose an option with the device's native select menu.",
-      "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
-      ],
+      "dependencies": ["reicon-react", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1602,21 +1255,6 @@
           "path": "registry/generated/src/components/vip-ui/native-select.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/native-select.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/form.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/form.tsx"
         }
       ]
     },
@@ -1651,21 +1289,6 @@
           "path": "registry/generated/src/components/vip-ui/number-field.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/number-field.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/badge.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/badge.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
         }
       ]
     },
@@ -1734,11 +1357,6 @@
           "path": "registry/generated/src/components/vip-ui/password-field.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/password-field.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/form.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/form.tsx"
         }
       ]
     },
@@ -1758,16 +1376,6 @@
           "path": "registry/generated/src/components/vip-ui/popover.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/popover.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
         }
       ]
     },
@@ -1776,7 +1384,7 @@
       "type": "registry:ui",
       "title": "Presence List",
       "description": "Animate additions and removals in a semantic list.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": ["motion", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1787,16 +1395,6 @@
           "path": "registry/generated/src/components/vip-ui/presence-list.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/presence-list.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
         }
       ]
     },
@@ -1819,37 +1417,12 @@
       "type": "registry:ui",
       "title": "Preview Trigger",
       "description": "Open a preview without leaving the current context.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": ["react-aria-components"],
       "files": [
-        {
-          "path": "registry/generated/src/components/vip-ui/utils.ts",
-          "type": "registry:file",
-          "target": "@components/vip-ui/utils.ts"
-        },
         {
           "path": "registry/generated/src/components/vip-ui/preview-trigger.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/preview-trigger.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-link.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-link.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/popover.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/popover.tsx"
         }
       ]
     },
@@ -1858,12 +1431,7 @@
       "type": "registry:ui",
       "title": "Progress Bar",
       "description": "Show progress for a task with a known completion point.",
-      "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
-      ],
+      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1874,21 +1442,6 @@
           "path": "registry/generated/src/components/vip-ui/progress-bar.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/progress-bar.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/badge.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/badge.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
         }
       ]
     },
@@ -1908,16 +1461,6 @@
           "path": "registry/generated/src/components/vip-ui/progress-ring.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/progress-ring.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
         }
       ]
     },
@@ -1946,7 +1489,6 @@
       "title": "Range Calendar",
       "description": "Select a start and end date in a calendar.",
       "dependencies": [
-        "@internationalized/date",
         "motion",
         "react-aria-components",
         "reicon-react",
@@ -2005,11 +1547,6 @@
           "path": "registry/generated/src/components/vip-ui/search-field.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/search-field.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/badge.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/badge.tsx"
         }
       ]
     },
@@ -2109,22 +1646,12 @@
       "type": "registry:ui",
       "title": "Spinner",
       "description": "Indicate that a task is running without a known end time.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": ["motion", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/spinner.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/spinner.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
         }
       ]
     },
@@ -2152,12 +1679,7 @@
       "type": "registry:ui",
       "title": "Stepper",
       "description": "Show the current stage of a multi-step process.",
-      "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
-      ],
+      "dependencies": ["motion", "reicon-react", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2168,16 +1690,6 @@
           "path": "registry/generated/src/components/vip-ui/stepper.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/stepper.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
         }
       ]
     },
@@ -2205,12 +1717,7 @@
       "type": "registry:ui",
       "title": "Table",
       "description": "Present rows and columns with sortable headers.",
-      "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
-      ],
+      "dependencies": ["react-aria-components", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2221,36 +1728,6 @@
           "path": "registry/generated/src/components/vip-ui/table.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/table.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/badge.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/badge.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/field-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/search-field.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/search-field.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/popover.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/popover.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/press-button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/press-button.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/select.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/select.tsx"
         }
       ]
     },
@@ -2259,12 +1736,7 @@
       "type": "registry:ui",
       "title": "Tabs",
       "description": "Switch between related content panels.",
-      "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
-      ],
+      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2275,11 +1747,6 @@
           "path": "registry/generated/src/components/vip-ui/tabs.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/tabs.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/badge.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/badge.tsx"
         }
       ]
     },
@@ -2317,7 +1784,7 @@
       "type": "registry:ui",
       "title": "Text Area",
       "description": "Enter a longer answer with a labeled field.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": ["react-aria-components", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2333,21 +1800,6 @@
           "path": "registry/generated/src/components/vip-ui/text-area.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/text-area.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/form.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/form.tsx"
         }
       ]
     },
@@ -2380,7 +1832,7 @@
       "type": "registry:ui",
       "title": "Text Swap",
       "description": "Transition short changing labels without duplicating accessible text.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": ["motion", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2391,21 +1843,6 @@
           "path": "registry/generated/src/components/vip-ui/text-swap.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/text-swap.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/badge.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/badge.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
         }
       ]
     },
@@ -2414,11 +1851,7 @@
       "type": "registry:ui",
       "title": "Time Field",
       "description": "Enter a time one editable segment at a time.",
-      "dependencies": [
-        "@internationalized/date",
-        "react-aria-components",
-        "tailwind-variants"
-      ],
+      "dependencies": ["react-aria-components", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2447,7 +1880,7 @@
       "type": "registry:ui",
       "title": "Timeline",
       "description": "Show dated events in a semantic sequence.",
-      "dependencies": ["tailwind-variants"],
+      "dependencies": ["reicon-react", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2467,7 +1900,6 @@
       "title": "Toast",
       "description": "Show feedback after an action without interrupting the page.",
       "dependencies": [
-        "motion",
         "react-aria-components",
         "react-dom",
         "reicon-react",
@@ -2483,21 +1915,6 @@
           "path": "registry/generated/src/components/vip-ui/toast.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/toast.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/badge.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/badge.tsx"
         }
       ]
     },
@@ -2506,12 +1923,7 @@
       "type": "registry:ui",
       "title": "Toggle Button Group",
       "description": "Choose one or more persistent actions in a group.",
-      "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
-      ],
+      "dependencies": ["react-aria-components", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2522,11 +1934,6 @@
           "path": "registry/generated/src/components/vip-ui/toggle-button-group.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/toggle-button-group.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/toggle-button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/toggle-button.tsx"
         }
       ]
     },
@@ -2535,32 +1942,12 @@
       "type": "registry:ui",
       "title": "Toggle Button",
       "description": "Turn a persistent action on or off.",
-      "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
-      ],
+      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
       "files": [
-        {
-          "path": "registry/generated/src/components/vip-ui/utils.ts",
-          "type": "registry:file",
-          "target": "@components/vip-ui/utils.ts"
-        },
         {
           "path": "registry/generated/src/components/vip-ui/toggle-button.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/toggle-button.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/toggle-button-group.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/toggle-button-group.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/badge.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/badge.tsx"
         }
       ]
     },
@@ -2588,12 +1975,7 @@
       "type": "registry:ui",
       "title": "Toolbar",
       "description": "Group related actions with arrow-key navigation.",
-      "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
-      ],
+      "dependencies": ["react-aria-components", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2604,31 +1986,6 @@
           "path": "registry/generated/src/components/vip-ui/toolbar.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/toolbar.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/toggle-button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/toggle-button.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/toggle-button-group.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/toggle-button-group.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/separator.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/separator.tsx"
         }
       ]
     },
@@ -2637,12 +1994,7 @@
       "type": "registry:ui",
       "title": "Tooltip",
       "description": "Show short supplementary help on hover or focus.",
-      "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
-      ],
+      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2653,21 +2005,6 @@
           "path": "registry/generated/src/components/vip-ui/tooltip.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/tooltip.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/badge.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/badge.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
         }
       ]
     },
@@ -2759,16 +2096,6 @@
           "target": "@components/vip-ui/card.tsx"
         },
         {
-          "path": "registry/generated/src/components/vip-ui/badge.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/badge.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
-        },
-        {
           "path": "registry/generated/src/components/vip-ui/stat.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/stat.tsx"
@@ -2799,24 +2126,19 @@
           "target": "src/app/examples/business/subscriptions/page.tsx"
         },
         {
-          "path": "registry/generated/src/components/vip-ui/button-group.tsx",
+          "path": "registry/generated/src/components/vip-ui/button.tsx",
           "type": "registry:file",
-          "target": "@components/vip-ui/button-group.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/popover.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/popover.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/menu.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/menu.tsx"
+          "target": "@components/vip-ui/button.tsx"
         },
         {
           "path": "registry/generated/src/app/examples/business/theme-toggle.tsx",
           "type": "registry:file",
           "target": "src/app/examples/business/theme-toggle.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/badge.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/badge.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/form.tsx",
@@ -2829,14 +2151,14 @@
           "target": "@components/vip-ui/field-styles.tsx"
         },
         {
-          "path": "registry/generated/src/components/vip-ui/text-field.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/text-field.tsx"
-        },
-        {
           "path": "registry/generated/src/components/vip-ui/search-field.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/search-field.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/popover.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/popover.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/press-button.tsx",
@@ -2884,11 +2206,6 @@
           "target": "src/app/examples/chat/page.tsx"
         },
         {
-          "path": "registry/generated/src/components/vip-ui/utils.ts",
-          "type": "registry:file",
-          "target": "@components/vip-ui/utils.ts"
-        },
-        {
           "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/button-styles.tsx"
@@ -2899,39 +2216,24 @@
           "target": "@components/vip-ui/button.tsx"
         },
         {
-          "path": "registry/generated/src/components/vip-ui/badge.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/badge.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/card.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/card.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-group.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-group.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/popover.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/popover.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/menu.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/menu.tsx"
-        },
-        {
           "path": "registry/generated/src/app/examples/chat/theme-toggle.tsx",
           "type": "registry:file",
           "target": "src/app/examples/chat/theme-toggle.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/avatar.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/avatar.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/card.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/card.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
@@ -2949,11 +2251,6 @@
           "target": "@components/vip-ui/text-area.tsx"
         },
         {
-          "path": "registry/generated/src/components/vip-ui/form.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/form.tsx"
-        },
-        {
           "path": "registry/generated/src/app/examples/chat/workspace.tsx",
           "type": "registry:file",
           "target": "src/app/examples/chat/workspace.tsx"
@@ -2966,7 +2263,6 @@
       "title": "repository example",
       "description": "A Next.js App Router repository example built with vip/ui.",
       "dependencies": [
-        "@internationalized/date",
         "motion",
         "react-aria-components",
         "reicon-react",
@@ -3030,26 +2326,6 @@
           "target": "@components/vip-ui/button.tsx"
         },
         {
-          "path": "registry/generated/src/components/vip-ui/card.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/card.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-group.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-group.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/popover.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/popover.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/menu.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/menu.tsx"
-        },
-        {
           "path": "registry/generated/src/components/vip-ui/calendar.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/calendar.tsx"
@@ -3063,6 +2339,11 @@
           "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/popover.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/popover.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/date-picker.tsx",
@@ -3108,6 +2389,11 @@
           "path": "registry/generated/src/app/examples/repository/navigation.tsx",
           "type": "registry:file",
           "target": "src/app/examples/repository/navigation.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/card.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/card.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/stat.tsx",
@@ -3195,11 +2481,6 @@
           "target": "src/app/examples/studio/page.tsx"
         },
         {
-          "path": "registry/generated/src/components/vip-ui/utils.ts",
-          "type": "registry:file",
-          "target": "@components/vip-ui/utils.ts"
-        },
-        {
           "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/button-styles.tsx"
@@ -3210,34 +2491,19 @@
           "target": "@components/vip-ui/button.tsx"
         },
         {
-          "path": "registry/generated/src/components/vip-ui/badge.tsx",
+          "path": "registry/generated/src/app/examples/studio/theme-toggle.tsx",
           "type": "registry:file",
-          "target": "@components/vip-ui/badge.tsx"
+          "target": "src/app/examples/studio/theme-toggle.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
         },
         {
           "path": "registry/generated/src/components/vip-ui/card.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/card.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-group.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-group.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/popover.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/popover.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/menu.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/menu.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/studio/theme-toggle.tsx",
-          "type": "registry:file",
-          "target": "src/app/examples/studio/theme-toggle.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
@@ -3253,6 +2519,11 @@
           "path": "registry/generated/src/components/vip-ui/color-swatch.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/color-swatch.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/popover.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/popover.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/color-picker.tsx",
@@ -3273,6 +2544,11 @@
           "path": "registry/generated/src/components/vip-ui/kbd-code.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/kbd-code.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/menu.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/menu.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/search-field.tsx",

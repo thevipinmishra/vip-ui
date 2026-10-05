@@ -9,7 +9,7 @@ export function ButtonSizesDemo() {
       <Button size="sm">Small</Button>
       <Button>Default</Button>
       <Button size="lg">Large</Button>
-      <Button size="icon" variant="outline" aria-label="Add member">
+      <Button size="icon" variant="outline" aria-label="Add">
         <Plus size={17} aria-hidden="true" />
       </Button>
     </div>
