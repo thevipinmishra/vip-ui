@@ -7,7 +7,15 @@ import {
   useReducedMotion,
 } from "motion/react";
 import type { ComponentProps, ReactNode } from "react";
-import { FileText, Warning, X } from "reicon-react";
+import {
+  CodeFile,
+  FilePdf,
+  FileText,
+  FileZip,
+  Image,
+  Warning,
+  X,
+} from "reicon-react";
 import { cn } from "./utils";
 import { Button } from "./button";
 import { ProgressBar } from "./progress-bar";
@@ -74,6 +82,19 @@ export function Attachment({
 }: AttachmentProps) {
   const reduceMotion = useReducedMotion() === true;
   const isPresent = useIsPresent();
+  const extension = name.split(".").pop()?.toLowerCase();
+  const FileIcon =
+    extension === "pdf"
+      ? FilePdf
+      : extension === "zip"
+        ? FileZip
+        : ["png", "jpg", "jpeg", "gif", "webp", "svg"].includes(extension ?? "")
+          ? Image
+          : ["js", "jsx", "ts", "tsx", "json", "html", "css"].includes(
+                extension ?? "",
+              )
+            ? CodeFile
+            : FileText;
   const statusText =
     status === "uploading"
       ? "Uploading"
@@ -110,7 +131,7 @@ export function Attachment({
           // biome-ignore lint/performance/noImgElement: Files can be object URLs in any React app.
           <img src={previewUrl} alt="" className="size-full object-cover" />
         ) : (
-          <FileText size={20} aria-hidden="true" />
+          <FileIcon size={20} aria-hidden="true" />
         )}
       </span>
       <div className="min-w-0 flex-1">

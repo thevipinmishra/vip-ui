@@ -21,12 +21,6 @@ export default function DialogPage() {
     <ComponentPage
       name="Dialog"
       description={page.description}
-      descriptionLinks={[
-        {
-          label: "Jump to Alert dialog",
-          href: "#example-alert-dialog",
-        },
-      ]}
       preview={<DialogDemo />}
       previewSourcePath={page.usage}
       examples={withExamplePreviews(page.examples, [

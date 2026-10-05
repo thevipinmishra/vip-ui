@@ -432,8 +432,8 @@ const catalog: CatalogDefinition[] = [
 ];
 
 /**
- * Components that wrap a React Aria component and inherit its props and
- * behavior. The URL appears in every page's API reference section.
+ * React Aria APIs for inherited props on wrappers and their composed parts.
+ * The URL appears in the component's API reference.
  */
 const reactAriaDocs: Record<string, string> = {
   button: "https://react-aria.adobe.com/Button",
@@ -444,6 +444,8 @@ const reactAriaDocs: Record<string, string> = {
   "toggle-button-group": "https://react-aria.adobe.com/ToggleButtonGroup",
   toolbar: "https://react-aria.adobe.com/Toolbar",
   "file-trigger": "https://react-aria.adobe.com/FileTrigger",
+  "copy-button": "https://react-aria.adobe.com/Button",
+  "command-palette": "https://react-aria.adobe.com/Menu",
   "text-field": "https://react-aria.adobe.com/TextField",
   "password-field": "https://react-aria.adobe.com/TextField",
   "input-group": "https://react-aria.adobe.com/Group",
@@ -474,6 +476,7 @@ const reactAriaDocs: Record<string, string> = {
   accordion: "https://react-aria.adobe.com/DisclosureGroup",
   disclosure: "https://react-aria.adobe.com/Disclosure",
   dialog: "https://react-aria.adobe.com/Modal",
+  drawer: "https://react-aria.adobe.com/Modal",
   popover: "https://react-aria.adobe.com/Popover",
   tooltip: "https://react-aria.adobe.com/Tooltip",
   toast: "https://react-aria.adobe.com/Toast",

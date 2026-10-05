@@ -37,9 +37,9 @@ export function Stepper({
       <ol
         {...props}
         data-slot="stepper"
-        tabIndex={props.tabIndex ?? (steps.length > 3 ? 0 : undefined)}
+        tabIndex={props.tabIndex ?? (steps.length > 0 ? 0 : undefined)}
         className={cn(
-          "flex w-full max-w-full overflow-x-auto px-1 py-1 outline-none data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring",
+          "flex w-full max-w-full overflow-x-auto rounded-xl px-1 py-2 outline-none data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring",
           className,
         )}
       >
@@ -54,16 +54,18 @@ export function Stepper({
                 active ? "current" : completed ? "complete" : "upcoming"
               }
               aria-current={active ? "step" : undefined}
-              className="min-w-16 flex-1"
+              className="min-w-28 flex-1"
             >
               <div className="flex items-center gap-2.5">
                 <span
                   aria-hidden="true"
                   className={cn(
-                    "relative grid size-8 shrink-0 place-items-center rounded-full border text-xs font-semibold tabular-nums",
-                    active || completed
-                      ? "border-primary bg-primary text-primary-foreground"
-                      : "border-border bg-secondary text-muted-foreground",
+                    "relative grid size-9 shrink-0 place-items-center rounded-full border text-xs font-semibold tabular-nums",
+                    active
+                      ? "border-primary bg-accent text-primary"
+                      : completed
+                        ? "border-primary bg-primary text-primary-foreground"
+                        : "border-border bg-secondary text-muted-foreground",
                   )}
                 >
                   {active && (
@@ -71,7 +73,7 @@ export function Stepper({
                       layoutId="stepper-current"
                       initial={false}
                       transition={transition}
-                      className="pointer-events-none absolute -inset-1 rounded-full ring-2 ring-primary/25"
+                      className="pointer-events-none absolute -inset-1 rounded-full ring-2 ring-primary/35"
                     />
                   )}
                   <AnimatePresence initial={false}>
@@ -95,7 +97,7 @@ export function Stepper({
                 {index < steps.length - 1 && (
                   <span
                     aria-hidden="true"
-                    className="relative h-0.5 min-w-5 flex-1 overflow-hidden rounded-full bg-border"
+                    className="relative h-0.5 min-w-6 flex-1 overflow-hidden rounded-full bg-border"
                   >
                     <motion.span
                       className="absolute inset-0 origin-left rounded-full bg-primary"
@@ -110,9 +112,11 @@ export function Stepper({
                 <span
                   className={cn(
                     "block text-sm font-medium leading-5",
-                    active || completed
-                      ? "text-foreground"
-                      : "text-muted-foreground",
+                    active
+                      ? "text-primary"
+                      : completed
+                        ? "text-foreground"
+                        : "text-muted-foreground",
                   )}
                 >
                   {completed && <span className="sr-only">Completed: </span>}

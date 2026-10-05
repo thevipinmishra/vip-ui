@@ -10,17 +10,16 @@ export const buttonStyles = tv({
         "bg-secondary text-secondary-foreground hover:bg-border/70 pressed:bg-border/70",
       outline:
         "border border-border bg-card text-foreground shadow-[var(--shadow-card)] hover:bg-muted pressed:bg-muted",
-      ghost: "text-foreground hover:bg-muted pressed:bg-muted",
+      ghost:
+        "text-foreground hover:bg-muted pressed:bg-muted aria-[pressed=true]:bg-accent aria-[pressed=true]:text-accent-foreground aria-[pressed=true]:hover:bg-accent",
       destructive:
         "bg-destructive text-background shadow-[var(--shadow-card)] hover:bg-destructive/90 pressed:bg-destructive/90",
-      nav: "text-foreground hover:bg-muted aria-[pressed=true]:bg-accent aria-[pressed=true]:text-accent-foreground aria-[pressed=true]:hover:bg-accent",
     },
     size: {
       default: "h-11 px-5 text-sm",
       sm: "h-9 px-3.5 text-sm",
       lg: "h-12 px-6 text-sm",
       icon: "size-11 cursor-pointer p-0",
-      nav: "h-9 w-full justify-center px-0 text-xs sm:justify-start sm:px-2.5",
     },
   },
   defaultVariants: { variant: "default", size: "default" },

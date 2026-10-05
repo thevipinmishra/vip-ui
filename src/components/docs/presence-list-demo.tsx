@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ArrowUp, Check, Plus } from "reicon-react";
 import { Button } from "@/components/ui/button";
 import { PresenceList } from "@/components/ui/presence-list";
 
@@ -14,6 +15,7 @@ const backlog = [
 export function PresenceListDemo() {
   const [items, setItems] = useState(backlog.slice(0, 2));
   const [nextIndex, setNextIndex] = useState(2);
+  const [message, setMessage] = useState("Reorder or update the list.");
   return (
     <div className="grid w-full max-w-sm gap-4">
       <PresenceList
@@ -39,9 +41,12 @@ export function PresenceListDemo() {
           variant="secondary"
           size="sm"
           isDisabled={items.length === 0}
-          onPress={() => setItems((current) => current.slice(1))}
+          onPress={() => {
+            setMessage(`${items[0].title} completed.`);
+            setItems((current) => current.slice(1));
+          }}
         >
-          Complete first
+          <Check size={16} aria-hidden="true" /> Complete first
         </Button>
         <Button
           variant="secondary"
@@ -50,24 +55,29 @@ export function PresenceListDemo() {
           onPress={() => {
             setItems((current) => [...current, backlog[nextIndex]]);
             setNextIndex((current) => current + 1);
+            setMessage(`${backlog[nextIndex].title} added.`);
           }}
         >
-          Add task
+          <Plus size={16} aria-hidden="true" /> Add task
         </Button>
         <Button
           variant="outline"
           size="sm"
           isDisabled={items.length < 2}
-          onPress={() =>
+          onPress={() => {
             setItems((current) => [
               current[current.length - 1],
               ...current.slice(0, -1),
-            ])
-          }
+            ]);
+            setMessage("Last task moved to the top.");
+          }}
         >
-          Move last to top
+          <ArrowUp size={16} aria-hidden="true" /> Move last to top
         </Button>
       </div>
+      <output aria-live="polite" className="text-xs text-muted-foreground">
+        {message}
+      </output>
     </div>
   );
 }

@@ -11,29 +11,25 @@ import {
 } from "@/components/ui/menu";
 
 export function MenuDemo() {
-  const [action, setAction] = useState("Choose a project action.");
+  const [reviewed, setReviewed] = useState(false);
 
   return (
-    <div className="flex w-full max-w-sm flex-col items-start gap-4">
+    <div className="flex flex-col items-start gap-3">
       <MenuTrigger>
-        <Button variant="outline">Project actions</Button>
+        <Button variant="outline">Open menu</Button>
         <MenuPopover>
-          <MenuContent>
-            <MenuItem onAction={() => setAction("Opened Studio North.")}>
-              Open project
-            </MenuItem>
-            <MenuItem onAction={() => setAction("Duplicated Studio North.")}>
-              Duplicate project
-            </MenuItem>
+          <MenuContent aria-label="Component links and actions">
+            <MenuItem href="/components/avatar">Avatar docs</MenuItem>
+            <MenuItem href="/components/attachment">Attachment docs</MenuItem>
             <MenuSeparator />
-            <MenuItem onAction={() => setAction("Archived Studio North.")}>
-              Archive project
+            <MenuItem onAction={() => setReviewed((value) => !value)}>
+              {reviewed ? "Mark as unread" : "Mark as reviewed"}
             </MenuItem>
           </MenuContent>
         </MenuPopover>
       </MenuTrigger>
-      <output className="block w-full rounded-lg bg-card px-4 py-3 text-[13px] text-muted-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70">
-        {action}
+      <output className="text-sm text-muted-foreground">
+        {reviewed ? "Reviewed" : "Not reviewed"}
       </output>
     </div>
   );

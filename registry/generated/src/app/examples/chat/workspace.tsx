@@ -254,8 +254,9 @@ export function ChatWorkspace() {
                 {filtered.map((conversation) => (
                   <li key={conversation.id}>
                     <Button
-                      variant="nav"
-                      size="nav"
+                      variant="ghost"
+                      size="sm"
+                      className="w-full min-w-0 justify-start"
                       aria-pressed={activeId === conversation.id}
                       onPress={() => selectChat(conversation.id)}
                     >

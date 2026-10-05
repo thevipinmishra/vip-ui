@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Pin } from "reicon-react";
+import { Pin, PinOff } from "reicon-react";
 import { Badge } from "@/components/ui/badge";
 import { ToggleButton } from "@/components/ui/toggle-button";
 
@@ -46,7 +46,11 @@ export function ToggleButtonProjectsDemo() {
               }
               aria-label={`${pinned.has(project.id) ? "Unpin" : "Pin"} ${project.name}`}
             >
-              <Pin size={16} aria-hidden="true" />
+              {pinned.has(project.id) ? (
+                <Pin size={16} aria-hidden="true" />
+              ) : (
+                <PinOff size={16} aria-hidden="true" />
+              )}
               <span className="hidden sm:inline">
                 {pinned.has(project.id) ? "Unpin" : "Pin"}
               </span>

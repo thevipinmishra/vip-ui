@@ -2,24 +2,33 @@ import { Avatar, AvatarGroup } from "@/components/ui/avatar";
 
 export function AvatarDemo() {
   return (
-    <div className="flex w-full max-w-sm items-center justify-between gap-4 rounded-xl bg-card p-5 ring-1 ring-border/70">
-      <div className="min-w-0">
-        <p className="text-sm font-semibold">Autumn campaign</p>
-        <p className="mt-1 text-xs text-muted-foreground">
-          3 reviewers assigned
-        </p>
-      </div>
-      <AvatarGroup aria-label="Reviewers: Amina Shah, Maya Chen, Leo Park">
-        <Avatar
-          name="Amina Shah"
-          className="bg-primary text-primary-foreground"
-        />
+    <div className="flex flex-wrap items-center gap-8">
+      <div className="grid gap-2 text-center">
         <Avatar name="Maya Chen" initials="MC" />
-        <Avatar
-          name="Leo Park"
-          className="bg-success-subtle text-success-foreground"
-        />
-      </AvatarGroup>
+        <span className="text-xs text-muted-foreground">Initials</span>
+      </div>
+      <div className="grid gap-2 text-center">
+        <Avatar name="Amina Shah" />
+        <span className="text-xs text-muted-foreground">
+          Automatic initials
+        </span>
+      </div>
+      <div className="grid gap-2 text-center">
+        <AvatarGroup aria-label="Reviewers: Maya Chen, Amina Shah, Leo Park">
+          <Avatar name="Maya Chen" initials="MC" />
+          <Avatar
+            name="Amina Shah"
+            initials="AS"
+            className="bg-primary text-primary-foreground"
+          />
+          <Avatar
+            name="Leo Park"
+            initials="LP"
+            className="bg-success-subtle text-success-foreground"
+          />
+        </AvatarGroup>
+        <span className="text-xs text-muted-foreground">Group</span>
+      </div>
     </div>
   );
 }

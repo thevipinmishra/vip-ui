@@ -7,7 +7,6 @@ const uiDirectory = path.join(root, "src/components/ui");
 const outputDirectory = path.join(root, "public/r");
 const sourceDirectory = path.join(root, "registry/generated");
 const utilsSource = await readFile(path.join(root, "src/lib/utils.ts"), "utf8");
-const demoDirectory = path.join(root, "src/components/docs");
 const descriptions = {
   accordion: "Reveal one or more sections of related content.",
   alert: "Show information, success, warning, or error messages.",
@@ -101,16 +100,6 @@ const descriptions = {
   tooltip: "Show short supplementary help on hover or focus.",
   tree: "Browse and select items in a nested collection.",
 };
-const demos = new Map(
-  await Promise.all(
-    (await readdir(demoDirectory))
-      .filter((file) => file.endsWith("-demo.tsx"))
-      .map(async (file) => [
-        file,
-        await readFile(path.join(demoDirectory, file), "utf8"),
-      ]),
-  ),
-);
 export function portableSource(source) {
   // React Aria exposes these states as data attributes on its elements.
   // Unlike the site's shorthand variants, these work without a Tailwind plugin.
@@ -179,24 +168,7 @@ export function createItem(name, sources) {
     });
   }
   visit(name);
-  for (const [filename, demo] of demos) {
-    if (
-      filename !== `${name}-demo.tsx` &&
-      !(filename.startsWith(`${name}-`) && filename.endsWith("-demo.tsx"))
-    )
-      continue;
-    for (const specifier of importsFrom(demo)) {
-      if (specifier.startsWith("@/components/ui/")) {
-        visit(specifier.slice("@/components/ui/".length));
-      } else if (specifier === "react" || specifier.startsWith("next/")) {
-        // Application dependencies, not part of the copyable component.
-      } else if (!specifier.startsWith("@/") && !specifier.startsWith(".")) {
-        dependencies.add(packageName(specifier));
-      }
-    }
-  }
-  // The frame is renderer-agnostic, but its documented examples need Charts.
-  // Keep the install dependency even when no chart demo file is registered.
+  // ChartFrame styles TanStack Charts; install the renderer with the frame.
   if (name === "chart") dependencies.add("@tanstack/charts");
   if (needsUtils) {
     for (const specifier of importsFrom(utilsSource))

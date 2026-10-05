@@ -57,7 +57,7 @@ export function ThemeStudio({
 
   return (
     <div className="grid min-w-0 gap-10 lg:grid-cols-[13rem_minmax(0,1fr)] lg:items-start lg:gap-14">
-      <aside className="grid min-w-0 content-start gap-7 lg:sticky lg:top-[7.5rem]">
+      <aside className="grid min-w-0 content-start gap-7 lg:sticky lg:top-6">
         <div className="grid gap-3">
           <p
             id={themeLabelId}

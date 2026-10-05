@@ -8,14 +8,17 @@ import {
 
 export function TimelineDemo() {
   return (
-    <Timeline aria-label="Project activity" className="max-w-md">
-      <TimelineItem>
+    <Timeline
+      aria-label="Project activity"
+      className="max-w-md rounded-xl border border-border bg-card p-5 shadow-[var(--shadow-card)] sm:p-6"
+    >
+      <TimelineItem status="latest">
         <TimelineTitle>Design approved</TimelineTitle>
         <TimelineTime dateTime="2025-10-18T14:30:00Z">
           October 18, 2:30 PM UTC
         </TimelineTime>
         <TimelineDescription>
-          The team approved the final layouts for the release.
+          Final layouts approved for the release.
         </TimelineDescription>
       </TimelineItem>
       <TimelineItem>
@@ -24,7 +27,7 @@ export function TimelineDemo() {
           October 17, 9:00 AM UTC
         </TimelineTime>
         <TimelineDescription>
-          Updated navigation and focus states after review.
+          Navigation and keyboard focus states updated.
         </TimelineDescription>
       </TimelineItem>
       <TimelineItem>

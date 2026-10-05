@@ -154,16 +154,8 @@ export default async function InstallationPage() {
           )}
           <p>
             Import from the installed folder. If you use a custom components
-            alias, adjust the path to match your project.
-          </p>
-          <p>
-            Items are demo-inclusive: a component item also includes the vip/ui
-            files its documentation examples import. Button, for example,
-            installs eight files because its page shows Badge, Card, Button
-            group, Popover, and Menu states alongside the button itself. The
-            component file still works on its own; delete example-only files you
-            do not use, or review the list on the component page before running
-            the command.
+            alias, adjust the path to match your project. To copy a demo,
+            install any other vip/ui components and packages it imports.
           </p>
         </div>
         <div className="mt-5">

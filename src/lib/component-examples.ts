@@ -12,7 +12,8 @@
 
 export interface ComponentExampleMetadata {
   title: string;
-  description: string;
+  /** Essential facts not already clear from the title and source. */
+  description?: string;
   /** Demo file name in `src/components/docs/`. */
   sourcePath: string;
   /** Extra setup the example needs beyond the page's install list. */
@@ -22,7 +23,7 @@ export interface ComponentExampleMetadata {
 export interface ComponentPageData {
   /** Usage/preview source file name in `src/components/docs/`. */
   usage: string;
-  /** Page description shown under the heading and in the Markdown export. */
+  /** Core-component summary for the preview and Markdown export. */
   description: string;
   examples: readonly ComponentExampleMetadata[];
 }
@@ -30,26 +31,15 @@ export interface ComponentPageData {
 export const componentPageData = {
   button: {
     usage: "button-basic-demo.tsx",
-    description:
-      "An action with clear priority: default for the primary action, outline or ghost for lower-priority ones, and destructive only for actions that remove data. Keep a completed button disabled so its result stays visible; see Project actions below for the full publish, revision, and archive flow.",
+    description: "Triggers an action.",
     examples: [
       {
         title: "Variants",
-        description:
-          "Choose a variant to match the action's priority. Use destructive for actions that remove data.",
         sourcePath: "button-variants-demo.tsx",
       },
       {
         title: "Sizes",
-        description:
-          "Use size for placement. Give an icon-only button an accessible name.",
         sourcePath: "button-sizes-demo.tsx",
-      },
-      {
-        title: "Project actions",
-        description:
-          "Publish a draft, save another revision, or archive it. The status and revision update in the project card.",
-        sourcePath: "button-demo.tsx",
       },
     ],
   },
@@ -181,9 +171,9 @@ export const componentPageData = {
     description: "Displays an image or initials for a person.",
     examples: [
       {
-        title: "Assigned reviewers",
+        title: "Fallbacks and groups",
         description:
-          "Group named fallbacks when several people own the same review.",
+          "Provide initials when no image is available. Avatar also derives initials from the name.",
         sourcePath: "avatar-demo.tsx",
       },
     ],
@@ -347,7 +337,7 @@ export const componentPageData = {
       {
         title: "Grouped actions",
         description:
-          "Compose the popover and menu when you need separators or disabled actions. The trigger keeps the same keyboard and touch behavior.",
+          "Use a separator to group actions and isDisabled to leave an unavailable option visible.",
         sourcePath: "context-menu-grouped-demo.tsx",
       },
     ],
@@ -492,9 +482,9 @@ export const componentPageData = {
     description: "Groups fields and handles validation and submission.",
     examples: [
       {
-        title: "Custom validation",
+        title: "Validation and field states",
         description:
-          "Try submitting an empty or short workspace name. The field reports its error before submission.",
+          "Use validate for errors, isReadOnly to keep a value selectable, and isDisabled to prevent input.",
         sourcePath: "form-validation-demo.tsx",
       },
     ],
@@ -564,7 +554,7 @@ export const componentPageData = {
       {
         title: "Nested menu",
         description:
-          "Group related actions under a submenu. Open Share with using the pointer or Right Arrow; Left Arrow returns to the parent.",
+          "Use href on a MenuItem for links, including links inside submenus.",
         sourcePath: "menu-nested-demo.tsx",
       },
       {
@@ -637,7 +627,7 @@ export const componentPageData = {
       {
         title: "URL-synced pages",
         description:
-          "Keep the current page in the URL so reloads and browser history work, and update the visible rows as the page changes.",
+          "Keep the page in the URL. Keep Previous and Next in place when unavailable to avoid layout shifts.",
         sourcePath: "pagination-demo.tsx",
       },
     ],
@@ -672,9 +662,9 @@ export const componentPageData = {
     description: "Displays a list with animated item additions and removals.",
     examples: [
       {
-        title: "Release checklist",
+        title: "Adding and reordering",
         description:
-          "Keep stable task keys while adding and completing rows so each exit follows the right item.",
+          "Use stable keys so entering, leaving, and reordered rows keep their identity.",
         sourcePath: "presence-list-demo.tsx",
       },
     ],
@@ -884,9 +874,9 @@ export const componentPageData = {
     description: "A field for entering multiline text.",
     examples: [
       {
-        title: "Review thread",
+        title: "Field states",
         description:
-          "Add a note to a project review with a character limit. The new note appears with the existing discussion.",
+          "Use isInvalid with TextAreaError for errors, isReadOnly for selectable text, and isDisabled to prevent input.",
         sourcePath: "text-area-demo.tsx",
       },
     ],
@@ -896,9 +886,9 @@ export const componentPageData = {
     description: "A field for entering a single line of text.",
     examples: [
       {
-        title: "Live project name",
+        title: "Field states",
         description:
-          "The project list reflects the value as it changes, including an empty-name fallback.",
+          "Use isInvalid with TextFieldError for errors, isReadOnly for selectable text, and isDisabled to prevent input.",
         sourcePath: "text-field-demo.tsx",
       },
     ],
@@ -923,9 +913,9 @@ export const componentPageData = {
     description: "Displays a brief notification.",
     examples: [
       {
-        title: "Upload notifications",
+        title: "Notification types",
         description:
-          "Start, complete, or pause an upload to compare notification states. Mount ToastViewport once for the page.",
+          "Call showToast each time you need a notification. Leave important warnings open until dismissed; mount ToastViewport once near the app root.",
         sourcePath: "toast-status-demo.tsx",
       },
     ],

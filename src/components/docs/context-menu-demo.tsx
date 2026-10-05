@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { FilePdf } from "reicon-react";
 import { Button } from "@/components/ui/button";
 import {
   ContextMenu,
@@ -9,32 +10,44 @@ import {
 } from "@/components/ui/context-menu";
 
 export function ContextMenuDemo() {
-  const [action, setAction] = useState("Choose a file action.");
+  const [name, setName] = useState("brief.pdf");
+  const [message, setMessage] = useState(
+    "Right-click, long-press, or press Shift+F10 on the file.",
+  );
 
   return (
-    <div className="flex w-full max-w-sm flex-col items-start gap-4">
+    <div className="flex w-full max-w-sm flex-col items-start gap-3">
       <ContextMenuTrigger>
         <Button
           variant="outline"
-          onPress={() => setAction("Opened brief.pdf.")}
+          onPress={() => setMessage(`${name} selected.`)}
         >
-          brief.pdf
+          <FilePdf size={18} aria-hidden="true" /> {name}
         </Button>
-        <ContextMenu aria-label="File actions">
-          <ContextMenuItem onAction={() => setAction("Opened brief.pdf.")}>
-            Open file
+        <ContextMenu aria-label={`Actions for ${name}`}>
+          <ContextMenuItem
+            onAction={() => {
+              setName("brief-final.pdf");
+              setMessage("File renamed.");
+            }}
+          >
+            Rename to brief-final.pdf
           </ContextMenuItem>
-          <ContextMenuItem onAction={() => setAction("Renamed brief.pdf.")}>
-            Rename file
-          </ContextMenuItem>
-          <ContextMenuItem onAction={() => setAction("Copied brief.pdf.")}>
-            Copy file
+          <ContextMenuItem
+            onAction={async () => {
+              try {
+                await navigator.clipboard.writeText(name);
+                setMessage(`${name} copied.`);
+              } catch {
+                setMessage("Could not copy the filename.");
+              }
+            }}
+          >
+            Copy filename
           </ContextMenuItem>
         </ContextMenu>
       </ContextMenuTrigger>
-      <output className="block w-full rounded-lg bg-card px-4 py-3 text-[13px] text-muted-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70">
-        {action}
-      </output>
+      <output className="text-sm text-muted-foreground">{message}</output>
     </div>
   );
 }

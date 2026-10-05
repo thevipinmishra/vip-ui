@@ -28,13 +28,14 @@ const PresenceListRow = forwardRef<
       inert={!isPresent}
       aria-hidden={!isPresent || undefined}
       layout={reducedMotion ? false : "position"}
-      initial={reducedMotion ? false : { opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
+      initial={reducedMotion ? false : { opacity: 0, y: 6, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.98 }}
       transition={{
-        layout: { type: "spring", stiffness: 420, damping: 38 },
-        opacity: { duration: reducedMotion ? 0 : 0.16 },
-        y: { duration: reducedMotion ? 0 : 0.22, ease: [0.23, 1, 0.32, 1] },
+        layout: { type: "spring", stiffness: 380, damping: 36 },
+        opacity: { duration: reducedMotion ? 0 : 0.18 },
+        y: { duration: reducedMotion ? 0 : 0.2, ease: [0.23, 1, 0.32, 1] },
+        scale: { duration: reducedMotion ? 0 : 0.2 },
       }}
     >
       {children}

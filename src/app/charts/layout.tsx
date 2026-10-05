@@ -15,8 +15,8 @@ export default function ChartsLayout({ children }: LayoutProps<"/charts">) {
       <main id="main" className="flex-1">
         <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 xl:grid xl:grid-cols-[minmax(0,1fr)_160px] xl:gap-8">
           <div className="min-w-0">{children}</div>
-          <div className="hidden xl:block">
-            <div className="sticky top-[7.5rem] max-h-[calc(100dvh-7.5rem)] overflow-y-auto pb-10">
+          <div className="hidden pt-14 xl:block">
+            <div className="sticky top-6 max-h-[calc(100dvh-1.5rem)] overflow-y-auto pb-10">
               <OnThisPage />
             </div>
           </div>

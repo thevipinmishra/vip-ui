@@ -11,35 +11,31 @@ import {
 } from "@/components/ui/menu";
 
 export function MenuNestedDemo() {
-  const [action, setAction] = useState("Choose where to share the project.");
+  const [saved, setSaved] = useState(false);
 
   return (
-    <div className="flex w-full max-w-sm flex-col items-start gap-4">
+    <div className="flex flex-col items-start gap-3">
       <MenuTrigger>
-        <Button variant="outline">Project actions</Button>
+        <Button variant="outline">More options</Button>
         <MenuPopover>
-          <MenuContent>
-            <MenuItem onAction={() => setAction("Opened Studio North.")}>
-              Open project
+          <MenuContent aria-label="More options">
+            <MenuItem onAction={() => setSaved((value) => !value)}>
+              {saved ? "Remove bookmark" : "Bookmark this page"}
             </MenuItem>
             <SubmenuTrigger>
-              <MenuItem>Share with</MenuItem>
+              <MenuItem>Components</MenuItem>
               <MenuPopover placement="right top" offset={-2}>
-                <MenuContent>
-                  <MenuItem onAction={() => setAction("Sharing by email.")}>
-                    Email
-                  </MenuItem>
-                  <MenuItem onAction={() => setAction("Copied a share link.")}>
-                    Copy link
-                  </MenuItem>
+                <MenuContent aria-label="Component links">
+                  <MenuItem href="/components/avatar">Avatar</MenuItem>
+                  <MenuItem href="/components/pagination">Pagination</MenuItem>
                 </MenuContent>
               </MenuPopover>
             </SubmenuTrigger>
           </MenuContent>
         </MenuPopover>
       </MenuTrigger>
-      <output className="block w-full rounded-lg bg-card px-4 py-3 text-[13px] text-muted-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70">
-        {action}
+      <output className="text-sm text-muted-foreground">
+        {saved ? "Bookmarked" : "Not bookmarked"}
       </output>
     </div>
   );

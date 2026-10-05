@@ -2,39 +2,24 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import {
-  ArrowDown,
-  ArrowLeft,
-  ArrowRight,
-  ArrowUpRight,
-  DocumentCode2,
-} from "reicon-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "reicon-react";
 import { Breadcrumb, Breadcrumbs } from "@/components/ui/breadcrumbs";
-import { ButtonLink } from "@/components/ui/button-link";
 import { getComponent, getNeighbors } from "@/lib/catalog";
-import { customComponentApi, customGuidance } from "@/lib/component-api";
+import { customComponentApi, groupApiProps } from "@/lib/component-api";
 import {
   type ComponentExampleMetadata,
   exampleAnchor,
 } from "@/lib/component-examples";
-import { buildComponentMarkdown } from "@/lib/component-markdown";
 import { readRegistryItem, registryUrl } from "@/lib/registry-docs";
-import { siteUrl } from "@/lib/site-url";
 import { CodeBlock } from "./code-block";
 import { ComponentComposition } from "./component-composition";
 import { compositions } from "./component-compositions";
-import { CopyButton } from "./copy-button";
 import { InstallTabs } from "./install-tabs";
 import { PackageManagerCommand } from "./package-manager-command";
 import { PreviewPanel } from "./preview-panel";
 
 export interface ComponentExample extends ComponentExampleMetadata {
   preview: ReactNode;
-}
-
-export interface ComponentPageLink {
-  label: string;
-  href: string;
 }
 
 /**
@@ -63,8 +48,6 @@ export function withExamplePreviews(
 interface ComponentPageProps {
   name: string;
   description: string;
-  /** Short links rendered under the description, before the preview. */
-  descriptionLinks?: ComponentPageLink[];
   preview: ReactNode;
   previewSourcePath: string;
   examples?: ComponentExample[];
@@ -74,7 +57,6 @@ interface ComponentPageProps {
 export async function ComponentPage({
   name,
   description,
-  descriptionLinks,
   preview,
   previewSourcePath,
   examples = [],
@@ -113,98 +95,28 @@ export async function ComponentPage({
   const packages = item.dependencies;
   const cliUrl = registryUrl(componentSlug);
   const customApi = customComponentApi[componentSlug];
+  const apiGroups = customApi ? groupApiProps(customApi) : [];
   const reactAriaDocsHref = getComponent(componentSlug)?.reactAriaDocsHref;
-  const markdown = buildComponentMarkdown({
-    slug: componentSlug,
-    name,
-    description,
-    site: siteUrl(),
-    registryItem: item,
-    cliUrl,
-    usage: {
-      code: previewSource,
-      filename: path.basename(previewSourcePath),
-    },
-    guidance: customGuidance[componentSlug],
-    api: customApi,
-    examples: examples.map((example, index) => ({
-      title: example.title,
-      description: example.description,
-      code: exampleSources[index],
-      filename: path.basename(example.sourcePath),
-      prerequisite: example.prerequisite,
-    })),
-    reactAriaDocsHref,
-  });
   return (
     <article>
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+      <div className="mb-4">
         <Breadcrumbs>
           <Breadcrumb href="/components">Components</Breadcrumb>
           <Breadcrumb>{name}</Breadcrumb>
         </Breadcrumbs>
-        <div className="flex items-center gap-2">
-          <CopyButton
-            code={markdown}
-            label="Copy page as Markdown"
-            text="Copy page"
-          />
-          <ButtonLink
-            href={`/components/${componentSlug}.md`}
-            target="_blank"
-            rel="noreferrer"
-            variant="outline"
-            size="sm"
-          >
-            <DocumentCode2 size={15} aria-hidden="true" />
-            Markdown
-            <span className="sr-only"> (opens in a new tab)</span>
-          </ButtonLink>
-        </div>
       </div>
       <h1 className="text-[clamp(2.25rem,4vw,3.5rem)] font-semibold leading-[1.08] tracking-[-0.055em] [text-wrap:balance]">
         {name}
       </h1>
+      <p className="mt-2 max-w-[670px] text-sm leading-7 text-muted-foreground">
+        {description}
+      </p>
       <section
         id="preview"
         data-toc-label="Preview"
         aria-label={`${name} preview`}
         className="mt-6 scroll-mt-24"
       >
-        <div className="mb-5 flex flex-wrap items-start justify-between gap-x-4 gap-y-3">
-          <div className="max-w-[670px] space-y-2">
-            <p className="text-sm leading-7 text-muted-foreground">
-              {description}
-            </p>
-            {descriptionLinks && descriptionLinks.length > 0 && (
-              <ul className="flex flex-wrap items-center gap-x-4 gap-y-1">
-                {descriptionLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="inline-flex items-center gap-1 text-[13px] font-medium text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-                    >
-                      {link.label}
-                      {link.href.startsWith("#") ? (
-                        <ArrowDown size={14} aria-hidden="true" />
-                      ) : (
-                        <ArrowRight size={14} aria-hidden="true" />
-                      )}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-          <ButtonLink
-            href="#installation"
-            variant="outline"
-            size="sm"
-            className="shrink-0"
-          >
-            Install {name}
-          </ButtonLink>
-        </div>
         <PreviewPanel
           code={previewSource}
           filename={path.basename(previewSourcePath)}
@@ -231,39 +143,10 @@ export async function ComponentPage({
                 before running this command.
               </p>
               {cliUrl ? (
-                <>
-                  <PackageManagerCommand
-                    action="run"
-                    args={`shadcn@latest add ${cliUrl}`}
-                  />
-                  <div>
-                    <p className="text-[13px] font-medium">Adds these files</p>
-                    <ul className="mt-1.5 grid gap-1">
-                      {item.files.map((file) => (
-                        <li
-                          key={file.target}
-                          className="font-mono text-xs text-muted-foreground"
-                        >
-                          {file.target}
-                        </li>
-                      ))}
-                    </ul>
-                    <p className="mt-2 text-[13px] leading-6 text-muted-foreground">
-                      Demo-inclusive: the item also includes the vip/ui files
-                      this page&apos;s examples import. Unused example files can
-                      be deleted after install.
-                    </p>
-                    {packages.length > 0 && (
-                      <p className="mt-2 text-[13px] leading-6 text-muted-foreground">
-                        Installs {packages.join(", ")}.
-                      </p>
-                    )}
-                    <p className="mt-2 text-[13px] leading-6 text-muted-foreground">
-                      Restart your dev server, then render the component to
-                      confirm it picks up your theme styles.
-                    </p>
-                  </div>
-                </>
+                <PackageManagerCommand
+                  action="run"
+                  args={`shadcn@latest add ${cliUrl}`}
+                />
               ) : (
                 <p className="text-[13px] leading-6 text-muted-foreground">
                   The CLI command will be available when the registry has a
@@ -301,19 +184,6 @@ export async function ComponentPage({
         />
       </section>
 
-      <section id="usage" className="mt-14 scroll-mt-24">
-        <SectionHeading title="Usage" />
-        {customGuidance[componentSlug] && (
-          <p className="mb-5 max-w-[670px] text-sm leading-7 text-muted-foreground">
-            {customGuidance[componentSlug]}
-          </p>
-        )}
-        <CodeBlock
-          code={previewSource}
-          filename={path.basename(previewSourcePath)}
-        />
-      </section>
-
       {compositions[componentSlug] && (
         <section id="composition" className="mt-14 scroll-mt-24">
           <SectionHeading title="Composition" />
@@ -328,9 +198,11 @@ export async function ComponentPage({
           className="mt-14 scroll-mt-24"
         >
           <SectionHeading title={example.title} />
-          <p className="mb-5 max-w-[670px] text-sm leading-7 text-muted-foreground">
-            {example.description}
-          </p>
+          {example.description && (
+            <p className="mb-5 max-w-[670px] text-sm leading-7 text-muted-foreground">
+              {example.description}
+            </p>
+          )}
           <PreviewPanel
             code={exampleSources[index]}
             filename={path.basename(example.sourcePath)}
@@ -340,90 +212,78 @@ export async function ComponentPage({
         </section>
       ))}
 
-      <section id="api" className="mt-14 scroll-mt-24">
-        <SectionHeading title="API reference" />
-        {customApi && (
-          <>
-            <p className="mb-3 text-xs text-muted-foreground sm:hidden">
-              Scroll the table to see all columns.
-            </p>
-            <div className="overflow-x-auto rounded-xl bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70">
-              <table className="w-full min-w-[650px] border-collapse text-left text-[12px]">
-                <thead className="bg-muted/60 text-muted-foreground">
-                  <tr>
-                    {(
-                      [
-                        "Component",
-                        "Prop",
-                        "Type",
-                        "Default",
-                        "Description",
-                      ] as const
-                    ).map((label) => (
-                      <th
-                        key={label}
-                        scope="col"
-                        className="px-4 py-3 font-semibold"
+      {(apiGroups.length > 0 || reactAriaDocsHref) && (
+        <section id="api" className="mt-14 scroll-mt-24">
+          <div className="mb-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+            <h2 className="text-[23px] font-semibold tracking-[-0.045em]">
+              API reference
+            </h2>
+            {reactAriaDocsHref && (
+              <a
+                href={reactAriaDocsHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 rounded-md text-sm font-medium text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              >
+                React Aria props
+                <ArrowUpRight size={16} aria-hidden="true" />
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            )}
+          </div>
+          {apiGroups.length > 0 && (
+            <div className="space-y-8">
+              {apiGroups.map(({ component, props }) => (
+                <div key={component}>
+                  {(apiGroups.length > 1 ||
+                    component.toLowerCase() !==
+                      componentSlug.replaceAll("-", "")) && (
+                    <h3 className="mb-3 text-sm font-semibold text-foreground">
+                      {component}
+                    </h3>
+                  )}
+                  <dl className="divide-y divide-border/70 rounded-xl border border-border/70 bg-card/50 px-4 sm:px-5">
+                    {props.map((item) => (
+                      <div
+                        key={item.prop}
+                        className="grid gap-x-6 gap-y-1.5 py-4 sm:grid-cols-[minmax(0,12rem)_minmax(0,1fr)]"
                       >
-                        {label}
-                      </th>
+                        <dt className="min-w-0 font-mono text-[13px] font-medium text-foreground [overflow-wrap:anywhere]">
+                          {item.prop}
+                        </dt>
+                        <dd className="min-w-0">
+                          <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                            <code className="font-mono [overflow-wrap:anywhere]">
+                              {item.type}
+                            </code>
+                            {item.defaultValue !== "—" && (
+                              <span>
+                                {item.defaultValue === "required" ? (
+                                  "Required"
+                                ) : (
+                                  <>
+                                    Default{" "}
+                                    <code className="font-mono text-foreground [overflow-wrap:anywhere]">
+                                      {item.defaultValue}
+                                    </code>
+                                  </>
+                                )}
+                              </span>
+                            )}
+                          </div>
+                          <p className="mt-1.5 text-[13px] leading-5 text-muted-foreground">
+                            {item.description}
+                          </p>
+                        </dd>
+                      </div>
                     ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {customApi.map((item) => (
-                    <tr
-                      key={`${item.component}-${item.prop}`}
-                      className="border-t border-border/70 align-top"
-                    >
-                      <th
-                        scope="row"
-                        className="px-4 py-3 font-mono font-medium text-foreground"
-                      >
-                        {item.component}
-                      </th>
-                      <td className="px-4 py-3 font-mono text-foreground">
-                        {item.prop}
-                      </td>
-                      <td className="px-4 py-3 font-mono text-muted-foreground">
-                        {item.type}
-                      </td>
-                      <td className="px-4 py-3 font-mono text-muted-foreground">
-                        {item.defaultValue}
-                      </td>
-                      <td className="px-4 py-3 leading-5 text-muted-foreground">
-                        {item.description}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </dl>
+                </div>
+              ))}
             </div>
-          </>
-        )}
-        {reactAriaDocsHref && (
-          <p className="mt-4 max-w-[670px] text-sm leading-7 text-muted-foreground">
-            See the{" "}
-            <a
-              href={reactAriaDocsHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 rounded-md text-primary underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-            >
-              React Aria API
-              <ArrowUpRight size={16} aria-hidden="true" />
-            </a>{" "}
-            for inherited props and behavior. The Custom tab above contains
-            vip/ui's source and local props.
-          </p>
-        )}
-        {!customApi && !reactAriaDocsHref && (
-          <p className="max-w-[670px] text-sm leading-7 text-muted-foreground">
-            This component exports its parts with no additional props. See the
-            Custom tab for the full source.
-          </p>
-        )}
-      </section>
+          )}
+        </section>
+      )}
 
       <nav
         aria-label="Component pagination"

@@ -4,12 +4,7 @@
   "type": "registry:ui",
   "title": "Toggle Button Group",
   "description": "Choose one or more persistent actions in a group.",
-  "dependencies": [
-    "motion",
-    "react-aria-components",
-    "reicon-react",
-    "tailwind-variants"
-  ],
+  "dependencies": ["react-aria-components", "tailwind-variants"],
   "files": [
     {
       "path": "src/lib/utils.ts",
@@ -22,12 +17,6 @@
       "type": "registry:file",
       "target": "@components/vip-ui/toggle-button-group.tsx",
       "content": "\"use client\";\n\nimport {\n  ToggleButtonGroup as AriaToggleButtonGroup,\n  composeRenderProps,\n  type ToggleButtonGroupProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport function ToggleButtonGroup({\n  className,\n  ...props\n}: ToggleButtonGroupProps) {\n  return (\n    <AriaToggleButtonGroup\n      {...props}\n      data-slot=\"toggle-button-group\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"inline-flex w-fit max-w-full flex-wrap gap-1 rounded-lg border border-border bg-secondary p-1 data-[orientation=vertical]:flex-col\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n"
-    },
-    {
-      "path": "src/components/ui/toggle-button.tsx",
-      "type": "registry:file",
-      "target": "@components/vip-ui/toggle-button.tsx",
-      "content": "\"use client\";\n\nimport { type HTMLMotionProps, motion, useReducedMotion } from \"motion/react\";\nimport {\n  ToggleButton as AriaToggleButton,\n  composeRenderProps,\n  type ToggleButtonProps,\n} from \"react-aria-components\";\nimport { tv, type VariantProps } from \"tailwind-variants\";\n\nconst toggleButtonStyles = tv({\n  base: \"inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-md px-4 text-sm font-medium data-[disabled]:cursor-default data-[disabled]:opacity-50 data-[focus-visible]:z-10 data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring\",\n  variants: {\n    variant: {\n      default:\n        \"border border-border bg-card text-foreground shadow-[var(--shadow-card)] hover:bg-muted data-[pressed]:bg-muted data-[selected]:border-primary/40 data-[selected]:bg-accent data-[selected]:text-accent-foreground\",\n      segmented:\n        \"min-h-11 border border-transparent bg-transparent px-3 sm:min-h-9 text-muted-foreground shadow-none hover:bg-card/70 hover:text-foreground data-[pressed]:bg-card/70 data-[selected]:border-border data-[selected]:bg-card data-[selected]:text-foreground data-[selected]:shadow-[var(--shadow-card)]\",\n      ghost:\n        \"border border-transparent bg-transparent text-foreground hover:bg-muted data-[pressed]:bg-muted data-[selected]:bg-accent data-[selected]:text-accent-foreground\",\n    },\n  },\n  defaultVariants: { variant: \"default\" },\n});\n\nexport interface ToggleButtonStyleProps extends ToggleButtonProps {\n  variant?: NonNullable<VariantProps<typeof toggleButtonStyles>[\"variant\"]>;\n}\n\nexport function ToggleButton({\n  className,\n  variant = \"default\",\n  ...props\n}: ToggleButtonStyleProps) {\n  const reduceMotion = useReducedMotion();\n  return (\n    <AriaToggleButton\n      {...props}\n      data-slot=\"toggle-button\"\n      data-variant={variant}\n      render={\n        props.render ??\n        ((domProps) => (\n          <motion.button\n            {...(domProps as HTMLMotionProps<\"button\">)}\n            whileTap={\n              reduceMotion || props.isDisabled ? undefined : { scale: 0.96 }\n            }\n            transition={{ duration: 0.14 }}\n          />\n        ))\n      }\n      className={composeRenderProps(className, (className) =>\n        toggleButtonStyles({ variant, className }),\n      )}\n    />\n  );\n}\n"
     }
   ]
 }
