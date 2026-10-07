@@ -107,19 +107,12 @@ function ChartCategoryContent({
           <CodeFrame
             code={shared}
             filename="src/components/charts/chart-plot.tsx"
-            language="tsx"
             embedded
             scrollable
           >
             <CodeSnippet code={shared} />
           </CodeFrame>
-          <CodeFrame
-            code={source}
-            filename={sourcePath}
-            language="tsx"
-            embedded
-            scrollable
-          >
+          <CodeFrame code={source} filename={sourcePath} embedded scrollable>
             <CodeSnippet code={source} />
           </CodeFrame>
         </ChartSourceDrawer>

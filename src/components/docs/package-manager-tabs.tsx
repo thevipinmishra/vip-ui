@@ -69,9 +69,7 @@ export function PackageManagerTabs({
       <CodeFrame
         code={commands[selected]}
         filename=""
-        language="bash"
         codeLabel={`${selected} command`}
-        iconOnlyCopy
         header={
           <div className="flex min-w-0 flex-1 items-center gap-2">
             <TerminalSquare

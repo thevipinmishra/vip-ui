@@ -25,13 +25,7 @@ export function PreviewCode({
         </div>
       </div>
       <div className="min-w-0 border-t border-border/70">
-        <CodeFrame
-          code={code}
-          filename={filename}
-          language="tsx"
-          embedded
-          previewCode
-        >
+        <CodeFrame code={code} filename={filename} embedded previewCode>
           {source}
         </CodeFrame>
       </div>
