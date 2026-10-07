@@ -71,7 +71,7 @@ export function TabList({
       }
       className={composeRenderProps(className, (className) =>
         cn(
-          "inline-flex min-w-0 max-w-full gap-1.5 overflow-x-auto overflow-y-hidden rounded-xl bg-muted p-1.5 shadow-[var(--shadow-inset)] ring-1 ring-border/70",
+          "inline-flex min-w-0 max-w-full items-center gap-1.5 overflow-x-auto overflow-y-hidden rounded-xl bg-muted p-1.5 shadow-[var(--shadow-inset)] ring-1 ring-border/70",
           className,
         ),
       )}
@@ -115,7 +115,7 @@ export function Tab({ className, children, ...props }: AriaTabProps) {
       }
       className={composeRenderProps(className, (className) =>
         cn(
-          "relative isolate min-h-11 shrink-0 cursor-pointer whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium text-muted-foreground outline-none hover:bg-card/70 selected:hover:bg-transparent selected:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-50 sm:min-h-9",
+          "relative isolate inline-flex min-h-11 shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 text-sm font-medium leading-5 text-muted-foreground outline-none hover:bg-card/70 selected:hover:bg-transparent selected:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-50 sm:min-h-9",
           className,
         ),
       )}

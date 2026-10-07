@@ -27,7 +27,9 @@ import { Popover } from "./popover";
 import { PressButton } from "./press-button";
 
 const selectTriggerStyles =
-  "flex min-h-12 w-full cursor-pointer items-center justify-between gap-3 rounded-lg border border-input bg-card px-3.5 text-start text-sm text-foreground shadow-[var(--shadow-card)] hover:border-primary/45 hover:bg-muted/60 data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring group-data-[invalid]:border-destructive group-data-[invalid]:ring-3 group-data-[invalid]:ring-destructive/20 data-[disabled]:cursor-default data-[disabled]:bg-muted data-[disabled]:opacity-50";
+  "relative flex min-h-12 w-full min-w-0 cursor-pointer items-center rounded-lg border border-input bg-card ps-3.5 pe-10 text-start text-base leading-6 text-foreground shadow-[var(--shadow-card)] hover:border-primary/45 hover:bg-muted/60 data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring group-data-[invalid]:border-destructive group-data-[invalid]:ring-3 group-data-[invalid]:ring-destructive/20 data-[disabled]:cursor-default data-[disabled]:bg-muted data-[disabled]:opacity-50 sm:text-sm sm:leading-5";
+const selectValueStyles =
+  "min-w-0 flex-1 self-center truncate text-start data-[placeholder]:text-muted-foreground";
 const selectItemStyles =
   "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted data-[focused]:bg-muted data-[selected]:bg-accent data-[selected]:text-accent-foreground data-[focus-visible]:-outline-offset-2 data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring data-[disabled]:cursor-default data-[disabled]:opacity-50";
 const selectPopoverStyles =
@@ -76,7 +78,7 @@ export function Select({
       }}
       placeholder={placeholder}
       className={composeRenderProps(className, (className) =>
-        cn("group flex w-full flex-col gap-2", className),
+        cn("group flex w-full min-w-0 flex-col gap-2", className),
       )}
     >
       {children ??
@@ -93,7 +95,7 @@ export function Select({
             >
               <AriaSelectValue
                 data-slot="select-value"
-                className="min-w-0 flex-1 truncate text-start data-[placeholder]:text-muted-foreground"
+                className={selectValueStyles}
               >
                 {({ selectedText, isPlaceholder, state }) =>
                   isPlaceholder
@@ -103,17 +105,7 @@ export function Select({
                       )?.name ?? selectedText)
                 }
               </AriaSelectValue>
-              <motion.span
-                initial={false}
-                animate={{ rotate: isOpen ? 180 : 0 }}
-                transition={{
-                  duration: reduceMotion ? 0 : 0.2,
-                  ease: "easeOut",
-                }}
-                className="shrink-0 text-muted-foreground"
-              >
-                <ChevronDown size={16} aria-hidden="true" />
-              </motion.span>
+              <SelectChevron open={isOpen} reduceMotion={reduceMotion} />
             </PressButton>
             {description && (
               <Text
@@ -204,19 +196,32 @@ export function SelectTrigger({
   );
 }
 
-function SelectChevron() {
-  const isOpen = useContext(SelectStateContext)?.isOpen;
-  const reduceMotion = useReducedMotion();
+function SelectChevron({
+  open,
+  reduceMotion,
+}: {
+  open?: boolean;
+  reduceMotion?: boolean | null;
+}) {
+  const contextOpen = useContext(SelectStateContext)?.isOpen;
+  const prefersReducedMotion = useReducedMotion();
+  const isOpen = open ?? contextOpen;
+  const reduce = reduceMotion ?? prefersReducedMotion;
   return (
-    <motion.span
+    <span
       aria-hidden="true"
-      className="shrink-0 text-muted-foreground"
-      initial={false}
-      animate={{ rotate: isOpen ? 180 : 0 }}
-      transition={{ duration: reduceMotion ? 0 : 0.2, ease: "easeOut" }}
+      data-slot="select-chevron"
+      className="pointer-events-none absolute inset-y-0 end-3.5 grid place-items-center text-muted-foreground"
     >
-      <ChevronDown size={16} />
-    </motion.span>
+      <motion.span
+        className="grid size-4 place-items-center"
+        initial={false}
+        animate={{ rotate: isOpen ? 180 : 0 }}
+        transition={{ duration: reduce ? 0 : 0.2, ease: "easeOut" }}
+      >
+        <ChevronDown size={16} />
+      </motion.span>
+    </span>
   );
 }
 
@@ -229,15 +234,12 @@ export function SelectValue({
       {...props}
       data-slot="select-value"
       className={composeRenderProps(className, (className) =>
-        cn(
-          "min-w-0 flex-1 truncate text-start data-[placeholder]:text-muted-foreground",
-          className,
-        ),
+        cn(selectValueStyles, className),
       )}
     >
       {props.children ??
-        (({ selectedText, defaultChildren }) =>
-          selectedText || defaultChildren)}
+        (({ isPlaceholder, selectedText, defaultChildren }) =>
+          isPlaceholder ? defaultChildren : selectedText || defaultChildren)}
     </AriaSelectValue>
   );
 }
@@ -270,6 +272,7 @@ export function SelectContent({
 export function SelectItem({
   className,
   children,
+  textValue,
   ...props
 }: Omit<React.ComponentProps<typeof ListBoxItem>, "children"> & {
   children: ReactNode;
@@ -277,6 +280,9 @@ export function SelectItem({
   return (
     <ListBoxItem
       {...props}
+      textValue={
+        textValue ?? (typeof children === "string" ? children : undefined)
+      }
       data-slot="select-item"
       className={composeRenderProps(className, (className) =>
         cn(selectItemStyles, className),

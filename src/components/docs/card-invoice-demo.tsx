@@ -8,10 +8,11 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Form } from "@/components/ui/form";
+import { TextField } from "@/components/ui/text-field";
 
 const items = [
   { name: "Product design", detail: "12 hours × $120", amount: "$1,440" },
@@ -21,6 +22,7 @@ const items = [
 
 export function CardInvoiceDemo() {
   const [approved, setApproved] = useState(false);
+  const [note, setNote] = useState("Net 15. Send to accounts payable.");
 
   return (
     <Card className="w-full max-w-md">
@@ -61,19 +63,41 @@ export function CardInvoiceDemo() {
           <span className="font-medium">Total due</span>
           <span className="text-lg font-semibold tabular-nums">$2,640</span>
         </div>
-      </CardContent>
-      <CardFooter>
-        <Button
-          variant={approved ? "secondary" : "default"}
-          size="sm"
-          onPress={() => setApproved((current) => !current)}
+        <Form
+          className="mt-5 gap-3"
+          onSubmit={(event) => {
+            event.preventDefault();
+            setApproved(true);
+          }}
         >
-          {approved ? "Undo approval" : "Approve invoice"}
-        </Button>
-        <output className="text-xs text-muted-foreground">
-          {approved ? "Ready for payment" : "Awaiting approval"}
-        </output>
-      </CardFooter>
+          <TextField
+            label="Payment note"
+            name="note"
+            value={note}
+            onChange={setNote}
+            description="Included with the approval sent to finance."
+          />
+          <div className="flex flex-wrap items-center gap-3">
+            {approved ? (
+              <Button
+                type="button"
+                variant="secondary"
+                size="sm"
+                onPress={() => setApproved(false)}
+              >
+                Undo approval
+              </Button>
+            ) : (
+              <Button type="submit" size="sm">
+                Approve invoice
+              </Button>
+            )}
+            <output className="text-xs text-muted-foreground">
+              {approved ? `Ready for payment. ${note}` : "Awaiting approval"}
+            </output>
+          </div>
+        </Form>
+      </CardContent>
     </Card>
   );
 }

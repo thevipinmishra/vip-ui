@@ -4,7 +4,7 @@ import { Select } from "@/components/ui/select";
 
 export function SelectDemo() {
   return (
-    <div className="w-full max-w-[340px]">
+    <div className="w-full min-w-0 max-w-[340px]">
       <Select
         label="Workspace"
         placeholder="Choose a workspace"
