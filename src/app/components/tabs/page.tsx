@@ -5,7 +5,6 @@ import {
 } from "@/components/docs/component-page";
 import { TabsBasicDemo } from "@/components/docs/tabs-basic-demo";
 import { TabsDemo } from "@/components/docs/tabs-demo";
-import { TabsDisabledDemo } from "@/components/docs/tabs-disabled-demo";
 import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
@@ -23,7 +22,6 @@ export default function TabsPage() {
       previewSourcePath={page.usage}
       examples={withExamplePreviews(page.examples, [
         <TabsDemo key="example-1" />,
-        <TabsDisabledDemo key="example-2" />,
       ])}
       sourcePath="src/components/ui/tabs.tsx"
     />

@@ -5,7 +5,6 @@ import {
 } from "@/components/docs/component-page";
 import { SwitchBasicDemo } from "@/components/docs/switch-basic-demo";
 import { SwitchDemo } from "@/components/docs/switch-demo";
-import { SwitchStatesDemo } from "@/components/docs/switch-states-demo";
 import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
@@ -23,7 +22,6 @@ export default function SwitchPage() {
       previewSourcePath={page.usage}
       examples={withExamplePreviews(page.examples, [
         <SwitchDemo key="example-1" />,
-        <SwitchStatesDemo key="example-2" />,
       ])}
       sourcePath="src/components/ui/switch.tsx"
     />

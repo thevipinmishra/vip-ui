@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { ComboBoxBasicDemo } from "@/components/docs/combo-box-basic-demo";
 import { ComboBoxDemo } from "@/components/docs/combo-box-demo";
-import { ComboBoxDisabledDemo } from "@/components/docs/combo-box-disabled-demo";
 import { ComboBoxMultipleDemo } from "@/components/docs/combo-box-multiple-demo";
 import {
   ComponentPage,
@@ -25,7 +24,6 @@ export default function ComboBoxPage() {
       examples={withExamplePreviews(page.examples, [
         <ComboBoxDemo key="example-1" />,
         <ComboBoxMultipleDemo key="example-2" />,
-        <ComboBoxDisabledDemo key="example-3" />,
       ])}
       sourcePath="src/components/ui/combo-box.tsx"
     />

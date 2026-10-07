@@ -38,6 +38,9 @@ export function TabsDemo() {
           <Users size={15} aria-hidden="true" className="me-2 inline-block" />
           Team
         </TabsTrigger>
+        <TabsTrigger value="billing" isDisabled>
+          Billing
+        </TabsTrigger>
       </TabsList>
       <TabsContent value="overview">
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -93,6 +96,9 @@ export function TabsDemo() {
             </li>
           ))}
         </ul>
+      </TabsContent>
+      <TabsContent value="billing">
+        Invoices are not available until the project is approved.
       </TabsContent>
     </Tabs>
   );

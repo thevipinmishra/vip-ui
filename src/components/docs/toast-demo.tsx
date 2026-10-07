@@ -1,6 +1,6 @@
 "use client";
 
-import { InfoCircle } from "reicon-react";
+import { Warning } from "reicon-react";
 import { Button } from "@/components/ui/button";
 import { showToast } from "@/components/ui/toast";
 
@@ -8,16 +8,15 @@ export function ToastDemo() {
   return (
     <Button
       onPress={() =>
-        showToast(
-          {
-            title: "Update available",
-            description: "A new version is ready to install.",
-          },
-          { timeout: 5000 },
-        )
+        showToast({
+          title: "Upload paused",
+          description:
+            "The connection dropped. Retry when you are back online.",
+          variant: "warning",
+        })
       }
     >
-      <InfoCircle size={16} aria-hidden="true" /> Show notification
+      <Warning size={16} aria-hidden="true" /> Show upload warning
     </Button>
   );
 }
