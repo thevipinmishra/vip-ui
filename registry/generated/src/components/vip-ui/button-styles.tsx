@@ -12,6 +12,8 @@ export const buttonStyles = tv({
         "border border-border bg-card text-foreground shadow-[var(--shadow-card)] hover:bg-muted data-[pressed]:bg-muted",
       ghost:
         "text-foreground hover:bg-muted data-[pressed]:bg-muted aria-[pressed=true]:bg-accent aria-[pressed=true]:text-accent-foreground aria-[pressed=true]:hover:bg-accent",
+      minimal:
+        "text-muted-foreground hover:bg-muted hover:text-foreground data-[pressed]:bg-muted data-[pressed]:text-foreground",
       destructive:
         "bg-destructive text-background shadow-[var(--shadow-card)] hover:bg-destructive/90 data-[pressed]:bg-destructive/90",
     },

@@ -676,9 +676,10 @@ export const customComponentApi: Record<string, ApiProp[]> = {
     {
       component: "Button",
       prop: "variant",
-      type: '"default" | "secondary" | "outline" | "ghost" | "destructive"',
+      type: '"default" | "secondary" | "outline" | "ghost" | "minimal" | "destructive"',
       defaultValue: '"default"',
-      description: "Choose the action's visual priority.",
+      description:
+        "Choose the action's visual priority. Minimal is for a quiet icon action.",
     },
     {
       component: "Button",

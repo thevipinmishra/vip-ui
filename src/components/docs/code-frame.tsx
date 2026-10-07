@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { type ReactNode, useId, useRef, useState } from "react";
-import { DocumentCode2, Palette, TerminalSquare } from "reicon-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { CodeScrollArea } from "./code-scroll-area";
@@ -11,11 +10,9 @@ import { CopyButton } from "./copy-button";
 export function CodeFrame({
   code,
   filename,
-  language,
   children,
   copyText,
   header,
-  iconOnlyCopy = false,
   codeLabel,
   embedded = false,
   previewCode = false,
@@ -23,11 +20,9 @@ export function CodeFrame({
 }: {
   code: string;
   filename: string;
-  language: string;
   children: ReactNode;
   copyText?: string;
   header?: ReactNode;
-  iconOnlyCopy?: boolean;
   codeLabel?: string;
   embedded?: boolean;
   previewCode?: boolean;
@@ -75,18 +70,6 @@ export function CodeFrame({
               canExpand && expanded && "max-sm:basis-full",
             )}
           >
-            <span
-              className="grid size-7 shrink-0 place-items-center rounded-md bg-card text-muted-foreground ring-1 ring-border/70"
-              aria-hidden="true"
-            >
-              {language === "bash" ? (
-                <TerminalSquare size={15} />
-              ) : language === "css" ? (
-                <Palette size={15} />
-              ) : (
-                <DocumentCode2 size={15} />
-              )}
-            </span>
             {filename && (
               <span
                 className="min-w-0 truncate font-mono text-[11px] text-code-foreground"
@@ -107,8 +90,9 @@ export function CodeFrame({
             key={code}
             code={code.trim()}
             label={copyText}
-            text={copyText}
-            iconOnly={iconOnlyCopy}
+            iconOnly
+            variant="minimal"
+            className="size-8 data-[status=copied]:text-foreground data-[status=failed]:text-destructive"
           />
         </div>
       </div>

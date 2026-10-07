@@ -156,7 +156,6 @@ export function ThemeStudio({
           <CodeFrame
             code={css}
             filename={`${theme.slug}.css`}
-            language="css"
             copyText="Copy CSS"
             previewCode
           >
