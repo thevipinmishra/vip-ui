@@ -156,7 +156,7 @@ export function OnThisPage() {
                   aria-current={isCurrent ? "location" : undefined}
                   onClick={() => setCurrentId(section.id)}
                   className={cn(
-                    "relative flex items-start rounded-sm py-1 pr-1 pl-4 text-[13px] leading-5 transition-colors duration-200 hover:text-foreground motion-reduce:transition-none",
+                    "relative flex items-start rounded-sm py-1 pr-1 pl-4 text-[13px] leading-5 hover:text-foreground",
                     isHighlighted
                       ? "font-medium text-foreground"
                       : "text-muted-foreground",

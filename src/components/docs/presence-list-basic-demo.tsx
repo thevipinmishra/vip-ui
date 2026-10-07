@@ -17,16 +17,15 @@ export function PresenceListBasicDemo() {
     <div className="grid w-full max-w-sm gap-4">
       <PresenceList items={items} getKey={(item) => item.id} aria-label="Tasks">
         {(item) => (
-          <span className="flex items-center gap-3 rounded-lg bg-card px-4 py-3 text-sm shadow-[var(--shadow-card)] ring-1 ring-border/70">
-            <span
-              aria-hidden="true"
-              className="size-2 rounded-full bg-primary"
-            />
-            {item.title}
+          <span className="flex items-center gap-4 rounded-xl border border-border bg-card px-4 py-3 text-sm shadow-[var(--shadow-card)]">
+            <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-accent font-mono text-xs font-semibold text-accent-foreground">
+              {String(tasks.indexOf(item) + 1).padStart(2, "0")}
+            </span>
+            <span className="font-medium">{item.title}</span>
           </span>
         )}
       </PresenceList>
-      <div className="flex items-center justify-between gap-3">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <output aria-live="polite" className="text-sm text-muted-foreground">
           {items.length ? `${items.length} remaining` : "All done"}
         </output>

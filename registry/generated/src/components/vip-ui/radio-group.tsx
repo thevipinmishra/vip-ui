@@ -25,7 +25,11 @@ const radioStyles = tv({
   defaultVariants: { variant: "default" },
 });
 
-const RadioStateContext = createContext({ isSelected: false });
+const RadioStateContext = createContext({
+  isSelected: false,
+  isHovered: false,
+  isPressed: false,
+});
 
 export interface RadioGroupProps
   extends Omit<AriaRadioGroupProps, "children" | "className"> {
@@ -151,7 +155,7 @@ export function RadioIndicator({
   className,
   ...props
 }: React.HTMLAttributes<HTMLSpanElement>) {
-  const { isSelected } = useContext(RadioStateContext);
+  const { isSelected, isHovered, isPressed } = useContext(RadioStateContext);
   const reduceMotion = useReducedMotion();
   return (
     <span
@@ -159,13 +163,16 @@ export function RadioIndicator({
       aria-hidden="true"
       data-slot="radio-indicator"
       className={cn(
-        "grid size-5 shrink-0 place-items-center rounded-full border border-input bg-card group-data-[selected]:border-primary motion-safe:transition-colors motion-safe:duration-150",
+        "grid size-5 shrink-0 place-items-center rounded-full border border-input bg-card group-data-[selected]:border-primary",
         className,
       )}
     >
       <motion.span
         initial={false}
-        animate={{ scale: isSelected ? 1 : 0.86, opacity: isSelected ? 1 : 0 }}
+        animate={{
+          scale: isSelected ? (isPressed ? 0.85 : isHovered ? 1.12 : 1) : 0.86,
+          opacity: isSelected ? 1 : 0,
+        }}
         transition={{
           duration: reduceMotion ? 0 : 0.16,
           ease: [0.23, 1, 0.32, 1],

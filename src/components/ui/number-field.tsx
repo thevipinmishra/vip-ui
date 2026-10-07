@@ -59,7 +59,7 @@ export function NumberField({
               slot="decrement"
               data-slot="number-field-decrement"
               aria-label="Decrease"
-              className="grid min-h-11 min-w-11 cursor-pointer place-items-center rounded-md bg-muted/70 text-foreground hover:bg-accent hover:text-accent-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-40 motion-safe:transition-[background-color,color,scale] motion-safe:duration-150 motion-safe:active:scale-[0.96]"
+              className="grid min-h-11 min-w-11 cursor-pointer place-items-center rounded-md bg-muted/70 text-foreground hover:bg-accent hover:text-accent-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-40"
             >
               <Minus size={16} aria-hidden="true" />
             </PressButton>
@@ -71,7 +71,7 @@ export function NumberField({
               slot="increment"
               data-slot="number-field-increment"
               aria-label="Increase"
-              className="grid min-h-11 min-w-11 cursor-pointer place-items-center rounded-md bg-muted/70 text-foreground hover:bg-accent hover:text-accent-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-40 motion-safe:transition-[background-color,color,scale] motion-safe:duration-150 motion-safe:active:scale-[0.96]"
+              className="grid min-h-11 min-w-11 cursor-pointer place-items-center rounded-md bg-muted/70 text-foreground hover:bg-accent hover:text-accent-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-40"
             >
               <Plus size={16} aria-hidden="true" />
             </PressButton>

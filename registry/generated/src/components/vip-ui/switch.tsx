@@ -10,7 +10,11 @@ import {
 } from "react-aria-components";
 import { cn } from "./utils";
 
-const SwitchStateContext = createContext({ isSelected: false });
+const SwitchStateContext = createContext({
+  isSelected: false,
+  isPressed: false,
+  isDisabled: false,
+});
 
 export interface SwitchProps
   extends Omit<AriaSwitchProps, "className" | "children"> {
@@ -119,7 +123,7 @@ export function SwitchControl({
       aria-hidden="true"
       data-slot="switch-control"
       className={cn(
-        "flex h-7 w-11 shrink-0 items-center rounded-full bg-muted p-1 shadow-[var(--shadow-inset)] ring-1 ring-input group-hover:bg-secondary group-data-[selected]:bg-primary group-data-[selected]:ring-primary/70 group-data-[selected]:hover:bg-primary/90 forced-colors:border forced-colors:border-[ButtonText] motion-safe:transition-[background-color,box-shadow] motion-safe:duration-150",
+        "flex h-6 w-10 shrink-0 items-center rounded-full bg-foreground/60 p-0.5 group-hover:bg-foreground/70 group-data-[selected]:bg-primary group-data-[selected]:hover:bg-primary/90 group-data-[focus-visible]:outline-2 group-data-[focus-visible]:outline-solid group-data-[focus-visible]:outline-offset-2 group-data-[focus-visible]:outline-ring forced-colors:border forced-colors:border-[ButtonText] motion-safe:transition-colors motion-safe:duration-200",
         className,
       )}
     />
@@ -130,7 +134,7 @@ export function SwitchThumb({
   className,
   ...props
 }: React.HTMLAttributes<HTMLSpanElement>) {
-  const { isSelected } = useContext(SwitchStateContext);
+  const { isSelected, isPressed, isDisabled } = useContext(SwitchStateContext);
   const { direction } = useLocale();
   const reduceMotion = useReducedMotion();
   return (
@@ -142,13 +146,16 @@ export function SwitchThumb({
     >
       <motion.span
         initial={false}
-        animate={{ x: isSelected ? (direction === "rtl" ? -16 : 16) : 0 }}
+        animate={{
+          x: isSelected ? (direction === "rtl" ? -16 : 16) : 0,
+          scaleX: !isDisabled && isPressed ? 1.1 : 1,
+        }}
         transition={
           reduceMotion
             ? { duration: 0 }
             : { type: "spring", duration: 0.24, bounce: 0 }
         }
-        className="size-5 rounded-full bg-card shadow-[var(--shadow-float)] ring-1 ring-border/50 motion-safe:group-data-[pressed]:scale-95 forced-colors:bg-[ButtonText]"
+        className="size-5 rounded-full bg-card group-data-[selected]:bg-primary-foreground forced-colors:bg-[ButtonText] motion-safe:transition-colors motion-safe:duration-200"
       />
     </span>
   );

@@ -4,7 +4,7 @@ import { ChartGallery } from "@/components/charts/chart-gallery";
 export const metadata: Metadata = {
   title: "Charts | vip/ui",
   description:
-    "Browse TanStack chart examples, animated updates, and tooltips, with installation, usage, and API documentation for the vip/ui chart frame.",
+    "Browse interactive TanStack chart examples with period, metric, and goal controls, plus installation and API documentation for the vip/ui chart frame.",
 };
 
 export default async function ChartsPage({

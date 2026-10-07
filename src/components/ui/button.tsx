@@ -46,8 +46,17 @@ export function Button({
       data-variant={variant}
       data-size={size}
       layout={reduceMotion ? false : layout}
-      whileTap={isStatic || reduceMotion ? undefined : { scale: 0.96 }}
-      transition={{ duration: 0.14, ease: [0.23, 1, 0.32, 1] }}
+      whileHover={
+        isStatic || reduceMotion || props.isDisabled
+          ? undefined
+          : { scale: 1.015 }
+      }
+      whileTap={
+        isStatic || reduceMotion || props.isDisabled
+          ? undefined
+          : { scale: 0.96 }
+      }
+      transition={{ type: "spring", stiffness: 500, damping: 36 }}
       className={composeRenderProps(className, (className) =>
         buttonStyles({ variant, size, className }),
       )}

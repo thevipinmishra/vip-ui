@@ -46,15 +46,21 @@ export function Tooltip({ className, offset = 8, ...props }: TooltipProps) {
           <motion.div
             {...(domProps as HTMLMotionProps<"div">)}
             initial={
-              reduceMotion ? false : { ...edgeOffset(placement), scale: 0.98 }
+              reduceMotion
+                ? false
+                : { opacity: 0, ...edgeOffset(placement), scale: 0.98 }
             }
             animate={
-              isExiting && !reduceMotion
-                ? { ...edgeOffset(placement), scale: 0.99 }
-                : { x: 0, y: 0, scale: 1 }
+              isExiting
+                ? {
+                    opacity: 0,
+                    ...(reduceMotion ? {} : edgeOffset(placement)),
+                    scale: reduceMotion ? 1 : 0.99,
+                  }
+                : { opacity: 1, x: 0, y: 0, scale: 1 }
             }
             transition={{
-              duration: isExiting ? 0.12 : 0.18,
+              duration: reduceMotion ? 0 : isExiting ? 0.12 : 0.18,
               ease: [0.23, 1, 0.32, 1],
             }}
           />
@@ -62,7 +68,7 @@ export function Tooltip({ className, offset = 8, ...props }: TooltipProps) {
       }
       className={composeRenderProps(className, (className) =>
         cn(
-          "max-w-56 rounded-md bg-foreground px-3 py-2 text-xs leading-5 text-background shadow-[var(--shadow-float)] outline-none transition-opacity duration-100 data-[entering]:opacity-0 data-[exiting]:opacity-0 motion-safe:duration-200 motion-safe:data-[exiting]:duration-150",
+          "max-w-56 rounded-md bg-foreground px-3 py-2 text-xs leading-5 text-background shadow-[var(--shadow-float)] outline-none",
           className,
         ),
       )}

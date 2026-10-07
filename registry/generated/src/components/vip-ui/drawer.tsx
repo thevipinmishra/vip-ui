@@ -447,6 +447,7 @@ export function DrawerContent({
 
 export function DrawerHandle({ className, ...props }: ButtonProps) {
   const context = useContext(DrawerContentContext);
+  const reduceMotion = useReducedMotion();
   if (!context) throw new Error("DrawerHandle must be inside <DrawerContent>.");
   return (
     <AriaButton
@@ -477,12 +478,19 @@ export function DrawerHandle({ className, ...props }: ButtonProps) {
         ),
       )}
     >
-      {props.children ?? (
-        <span
-          aria-hidden="true"
-          data-slot="drawer-handle-grip"
-          className="h-1 w-9 rounded-full bg-muted-foreground/50"
-        />
+      {composeRenderProps(
+        props.children,
+        (content, { isHovered, isPressed }) =>
+          content ?? (
+            <motion.span
+              aria-hidden="true"
+              data-slot="drawer-handle-grip"
+              className="h-1 w-9 rounded-full bg-muted-foreground/50"
+              initial={false}
+              animate={{ scaleX: isPressed ? 0.78 : isHovered ? 1.16 : 1 }}
+              transition={{ duration: reduceMotion ? 0 : 0.15 }}
+            />
+          ),
       )}
     </AriaButton>
   );

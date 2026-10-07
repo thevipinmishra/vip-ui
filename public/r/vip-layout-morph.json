@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-layout-morph",
+  "type": "registry:ui",
+  "title": "Layout Morph",
+  "description": "Resize around changing content without distorting it.",
+  "dependencies": ["motion", "tailwind-variants"],
+  "files": [
+    {
+      "path": "src/lib/utils.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/utils.ts",
+      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
+    },
+    {
+      "path": "src/components/ui/layout-morph.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/layout-morph.tsx",
+      "content": "\"use client\";\n\nimport {\n  AnimatePresence,\n  type HTMLMotionProps,\n  motion,\n  useIsPresent,\n  useReducedMotion,\n} from \"motion/react\";\nimport {\n  type ReactNode,\n  useCallback,\n  useEffect,\n  useRef,\n  useState,\n} from \"react\";\nimport { cn } from \"./utils\";\n\nexport interface LayoutMorphProps\n  extends Omit<\n    HTMLMotionProps<\"div\">,\n    \"ref\" | \"children\" | \"animate\" | \"transition\"\n  > {\n  contentKey: string | number;\n  children: ReactNode;\n}\n\nfunction MorphContent({\n  children,\n  onHeight,\n  reducedMotion,\n}: {\n  children: ReactNode;\n  onHeight: (height: number) => void;\n  reducedMotion: boolean;\n}) {\n  const ref = useRef<HTMLDivElement>(null);\n  const isPresent = useIsPresent();\n\n  useEffect(() => {\n    if (!isPresent || !ref.current) return;\n    const node = ref.current;\n    const observer = new ResizeObserver(() => onHeight(node.offsetHeight));\n    observer.observe(node);\n    return () => observer.disconnect();\n  }, [isPresent, onHeight]);\n\n  return (\n    <motion.div\n      ref={ref}\n      data-slot=\"layout-morph-content\"\n      className=\"w-full\"\n      style={!isPresent ? { position: \"absolute\", inset: 0 } : undefined}\n      inert={!isPresent}\n      aria-hidden={!isPresent || undefined}\n      initial={reducedMotion ? false : { opacity: 0, y: 6 }}\n      animate={{ opacity: 1, y: 0 }}\n      exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: -6 }}\n      transition={{ duration: reducedMotion ? 0 : 0.2 }}\n    >\n      {children}\n    </motion.div>\n  );\n}\n\nexport function LayoutMorph({\n  contentKey,\n  children,\n  className,\n  style,\n  ...props\n}: LayoutMorphProps) {\n  const ref = useRef<HTMLDivElement>(null);\n  const [height, setHeight] = useState<number>();\n  const reducedMotion = useReducedMotion() === true;\n  const measure = useCallback((contentHeight: number) => {\n    if (!ref.current) return;\n    const styles = getComputedStyle(ref.current);\n    setHeight(\n      contentHeight +\n        Number.parseFloat(styles.paddingTop) +\n        Number.parseFloat(styles.paddingBottom) +\n        Number.parseFloat(styles.borderTopWidth) +\n        Number.parseFloat(styles.borderBottomWidth),\n    );\n  }, []);\n\n  return (\n    <motion.div\n      {...props}\n      ref={ref}\n      data-slot=\"layout-morph\"\n      className={cn(\"relative overflow-hidden\", className)}\n      style={style}\n      animate={{ height: reducedMotion ? \"auto\" : (height ?? \"auto\") }}\n      transition={{\n        height: { duration: reducedMotion ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] },\n      }}\n    >\n      <AnimatePresence initial={false}>\n        <MorphContent\n          key={contentKey}\n          onHeight={measure}\n          reducedMotion={reducedMotion}\n        >\n          {children}\n        </MorphContent>\n      </AnimatePresence>\n    </motion.div>\n  );\n}\n"
+    }
+  ]
+}

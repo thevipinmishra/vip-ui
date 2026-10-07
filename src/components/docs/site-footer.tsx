@@ -20,7 +20,7 @@ export function SiteFooter() {
           <Link
             href="/"
             aria-label="vip/ui home"
-            className="inline-flex rounded-lg transition-opacity duration-200 hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            className="inline-flex rounded-lg hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
             <SiteLogo />
           </Link>
@@ -34,7 +34,7 @@ export function SiteFooter() {
             <Link
               key={link.href}
               href={link.href}
-              className="inline-flex min-h-8 items-center rounded-md text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              className="inline-flex min-h-8 items-center rounded-md text-sm text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
             >
               {link.label}
             </Link>

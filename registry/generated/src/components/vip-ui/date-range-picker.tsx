@@ -1,10 +1,13 @@
 "use client";
 
+import { motion, useReducedMotion } from "motion/react";
+import { useContext } from "react";
 import {
   DateRangePicker as AriaDateRangePicker,
   composeRenderProps,
   DateInput,
   type DateRangePickerProps,
+  DateRangePickerStateContext,
   type DateValue,
   FieldError,
   Group,
@@ -86,7 +89,7 @@ export function DateRangePicker<T extends DateValue>({
               size="icon"
               className="me-1 shrink-0"
             >
-              <ChevronDown size={17} aria-hidden="true" />
+              <DateRangePickerChevron />
             </Button>
           </Group>
           {description && (
@@ -108,5 +111,20 @@ export function DateRangePicker<T extends DateValue>({
         </>
       )}
     </AriaDateRangePicker>
+  );
+}
+
+function DateRangePickerChevron() {
+  const isOpen = useContext(DateRangePickerStateContext)?.isOpen;
+  const reduceMotion = useReducedMotion();
+  return (
+    <motion.span
+      aria-hidden="true"
+      initial={false}
+      animate={{ rotate: isOpen ? 180 : 0 }}
+      transition={{ duration: reduceMotion ? 0 : 0.2, ease: "easeOut" }}
+    >
+      <ChevronDown size={17} />
+    </motion.span>
   );
 }

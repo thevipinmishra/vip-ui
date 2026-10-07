@@ -18,6 +18,220 @@ export function groupApiProps(api: readonly ApiProp[]) {
 }
 
 export const customComponentApi: Record<string, ApiProp[]> = {
+  "text-reveal": [
+    {
+      component: "TextReveal",
+      prop: "text",
+      type: "string",
+      defaultValue: "required",
+      description: "Plain text announced once to assistive technology.",
+    },
+    {
+      component: "TextReveal",
+      prop: "split",
+      type: '"words" | "characters"',
+      defaultValue: '"words"',
+      description:
+        "Unit used for the masked entrance; characters follow grapheme boundaries.",
+    },
+    {
+      component: "TextReveal",
+      prop: "trigger",
+      type: '"mount" | "in-view"',
+      defaultValue: '"in-view"',
+      description:
+        "Starts on mount or the first time text enters the viewport.",
+    },
+    {
+      component: "TextReveal",
+      prop: "stagger",
+      type: "number",
+      defaultValue: "0.045",
+      description: "Delay in seconds between units.",
+    },
+  ],
+  "text-scramble": [
+    {
+      component: "TextScramble",
+      prop: "value",
+      type: "string",
+      defaultValue: "required",
+      description:
+        "Current text; changing it starts a new scramble. Screen readers receive the final text immediately.",
+    },
+    {
+      component: "TextScramble",
+      prop: "duration",
+      type: "number",
+      defaultValue: "0.7",
+      description: "Time in seconds to resolve the text.",
+    },
+    {
+      component: "TextScramble",
+      prop: "glyphs",
+      type: "string",
+      defaultValue: "A-Z and 0-9",
+      description: "Characters used for the temporary visual scramble.",
+    },
+  ],
+  "scroll-highlight": [
+    {
+      component: "ScrollHighlight",
+      prop: "text",
+      type: "string",
+      defaultValue: "required",
+      description:
+        "Words emphasize as the element scrolls; the full text remains readable and is announced once.",
+    },
+    {
+      component: "ScrollHighlight",
+      prop: "containerRef",
+      type: "RefObject<HTMLElement | null>",
+      defaultValue: "viewport",
+      description: "Scrollable container to track instead of the page.",
+    },
+  ],
+  "scroll-progress": [
+    {
+      component: "ScrollProgress",
+      prop: "label",
+      type: "string",
+      defaultValue: "required",
+      description: "Visible name for the reading progress bar.",
+    },
+    {
+      component: "ScrollProgress",
+      prop: "containerRef",
+      type: "RefObject<HTMLElement | null>",
+      defaultValue: "viewport",
+      description: "Scrollable container to track instead of the page.",
+    },
+  ],
+  presence: [
+    {
+      component: "Presence",
+      prop: "show",
+      type: "boolean",
+      defaultValue: "required",
+      description:
+        "Keeps exiting content mounted but inert until the exit ends. Move focus before hiding focused content.",
+    },
+    {
+      component: "Presence",
+      prop: "as",
+      type: '"div" | "span"',
+      defaultValue: '"div"',
+      description: "Outer element for the conditional content.",
+    },
+    {
+      component: "Presence",
+      prop: "distance / duration",
+      type: "number / number",
+      defaultValue: "8 / 0.22",
+      description:
+        "Exit and entrance travel in pixels, and transition time in seconds.",
+    },
+  ],
+  "stagger-group": [
+    {
+      component: "StaggerGroup",
+      prop: "as",
+      type: '"div" | "ul"',
+      defaultValue: '"div"',
+      description: "Use ul with li StaggerItem children for a semantic list.",
+    },
+    {
+      component: "StaggerGroup",
+      prop: "trigger",
+      type: '"mount" | "in-view"',
+      defaultValue: '"in-view"',
+      description:
+        "Starts the sequence on mount or the first time the group enters view.",
+    },
+    {
+      component: "StaggerGroup",
+      prop: "stagger",
+      type: "number",
+      defaultValue: "0.08",
+      description: "Delay in seconds between StaggerItem children.",
+    },
+    {
+      component: "StaggerItem",
+      prop: "as",
+      type: '"div" | "li"',
+      defaultValue: '"div"',
+      description: "Element receiving the group animation.",
+    },
+  ],
+  "mask-reveal": [
+    {
+      component: "MaskReveal",
+      prop: "direction",
+      type: '"left" | "right" | "up" | "down"',
+      defaultValue: '"left"',
+      description: "Edge from which content becomes visible.",
+    },
+    {
+      component: "MaskReveal",
+      prop: "trigger",
+      type: '"mount" | "in-view"',
+      defaultValue: '"in-view"',
+      description:
+        "Starts on mount or the first time content enters view. Hidden content is inert until reveal starts.",
+    },
+    {
+      component: "MaskReveal",
+      prop: "duration",
+      type: "number",
+      defaultValue: "0.65",
+      description: "Reveal time in seconds.",
+    },
+  ],
+  "layout-morph": [
+    {
+      component: "LayoutMorph",
+      prop: "contentKey",
+      type: "string | number",
+      defaultValue: "required",
+      description:
+        "Change with the content to crossfade it and animate the container height.",
+    },
+  ],
+  "parallax-layer": [
+    {
+      component: "ParallaxLayer",
+      prop: "distance",
+      type: "number",
+      defaultValue: "32",
+      description:
+        "Maximum movement in pixels from center; use an outer clipping container when needed.",
+    },
+    {
+      component: "ParallaxLayer",
+      prop: "containerRef",
+      type: "RefObject<HTMLElement | null>",
+      defaultValue: "viewport",
+      description: "Scrollable container to track instead of the page.",
+    },
+  ],
+  marquee: [
+    {
+      component: "Marquee",
+      prop: "speed",
+      type: "number",
+      defaultValue: "50",
+      description:
+        "Movement in pixels per second. Zero stops movement; hover, focus, and the built-in button pause it.",
+    },
+    {
+      component: "Marquee",
+      prop: "children",
+      type: "ReactNode",
+      defaultValue: "required",
+      description:
+        "Use presentational content without duplicate IDs. The second copy is inert and hidden from assistive technology.",
+    },
+  ],
   "combo-box": [
     {
       component: "ComboBox",
@@ -399,7 +613,8 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "children",
       type: "(item: T) => ReactNode",
       defaultValue: "required",
-      description: "Render each item's contents inside a semantic list item.",
+      description:
+        "Render each item's contents inside a list item. Move focus before removing a focused item.",
     },
   ],
   "input-group": [

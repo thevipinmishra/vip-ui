@@ -1,5 +1,6 @@
 "use client";
 
+import { type HTMLMotionProps, motion, useReducedMotion } from "motion/react";
 import {
   Tag as AriaTag,
   TagGroup as AriaTagGroup,
@@ -52,16 +53,32 @@ export function TagListView<T extends object>({
 }
 
 export function Tag({ className, children, ...props }: TagProps) {
+  const reduceMotion = useReducedMotion();
   return (
     <AriaTag
       {...props}
       data-slot="tag"
+      render={
+        props.render ??
+        ((domProps, { isPressed, isDisabled }) => (
+          <motion.div
+            {...(domProps as HTMLMotionProps<"div">)}
+            initial={false}
+            animate={{ scale: isPressed && !isDisabled ? 0.96 : 1 }}
+            transition={
+              reduceMotion
+                ? { duration: 0 }
+                : { type: "spring", stiffness: 500, damping: 36 }
+            }
+          />
+        ))
+      }
       textValue={
         props.textValue ?? (typeof children === "string" ? children : undefined)
       }
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex min-h-11 cursor-pointer items-center gap-1 rounded-lg bg-card ps-3 pe-1 text-sm font-medium shadow-[var(--shadow-card)] ring-1 ring-border/80 hover:bg-muted selected:bg-accent selected:text-accent-foreground selected:ring-primary/35 disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-safe:transition-[background-color,box-shadow,scale] motion-safe:duration-150 motion-safe:active:scale-[0.96]",
+          "flex min-h-11 cursor-pointer items-center gap-1 rounded-lg bg-card ps-3 pe-1 text-sm font-medium shadow-[var(--shadow-card)] ring-1 ring-border/80 hover:bg-muted selected:bg-accent selected:text-accent-foreground selected:ring-primary/35 disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
           className,
         ),
       )}

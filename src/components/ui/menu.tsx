@@ -11,6 +11,7 @@ import {
   type SeparatorProps,
 } from "react-aria-components";
 import { cn } from "@/lib/utils";
+import { SelectionMark } from "./list-box";
 import { Popover } from "./popover";
 
 export { MenuTrigger };
@@ -63,6 +64,7 @@ export function MenuContent<T extends object>({
 
 export function MenuItem<T extends object>({
   className,
+  children,
   ...props
 }: MenuItemProps<T>) {
   return (
@@ -75,7 +77,19 @@ export function MenuItem<T extends object>({
           className,
         ),
       )}
-    />
+    >
+      {composeRenderProps(
+        children,
+        (content, { isSelected, selectionMode }) => (
+          <>
+            {content}
+            {selectionMode !== "none" && (
+              <SelectionMark isSelected={isSelected} />
+            )}
+          </>
+        ),
+      )}
+    </AriaMenuItem>
   );
 }
 

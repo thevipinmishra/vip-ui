@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-text-reveal",
+  "type": "registry:ui",
+  "title": "Text Reveal",
+  "description": "Reveal text by word or character with staggered movement.",
+  "dependencies": ["motion", "tailwind-variants"],
+  "files": [
+    {
+      "path": "src/lib/utils.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/utils.ts",
+      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
+    },
+    {
+      "path": "src/components/ui/text-reveal.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/text-reveal.tsx",
+      "content": "\"use client\";\n\nimport { motion, useInView, useReducedMotion } from \"motion/react\";\nimport { type ComponentProps, useRef } from \"react\";\nimport { cn } from \"./utils\";\n\nexport interface TextRevealProps\n  extends Omit<ComponentProps<\"span\">, \"children\"> {\n  text: string;\n  split?: \"words\" | \"characters\";\n  trigger?: \"mount\" | \"in-view\";\n  stagger?: number;\n}\n\nexport function TextReveal({\n  text,\n  split = \"words\",\n  trigger = \"in-view\",\n  stagger = 0.045,\n  className,\n  ...props\n}: TextRevealProps) {\n  const ref = useRef<HTMLSpanElement>(null);\n  const inView = useInView(ref, { once: true, amount: 0.25 });\n  const reducedMotion = useReducedMotion();\n  const parts =\n    split === \"words\"\n      ? Array.from(text.matchAll(/\\s+|\\S+/gu), (match) => ({\n          value: match[0],\n          offset: match.index,\n        }))\n      : Array.from(\n          new Intl.Segmenter(undefined, { granularity: \"grapheme\" }).segment(\n            text,\n          ),\n          ({ segment, index }) => ({ value: segment, offset: index }),\n        );\n  let order = 0;\n\n  return (\n    <span\n      {...props}\n      ref={ref}\n      data-slot=\"text-reveal\"\n      className={cn(\"whitespace-pre-wrap\", className)}\n    >\n      <span className=\"sr-only\">{text}</span>\n      <span aria-hidden=\"true\">\n        {parts.map(({ value, offset }) => {\n          if (/^\\s+$/u.test(value))\n            return <span key={`${text}-${offset}`}>{value}</span>;\n          const delay = order++ * stagger;\n          return (\n            <span\n              key={`${text}-${offset}`}\n              className=\"inline-block overflow-hidden align-bottom\"\n            >\n              <motion.span\n                className=\"inline-block\"\n                initial={reducedMotion ? false : { opacity: 0, y: \"100%\" }}\n                animate={\n                  reducedMotion || trigger === \"mount\" || inView\n                    ? { opacity: 1, y: \"0%\" }\n                    : { opacity: 0, y: \"100%\" }\n                }\n                transition={{\n                  duration: reducedMotion ? 0 : 0.5,\n                  delay: reducedMotion ? 0 : delay,\n                  ease: [0.22, 1, 0.36, 1],\n                }}\n              >\n                {value}\n              </motion.span>\n            </span>\n          );\n        })}\n      </span>\n    </span>\n  );\n}\n"
+    }
+  ]
+}

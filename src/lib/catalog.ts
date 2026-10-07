@@ -284,6 +284,62 @@ const catalog: CatalogDefinition[] = [
     ],
   },
   {
+    title: "Motion & effects",
+    description: "Text, content transitions, and scroll-linked movement.",
+    items: [
+      {
+        slug: "text-reveal",
+        name: "Text reveal",
+        useFor: "Revealing text by word or character.",
+      },
+      {
+        slug: "text-scramble",
+        name: "Text scramble",
+        useFor: "Resolving changing text from scrambled characters.",
+      },
+      {
+        slug: "scroll-highlight",
+        name: "Scroll highlight",
+        useFor: "Emphasizing words as a passage scrolls into view.",
+      },
+      {
+        slug: "scroll-progress",
+        name: "Scroll progress",
+        useFor: "Showing reading progress through a page or scrollable panel.",
+      },
+      {
+        slug: "presence",
+        name: "Presence",
+        useFor: "Animating conditional content into and out of a page.",
+      },
+      {
+        slug: "stagger-group",
+        name: "Stagger group",
+        useFor: "Sequencing the entrance of grouped items.",
+      },
+      {
+        slug: "mask-reveal",
+        name: "Mask reveal",
+        useFor: "Uncovering media or content from an edge.",
+      },
+      {
+        slug: "layout-morph",
+        name: "Layout morph",
+        useFor: "Resizing around changing content without stretching it.",
+      },
+      {
+        slug: "parallax-layer",
+        name: "Parallax layer",
+        useFor: "Moving a layer in response to scrolling.",
+      },
+      {
+        slug: "marquee",
+        name: "Marquee",
+        useFor: "Looping a pausable strip of content.",
+      },
+    ],
+  },
+  {
     title: "Content & feedback",
     description: "Information, navigation, and progress.",
     items: [

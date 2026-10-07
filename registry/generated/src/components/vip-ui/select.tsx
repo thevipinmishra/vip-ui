@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import type { ReactNode } from "react";
+import { type ReactNode, useContext } from "react";
 import {
   type Button as AriaButton,
   Select as AriaSelect,
@@ -12,20 +12,22 @@ import {
   Label,
   ListBox,
   ListBoxItem,
+  SelectStateContext,
   Text,
 } from "react-aria-components";
-import { Check, ChevronDown } from "reicon-react";
+import { ChevronDown } from "reicon-react";
 import { cn } from "./utils";
 import {
   fieldDescriptionStyles,
   fieldErrorStyles,
   fieldLabelStyles,
 } from "./field-styles";
+import { SelectionMark } from "./list-box";
 import { Popover } from "./popover";
 import { PressButton } from "./press-button";
 
 const selectTriggerStyles =
-  "flex min-h-12 w-full cursor-pointer items-center justify-between gap-3 rounded-lg border border-input bg-card px-3.5 text-start text-sm text-foreground shadow-[var(--shadow-card)] hover:border-primary/45 hover:bg-muted/60 motion-safe:transition-[border-color,background-color,box-shadow] motion-safe:duration-150 data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring group-data-[invalid]:border-destructive group-data-[invalid]:ring-3 group-data-[invalid]:ring-destructive/20 data-[disabled]:cursor-default data-[disabled]:bg-muted data-[disabled]:opacity-50";
+  "flex min-h-12 w-full cursor-pointer items-center justify-between gap-3 rounded-lg border border-input bg-card px-3.5 text-start text-sm text-foreground shadow-[var(--shadow-card)] hover:border-primary/45 hover:bg-muted/60 data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring group-data-[invalid]:border-destructive group-data-[invalid]:ring-3 group-data-[invalid]:ring-destructive/20 data-[disabled]:cursor-default data-[disabled]:bg-muted data-[disabled]:opacity-50";
 const selectItemStyles =
   "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted data-[focused]:bg-muted data-[selected]:bg-accent data-[selected]:text-accent-foreground data-[focus-visible]:-outline-offset-2 data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring data-[disabled]:cursor-default data-[disabled]:opacity-50";
 const selectPopoverStyles =
@@ -141,19 +143,21 @@ export function Select({
                     textValue={option.name}
                     className={selectItemStyles}
                   >
-                    <span className="min-w-0">
-                      <span className="block font-medium">{option.name}</span>
-                      {option.description && (
-                        <span className="mt-0.5 block text-xs text-muted-foreground group-data-[selected]/item:text-accent-foreground">
-                          {option.description}
+                    {({ isSelected }) => (
+                      <>
+                        <span className="min-w-0">
+                          <span className="block font-medium">
+                            {option.name}
+                          </span>
+                          {option.description && (
+                            <span className="mt-0.5 block text-xs text-muted-foreground group-data-[selected]/item:text-accent-foreground">
+                              {option.description}
+                            </span>
+                          )}
                         </span>
-                      )}
-                    </span>
-                    <Check
-                      size={15}
-                      aria-hidden="true"
-                      className="shrink-0 opacity-0 group-data-[selected]/item:opacity-100"
-                    />
+                        <SelectionMark isSelected={isSelected} />
+                      </>
+                    )}
                   </ListBoxItem>
                 )}
               </ListBox>
@@ -193,14 +197,26 @@ export function SelectTrigger({
       {children ?? (
         <>
           <SelectValue />
-          <ChevronDown
-            size={16}
-            aria-hidden="true"
-            className="shrink-0 text-muted-foreground motion-safe:transition-transform motion-safe:duration-200 group-data-[open]:rotate-180"
-          />
+          <SelectChevron />
         </>
       )}
     </PressButton>
+  );
+}
+
+function SelectChevron() {
+  const isOpen = useContext(SelectStateContext)?.isOpen;
+  const reduceMotion = useReducedMotion();
+  return (
+    <motion.span
+      aria-hidden="true"
+      className="shrink-0 text-muted-foreground"
+      initial={false}
+      animate={{ rotate: isOpen ? 180 : 0 }}
+      transition={{ duration: reduceMotion ? 0 : 0.2, ease: "easeOut" }}
+    >
+      <ChevronDown size={16} />
+    </motion.span>
   );
 }
 
@@ -266,12 +282,12 @@ export function SelectItem({
         cn(selectItemStyles, className),
       )}
     >
-      {children}
-      <Check
-        size={15}
-        aria-hidden="true"
-        className="ms-auto shrink-0 opacity-0 group-data-[selected]/item:opacity-100"
-      />
+      {composeRenderProps(children, (content, { isSelected }) => (
+        <>
+          {content}
+          <SelectionMark isSelected={isSelected} />
+        </>
+      ))}
     </ListBoxItem>
   );
 }
