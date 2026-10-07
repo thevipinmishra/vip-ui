@@ -3,9 +3,8 @@ import {
   ComponentPage,
   withExamplePreviews,
 } from "@/components/docs/component-page";
+import { SliderBudgetDemo } from "@/components/docs/slider-budget-demo";
 import { SliderDemo } from "@/components/docs/slider-demo";
-import { SliderDisabledDemo } from "@/components/docs/slider-disabled-demo";
-import { SliderRangeDemo } from "@/components/docs/slider-range-demo";
 import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
@@ -22,8 +21,7 @@ export default function SliderPage() {
       preview={<SliderDemo />}
       previewSourcePath={page.usage}
       examples={withExamplePreviews(page.examples, [
-        <SliderRangeDemo key="example-1" />,
-        <SliderDisabledDemo key="example-2" />,
+        <SliderBudgetDemo key="example-1" />,
       ])}
       sourcePath="src/components/ui/slider.tsx"
     />

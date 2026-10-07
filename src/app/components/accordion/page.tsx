@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
+import { AccordionBillingDemo } from "@/components/docs/accordion-billing-demo";
 import { AccordionDemo } from "@/components/docs/accordion-demo";
-import { AccordionDisabledDemo } from "@/components/docs/accordion-disabled-demo";
-import { AccordionDividedDemo } from "@/components/docs/accordion-divided-demo";
-import { AccordionMultipleDemo } from "@/components/docs/accordion-multiple-demo";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -23,9 +21,7 @@ export default function AccordionPage() {
       preview={<AccordionDemo />}
       previewSourcePath={page.usage}
       examples={withExamplePreviews(page.examples, [
-        <AccordionMultipleDemo key="example-1" />,
-        <AccordionDisabledDemo key="example-2" />,
-        <AccordionDividedDemo key="example-3" />,
+        <AccordionBillingDemo key="example-1" />,
       ])}
       sourcePath="src/components/ui/accordion.tsx"
     />

@@ -16,7 +16,7 @@ export function MenuDemo() {
   return (
     <div className="flex flex-col items-start gap-3">
       <MenuTrigger>
-        <Button variant="outline">Open menu</Button>
+        <Button variant="outline">Project actions</Button>
         <MenuPopover>
           <MenuContent aria-label="Component links and actions">
             <MenuItem href="/components/avatar">Avatar docs</MenuItem>

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { ButtonBasicDemo } from "@/components/docs/button-basic-demo";
-import { ButtonSizesDemo } from "@/components/docs/button-sizes-demo";
-import { ButtonVariantsDemo } from "@/components/docs/button-variants-demo";
+import { ButtonProjectActionsDemo } from "@/components/docs/button-project-actions-demo";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -23,8 +22,7 @@ export default function ButtonPage() {
       preview={<ButtonBasicDemo />}
       previewSourcePath={page.usage}
       examples={withExamplePreviews(page.examples, [
-        <ButtonVariantsDemo key="variants" />,
-        <ButtonSizesDemo key="sizes" />,
+        <ButtonProjectActionsDemo key="project-actions" />,
       ])}
       sourcePath="src/components/ui/button.tsx"
     />
