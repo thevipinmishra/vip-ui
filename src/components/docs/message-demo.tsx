@@ -13,9 +13,15 @@ type Entry = {
   id: string;
   sender: string;
   text: string;
-  side: "incoming" | "outgoing";
+  side: "incoming" | "outgoing" | "system";
 };
 const initialMessages: Entry[] = [
+  {
+    id: "joined",
+    sender: "Workspace",
+    text: "Maya Chen joined the conversation.",
+    side: "system",
+  },
   {
     id: "question",
     sender: "Maya",
@@ -54,13 +60,15 @@ export function MessageDemo() {
                 <Avatar name={entry.sender} initials="M" />
               ) : undefined
             }
-            status={entry.id !== "question" ? "Local note" : undefined}
+            status={entry.side === "outgoing" ? "Local note" : undefined}
             actions={
-              <CopyButton
-                value={entry.text}
-                aria-label={`Copy ${entry.sender}'s message`}
-                variant="ghost"
-              />
+              entry.side === "system" ? undefined : (
+                <CopyButton
+                  value={entry.text}
+                  aria-label={`Copy ${entry.sender}'s message`}
+                  variant="ghost"
+                />
+              )
             }
           >
             {entry.text}

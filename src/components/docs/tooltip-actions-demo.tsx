@@ -30,7 +30,7 @@ export function TooltipActionsDemo() {
             >
               <Check size={17} aria-hidden="true" />
             </Button>
-            <TooltipContent>
+            <TooltipContent placement="top">
               {reviewed
                 ? "Return this draft to the review queue."
                 : "Finish reviewing this draft."}
@@ -51,7 +51,7 @@ export function TooltipActionsDemo() {
             >
               <InfoCircle size={17} aria-hidden="true" />
             </Button>
-            <TooltipContent>
+            <TooltipContent placement="bottom">
               {showDetails
                 ? "Collapse the reviewer and comment count."
                 : "See the reviewer and comment count."}

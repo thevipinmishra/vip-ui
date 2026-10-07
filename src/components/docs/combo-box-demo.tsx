@@ -70,6 +70,13 @@ export function ComboBoxDemo() {
           "No framework selected."
         )}
       </output>
+      <ComboBox
+        label="Archived framework"
+        description="This project is no longer editable."
+        defaultValue="next"
+        isDisabled
+        options={[{ id: "next", name: "Next.js" }]}
+      />
     </div>
   );
 }

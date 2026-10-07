@@ -12,38 +12,41 @@ export function ToastStatusDemo() {
         onPress={() =>
           showToast(
             {
-              title: "Info notification",
-              description: "An update is available.",
+              title: "Update available",
+              description: "Version 2.6 is ready to install.",
             },
             { timeout: 5000 },
           )
         }
       >
-        <InfoCircle size={16} aria-hidden="true" /> Info
+        <InfoCircle size={16} aria-hidden="true" /> Check for updates
       </Button>
       <Button
         variant="outline"
         onPress={() =>
           showToast(
-            { title: "Success notification", variant: "success" },
+            {
+              title: "Release published",
+              description: "Autumn campaign is live.",
+              variant: "success",
+            },
             { timeout: 5000 },
           )
         }
       >
-        <CheckCircle size={16} aria-hidden="true" /> Success
+        <CheckCircle size={16} aria-hidden="true" /> Publish release
       </Button>
       <Button
         variant="outline"
         onPress={() =>
           showToast({
-            title: "Warning notification",
-            description:
-              "Dismiss this notification when you're done reading it.",
+            title: "Billing needs attention",
+            description: "Update the card on file before Friday.",
             variant: "warning",
           })
         }
       >
-        <Warning size={16} aria-hidden="true" /> Warning
+        <Warning size={16} aria-hidden="true" /> Review billing
       </Button>
     </div>
   );
