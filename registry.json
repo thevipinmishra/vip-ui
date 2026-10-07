@@ -467,7 +467,7 @@
       "type": "registry:ui",
       "title": "Color Swatch Picker",
       "description": "Choose from a set of color swatches.",
-      "dependencies": ["react-aria-components", "tailwind-variants"],
+      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -526,6 +526,11 @@
           "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/list-box.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/list-box.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/popover.tsx",
@@ -592,6 +597,11 @@
           "target": "@components/vip-ui/kbd-code.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/list-box.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/list-box.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/popover.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/popover.tsx"
@@ -623,12 +633,22 @@
       "type": "registry:ui",
       "title": "Context Menu",
       "description": "Open actions beside an item with pointer, touch, or keyboard.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "motion",
+        "react-aria-components",
+        "reicon-react",
+        "tailwind-variants"
+      ],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/list-box.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/list-box.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/popover.tsx",
@@ -1130,6 +1150,25 @@
       ]
     },
     {
+      "name": "vip-layout-morph",
+      "type": "registry:ui",
+      "title": "Layout Morph",
+      "description": "Resize around changing content without distorting it.",
+      "dependencies": ["motion", "tailwind-variants"],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/layout-morph.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/layout-morph.tsx"
+        }
+      ]
+    },
+    {
       "name": "vip-link",
       "type": "registry:ui",
       "title": "Link",
@@ -1173,16 +1212,74 @@
       ]
     },
     {
-      "name": "vip-menu",
+      "name": "vip-marquee",
       "type": "registry:ui",
-      "title": "Menu",
-      "description": "Choose an action from a popover menu.",
+      "title": "Marquee",
+      "description": "Loop a strip of content with a pause control.",
       "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/marquee.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/marquee.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-mask-reveal",
+      "type": "registry:ui",
+      "title": "Mask Reveal",
+      "description": "Uncover content from an edge on mount or in view.",
+      "dependencies": ["motion", "tailwind-variants"],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/mask-reveal.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/mask-reveal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-menu",
+      "type": "registry:ui",
+      "title": "Menu",
+      "description": "Choose an action from a popover menu.",
+      "dependencies": [
+        "motion",
+        "react-aria-components",
+        "reicon-react",
+        "tailwind-variants"
+      ],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/list-box.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/list-box.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/popover.tsx",
@@ -1297,7 +1394,7 @@
       "type": "registry:ui",
       "title": "Pagination",
       "description": "Navigate between pages of results.",
-      "dependencies": ["tailwind-variants"],
+      "dependencies": ["motion", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1308,6 +1405,25 @@
           "path": "registry/generated/src/components/vip-ui/pagination.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/pagination.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-parallax-layer",
+      "type": "registry:ui",
+      "title": "Parallax Layer",
+      "description": "Move a layer as its container scrolls.",
+      "dependencies": ["motion", "tailwind-variants"],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/parallax-layer.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/parallax-layer.tsx"
         }
       ]
     },
@@ -1395,6 +1511,25 @@
           "path": "registry/generated/src/components/vip-ui/presence-list.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/presence-list.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-presence",
+      "type": "registry:ui",
+      "title": "Presence",
+      "description": "Animate conditional content when it enters or leaves.",
+      "dependencies": ["motion", "tailwind-variants"],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/presence.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/presence.tsx"
         }
       ]
     },
@@ -1523,6 +1658,44 @@
       ]
     },
     {
+      "name": "vip-scroll-highlight",
+      "type": "registry:ui",
+      "title": "Scroll Highlight",
+      "description": "Emphasize words as a passage scrolls through the viewport or a panel.",
+      "dependencies": ["motion", "tailwind-variants"],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/scroll-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/scroll-highlight.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-scroll-progress",
+      "type": "registry:ui",
+      "title": "Scroll Progress",
+      "description": "Show reading progress in a page or scrollable panel.",
+      "dependencies": ["motion", "tailwind-variants"],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/scroll-progress.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/scroll-progress.tsx"
+        }
+      ]
+    },
+    {
       "name": "vip-search-field",
       "type": "registry:ui",
       "title": "Search Field",
@@ -1571,6 +1744,11 @@
           "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/list-box.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/list-box.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/popover.tsx",
@@ -1627,7 +1805,7 @@
       "type": "registry:ui",
       "title": "Slider",
       "description": "Adjust a value by dragging or with the keyboard.",
-      "dependencies": ["react-aria-components", "tailwind-variants"],
+      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1652,6 +1830,25 @@
           "path": "registry/generated/src/components/vip-ui/spinner.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/spinner.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-stagger-group",
+      "type": "registry:ui",
+      "title": "Stagger Group",
+      "description": "Sequence the entrance of grouped content.",
+      "dependencies": ["motion", "tailwind-variants"],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/stagger-group.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/stagger-group.tsx"
         }
       ]
     },
@@ -1828,6 +2025,44 @@
       ]
     },
     {
+      "name": "vip-text-reveal",
+      "type": "registry:ui",
+      "title": "Text Reveal",
+      "description": "Reveal text by word or character with staggered movement.",
+      "dependencies": ["motion", "tailwind-variants"],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/text-reveal.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/text-reveal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-text-scramble",
+      "type": "registry:ui",
+      "title": "Text Scramble",
+      "description": "Resolve changing text from scrambled characters.",
+      "dependencies": ["motion", "tailwind-variants"],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/text-scramble.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/text-scramble.tsx"
+        }
+      ]
+    },
+    {
       "name": "vip-text-swap",
       "type": "registry:ui",
       "title": "Text Swap",
@@ -1900,8 +2135,8 @@
       "title": "Toast",
       "description": "Show feedback after an action without interrupting the page.",
       "dependencies": [
+        "motion",
         "react-aria-components",
-        "react-dom",
         "reicon-react",
         "tailwind-variants"
       ],
@@ -1923,7 +2158,7 @@
       "type": "registry:ui",
       "title": "Toggle Button Group",
       "description": "Choose one or more persistent actions in a group.",
-      "dependencies": ["react-aria-components", "tailwind-variants"],
+      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1944,6 +2179,16 @@
       "description": "Turn a persistent action on or off.",
       "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/toggle-button-group.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/toggle-button-group.tsx"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/toggle-button.tsx",
           "type": "registry:file",
@@ -2156,6 +2401,11 @@
           "target": "@components/vip-ui/search-field.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/list-box.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/list-box.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/popover.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/popover.tsx"
@@ -2356,6 +2606,11 @@
           "target": "@components/vip-ui/search-field.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/list-box.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/list-box.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/press-button.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/press-button.tsx"
@@ -2544,6 +2799,11 @@
           "path": "registry/generated/src/components/vip-ui/kbd-code.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/kbd-code.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/list-box.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/list-box.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/menu.tsx",

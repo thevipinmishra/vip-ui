@@ -1,11 +1,13 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import { type ReactNode, useContext } from "react";
 import {
   Button as AriaButton,
   ComboBox as AriaComboBox,
   type ComboBoxProps as AriaComboBoxProps,
   ComboBoxValue as AriaComboBoxValue,
+  ComboBoxStateContext,
   composeRenderProps,
   FieldError,
   Input,
@@ -14,7 +16,7 @@ import {
   ListBoxItem,
   Text,
 } from "react-aria-components";
-import { Check, ChevronDown } from "reicon-react";
+import { ChevronDown } from "reicon-react";
 import { cn } from "./utils";
 import {
   fieldDescriptionStyles,
@@ -22,6 +24,7 @@ import {
   fieldInputStyles,
   fieldLabelStyles,
 } from "./field-styles";
+import { SelectionMark } from "./list-box";
 import { Popover } from "./popover";
 import { Tag, TagGroup, TagListView } from "./tag-group";
 
@@ -92,7 +95,7 @@ function SingleComboBox({
         onValueChange?.(key === null ? "" : String(key));
       }}
       className={composeRenderProps(className, (className) =>
-        cn("flex w-full flex-col gap-2", className),
+        cn("group flex w-full flex-col gap-2", className),
       )}
     >
       {children ?? (
@@ -121,7 +124,7 @@ function MultipleComboBox({
       {...props}
       data-slot="combo-box"
       className={composeRenderProps(className, (className) =>
-        cn("flex w-full flex-col gap-2", className),
+        cn("group flex w-full flex-col gap-2", className),
       )}
     >
       {children ?? (
@@ -183,19 +186,19 @@ function ComboBoxDefaults({
               textValue={option.name}
               className={comboBoxItemStyles}
             >
-              <span className="min-w-0">
-                <span className="block font-medium">{option.name}</span>
-                {option.description && (
-                  <span className="mt-0.5 block text-xs text-muted-foreground group-data-[selected]/item:text-accent-foreground">
-                    {option.description}
+              {({ isSelected }) => (
+                <>
+                  <span className="min-w-0">
+                    <span className="block font-medium">{option.name}</span>
+                    {option.description && (
+                      <span className="mt-0.5 block text-xs text-muted-foreground group-data-[selected]/item:text-accent-foreground">
+                        {option.description}
+                      </span>
+                    )}
                   </span>
-                )}
-              </span>
-              <Check
-                size={15}
-                aria-hidden="true"
-                className="shrink-0 opacity-0 group-data-[selected]/item:opacity-100"
-              />
+                  <SelectionMark isSelected={isSelected} />
+                </>
+              )}
             </ListBoxItem>
           )}
         </ListBox>
@@ -293,8 +296,23 @@ export function ComboBoxTrigger({
         ),
       )}
     >
-      {children ?? <ChevronDown size={16} aria-hidden="true" />}
+      {children ?? <ComboBoxChevron />}
     </AriaButton>
+  );
+}
+
+function ComboBoxChevron() {
+  const isOpen = useContext(ComboBoxStateContext)?.isOpen;
+  const reduceMotion = useReducedMotion();
+  return (
+    <motion.span
+      aria-hidden="true"
+      initial={false}
+      animate={{ rotate: isOpen ? 180 : 0 }}
+      transition={{ duration: reduceMotion ? 0 : 0.2, ease: "easeOut" }}
+    >
+      <ChevronDown size={16} />
+    </motion.span>
   );
 }
 
@@ -343,12 +361,12 @@ export function ComboBoxItem({
         cn(comboBoxItemStyles, className),
       )}
     >
-      {children}
-      <Check
-        size={15}
-        aria-hidden="true"
-        className="ms-auto shrink-0 opacity-0 group-data-[selected]/item:opacity-100"
-      />
+      {composeRenderProps(children, (content, { isSelected }) => (
+        <>
+          {content}
+          <SelectionMark isSelected={isSelected} />
+        </>
+      ))}
     </ListBoxItem>
   );
 }

@@ -13,6 +13,8 @@ import { cn } from "./utils";
 const CheckboxStateContext = createContext({
   isSelected: false,
   isIndeterminate: false,
+  isHovered: false,
+  isPressed: false,
 });
 
 export interface CheckboxProps
@@ -99,7 +101,8 @@ export function CheckboxIndicator({
   className,
   ...props
 }: React.HTMLAttributes<HTMLSpanElement>) {
-  const { isSelected, isIndeterminate } = useContext(CheckboxStateContext);
+  const { isSelected, isIndeterminate, isHovered, isPressed } =
+    useContext(CheckboxStateContext);
   const reduceMotion = useReducedMotion();
   const isChecked = isSelected || isIndeterminate;
   return (
@@ -108,14 +111,14 @@ export function CheckboxIndicator({
       aria-hidden="true"
       data-slot="checkbox-indicator"
       className={cn(
-        "mt-0.5 grid size-5 shrink-0 place-items-center rounded-md border border-input bg-card shadow-[var(--shadow-inset)] group-hover:border-primary/60 group-data-[selected]:border-primary group-data-[selected]:bg-primary group-data-[indeterminate]:border-primary group-data-[indeterminate]:bg-primary motion-safe:transition-[border-color,background-color] motion-safe:duration-150",
+        "mt-0.5 grid size-5 shrink-0 place-items-center rounded-md border border-input bg-card shadow-[var(--shadow-inset)] group-hover:border-primary/60 group-data-[selected]:border-primary group-data-[selected]:bg-primary group-data-[indeterminate]:border-primary group-data-[indeterminate]:bg-primary",
         className,
       )}
     >
       <motion.span
         initial={false}
         animate={{
-          scale: isChecked ? 1 : 0.86,
+          scale: isChecked ? (isPressed ? 0.9 : isHovered ? 1.06 : 1) : 0.86,
           opacity: isChecked ? 1 : 0,
         }}
         transition={{

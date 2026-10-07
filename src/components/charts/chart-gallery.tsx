@@ -1,13 +1,14 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import Link from "next/link";
-import { ArrowRight, Link2 } from "reicon-react";
+import { ArrowRight } from "reicon-react";
 import { CodeFrame } from "@/components/docs/code-frame";
 import { CodeSnippet } from "@/components/docs/code-snippet";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ButtonLink } from "@/components/ui/button-link";
+import { Card, CardContent } from "@/components/ui/card";
 import { chartCategories } from "./catalog";
 import { ChartDocumentation } from "./chart-documentation";
 import { ChartFilters } from "./chart-filters";
+import { ChartGalleryItem } from "./chart-plot";
 import { ChartSourceDrawer } from "./chart-source-drawer";
 
 export async function ChartGallery({
@@ -41,7 +42,7 @@ export async function ChartGallery({
         id="gallery"
         aria-labelledby="charts-title"
         data-toc-skip
-        className="scroll-mt-28 pb-24 pt-14 sm:pt-20"
+        className="scroll-mt-28 pb-16 pt-10 sm:pt-14"
       >
         <h1
           id="charts-title"
@@ -49,17 +50,14 @@ export async function ChartGallery({
         >
           Charts
         </h1>
-        <div className="mb-10 mt-4 flex flex-wrap items-end justify-between gap-4">
+        <div className="mb-7 mt-4 flex flex-wrap items-center justify-between gap-5">
           <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
             Choose a chart type, then open View code to copy its source files.
             Screen readers can access exact values in a table for each chart.
           </p>
-          <Link
-            href="#documentation"
-            className="inline-flex min-h-10 items-center gap-2 text-sm font-medium text-primary hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-          >
-            Installation and usage <ArrowRight size={15} aria-hidden="true" />
-          </Link>
+          <ButtonLink href="#installation" variant="outline" size="sm">
+            Install charts <ArrowRight size={15} aria-hidden="true" />
+          </ButtonLink>
         </div>
         <ChartFilters
           categories={chartCategories.map(({ slug, label }) => ({
@@ -97,11 +95,11 @@ function ChartCategoryContent({
   shared: string;
 }) {
   return (
-    <section aria-labelledby="category-title" className="pt-10">
-      <div className="flex flex-wrap items-center justify-between gap-4">
+    <section aria-labelledby="category-title" className="pt-6">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <h2
           id="category-title"
-          className="text-[clamp(2rem,4vw,3.4rem)] font-semibold tracking-[-0.055em]"
+          className="text-xl font-semibold tracking-[-0.035em] sm:text-2xl"
         >
           {category.title}
         </h2>
@@ -126,27 +124,19 @@ function ChartCategoryContent({
           </CodeFrame>
         </ChartSourceDrawer>
       </div>
-      <div className="mt-8 grid gap-5 lg:grid-cols-2">
+      <div className="mt-5 grid gap-4 lg:grid-cols-2">
         {category.examples.map((example) => {
           const anchor = chartExampleAnchor(category.slug, example.name);
           return (
             <Card
               key={example.name}
               id={anchor}
-              className="relative z-0 flex min-w-0 scroll-mt-28 flex-col rounded-[22px] hover:z-10 focus-within:z-10"
+              className="relative z-0 flex min-w-0 scroll-mt-28 flex-col rounded-2xl hover:z-10 focus-within:z-10"
             >
-              <CardHeader className="flex-row items-center justify-between gap-3">
-                <CardTitle>{example.name}</CardTitle>
-                <a
-                  href={`#${anchor}`}
-                  aria-label={`Link to ${example.name}`}
-                  className="grid size-8 shrink-0 place-items-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring"
-                >
-                  <Link2 size={15} aria-hidden="true" />
-                </a>
-              </CardHeader>
-              <CardContent className="min-w-0 flex-1 pb-6 pt-5">
-                {example.preview}
+              <CardContent className="min-w-0 flex-1 p-0">
+                <ChartGalleryItem name={example.name} href={`#${anchor}`}>
+                  {example.preview}
+                </ChartGalleryItem>
               </CardContent>
             </Card>
           );

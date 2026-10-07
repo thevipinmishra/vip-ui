@@ -46,17 +46,22 @@ import { FormValidationDemo } from "@/components/docs/form-validation-demo";
 import { GridListDemo } from "@/components/docs/grid-list-demo";
 import { GridListDisabledDemo } from "@/components/docs/grid-list-disabled-demo";
 import { KbdCodeDemo } from "@/components/docs/kbd-code-demo";
+import { LayoutMorphDemo } from "@/components/docs/layout-morph-demo";
 import { LinkDemo } from "@/components/docs/link-demo";
 import { ListBoxDemo } from "@/components/docs/list-box-demo";
 import { ListBoxMultipleDemo } from "@/components/docs/list-box-multiple-demo";
+import { MarqueeDemo } from "@/components/docs/marquee-demo";
+import { MaskRevealDemo } from "@/components/docs/mask-reveal-demo";
 import { MeterBasicDemo } from "@/components/docs/meter-basic-demo";
 import { MeterDemo } from "@/components/docs/meter-demo";
 import { NumberFieldDemo } from "@/components/docs/number-field-demo";
 import { NumberFieldSeatsDemo } from "@/components/docs/number-field-seats-demo";
 import { PaginationBasicDemo } from "@/components/docs/pagination-basic-demo";
 import { PaginationDemo } from "@/components/docs/pagination-demo";
+import { ParallaxLayerDemo } from "@/components/docs/parallax-layer-demo";
 import { PopoverDemo } from "@/components/docs/popover-demo";
 import { PopoverPlacementDemo } from "@/components/docs/popover-placement-demo";
+import { PresenceDemo } from "@/components/docs/presence-demo";
 import { PresenceListBasicDemo } from "@/components/docs/presence-list-basic-demo";
 import { PresenceListDemo } from "@/components/docs/presence-list-demo";
 import { PreviewTriggerDemo } from "@/components/docs/preview-trigger-demo";
@@ -66,12 +71,15 @@ import { ProgressRingBasicDemo } from "@/components/docs/progress-ring-basic-dem
 import { ProgressRingDemo } from "@/components/docs/progress-ring-demo";
 import { RangeCalendarDemo } from "@/components/docs/range-calendar-demo";
 import { RangeCalendarLimitsDemo } from "@/components/docs/range-calendar-limits-demo";
+import { ScrollHighlightDemo } from "@/components/docs/scroll-highlight-demo";
+import { ScrollProgressDemo } from "@/components/docs/scroll-progress-demo";
 import { SeparatorDemo } from "@/components/docs/separator-demo";
 import { SeparatorVerticalDemo } from "@/components/docs/separator-vertical-demo";
 import { SkeletonDemo } from "@/components/docs/skeleton-demo";
 import { SpinnerBasicDemo } from "@/components/docs/spinner-basic-demo";
 import { SpinnerDemo } from "@/components/docs/spinner-demo";
 import { SpinnerUsageDemo } from "@/components/docs/spinner-usage-demo";
+import { StaggerGroupDemo } from "@/components/docs/stagger-group-demo";
 import { StatDemo } from "@/components/docs/stat-demo";
 import { StepperBasicDemo } from "@/components/docs/stepper-basic-demo";
 import { StepperDemo } from "@/components/docs/stepper-demo";
@@ -80,6 +88,8 @@ import { TableDemo } from "@/components/docs/table-demo";
 import { TableFilterDemo } from "@/components/docs/table-filter-demo";
 import { TableSortingDemo } from "@/components/docs/table-sorting-demo";
 import { TagGroupDemo } from "@/components/docs/tag-group-demo";
+import { TextRevealDemo } from "@/components/docs/text-reveal-demo";
+import { TextScrambleDemo } from "@/components/docs/text-scramble-demo";
 import { TextSwapDemo } from "@/components/docs/text-swap-demo";
 import { TimeFieldDemo } from "@/components/docs/time-field-demo";
 import { TimelineDemo } from "@/components/docs/timeline-demo";
@@ -350,6 +360,28 @@ const entries: {
     name: "Text swap",
     demo: <TextSwapDemo />,
   },
+  { slug: "text-reveal", name: "Text reveal", demo: <TextRevealDemo /> },
+  { slug: "text-scramble", name: "Text scramble", demo: <TextScrambleDemo /> },
+  {
+    slug: "scroll-highlight",
+    name: "Scroll highlight",
+    demo: <ScrollHighlightDemo />,
+  },
+  {
+    slug: "scroll-progress",
+    name: "Scroll progress",
+    demo: <ScrollProgressDemo />,
+  },
+  { slug: "presence", name: "Presence", demo: <PresenceDemo /> },
+  { slug: "stagger-group", name: "Stagger group", demo: <StaggerGroupDemo /> },
+  { slug: "mask-reveal", name: "Mask reveal", demo: <MaskRevealDemo /> },
+  { slug: "layout-morph", name: "Layout morph", demo: <LayoutMorphDemo /> },
+  {
+    slug: "parallax-layer",
+    name: "Parallax layer",
+    demo: <ParallaxLayerDemo />,
+  },
+  { slug: "marquee", name: "Marquee", demo: <MarqueeDemo /> },
   {
     slug: "stepper",
     name: "Stepper",

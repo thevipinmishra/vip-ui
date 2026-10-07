@@ -6,6 +6,8 @@ import { Chart } from "@tanstack/charts/react/core";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
+import { useMemo, useState } from "react";
+import { ToggleButton } from "@/components/ui/toggle-button";
 import {
   ChartPlot,
   galleryRenderer,
@@ -128,6 +130,79 @@ const uptimeChart = defineChart({
     }),
   },
 });
+
+export function LineThreshold() {
+  const [showGoal, setShowGoal] = useState(true);
+  const definition = useMemo(
+    () =>
+      defineChart({
+        marks: [
+          ...(showGoal
+            ? [
+                decorative(
+                  ruleY([30], {
+                    stroke: "var(--ts-chart-5)",
+                    strokeDasharray: "4 4",
+                  }),
+                ),
+              ]
+            : []),
+          lineY(response, {
+            id: "response-line",
+            x: "week",
+            y: "minutes",
+            stroke: "var(--ts-chart-1)",
+            strokeWidth: 2.5,
+          }),
+        ],
+        scales: {
+          x: { scale: scalePoint },
+          y: { scale: scaleLinear().domain([0, 55]), grid: true },
+        },
+        tooltip: {
+          use: tooltip,
+          content: ([point]) =>
+            valueTooltip(
+              point.datum.week,
+              "Median response",
+              `${point.datum.minutes} min`,
+              point.color,
+            ),
+        },
+      }),
+    [showGoal],
+  );
+
+  return (
+    <ChartPlot
+      title={`Median response time in minutes${showGoal ? ", with 30 minute goal" : ""}`}
+      columns={["Week", "Minutes"]}
+      rows={response.map((row) => [row.week, row.minutes])}
+      controls={
+        <>
+          <span className="text-xs text-muted-foreground">
+            30 min response goal
+          </span>
+          <ToggleButton
+            isSelected={showGoal}
+            onChange={setShowGoal}
+            variant="segmented"
+          >
+            Show goal
+          </ToggleButton>
+        </>
+      }
+    >
+      <Chart
+        definition={definition}
+        renderer={galleryRenderer}
+        height={222}
+        initialWidth={520}
+        ariaLabel={`Median response time across six weeks in minutes${showGoal ? ", with a 30 minute goal" : ""}`}
+      />
+    </ChartPlot>
+  );
+}
 
 export function LineResponse() {
   return (

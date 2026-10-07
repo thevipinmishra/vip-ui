@@ -16,7 +16,7 @@ export function DropZone({ className, ...props }: DropZoneProps) {
       data-slot="drop-zone"
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex min-h-40 flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border bg-card p-6 text-center text-sm text-foreground outline-none data-[drop-target]:border-primary data-[drop-target]:bg-accent data-[drop-target]:ring-2 data-[drop-target]:ring-primary/25 data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring motion-safe:transition-[background-color,border-color,box-shadow] motion-safe:duration-150",
+          "flex min-h-40 flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border bg-card p-6 text-center text-sm text-foreground outline-none data-[drop-target]:border-primary data-[drop-target]:bg-accent data-[drop-target]:ring-2 data-[drop-target]:ring-primary/25 data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring",
           className,
         ),
       )}

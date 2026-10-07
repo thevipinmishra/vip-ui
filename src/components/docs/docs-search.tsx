@@ -50,7 +50,7 @@ export function DocsSearch() {
         variant="ghost"
         aria-label="Search components and pages"
         onPress={() => setOpen(true)}
-        className="size-10 gap-2 rounded-md p-0 text-muted-foreground transition-colors duration-200 hover:text-foreground lg:w-auto lg:px-3"
+        className="size-10 gap-2 rounded-md p-0 text-muted-foreground hover:text-foreground lg:w-auto lg:px-3"
       >
         <Search size={17} aria-hidden="true" />
         <span className="hidden lg:inline">Search</span>

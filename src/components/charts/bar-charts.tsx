@@ -7,6 +7,8 @@ import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { tooltip } from "@tanstack/charts/tooltip";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { ToggleButton } from "@/components/ui/toggle-button";
+import { ToggleButtonGroup } from "@/components/ui/toggle-button-group";
 import {
   ChartPlot,
   galleryRenderer,
@@ -177,6 +179,22 @@ export function BarUpdates() {
       title={`Monthly orders in ${year}`}
       columns={["Month", "Orders"]}
       rows={rows.map((row) => [row.month, row.value])}
+      controls={
+        <>
+          <output className="text-xs text-muted-foreground">
+            Showing {year} orders
+          </output>
+          <Button
+            variant="secondary"
+            size="sm"
+            onPress={() =>
+              setYear((current) => (current === "2026" ? "2025" : "2026"))
+            }
+          >
+            Show {year === "2026" ? "2025" : "2026"}
+          </Button>
+        </>
+      }
     >
       <Chart
         definition={definition}
@@ -185,20 +203,94 @@ export function BarUpdates() {
         initialWidth={520}
         ariaLabel={`Monthly orders from January to June ${year}`}
       />
-      <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-border/70 pt-4">
-        <output className="text-xs text-muted-foreground">
-          Showing {year} orders
-        </output>
-        <Button
-          variant="secondary"
-          size="sm"
-          onPress={() =>
-            setYear((current) => (current === "2026" ? "2025" : "2026"))
-          }
+    </ChartPlot>
+  );
+}
+
+const sales = [
+  { month: "Jan", orders: 124, revenue: 18 },
+  { month: "Feb", orders: 158, revenue: 23 },
+  { month: "Mar", orders: 142, revenue: 21 },
+  { month: "Apr", orders: 186, revenue: 28 },
+  { month: "May", orders: 211, revenue: 33 },
+  { month: "Jun", orders: 235, revenue: 37 },
+];
+
+export function BarMetric() {
+  const [metric, setMetric] = useState<"orders" | "revenue">("revenue");
+  const rows = useMemo(
+    () => sales.map((row) => ({ month: row.month, value: row[metric] })),
+    [metric],
+  );
+  const definition = useMemo(
+    () =>
+      defineChart({
+        marks: [
+          barY(rows, {
+            id: "sales-by-month",
+            x: "month",
+            y: "value",
+            key: "month",
+            fill: "var(--ts-chart-2)",
+            inset: 5,
+            radius: { end: 5 },
+          }),
+        ],
+        scales: {
+          x: { scale: () => scaleBand().padding(0.1) },
+          y: {
+            scale: scaleLinear().domain([0, metric === "orders" ? 260 : 45]),
+            grid: true,
+          },
+        },
+        tooltip: {
+          use: tooltip,
+          content: ([point]) =>
+            valueTooltip(
+              point.datum.month,
+              metric === "orders" ? "Orders" : "Revenue",
+              metric === "orders"
+                ? `${point.datum.value} orders`
+                : `$${point.datum.value}k`,
+              point.color,
+            ),
+        },
+      }),
+    [rows, metric],
+  );
+
+  return (
+    <ChartPlot
+      title={`Monthly ${metric === "orders" ? "orders" : "revenue in thousands of dollars"}`}
+      columns={["Month", metric === "orders" ? "Orders" : "Revenue ($k)"]}
+      rows={rows.map((row) => [row.month, row.value])}
+      controls={
+        <ToggleButtonGroup
+          aria-label="Sales metric"
+          selectionMode="single"
+          disallowEmptySelection
+          selectedKeys={[metric]}
+          onSelectionChange={(keys) => {
+            const [next] = keys;
+            if (next === "orders" || next === "revenue") setMetric(next);
+          }}
         >
-          Show {year === "2026" ? "2025" : "2026"}
-        </Button>
-      </div>
+          <ToggleButton id="revenue" variant="segmented">
+            Revenue
+          </ToggleButton>
+          <ToggleButton id="orders" variant="segmented">
+            Orders
+          </ToggleButton>
+        </ToggleButtonGroup>
+      }
+    >
+      <Chart
+        definition={definition}
+        renderer={galleryRenderer}
+        height={222}
+        initialWidth={520}
+        ariaLabel={`Monthly ${metric === "orders" ? "orders" : "revenue in thousands of dollars"} from January to June`}
+      />
     </ChartPlot>
   );
 }

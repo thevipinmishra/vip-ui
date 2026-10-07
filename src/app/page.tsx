@@ -4,6 +4,7 @@ import { AreaVisits } from "@/components/charts/area-charts";
 import { AccordionDemo } from "@/components/docs/accordion-demo";
 import { CheckboxBasicDemo } from "@/components/docs/checkbox-basic-demo";
 import { DialogDemo } from "@/components/docs/dialog-demo";
+import { DocsArrowLink } from "@/components/docs/docs-arrow-link";
 import { HomeButtonDemo } from "@/components/docs/home-button-demo";
 import { HomeReveal } from "@/components/docs/home-page-motion";
 import { HomeProjectScene } from "@/components/docs/home-project-scene";
@@ -51,17 +52,9 @@ function Showcase({
           <CardTitle as="h2" className="min-w-0 text-base tracking-[-0.025em]">
             {title}
           </CardTitle>
-          <Link
-            href={href}
-            className="group inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-md text-sm font-medium text-muted-foreground transition-colors duration-200 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-          >
+          <DocsArrowLink href={href}>
             View docs<span className="sr-only"> for {title}</span>
-            <ArrowRight
-              size={15}
-              aria-hidden="true"
-              className="motion-safe:transition-transform motion-safe:duration-200 motion-safe:group-hover:translate-x-1 motion-safe:group-focus-visible:translate-x-1"
-            />
-          </Link>
+          </DocsArrowLink>
         </CardHeader>
         <CardContent className="flex min-w-0 flex-1 items-stretch px-2 pb-2 pt-1 sm:px-3 sm:pb-3">
           <div

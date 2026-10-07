@@ -62,7 +62,7 @@ export function NativeSelect({
             undefined
           }
           className={cn(
-            "min-h-12 w-full cursor-pointer appearance-none rounded-lg border border-input bg-card ps-3.5 pe-10 text-base text-foreground shadow-[var(--shadow-card)] outline-none hover:border-primary/45 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 disabled:hover:border-input motion-safe:transition-[border-color,box-shadow] motion-safe:duration-150 sm:text-sm",
+            "min-h-12 w-full cursor-pointer appearance-none rounded-lg border border-input bg-card ps-3.5 pe-10 text-base text-foreground shadow-[var(--shadow-card)] outline-none hover:border-primary/45 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 disabled:hover:border-input sm:text-sm",
             (isInvalid || error) &&
               "border-destructive ring-3 ring-destructive/20 hover:border-destructive focus-visible:border-destructive focus-visible:ring-destructive/30",
             className,

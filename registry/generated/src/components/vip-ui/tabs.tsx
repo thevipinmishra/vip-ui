@@ -86,9 +86,36 @@ export function Tab({ className, children, ...props }: AriaTabProps) {
     <AriaTab
       {...props}
       data-slot="tabs-trigger"
+      render={
+        props.render ??
+        ((domProps, { isPressed, isDisabled }) =>
+          props.href ? (
+            <motion.a
+              {...(domProps as HTMLMotionProps<"a">)}
+              initial={false}
+              animate={{ scale: isPressed && !isDisabled ? 0.96 : 1 }}
+              transition={
+                reduceMotion
+                  ? { duration: 0 }
+                  : { type: "spring", stiffness: 500, damping: 36 }
+              }
+            />
+          ) : (
+            <motion.div
+              {...(domProps as HTMLMotionProps<"div">)}
+              initial={false}
+              animate={{ scale: isPressed && !isDisabled ? 0.96 : 1 }}
+              transition={
+                reduceMotion
+                  ? { duration: 0 }
+                  : { type: "spring", stiffness: 500, damping: 36 }
+              }
+            />
+          ))
+      }
       className={composeRenderProps(className, (className) =>
         cn(
-          "relative isolate min-h-11 shrink-0 cursor-pointer whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium text-muted-foreground outline-none hover:bg-card/70 data-[selected]:hover:bg-transparent data-[selected]:text-foreground data-[focus-visible]:outline-2 data-[focus-visible]:-outline-offset-2 data-[focus-visible]:outline-ring data-[disabled]:cursor-default data-[disabled]:opacity-50 sm:min-h-9 motion-safe:transition-[background-color,color,scale] motion-safe:duration-150 motion-safe:active:scale-[0.96]",
+          "relative isolate min-h-11 shrink-0 cursor-pointer whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium text-muted-foreground outline-none hover:bg-card/70 data-[selected]:hover:bg-transparent data-[selected]:text-foreground data-[focus-visible]:outline-2 data-[focus-visible]:-outline-offset-2 data-[focus-visible]:outline-ring data-[disabled]:cursor-default data-[disabled]:opacity-50 sm:min-h-9",
           className,
         ),
       )}

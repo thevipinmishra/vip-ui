@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-presence",
+  "type": "registry:ui",
+  "title": "Presence",
+  "description": "Animate conditional content when it enters or leaves.",
+  "dependencies": ["motion", "tailwind-variants"],
+  "files": [
+    {
+      "path": "src/lib/utils.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/utils.ts",
+      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
+    },
+    {
+      "path": "src/components/ui/presence.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/presence.tsx",
+      "content": "\"use client\";\n\nimport {\n  AnimatePresence,\n  type HTMLMotionProps,\n  motion,\n  useIsPresent,\n  useReducedMotion,\n} from \"motion/react\";\nimport type { ReactNode } from \"react\";\nimport { cn } from \"./utils\";\n\nexport interface PresenceProps\n  extends Omit<\n    HTMLMotionProps<\"div\">,\n    \"ref\" | \"children\" | \"initial\" | \"animate\" | \"exit\" | \"transition\"\n  > {\n  show: boolean;\n  children: ReactNode;\n  as?: \"div\" | \"span\";\n  distance?: number;\n  duration?: number;\n}\n\nfunction PresenceContent({\n  as,\n  children,\n  className,\n  distance = 8,\n  duration = 0.22,\n  ...props\n}: Omit<PresenceProps, \"show\">) {\n  const isPresent = useIsPresent();\n  const reducedMotion = useReducedMotion();\n  const Element = as === \"span\" ? motion.span : motion.div;\n\n  return (\n    <Element\n      {...props}\n      data-slot=\"presence\"\n      className={cn(className)}\n      inert={!isPresent}\n      aria-hidden={!isPresent || undefined}\n      initial={reducedMotion ? false : { opacity: 0, y: distance }}\n      animate={{ opacity: 1, y: 0 }}\n      exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: -distance }}\n      transition={{\n        duration: reducedMotion ? 0 : duration,\n        ease: [0.22, 1, 0.36, 1],\n      }}\n    >\n      {children}\n    </Element>\n  );\n}\n\nexport function Presence({ show, ...props }: PresenceProps) {\n  return (\n    <AnimatePresence initial={false}>\n      {show && <PresenceContent key=\"content\" {...props} />}\n    </AnimatePresence>\n  );\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-text-scramble",
+  "type": "registry:ui",
+  "title": "Text Scramble",
+  "description": "Resolve changing text from scrambled characters.",
+  "dependencies": ["motion", "tailwind-variants"],
+  "files": [
+    {
+      "path": "src/lib/utils.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/utils.ts",
+      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
+    },
+    {
+      "path": "src/components/ui/text-scramble.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/text-scramble.tsx",
+      "content": "\"use client\";\n\nimport {\n  animate,\n  useMotionValue,\n  useMotionValueEvent,\n  useReducedMotion,\n} from \"motion/react\";\nimport { type ComponentProps, useEffect, useState } from \"react\";\nimport { cn } from \"./utils\";\n\nconst DEFAULT_GLYPHS = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\";\n\nexport interface TextScrambleProps\n  extends Omit<ComponentProps<\"span\">, \"children\"> {\n  value: string;\n  duration?: number;\n  glyphs?: string;\n}\n\nexport function TextScramble({\n  value,\n  duration = 0.7,\n  glyphs = DEFAULT_GLYPHS,\n  className,\n  ...props\n}: TextScrambleProps) {\n  const [display, setDisplay] = useState(value);\n  const progress = useMotionValue(1);\n  const reducedMotion = useReducedMotion();\n  const characters = Array.from(\n    new Intl.Segmenter(undefined, { granularity: \"grapheme\" }).segment(value),\n    ({ segment }) => segment,\n  );\n  const alphabet = Array.from(\n    new Intl.Segmenter(undefined, { granularity: \"grapheme\" }).segment(\n      glyphs || DEFAULT_GLYPHS,\n    ),\n    ({ segment }) => segment,\n  );\n\n  useMotionValueEvent(progress, \"change\", (latest) => {\n    const resolved = Math.floor(latest * characters.length);\n    setDisplay(\n      characters\n        .map((character, index) =>\n          index < resolved || /^\\s$/u.test(character)\n            ? character\n            : alphabet[Math.floor(Math.random() * alphabet.length)],\n        )\n        .join(\"\"),\n    );\n  });\n\n  useEffect(() => {\n    if (!value || reducedMotion || duration <= 0) {\n      progress.set(1);\n      return;\n    }\n    progress.set(0);\n    const controls = animate(progress, 1, {\n      duration,\n      ease: \"linear\",\n    });\n    return () => controls.stop();\n  }, [duration, progress, reducedMotion, value]);\n\n  return (\n    <span\n      {...props}\n      data-slot=\"text-scramble\"\n      className={cn(\"font-mono\", className)}\n    >\n      <span className=\"sr-only\">{value}</span>\n      <span aria-hidden=\"true\">\n        {reducedMotion || duration <= 0 || !value ? value : display}\n      </span>\n    </span>\n  );\n}\n"
+    }
+  ]
+}

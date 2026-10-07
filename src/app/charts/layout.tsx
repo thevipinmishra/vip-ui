@@ -1,4 +1,3 @@
-import { OnThisPage } from "@/components/docs/on-this-page";
 import { SiteFooter } from "@/components/docs/site-footer";
 import { SiteHeader } from "@/components/docs/site-header";
 
@@ -13,14 +12,7 @@ export default function ChartsLayout({ children }: LayoutProps<"/charts">) {
       </a>
       <SiteHeader />
       <main id="main" className="flex-1">
-        <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 xl:grid xl:grid-cols-[minmax(0,1fr)_160px] xl:gap-8">
-          <div className="min-w-0">{children}</div>
-          <div className="hidden pt-14 xl:block">
-            <div className="sticky top-6 max-h-[calc(100dvh-1.5rem)] overflow-y-auto pb-10">
-              <OnThisPage />
-            </div>
-          </div>
-        </div>
+        <div className="mx-auto w-full max-w-7xl px-5 sm:px-8">{children}</div>
       </main>
       <SiteFooter />
     </div>

@@ -53,7 +53,7 @@ export function SiteHeader({ wide = false }: { wide?: boolean }) {
           isActive ? (pathname === href ? "page" : "location") : undefined
         }
         className={cn(
-          "flex min-h-12 items-center rounded-lg px-4 text-sm font-medium transition-colors duration-200 hover:bg-muted focus-visible:outline-2 focus-visible:outline-ring motion-reduce:transition-none",
+          "flex min-h-12 items-center rounded-lg px-4 text-sm font-medium hover:bg-muted focus-visible:outline-2 focus-visible:outline-ring",
           isActive
             ? "bg-accent text-accent-foreground"
             : "text-muted-foreground hover:text-foreground",
@@ -76,7 +76,7 @@ export function SiteHeader({ wide = false }: { wide?: boolean }) {
           href="/"
           aria-label="vip/ui home"
           aria-current={pathname === "/" ? "page" : undefined}
-          className="inline-flex min-h-10 shrink-0 items-center rounded-md transition-colors duration-200 hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:transition-none"
+          className="inline-flex min-h-10 shrink-0 items-center rounded-md hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
         >
           <SiteLogo />
         </Link>
@@ -97,7 +97,7 @@ export function SiteHeader({ wide = false }: { wide?: boolean }) {
                     : undefined
                 }
                 className={cn(
-                  "inline-flex h-full items-center border-b-2 px-2 text-sm font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring motion-reduce:transition-none",
+                  "inline-flex h-full items-center border-b-2 px-2 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring",
                   active === link.href
                     ? "border-primary text-foreground"
                     : "border-transparent text-muted-foreground hover:border-border hover:text-foreground",
@@ -116,7 +116,7 @@ export function SiteHeader({ wide = false }: { wide?: boolean }) {
                   variant="ghost"
                   size="icon"
                   aria-label="Open site navigation"
-                  className="size-10 rounded-md text-muted-foreground transition-colors duration-200 hover:text-foreground"
+                  className="size-10 rounded-md text-muted-foreground hover:text-foreground"
                 >
                   <Menu size={20} aria-hidden="true" />
                 </DrawerTrigger>

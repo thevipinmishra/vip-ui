@@ -53,7 +53,7 @@ export function TreeItem({
       textValue={props.textValue ?? title}
       className={composeRenderProps(className, (className) =>
         cn(
-          "group/tree-item rounded-md text-foreground outline-none transition-colors duration-150 hover:bg-muted data-[focused]:bg-muted data-[pressed]:bg-muted data-[selected]:bg-accent data-[selected]:text-accent-foreground data-[selected]:font-medium data-[selected]:ring-1 data-[selected]:ring-primary/15 data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-[-2px] data-[focus-visible]:outline-ring data-[disabled]:opacity-50 motion-reduce:transition-none",
+          "group/tree-item rounded-md text-foreground outline-none hover:bg-muted data-[focused]:bg-muted data-[pressed]:bg-muted data-[selected]:bg-accent data-[selected]:text-accent-foreground data-[selected]:font-medium data-[selected]:ring-1 data-[selected]:ring-primary/15 data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-[-2px] data-[focus-visible]:outline-ring data-[disabled]:opacity-50",
           className,
         ),
       )}

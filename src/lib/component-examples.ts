@@ -753,20 +753,10 @@ export const componentPageData = {
   },
   slider: {
     usage: "slider-demo.tsx",
-    description: "A control for choosing a value or range on a track.",
+    description: "Selects a value or range on a track.",
     examples: [
-      {
-        title: "Price range",
-        description:
-          "Use two thumbs to set a minimum and maximum. The value updates as you move either thumb.",
-        sourcePath: "slider-range-demo.tsx",
-      },
-      {
-        title: "Disabled slider",
-        description:
-          "Keep the current volume visible when it cannot be changed.",
-        sourcePath: "slider-disabled-demo.tsx",
-      },
+      { title: "Range", sourcePath: "slider-range-demo.tsx" },
+      { title: "Disabled", sourcePath: "slider-disabled-demo.tsx" },
     ],
   },
   spinner: {
@@ -794,32 +784,15 @@ export const componentPageData = {
   },
   stepper: {
     usage: "stepper-basic-demo.tsx",
-    description: "Displays the current step in a sequence.",
-    examples: [
-      {
-        title: "Setup workflow",
-        description:
-          "Keep currentStep in application state when Back and Next controls move through the workflow.",
-        sourcePath: "stepper-demo.tsx",
-      },
-    ],
+    description: "Shows the current and completed steps in a sequence.",
+    examples: [{ title: "Controlled step", sourcePath: "stepper-demo.tsx" }],
   },
   switch: {
     usage: "switch-basic-demo.tsx",
-    description: "A control for turning a setting on or off.",
+    description: "Turns a setting on or off.",
     examples: [
-      {
-        title: "Privacy settings",
-        description:
-          "Compose a group of switches with supporting descriptions and live feedback.",
-        sourcePath: "switch-demo.tsx",
-      },
-      {
-        title: "Descriptions and disabled state",
-        description:
-          "Add context to a setting or show when it is managed elsewhere.",
-        sourcePath: "switch-states-demo.tsx",
-      },
+      { title: "Controlled switches", sourcePath: "switch-demo.tsx" },
+      { title: "Disabled", sourcePath: "switch-states-demo.tsx" },
     ],
   },
   table: {
@@ -892,6 +865,59 @@ export const componentPageData = {
         sourcePath: "text-field-demo.tsx",
       },
     ],
+  },
+  "text-reveal": {
+    usage: "text-reveal-demo.tsx",
+    description: "Reveals text by word or character with staggered movement.",
+    examples: [],
+  },
+  "text-scramble": {
+    usage: "text-scramble-demo.tsx",
+    description: "Resolves changing text from scrambled characters.",
+    examples: [],
+  },
+  "scroll-highlight": {
+    usage: "scroll-highlight-demo.tsx",
+    description:
+      "Highlights words as text moves through the viewport or a panel.",
+    examples: [],
+  },
+  "scroll-progress": {
+    usage: "scroll-progress-demo.tsx",
+    description: "Shows reading progress for a page or a scrollable panel.",
+    examples: [],
+  },
+  presence: {
+    usage: "presence-demo.tsx",
+    description:
+      "Animates conditional content when it enters or leaves the page.",
+    examples: [],
+  },
+  "stagger-group": {
+    usage: "stagger-group-demo.tsx",
+    description: "Sequences the entrance of grouped content.",
+    examples: [],
+  },
+  "mask-reveal": {
+    usage: "mask-reveal-demo.tsx",
+    description: "Uncovers content from a chosen edge.",
+    examples: [],
+  },
+  "layout-morph": {
+    usage: "layout-morph-demo.tsx",
+    description: "Animates height and content when a keyed section changes.",
+    examples: [],
+  },
+  "parallax-layer": {
+    usage: "parallax-layer-demo.tsx",
+    description:
+      "Moves a layer by a bounded distance as it scrolls through a page or panel.",
+    examples: [],
+  },
+  marquee: {
+    usage: "marquee-demo.tsx",
+    description: "Loops a strip of content with a pause control.",
+    examples: [],
   },
   "text-swap": {
     usage: "text-swap-demo.tsx",

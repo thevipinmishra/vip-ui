@@ -41,15 +41,19 @@ export function Popover({
             initial={
               reduceMotion || props.shouldSkipAnimation
                 ? false
-                : { ...edgeOffset(placement), scale: 0.98 }
+                : { opacity: 0, ...edgeOffset(placement), scale: 0.98 }
             }
             animate={
-              isExiting && !reduceMotion
-                ? { ...edgeOffset(placement), scale: 0.99 }
-                : { x: 0, y: 0, scale: 1 }
+              isExiting
+                ? {
+                    opacity: 0,
+                    ...(reduceMotion ? {} : edgeOffset(placement)),
+                    scale: reduceMotion ? 1 : 0.99,
+                  }
+                : { opacity: 1, x: 0, y: 0, scale: 1 }
             }
             transition={{
-              duration: isExiting ? 0.14 : 0.2,
+              duration: reduceMotion ? 0 : isExiting ? 0.14 : 0.2,
               ease: [0.23, 1, 0.32, 1],
             }}
           />
@@ -57,7 +61,7 @@ export function Popover({
       }
       className={composeRenderProps(className, (className) =>
         cn(
-          "max-w-[calc(100vw-2rem)] rounded-xl border border-border bg-popover p-5 text-popover-foreground shadow-[var(--shadow-float)] outline-none transition-opacity duration-100 data-[entering]:opacity-0 data-[exiting]:opacity-0 motion-safe:duration-200 motion-safe:data-[exiting]:duration-150 data-[placement=top]:origin-bottom data-[placement=bottom]:origin-top data-[placement=left]:origin-right data-[placement=right]:origin-left",
+          "max-w-[calc(100vw-2rem)] rounded-xl border border-border bg-popover p-5 text-popover-foreground shadow-[var(--shadow-float)] outline-none data-[placement=top]:origin-bottom data-[placement=bottom]:origin-top data-[placement=left]:origin-right data-[placement=right]:origin-left",
           className,
         ),
       )}

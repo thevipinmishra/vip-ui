@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Toggle Button Group",
   "description": "Choose one or more persistent actions in a group.",
-  "dependencies": ["react-aria-components", "tailwind-variants"],
+  "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
   "files": [
     {
       "path": "src/lib/utils.ts",
@@ -16,7 +16,7 @@
       "path": "src/components/ui/toggle-button-group.tsx",
       "type": "registry:file",
       "target": "@components/vip-ui/toggle-button-group.tsx",
-      "content": "\"use client\";\n\nimport {\n  ToggleButtonGroup as AriaToggleButtonGroup,\n  composeRenderProps,\n  type ToggleButtonGroupProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport function ToggleButtonGroup({\n  className,\n  ...props\n}: ToggleButtonGroupProps) {\n  return (\n    <AriaToggleButtonGroup\n      {...props}\n      data-slot=\"toggle-button-group\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"inline-flex w-fit max-w-full flex-wrap gap-1 rounded-lg border border-border bg-secondary p-1 data-[orientation=vertical]:flex-col\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n"
+      "content": "\"use client\";\n\nimport { LayoutGroup } from \"motion/react\";\nimport { createContext, useId } from \"react\";\nimport {\n  ToggleButtonGroup as AriaToggleButtonGroup,\n  composeRenderProps,\n  type ToggleButtonGroupProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport const SingleToggleGroupContext = createContext(false);\n\nexport function ToggleButtonGroup({\n  className,\n  ...props\n}: ToggleButtonGroupProps) {\n  const groupId = useId();\n  return (\n    <LayoutGroup id={groupId}>\n      <SingleToggleGroupContext.Provider\n        value={props.selectionMode !== \"multiple\"}\n      >\n        <AriaToggleButtonGroup\n          {...props}\n          data-slot=\"toggle-button-group\"\n          className={composeRenderProps(className, (className) =>\n            cn(\n              \"inline-flex w-fit max-w-full flex-wrap gap-1 rounded-lg border border-border bg-secondary p-1 data-[orientation=vertical]:flex-col\",\n              className,\n            ),\n          )}\n        />\n      </SingleToggleGroupContext.Provider>\n    </LayoutGroup>\n  );\n}\n"
     }
   ]
 }

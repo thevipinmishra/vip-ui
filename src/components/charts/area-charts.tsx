@@ -6,6 +6,9 @@ import { Chart } from "@tanstack/charts/react/core";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
+import { useMemo, useState } from "react";
+import { ToggleButton } from "@/components/ui/toggle-button";
+import { ToggleButtonGroup } from "@/components/ui/toggle-button-group";
 import {
   ChartPlot,
   galleryRenderer,
@@ -151,6 +154,94 @@ const forecastChart = defineChart({
     }),
   },
 });
+
+const visitHistory = [
+  { month: "Jul", value: 35 },
+  { month: "Aug", value: 39 },
+  { month: "Sep", value: 45 },
+  { month: "Oct", value: 49 },
+  { month: "Nov", value: 47 },
+  { month: "Dec", value: 54 },
+  ...visits,
+];
+
+export function AreaWindow() {
+  const [period, setPeriod] = useState<"6" | "12">("6");
+  const rows = useMemo(() => visitHistory.slice(-Number(period)), [period]);
+  const definition = useMemo(
+    () =>
+      defineChart({
+        marks: [
+          decorative(
+            areaY(rows, {
+              id: "visits-fill",
+              x: "month",
+              y: "value",
+              fill: "var(--ts-chart-1)",
+              fillOpacity: 0.19,
+            }),
+          ),
+          lineY(rows, {
+            id: "visits-line",
+            x: "month",
+            y: "value",
+            stroke: "var(--ts-chart-1)",
+            strokeWidth: 2.5,
+          }),
+        ],
+        scales: {
+          x: { scale: scalePoint },
+          y: { scale: scaleLinear().domain([0, 90]), grid: true },
+        },
+        tooltip: {
+          use: tooltip,
+          content: ([point]) =>
+            valueTooltip(
+              point.datum.month,
+              "Visits",
+              `${point.datum.value}k visits`,
+              point.color,
+            ),
+        },
+      }),
+    [rows],
+  );
+
+  return (
+    <ChartPlot
+      title={`Workspace visits over ${period} months, in thousands`}
+      columns={["Month", "Visits (thousands)"]}
+      rows={rows.map((row) => [row.month, row.value])}
+      controls={
+        <ToggleButtonGroup
+          aria-label="Visit period"
+          selectionMode="single"
+          disallowEmptySelection
+          selectedKeys={[period]}
+          onSelectionChange={(keys) => {
+            const [next] = keys;
+            if (next === "6" || next === "12") setPeriod(next);
+          }}
+        >
+          <ToggleButton id="6" variant="segmented">
+            6 months
+          </ToggleButton>
+          <ToggleButton id="12" variant="segmented">
+            12 months
+          </ToggleButton>
+        </ToggleButtonGroup>
+      }
+    >
+      <Chart
+        definition={definition}
+        renderer={galleryRenderer}
+        height={222}
+        initialWidth={520}
+        ariaLabel={`Workspace visits over the last ${period} months, in thousands`}
+      />
+    </ChartPlot>
+  );
+}
 
 export function AreaVisits() {
   return (

@@ -18,11 +18,11 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1(next@16.3.6(@playwright/test@1.63.0)(@types/node@20.19.43)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)
       '@zag-js/react':
-        specifier: ^1.44.0
-        version: 1.44.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        specifier: ^1.45.0
+        version: 1.45.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@zag-js/scroll-area':
-        specifier: ^1.44.0
-        version: 1.44.0
+        specifier: ^1.45.0
+        version: 1.45.0
       d3-shape:
         specifier: ^3.2.0
         version: 3.2.0
@@ -670,32 +670,32 @@ packages:
       vue-router:
         optional: true
 
-  '@zag-js/anatomy@1.44.0':
-    resolution: {integrity: sha512-gVN02k7cUqEDlEDDv3CcStMIqDQ32e7QCH8FVBwwXqbSH8D5KMuqPrmyfdE8irVZuPfY4PtKuZsNvJLYvXDpgA==}
+  '@zag-js/anatomy@1.45.0':
+    resolution: {integrity: sha512-IPj5KyrIjfhxKBCeVyzZsP3j9LhDmZ5wTTpfeLTwPwGlPgYrRT8m2Tyh88uX9RCd6cEOkxgWYTIAJGwbaDzgSA==}
 
-  '@zag-js/core@1.44.0':
-    resolution: {integrity: sha512-tqDBJeDpDuLfjodk6NetSDZLMy7+r799RcC5oDtVivowfSxfPBSsfh4UxYT/+zXv9RZ0mYG3TzO4yFROPmniIA==}
+  '@zag-js/core@1.45.0':
+    resolution: {integrity: sha512-xDd+ezb1+jzGVf+85HgVuqBzCuX+x8/GH+FnPESsSU97Hzq6OYJbvd56YpN5gioqViuJkJUFkPBCYcq0Niw2LA==}
 
-  '@zag-js/dom-query@1.44.0':
-    resolution: {integrity: sha512-BKdiKNjd9iTtaQjjU07YymGkgKVSO7vXu8ukZPyt+F8tOesAv9xW5wCn3fuEI6zNthzOpHD9ejj48YW0mljnpQ==}
+  '@zag-js/dom-query@1.45.0':
+    resolution: {integrity: sha512-rJIESTiyzS6sfplDZxlO5WO0fTeHwL8RFylPDetpAtxhbADIV3kcP6qAd7pEMyXM5rdh7qTXOFm0PJOU2selyA==}
 
-  '@zag-js/react@1.44.0':
-    resolution: {integrity: sha512-qRO5LJLzKuul97it+qYj/IrriS+IX9KZ7OrhCxPbY1Xd2g7TJdOpuGRU5IsGwTJCUfW6vQBrBj/0Qhc1GMClog==}
+  '@zag-js/react@1.45.0':
+    resolution: {integrity: sha512-PgltLBL8tS6+RvQPXr6+UmCmBQDF/D2VQobUhjlnm36JkXPz8e5E/Mj8ah40ORlSEOFjWx92Tp2LE4wIyDoGgg==}
     peerDependencies:
       react: '>=18.0.0'
       react-dom: '>=18.0.0'
 
-  '@zag-js/scroll-area@1.44.0':
-    resolution: {integrity: sha512-vW/j7O7UFSl1DZunLnGQ9ZnRsYNSyqp+HnoJAwTwzcUEnyId116xobj2U4tFyQxPbISxr8OqTV+NqfHEqnNxqQ==}
+  '@zag-js/scroll-area@1.45.0':
+    resolution: {integrity: sha512-5hAei2Hbfhxae8Iv0NLKdeFe56+ZDpdwvRTxbFfqs828zsm0rKP8XciH+v+7sJHKDlRBXdnS0EtF7JudeLa5dg==}
 
-  '@zag-js/store@1.44.0':
-    resolution: {integrity: sha512-syjbybsc1e2zro50Eu+SaloeJbiXTY78wa+m8iUzswdmVzpts+7KSk3Oogso7jxZ7L91vNAQDhSqZR73Il3KOA==}
+  '@zag-js/store@1.45.0':
+    resolution: {integrity: sha512-zA5zfOXZsDEZxK7gzGF0dldZn3imxaxY8r7g+Zcs/Am0x5VAmVJx2uJHs1Vwx9agZ0XHtnqBVrjV+UhUzST5rg==}
 
-  '@zag-js/types@1.44.0':
-    resolution: {integrity: sha512-hVi+EekA3V2EDyJxhkSg1Znmk8Qhk3JRWH8atkwTvnGckpCXjQQ9YpKGsP6KSzD88ci7PgH/mYj7fU62E+GYqw==}
+  '@zag-js/types@1.45.0':
+    resolution: {integrity: sha512-92xETOwIVWksA+wqZ/Dex/obbC5cgCCRCF7HQ7Cf8Wgv0jBKqUphccZRzmHic1qOthoW7ZAK2xkUtyXFmd2/SQ==}
 
-  '@zag-js/utils@1.44.0':
-    resolution: {integrity: sha512-XO4UoPSRBE/CQ781eSqYELOzsc8Bch33340L6/iVEP+5rW8SL5yCyKewu9w0t0bG1Y+EETLlmvswDjI252t1Vw==}
+  '@zag-js/utils@1.45.0':
+    resolution: {integrity: sha512-LyeGfTEojjhDcajCCGxvjrgFuPoMia1HKefdP6KqvJpC78+1awahBoZpYYZlbab2WPawgCaprcDevBJFlOe6Ag==}
 
   aria-hidden@1.2.6:
     resolution: {integrity: sha512-ik3ZgC9dY/lYVVM++OISsaYDeg1tb0VtP5uL3ouh1koGOaUMDPpbFIei4JkFimWUFPn90sbMNMXQAIVOlnYKJA==}
@@ -1012,8 +1012,8 @@ packages:
       react-dom:
         optional: true
 
-  nanoid@3.3.19:
-    resolution: {integrity: sha512-Y2tUNy4ouw6tq5oDSKeQYGOyhkUBhNOcGV/02KC+6kd9eDGqdZd++mjMiIDilrBYvjEnCYvVtsuHCuP+okSfug==}
+  nanoid@3.3.20:
+    resolution: {integrity: sha512-uKdg2G3GNCKQn9byYOpxbGqrT2fGO5KRt5J/8b3pok8rT6qxGWF6hxMyJiEYtAf+FVyYuD9hRaDqX5uPFYJ4ZQ==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
@@ -1061,8 +1061,8 @@ packages:
     resolution: {integrity: sha512-g50586zr4bZmwFiTlflMu8E0bDTb5I5gertgwAKmsdUlTQIhZtunzUlD1WSzwcVWPoAVpsrA6vlfCD7oXvRwgg==}
     engines: {node: ^10 || ^12 || >=14}
 
-  postcss@8.5.28:
-    resolution: {integrity: sha512-RRuzqDtt5Y9h3quz5hWhK+TPnsmVs6WwSU6LkJMeY4HstUEDuYTG8UJSdawMRzmzAtV+KEoG8N3Qg2qLy5vM/A==}
+  postcss@8.5.29:
+    resolution: {integrity: sha512-49cGhUbXj8Qenv0iTMxA1cFBzxXoctpC9Ujd77t1WcbJIr6nF/eI7g/8MgxrYldFRuAXvja7xQRwavoW7kgrxQ==}
     engines: {node: ^10 || ^12 || >=14}
 
   property-information@7.2.0:
@@ -1560,7 +1560,7 @@ snapshots:
       '@alloc/quick-lru': 5.3.0
       '@tailwindcss/node': 4.3.3
       '@tailwindcss/oxide': 4.3.3
-      postcss: 8.5.28
+      postcss: 8.5.29
       tailwindcss: 4.3.3
 
   '@tanstack/charts@0.18.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
@@ -1643,43 +1643,43 @@ snapshots:
       next: 16.3.6(@playwright/test@1.63.0)(@types/node@20.19.43)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       react: 19.2.8
 
-  '@zag-js/anatomy@1.44.0': {}
+  '@zag-js/anatomy@1.45.0': {}
 
-  '@zag-js/core@1.44.0':
+  '@zag-js/core@1.45.0':
     dependencies:
-      '@zag-js/dom-query': 1.44.0
-      '@zag-js/utils': 1.44.0
+      '@zag-js/dom-query': 1.45.0
+      '@zag-js/utils': 1.45.0
 
-  '@zag-js/dom-query@1.44.0':
+  '@zag-js/dom-query@1.45.0':
     dependencies:
-      '@zag-js/types': 1.44.0
+      '@zag-js/types': 1.45.0
 
-  '@zag-js/react@1.44.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@zag-js/react@1.45.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
-      '@zag-js/core': 1.44.0
-      '@zag-js/store': 1.44.0
-      '@zag-js/types': 1.44.0
-      '@zag-js/utils': 1.44.0
+      '@zag-js/core': 1.45.0
+      '@zag-js/store': 1.45.0
+      '@zag-js/types': 1.45.0
+      '@zag-js/utils': 1.45.0
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
 
-  '@zag-js/scroll-area@1.44.0':
+  '@zag-js/scroll-area@1.45.0':
     dependencies:
-      '@zag-js/anatomy': 1.44.0
-      '@zag-js/core': 1.44.0
-      '@zag-js/dom-query': 1.44.0
-      '@zag-js/types': 1.44.0
-      '@zag-js/utils': 1.44.0
+      '@zag-js/anatomy': 1.45.0
+      '@zag-js/core': 1.45.0
+      '@zag-js/dom-query': 1.45.0
+      '@zag-js/types': 1.45.0
+      '@zag-js/utils': 1.45.0
 
-  '@zag-js/store@1.44.0':
+  '@zag-js/store@1.45.0':
     dependencies:
       proxy-compare: 3.0.1
 
-  '@zag-js/types@1.44.0':
+  '@zag-js/types@1.45.0':
     dependencies:
       csstype: 3.2.3
 
-  '@zag-js/utils@1.44.0': {}
+  '@zag-js/utils@1.45.0': {}
 
   aria-hidden@1.2.6:
     dependencies:
@@ -1972,7 +1972,7 @@ snapshots:
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
 
-  nanoid@3.3.19: {}
+  nanoid@3.3.20: {}
 
   next@16.3.6(@playwright/test@1.63.0)(@types/node@20.19.43)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
     dependencies:
@@ -2019,13 +2019,13 @@ snapshots:
 
   postcss@8.5.23:
     dependencies:
-      nanoid: 3.3.19
+      nanoid: 3.3.20
       picocolors: 1.1.1
       source-map-js: 1.2.2
 
-  postcss@8.5.28:
+  postcss@8.5.29:
     dependencies:
-      nanoid: 3.3.19
+      nanoid: 3.3.20
       picocolors: 1.1.1
       source-map-js: 1.2.2
 

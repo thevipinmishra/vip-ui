@@ -34,7 +34,6 @@ export function ListBoxItem({
   children,
   ...props
 }: ListBoxItemProps) {
-  const reduceMotion = useReducedMotion();
   return (
     <AriaListBoxItem
       {...props}
@@ -52,17 +51,34 @@ export function ListBoxItem({
       {composeRenderProps(children, (content, { isSelected }) => (
         <>
           {content}
-          <motion.span
-            aria-hidden="true"
-            className="ms-auto shrink-0"
-            initial={false}
-            animate={{ opacity: isSelected ? 1 : 0 }}
-            transition={{ duration: reduceMotion ? 0 : 0.15 }}
-          >
-            <Check size={16} />
-          </motion.span>
+          <SelectionMark isSelected={isSelected} />
         </>
       ))}
     </AriaListBoxItem>
+  );
+}
+
+/** Keep the check in the layout when an option is not selected. */
+export function SelectionMark({
+  isSelected,
+  className,
+}: {
+  isSelected: boolean;
+  className?: string;
+}) {
+  const reduceMotion = useReducedMotion();
+  return (
+    <motion.span
+      aria-hidden="true"
+      className={cn("ms-auto shrink-0", className)}
+      initial={false}
+      animate={{ opacity: isSelected ? 1 : 0, scale: isSelected ? 1 : 0.85 }}
+      transition={{
+        duration: reduceMotion ? 0 : 0.16,
+        ease: [0.23, 1, 0.32, 1],
+      }}
+    >
+      <Check size={16} />
+    </motion.span>
   );
 }

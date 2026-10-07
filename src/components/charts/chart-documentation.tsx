@@ -106,216 +106,206 @@ export async function ChartDocumentation() {
   return (
     <section
       id="documentation"
-      aria-labelledby="documentation-title"
+      aria-label="Chart documentation"
       data-toc-skip
-      className="scroll-mt-28 pb-28"
+      className="scroll-mt-28 border-t border-border/70 pb-28 pt-14"
     >
-      <div className="border-t border-border/70 pt-16">
-        <h2
-          id="documentation-title"
-          className="text-[clamp(2rem,4vw,3.4rem)] font-semibold tracking-[-0.055em]"
+      <div className="max-w-4xl space-y-16">
+        <section
+          id="installation"
+          aria-labelledby="chart-installation"
+          className="scroll-mt-28"
         >
-          Chart documentation
-        </h2>
-        <div className="mt-12 max-w-4xl space-y-16">
-          <section
-            id="installation"
-            aria-labelledby="chart-installation"
-            className="scroll-mt-28"
+          <h2
+            id="chart-installation"
+            className="mb-6 text-2xl font-semibold tracking-[-0.04em]"
           >
-            <h3
-              id="chart-installation"
-              className="mb-6 text-2xl font-semibold tracking-[-0.04em]"
+            Installation
+          </h2>
+          <InstallTabs
+            cliAvailable={Boolean(cliUrl)}
+            cli={
+              <div className="space-y-4">
+                <p className="text-[13px] leading-6 text-muted-foreground">
+                  Requires TypeScript, Tailwind v4, and shadcn CSS-variable
+                  theming. Complete the{" "}
+                  <Link
+                    href="/components/installation#setup"
+                    className="text-primary underline underline-offset-4"
+                  >
+                    one-time setup
+                  </Link>{" "}
+                  before running this command.
+                </p>
+                {cliUrl ? (
+                  <PackageManagerCommand
+                    action="run"
+                    args={`shadcn@latest add ${cliUrl}`}
+                  />
+                ) : (
+                  <p className="text-[13px] leading-6 text-muted-foreground">
+                    The CLI command will be available when the registry has a
+                    public URL. Use Custom until then.
+                  </p>
+                )}
+              </div>
+            }
+            custom={
+              <div className="space-y-5">
+                <p className="text-[13px] leading-6 text-muted-foreground">
+                  First complete the{" "}
+                  <Link
+                    href="/components/installation#setup"
+                    className="text-primary underline underline-offset-4"
+                  >
+                    one-time setup
+                  </Link>
+                  . Install the dependencies, then copy every file below under
+                  your components directory. The{" "}
+                  <code className="font-mono text-foreground">
+                    @components/
+                  </code>{" "}
+                  placeholder represents your configured components alias.
+                  Review existing files before replacing them, and adjust the
+                  import in Usage if your alias differs.
+                </p>
+                {packages.length > 0 && (
+                  <PackageManagerCommand
+                    action="add"
+                    args={packages.join(" ")}
+                  />
+                )}
+                {item.files.map((file) => (
+                  <CodeBlock
+                    key={file.target}
+                    code={file.content}
+                    filename={file.target}
+                  />
+                ))}
+              </div>
+            }
+          />
+        </section>
+        <section
+          id="usage"
+          aria-labelledby="chart-usage"
+          className="scroll-mt-28"
+        >
+          <h2
+            id="chart-usage"
+            className="mb-6 text-2xl font-semibold tracking-[-0.04em]"
+          >
+            Usage
+          </h2>
+          <p className="mb-5 max-w-2xl text-sm leading-7 text-muted-foreground">
+            Compose TanStack marks and scales inside the installed vip/ui frame.{" "}
+            <code>ChartFrame</code> maps shadcn&apos;s chart palette and tooltip
+            styles; <code>Chart</code> comes from TanStack, not vip/ui. Keep
+            static definitions outside render, memoize definitions that capture
+            changing rows, and supply a specific <code>ariaLabel</code> and a
+            table when exact values matter.
+          </p>
+          <CodeBlock code={usage} filename="signups-chart.tsx" />
+          <p className="mt-5 max-w-2xl text-sm leading-7 text-muted-foreground">
+            Change <code>--chart-1</code> through <code>--chart-5</code> in both
+            themes, or set <code>--ts-chart-1</code> on one frame via its{" "}
+            <code>style</code> prop. The gallery above shows interactive updates
+            and polar marks. Each View code drawer includes the shared plot
+            helper and category file. Keep them side by side, then import the
+            example you need. Install{" "}
+            <Link
+              href="/components/button#installation"
+              className="text-primary underline underline-offset-4"
             >
-              Install
-            </h3>
-            <InstallTabs
-              cliAvailable={Boolean(cliUrl)}
-              cli={
-                <div className="space-y-4">
-                  <p className="text-[13px] leading-6 text-muted-foreground">
-                    Requires TypeScript, Tailwind v4, and shadcn CSS-variable
-                    theming. Complete the{" "}
-                    <Link
-                      href="/components/installation#setup"
-                      className="text-primary underline underline-offset-4"
+              vip/ui Button
+            </Link>{" "}
+            before copying the Bar category source. Area and Bar examples with
+            period or metric controls also need vip/ui Toggle Button and Toggle
+            Button Group; the Line goal control needs Toggle Button. The Radar
+            category also needs <code>d3-shape</code> and its TypeScript types,{" "}
+            <code>@types/d3-shape</code>.
+          </p>
+        </section>
+        <section id="api" aria-labelledby="chart-api" className="scroll-mt-28">
+          <h2
+            id="chart-api"
+            className="mb-6 text-2xl font-semibold tracking-[-0.04em]"
+          >
+            API reference
+          </h2>
+          <p className="mb-5 max-w-2xl text-sm leading-7 text-muted-foreground">
+            These are vip/ui frame parts. TanStack owns the chart definition,
+            renderer, sizing, tooltip, and keyboard behavior. See the{" "}
+            <a
+              href="https://tanstack.com/charts/latest/docs/framework/react/adapter"
+              className="text-primary underline underline-offset-4"
+            >
+              React adapter
+            </a>{" "}
+            and{" "}
+            <a
+              href="https://tanstack.com/charts/latest/docs/reference/chart-definitions"
+              className="text-primary underline underline-offset-4"
+            >
+              definition API
+            </a>{" "}
+            for their props.
+          </p>
+          <div className="overflow-x-auto rounded-xl bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70">
+            <table className="w-full min-w-[650px] border-collapse text-left text-[12px]">
+              <thead className="bg-muted/60 text-muted-foreground">
+                <tr>
+                  {(
+                    [
+                      "Component",
+                      "Prop",
+                      "Type",
+                      "Default",
+                      "Description",
+                    ] as const
+                  ).map((heading) => (
+                    <th
+                      key={heading}
+                      scope="col"
+                      className="px-4 py-3 font-semibold"
                     >
-                      one-time setup
-                    </Link>{" "}
-                    before running this command.
-                  </p>
-                  {cliUrl ? (
-                    <PackageManagerCommand
-                      action="run"
-                      args={`shadcn@latest add ${cliUrl}`}
-                    />
-                  ) : (
-                    <p className="text-[13px] leading-6 text-muted-foreground">
-                      The CLI command will be available when the registry has a
-                      public URL. Use Custom until then.
-                    </p>
-                  )}
-                </div>
-              }
-              custom={
-                <div className="space-y-5">
-                  <p className="text-[13px] leading-6 text-muted-foreground">
-                    First complete the{" "}
-                    <Link
-                      href="/components/installation#setup"
-                      className="text-primary underline underline-offset-4"
-                    >
-                      one-time setup
-                    </Link>
-                    . Install the dependencies, then copy every file below under
-                    your components directory. The{" "}
-                    <code className="font-mono text-foreground">
-                      @components/
-                    </code>{" "}
-                    placeholder represents your configured components alias.
-                    Review existing files before replacing them, and adjust the
-                    import in Usage if your alias differs.
-                  </p>
-                  {packages.length > 0 && (
-                    <PackageManagerCommand
-                      action="add"
-                      args={packages.join(" ")}
-                    />
-                  )}
-                  {item.files.map((file) => (
-                    <CodeBlock
-                      key={file.target}
-                      code={file.content}
-                      filename={file.target}
-                    />
+                      {heading}
+                    </th>
                   ))}
-                </div>
-              }
-            />
-          </section>
-          <section
-            id="usage"
-            aria-labelledby="chart-usage"
-            className="scroll-mt-28"
-          >
-            <h3
-              id="chart-usage"
-              className="mb-6 text-2xl font-semibold tracking-[-0.04em]"
-            >
-              Usage
-            </h3>
-            <p className="mb-5 max-w-2xl text-sm leading-7 text-muted-foreground">
-              Compose TanStack marks and scales inside the installed vip/ui
-              frame. <code>ChartFrame</code> maps shadcn&apos;s chart palette
-              and tooltip styles; <code>Chart</code> comes from TanStack, not
-              vip/ui. Keep static definitions outside render, memoize
-              definitions that capture changing rows, and supply a specific{" "}
-              <code>ariaLabel</code> and a table when exact values matter.
-            </p>
-            <CodeBlock code={usage} filename="signups-chart.tsx" />
-            <p className="mt-5 max-w-2xl text-sm leading-7 text-muted-foreground">
-              Change <code>--chart-1</code> through <code>--chart-5</code> in
-              both themes, or set <code>--ts-chart-1</code> on one frame via its{" "}
-              <code>style</code> prop. The gallery above shows grouped tooltips,
-              polar marks, and keyed motion. Each View code drawer includes the
-              shared plot helper and category file. Keep them side by side, then
-              import the example you need. Install{" "}
-              <Link
-                href="/components/button#installation"
-                className="text-primary underline underline-offset-4"
-              >
-                vip/ui Button
-              </Link>{" "}
-              before copying the Bar category source. The Radar category also
-              needs <code>d3-shape</code> and its TypeScript types,{" "}
-              <code>@types/d3-shape</code>.
-            </p>
-          </section>
-          <section
-            id="api"
-            aria-labelledby="chart-api"
-            className="scroll-mt-28"
-          >
-            <h3
-              id="chart-api"
-              className="mb-6 text-2xl font-semibold tracking-[-0.04em]"
-            >
-              API reference
-            </h3>
-            <p className="mb-5 max-w-2xl text-sm leading-7 text-muted-foreground">
-              These are vip/ui frame parts. TanStack owns the chart definition,
-              renderer, sizing, tooltip, and keyboard behavior. See the{" "}
-              <a
-                href="https://tanstack.com/charts/latest/docs/framework/react/adapter"
-                className="text-primary underline underline-offset-4"
-              >
-                React adapter
-              </a>{" "}
-              and{" "}
-              <a
-                href="https://tanstack.com/charts/latest/docs/reference/chart-definitions"
-                className="text-primary underline underline-offset-4"
-              >
-                definition API
-              </a>{" "}
-              for their props.
-            </p>
-            <div className="overflow-x-auto rounded-xl bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70">
-              <table className="w-full min-w-[650px] border-collapse text-left text-[12px]">
-                <thead className="bg-muted/60 text-muted-foreground">
-                  <tr>
-                    {(
-                      [
-                        "Component",
-                        "Prop",
-                        "Type",
-                        "Default",
-                        "Description",
-                      ] as const
-                    ).map((heading) => (
+                </tr>
+              </thead>
+              <tbody>
+                {api.map(
+                  ([component, prop, type, defaultValue, description]) => (
+                    <tr
+                      key={`${component}-${prop}`}
+                      className="border-t border-border/70 align-top"
+                    >
                       <th
-                        key={heading}
-                        scope="col"
-                        className="px-4 py-3 font-semibold"
+                        scope="row"
+                        className="px-4 py-3 font-mono font-medium text-foreground"
                       >
-                        {heading}
+                        {component}
                       </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {api.map(
-                    ([component, prop, type, defaultValue, description]) => (
-                      <tr
-                        key={`${component}-${prop}`}
-                        className="border-t border-border/70 align-top"
-                      >
-                        <th
-                          scope="row"
-                          className="px-4 py-3 font-mono font-medium text-foreground"
-                        >
-                          {component}
-                        </th>
-                        <td className="px-4 py-3 font-mono text-foreground">
-                          {prop}
-                        </td>
-                        <td className="px-4 py-3 font-mono text-muted-foreground">
-                          {type}
-                        </td>
-                        <td className="px-4 py-3 font-mono text-muted-foreground">
-                          {defaultValue}
-                        </td>
-                        <td className="px-4 py-3 leading-5 text-muted-foreground">
-                          {description}
-                        </td>
-                      </tr>
-                    ),
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </section>
-        </div>
+                      <td className="px-4 py-3 font-mono text-foreground">
+                        {prop}
+                      </td>
+                      <td className="px-4 py-3 font-mono text-muted-foreground">
+                        {type}
+                      </td>
+                      <td className="px-4 py-3 font-mono text-muted-foreground">
+                        {defaultValue}
+                      </td>
+                      <td className="px-4 py-3 leading-5 text-muted-foreground">
+                        {description}
+                      </td>
+                    </tr>
+                  ),
+                )}
+              </tbody>
+            </table>
+          </div>
+        </section>
       </div>
     </section>
   );

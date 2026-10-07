@@ -1,5 +1,6 @@
 "use client";
 
+import { motion, useReducedMotion } from "motion/react";
 import {
   Slider as AriaSlider,
   type SliderProps as AriaSliderProps,
@@ -70,7 +71,7 @@ export function SliderValue({
       data-slot="slider-value"
       className={composeRenderProps(className, (className) =>
         cn(
-          "rounded-md bg-secondary px-2 py-0.5 font-mono text-xs tabular-nums text-secondary-foreground ring-1 ring-border/60",
+          "font-mono text-xs font-medium tabular-nums text-muted-foreground",
           className,
         ),
       )}
@@ -106,7 +107,7 @@ export function SliderRail({
       aria-hidden="true"
       data-slot="slider-rail"
       className={cn(
-        "pointer-events-none absolute inset-x-0 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-secondary shadow-[var(--shadow-inset)] ring-1 ring-border/60 forced-colors:bg-[ButtonBorder]",
+        "pointer-events-none absolute inset-x-0 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-secondary forced-colors:bg-[ButtonBorder]",
         className,
       )}
     />
@@ -130,20 +131,52 @@ export function SliderRange({
 
 export function SliderHandle({
   className,
+  children,
   ...props
 }: React.ComponentProps<typeof SliderThumb>) {
-  // React Aria positions the thumb with an inline translate(-50%, -50%).
-  // Only set top: 50%; an extra translate utility offsets it twice.
+  const reduceMotion = useReducedMotion();
+  // React Aria owns the thumb's position. Only animate its visual layer.
   return (
     <SliderThumb
       {...props}
       data-slot="slider-handle"
       className={composeRenderProps(className, (className) =>
         cn(
-          "top-1/2 size-6 cursor-grab rounded-full border-[3px] border-card bg-primary shadow-[var(--shadow-float),0_0_0_1px_var(--primary)] outline-none dragging:cursor-grabbing disabled:cursor-default focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-3 focus-visible:outline-ring forced-colors:border-[ButtonFace] forced-colors:bg-[Highlight] motion-safe:transition-[scale,box-shadow] motion-safe:duration-150 motion-safe:dragging:scale-110",
+          "relative top-1/2 h-7 w-5 cursor-grab rounded-md outline-none dragging:cursor-grabbing disabled:cursor-default focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-3 focus-visible:outline-ring",
           className,
         ),
       )}
-    />
+    >
+      {composeRenderProps(
+        children,
+        (content, { isDragging, isHovered, isDisabled }) => (
+          <>
+            <motion.span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 flex items-center justify-center gap-0.5 rounded-md bg-primary forced-colors:bg-[Highlight]"
+              initial={false}
+              animate={{
+                scaleX:
+                  !isDisabled && isDragging
+                    ? 1.18
+                    : !isDisabled && isHovered
+                      ? 1.07
+                      : 1,
+                scaleY: !isDisabled && isDragging ? 0.94 : 1,
+              }}
+              transition={
+                reduceMotion
+                  ? { duration: 0 }
+                  : { type: "spring", stiffness: 420, damping: 32 }
+              }
+            >
+              <span className="h-2 w-px rounded-full bg-primary-foreground/80 forced-colors:bg-[HighlightText]" />
+              <span className="h-2 w-px rounded-full bg-primary-foreground/80 forced-colors:bg-[HighlightText]" />
+            </motion.span>
+            {content}
+          </>
+        ),
+      )}
+    </SliderThumb>
   );
 }
