@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { CheckboxBasicDemo } from "@/components/docs/checkbox-basic-demo";
 import { CheckboxDemo } from "@/components/docs/checkbox-demo";
-import { CheckboxStatesDemo } from "@/components/docs/checkbox-states-demo";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -23,7 +22,6 @@ export default function CheckboxPage() {
       previewSourcePath={page.usage}
       examples={withExamplePreviews(page.examples, [
         <CheckboxDemo key="example-1" />,
-        <CheckboxStatesDemo key="example-2" />,
       ])}
       sourcePath="src/components/ui/checkbox.tsx"
     />

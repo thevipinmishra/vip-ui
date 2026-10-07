@@ -3,6 +3,14 @@ import { Separator } from "@/components/ui/separator";
 export function SeparatorDemo() {
   return (
     <div className="w-full max-w-sm rounded-lg bg-card p-5 text-sm ring-1 ring-border">
+      <div className="flex min-h-11 items-center gap-4">
+        <span>Profile</span>
+        <Separator orientation="vertical" />
+        <span>Security</span>
+        <Separator orientation="vertical" />
+        <span>Billing</span>
+      </div>
+      <Separator className="my-4" />
       <p className="font-medium">Account</p>
       <p className="mt-1 text-muted-foreground">
         Manage your profile and security.

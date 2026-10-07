@@ -21,7 +21,7 @@ export function DrawerDemo() {
 
   return (
     <Drawer>
-      <DrawerTrigger>Review order</DrawerTrigger>
+      <DrawerTrigger>Resize order</DrawerTrigger>
       <DrawerContent
         snapPoints={snapPoints}
         defaultSnapPoint={snapPoints[1]}

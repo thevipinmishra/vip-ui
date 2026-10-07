@@ -9,8 +9,12 @@ import {
 } from "@/components/ui/checkbox";
 
 export function CheckboxDemo() {
-  const [email, setEmail] = useState(true);
+  const [updates, setUpdates] = useState(true);
   const [digest, setDigest] = useState(false);
+  const selected = Number(updates) + Number(digest);
+  const email =
+    selected === 2 ? true : selected === 0 ? false : "indeterminate";
+
   return (
     <div className="w-full max-w-sm rounded-xl bg-card p-5 shadow-[var(--shadow-card)] ring-1 ring-border/70 sm:p-6">
       <p className="text-sm font-semibold">Notifications</p>
@@ -18,25 +22,42 @@ export function CheckboxDemo() {
         Choose what reaches your inbox.
       </p>
       <div className="mt-5 grid gap-3">
-        <Checkbox checked={email} onCheckedChange={setEmail}>
+        <Checkbox
+          checked={email}
+          onCheckedChange={(checked) => {
+            setUpdates(checked);
+            setDigest(checked);
+          }}
+        >
           <CheckboxIndicator />
           <span className="pt-0.5">
-            <CheckboxLabel>Product updates</CheckboxLabel>
+            <CheckboxLabel>Email</CheckboxLabel>
             <CheckboxDescription>
-              A note when something needs your attention.
+              Product updates and the Friday digest.
             </CheckboxDescription>
           </span>
         </Checkbox>
-        <Checkbox checked={digest} onCheckedChange={setDigest}>
-          <CheckboxIndicator />
-          <span className="pt-0.5">
-            <CheckboxLabel>Weekly digest</CheckboxLabel>
-            <CheckboxDescription>
-              A short summary every Friday.
-            </CheckboxDescription>
-          </span>
-        </Checkbox>
-        <Checkbox isDisabled>
+        <div className="grid gap-3 ps-8">
+          <Checkbox checked={updates} onCheckedChange={setUpdates}>
+            <CheckboxIndicator />
+            <span className="pt-0.5">
+              <CheckboxLabel>Product updates</CheckboxLabel>
+              <CheckboxDescription>
+                A note when something needs your attention.
+              </CheckboxDescription>
+            </span>
+          </Checkbox>
+          <Checkbox checked={digest} onCheckedChange={setDigest}>
+            <CheckboxIndicator />
+            <span className="pt-0.5">
+              <CheckboxLabel>Weekly digest</CheckboxLabel>
+              <CheckboxDescription>
+                A short summary every Friday.
+              </CheckboxDescription>
+            </span>
+          </Checkbox>
+        </div>
+        <Checkbox isDisabled checked>
           <CheckboxIndicator />
           <span className="pt-0.5">
             <CheckboxLabel>Security alerts</CheckboxLabel>

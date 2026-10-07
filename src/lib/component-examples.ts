@@ -34,12 +34,10 @@ export const componentPageData = {
     description: "Triggers an action.",
     examples: [
       {
-        title: "Variants",
-        sourcePath: "button-variants-demo.tsx",
-      },
-      {
-        title: "Sizes",
-        sourcePath: "button-sizes-demo.tsx",
+        title: "Project actions",
+        description:
+          "Publish, save a revision, or archive. The primary action is large, the secondary actions are small, and preview is an icon button. The badge and saved revision update with each action.",
+        sourcePath: "button-project-actions-demo.tsx",
       },
     ],
   },
@@ -100,22 +98,10 @@ export const componentPageData = {
     description: "Displays collapsible sections of related content.",
     examples: [
       {
-        title: "Multiple open items",
+        title: "Billing questions",
         description:
-          "Use allowsMultipleExpanded to keep more than one answer open. Both answers start expanded; close one without affecting the other.",
-        sourcePath: "accordion-multiple-demo.tsx",
-      },
-      {
-        title: "Disabled item",
-        description:
-          "Set isDisabled on an AccordionItem when its answer is not available. The other item still opens normally.",
-        sourcePath: "accordion-disabled-demo.tsx",
-      },
-      {
-        title: "Divided",
-        description:
-          'Use variant="divided" for rows separated by a single line, without individual cards. Open either row to see the content expand.',
-        sourcePath: "accordion-divided-demo.tsx",
+          "Use a divided list when several answers can stay open. A disabled question stays visible until tax receipts are available.",
+        sourcePath: "accordion-billing-demo.tsx",
       },
     ],
   },
@@ -207,10 +193,10 @@ export const componentPageData = {
       "Joins related actions with shared edges while keeping each button independently focusable.",
     examples: [
       {
-        title: "Vertical draft actions",
+        title: "Orientations",
         description:
-          "Stack two actions in a column. Each button stays in the Tab order and changes the draft status.",
-        sourcePath: "button-group-vertical-demo.tsx",
+          "Keep save and discard in a row, and stack review actions in a column. Each button stays in the Tab order.",
+        sourcePath: "button-group-orientations-demo.tsx",
       },
     ],
   },
@@ -244,14 +230,8 @@ export const componentPageData = {
       {
         title: "Notification preferences",
         description:
-          "Compose labels and descriptions when choices need more context.",
+          "A parent checkbox shows a mixed state when only some inbox messages are selected. Disabled choices remain visible but unavailable.",
         sourcePath: "checkbox-demo.tsx",
-      },
-      {
-        title: "Indeterminate and disabled",
-        description:
-          "A mixed state can represent partial selection; disabled choices remain visible but unavailable.",
-        sourcePath: "checkbox-states-demo.tsx",
       },
     ],
   },
@@ -301,7 +281,7 @@ export const componentPageData = {
       {
         title: "Descriptive results",
         description:
-          "Filter options with supporting details and show the current selection.",
+          "Filter options with supporting details and show the current selection. A locked field keeps an archived value visible.",
         sourcePath: "combo-box-demo.tsx",
       },
       {
@@ -309,12 +289,6 @@ export const componentPageData = {
         description:
           "Filter teams, select more than one, and remove selections from the tags below the input. The array of selected keys is controlled by the app.",
         sourcePath: "combo-box-multiple-demo.tsx",
-      },
-      {
-        title: "Disabled",
-        description:
-          "Keep the selected value visible when the field cannot be edited.",
-        sourcePath: "combo-box-disabled-demo.tsx",
       },
     ],
   },
@@ -348,16 +322,10 @@ export const componentPageData = {
       "Copies a value and confirms whether the clipboard write succeeded.",
     examples: [
       {
-        title: "Text-only action",
+        title: "Share a release",
         description:
-          "Render each status as text. The button grows or shrinks with the label, and a failed write offers a retry.",
-        sourcePath: "copy-button-link-demo.tsx",
-      },
-      {
-        title: "Icon action",
-        description:
-          "Use the shared icon size for compact actions. Give an icon-only button a specific accessible name; the live region announces the result.",
-        sourcePath: "copy-button-icon-demo.tsx",
+          "Use a text label when the action needs to be read, and an icon button when the value is already on screen. A failed write offers a retry.",
+        sourcePath: "copy-button-share-demo.tsx",
       },
     ],
   },
@@ -417,21 +385,10 @@ export const componentPageData = {
         sourcePath: "drawer-demo.tsx",
       },
       {
-        title: "Right: project filters",
+        title: "Edge placement",
         description:
-          "Filter a project list. Swipe the handle right to dismiss without dragging form controls.",
-        sourcePath: "drawer-side-demo.tsx",
-      },
-      {
-        title: "Left: workspace navigation",
-        description:
-          "Browse collections, then select one or swipe left to close.",
-        sourcePath: "drawer-left-demo.tsx",
-      },
-      {
-        title: "Top: quick announcement",
-        description: "Write a note, then pull the bottom handle up to dismiss.",
-        sourcePath: "drawer-top-demo.tsx",
+          "Review an order from the bottom, write an announcement from the top, browse collections from the left, and filter projects from the right.",
+        sourcePath: "drawer-placement-demo.tsx",
       },
     ],
   },
@@ -558,15 +515,9 @@ export const componentPageData = {
         sourcePath: "menu-nested-demo.tsx",
       },
       {
-        title: "Single selection",
+        title: "Selection",
         description:
-          'Use selectionMode="single" to keep one view selected when the menu closes. Reopen the menu to change it.',
-        sourcePath: "menu-single-selection-demo.tsx",
-      },
-      {
-        title: "Multiple selection",
-        description:
-          "Keep view options selected across openings. Disabled items remain visible but cannot be chosen.",
+          "Keep one view selected, and keep overlay layers selected across openings. An unavailable layer stays visible but cannot be chosen.",
         sourcePath: "menu-selection-demo.tsx",
       },
     ],
@@ -579,7 +530,7 @@ export const componentPageData = {
       {
         title: "Support conversation",
         description:
-          "Add a local note and copy a message. New entries animate in without moving the entire thread; a long URL wraps at phone width. Enter makes a new line, and Send note submits.",
+          "Show incoming, outgoing, and system entries in one thread. Add a local note and copy a message. New entries animate in without moving the thread; a long URL wraps at phone width.",
         sourcePath: "message-demo.tsx",
       },
     ],
@@ -652,7 +603,7 @@ export const componentPageData = {
       {
         title: "Placement",
         description:
-          "Use placement to put the popover above its trigger. It can flip when there is not enough room.",
+          "Open notes above, details below, the assignee to the left, and sharing to the right. A popover can flip when there is not enough room.",
         sourcePath: "popover-placement-demo.tsx",
       },
     ],
@@ -737,14 +688,7 @@ export const componentPageData = {
   separator: {
     usage: "separator-demo.tsx",
     description: "Visually separates sections of content.",
-    examples: [
-      {
-        title: "Vertical separator",
-        description:
-          "Set orientation to vertical between adjacent labels. The parent row supplies the separator's height.",
-        sourcePath: "separator-vertical-demo.tsx",
-      },
-    ],
+    examples: [],
   },
   skeleton: {
     usage: "skeleton-demo.tsx",
@@ -755,8 +699,12 @@ export const componentPageData = {
     usage: "slider-demo.tsx",
     description: "Selects a value or range on a track.",
     examples: [
-      { title: "Range", sourcePath: "slider-range-demo.tsx" },
-      { title: "Disabled", sourcePath: "slider-disabled-demo.tsx" },
+      {
+        title: "Campaign budget",
+        description:
+          "Choose a daily spend range. Boost spend stays visible and disabled until the plan includes it.",
+        sourcePath: "slider-budget-demo.tsx",
+      },
     ],
   },
   spinner: {
@@ -791,8 +739,12 @@ export const componentPageData = {
     usage: "switch-basic-demo.tsx",
     description: "Turns a setting on or off.",
     examples: [
-      { title: "Controlled switches", sourcePath: "switch-demo.tsx" },
-      { title: "Disabled", sourcePath: "switch-states-demo.tsx" },
+      {
+        title: "Account settings",
+        description:
+          "Keep each switch in application state. A setting managed by the workspace stays on and cannot be changed.",
+        sourcePath: "switch-demo.tsx",
+      },
     ],
   },
   table: {
@@ -826,14 +778,8 @@ export const componentPageData = {
       {
         title: "Project workspace",
         description:
-          "Use separate panels for a summary, activity, and team when each section has more content.",
+          "Use separate panels for a summary, activity, and team. Keep Billing visible without allowing selection until the project is approved.",
         sourcePath: "tabs-demo.tsx",
-      },
-      {
-        title: "Unavailable tab",
-        description:
-          "Keep a destination visible without allowing selection until it becomes available.",
-        sourcePath: "tabs-disabled-demo.tsx",
       },
     ],
   },
@@ -901,7 +847,14 @@ export const componentPageData = {
   "mask-reveal": {
     usage: "mask-reveal-demo.tsx",
     description: "Uncovers content from a chosen edge.",
-    examples: [],
+    examples: [
+      {
+        title: "Reveal direction",
+        description:
+          "Replay the same still from the left, right, above, or below. Each button uncovers the card from that edge.",
+        sourcePath: "mask-reveal-directions-demo.tsx",
+      },
+    ],
   },
   "layout-morph": {
     usage: "layout-morph-demo.tsx",
@@ -941,7 +894,7 @@ export const componentPageData = {
       {
         title: "Notification types",
         description:
-          "Call showToast each time you need a notification. Leave important warnings open until dismissed; mount ToastViewport once near the app root.",
+          "Publish a release, check for an update, or flag billing. Leave important warnings open until dismissed; mount ToastViewport once near the app root.",
         sourcePath: "toast-status-demo.tsx",
       },
     ],
@@ -990,7 +943,7 @@ export const componentPageData = {
       {
         title: "Formatting toolbar",
         description:
-          "Combine text styles in one toolbar and separate Clear from the selection group.",
+          "Format the selection from a horizontal toolbar, and switch between body and quote from a vertical one.",
         sourcePath: "toolbar-demo.tsx",
       },
     ],
@@ -1003,7 +956,7 @@ export const componentPageData = {
       {
         title: "Review actions",
         description:
-          "Keep icon-only buttons named without the tooltip. Hover or focus for extra context, then try the actions.",
+          "Keep icon-only buttons named without the tooltip. Review opens above the button and assignment details open below.",
         sourcePath: "tooltip-actions-demo.tsx",
       },
     ],

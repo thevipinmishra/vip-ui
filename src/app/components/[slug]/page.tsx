@@ -8,7 +8,7 @@ import { AvatarBasicDemo } from "@/components/docs/avatar-basic-demo";
 import { AvatarDemo } from "@/components/docs/avatar-demo";
 import { BreadcrumbsDemo } from "@/components/docs/breadcrumbs-demo";
 import { ButtonGroupDemo } from "@/components/docs/button-group-demo";
-import { ButtonGroupVerticalDemo } from "@/components/docs/button-group-vertical-demo";
+import { ButtonGroupOrientationsDemo } from "@/components/docs/button-group-orientations-demo";
 import { CalendarDemo } from "@/components/docs/calendar-demo";
 import { CalendarUnavailableDemo } from "@/components/docs/calendar-unavailable-demo";
 import { CardDemo } from "@/components/docs/card-demo";
@@ -52,6 +52,7 @@ import { ListBoxDemo } from "@/components/docs/list-box-demo";
 import { ListBoxMultipleDemo } from "@/components/docs/list-box-multiple-demo";
 import { MarqueeDemo } from "@/components/docs/marquee-demo";
 import { MaskRevealDemo } from "@/components/docs/mask-reveal-demo";
+import { MaskRevealDirectionsDemo } from "@/components/docs/mask-reveal-directions-demo";
 import { MeterBasicDemo } from "@/components/docs/meter-basic-demo";
 import { MeterDemo } from "@/components/docs/meter-demo";
 import { NumberFieldDemo } from "@/components/docs/number-field-demo";
@@ -74,7 +75,6 @@ import { RangeCalendarLimitsDemo } from "@/components/docs/range-calendar-limits
 import { ScrollHighlightDemo } from "@/components/docs/scroll-highlight-demo";
 import { ScrollProgressDemo } from "@/components/docs/scroll-progress-demo";
 import { SeparatorDemo } from "@/components/docs/separator-demo";
-import { SeparatorVerticalDemo } from "@/components/docs/separator-vertical-demo";
 import { SkeletonDemo } from "@/components/docs/skeleton-demo";
 import { SpinnerBasicDemo } from "@/components/docs/spinner-basic-demo";
 import { SpinnerDemo } from "@/components/docs/spinner-demo";
@@ -463,7 +463,7 @@ const basicPreviews: Record<string, { demo: ReactNode; source: string }> = {
 const examplePreviews: Record<string, ReactNode[]> = {
   "animated-number": [<AnimatedNumberDemo key="preview-1" />],
   avatar: [<AvatarDemo key="preview-1" />],
-  "button-group": [<ButtonGroupVerticalDemo key="preview-1" />],
+  "button-group": [<ButtonGroupOrientationsDemo key="preview-1" />],
   calendar: [<CalendarUnavailableDemo key="preview-1" />],
   card: [<CardInvoiceDemo key="preview-1" />],
   "checkbox-group": [<CheckboxGroupRequiredDemo key="preview-1" />],
@@ -488,7 +488,7 @@ const examplePreviews: Record<string, ReactNode[]> = {
   "progress-bar": [<ProgressBarDemo key="preview-1" />],
   "progress-ring": [<ProgressRingDemo key="preview-1" />],
   "range-calendar": [<RangeCalendarLimitsDemo key="preview-1" />],
-  separator: [<SeparatorVerticalDemo key="preview-1" />],
+  "mask-reveal": [<MaskRevealDirectionsDemo key="preview-1" />],
   spinner: [
     <SpinnerDemo key="preview-1" />,
     <SpinnerUsageDemo key="preview-2" />,
