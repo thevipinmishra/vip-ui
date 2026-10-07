@@ -70,13 +70,13 @@ test("installation tabs and package manager tabs preserve arrow-key navigation",
   await cli.click();
   await cli.focus();
   await page.keyboard.press("ArrowRight");
-  const custom = install.getByRole("tab", { name: "Custom" });
-  await expect(custom).toBeFocused();
-  await expect(custom).toHaveAttribute("aria-selected", "true");
+  const manual = install.getByRole("tab", { name: "Manual" });
+  await expect(manual).toBeFocused();
+  await expect(manual).toHaveAttribute("aria-selected", "true");
   await page.keyboard.press("Tab");
-  const customPanel = page.getByRole("tabpanel", { name: "Custom" });
-  await expect(customPanel.getByRole("link").first()).toBeFocused();
-  await custom.focus();
+  const manualPanel = page.getByRole("tabpanel", { name: "Manual" });
+  await expect(manualPanel.getByRole("link").first()).toBeFocused();
+  await manual.focus();
   await page.keyboard.press("ArrowLeft");
   await expect(cli).toBeFocused();
   const manager = page

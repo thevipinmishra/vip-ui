@@ -1,24 +1,46 @@
-import { expect, test } from "@playwright/test";
+import { expect, type Locator, test } from "@playwright/test";
 
-test("the homepage leads to real components, examples, and source", async ({
+async function expectTriggerCentered(trigger: Locator) {
+  const value = trigger.locator("[data-slot=select-value]");
+  const icon = trigger.locator("[data-slot=select-chevron] svg");
+  const [valueBox, iconBox, triggerBox] = await Promise.all([
+    value.boundingBox(),
+    icon.boundingBox(),
+    trigger.boundingBox(),
+  ]);
+  expect(valueBox).toBeTruthy();
+  expect(iconBox).toBeTruthy();
+  expect(triggerBox).toBeTruthy();
+  if (!valueBox || !iconBox || !triggerBox) return;
+  const triggerMid = triggerBox.y + triggerBox.height / 2;
+  expect(Math.abs(valueBox.y + valueBox.height / 2 - triggerMid)).toBeLessThan(
+    2,
+  );
+  expect(Math.abs(iconBox.y + iconBox.height / 2 - triggerMid)).toBeLessThan(2);
+  expect(iconBox.x).toBeGreaterThan(valueBox.x);
+}
+
+test("the homepage leads to real components and working examples", async ({
   page,
 }) => {
   await page.goto("/");
   await expect(
-    page.getByRole("heading", { level: 1, name: /It's your interface/ }),
+    page.getByRole("heading", { level: 1, name: /Accessible components/ }),
   ).toBeVisible();
-  await expect(
-    page.getByRole("heading", { name: "Shape your space." }),
-  ).toHaveCount(0);
-  await expect(
-    page.getByRole("link", { name: "View examples" }),
-  ).toHaveAttribute("href", "/examples");
-
-  await page.getByRole("button", { name: "Workspace" }).click();
-  await page.getByRole("option", { name: "Team" }).click();
-  await expect(page.getByRole("button", { name: "Workspace" })).toContainText(
-    "Team",
+  await expect(page.getByRole("link", { name: "Get started" })).toHaveAttribute(
+    "href",
+    "/components/installation",
   );
+  await expect(
+    page.getByRole("link", { name: "Browse components" }),
+  ).toHaveAttribute("href", "/components");
+
+  const workspace = page.getByRole("button", { name: "Workspace" }).first();
+  await expectTriggerCentered(workspace);
+  await workspace.click();
+  await page.getByRole("option", { name: "Billing operations" }).click();
+  await expect(workspace).toContainText("Billing operations");
+  await expectTriggerCentered(workspace);
 
   await page.getByRole("button", { name: "View project details" }).click();
   await expect(
@@ -32,20 +54,8 @@ test("the homepage leads to real components, examples, and source", async ({
   await page.getByRole("button", { name: "Save draft" }).click();
   await expect(page.getByText("Draft saved")).toBeVisible();
 
-  await expect(
-    page.getByRole("link", { name: "Open repository demo" }),
-  ).toHaveAttribute("href", "/examples/repository");
-  await expect(
-    page.getByRole("link", { name: "Open business demo" }),
-  ).toHaveAttribute("href", "/examples/business");
-
-  await page.getByRole("tab", { name: "Code" }).click();
-  await expect(page.getByText("button-demo.tsx")).toBeVisible();
-  await page.getByRole("link", { name: "MIT license" }).click();
-  await expect(
-    page.getByRole("heading", { name: "MIT license" }),
-  ).toBeVisible();
-  await expect(page.getByText(/Permission is hereby granted/)).toBeVisible();
+  await page.getByRole("link", { name: "Select", exact: true }).click();
+  await expect(page).toHaveURL(/\/components\/select/);
 });
 
 test("the homepage fits a narrow screen and honors reduced motion", async ({
@@ -56,12 +66,11 @@ test("the homepage fits a narrow screen and honors reduced motion", async ({
   await page.goto("/");
 
   await expect(
-    page.getByRole("link", { name: "Explore components" }),
+    page.getByRole("link", { name: "Browse components" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Components", exact: true }),
   ).toBeVisible();
   const width = await page.evaluate(() => document.documentElement.scrollWidth);
   expect(width).toBeLessThanOrEqual(320);
-  await expect(page.locator(".home-enter").first()).toHaveCSS(
-    "animation-name",
-    "none",
-  );
 });

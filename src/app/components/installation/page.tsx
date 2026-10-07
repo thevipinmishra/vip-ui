@@ -148,7 +148,7 @@ export default async function InstallationPage() {
           {!buttonUrl && (
             <p>
               The CLI command appears on the component page when the registry
-              has a public URL. Until then, use its Custom tab to install the
+              has a public URL. Until then, use its Manual tab to install the
               files manually.
             </p>
           )}
@@ -170,7 +170,7 @@ export default async function InstallationPage() {
         <div className="mt-4 grid max-w-[670px] gap-4 text-sm leading-7 text-muted-foreground">
           <p>
             The manual path needs no registry URL and no CLI. On each component
-            page, the Custom tab lists its packages and the current content of
+            page, the Manual tab lists its packages and the current content of
             every file to copy, including a local{" "}
             <code className="font-mono text-foreground">utils.ts</code> where
             needed. Put the files in{" "}

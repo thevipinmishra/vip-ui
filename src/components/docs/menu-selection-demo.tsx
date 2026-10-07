@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { Selection } from "react-aria-components";
+import { Grid, Layers, List, Message, Pin, Ruler } from "reicon-react";
 import { Button } from "@/components/ui/button";
 import {
   MenuContent,
@@ -11,15 +12,15 @@ import {
 } from "@/components/ui/menu";
 
 const views = [
-  { id: "list", label: "List" },
-  { id: "grid", label: "Grid" },
-  { id: "board", label: "Board" },
+  { id: "list", label: "List", icon: List },
+  { id: "grid", label: "Grid", icon: Grid },
+  { id: "board", label: "Board", icon: Layers },
 ];
 
 const layers = [
-  { id: "guides", label: "Guides" },
-  { id: "rulers", label: "Rulers" },
-  { id: "comments", label: "Comments", disabled: true },
+  { id: "guides", label: "Guides", icon: Pin },
+  { id: "rulers", label: "Rulers", icon: Ruler },
+  { id: "comments", label: "Comments", icon: Message, disabled: true },
 ];
 
 export function MenuSelectionDemo() {
@@ -43,11 +44,15 @@ export function MenuSelectionDemo() {
               selectedKeys={view}
               onSelectionChange={setView}
             >
-              {views.map((item) => (
-                <MenuItem key={item.id} id={item.id}>
-                  {item.label} view
-                </MenuItem>
-              ))}
+              {views.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <MenuItem key={item.id} id={item.id}>
+                    <Icon size={16} aria-hidden="true" className="shrink-0" />
+                    <span className="min-w-0 flex-1">{item.label} view</span>
+                  </MenuItem>
+                );
+              })}
             </MenuContent>
           </MenuPopover>
         </MenuTrigger>
@@ -59,11 +64,21 @@ export function MenuSelectionDemo() {
               selectedKeys={visible}
               onSelectionChange={setVisible}
             >
-              {layers.map((item) => (
-                <MenuItem key={item.id} id={item.id} isDisabled={item.disabled}>
-                  {item.disabled ? "Comments (unavailable)" : item.label}
-                </MenuItem>
-              ))}
+              {layers.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <MenuItem
+                    key={item.id}
+                    id={item.id}
+                    isDisabled={item.disabled}
+                  >
+                    <Icon size={16} aria-hidden="true" className="shrink-0" />
+                    <span className="min-w-0 flex-1">
+                      {item.disabled ? "Comments (unavailable)" : item.label}
+                    </span>
+                  </MenuItem>
+                );
+              })}
             </MenuContent>
           </MenuPopover>
         </MenuTrigger>

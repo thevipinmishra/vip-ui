@@ -22,7 +22,7 @@ export function HomeWorkspaceScene() {
   const selected = workspaces.find((item) => item.id === workspace);
 
   return (
-    <div className="flex w-full max-w-sm flex-col gap-4">
+    <div className="flex w-full min-w-0 max-w-sm flex-col gap-4">
       <Select
         value={workspace}
         onValueChange={setWorkspace}

@@ -25,7 +25,7 @@ Use a TypeScript React app with Tailwind CSS v4 and a shadcn CSS-variable theme.
    }
    ```
 
-The CLI installs the required packages and files under `aliases.components/vip-ui/`. It does not replace your shadcn components. To install without the CLI, use the Custom tab on a [component page](https://vip-ui.vercel.app/components); it lists the files and packages to copy. Manual installation does not require `components.json`. See [styling and variants](docs/styling.md) for ways to change installed styles.
+The CLI installs the required packages and files under `aliases.components/vip-ui/`. It does not replace your shadcn components. To install without the CLI, use the Manual tab on a [component page](https://vip-ui.vercel.app/components); it lists the files and packages to copy. Manual installation does not require `components.json`. See [styling and variants](docs/styling.md) for ways to change installed styles.
 
 ## Explore
 

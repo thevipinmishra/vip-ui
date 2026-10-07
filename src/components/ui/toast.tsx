@@ -133,7 +133,7 @@ export function ToastViewport({
       aria-label="Notifications"
       className={composeRenderProps(className, (className) =>
         cn(
-          "fixed inset-x-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-50 flex max-h-[min(70dvh,32rem)] flex-col-reverse gap-2 overflow-y-auto overscroll-contain rounded-xl outline-none focus-visible:outline-2 focus-visible:outline-ring sm:inset-x-auto sm:end-4 sm:w-96",
+          "fixed inset-x-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-50 flex flex-col-reverse gap-2 outline-none focus-visible:outline-2 focus-visible:outline-ring sm:inset-x-auto sm:end-4 sm:w-96",
           className,
         ),
       )}

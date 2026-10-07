@@ -4,6 +4,7 @@ test("notifications animate on the toast surface and remain dismissible", async 
   page,
 }) => {
   await page.goto("/components/toast");
+  await page.waitForLoadState("networkidle");
   await page.getByRole("button", { name: "Show upload warning" }).click();
 
   const notification = page.getByRole("alertdialog", { name: "Upload paused" });

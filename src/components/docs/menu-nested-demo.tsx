@@ -2,6 +2,13 @@
 
 import { useState } from "react";
 import { SubmenuTrigger } from "react-aria-components";
+import {
+  Bookmark,
+  ChevronRight,
+  Layers,
+  Link as LinkIcon,
+  Pin,
+} from "reicon-react";
 import { Button } from "@/components/ui/button";
 import {
   MenuContent,
@@ -10,24 +17,60 @@ import {
   MenuTrigger,
 } from "@/components/ui/menu";
 
+const iconClass = "shrink-0 text-muted-foreground";
+
 export function MenuNestedDemo() {
   const [saved, setSaved] = useState(false);
 
   return (
     <div className="flex flex-col items-start gap-3">
       <MenuTrigger>
-        <Button variant="outline">More options</Button>
+        <Button variant="outline">
+          <Bookmark size={16} aria-hidden="true" />
+          More options
+        </Button>
         <MenuPopover>
           <MenuContent aria-label="More options">
             <MenuItem onAction={() => setSaved((value) => !value)}>
+              <Pin size={16} aria-hidden="true" className={iconClass} />
               {saved ? "Remove bookmark" : "Bookmark this page"}
             </MenuItem>
             <SubmenuTrigger>
-              <MenuItem>Components</MenuItem>
+              <MenuItem>
+                <Layers size={16} aria-hidden="true" className={iconClass} />
+                <span className="min-w-0 flex-1">Components</span>
+                <ChevronRight
+                  size={16}
+                  aria-hidden="true"
+                  className={iconClass}
+                />
+              </MenuItem>
               <MenuPopover placement="right top" offset={-2}>
                 <MenuContent aria-label="Component links">
-                  <MenuItem href="/components/avatar">Avatar</MenuItem>
-                  <MenuItem href="/components/pagination">Pagination</MenuItem>
+                  <MenuItem href="/components/avatar">
+                    <LinkIcon
+                      size={16}
+                      aria-hidden="true"
+                      className={iconClass}
+                    />
+                    Avatar
+                  </MenuItem>
+                  <MenuItem href="/components/badge">
+                    <LinkIcon
+                      size={16}
+                      aria-hidden="true"
+                      className={iconClass}
+                    />
+                    Badge
+                  </MenuItem>
+                  <MenuItem href="/components/pagination">
+                    <LinkIcon
+                      size={16}
+                      aria-hidden="true"
+                      className={iconClass}
+                    />
+                    Pagination
+                  </MenuItem>
                 </MenuContent>
               </MenuPopover>
             </SubmenuTrigger>
