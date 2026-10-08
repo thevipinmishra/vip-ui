@@ -20,10 +20,12 @@ export async function CodeSnippet({
       theme: "github-dark-default",
     }),
   ]);
+  const lineDigits = String(Math.max(lightTokens.length, 1)).length;
   return (
     <div
       className="code-block min-w-0 text-code-foreground"
       data-language={language}
+      style={{ "--code-line-digits": lineDigits } as CSSProperties}
     >
       <pre className="shiki">
         <code>
