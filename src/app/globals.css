@@ -351,7 +351,7 @@
 .code-block .shiki {
   margin: 0;
   min-width: max-content;
-  padding: 1.25rem 1.75rem 1.75rem 1.125rem;
+  padding: 1.25rem 1.5rem 1.75rem 1rem;
   background: transparent;
   font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-size: 0.8125rem;
@@ -364,9 +364,11 @@
   min-height: 1.8em;
   counter-increment: code-line;
 }
+/* Match the gutter to the snippet's digit count so short files do not
+   reserve a three-digit column of empty space to the left of the numbers. */
 .code-block .shiki .line::before {
   display: inline-block;
-  width: 2.25rem;
+  width: calc(var(--code-line-digits, 2) * 1ch);
   margin-inline-end: 1.25rem;
   color: var(--neutral-500);
   content: counter(code-line);

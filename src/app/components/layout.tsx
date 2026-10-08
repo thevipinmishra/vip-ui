@@ -35,7 +35,7 @@ export default function ComponentsLayout({
           </div>
         </div>
       </div>
-      <SiteFooter />
+      <SiteFooter wide />
     </div>
   );
 }
