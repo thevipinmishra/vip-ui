@@ -6,6 +6,7 @@ const staticRoutes = [
   { path: "", priority: 1 },
   { path: "/components", priority: 0.9 },
   { path: "/components/installation", priority: 0.9 },
+  { path: "/components/react-aria", priority: 0.8 },
   { path: "/themes", priority: 0.8 },
   { path: "/charts", priority: 0.8 },
   { path: "/examples", priority: 0.7 },

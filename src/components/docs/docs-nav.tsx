@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 const gettingStarted = [
   { href: "/components", label: "Catalog" },
   { href: "/components/installation", label: "Installation" },
+  { href: "/components/react-aria", label: "React Aria" },
 ];
 
 export function DocsNav({

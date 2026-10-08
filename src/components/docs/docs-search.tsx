@@ -9,6 +9,7 @@ import {
   FolderOpen,
   House,
   Palette,
+  Puzzle,
   Scale,
   Search,
 } from "reicon-react";
@@ -33,6 +34,7 @@ const pages = [
   { href: "/", label: "Home", icon: House },
   { href: "/components", label: "Components", icon: Component },
   { href: "/components/installation", label: "Installation", icon: BookOpen },
+  { href: "/components/react-aria", label: "React Aria", icon: Puzzle },
   { href: "/themes", label: "Themes", icon: Palette },
   { href: "/charts", label: "Charts", icon: ChartBar },
   { href: "/examples", label: "Examples", icon: FolderOpen },
