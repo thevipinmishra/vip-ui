@@ -23,6 +23,7 @@ import {
   fieldDescriptionStyles,
   fieldErrorStyles,
   fieldLabelStyles,
+  fieldTriggerStyles,
   segmentedFieldStyles,
 } from "./field-styles";
 import { Popover } from "./popover";
@@ -71,7 +72,7 @@ export function DatePicker<T extends DateValue>({
               data-slot="date-picker-trigger"
               variant="ghost"
               size="icon"
-              className="me-1 shrink-0"
+              className={cn(fieldTriggerStyles, "me-1")}
             >
               <DatePickerChevron />
             </Button>

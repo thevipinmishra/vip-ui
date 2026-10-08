@@ -17,6 +17,7 @@ import {
   fieldErrorStyles,
   fieldInputStyles,
   fieldLabelStyles,
+  fieldTriggerStyles,
 } from "./field-styles";
 
 export interface SearchFieldProps
@@ -112,7 +113,8 @@ export function SearchFieldClear({
       aria-label={props["aria-label"] ?? "Clear search"}
       className={composeRenderProps(className, (className) =>
         cn(
-          "absolute inset-y-0 end-1 my-auto grid size-11 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none data-[disabled]:cursor-default data-[disabled]:opacity-50 hover:bg-muted hover:text-foreground data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring group-data-[empty]:hidden",
+          fieldTriggerStyles,
+          "absolute inset-y-0 end-1 my-auto group-data-[empty]:hidden",
           className,
         ),
       )}

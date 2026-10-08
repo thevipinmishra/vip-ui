@@ -35,9 +35,10 @@ export function MenuPopover({
       data-slot="menu-popover"
       placement={props.placement ?? "bottom start"}
       offset={props.offset ?? 7}
+      maxHeight={props.maxHeight ?? 300}
       className={composeRenderProps(className, (className) =>
         cn(
-          "min-w-44 max-w-[calc(100vw-2rem)] rounded-lg border-0 p-1.5 ring-1 ring-border/70",
+          "min-w-[min(11rem,calc(100vw-2rem))] rounded-lg border-0 p-1.5 ring-1 ring-border/70",
           className,
         ),
       )}
@@ -56,7 +57,7 @@ export function MenuContent<T extends object>({
       {...props}
       data-slot="menu-content"
       className={composeRenderProps(className, (className) =>
-        cn("grid max-h-72 gap-1 overflow-y-auto outline-none", className),
+        cn("grid gap-1 outline-none", className),
       )}
     />
   );

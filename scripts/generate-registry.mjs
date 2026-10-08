@@ -8,6 +8,7 @@ const outputDirectory = path.join(root, "public/r");
 const sourceDirectory = path.join(root, "registry/generated");
 const utilsSource = await readFile(path.join(root, "src/lib/utils.ts"), "utf8");
 const descriptions = {
+  "agent-status": "Show an agent's current step and outcome.",
   accordion: "Reveal one or more sections of related content.",
   alert: "Show information, success, warning, or error messages.",
   "animated-number":
@@ -40,6 +41,8 @@ const descriptions = {
   "context-menu":
     "Open actions beside an item with pointer, touch, or keyboard.",
   "command-palette": "Find and run actions with keyboard search.",
+  "data-table":
+    "Search, filter, sort, select, and paginate rows in a client-side table.",
   "date-field": "Enter a date one editable segment at a time.",
   "date-picker": "Choose a single date from a field and calendar.",
   "date-range-picker": "Choose a start and end date from a field and calendar.",
@@ -56,6 +59,7 @@ const descriptions = {
   form: "Group fields and handle form validation.",
   "grid-list": "Select and act on rows with keyboard navigation.",
   "input-group": "Combine an input with a prefix, suffix, or action.",
+  "inline-edit": "Edit text in place and handle save errors.",
   "kbd-code": "Display keyboard shortcuts and inline code.",
   link: "Navigate with an accessible text link.",
   "list-box": "Select an option from a visible list.",
@@ -71,6 +75,8 @@ const descriptions = {
   "parallax-layer": "Move a layer as its container scrolls.",
   presence: "Animate conditional content when it enters or leaves.",
   "password-field": "Enter a password and toggle its visibility.",
+  "password-strength-meter":
+    "Estimate password strength beside any password field.",
   popover: "Show contextual content anchored to a trigger.",
   "presence-list": "Animate additions and removals in a semantic list.",
   "press-button": "Handle press interactions for shared button controls.",
@@ -78,11 +84,13 @@ const descriptions = {
   "progress-bar": "Show progress for a task with a known completion point.",
   "progress-ring": "Show known or unknown progress in a circular indicator.",
   "radio-group": "Choose one option from a visible set.",
+  "rating-input": "Choose a star rating with radio controls.",
   "range-calendar": "Select a start and end date in a calendar.",
   "search-field": "Search with a labeled input and clear control.",
   "scroll-highlight":
     "Emphasize words as a passage scrolls through the viewport or a panel.",
   "scroll-progress": "Show reading progress in a page or scrollable panel.",
+  "source-link": "Link an answer to a named source.",
   select: "Choose one option from a list in a popover.",
   separator: "Divide related groups of content.",
   skeleton: "Reserve space while content is loading.",
@@ -103,6 +111,7 @@ const descriptions = {
   "text-scramble": "Resolve changing text from scrambled characters.",
   timeline: "Show dated events in a semantic sequence.",
   "time-field": "Enter a time one editable segment at a time.",
+  "tool-call": "Inspect a tool request and result behind a disclosure.",
   toast: "Show feedback after an action without interrupting the page.",
   "toggle-button-group": "Choose one or more persistent actions in a group.",
   "toggle-button": "Turn a persistent action on or off.",

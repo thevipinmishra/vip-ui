@@ -121,12 +121,13 @@ export function Select({
               data-slot="select-content"
               placement="bottom start"
               offset={7}
+              maxHeight={268}
               className={selectPopoverStyles}
             >
               <ListBox
                 data-slot="select-list-box"
                 items={options ?? []}
-                className="grid max-h-64 gap-1 overflow-y-auto outline-none"
+                className="grid gap-1 outline-none"
               >
                 {(option) => (
                   <ListBoxItem
@@ -255,14 +256,12 @@ export function SelectContent({
       data-slot="select-content"
       placement={props.placement ?? "bottom start"}
       offset={props.offset ?? 7}
+      maxHeight={props.maxHeight ?? 268}
       className={composeRenderProps(className, (className) =>
         cn(selectPopoverStyles, className),
       )}
     >
-      <ListBox
-        data-slot="select-list-box"
-        className="grid max-h-64 gap-1 overflow-y-auto outline-none"
-      >
+      <ListBox data-slot="select-list-box" className="grid gap-1 outline-none">
         {children}
       </ListBox>
     </Popover>

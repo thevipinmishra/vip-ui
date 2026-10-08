@@ -90,6 +90,16 @@ const catalog: CatalogDefinition[] = [
         useFor: "Entering a password with a reveal control.",
       },
       {
+        slug: "password-strength-meter",
+        name: "Password strength meter",
+        useFor: "Estimating the strength of a password entered elsewhere.",
+      },
+      {
+        slug: "inline-edit",
+        name: "Inline edit",
+        useFor: "Editing text in place with keyboard and save-error handling.",
+      },
+      {
         slug: "input-group",
         name: "Input group",
         useFor: "A field with a prefix, suffix, or action.",
@@ -148,6 +158,11 @@ const catalog: CatalogDefinition[] = [
         slug: "radio-group",
         name: "Radio group",
         useFor: "One choice from a short visible list.",
+      },
+      {
+        slug: "rating-input",
+        name: "Rating input",
+        useFor: "Choosing a star rating with keyboard or pointer.",
       },
       {
         slug: "switch",
@@ -359,6 +374,21 @@ const catalog: CatalogDefinition[] = [
         useFor: "A readable entry in a conversation.",
       },
       {
+        slug: "agent-status",
+        name: "Agent status",
+        useFor: "A visible state for an agent's current step.",
+      },
+      {
+        slug: "tool-call",
+        name: "Tool call",
+        useFor: "An expandable tool request and result.",
+      },
+      {
+        slug: "source-link",
+        name: "Source link",
+        useFor: "A linked source for an answer.",
+      },
+      {
         slug: "tabs",
         name: "Tabs",
         useFor: "Related panels in one view.",
@@ -479,6 +509,12 @@ const catalog: CatalogDefinition[] = [
         useFor: "Data in rows and columns.",
       },
       {
+        slug: "data-table",
+        name: "Data table",
+        useFor:
+          "Searching, filtering, sorting, selecting, and paging through rows.",
+      },
+      {
         slug: "preview-trigger",
         name: "Preview trigger",
         useFor: "A preview on hover, focus, or long press.",
@@ -504,6 +540,8 @@ const reactAriaDocs: Record<string, string> = {
   "command-palette": "https://react-aria.adobe.com/Menu",
   "text-field": "https://react-aria.adobe.com/TextField",
   "password-field": "https://react-aria.adobe.com/TextField",
+  "password-strength-meter": "https://react-aria.adobe.com/Meter",
+  "inline-edit": "https://react-aria.adobe.com/TextField",
   "input-group": "https://react-aria.adobe.com/Group",
   "text-area": "https://react-aria.adobe.com/TextField#textarea",
   "number-field": "https://react-aria.adobe.com/NumberField",
@@ -515,6 +553,7 @@ const reactAriaDocs: Record<string, string> = {
   checkbox: "https://react-aria.adobe.com/Checkbox",
   "checkbox-group": "https://react-aria.adobe.com/CheckboxGroup",
   "radio-group": "https://react-aria.adobe.com/RadioGroup",
+  "rating-input": "https://react-aria.adobe.com/RadioGroup",
   switch: "https://react-aria.adobe.com/Switch",
   slider: "https://react-aria.adobe.com/Slider",
   form: "https://react-aria.adobe.com/Form",
@@ -531,6 +570,8 @@ const reactAriaDocs: Record<string, string> = {
   tabs: "https://react-aria.adobe.com/Tabs",
   accordion: "https://react-aria.adobe.com/DisclosureGroup",
   disclosure: "https://react-aria.adobe.com/Disclosure",
+  "tool-call": "https://react-aria.adobe.com/Disclosure",
+  "source-link": "https://react-aria.adobe.com/Link",
   dialog: "https://react-aria.adobe.com/Modal",
   drawer: "https://react-aria.adobe.com/Modal",
   popover: "https://react-aria.adobe.com/Popover",
@@ -547,6 +588,7 @@ const reactAriaDocs: Record<string, string> = {
   tree: "https://react-aria.adobe.com/Tree",
   "drop-zone": "https://react-aria.adobe.com/DropZone",
   table: "https://react-aria.adobe.com/Table",
+  "data-table": "https://react-aria.adobe.com/Table",
   "preview-trigger": "https://react-aria.adobe.com/PreviewTrigger",
 };
 

@@ -419,6 +419,31 @@ export const customComponentApi: Record<string, ApiProp[]> = {
         "Called with the selected option id, or an empty string when the selection is cleared. A supplied React Aria onSelectionChange also runs.",
     },
   ],
+  "agent-status": [
+    {
+      component: "AgentStatus",
+      prop: "state",
+      type: '"thinking" | "working" | "complete" | "error"',
+      defaultValue: "required",
+      description:
+        "Current state. Thinking and working animate unless motion is reduced.",
+    },
+    {
+      component: "AgentStatus",
+      prop: "label",
+      type: "string",
+      defaultValue: "required",
+      description:
+        "Visible description of the current step, announced when it changes.",
+    },
+    {
+      component: "AgentStatus",
+      prop: "detail",
+      type: "string",
+      defaultValue: "—",
+      description: "Optional visible detail under the step label.",
+    },
+  ],
   message: [
     {
       component: "Message",
@@ -461,6 +486,88 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "ReactNode",
       defaultValue: "—",
       description: "Actions displayed below the message.",
+    },
+  ],
+  "source-link": [
+    {
+      component: "SourceLink",
+      prop: "label / source",
+      type: "string / string",
+      defaultValue: "required",
+      description: "Visible title and source name for the destination.",
+    },
+    {
+      component: "SourceLink",
+      prop: "index / description",
+      type: "number / string",
+      defaultValue: "—",
+      description: "Optional citation number and supporting text.",
+    },
+  ],
+  "tool-call": [
+    {
+      component: "ToolCallTrigger",
+      prop: "name",
+      type: "string",
+      defaultValue: "required",
+      description: "Visible name of the tool that ran.",
+    },
+    {
+      component: "ToolCallTrigger",
+      prop: "status",
+      type: '"running" | "complete" | "error"',
+      defaultValue: "required",
+      description:
+        "Visible execution state. Running animates unless motion is reduced.",
+    },
+    {
+      component: "ToolCallTrigger",
+      prop: "summary",
+      type: "string",
+      defaultValue: "—",
+      description: "Optional short description below the tool name.",
+    },
+  ],
+  "inline-edit": [
+    {
+      component: "InlineEdit",
+      prop: "label",
+      type: "string",
+      defaultValue: "required",
+      description: "Visible label in display and edit modes.",
+    },
+    {
+      component: "InlineEdit",
+      prop: "value / defaultValue",
+      type: "string",
+      defaultValue: "undefined / empty",
+      description:
+        "Control the displayed value or set its initial local value.",
+    },
+    {
+      component: "InlineEdit",
+      prop: "onSave",
+      type: "(value: string) => void | Promise<void>",
+      defaultValue: "undefined",
+      description:
+        "Called on Save, not when the value is unchanged. A rejected promise keeps the draft open and shows its error; update value here when controlled.",
+    },
+    {
+      component: "InlineEdit",
+      prop: "isDisabled",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Prevents opening the editor.",
+    },
+  ],
+  "password-strength-meter": [
+    {
+      component: "PasswordStrengthMeter",
+      prop: "password",
+      type: "string",
+      defaultValue: "required",
+      description:
+        "The password to estimate. Counts length and character mix, not actual resistance to guessing; a unique password matters more than the score.",
     },
   ],
   "password-field": [
@@ -760,6 +867,122 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       defaultValue: "false",
       description:
         "Hide the indicator from assistive technology when adjacent text already reports progress.",
+    },
+  ],
+  "rating-input": [
+    {
+      component: "RatingInput",
+      prop: "label",
+      type: "string",
+      defaultValue: "required",
+      description: "Visible label for the rating group.",
+    },
+    {
+      component: "RatingInput",
+      prop: "max",
+      type: "number",
+      defaultValue: "5",
+      description: "Number of stars. Use a positive whole number.",
+    },
+    {
+      component: "RatingInput",
+      prop: "value / defaultValue",
+      type: "number",
+      defaultValue: "undefined / 0",
+      description:
+        "Selected rating; 0 means no rating. Use a number between 1 and max for a selection.",
+    },
+    {
+      component: "RatingInput",
+      prop: "onValueChange",
+      type: "(value: number) => void",
+      defaultValue: "undefined",
+      description: "Called when a star is selected.",
+    },
+  ],
+  "data-table": [
+    {
+      component: "DataTable",
+      prop: "label",
+      type: "string",
+      defaultValue: "required",
+      description: "Names the table and its search and pagination controls.",
+    },
+    {
+      component: "DataTable",
+      prop: "rows / columns",
+      type: "readonly T[] / readonly DataTableColumn<T>[]",
+      defaultValue: "required",
+      description:
+        "Client-side rows and column definitions. The first column labels each row.",
+    },
+    {
+      component: "DataTableColumn",
+      prop: "id / header / cell",
+      type: "string / string / (row: T) => ReactNode",
+      defaultValue: "required",
+      description: "Stable column key, visible header, and cell renderer.",
+    },
+    {
+      component: "DataTableColumn",
+      prop: "sortValue",
+      type: "(row: T) => string | number",
+      defaultValue: "undefined",
+      description:
+        "Enables sorting for this column; return a comparable value. Column filters use this value too.",
+    },
+    {
+      component: "DataTableColumn",
+      prop: "align",
+      type: '"start" | "end"',
+      defaultValue: '"start"',
+      description: "Aligns the header and cells; use end for numbers.",
+    },
+    {
+      component: "DataTableColumn",
+      prop: "filter",
+      type: "{ type: 'text' } | { type: 'select'; options: SelectOption[] }",
+      defaultValue: "undefined",
+      description:
+        "Adds a text or single-choice filter for a column with sortValue. Filters combine with search before sorting and pagination.",
+    },
+    {
+      component: "DataTable",
+      prop: "getRowId",
+      type: "(row: T) => Key",
+      defaultValue: "required",
+      description: "Returns a unique, stable key for each row.",
+    },
+    {
+      component: "DataTable",
+      prop: "getSearchText",
+      type: "(row: T) => string",
+      defaultValue: "undefined",
+      description:
+        "Enables search across rows; return all text that should be searchable for each row.",
+    },
+    {
+      component: "DataTable",
+      prop: "pageSize / selectable",
+      type: "number / boolean",
+      defaultValue: "5 / true",
+      description:
+        "Rows per page and whether to show row-selection checkboxes. Select all affects the current page; filters do not clear selections.",
+    },
+    {
+      component: "DataTable",
+      prop: "selectedKeys / defaultSelectedKeys",
+      type: "Iterable<Key>",
+      defaultValue: "undefined / empty",
+      description:
+        "Control selected row keys or set their initial value. Selections persist across pages and filters.",
+    },
+    {
+      component: "DataTable",
+      prop: "onSelectionChange",
+      type: "(keys: Set<Key>) => void",
+      defaultValue: "undefined",
+      description: "Receives selected row keys, including keys on other pages.",
     },
   ],
   pagination: [

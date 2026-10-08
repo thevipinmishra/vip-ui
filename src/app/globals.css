@@ -47,6 +47,16 @@
   --destructive-foreground: var(--neutral-0);
   --border: oklch(0.88 0.009 85);
   --input: oklch(0.82 0.014 85);
+  --scrollbar-thumb: color-mix(
+    in oklab,
+    var(--muted-foreground) 55%,
+    transparent
+  );
+  --scrollbar-thumb-hover: color-mix(
+    in oklab,
+    var(--muted-foreground) 80%,
+    transparent
+  );
   --ring: var(--blue-600);
   --code: oklch(0.968 0.007 85);
   --code-foreground: var(--neutral-900);
@@ -80,6 +90,16 @@
   --destructive-foreground: oklch(0.16 0.014 257);
   --border: oklch(0.68 0.015 257 / 0.2);
   --input: oklch(0.72 0.018 257 / 0.28);
+  --scrollbar-thumb: color-mix(
+    in oklab,
+    var(--muted-foreground) 65%,
+    transparent
+  );
+  --scrollbar-thumb-hover: color-mix(
+    in oklab,
+    var(--muted-foreground) 90%,
+    transparent
+  );
   --ring: oklch(0.78 0.105 257);
   --code: oklch(0.18 0.016 257);
   --code-foreground: var(--foreground);
@@ -151,7 +171,7 @@
 @layer base {
   * {
     border-color: var(--border);
-    scrollbar-color: var(--input) transparent;
+    scrollbar-color: var(--scrollbar-thumb) transparent;
     scrollbar-width: thin;
   }
   body {
@@ -186,11 +206,11 @@
   *::-webkit-scrollbar-thumb {
     border: 2px solid transparent;
     border-radius: 999px;
-    background: var(--input);
+    background: var(--scrollbar-thumb);
     background-clip: padding-box;
   }
   *::-webkit-scrollbar-thumb:hover {
-    background: var(--muted-foreground);
+    background: var(--scrollbar-thumb-hover);
     background-clip: padding-box;
   }
 }
@@ -240,11 +260,11 @@
   width: 100%;
   cursor: grab;
   border-radius: 999px;
-  background: var(--input);
+  background: var(--scrollbar-thumb);
 }
 .sidebar-scrollbar:hover .sidebar-scroll-thumb,
 .sidebar-scrollbar[data-dragging] .sidebar-scroll-thumb {
-  background: var(--muted-foreground);
+  background: var(--scrollbar-thumb-hover);
 }
 .sidebar-scrollbar[data-dragging] .sidebar-scroll-thumb {
   cursor: grabbing;
@@ -303,7 +323,7 @@
   flex: none;
   cursor: grab;
   border-radius: 999px;
-  background: var(--input);
+  background: var(--scrollbar-thumb);
 }
 .code-scrollbar-x .code-scroll-thumb {
   height: 100%;
@@ -317,7 +337,7 @@
 }
 .code-scrollbar:hover .code-scroll-thumb,
 .code-scrollbar[data-dragging] .code-scroll-thumb {
-  background: var(--muted-foreground);
+  background: var(--scrollbar-thumb-hover);
 }
 .code-scrollbar[data-dragging] .code-scroll-thumb {
   cursor: grabbing;

@@ -6,8 +6,6 @@ import { CheckboxBasicDemo } from "@/components/docs/checkbox-basic-demo";
 import { DialogDemo } from "@/components/docs/dialog-demo";
 import { HomeButtonDemo } from "@/components/docs/home-button-demo";
 import { HomeReveal } from "@/components/docs/home-page-motion";
-import { HomeProjectScene } from "@/components/docs/home-project-scene";
-import { HomeWorkspaceScene } from "@/components/docs/home-workspace-scene";
 import { MenuDemo } from "@/components/docs/menu-demo";
 import { PopoverDemo } from "@/components/docs/popover-demo";
 import { ProgressBarBasicDemo } from "@/components/docs/progress-bar-basic-demo";
@@ -51,53 +49,6 @@ function Preview({
   );
 }
 
-function Task({
-  title,
-  detail,
-  primaryHref,
-  primaryLabel,
-  secondaryHref,
-  secondaryLabel,
-  children,
-}: {
-  title: string;
-  detail: string;
-  primaryHref: string;
-  primaryLabel: string;
-  secondaryHref: string;
-  secondaryLabel: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <HomeReveal className="min-w-0">
-      <div className="flex h-full min-w-0 flex-col">
-        <h2 className="text-lg font-semibold tracking-[-0.03em]">{title}</h2>
-        <p className="mt-1 max-w-md text-sm leading-6 text-muted-foreground">
-          {detail}
-        </p>
-        <div className="mt-6 flex min-w-0 flex-1 items-center [&>*]:min-w-0 [&>*]:max-w-full">
-          {children}
-        </div>
-        <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
-          <Link
-            href={primaryHref}
-            className="inline-flex min-h-10 items-center gap-1.5 rounded-sm text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-          >
-            {primaryLabel}
-            <ArrowRight size={15} aria-hidden="true" />
-          </Link>
-          <Link
-            href={secondaryHref}
-            className="inline-flex min-h-10 items-center rounded-sm text-sm font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-          >
-            {secondaryLabel}
-          </Link>
-        </div>
-      </div>
-    </HomeReveal>
-  );
-}
-
 export default function Home() {
   return (
     <div className="min-h-screen overflow-x-clip bg-background text-foreground">
@@ -130,34 +81,6 @@ export default function Home() {
             >
               Browse components
             </ButtonLink>
-          </div>
-        </section>
-
-        <section
-          aria-label="Task examples"
-          className="mx-auto max-w-7xl px-5 pb-8 sm:px-8"
-        >
-          <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
-            <Task
-              title="Select a workspace"
-              detail="The field starts invalid. Choose a workspace and the error clears."
-              primaryHref="/components/select#example-invalid-selection"
-              primaryLabel="Select docs"
-              secondaryHref="/examples/business"
-              secondaryLabel="Billing operations"
-            >
-              <HomeWorkspaceScene />
-            </Task>
-            <Task
-              title="Change a project status"
-              detail="Publish, save a revision, or archive. The status updates with each action."
-              primaryHref="/components/button#example-project-actions"
-              primaryLabel="Button docs"
-              secondaryHref="/examples/repository"
-              secondaryLabel="Repository desk"
-            >
-              <HomeProjectScene />
-            </Task>
           </div>
         </section>
 

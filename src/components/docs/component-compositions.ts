@@ -10,6 +10,25 @@ export interface Composition {
 }
 
 export const compositions: Record<string, Composition> = {
+  "tool-call": {
+    parts: [
+      {
+        part: "ToolCall",
+        purpose:
+          "Owns the expanded state; accepts isExpanded, defaultExpanded, and onExpandedChange.",
+        children: [
+          {
+            part: "ToolCallTrigger",
+            purpose: "Names the tool, shows its status, and toggles the panel.",
+          },
+          {
+            part: "ToolCallPanel",
+            purpose: "Contains the app-supplied input and result.",
+          },
+        ],
+      },
+    ],
+  },
   attachment: {
     parts: [
       {

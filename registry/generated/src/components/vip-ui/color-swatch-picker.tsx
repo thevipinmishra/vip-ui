@@ -53,7 +53,7 @@ export function ColorSwatchPickerItem({
       }
       className={composeRenderProps(className, (className) =>
         cn(
-          "grid size-11 cursor-pointer place-items-center rounded-lg border-2 border-transparent hover:border-border data-[selected]:border-primary data-[disabled]:cursor-default data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring data-[disabled]:opacity-50",
+          "grid size-11 cursor-pointer place-items-center rounded-lg border-2 border-transparent hover:border-border hover:bg-muted/50 data-[selected]:border-primary data-[selected]:bg-accent/50 data-[selected]:hover:border-primary data-[disabled]:cursor-default data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring data-[disabled]:opacity-50",
           className,
         ),
       )}

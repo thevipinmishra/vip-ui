@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
+import { AgentStatusDemo } from "@/components/docs/agent-status-demo";
+import { AgentStatusStatesDemo } from "@/components/docs/agent-status-states-demo";
 import { AnimatedNumberBasicDemo } from "@/components/docs/animated-number-basic-demo";
 import { AnimatedNumberDemo } from "@/components/docs/animated-number-demo";
 import { AutocompleteDemo } from "@/components/docs/autocomplete-demo";
@@ -26,6 +28,8 @@ import {
   ComponentPage,
   withExamplePreviews,
 } from "@/components/docs/component-page";
+import { DataTableColumnFiltersDemo } from "@/components/docs/data-table-column-filters-demo";
+import { DataTableDemo } from "@/components/docs/data-table-demo";
 import { DateFieldDemo } from "@/components/docs/date-field-demo";
 import { DatePickerControlledDemo } from "@/components/docs/date-picker-controlled-demo";
 import { DatePickerDemo } from "@/components/docs/date-picker-demo";
@@ -45,6 +49,7 @@ import { FormDemo } from "@/components/docs/form-demo";
 import { FormValidationDemo } from "@/components/docs/form-validation-demo";
 import { GridListDemo } from "@/components/docs/grid-list-demo";
 import { GridListDisabledDemo } from "@/components/docs/grid-list-disabled-demo";
+import { InlineEditDemo } from "@/components/docs/inline-edit-demo";
 import { KbdCodeDemo } from "@/components/docs/kbd-code-demo";
 import { LayoutMorphDemo } from "@/components/docs/layout-morph-demo";
 import { LinkDemo } from "@/components/docs/link-demo";
@@ -60,6 +65,8 @@ import { NumberFieldSeatsDemo } from "@/components/docs/number-field-seats-demo"
 import { PaginationBasicDemo } from "@/components/docs/pagination-basic-demo";
 import { PaginationDemo } from "@/components/docs/pagination-demo";
 import { ParallaxLayerDemo } from "@/components/docs/parallax-layer-demo";
+import { PasswordStrengthMeterDemo } from "@/components/docs/password-strength-meter-demo";
+import { PasswordStrengthMeterFieldDemo } from "@/components/docs/password-strength-meter-field-demo";
 import { PopoverDemo } from "@/components/docs/popover-demo";
 import { PopoverPlacementDemo } from "@/components/docs/popover-placement-demo";
 import { PresenceDemo } from "@/components/docs/presence-demo";
@@ -72,10 +79,12 @@ import { ProgressRingBasicDemo } from "@/components/docs/progress-ring-basic-dem
 import { ProgressRingDemo } from "@/components/docs/progress-ring-demo";
 import { RangeCalendarDemo } from "@/components/docs/range-calendar-demo";
 import { RangeCalendarLimitsDemo } from "@/components/docs/range-calendar-limits-demo";
+import { RatingInputDemo } from "@/components/docs/rating-input-demo";
 import { ScrollHighlightDemo } from "@/components/docs/scroll-highlight-demo";
 import { ScrollProgressDemo } from "@/components/docs/scroll-progress-demo";
 import { SeparatorDemo } from "@/components/docs/separator-demo";
 import { SkeletonDemo } from "@/components/docs/skeleton-demo";
+import { SourceLinkDemo } from "@/components/docs/source-link-demo";
 import { SpinnerBasicDemo } from "@/components/docs/spinner-basic-demo";
 import { SpinnerDemo } from "@/components/docs/spinner-demo";
 import { SpinnerUsageDemo } from "@/components/docs/spinner-usage-demo";
@@ -99,6 +108,8 @@ import { ToggleButtonGroupEditorDemo } from "@/components/docs/toggle-button-gro
 import { ToggleButtonProjectsDemo } from "@/components/docs/toggle-button-projects-demo";
 import { TokenFieldBasicDemo } from "@/components/docs/token-field-basic-demo";
 import { TokenFieldDemo } from "@/components/docs/token-field-demo";
+import { ToolCallDemo } from "@/components/docs/tool-call-demo";
+import { ToolCallStatesDemo } from "@/components/docs/tool-call-states-demo";
 import { ToolbarBasicDemo } from "@/components/docs/toolbar-basic-demo";
 import { ToolbarDemo } from "@/components/docs/toolbar-demo";
 import { TreeBasicDemo } from "@/components/docs/tree-basic-demo";
@@ -160,6 +171,13 @@ const entries: {
     name: "Number field",
     demo: <NumberFieldDemo />,
   },
+  {
+    slug: "password-strength-meter",
+    name: "Password strength meter",
+    demo: <PasswordStrengthMeterDemo />,
+  },
+  { slug: "inline-edit", name: "Inline edit", demo: <InlineEditDemo /> },
+  { slug: "rating-input", name: "Rating input", demo: <RatingInputDemo /> },
   {
     slug: "toggle-button",
     name: "Toggle button",
@@ -291,6 +309,11 @@ const entries: {
     demo: <TableDemo />,
   },
   {
+    slug: "data-table",
+    name: "Data table",
+    demo: <DataTableDemo />,
+  },
+  {
     slug: "autocomplete",
     name: "Autocomplete",
     demo: <AutocompleteDemo />,
@@ -387,6 +410,9 @@ const entries: {
     name: "Stepper",
     demo: <StepperDemo />,
   },
+  { slug: "agent-status", name: "Agent status", demo: <AgentStatusDemo /> },
+  { slug: "tool-call", name: "Tool call", demo: <ToolCallDemo /> },
+  { slug: "source-link", name: "Source link", demo: <SourceLinkDemo /> },
 ];
 
 const basicPreviews: Record<string, { demo: ReactNode; source: string }> = {
@@ -461,6 +487,8 @@ const basicPreviews: Record<string, { demo: ReactNode; source: string }> = {
 };
 
 const examplePreviews: Record<string, ReactNode[]> = {
+  "agent-status": [<AgentStatusStatesDemo key="preview-1" />],
+  "tool-call": [<ToolCallStatesDemo key="preview-1" />],
   "animated-number": [<AnimatedNumberDemo key="preview-1" />],
   avatar: [<AvatarDemo key="preview-1" />],
   "button-group": [<ButtonGroupOrientationsDemo key="preview-1" />],
@@ -472,6 +500,10 @@ const examplePreviews: Record<string, ReactNode[]> = {
   "date-picker": [
     <DatePickerUnavailableDemo key="preview-1" />,
     <DatePickerControlledDemo key="preview-2" />,
+  ],
+  "data-table": [<DataTableColumnFiltersDemo key="preview-1" />],
+  "password-strength-meter": [
+    <PasswordStrengthMeterFieldDemo key="preview-1" />,
   ],
   "date-range-picker": [<DateRangePickerLimitsDemo key="preview-1" />],
   "drop-zone": [<DropZoneDemo key="preview-1" />],

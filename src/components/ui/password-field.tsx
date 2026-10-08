@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 import { Eye, EyeOff } from "reicon-react";
 import { Button } from "./button";
+import { fieldTriggerStyles } from "./field-styles";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "./input-group";
 import {
   TextField,
@@ -42,13 +43,14 @@ export function PasswordField({
       isDisabled={isDisabled}
     >
       <TextFieldLabel>{label}</TextFieldLabel>
-      <InputGroup>
+      <InputGroup className="pe-1">
         <InputGroupInput placeholder={placeholder} />
         <InputGroupAddon>
           <Button
             type="button"
             variant="ghost"
             size="icon"
+            className={fieldTriggerStyles}
             isDisabled={isDisabled}
             aria-label={visible ? "Hide password" : "Show password"}
             aria-pressed={visible}

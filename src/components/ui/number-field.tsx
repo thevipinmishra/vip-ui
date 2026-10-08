@@ -16,9 +16,15 @@ import {
   fieldDescriptionStyles,
   fieldErrorStyles,
   fieldLabelStyles,
+  fieldTriggerStyles,
   segmentedFieldStyles,
 } from "./field-styles";
 import { PressButton } from "./press-button";
+
+const stepperButtonStyles = cn(
+  fieldTriggerStyles,
+  "bg-muted/70 text-foreground hover:bg-accent hover:text-accent-foreground pressed:bg-accent pressed:text-accent-foreground disabled:opacity-40",
+);
 
 export interface NumberFieldProps
   extends Omit<AriaNumberFieldProps, "className" | "children"> {
@@ -53,13 +59,13 @@ export function NumberField({
           )}
           <Group
             data-slot="number-field-group"
-            className={cn(segmentedFieldStyles, "gap-1 p-1")}
+            className={cn(segmentedFieldStyles, "gap-1 px-1")}
           >
             <PressButton
               slot="decrement"
               data-slot="number-field-decrement"
               aria-label="Decrease"
-              className="grid min-h-11 min-w-11 cursor-pointer place-items-center rounded-md bg-muted/70 text-foreground hover:bg-accent hover:text-accent-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-40"
+              className={stepperButtonStyles}
             >
               <Minus size={16} aria-hidden="true" />
             </PressButton>
@@ -71,7 +77,7 @@ export function NumberField({
               slot="increment"
               data-slot="number-field-increment"
               aria-label="Increase"
-              className="grid min-h-11 min-w-11 cursor-pointer place-items-center rounded-md bg-muted/70 text-foreground hover:bg-accent hover:text-accent-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-40"
+              className={stepperButtonStyles}
             >
               <Plus size={16} aria-hidden="true" />
             </PressButton>

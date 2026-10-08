@@ -524,6 +524,11 @@ export const componentPageData = {
       },
     ],
   },
+  "agent-status": {
+    usage: "agent-status-demo.tsx",
+    description: "Shows an agent's current step with a persistent state cue.",
+    examples: [{ title: "States", sourcePath: "agent-status-states-demo.tsx" }],
+  },
   message: {
     usage: "message-basic-demo.tsx",
     description:
@@ -582,6 +587,23 @@ export const componentPageData = {
         description:
           "Keep the page in the URL. Keep Previous and Next in place when unavailable to avoid layout shifts.",
         sourcePath: "pagination-demo.tsx",
+      },
+    ],
+  },
+  "inline-edit": {
+    usage: "inline-edit-demo.tsx",
+    description: "Edits text in place and keeps the draft when saving fails.",
+    examples: [],
+  },
+  "password-strength-meter": {
+    usage: "password-strength-meter-demo.tsx",
+    description: "Estimates password strength from length and character mix.",
+    examples: [
+      {
+        title: "With password field",
+        description:
+          "Install Password field separately to use this composition.",
+        sourcePath: "password-strength-meter-field-demo.tsx",
       },
     ],
   },
@@ -651,6 +673,11 @@ export const componentPageData = {
         sourcePath: "progress-ring-demo.tsx",
       },
     ],
+  },
+  "rating-input": {
+    usage: "rating-input-demo.tsx",
+    description: "Selects a star rating with radio controls.",
+    examples: [],
   },
   "radio-group": {
     usage: "radio-group-demo.tsx",
@@ -749,6 +776,16 @@ export const componentPageData = {
       },
     ],
   },
+  "data-table": {
+    usage: "data-table-demo.tsx",
+    description: "Searches, filters, sorts, selects, and pages through rows.",
+    examples: [
+      {
+        title: "Column filters",
+        sourcePath: "data-table-column-filters-demo.tsx",
+      },
+    ],
+  },
   table: {
     usage: "table-basic-demo.tsx",
     description: "Displays data in rows and columns.",
@@ -841,6 +878,12 @@ export const componentPageData = {
       "Animates conditional content when it enters or leaves the page.",
     examples: [],
   },
+  "source-link": {
+    usage: "source-link-demo.tsx",
+    description:
+      "Links an answer to its source and identifies the source by name.",
+    examples: [],
+  },
   "stagger-group": {
     usage: "stagger-group-demo.tsx",
     description: "Sequences the entrance of grouped content.",
@@ -878,6 +921,11 @@ export const componentPageData = {
     usage: "text-swap-demo.tsx",
     description: "Displays text that transitions when its value changes.",
     examples: [],
+  },
+  "tool-call": {
+    usage: "tool-call-demo.tsx",
+    description: "Shows a tool's status with expandable input and output.",
+    examples: [{ title: "States", sourcePath: "tool-call-states-demo.tsx" }],
   },
   "time-field": {
     usage: "time-field-demo.tsx",

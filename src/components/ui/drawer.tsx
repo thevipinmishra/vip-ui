@@ -45,13 +45,14 @@ import { Button, type ButtonProps as StyledButtonProps } from "./button";
 type Placement = "bottom" | "top" | "left" | "right";
 
 const drawerSurfaceStyles = tv({
-  base: "absolute flex flex-col overflow-hidden bg-card text-card-foreground shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70",
+  base: "absolute flex max-h-[var(--visual-viewport-height,100dvh)] min-w-0 max-w-full flex-col overflow-x-hidden overflow-y-auto bg-card text-card-foreground shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70",
   variants: {
     placement: {
       bottom: "inset-x-0 mx-auto w-full max-w-2xl bottom-0 rounded-t-xl",
       top: "inset-x-0 mx-auto w-full max-w-2xl top-0 rounded-b-xl",
-      left: "inset-y-0 w-[min(26rem,100vw)] left-0 rounded-r-xl",
-      right: "inset-y-0 w-[min(26rem,100vw)] right-0 rounded-l-xl",
+      left: "top-0 left-0 h-[var(--visual-viewport-height,100dvh)] w-[min(26rem,100vw)] max-w-[var(--visual-viewport-width,100vw)] rounded-r-xl",
+      right:
+        "top-0 right-0 h-[var(--visual-viewport-height,100dvh)] w-[min(26rem,100vw)] max-w-[var(--visual-viewport-width,100vw)] rounded-l-xl",
     },
   },
   defaultVariants: { placement: "bottom" },

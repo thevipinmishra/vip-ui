@@ -129,7 +129,7 @@ export function DialogContent({
       data-slot="dialog-overlay"
       className={composeRenderProps(overlayProps?.className, (className) =>
         cn(
-          "fixed inset-0 z-50 grid items-end overflow-hidden sm:place-items-center sm:overflow-y-auto sm:p-4",
+          "fixed inset-x-0 top-0 z-50 grid h-[var(--visual-viewport-height,100dvh)] items-end overflow-y-auto sm:place-items-center sm:p-4",
           className,
         ),
       )}
@@ -185,7 +185,7 @@ export function DialogContent({
         )}
         data-slot={modalSlot}
         className={cn(
-          "relative w-full max-h-[calc(100dvh-1rem)] overflow-y-auto overscroll-contain rounded-t-2xl bg-card p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] text-card-foreground shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70 sm:max-h-[calc(100dvh-2rem)] sm:max-w-md sm:rounded-xl sm:p-7",
+          "relative max-h-[calc(var(--visual-viewport-height,100dvh)-1rem)] w-full min-w-0 max-w-full overflow-y-auto overscroll-contain rounded-t-2xl bg-card p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] text-card-foreground shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70 sm:max-h-[calc(var(--visual-viewport-height,100dvh)-2rem)] sm:max-w-md sm:rounded-xl sm:p-7",
           modalProps?.className,
         )}
       >

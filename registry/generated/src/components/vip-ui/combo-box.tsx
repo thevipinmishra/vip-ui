@@ -23,6 +23,7 @@ import {
   fieldErrorStyles,
   fieldInputStyles,
   fieldLabelStyles,
+  fieldTriggerStyles,
 } from "./field-styles";
 import { SelectionMark } from "./list-box";
 import { Popover } from "./popover";
@@ -167,6 +168,7 @@ function ComboBoxDefaults({
         data-slot="combo-box-content"
         placement="bottom start"
         offset={7}
+        maxHeight={268}
         className={comboBoxPopoverStyles}
       >
         <ListBox
@@ -177,7 +179,7 @@ function ComboBoxDefaults({
               No matching options.
             </div>
           )}
-          className="grid max-h-64 gap-1 overflow-y-auto outline-none"
+          className="grid gap-1 outline-none"
         >
           {(option) => (
             <ListBoxItem
@@ -290,10 +292,7 @@ export function ComboBoxTrigger({
       data-slot="combo-box-trigger"
       aria-label={props["aria-label"] ?? "Show options"}
       className={composeRenderProps(className, (className) =>
-        cn(
-          "absolute inset-y-0 end-1 my-auto grid size-11 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none data-[disabled]:cursor-default data-[disabled]:opacity-50 hover:bg-muted hover:text-foreground data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring",
-          className,
-        ),
+        cn(fieldTriggerStyles, "absolute inset-y-0 end-1 my-auto", className),
       )}
     >
       {children ?? <ComboBoxChevron />}
@@ -327,13 +326,14 @@ export function ComboBoxContent({
       data-slot="combo-box-content"
       placement={props.placement ?? "bottom start"}
       offset={props.offset ?? 7}
+      maxHeight={props.maxHeight ?? 268}
       className={composeRenderProps(className, (className) =>
         cn(comboBoxPopoverStyles, className),
       )}
     >
       <ListBox
         data-slot="combo-box-list-box"
-        className="grid max-h-64 gap-1 overflow-y-auto outline-none"
+        className="grid gap-1 outline-none"
         renderEmptyState={() => (
           <div className="px-3 py-3 text-sm text-muted-foreground">
             No matching options.
