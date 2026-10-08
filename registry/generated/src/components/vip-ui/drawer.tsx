@@ -45,11 +45,12 @@ import { Button, type ButtonProps as StyledButtonProps } from "./button";
 type Placement = "bottom" | "top" | "left" | "right";
 
 const drawerSurfaceStyles = tv({
-  base: "absolute flex max-h-[var(--visual-viewport-height,100dvh)] min-w-0 max-w-full flex-col overflow-x-hidden overflow-y-auto bg-card text-card-foreground shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70",
+  base: "absolute flex max-h-[var(--visual-viewport-height,100dvh)] min-w-0 max-w-full flex-col bg-card text-card-foreground shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70",
   variants: {
     placement: {
-      bottom: "inset-x-0 mx-auto w-full max-w-2xl bottom-0 rounded-t-xl",
-      top: "inset-x-0 mx-auto w-full max-w-2xl top-0 rounded-b-xl",
+      bottom:
+        "inset-x-0 mx-auto bottom-0 w-full max-w-2xl overflow-x-hidden overflow-y-auto rounded-t-xl",
+      top: "inset-x-0 mx-auto top-0 max-h-[min(26rem,var(--visual-viewport-height,100dvh))] w-full max-w-2xl overflow-x-hidden overflow-y-auto rounded-b-xl",
       left: "top-0 left-0 h-[var(--visual-viewport-height,100dvh)] w-[min(26rem,100vw)] max-w-[var(--visual-viewport-width,100vw)] rounded-r-xl",
       right:
         "top-0 right-0 h-[var(--visual-viewport-height,100dvh)] w-[min(26rem,100vw)] max-w-[var(--visual-viewport-width,100vw)] rounded-l-xl",
@@ -160,6 +161,8 @@ export function DrawerContent({
   const dragged = useRef(false);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
+  const surfaceRef = useRef<HTMLDivElement>(null);
+  const [surfaceSize, setSurfaceSize] = useState({ height: 0, width: 0 });
   const [viewport, setViewport] = useState({ height: 0, width: 0 });
   const points = useMemo(() => {
     const valid = snapPoints.filter(
@@ -179,11 +182,11 @@ export function DrawerContent({
       : nearest,
   );
   const maxHeight = points[points.length - 1] * viewport.height;
-  const sideWidth = Math.min(416, viewport.width);
-  const topHeight = Math.min(416, viewport.height);
+  const sideWidth = surfaceSize.width || Math.min(416, viewport.width);
+  const topHeight = surfaceSize.height || Math.min(416, viewport.height);
   const vertical = placement === "bottom" || placement === "top";
   const offset = (points[points.length - 1] - point) * viewport.height;
-  const closedSide = (placement === "left" ? -1 : 1) * sideWidth;
+  const closedSide = (placement === "left" ? -1 : 1) * (sideWidth + 24);
   const progress = useTransform(vertical ? y : x, (value) =>
     Math.max(
       0,
@@ -195,7 +198,7 @@ export function DrawerContent({
               ? maxHeight || 1
               : placement === "top"
                 ? topHeight || 1
-                : sideWidth || 1),
+                : sideWidth + 24),
         ),
     ),
   );
@@ -204,7 +207,7 @@ export function DrawerContent({
     const update = () =>
       setViewport({
         height: window.visualViewport?.height ?? window.innerHeight,
-        width: window.innerWidth,
+        width: window.visualViewport?.width ?? window.innerWidth,
       });
     update();
     window.addEventListener("resize", update);
@@ -216,14 +219,30 @@ export function DrawerContent({
   }, []);
 
   useLayoutEffect(() => {
+    if (placement === "bottom" || (!open && !present)) return;
+    const surface = surfaceRef.current;
+    if (!surface) return;
+    const measure = () =>
+      setSurfaceSize({
+        height: surface.offsetHeight,
+        width: surface.offsetWidth,
+      });
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(surface);
+    return () => observer.disconnect();
+  }, [open, present, placement]);
+
+  useLayoutEffect(() => {
     if (!viewport.height || (!open && !present)) return;
     const value = vertical ? y : x;
     const closed =
       placement === "bottom"
         ? maxHeight
         : placement === "top"
-          ? -topHeight
-          : closedSide;
+          ? -(surfaceRef.current?.offsetHeight || topHeight)
+          : (placement === "left" ? -1 : 1) *
+            ((surfaceRef.current?.offsetWidth || sideWidth) + 24);
     const target = open ? (placement === "bottom" ? offset : 0) : closed;
     if (open && !wasOpen.current) value.set(closed);
     wasOpen.current = open;
@@ -252,7 +271,7 @@ export function DrawerContent({
     viewport.height,
     offset,
     maxHeight,
-    closedSide,
+    sideWidth,
     topHeight,
     vertical,
     reduceMotion,
@@ -322,15 +341,21 @@ export function DrawerContent({
       else selectPoint(nearest.snap);
     } else {
       const value = placement === "top" ? y : x;
-      const velocity = placement === "top" ? info.velocity.y : info.velocity.x;
       const edge = placement === "top" ? -topHeight : closedSide;
-      const projected = value.get() + velocity * 0.18;
+      const distance = Math.abs(edge);
+      const displacement = value.get() * Math.sign(edge);
+      const speed =
+        (placement === "top" ? info.velocity.y : info.velocity.x) *
+        Math.sign(edge);
+      const projected = displacement + speed * 0.18;
       if (
-        projected * Math.sign(edge) > Math.abs(edge) * 0.35 ||
-        velocity * Math.sign(edge) > 650
-      )
+        displacement >= distance * 0.35 ||
+        (displacement >= 20 && speed > 650 && projected >= distance * 0.35)
+      ) {
         close();
-      else animate(value, 0, reduceMotion ? { duration: 0 } : spring);
+      } else {
+        animate(value, 0, spring);
+      }
     }
   };
 
@@ -347,10 +372,11 @@ export function DrawerContent({
       <motion.div
         aria-hidden="true"
         data-slot="drawer-backdrop"
-        className="pointer-events-none absolute inset-0 bg-foreground/40 backdrop-blur-sm dark:bg-foreground/20"
+        className="pointer-events-none absolute inset-0 bg-black/45 backdrop-blur-[2px] dark:bg-black/55 motion-reduce:backdrop-blur-none"
         style={{ opacity: progress }}
       />
       <Modal
+        ref={surfaceRef}
         data-slot="drawer-modal"
         render={(domProps) => (
           <motion.div
@@ -377,11 +403,9 @@ export function DrawerContent({
                   ? maxHeight
                     ? `${maxHeight}px`
                     : `${points[points.length - 1] * 100}dvh`
-                  : placement === "top"
-                    ? `${topHeight || 416}px`
-                    : undefined,
+                  : undefined,
             }}
-            drag={vertical ? "y" : "x"}
+            drag={reduceMotion ? false : vertical ? "y" : "x"}
             dragControls={dragControls}
             dragListener={false}
             dragMomentum={false}
@@ -395,8 +419,8 @@ export function DrawerContent({
                 : placement === "top"
                   ? { top: -topHeight, bottom: 0 }
                   : {
-                      left: placement === "left" ? -sideWidth : 0,
-                      right: placement === "right" ? sideWidth : 0,
+                      left: placement === "left" ? -(sideWidth + 24) : 0,
+                      right: placement === "right" ? sideWidth + 24 : 0,
                     }
             }
             onDragEnd={onDragEnd}
@@ -417,7 +441,11 @@ export function DrawerContent({
               point,
               startDrag: (event) => {
                 dragged.current = false;
-                dragControls.start(event);
+                if (!reduceMotion) {
+                  dragControls.start(event, {
+                    distanceThreshold: event.pointerType === "touch" ? 8 : 5,
+                  });
+                }
               },
               onHandleKeyDown,
               onHandlePress: () => {
@@ -458,7 +486,7 @@ export function DrawerHandle({ className, ...props }: ButtonProps) {
         props["aria-label"] ??
         (context.placement === "bottom"
           ? `Resize drawer, ${Math.round(context.point * 100)} percent visible. Use arrow keys, Home, or End.`
-          : "Dismiss drawer or drag to close")
+          : `Dismiss ${context.placement} drawer or drag ${context.placement === "top" ? "up" : context.placement} to close`)
       }
       onPointerDown={(event) => {
         props.onPointerDown?.(event);
@@ -474,7 +502,10 @@ export function DrawerHandle({ className, ...props }: ButtonProps) {
       }}
       className={composeRenderProps(className, (className) =>
         cn(
-          "mx-auto flex min-h-11 min-w-16 shrink-0 cursor-grab items-center justify-center touch-none active:cursor-grabbing data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring",
+          "flex shrink-0 cursor-grab items-center justify-center touch-none active:cursor-grabbing data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring",
+          context.placement === "left" || context.placement === "right"
+            ? `absolute top-1/2 z-10 h-20 w-11 -translate-y-1/2 rounded-full border border-border bg-card shadow-[var(--shadow-float)] ${context.placement === "left" ? "-right-5" : "-left-5"}`
+            : "mx-auto min-h-11 min-w-16",
           className,
         ),
       )}
@@ -486,9 +517,18 @@ export function DrawerHandle({ className, ...props }: ButtonProps) {
             <motion.span
               aria-hidden="true"
               data-slot="drawer-handle-grip"
-              className="h-1 w-9 rounded-full bg-muted-foreground/50"
+              className={cn(
+                "rounded-full bg-muted-foreground/60",
+                context.placement === "left" || context.placement === "right"
+                  ? "h-9 w-1"
+                  : "h-1 w-9",
+              )}
               initial={false}
-              animate={{ scaleX: isPressed ? 0.78 : isHovered ? 1.16 : 1 }}
+              animate={
+                context.placement === "left" || context.placement === "right"
+                  ? { scaleY: isPressed ? 0.78 : isHovered ? 1.16 : 1 }
+                  : { scaleX: isPressed ? 0.78 : isHovered ? 1.16 : 1 }
+              }
               transition={{ duration: reduceMotion ? 0 : 0.15 }}
             />
           ),

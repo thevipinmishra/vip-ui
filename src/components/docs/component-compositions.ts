@@ -383,7 +383,8 @@ export const compositions: Record<string, Composition> = {
             children: [
               {
                 part: "DrawerHandle",
-                purpose: "Resizes or dismisses a bottom sheet.",
+                purpose:
+                  "Drag or press to resize a bottom drawer or dismiss a top or side drawer. Place it last for top drawers; keyboard activation always works.",
               },
               {
                 part: "DrawerHeader",

@@ -1077,7 +1077,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: '"bottom" | "top" | "left" | "right"',
       defaultValue: '"bottom"',
       description:
-        "Choose the edge. Side drawers swipe to dismiss; only bottom drawers use snap points.",
+        "Choose the entry edge and drag direction. Only bottom drawers use snap points; top and side handles swipe toward their edge to dismiss.",
     },
     {
       component: "DrawerContent",
@@ -1108,7 +1108,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "ModalOverlayProps",
       defaultValue: "isDismissable: true",
       description:
-        "Pass React Aria overlay options such as isDismissable and isKeyboardDismissDisabled.",
+        "Configure outside-click and Escape dismissal. The backdrop dims and softly blurs the page, fading with the visible panel as it moves; reduced motion removes the blur and slide.",
     },
     {
       component: "DrawerClose",

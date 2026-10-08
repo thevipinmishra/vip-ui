@@ -381,14 +381,10 @@ export const componentPageData = {
     examples: [
       {
         title: "Snap points",
-        description:
-          "Drag the handle or use Up, Down, Home, and End to resize the order summary.",
         sourcePath: "drawer-demo.tsx",
       },
       {
         title: "Edge placement",
-        description:
-          "Review an order from the bottom, write an announcement from the top, browse collections from the left, and filter projects from the right.",
         sourcePath: "drawer-placement-demo.tsx",
       },
     ],
