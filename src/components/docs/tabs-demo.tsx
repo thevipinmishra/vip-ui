@@ -23,19 +23,15 @@ export function TabsDemo() {
     <Tabs defaultValue="overview" className="w-full max-w-lg">
       <TabsList aria-label="Studio North project">
         <TabsTrigger value="overview">
-          <Layers size={15} aria-hidden="true" className="me-2 inline-block" />
+          <Layers size={15} aria-hidden="true" />
           Overview
         </TabsTrigger>
         <TabsTrigger value="activity">
-          <Activity
-            size={15}
-            aria-hidden="true"
-            className="me-2 inline-block"
-          />
+          <Activity size={15} aria-hidden="true" />
           Activity
         </TabsTrigger>
         <TabsTrigger value="team">
-          <Users size={15} aria-hidden="true" className="me-2 inline-block" />
+          <Users size={15} aria-hidden="true" />
           Team
         </TabsTrigger>
         <TabsTrigger value="billing" isDisabled>

@@ -213,7 +213,8 @@ export const componentPageData = {
   },
   card: {
     usage: "card-demo.tsx",
-    description: "Displays a card with header, content, and footer.",
+    description:
+      "Groups a project summary, team, and an editable name in a card.",
     examples: [
       {
         title: "Invoice review",
@@ -506,7 +507,8 @@ export const componentPageData = {
   },
   menu: {
     usage: "menu-demo.tsx",
-    description: "Displays a list of actions or choices from a trigger.",
+    description:
+      "Opens project actions from a trigger, including a rename form.",
     examples: [
       {
         title: "Nested menu",
@@ -598,7 +600,7 @@ export const componentPageData = {
   },
   popover: {
     usage: "popover-demo.tsx",
-    description: "Displays content in a panel anchored to a trigger.",
+    description: "Anchors a share form and the people who already have access.",
     examples: [
       {
         title: "Placement",
@@ -623,7 +625,7 @@ export const componentPageData = {
   "preview-trigger": {
     usage: "preview-trigger-demo.tsx",
     description:
-      "Displays a preview when its trigger is hovered, focused, or long-pressed.",
+      "Shows a file preview and review note when its trigger is hovered, focused, or long-pressed.",
     examples: [],
   },
   "progress-bar": {

@@ -4,7 +4,6 @@ import { AreaVisits } from "@/components/charts/area-charts";
 import { AccordionDemo } from "@/components/docs/accordion-demo";
 import { CheckboxBasicDemo } from "@/components/docs/checkbox-basic-demo";
 import { DialogDemo } from "@/components/docs/dialog-demo";
-import { DocsArrowLink } from "@/components/docs/docs-arrow-link";
 import { HomeButtonDemo } from "@/components/docs/home-button-demo";
 import { HomeReveal } from "@/components/docs/home-page-motion";
 import { HomeProjectScene } from "@/components/docs/home-project-scene";
@@ -22,97 +21,79 @@ import { ToastDemo } from "@/components/docs/toast-demo";
 import { TooltipDemo } from "@/components/docs/tooltip-demo";
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button-link";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-function Showcase({
+function Preview({
   title,
   href,
   children,
-  className = "",
-  featured = false,
+  className,
 }: {
   title: string;
   href: string;
   children: React.ReactNode;
   className?: string;
-  featured?: boolean;
 }) {
   return (
     <HomeReveal className={cn("min-w-0", className)}>
-      <Card className="relative z-0 flex h-full min-w-0 flex-col rounded-2xl p-1 hover:z-10 focus-within:z-10">
-        <CardHeader className="flex-row items-center justify-between gap-3 px-3 pt-2 sm:px-4 sm:pt-3">
-          <CardTitle as="h2" className="min-w-0 text-base tracking-[-0.025em]">
-            {title}
-          </CardTitle>
-          <DocsArrowLink href={href}>
-            View docs<span className="sr-only"> for {title}</span>
-          </DocsArrowLink>
-        </CardHeader>
-        <CardContent className="flex min-w-0 flex-1 items-stretch px-2 pb-2 pt-1 sm:px-3 sm:pb-3">
-          <div
-            className={cn(
-              "flex w-full min-w-0 flex-1 items-center justify-center rounded-xl bg-muted/50 p-3",
-              featured ? "min-h-44" : "min-h-28",
-            )}
-          >
-            {children}
-          </div>
-        </CardContent>
-      </Card>
+      <div className="flex min-w-0 flex-col items-center gap-5">
+        <div className="flex w-full min-w-0 items-center justify-center [&>*]:min-w-0 [&>*]:max-w-full">
+          {children}
+        </div>
+        <Link
+          href={href}
+          className="rounded-sm text-sm font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+        >
+          {title}
+        </Link>
+      </div>
     </HomeReveal>
   );
 }
 
-function HomeScene({
+function Task({
   title,
-  description,
-  docHref,
-  docLabel,
-  workspaceHref,
-  workspaceLabel,
+  detail,
+  primaryHref,
+  primaryLabel,
+  secondaryHref,
+  secondaryLabel,
   children,
 }: {
   title: string;
-  description: string;
-  docHref: string;
-  docLabel: string;
-  workspaceHref: string;
-  workspaceLabel: string;
+  detail: string;
+  primaryHref: string;
+  primaryLabel: string;
+  secondaryHref: string;
+  secondaryLabel: string;
   children: React.ReactNode;
 }) {
   return (
     <HomeReveal className="min-w-0">
-      <Card className="flex h-full min-w-0 flex-col rounded-2xl p-1">
-        <CardHeader className="gap-2 px-3 pt-3 sm:px-4 sm:pt-4">
-          <CardTitle as="h2" className="text-lg tracking-[-0.03em]">
-            {title}
-          </CardTitle>
-          <CardDescription>{description}</CardDescription>
-        </CardHeader>
-        <CardContent className="flex min-w-0 flex-1 flex-col px-2 pb-2 pt-3 sm:px-3">
-          <div className="flex w-full flex-1 items-center justify-center rounded-xl bg-muted/50 p-4 sm:p-5">
-            {children}
-          </div>
-        </CardContent>
-        <CardFooter className="flex-wrap gap-2 px-3 pb-3 sm:px-4">
-          <ButtonLink as={Link} href={docHref} variant="outline" size="sm">
-            {docLabel}
+      <div className="flex h-full min-w-0 flex-col">
+        <h2 className="text-lg font-semibold tracking-[-0.03em]">{title}</h2>
+        <p className="mt-1 max-w-md text-sm leading-6 text-muted-foreground">
+          {detail}
+        </p>
+        <div className="mt-6 flex min-w-0 flex-1 items-center [&>*]:min-w-0 [&>*]:max-w-full">
+          {children}
+        </div>
+        <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
+          <Link
+            href={primaryHref}
+            className="inline-flex min-h-10 items-center gap-1.5 rounded-sm text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          >
+            {primaryLabel}
             <ArrowRight size={15} aria-hidden="true" />
-          </ButtonLink>
-          <ButtonLink as={Link} href={workspaceHref} variant="ghost" size="sm">
-            {workspaceLabel}
-            <ArrowRight size={15} aria-hidden="true" />
-          </ButtonLink>
-        </CardFooter>
-      </Card>
+          </Link>
+          <Link
+            href={secondaryHref}
+            className="inline-flex min-h-10 items-center rounded-sm text-sm font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          >
+            {secondaryLabel}
+          </Link>
+        </div>
+      </div>
     </HomeReveal>
   );
 }
@@ -129,7 +110,7 @@ export default function Home() {
       <SiteHeader />
 
       <main id="main">
-        <section className="mx-auto max-w-7xl px-5 pb-14 pt-16 text-center sm:px-8 sm:pb-16 sm:pt-24">
+        <section className="mx-auto max-w-7xl px-5 pb-16 pt-16 text-center sm:px-8 sm:pb-20 sm:pt-24">
           <h1 className="mx-auto max-w-4xl text-[clamp(3.25rem,7vw,6rem)] font-semibold leading-[1.02] tracking-[-0.075em] [text-wrap:balance]">
             Accessible components <span className="text-primary">you own.</span>
           </h1>
@@ -154,45 +135,56 @@ export default function Home() {
 
         <section
           aria-label="Task examples"
-          className="mx-auto max-w-7xl px-5 pb-16 sm:px-8 sm:pb-20"
+          className="mx-auto max-w-7xl px-5 pb-8 sm:px-8"
         >
-          <div className="grid gap-3 lg:grid-cols-2">
-            <HomeScene
+          <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
+            <Task
               title="Select a workspace"
-              description="The field starts invalid. Pick a workspace and the error clears while the choice is confirmed."
-              docHref="/components/select#example-invalid-selection"
-              docLabel="Open the Select example"
-              workspaceHref="/examples/business"
-              workspaceLabel="Open Billing operations"
+              detail="The field starts invalid. Choose a workspace and the error clears."
+              primaryHref="/components/select#example-invalid-selection"
+              primaryLabel="Select docs"
+              secondaryHref="/examples/business"
+              secondaryLabel="Billing operations"
             >
               <HomeWorkspaceScene />
-            </HomeScene>
-            <HomeScene
+            </Task>
+            <Task
               title="Change a project status"
-              description="Publish, save a revision, or archive. The status badge and saved revision update with each action."
-              docHref="/components/button#example-project-actions"
-              docLabel="Open the Button example"
-              workspaceHref="/examples/repository"
-              workspaceLabel="Open Repository desk"
+              detail="Publish, save a revision, or archive. The status updates with each action."
+              primaryHref="/components/button#example-project-actions"
+              primaryLabel="Button docs"
+              secondaryHref="/examples/repository"
+              secondaryLabel="Repository desk"
             >
               <HomeProjectScene />
-            </HomeScene>
+            </Task>
           </div>
         </section>
 
         <section
           id="components"
           aria-label="Component previews"
-          className="mx-auto max-w-7xl scroll-mt-28 px-5 pb-24 pt-12 sm:px-8 sm:pb-32"
+          className="mx-auto max-w-7xl scroll-mt-28 px-5 pb-24 pt-8 sm:px-8 sm:pb-32"
         >
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <Showcase title="Button" href="/components/button">
+          <div className="mb-12 flex items-end justify-between gap-4 border-t border-border/70 pt-12">
+            <h2 className="text-2xl font-semibold tracking-[-0.04em]">
+              Components
+            </h2>
+            <Link
+              href="/components"
+              className="inline-flex min-h-10 items-center gap-2 text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            >
+              View all <ArrowRight size={15} aria-hidden="true" />
+            </Link>
+          </div>
+          <div className="grid gap-x-10 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
+            <Preview title="Button" href="/components/button">
               <HomeButtonDemo />
-            </Showcase>
-            <Showcase title="Select" href="/components/select">
+            </Preview>
+            <Preview title="Select" href="/components/select">
               <SelectDemo />
-            </Showcase>
-            <Showcase title="Badge" href="/components/badge">
+            </Preview>
+            <Preview title="Badge" href="/components/badge">
               <div className="flex flex-wrap items-center justify-center gap-2">
                 <Badge>Draft</Badge>
                 <Badge variant="accent" dot>
@@ -202,67 +194,57 @@ export default function Home() {
                   Published
                 </Badge>
               </div>
-            </Showcase>
-            <Showcase title="Checkbox" href="/components/checkbox">
+            </Preview>
+            <Preview title="Checkbox" href="/components/checkbox">
               <CheckboxBasicDemo />
-            </Showcase>
-            <Showcase
+            </Preview>
+            <Preview
               title="Accordion"
               href="/components/accordion"
               className="sm:col-span-2"
             >
               <AccordionDemo />
-            </Showcase>
-            <Showcase
+            </Preview>
+            <Preview
               title="Tabs"
               href="/components/tabs"
               className="sm:col-span-2"
-              featured
             >
               <TabsDemo />
-            </Showcase>
-            <Showcase title="Tooltip" href="/components/tooltip">
+            </Preview>
+            <Preview title="Tooltip" href="/components/tooltip">
               <TooltipDemo />
-            </Showcase>
-            <Showcase title="Menu" href="/components/menu">
+            </Preview>
+            <Preview title="Menu" href="/components/menu">
               <MenuDemo />
-            </Showcase>
-            <Showcase
+            </Preview>
+            <Preview title="Slider" href="/components/slider">
+              <SliderDemo />
+            </Preview>
+            <Preview title="Progress bar" href="/components/progress-bar">
+              <ProgressBarBasicDemo />
+            </Preview>
+            <Preview title="Switch" href="/components/switch">
+              <SwitchBasicDemo />
+            </Preview>
+            <Preview title="Dialog" href="/components/dialog">
+              <DialogDemo />
+            </Preview>
+            <Preview title="Toast" href="/components/toast">
+              <ToastDemo />
+            </Preview>
+            <Preview title="Popover" href="/components/popover">
+              <PopoverDemo />
+            </Preview>
+            <Preview
               title="Charts"
               href="/charts"
-              className="sm:col-span-2 xl:row-span-2"
-              featured
+              className="sm:col-span-2 lg:col-span-3"
             >
-              <div className="w-full max-w-2xl rounded-xl bg-card p-5 shadow-[var(--shadow-card)] ring-1 ring-border/70 sm:p-6">
+              <div className="w-full overflow-hidden rounded-xl bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70">
                 <AreaVisits />
               </div>
-            </Showcase>
-            <Showcase title="Slider" href="/components/slider">
-              <SliderDemo />
-            </Showcase>
-            <Showcase title="Progress bar" href="/components/progress-bar">
-              <ProgressBarBasicDemo />
-            </Showcase>
-            <Showcase title="Switch" href="/components/switch">
-              <SwitchBasicDemo />
-            </Showcase>
-            <Showcase title="Dialog" href="/components/dialog">
-              <DialogDemo />
-            </Showcase>
-            <Showcase title="Toast" href="/components/toast">
-              <ToastDemo />
-            </Showcase>
-            <Showcase title="Popover" href="/components/popover">
-              <PopoverDemo />
-            </Showcase>
-          </div>
-          <div className="mt-8 flex justify-end">
-            <Link
-              href="/components"
-              className="inline-flex min-h-10 items-center gap-2 text-sm font-medium text-primary hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-            >
-              View all components <ArrowRight size={15} aria-hidden="true" />
-            </Link>
+            </Preview>
           </div>
         </section>
       </main>

@@ -145,7 +145,7 @@ export async function ChartDocumentation() {
                 ) : (
                   <p className="text-[13px] leading-6 text-muted-foreground">
                     The CLI command will be available when the registry has a
-                    public URL. Use Custom until then.
+                    public URL. Use Manual until then.
                   </p>
                 )}
               </div>
