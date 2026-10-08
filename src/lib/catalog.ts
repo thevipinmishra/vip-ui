@@ -300,7 +300,7 @@ const catalog: CatalogDefinition[] = [
   },
   {
     title: "Motion & effects",
-    description: "Text, content transitions, and scroll-linked movement.",
+    description: "Text and content transitions.",
     items: [
       {
         slug: "text-reveal",
@@ -313,16 +313,6 @@ const catalog: CatalogDefinition[] = [
         useFor: "Resolving changing text from scrambled characters.",
       },
       {
-        slug: "scroll-highlight",
-        name: "Scroll highlight",
-        useFor: "Emphasizing words as a passage scrolls into view.",
-      },
-      {
-        slug: "scroll-progress",
-        name: "Scroll progress",
-        useFor: "Showing reading progress through a page or scrollable panel.",
-      },
-      {
         slug: "presence",
         name: "Presence",
         useFor: "Animating conditional content into and out of a page.",
@@ -333,19 +323,9 @@ const catalog: CatalogDefinition[] = [
         useFor: "Sequencing the entrance of grouped items.",
       },
       {
-        slug: "mask-reveal",
-        name: "Mask reveal",
-        useFor: "Uncovering media or content from an edge.",
-      },
-      {
         slug: "layout-morph",
         name: "Layout morph",
         useFor: "Resizing around changing content without stretching it.",
-      },
-      {
-        slug: "parallax-layer",
-        name: "Parallax layer",
-        useFor: "Moving a layer in response to scrolling.",
       },
       {
         slug: "marquee",

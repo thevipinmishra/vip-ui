@@ -27,7 +27,7 @@ export function ToastStatusDemo() {
           showToast(
             {
               title: "Release published",
-              description: "Autumn campaign is live.",
+              description: "Version 2.6 is live.",
               variant: "success",
             },
             { timeout: 5000 },

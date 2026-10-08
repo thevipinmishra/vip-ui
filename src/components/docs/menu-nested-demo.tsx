@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { SubmenuTrigger } from "react-aria-components";
 import {
   Bookmark,
@@ -20,66 +19,59 @@ import {
 const iconClass = "shrink-0 text-muted-foreground";
 
 export function MenuNestedDemo() {
-  const [saved, setSaved] = useState(false);
-
   return (
-    <div className="flex flex-col items-start gap-3">
-      <MenuTrigger>
-        <Button variant="outline">
-          <Bookmark size={16} aria-hidden="true" />
-          More options
-        </Button>
-        <MenuPopover>
-          <MenuContent aria-label="More options">
-            <MenuItem onAction={() => setSaved((value) => !value)}>
-              <Pin size={16} aria-hidden="true" className={iconClass} />
-              {saved ? "Remove bookmark" : "Bookmark this page"}
+    <MenuTrigger>
+      <Button variant="outline">
+        <Bookmark size={16} aria-hidden="true" />
+        More options
+      </Button>
+      <MenuPopover>
+        <MenuContent aria-label="More options">
+          <MenuItem>
+            <Pin size={16} aria-hidden="true" className={iconClass} />
+            Bookmark this page
+          </MenuItem>
+          <SubmenuTrigger>
+            <MenuItem>
+              <Layers size={16} aria-hidden="true" className={iconClass} />
+              <span className="min-w-0 flex-1">Components</span>
+              <ChevronRight
+                size={16}
+                aria-hidden="true"
+                className={iconClass}
+              />
             </MenuItem>
-            <SubmenuTrigger>
-              <MenuItem>
-                <Layers size={16} aria-hidden="true" className={iconClass} />
-                <span className="min-w-0 flex-1">Components</span>
-                <ChevronRight
-                  size={16}
-                  aria-hidden="true"
-                  className={iconClass}
-                />
-              </MenuItem>
-              <MenuPopover placement="right top" offset={-2}>
-                <MenuContent aria-label="Component links">
-                  <MenuItem href="/components/avatar">
-                    <LinkIcon
-                      size={16}
-                      aria-hidden="true"
-                      className={iconClass}
-                    />
-                    Avatar
-                  </MenuItem>
-                  <MenuItem href="/components/badge">
-                    <LinkIcon
-                      size={16}
-                      aria-hidden="true"
-                      className={iconClass}
-                    />
-                    Badge
-                  </MenuItem>
-                  <MenuItem href="/components/pagination">
-                    <LinkIcon
-                      size={16}
-                      aria-hidden="true"
-                      className={iconClass}
-                    />
-                    Pagination
-                  </MenuItem>
-                </MenuContent>
-              </MenuPopover>
-            </SubmenuTrigger>
-          </MenuContent>
-        </MenuPopover>
-      </MenuTrigger>
-      <output className="text-sm text-muted-foreground">
-        {saved ? "Bookmarked" : "Not bookmarked"}
-      </output>
-    </div>
+            <MenuPopover placement="right top" offset={-2}>
+              <MenuContent aria-label="Component links">
+                <MenuItem href="/components/avatar">
+                  <LinkIcon
+                    size={16}
+                    aria-hidden="true"
+                    className={iconClass}
+                  />
+                  Avatar
+                </MenuItem>
+                <MenuItem href="/components/badge">
+                  <LinkIcon
+                    size={16}
+                    aria-hidden="true"
+                    className={iconClass}
+                  />
+                  Badge
+                </MenuItem>
+                <MenuItem href="/components/pagination">
+                  <LinkIcon
+                    size={16}
+                    aria-hidden="true"
+                    className={iconClass}
+                  />
+                  Pagination
+                </MenuItem>
+              </MenuContent>
+            </MenuPopover>
+          </SubmenuTrigger>
+        </MenuContent>
+      </MenuPopover>
+    </MenuTrigger>
   );
 }

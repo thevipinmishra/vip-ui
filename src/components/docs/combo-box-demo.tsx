@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import {
   ComboBox,
   ComboBoxContent,
@@ -25,15 +24,9 @@ const frameworks = [
 ];
 
 export function ComboBoxDemo() {
-  const [selected, setSelected] = useState<string | null>(null);
-  const selectedName = frameworks.find((item) => item.id === selected)?.name;
-
   return (
     <div className="grid w-full max-w-[340px] gap-4">
-      <ComboBox
-        value={selected ?? undefined}
-        onValueChange={(value) => setSelected(value || null)}
-      >
+      <ComboBox>
         <ComboBoxLabel>Framework</ComboBoxLabel>
         <div className="relative flex items-center">
           <ComboBoxInput placeholder="Search options" />
@@ -60,19 +53,9 @@ export function ComboBoxDemo() {
           ))}
         </ComboBoxContent>
       </ComboBox>
-      <output className="block rounded-md border border-border bg-background px-3 py-2.5 text-xs text-muted-foreground">
-        {selectedName ? (
-          <>
-            Selected{" "}
-            <span className="font-medium text-foreground">{selectedName}</span>
-          </>
-        ) : (
-          "No framework selected."
-        )}
-      </output>
       <ComboBox
         label="Archived framework"
-        description="This project is no longer editable."
+        description="An archived value stays visible but cannot change."
         defaultValue="next"
         isDisabled
         options={[{ id: "next", name: "Next.js" }]}

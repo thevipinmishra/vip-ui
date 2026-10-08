@@ -6,16 +6,16 @@ export function SpinnerUsageDemo() {
     <div className="grid w-full max-w-2xl gap-3 sm:grid-cols-2">
       <div className="flex min-h-40 flex-col items-start justify-between rounded-2xl bg-card p-5 ring-1 ring-border/70">
         <p className="text-xs font-medium text-muted-foreground">
-          Submitting a form
+          Small in a button
         </p>
         <Button isDisabled>
           <Spinner variant="ring" size="sm" decorative />
-          Saving changes
+          Saving
         </Button>
       </div>
       <div className="flex min-h-40 flex-col justify-between rounded-2xl bg-card p-5 ring-1 ring-border/70">
         <p className="text-xs font-medium text-muted-foreground">
-          Loading a workspace
+          Medium with a status
         </p>
         <output className="flex items-center gap-3 text-sm font-medium">
           <Spinner
@@ -24,7 +24,7 @@ export function SpinnerUsageDemo() {
             decorative
             className="text-primary"
           />
-          Connecting to your workspace
+          Loading
         </output>
       </div>
     </div>

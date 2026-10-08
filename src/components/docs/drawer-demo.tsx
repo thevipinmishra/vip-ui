@@ -53,7 +53,7 @@ export function DrawerDemo() {
           </dl>
         </DrawerBody>
         <DrawerFooter>
-          <DrawerClose variant="outline">Keep shopping</DrawerClose>
+          <DrawerClose variant="outline">Close</DrawerClose>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

@@ -9,7 +9,6 @@ import {
 
 export function CommandPaletteBasicDemo() {
   const [isOpen, setOpen] = useState(false);
-  const [selection, setSelection] = useState("");
 
   return (
     <div className="grid justify-items-start gap-3">
@@ -17,18 +16,9 @@ export function CommandPaletteBasicDemo() {
         Open commands
       </Button>
       <CommandPalette isOpen={isOpen} onOpenChange={setOpen}>
-        <CommandPaletteItem onAction={() => setSelection("New project")}>
-          New project
-        </CommandPaletteItem>
-        <CommandPaletteItem onAction={() => setSelection("Settings")}>
-          Settings
-        </CommandPaletteItem>
+        <CommandPaletteItem>New project</CommandPaletteItem>
+        <CommandPaletteItem>Settings</CommandPaletteItem>
       </CommandPalette>
-      {selection && (
-        <output className="text-sm text-muted-foreground">
-          Selected: {selection}
-        </output>
-      )}
     </div>
   );
 }

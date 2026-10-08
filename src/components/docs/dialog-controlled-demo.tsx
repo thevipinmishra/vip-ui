@@ -21,8 +21,7 @@ export function DialogControlledDemo() {
         <DialogContent>
           <DialogTitle>Controlled dialog</DialogTitle>
           <DialogDescription>
-            Either button can open this dialog. The application controls when it
-            closes.
+            Review the details before you continue.
           </DialogDescription>
           <div className="mt-6 flex justify-end">
             <Button onPress={() => setIsOpen(false)}>

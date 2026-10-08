@@ -34,10 +34,12 @@ export const componentPageData = {
     description: "Triggers an action.",
     examples: [
       {
-        title: "Project actions",
-        description:
-          "Publish, save a revision, or archive. The primary action is large, the secondary actions are small, and preview is an icon button. The badge and saved revision update with each action.",
-        sourcePath: "button-project-actions-demo.tsx",
+        title: "Variants",
+        sourcePath: "button-variants-demo.tsx",
+      },
+      {
+        title: "Icon buttons",
+        sourcePath: "button-icon-demo.tsx",
       },
     ],
   },
@@ -74,7 +76,7 @@ export const componentPageData = {
       {
         title: "Alert dialog",
         description:
-          "Ask for confirmation before archiving. Outside clicks do not dismiss the alert; Cancel leaves the project unchanged, while confirming updates the status below.",
+          "Ask for confirmation before archiving. Outside clicks do not dismiss the alert; Cancel closes without changing anything.",
         sourcePath: "dialog-alert-demo.tsx",
       },
       {
@@ -98,9 +100,9 @@ export const componentPageData = {
     description: "Displays collapsible sections of related content.",
     examples: [
       {
-        title: "Billing questions",
+        title: "Divided list",
         description:
-          "Use a divided list when several answers can stay open. A disabled question stays visible until tax receipts are available.",
+          "Use a divided list when several answers can stay open. A disabled question stays visible but cannot be opened.",
         sourcePath: "accordion-billing-demo.tsx",
       },
     ],
@@ -140,9 +142,9 @@ export const componentPageData = {
     description: "Displays a file's name, size, preview, and current state.",
     examples: [
       {
-        title: "Add files to a request",
+        title: "Adding and removing files",
         description:
-          "Drop a PNG, JPEG, or PDF, or browse on a touch device. Remove a file before submitting; selections stay local and no upload is started.",
+          "Drop a PNG, JPEG, or PDF, or browse on a touch device. Remove a file before submitting; no upload is started.",
         sourcePath: "attachment-demo.tsx",
       },
     ],
@@ -171,14 +173,8 @@ export const componentPageData = {
       {
         title: "Status variants",
         description:
-          "Compare the statuses used across a release workflow, including outline metadata.",
+          "Compare the variant styles, including dot and outline metadata.",
         sourcePath: "badge-demo.tsx",
-      },
-      {
-        title: "Release queue",
-        description:
-          "Pair each badge with a readable status and keep the record details outside the label.",
-        sourcePath: "badge-queue-demo.tsx",
       },
     ],
   },
@@ -214,15 +210,8 @@ export const componentPageData = {
   card: {
     usage: "card-demo.tsx",
     description:
-      "Groups a project summary, team, and an editable name in a card.",
-    examples: [
-      {
-        title: "Invoice review",
-        description:
-          "See an itemized total and approve the invoice locally. Compose Card sections with Badge and Button for the status and action.",
-        sourcePath: "card-invoice-demo.tsx",
-      },
-    ],
+      "Groups related content in a card with header, content, and footer sections.",
+    examples: [],
   },
   checkbox: {
     usage: "checkbox-basic-demo.tsx",
@@ -282,7 +271,7 @@ export const componentPageData = {
       {
         title: "Descriptive results",
         description:
-          "Filter options with supporting details and show the current selection. A locked field keeps an archived value visible.",
+          "Filter options with supporting details. A disabled field keeps an archived value visible.",
         sourcePath: "combo-box-demo.tsx",
       },
       {
@@ -300,7 +289,7 @@ export const componentPageData = {
       {
         title: "Commands with icons",
         description:
-          "Keep one palette on the page. Give each action a readable label and show the result after selection.",
+          "Keep one palette on the page and give each command an icon and a readable label.",
         sourcePath: "command-palette-demo.tsx",
       },
     ],
@@ -323,7 +312,7 @@ export const componentPageData = {
       "Copies a value and confirms whether the clipboard write succeeded.",
     examples: [
       {
-        title: "Share a release",
+        title: "Label and icon variants",
         description:
           "Use a text label when the action needs to be read, and an icon button when the value is already on screen. A failed write offers a retry.",
         sourcePath: "copy-button-share-demo.tsx",
@@ -407,9 +396,9 @@ export const componentPageData = {
     description: "Displays a message when there is no content to show.",
     examples: [
       {
-        title: "No matching results",
+        title: "Without an action",
         description:
-          "Omit the action when the user can resolve the empty result by changing an existing search instead.",
+          "Omit the action when there is no next step for the user to take.",
         sourcePath: "empty-state-no-action-demo.tsx",
       },
     ],
@@ -462,13 +451,13 @@ export const componentPageData = {
       {
         title: "Search action",
         description:
-          "Put a submit action beside the input. Both controls share a focus border, and the result appears below the field.",
+          "Put a submit action beside the input. Both controls share a focus border.",
         sourcePath: "input-group-demo.tsx",
       },
       {
         title: "Multiline note",
         description:
-          "Use InputGroupTextArea with a bottom row for a counter and an action. The field still owns its label and value.",
+          "Use InputGroupTextArea with a bottom row for a live character counter.",
         sourcePath: "input-group-notes-demo.tsx",
       },
       {
@@ -504,7 +493,7 @@ export const componentPageData = {
   menu: {
     usage: "menu-demo.tsx",
     description:
-      "Opens project actions from a trigger, including a rename form.",
+      "Opens a list of actions from a trigger, with icons, shortcuts, and separators.",
     examples: [
       {
         title: "Nested menu",
@@ -531,9 +520,9 @@ export const componentPageData = {
       "Displays a conversation entry with an author, content, and optional actions.",
     examples: [
       {
-        title: "Support conversation",
+        title: "Message states",
         description:
-          "Show incoming, outgoing, and system entries in one thread. Add a local note and copy a message. New entries animate in without moving the thread; a long URL wraps at phone width.",
+          "Show incoming, outgoing, and system entries in one thread, with an avatar and a copy action.",
         sourcePath: "message-demo.tsx",
       },
     ],
@@ -567,10 +556,10 @@ export const componentPageData = {
     description: "A field for entering and adjusting numeric values.",
     examples: [
       {
-        title: "Team seat estimate",
+        title: "Currency formatting",
         description:
-          "Adjust seats within a plan limit and see the monthly estimate before saving the new count.",
-        sourcePath: "number-field-seats-demo.tsx",
+          "Format the value as currency while the stepper moves in fixed steps.",
+        sourcePath: "number-field-currency-demo.tsx",
       },
     ],
   },
@@ -618,12 +607,12 @@ export const componentPageData = {
   },
   popover: {
     usage: "popover-demo.tsx",
-    description: "Anchors a share form and the people who already have access.",
+    description: "Anchors supporting content beside a trigger.",
     examples: [
       {
         title: "Placement",
         description:
-          "Open notes above, details below, the assignee to the left, and sharing to the right. A popover can flip when there is not enough room.",
+          "Open the panel above, below, to the left, or to the right of its trigger. A popover can flip when there is not enough room.",
         sourcePath: "popover-placement-demo.tsx",
       },
     ],
@@ -643,7 +632,7 @@ export const componentPageData = {
   "preview-trigger": {
     usage: "preview-trigger-demo.tsx",
     description:
-      "Shows a file preview and review note when its trigger is hovered, focused, or long-pressed.",
+      "Shows a file preview when its trigger is hovered, focused, or long-pressed.",
     examples: [],
   },
   "progress-bar": {
@@ -651,9 +640,9 @@ export const componentPageData = {
     description: "Displays the progress of a task in a horizontal bar.",
     examples: [
       {
-        title: "Campaign asset upload",
+        title: "Determinate and indeterminate",
         description:
-          "Advance the file upload while preview preparation stays indeterminate until the upload completes.",
+          "Advance a determinate bar with a button while a second bar stays indeterminate.",
         sourcePath: "progress-bar-demo.tsx",
       },
     ],
@@ -665,7 +654,7 @@ export const componentPageData = {
       {
         title: "Known and unknown progress",
         description:
-          "Advance a determinate upload while the connection remains indeterminate.",
+          "Advance a determinate ring with a button while a second ring stays indeterminate.",
         sourcePath: "progress-ring-demo.tsx",
       },
     ],
@@ -703,9 +692,9 @@ export const componentPageData = {
     description: "A field for entering a search query.",
     examples: [
       {
-        title: "Filter projects",
+        title: "Filtered results",
         description:
-          "Connect a controlled search field to a collection. Type a project or owner to filter, press Enter to submit, or clear the query to see every project again.",
+          "Update the visible results as the query changes, and clear the field to show every row again.",
         sourcePath: "search-field-demo.tsx",
       },
     ],
@@ -725,9 +714,9 @@ export const componentPageData = {
     description: "Selects a value or range on a track.",
     examples: [
       {
-        title: "Campaign budget",
+        title: "Range and disabled state",
         description:
-          "Choose a daily spend range. Boost spend stays visible and disabled until the plan includes it.",
+          "Choose a range with two handles, and keep the disabled slider's value visible.",
         sourcePath: "slider-budget-demo.tsx",
       },
     ],
@@ -811,9 +800,9 @@ export const componentPageData = {
     description: "Displays related content in switchable panels.",
     examples: [
       {
-        title: "Project workspace",
+        title: "Icons and disabled tabs",
         description:
-          "Use separate panels for a summary, activity, and team. Keep Billing visible without allowing selection until the project is approved.",
+          "Add icons to tab triggers and keep an unavailable tab visible with isDisabled.",
         sourcePath: "tabs-demo.tsx",
       },
     ],
@@ -857,17 +846,6 @@ export const componentPageData = {
     description: "Resolves changing text from scrambled characters.",
     examples: [],
   },
-  "scroll-highlight": {
-    usage: "scroll-highlight-demo.tsx",
-    description:
-      "Highlights words as text moves through the viewport or a panel.",
-    examples: [],
-  },
-  "scroll-progress": {
-    usage: "scroll-progress-demo.tsx",
-    description: "Shows reading progress for a page or a scrollable panel.",
-    examples: [],
-  },
   presence: {
     usage: "presence-demo.tsx",
     description:
@@ -885,27 +863,9 @@ export const componentPageData = {
     description: "Sequences the entrance of grouped content.",
     examples: [],
   },
-  "mask-reveal": {
-    usage: "mask-reveal-demo.tsx",
-    description: "Uncovers content from a chosen edge.",
-    examples: [
-      {
-        title: "Reveal direction",
-        description:
-          "Replay the same still from the left, right, above, or below. Each button uncovers the card from that edge.",
-        sourcePath: "mask-reveal-directions-demo.tsx",
-      },
-    ],
-  },
   "layout-morph": {
     usage: "layout-morph-demo.tsx",
     description: "Animates height and content when a keyed section changes.",
-    examples: [],
-  },
-  "parallax-layer": {
-    usage: "parallax-layer-demo.tsx",
-    description:
-      "Moves a layer by a bounded distance as it scrolls through a page or panel.",
     examples: [],
   },
   marquee: {
@@ -940,7 +900,7 @@ export const componentPageData = {
       {
         title: "Notification types",
         description:
-          "Publish a release, check for an update, or flag billing. Leave important warnings open until dismissed; mount ToastViewport once near the app root.",
+          "Compare info, success, and warning toasts. Leave important warnings open until dismissed; mount ToastViewport once near the app root.",
         sourcePath: "toast-status-demo.tsx",
       },
     ],
@@ -951,9 +911,9 @@ export const componentPageData = {
       "A button that switches between selected and unselected states.",
     examples: [
       {
-        title: "Pinned projects",
+        title: "Independent toggles",
         description:
-          "Pin a project to mark it for quick access. The badge repeats the state without relying on color.",
+          "Select more than one toggle independently, each with a visible label.",
         sourcePath: "toggle-button-projects-demo.tsx",
       },
     ],
@@ -1000,9 +960,9 @@ export const componentPageData = {
       "Displays a short hint when its trigger is hovered or focused.",
     examples: [
       {
-        title: "Review actions",
+        title: "Icon button tooltips",
         description:
-          "Keep icon-only buttons named without the tooltip. Review opens above the button and assignment details open below.",
+          "Give each icon-only button its own accessible name and place the hint above or below the trigger.",
         sourcePath: "tooltip-actions-demo.tsx",
       },
     ],

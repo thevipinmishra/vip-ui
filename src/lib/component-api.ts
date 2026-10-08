@@ -74,39 +74,6 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       description: "Characters used for the temporary visual scramble.",
     },
   ],
-  "scroll-highlight": [
-    {
-      component: "ScrollHighlight",
-      prop: "text",
-      type: "string",
-      defaultValue: "required",
-      description:
-        "Words emphasize as the element scrolls; the full text remains readable and is announced once.",
-    },
-    {
-      component: "ScrollHighlight",
-      prop: "containerRef",
-      type: "RefObject<HTMLElement | null>",
-      defaultValue: "viewport",
-      description: "Scrollable container to track instead of the page.",
-    },
-  ],
-  "scroll-progress": [
-    {
-      component: "ScrollProgress",
-      prop: "label",
-      type: "string",
-      defaultValue: "required",
-      description: "Visible name for the reading progress bar.",
-    },
-    {
-      component: "ScrollProgress",
-      prop: "containerRef",
-      type: "RefObject<HTMLElement | null>",
-      defaultValue: "viewport",
-      description: "Scrollable container to track instead of the page.",
-    },
-  ],
   presence: [
     {
       component: "Presence",
@@ -163,30 +130,6 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       description: "Element receiving the group animation.",
     },
   ],
-  "mask-reveal": [
-    {
-      component: "MaskReveal",
-      prop: "direction",
-      type: '"left" | "right" | "up" | "down"',
-      defaultValue: '"left"',
-      description: "Edge from which content becomes visible.",
-    },
-    {
-      component: "MaskReveal",
-      prop: "trigger",
-      type: '"mount" | "in-view"',
-      defaultValue: '"in-view"',
-      description:
-        "Starts on mount or the first time content enters view. Hidden content is inert until reveal starts.",
-    },
-    {
-      component: "MaskReveal",
-      prop: "duration",
-      type: "number",
-      defaultValue: "0.65",
-      description: "Reveal time in seconds.",
-    },
-  ],
   "layout-morph": [
     {
       component: "LayoutMorph",
@@ -195,23 +138,6 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       defaultValue: "required",
       description:
         "Change with the content to crossfade it and animate the container height.",
-    },
-  ],
-  "parallax-layer": [
-    {
-      component: "ParallaxLayer",
-      prop: "distance",
-      type: "number",
-      defaultValue: "32",
-      description:
-        "Maximum movement in pixels from center; use an outer clipping container when needed.",
-    },
-    {
-      component: "ParallaxLayer",
-      prop: "containerRef",
-      type: "RefObject<HTMLElement | null>",
-      defaultValue: "viewport",
-      description: "Scrollable container to track instead of the page.",
     },
   ],
   marquee: [

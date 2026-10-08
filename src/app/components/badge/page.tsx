@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { BadgeBasicDemo } from "@/components/docs/badge-basic-demo";
 import { BadgeDemo } from "@/components/docs/badge-demo";
-import { BadgeQueueDemo } from "@/components/docs/badge-queue-demo";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -23,7 +22,6 @@ export default function BadgePage() {
       previewSourcePath={page.usage}
       examples={withExamplePreviews(page.examples, [
         <BadgeDemo key="example-1" />,
-        <BadgeQueueDemo key="example-2" />,
       ])}
       sourcePath="src/components/ui/badge.tsx"
     />

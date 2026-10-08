@@ -14,7 +14,6 @@ import { ButtonGroupOrientationsDemo } from "@/components/docs/button-group-orie
 import { CalendarDemo } from "@/components/docs/calendar-demo";
 import { CalendarUnavailableDemo } from "@/components/docs/calendar-unavailable-demo";
 import { CardDemo } from "@/components/docs/card-demo";
-import { CardInvoiceDemo } from "@/components/docs/card-invoice-demo";
 import { CheckboxGroupDemo } from "@/components/docs/checkbox-group-demo";
 import { CheckboxGroupRequiredDemo } from "@/components/docs/checkbox-group-required-demo";
 import { ColorFieldDemo } from "@/components/docs/color-field-demo";
@@ -56,15 +55,12 @@ import { LinkDemo } from "@/components/docs/link-demo";
 import { ListBoxDemo } from "@/components/docs/list-box-demo";
 import { ListBoxMultipleDemo } from "@/components/docs/list-box-multiple-demo";
 import { MarqueeDemo } from "@/components/docs/marquee-demo";
-import { MaskRevealDemo } from "@/components/docs/mask-reveal-demo";
-import { MaskRevealDirectionsDemo } from "@/components/docs/mask-reveal-directions-demo";
 import { MeterBasicDemo } from "@/components/docs/meter-basic-demo";
 import { MeterDemo } from "@/components/docs/meter-demo";
+import { NumberFieldCurrencyDemo } from "@/components/docs/number-field-currency-demo";
 import { NumberFieldDemo } from "@/components/docs/number-field-demo";
-import { NumberFieldSeatsDemo } from "@/components/docs/number-field-seats-demo";
 import { PaginationBasicDemo } from "@/components/docs/pagination-basic-demo";
 import { PaginationDemo } from "@/components/docs/pagination-demo";
-import { ParallaxLayerDemo } from "@/components/docs/parallax-layer-demo";
 import { PasswordStrengthMeterDemo } from "@/components/docs/password-strength-meter-demo";
 import { PasswordStrengthMeterFieldDemo } from "@/components/docs/password-strength-meter-field-demo";
 import { PopoverDemo } from "@/components/docs/popover-demo";
@@ -80,8 +76,6 @@ import { ProgressRingDemo } from "@/components/docs/progress-ring-demo";
 import { RangeCalendarDemo } from "@/components/docs/range-calendar-demo";
 import { RangeCalendarLimitsDemo } from "@/components/docs/range-calendar-limits-demo";
 import { RatingInputDemo } from "@/components/docs/rating-input-demo";
-import { ScrollHighlightDemo } from "@/components/docs/scroll-highlight-demo";
-import { ScrollProgressDemo } from "@/components/docs/scroll-progress-demo";
 import { SeparatorDemo } from "@/components/docs/separator-demo";
 import { SkeletonDemo } from "@/components/docs/skeleton-demo";
 import { SourceLinkDemo } from "@/components/docs/source-link-demo";
@@ -385,25 +379,9 @@ const entries: {
   },
   { slug: "text-reveal", name: "Text reveal", demo: <TextRevealDemo /> },
   { slug: "text-scramble", name: "Text scramble", demo: <TextScrambleDemo /> },
-  {
-    slug: "scroll-highlight",
-    name: "Scroll highlight",
-    demo: <ScrollHighlightDemo />,
-  },
-  {
-    slug: "scroll-progress",
-    name: "Scroll progress",
-    demo: <ScrollProgressDemo />,
-  },
   { slug: "presence", name: "Presence", demo: <PresenceDemo /> },
   { slug: "stagger-group", name: "Stagger group", demo: <StaggerGroupDemo /> },
-  { slug: "mask-reveal", name: "Mask reveal", demo: <MaskRevealDemo /> },
   { slug: "layout-morph", name: "Layout morph", demo: <LayoutMorphDemo /> },
-  {
-    slug: "parallax-layer",
-    name: "Parallax layer",
-    demo: <ParallaxLayerDemo />,
-  },
   { slug: "marquee", name: "Marquee", demo: <MarqueeDemo /> },
   {
     slug: "stepper",
@@ -493,7 +471,6 @@ const examplePreviews: Record<string, ReactNode[]> = {
   avatar: [<AvatarDemo key="preview-1" />],
   "button-group": [<ButtonGroupOrientationsDemo key="preview-1" />],
   calendar: [<CalendarUnavailableDemo key="preview-1" />],
-  card: [<CardInvoiceDemo key="preview-1" />],
   "checkbox-group": [<CheckboxGroupRequiredDemo key="preview-1" />],
   "color-swatch": [<ColorSwatchDemo key="preview-1" />],
   "command-palette": [<CommandPaletteDemo shortcut={false} key="preview-1" />],
@@ -513,14 +490,13 @@ const examplePreviews: Record<string, ReactNode[]> = {
   "grid-list": [<GridListDisabledDemo key="preview-1" />],
   "list-box": [<ListBoxMultipleDemo key="preview-1" />],
   meter: [<MeterDemo key="preview-1" />],
-  "number-field": [<NumberFieldSeatsDemo key="preview-1" />],
+  "number-field": [<NumberFieldCurrencyDemo key="preview-1" />],
   pagination: [<PaginationDemo key="preview-1" />],
   popover: [<PopoverPlacementDemo key="preview-1" />],
   "presence-list": [<PresenceListDemo key="preview-1" />],
   "progress-bar": [<ProgressBarDemo key="preview-1" />],
   "progress-ring": [<ProgressRingDemo key="preview-1" />],
   "range-calendar": [<RangeCalendarLimitsDemo key="preview-1" />],
-  "mask-reveal": [<MaskRevealDirectionsDemo key="preview-1" />],
   spinner: [
     <SpinnerDemo key="preview-1" />,
     <SpinnerUsageDemo key="preview-2" />,

@@ -66,13 +66,11 @@ const descriptions = {
   "layout-morph": "Resize around changing content without distorting it.",
   menu: "Choose an action from a popover menu.",
   marquee: "Loop a strip of content with a pause control.",
-  "mask-reveal": "Uncover content from an edge on mount or in view.",
   message: "Display an entry in a conversation.",
   meter: "Display a measured value against a known range.",
   "number-field": "Enter or step through numeric values.",
   "native-select": "Choose an option with the device's native select menu.",
   pagination: "Navigate between pages of results.",
-  "parallax-layer": "Move a layer as its container scrolls.",
   presence: "Animate conditional content when it enters or leaves.",
   "password-field": "Enter a password and toggle its visibility.",
   "password-strength-meter":
@@ -87,9 +85,6 @@ const descriptions = {
   "rating-input": "Choose a star rating with radio controls.",
   "range-calendar": "Select a start and end date in a calendar.",
   "search-field": "Search with a labeled input and clear control.",
-  "scroll-highlight":
-    "Emphasize words as a passage scrolls through the viewport or a panel.",
-  "scroll-progress": "Show reading progress in a page or scrollable panel.",
   "source-link": "Link an answer to a named source.",
   select: "Choose one option from a list in a popover.",
   separator: "Divide related groups of content.",
@@ -335,6 +330,12 @@ export async function generate() {
     }
   }
   await mkdir(outputDirectory, { recursive: true });
+  // Keep static assets in public/r, but drop items for removed components.
+  for (const filename of await readdir(outputDirectory)) {
+    if (filename === "registry.json" || /^vip-.*\.json$/.test(filename)) {
+      await rm(path.join(outputDirectory, filename));
+    }
+  }
   await rm(sourceDirectory, { recursive: true, force: true });
   const catalogItems = [];
   const registrySources = new Map();

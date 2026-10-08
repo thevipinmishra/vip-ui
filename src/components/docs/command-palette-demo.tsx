@@ -14,24 +14,18 @@ export function CommandPaletteDemo({
   shortcut?: boolean;
 }) {
   const [isOpen, setOpen] = useState(false);
-  const [lastAction, setLastAction] = useState("");
 
   return (
     <div className="grid justify-items-start gap-3">
       <Button variant="outline" onPress={() => setOpen(true)}>
         <Search size={16} aria-hidden="true" /> Search commands
       </Button>
-      {lastAction && (
-        <output className="text-xs text-muted-foreground">
-          Selected: {lastAction}
-        </output>
-      )}
       <CommandPalette
         isOpen={isOpen}
         onOpenChange={setOpen}
         shortcut={shortcut}
       >
-        <CommandPaletteItem onAction={() => setLastAction("New project")}>
+        <CommandPaletteItem>
           <FolderPlus
             size={17}
             aria-hidden="true"
@@ -39,7 +33,7 @@ export function CommandPaletteDemo({
           />
           New project
         </CommandPaletteItem>
-        <CommandPaletteItem onAction={() => setLastAction("Open settings")}>
+        <CommandPaletteItem>
           <Settings
             size={17}
             aria-hidden="true"
@@ -47,7 +41,7 @@ export function CommandPaletteDemo({
           />
           Open settings
         </CommandPaletteItem>
-        <CommandPaletteItem onAction={() => setLastAction("Invite teammate")}>
+        <CommandPaletteItem>
           <UserAdd
             size={17}
             aria-hidden="true"

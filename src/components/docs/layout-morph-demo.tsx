@@ -9,7 +9,7 @@ const captions = [
   {
     title: "After the rain",
     detail:
-      "A longer note about what happens when color returns to the street. The container grows without stretching the type inside it.",
+      "A longer note about what happens when color returns to the street after the storm passes through.",
   },
 ];
 

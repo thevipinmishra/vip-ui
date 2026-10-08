@@ -7,9 +7,9 @@ import {
 export function EmptyStateNoActionDemo() {
   return (
     <EmptyState className="w-full max-w-md">
-      <EmptyStateTitle>No matching projects</EmptyStateTitle>
+      <EmptyStateTitle>No saved items</EmptyStateTitle>
       <EmptyStateDescription>
-        Try another name or clear the search to see every project.
+        Items you save appear here.
       </EmptyStateDescription>
     </EmptyState>
   );

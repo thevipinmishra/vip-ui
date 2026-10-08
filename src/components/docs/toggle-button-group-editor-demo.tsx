@@ -10,13 +10,7 @@ export function ToggleButtonGroupEditorDemo() {
   const [selected, setSelected] = useState(new Set<Key>(["bold"]));
 
   return (
-    <div className="grid w-full max-w-md gap-5 rounded-xl bg-card p-5 ring-1 ring-border/70">
-      <div>
-        <p className="text-sm font-semibold">Release announcement</p>
-        <p className="mt-1 text-xs text-muted-foreground">
-          Autumn campaign · Draft
-        </p>
-      </div>
+    <div className="grid w-full max-w-md gap-5">
       <ToggleButtonGroup
         aria-label="Text styles"
         selectionMode="multiple"
@@ -38,7 +32,7 @@ export function ToggleButtonGroupEditorDemo() {
         <p
           className={`mt-2 ${selected.has("bold") ? "font-bold" : ""} ${selected.has("italic") ? "italic" : ""} ${selected.has("underline") ? "underline" : ""}`}
         >
-          The autumn release is ready for review.
+          The quick brown fox jumps over the lazy dog.
         </p>
       </div>
     </div>

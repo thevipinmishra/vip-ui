@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "vip-ui",
-  "homepage": "https://vip-ui.vercel.app",
+  "homepage": "http://localhost:3000",
   "items": [
     {
       "name": "vip-accordion",
@@ -1379,25 +1379,6 @@
       ]
     },
     {
-      "name": "vip-mask-reveal",
-      "type": "registry:ui",
-      "title": "Mask Reveal",
-      "description": "Uncover content from an edge on mount or in view.",
-      "dependencies": ["motion", "tailwind-variants"],
-      "files": [
-        {
-          "path": "registry/generated/src/components/vip-ui/utils.ts",
-          "type": "registry:file",
-          "target": "@components/vip-ui/utils.ts"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/mask-reveal.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/mask-reveal.tsx"
-        }
-      ]
-    },
-    {
       "name": "vip-menu",
       "type": "registry:ui",
       "title": "Menu",
@@ -1543,25 +1524,6 @@
           "path": "registry/generated/src/components/vip-ui/pagination.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/pagination.tsx"
-        }
-      ]
-    },
-    {
-      "name": "vip-parallax-layer",
-      "type": "registry:ui",
-      "title": "Parallax Layer",
-      "description": "Move a layer as its container scrolls.",
-      "dependencies": ["motion", "tailwind-variants"],
-      "files": [
-        {
-          "path": "registry/generated/src/components/vip-ui/utils.ts",
-          "type": "registry:file",
-          "target": "@components/vip-ui/utils.ts"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/parallax-layer.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/parallax-layer.tsx"
         }
       ]
     },
@@ -1845,44 +1807,6 @@
           "path": "registry/generated/src/components/vip-ui/rating-input.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/rating-input.tsx"
-        }
-      ]
-    },
-    {
-      "name": "vip-scroll-highlight",
-      "type": "registry:ui",
-      "title": "Scroll Highlight",
-      "description": "Emphasize words as a passage scrolls through the viewport or a panel.",
-      "dependencies": ["motion", "tailwind-variants"],
-      "files": [
-        {
-          "path": "registry/generated/src/components/vip-ui/utils.ts",
-          "type": "registry:file",
-          "target": "@components/vip-ui/utils.ts"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/scroll-highlight.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/scroll-highlight.tsx"
-        }
-      ]
-    },
-    {
-      "name": "vip-scroll-progress",
-      "type": "registry:ui",
-      "title": "Scroll Progress",
-      "description": "Show reading progress in a page or scrollable panel.",
-      "dependencies": ["motion", "tailwind-variants"],
-      "files": [
-        {
-          "path": "registry/generated/src/components/vip-ui/utils.ts",
-          "type": "registry:file",
-          "target": "@components/vip-ui/utils.ts"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/scroll-progress.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/scroll-progress.tsx"
         }
       ]
     },

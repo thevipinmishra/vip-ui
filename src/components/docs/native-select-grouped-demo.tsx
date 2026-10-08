@@ -8,7 +8,6 @@ import { NativeSelect } from "@/components/ui/native-select";
 export function NativeSelectGroupedDemo() {
   const [team, setTeam] = useState("");
   const [attempted, setAttempted] = useState(false);
-  const [notice, setNotice] = useState("");
   const missing = attempted && !team;
 
   return (
@@ -18,7 +17,6 @@ export function NativeSelectGroupedDemo() {
       onSubmit={(event) => {
         event.preventDefault();
         setAttempted(true);
-        setNotice(team ? `Invitation will go to ${team}.` : "");
       }}
     >
       <NativeSelect
@@ -31,7 +29,6 @@ export function NativeSelectGroupedDemo() {
         error={missing ? "Choose a team before continuing." : undefined}
         onChange={(event) => {
           setTeam(event.target.value);
-          setNotice("");
         }}
       >
         <optgroup label="Design">
@@ -45,10 +42,7 @@ export function NativeSelectGroupedDemo() {
           </option>
         </optgroup>
       </NativeSelect>
-      <Button type="submit">Review invitation</Button>
-      <output aria-live="polite" className="text-xs text-muted-foreground">
-        {notice}
-      </output>
+      <Button type="submit">Continue</Button>
     </Form>
   );
 }

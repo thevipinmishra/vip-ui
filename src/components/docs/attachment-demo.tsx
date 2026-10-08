@@ -40,7 +40,7 @@ export function AttachmentDemo() {
     setNotice(
       rejected
         ? `${rejected} file${rejected === 1 ? " was" : "s were"} skipped. Choose PNG, JPEG, or PDF under 5 MB.`
-        : `${next.length} file${next.length === 1 ? "" : "s"} added locally. Nothing was uploaded.`,
+        : `${next.length} file${next.length === 1 ? "" : "s"} added.`,
     );
   }
 
@@ -102,7 +102,7 @@ export function AttachmentDemo() {
         ))}
       </AttachmentList>
       <output aria-live="polite" className="text-xs text-muted-foreground">
-        {notice || "Files stay on this device until you choose to upload them."}
+        {notice}
       </output>
     </div>
   );

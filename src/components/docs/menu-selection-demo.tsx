@@ -30,8 +30,6 @@ export function MenuSelectionDemo() {
     view === "all"
       ? "All"
       : (views.find((item) => view.has(item.id))?.label ?? "None");
-  const layerLabel =
-    visible === "all" ? "all layers" : [...visible].join(", ") || "no layers";
 
   return (
     <div className="grid w-full max-w-md justify-items-start gap-4">
@@ -83,9 +81,6 @@ export function MenuSelectionDemo() {
           </MenuPopover>
         </MenuTrigger>
       </div>
-      <output className="block w-full rounded-lg bg-card px-4 py-3 text-[13px] text-muted-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70">
-        {viewLabel} view · Visible: {layerLabel}
-      </output>
     </div>
   );
 }
