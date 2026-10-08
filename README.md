@@ -58,7 +58,7 @@ Use `pnpm lint` and `pnpm build` to check changes. `pnpm registry:build` regener
 
 ## Contributing
 
-See [AGENTS.md](AGENTS.md) for component and documentation authoring rules. See [registry publishing](docs/registry.md) for release steps.
+See [styling](docs/styling.md) for Tailwind Variants recipes, and [registry publishing](docs/registry.md) for release steps.
 
 ## License
 

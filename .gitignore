@@ -15,8 +15,9 @@
 /playwright-report/
 /test-results/
 
-# local agent skills and analysis files
+# local tooling artifacts
 /.agents/
+/AGENTS.md
 /CLAUDE.md
 /skills-lock.json
 /graphify-out/
