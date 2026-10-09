@@ -128,13 +128,35 @@ test("range trail is square in the middle and capped only at its edges", async (
   }
 });
 
-test("drawer primary action keeps a primary hover surface", async ({
-  page,
-}) => {
-  await page.goto("/components/drawer");
-  await page.getByRole("button", { name: "Filter results" }).click();
+test("sheet primary action keeps a primary hover surface", async ({ page }) => {
+  await page.goto("/components/sheet");
+  await page.waitForLoadState("networkidle");
+  await page.getByRole("button", { name: "Filter projects" }).click();
   const action = page.getByRole("button", { name: "Show results" });
   await expect(action).toBeVisible();
+  // Wait for the sheet to finish sliding in before hovering.
+  let previous = "";
+  await expect
+    .poll(
+      async () => {
+        const box = await action.boundingBox();
+        const viewport = page.viewportSize();
+        const key = JSON.stringify(box);
+        // It rests at the exit position briefly before sliding in.
+        const settled =
+          key === previous &&
+          !!box &&
+          !!viewport &&
+          box.x >= -1 &&
+          box.y >= -1 &&
+          box.x + box.width <= viewport.width + 1 &&
+          box.y + box.height <= viewport.height + 1;
+        previous = key;
+        return settled;
+      },
+      { intervals: [100] },
+    )
+    .toBe(true);
   await action.hover();
   const colors = await action.evaluate((element) => {
     const style = getComputedStyle(element);

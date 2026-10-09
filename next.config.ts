@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
         destination: "/charts#documentation",
         permanent: true,
       },
+      {
+        source: "/components/drawer",
+        destination: "/components/sheet",
+        permanent: true,
+      },
     ];
   },
   async rewrites() {

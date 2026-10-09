@@ -996,48 +996,49 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       description: "Button appearance; labeled children use the default size.",
     },
   ],
-  drawer: [
+  sheet: [
     {
-      component: "DrawerContent",
-      prop: "placement",
-      type: '"bottom" | "top" | "left" | "right"',
+      component: "Sheet",
+      prop: "position",
+      type: '"bottom" | "top" | "left" | "right" | "start" | "end" | "center"',
       defaultValue: '"bottom"',
       description:
-        "Choose the entry edge and drag direction. Only bottom drawers use snap points; top and side handles swipe toward their edge to dismiss.",
+        "Choose the entry edge. start and end mirror in right-to-left locales. Bottom sheets default to 85% of the visible viewport; set a height with className.",
     },
     {
-      component: "DrawerContent",
+      component: "Sheet",
+      prop: "swipeDirection",
+      type: '"bottom" | "top" | "left" | "right" | "start" | "end" | "vertical" | "horizontal"',
+      defaultValue: "same as position",
+      description:
+        "The direction a swipe or handle drag dismisses the sheet. vertical and horizontal dismiss toward either edge.",
+    },
+    {
+      component: "Sheet",
       prop: "snapPoints",
-      type: "number[]",
-      defaultValue: "[0.85]",
-      description:
-        "Bottom-only visible viewport fractions in (0, 1]. Invalid values are ignored. The first (smallest) valid point opens initially.",
-    },
-    {
-      component: "DrawerContent",
-      prop: "snapPoint / defaultSnapPoint",
-      type: "number",
-      defaultValue: "first snap point",
-      description:
-        "Bottom drawer height as a controlled or initial snap point.",
-    },
-    {
-      component: "DrawerContent",
-      prop: "onSnapPointChange",
-      type: "(point: number) => void",
+      type: "Array<number | string>",
       defaultValue: "—",
-      description: "Receives the new bottom drawer snap point.",
-    },
-    {
-      component: "DrawerContent",
-      prop: "overlayProps",
-      type: "ModalOverlayProps",
-      defaultValue: "isDismissable: true",
       description:
-        "Configure outside-click and Escape dismissal. The backdrop dims and softly blurs the page, fading with the visible panel as it moves; reduced motion removes the blur and slide.",
+        "Visible amount at each stop. Numbers are pixels; strings are CSS lengths, and percentages are relative to the sheet. The sheet opens at the first stop and can always be revealed fully.",
     },
     {
-      component: "DrawerClose",
+      component: "Sheet",
+      prop: "preventDismissal",
+      type: "boolean",
+      defaultValue: "false",
+      description:
+        "Blocks swiping away, Escape, and outside clicks. Snap points still work. The backdrop dims and softly blurs the page, fading with the visible sheet as it moves; reduced motion removes the blur and slide.",
+    },
+    {
+      component: "SheetTrigger",
+      prop: "isOpen / defaultOpen / onOpenChange",
+      type: "boolean / (isOpen: boolean) => void",
+      defaultValue: "uncontrolled",
+      description:
+        "Owns the open state. Its first Button child opens the sheet.",
+    },
+    {
+      component: "SheetClose",
       prop: "variant / size",
       type: "ButtonProps",
       defaultValue: '"ghost" / "icon" (without children)',

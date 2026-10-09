@@ -4,15 +4,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu } from "reicon-react";
+import { Button } from "@/components/ui/button";
 import {
-  Drawer,
-  DrawerBody,
-  DrawerClose,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
+  Sheet,
+  SheetBody,
+  SheetClose,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { DocsSearch } from "./docs-search";
 import { SiteLogo } from "./site-logo";
@@ -111,30 +111,30 @@ export function SiteHeader({ wide = false }: { wide?: boolean }) {
             <DocsSearch />
             <ThemeToggle />
             <div className="md:hidden">
-              <Drawer isOpen={open} onOpenChange={setOpen}>
-                <DrawerTrigger
+              <SheetTrigger isOpen={open} onOpenChange={setOpen}>
+                <Button
                   variant="ghost"
                   size="icon"
                   aria-label="Open site navigation"
                   className="size-10 rounded-md text-muted-foreground hover:text-foreground"
                 >
                   <Menu size={20} aria-hidden="true" />
-                </DrawerTrigger>
-                <DrawerContent placement="right">
-                  <DrawerHeader className="flex items-center justify-between gap-4 border-b border-border/70 pb-4">
-                    <DrawerTitle>Navigate</DrawerTitle>
-                    <DrawerClose />
-                  </DrawerHeader>
-                  <DrawerBody className="pb-[max(1.25rem,env(safe-area-inset-bottom))]">
+                </Button>
+                <Sheet position="right">
+                  <SheetHeader className="flex items-center justify-between gap-4 border-b border-border/70 pb-4">
+                    <SheetTitle>Navigate</SheetTitle>
+                    <SheetClose />
+                  </SheetHeader>
+                  <SheetBody className="pb-[max(1.25rem,env(safe-area-inset-bottom))]">
                     <nav aria-label="Mobile navigation" className="grid gap-1">
                       {renderMobileLink("/", "Home")}
                       {links.map((link) =>
                         renderMobileLink(link.href, link.label),
                       )}
                     </nav>
-                  </DrawerBody>
-                </DrawerContent>
-              </Drawer>
+                  </SheetBody>
+                </Sheet>
+              </SheetTrigger>
             </div>
           </div>
         </div>

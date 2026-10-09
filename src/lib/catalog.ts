@@ -14,7 +14,7 @@ interface CatalogDefinition {
 const catalog: CatalogDefinition[] = [
   {
     title: "Actions",
-    description: "Triggers, commands, and selected actions.",
+    description: "Triggers, commands, and selection controls.",
     items: [
       {
         slug: "button",
@@ -389,9 +389,9 @@ const catalog: CatalogDefinition[] = [
         useFor: "A short focused task above the page.",
       },
       {
-        slug: "drawer",
-        name: "Drawer",
-        useFor: "A panel that slides from an edge.",
+        slug: "sheet",
+        name: "Sheet",
+        useFor: "A swipeable panel that slides from an edge.",
       },
       {
         slug: "popover",
@@ -553,7 +553,7 @@ const reactAriaDocs: Record<string, string> = {
   "tool-call": "https://react-aria.adobe.com/Disclosure",
   "source-link": "https://react-aria.adobe.com/Link",
   dialog: "https://react-aria.adobe.com/Modal",
-  drawer: "https://react-aria.adobe.com/Modal",
+  sheet: "https://react-aria.adobe.com/Sheet",
   popover: "https://react-aria.adobe.com/Popover",
   tooltip: "https://react-aria.adobe.com/Tooltip",
   toast: "https://react-aria.adobe.com/Toast",

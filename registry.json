@@ -1039,40 +1039,6 @@
       ]
     },
     {
-      "name": "vip-drawer",
-      "type": "registry:ui",
-      "title": "Drawer",
-      "description": "Show a panel of content from the edge of the screen.",
-      "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
-      ],
-      "files": [
-        {
-          "path": "registry/generated/src/components/vip-ui/utils.ts",
-          "type": "registry:file",
-          "target": "@components/vip-ui/utils.ts"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/drawer.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/drawer.tsx"
-        }
-      ]
-    },
-    {
       "name": "vip-drop-zone",
       "type": "registry:ui",
       "title": "Drop Zone",
@@ -1893,6 +1859,41 @@
           "path": "registry/generated/src/components/vip-ui/separator.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/separator.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-sheet",
+      "type": "registry:ui",
+      "title": "Sheet",
+      "description": "Show a swipeable panel of content from the edge of the screen.",
+      "dependencies": [
+        "motion",
+        "react-aria",
+        "react-aria-components",
+        "reicon-react",
+        "tailwind-variants"
+      ],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/sheet.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/sheet.tsx"
         }
       ]
     },

@@ -210,7 +210,7 @@ export async function ChartDocumentation() {
             Change <code>--chart-1</code> through <code>--chart-5</code> in both
             themes, or set <code>--ts-chart-1</code> on one frame via its{" "}
             <code>style</code> prop. The gallery above shows interactive updates
-            and polar marks. Each View code drawer includes the shared plot
+            and polar marks. Each View code sheet includes the shared plot
             helper and category file. Keep them side by side, then import the
             example you need. Install{" "}
             <Link

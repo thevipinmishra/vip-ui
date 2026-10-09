@@ -45,50 +45,48 @@ export const componentPageData = {
   },
   select: {
     usage: "select-demo.tsx",
-    description:
-      "Pick one option from a list that is too long to show as radio buttons. For a required choice, see the Invalid selection example, where the error stays visible until a workspace is chosen.",
+    description: "Selects one option from a list.",
     examples: [
       {
         title: "Described options",
         description:
-          "Use when each option needs a supporting detail. The menu shows the name and description; the trigger shows only the selected name.",
+          "Add a description inside each SelectItem, and set textValue to keep a readable option name. The trigger shows only the selected value.",
         sourcePath: "select-descriptions-demo.tsx",
       },
       {
         title: "Disabled",
         description:
-          "Show the existing value when a field can no longer be changed.",
+          "Use isDisabled to keep the current value visible and prevent changes.",
         sourcePath: "select-disabled-demo.tsx",
       },
       {
         title: "Invalid selection",
         description:
-          "Mark a required choice invalid until an option is selected. The error clears when the user chooses a workspace.",
+          "Use isInvalid while the controlled value is empty. The error clears when an option is selected.",
         sourcePath: "select-invalid-demo.tsx",
       },
     ],
   },
   dialog: {
     usage: "dialog-demo.tsx",
-    description:
-      "Ask for one decision above the page, such as confirming a destructive action. Content behind the dialog stays inactive while it is open; the Alert dialog example shows a confirmation that outside clicks cannot dismiss.",
+    description: "Shows a focused task above the page.",
     examples: [
       {
         title: "Alert dialog",
         description:
-          "Ask for confirmation before archiving. Outside clicks do not dismiss the alert; Cancel closes without changing anything.",
+          'Set role="alertdialog" for a confirmation that outside clicks cannot dismiss. Close it with a button.',
         sourcePath: "dialog-alert-demo.tsx",
       },
       {
         title: "Scrollable content",
         description:
-          "Keep long content inside the dialog. On a short viewport, scroll the checklist while the page underneath remains inactive.",
+          "Keep long content inside DialogContent. The dialog scrolls while the page stays inactive.",
         sourcePath: "dialog-scrollable-demo.tsx",
       },
       {
         title: "Controlled open state",
         description:
-          "Open with the trigger or application state. Close by clicking outside, pressing Escape, or using the button; each updates the controlled value.",
+          "Control the dialog with isOpen and onOpenChange. Every close action updates the same state.",
         sourcePath: "dialog-controlled-demo.tsx",
       },
     ],
@@ -102,7 +100,7 @@ export const componentPageData = {
       {
         title: "Divided list",
         description:
-          "Use a divided list when several answers can stay open. A disabled question stays visible but cannot be opened.",
+          'Use variant="divided" to show dividers, allowsMultipleExpanded to keep several sections open, and isDisabled to keep a section visible but unavailable.',
         sourcePath: "accordion-billing-demo.tsx",
       },
     ],
@@ -132,7 +130,7 @@ export const componentPageData = {
       {
         title: "Task counter variants",
         description:
-          "Change each total separately. Count moves between totals; digit slide rolls the changed places in both directions.",
+          "Use the variant prop to choose a count or slide animation. Each number updates from its own value.",
         sourcePath: "animated-number-demo.tsx",
       },
     ],
@@ -144,7 +142,7 @@ export const componentPageData = {
       {
         title: "Adding and removing files",
         description:
-          "Drop a PNG, JPEG, or PDF, or browse on a touch device. Remove a file before submitting; no upload is started.",
+          "Use getDropOperation for the drop result and acceptedFileTypes for the file picker. Remove a file with onRemove.",
         sourcePath: "attachment-demo.tsx",
       },
     ],
@@ -161,19 +159,19 @@ export const componentPageData = {
       {
         title: "Fallbacks and groups",
         description:
-          "Provide initials when no image is available. Avatar also derives initials from the name.",
+          "Set initials when no image is available; Avatar derives them from the name when initials is not set. Group avatars with AvatarGroup and give the group an aria-label.",
         sourcePath: "avatar-demo.tsx",
       },
     ],
   },
   badge: {
     usage: "badge-basic-demo.tsx",
-    description: "Displays a badge or a component that looks like a badge.",
+    description: "Shows a short label, status, or count.",
     examples: [
       {
         title: "Status variants",
         description:
-          "Compare the variant styles, including dot and outline metadata.",
+          "Use the variant prop for status styles and BadgeDot for a status marker.",
         sourcePath: "badge-demo.tsx",
       },
     ],
@@ -191,7 +189,7 @@ export const componentPageData = {
       {
         title: "Orientations",
         description:
-          "Keep save and discard in a row, and stack review actions in a column. Each button stays in the Tab order.",
+          'Use orientation="vertical" for a column; the default orientation is a row. Each button stays in the Tab order.',
         sourcePath: "button-group-orientations-demo.tsx",
       },
     ],
@@ -202,7 +200,8 @@ export const componentPageData = {
     examples: [
       {
         title: "Unavailable days",
-        description: "Limit selection to June and make weekends unavailable.",
+        description:
+          "Use isDateUnavailable to mark dates unavailable, and minValue and maxValue to limit the selectable range.",
         sourcePath: "calendar-unavailable-demo.tsx",
       },
     ],
@@ -220,7 +219,7 @@ export const componentPageData = {
       {
         title: "Notification preferences",
         description:
-          "A parent checkbox shows a mixed state when only some inbox messages are selected. Disabled choices remain visible but unavailable.",
+          'Set checked to "indeterminate" when only some options in the group are selected. Use isDisabled to keep an option visible but unavailable.',
         sourcePath: "checkbox-demo.tsx",
       },
     ],
@@ -232,7 +231,7 @@ export const componentPageData = {
       {
         title: "Required choice",
         description:
-          "Mark the group invalid until at least one channel is selected. Keep the error beside the choices so the fix is clear.",
+          "Set isInvalid until at least one option is selected. CheckboxGroupError shows the message beside the choices.",
         sourcePath: "checkbox-group-required-demo.tsx",
       },
     ],
@@ -254,7 +253,7 @@ export const componentPageData = {
       {
         title: "Named palette",
         description:
-          "Pair each sample with a visible name when people need to compare several colors.",
+          "Set color and colorName to pair each swatch with its name.",
         sourcePath: "color-swatch-demo.tsx",
       },
     ],
@@ -271,13 +270,13 @@ export const componentPageData = {
       {
         title: "Descriptive results",
         description:
-          "Filter options with supporting details. A disabled field keeps an archived value visible.",
+          "Put a description inside each ComboBoxItem and set textValue for filtering. Use isDisabled to keep the current value visible and prevent changes.",
         sourcePath: "combo-box-demo.tsx",
       },
       {
         title: "Multiple selection",
         description:
-          "Filter teams, select more than one, and remove selections from the tags below the input. The array of selected keys is controlled by the app.",
+          'Set selectionMode="multiple". Control the selected array with value and onChange.',
         sourcePath: "combo-box-multiple-demo.tsx",
       },
     ],
@@ -289,14 +288,15 @@ export const componentPageData = {
       {
         title: "Commands with icons",
         description:
-          "Keep one palette on the page and give each command an icon and a readable label.",
+          "Give each CommandPaletteItem an icon and a readable label. The shortcut prop controls the keyboard shortcut that opens the palette.",
         sourcePath: "command-palette-demo.tsx",
       },
     ],
   },
   "context-menu": {
     usage: "context-menu-demo.tsx",
-    description: "Actions available beside the item you are working with.",
+    description:
+      "Shows actions for an item, opened by right-click, long press, or keyboard.",
     examples: [
       {
         title: "Grouped actions",
@@ -314,7 +314,7 @@ export const componentPageData = {
       {
         title: "Label and icon variants",
         description:
-          "Use a text label when the action needs to be read, and an icon button when the value is already on screen. A failed write offers a retry.",
+          'Use the status render prop to change the label after a copy. Set size="icon" for an icon-only button.',
         sourcePath: "copy-button-share-demo.tsx",
       },
     ],
@@ -331,13 +331,13 @@ export const componentPageData = {
       {
         title: "Unavailable dates",
         description:
-          "Restrict a booking window and exclude weekends and blocked days. Try typing an unavailable date as well as choosing one in the calendar.",
+          "Use isDateUnavailable to mark dates unavailable, and minValue and maxValue to limit the selectable range.",
         sourcePath: "date-picker-unavailable-demo.tsx",
       },
       {
         title: "Controlled value",
         description:
-          "Keep the selected date in application state and display it elsewhere on the page.",
+          "Control the selected date with the value and onChange props.",
         sourcePath: "date-picker-controlled-demo.tsx",
       },
     ],
@@ -349,7 +349,7 @@ export const componentPageData = {
       {
         title: "Restricted range",
         description:
-          "Limit the travel window and block dates that cannot be booked.",
+          "Use isDateUnavailable to mark dates unavailable, and minValue and maxValue to limit the selectable range.",
         sourcePath: "date-range-picker-limits-demo.tsx",
       },
     ],
@@ -364,17 +364,21 @@ export const componentPageData = {
     description: "Shows or hides a section of content.",
     examples: [],
   },
-  drawer: {
-    usage: "drawer-basic-demo.tsx",
+  sheet: {
+    usage: "sheet-basic-demo.tsx",
     description: "Displays a panel that slides in from the edge of the screen.",
     examples: [
       {
         title: "Snap points",
-        sourcePath: "drawer-demo.tsx",
+        description:
+          'Set snapPoints to the visible amount at each stop; the sheet opens at the first. Here "100%" opens it fully and "40dvh" adds a shorter stop.',
+        sourcePath: "sheet-demo.tsx",
       },
       {
         title: "Edge placement",
-        sourcePath: "drawer-placement-demo.tsx",
+        description:
+          "Use position to choose the edge. Swipe or drag the handle toward that edge to dismiss.",
+        sourcePath: "sheet-placement-demo.tsx",
       },
     ],
   },
@@ -386,7 +390,7 @@ export const componentPageData = {
       {
         title: "Accepted file types",
         description:
-          "Allow only the formats you support, and add a FileTrigger for people who cannot drag files.",
+          "Use getDropOperation to accept or cancel a drop. Add a FileTrigger with acceptedFileTypes as the file-picker alternative.",
         sourcePath: "drop-zone-demo.tsx",
       },
     ],
@@ -397,8 +401,7 @@ export const componentPageData = {
     examples: [
       {
         title: "Without an action",
-        description:
-          "Omit the action when there is no next step for the user to take.",
+        description: "Leave out EmptyStateActions when there is no next step.",
         sourcePath: "empty-state-no-action-demo.tsx",
       },
     ],
@@ -415,7 +418,7 @@ export const componentPageData = {
       {
         title: "Multiple images",
         description:
-          "Use allowsMultiple for a batch of files. Restrict accepted types and list the selected filenames before uploading anything.",
+          "Set allowsMultiple for a batch and acceptedFileTypes for the format. onSelect lists the selected file names.",
         sourcePath: "file-trigger-demo.tsx",
       },
     ],
@@ -439,7 +442,7 @@ export const componentPageData = {
       {
         title: "Unavailable row",
         description:
-          "Keep an unavailable file visible and explain why it cannot be selected.",
+          "Set isDisabled to keep an unavailable row visible. Explain why it cannot be selected.",
         sourcePath: "grid-list-disabled-demo.tsx",
       },
     ],
@@ -451,7 +454,7 @@ export const componentPageData = {
       {
         title: "Search action",
         description:
-          "Put a submit action beside the input. Both controls share a focus border.",
+          "Put a submit Button in InputGroupAddon. Disable it until the input has a value.",
         sourcePath: "input-group-demo.tsx",
       },
       {
@@ -463,7 +466,7 @@ export const componentPageData = {
       {
         title: "Invalid and disabled",
         description:
-          "The group picks up invalid and disabled states from its React Aria field. Disable independent actions separately.",
+          "Set isInvalid or isDisabled on the TextField. InputGroup inherits the state.",
         sourcePath: "input-group-states-demo.tsx",
       },
     ],
@@ -485,7 +488,7 @@ export const componentPageData = {
       {
         title: "Multiple selection",
         description:
-          "Use multiple selection when people may choose more than one team. Selections remain highlighted while navigating the list.",
+          'Set selectionMode="multiple" to choose more than one row. defaultSelectedKeys preselects options.',
         sourcePath: "list-box-multiple-demo.tsx",
       },
     ],
@@ -504,7 +507,7 @@ export const componentPageData = {
       {
         title: "Selection",
         description:
-          "Keep one view selected, and keep overlay layers selected across openings. An unavailable layer stays visible but cannot be chosen.",
+          "Use the selectionMode prop for single and multiple selection.",
         sourcePath: "menu-selection-demo.tsx",
       },
     ],
@@ -522,7 +525,7 @@ export const componentPageData = {
       {
         title: "Message states",
         description:
-          "Show incoming, outgoing, and system entries in one thread, with an avatar and a copy action.",
+          "Use the side prop for incoming, outgoing, or system. Add avatar, status, and actions per row.",
         sourcePath: "message-demo.tsx",
       },
     ],
@@ -534,7 +537,7 @@ export const componentPageData = {
       {
         title: "Updating a reading",
         description:
-          "Connect a value to application state when a measurement changes. The slider only simulates a storage reading in this example.",
+          "Control the meter with the value prop. The reading updates when the value changes.",
         sourcePath: "meter-demo.tsx",
       },
     ],
@@ -546,7 +549,7 @@ export const componentPageData = {
       {
         title: "Grouped choices and validation",
         description:
-          "Group teams under their departments, leave a full team disabled, and explain an empty required choice beside the field.",
+          "Group options with optgroup and disable an unavailable option. Use required with isInvalid to show the error beside the field.",
         sourcePath: "native-select-grouped-demo.tsx",
       },
     ],
@@ -558,7 +561,7 @@ export const componentPageData = {
       {
         title: "Currency formatting",
         description:
-          "Format the value as currency while the stepper moves in fixed steps.",
+          "Use formatOptions for currency and step to set the increment.",
         sourcePath: "number-field-currency-demo.tsx",
       },
     ],
@@ -570,7 +573,7 @@ export const componentPageData = {
       {
         title: "URL-synced pages",
         description:
-          "Keep the page in the URL. Keep Previous and Next in place when unavailable to avoid layout shifts.",
+          "Keep the page in the URL. Use isCurrent for the active link and isDisabled to keep an unavailable link in place.",
         sourcePath: "pagination-demo.tsx",
       },
     ],
@@ -612,7 +615,7 @@ export const componentPageData = {
       {
         title: "Placement",
         description:
-          "Open the panel above, below, to the left, or to the right of its trigger. A popover can flip when there is not enough room.",
+          "Use the placement prop for top, bottom, left, or right. The panel flips when space is tight.",
         sourcePath: "popover-placement-demo.tsx",
       },
     ],
@@ -624,7 +627,7 @@ export const componentPageData = {
       {
         title: "Adding and reordering",
         description:
-          "Use stable keys so entering, leaving, and reordered rows keep their identity.",
+          "Pass items and getKey so rows keep their identity when they enter, leave, or reorder.",
         sourcePath: "presence-list-demo.tsx",
       },
     ],
@@ -642,7 +645,7 @@ export const componentPageData = {
       {
         title: "Determinate and indeterminate",
         description:
-          "Advance a determinate bar with a button while a second bar stays indeterminate.",
+          "Use value for determinate progress and isIndeterminate for unknown progress.",
         sourcePath: "progress-bar-demo.tsx",
       },
     ],
@@ -654,7 +657,7 @@ export const componentPageData = {
       {
         title: "Known and unknown progress",
         description:
-          "Advance a determinate ring with a button while a second ring stays indeterminate.",
+          "Use value for known progress, isIndeterminate for unknown progress, and showValue={false} to hide the value.",
         sourcePath: "progress-ring-demo.tsx",
       },
     ],
@@ -670,7 +673,8 @@ export const componentPageData = {
     examples: [
       {
         title: "Card options",
-        description: "Use cards when each choice needs supporting context.",
+        description:
+          'Set variant="card" when each choice needs a label and description.',
         sourcePath: "radio-group-card-demo.tsx",
       },
     ],
@@ -682,7 +686,7 @@ export const componentPageData = {
       {
         title: "Restricted range",
         description:
-          "Choose a range in June while excluding dates that cannot be booked.",
+          "Use isDateUnavailable to mark dates unavailable, and minValue and maxValue to limit the selectable range.",
         sourcePath: "range-calendar-limits-demo.tsx",
       },
     ],
@@ -694,7 +698,7 @@ export const componentPageData = {
       {
         title: "Filtered results",
         description:
-          "Update the visible results as the query changes, and clear the field to show every row again.",
+          "Control the query with value and onChange. SearchFieldClear resets the query and the list.",
         sourcePath: "search-field-demo.tsx",
       },
     ],
@@ -716,7 +720,7 @@ export const componentPageData = {
       {
         title: "Range and disabled state",
         description:
-          "Choose a range with two handles, and keep the disabled slider's value visible.",
+          "Pass an array to defaultValue for two SliderHandles. Use isDisabled to keep a value visible when it cannot change.",
         sourcePath: "slider-budget-demo.tsx",
       },
     ],
@@ -728,13 +732,13 @@ export const componentPageData = {
       {
         title: "Loading patterns",
         description:
-          "Compare all seven variants before choosing one for the space available.",
+          "Use the variant prop to compare all seven styles, and size to fit the space.",
         sourcePath: "spinner-demo.tsx",
       },
       {
         title: "Loading in context",
         description:
-          "Use a compact ring in a disabled button, or pair a larger indicator with a spoken status for a waiting screen.",
+          'Put a size="sm" Spinner inside a disabled Button, or pair a larger Spinner with a status message.',
         sourcePath: "spinner-usage-demo.tsx",
       },
     ],
@@ -756,7 +760,7 @@ export const componentPageData = {
       {
         title: "Account settings",
         description:
-          "Keep each switch in application state. A setting managed by the workspace stays on and cannot be changed.",
+          "Control each switch with checked and onCheckedChange. Use isDisabled for a managed setting.",
         sourcePath: "switch-demo.tsx",
       },
     ],
@@ -777,20 +781,19 @@ export const componentPageData = {
     examples: [
       {
         title: "Selectable projects",
-        description:
-          "Add single-row selection when the user needs to choose a project. Keep status readable in every row.",
+        description: 'Set selectionMode="single" to select one row.',
         sourcePath: "table-demo.tsx",
       },
       {
         title: "Sortable columns",
         description:
-          "Sort the backlog by project, owner, or open tasks. Column headers announce the direction.",
+          "Control sorting with sortDescriptor and onSortChange, and set allowsSorting on each Column.",
         sourcePath: "table-sorting-demo.tsx",
       },
       {
         title: "Filter invoices",
         description:
-          "Search by invoice number or customer, narrow by status, and try a query with no matches.",
+          "Filter rows with a controlled SearchField and Select. renderEmptyState shows the message when nothing matches.",
         sourcePath: "table-filter-demo.tsx",
       },
     ],
@@ -900,7 +903,7 @@ export const componentPageData = {
       {
         title: "Notification types",
         description:
-          "Compare info, success, and warning toasts. Leave important warnings open until dismissed; mount ToastViewport once near the app root.",
+          "Pass variant for a success or warning toast. Set timeout to change how long a toast stays open.",
         sourcePath: "toast-status-demo.tsx",
       },
     ],
@@ -913,7 +916,7 @@ export const componentPageData = {
       {
         title: "Independent toggles",
         description:
-          "Select more than one toggle independently, each with a visible label.",
+          "Control each toggle with isSelected and onChange. Give every button a visible label.",
         sourcePath: "toggle-button-projects-demo.tsx",
       },
     ],
@@ -925,7 +928,7 @@ export const componentPageData = {
       {
         title: "Multiple text styles",
         description:
-          "Combine formatting options and see the resulting text without leaving the editor.",
+          'Set selectionMode="multiple" to select more than one option, and control selectedKeys with onSelectionChange.',
         sourcePath: "toggle-button-group-editor-demo.tsx",
       },
     ],
@@ -937,7 +940,7 @@ export const componentPageData = {
       {
         title: "Project tags",
         description:
-          "Compose the label, input, and description when tags need context. Count committed tokens without counting unfinished text.",
+          "Pass a TagFieldValue as the value and commit the draft with onSubmit. Uncommitted text is not a token.",
         sourcePath: "token-field-demo.tsx",
       },
     ],
@@ -949,7 +952,7 @@ export const componentPageData = {
       {
         title: "Formatting toolbar",
         description:
-          "Format the selection from a horizontal toolbar, and switch between body and quote from a vertical one.",
+          'Use orientation="vertical" for a vertical toolbar. In ToggleButtonGroup, selectionMode sets single or multiple selection.',
         sourcePath: "toolbar-demo.tsx",
       },
     ],
@@ -962,7 +965,7 @@ export const componentPageData = {
       {
         title: "Icon button tooltips",
         description:
-          "Give each icon-only button its own accessible name and place the hint above or below the trigger.",
+          "Give each icon Button an aria-label. Set placement on TooltipContent for top or bottom.",
         sourcePath: "tooltip-actions-demo.tsx",
       },
     ],

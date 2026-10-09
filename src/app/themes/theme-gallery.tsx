@@ -26,7 +26,6 @@ import { DateRangePickerDemo } from "@/components/docs/date-range-picker-demo";
 import { DescriptionListDemo } from "@/components/docs/description-list-demo";
 import { DialogDemo } from "@/components/docs/dialog-demo";
 import { DisclosureDemo } from "@/components/docs/disclosure-demo";
-import { DrawerBasicDemo } from "@/components/docs/drawer-basic-demo";
 import { DropZoneDemo } from "@/components/docs/drop-zone-demo";
 import { EmptyStateDemo } from "@/components/docs/empty-state-demo";
 import { FieldsetDemo } from "@/components/docs/fieldset-demo";
@@ -49,6 +48,7 @@ import { RadioGroupDemo } from "@/components/docs/radio-group-demo";
 import { RangeCalendarDemo } from "@/components/docs/range-calendar-demo";
 import { SelectDemo } from "@/components/docs/select-demo";
 import { SeparatorDemo } from "@/components/docs/separator-demo";
+import { SheetBasicDemo } from "@/components/docs/sheet-basic-demo";
 import { SkeletonDemo } from "@/components/docs/skeleton-demo";
 import { SliderDemo } from "@/components/docs/slider-demo";
 import { SpinnerBasicDemo } from "@/components/docs/spinner-basic-demo";
@@ -82,7 +82,7 @@ const examples: { title: string; Demo: ComponentType; wide?: boolean }[] = [
   { title: "Text field", Demo: TextFieldBasicDemo },
   { title: "Select", Demo: SelectDemo },
   { title: "Dialog", Demo: DialogDemo },
-  { title: "Drawer", Demo: DrawerBasicDemo },
+  { title: "Sheet", Demo: SheetBasicDemo },
   { title: "Toast", Demo: ToastDemo },
   { title: "Badge", Demo: BadgeBasicDemo },
   { title: "Bar chart", Demo: BarOrders, wide: true },
