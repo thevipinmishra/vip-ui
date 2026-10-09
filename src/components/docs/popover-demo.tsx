@@ -14,8 +14,7 @@ export function PopoverDemo() {
             Project details
           </Heading>
           <p className="mt-2 text-sm leading-6 text-muted-foreground">
-            Anchored content stays open until you click outside or press
-            Escape.
+            Anchored content stays open until you click outside or press Escape.
           </p>
         </Dialog>
       </Popover>

@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  Archive,
-  Copy,
-  Edit,
-  Eye,
-  Link as LinkIcon,
-  More,
-} from "reicon-react";
+import { Archive, Copy, Edit, Eye, Link as LinkIcon, More } from "reicon-react";
 import { Button } from "@/components/ui/button";
 import { Kbd } from "@/components/ui/kbd-code";
 import {

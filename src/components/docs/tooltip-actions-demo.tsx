@@ -18,7 +18,11 @@ export function TooltipActionsDemo() {
         <TooltipContent placement="top">Mark as reviewed</TooltipContent>
       </TooltipTrigger>
       <TooltipTrigger>
-        <Button size="icon" variant="ghost" aria-label="Show assignment details">
+        <Button
+          size="icon"
+          variant="ghost"
+          aria-label="Show assignment details"
+        >
           <InfoCircle size={17} aria-hidden="true" />
         </Button>
         <TooltipContent placement="bottom">
