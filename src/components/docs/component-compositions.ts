@@ -370,37 +370,37 @@ export const compositions: Record<string, Composition> = {
       },
     ],
   },
-  drawer: {
+  sheet: {
     parts: [
       {
-        part: "Drawer",
+        part: "SheetTrigger",
         purpose: "Owns the open state.",
         children: [
-          { part: "DrawerTrigger", purpose: "Opens the sheet." },
+          { part: "Button", purpose: "Opens the sheet." },
           {
-            part: "DrawerContent",
+            part: "Sheet",
             purpose: "Contains the sheet's task.",
             children: [
               {
-                part: "DrawerHandle",
+                part: "SheetHandle",
                 purpose:
-                  "Drag or press to resize a bottom drawer or dismiss a top or side drawer. Place it last for top drawers; keyboard activation always works.",
+                  "Drag or press to resize between snap points or dismiss the sheet. Place it last for top sheets; keyboard activation always works.",
               },
               {
-                part: "DrawerHeader",
+                part: "SheetHeader",
                 purpose: "Groups the sheet's heading and close control.",
                 children: [
-                  { part: "DrawerTitle", purpose: "Names the sheet." },
-                  { part: "DrawerDescription", purpose: "Explains the task." },
+                  { part: "SheetTitle", purpose: "Names the sheet." },
+                  { part: "SheetDescription", purpose: "Explains the task." },
                 ],
               },
-              { part: "DrawerBody", purpose: "Holds scrollable content." },
+              { part: "SheetBody", purpose: "Holds scrollable content." },
               {
-                part: "DrawerFooter",
+                part: "SheetFooter",
                 purpose: "Groups the task actions.",
                 children: [
                   {
-                    part: "DrawerClose",
+                    part: "SheetClose",
                     purpose: "Dismisses the sheet. Can also go in the header.",
                   },
                 ],

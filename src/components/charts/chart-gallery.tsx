@@ -9,7 +9,7 @@ import { chartCategories } from "./catalog";
 import { ChartDocumentation } from "./chart-documentation";
 import { ChartFilters } from "./chart-filters";
 import { ChartGalleryItem } from "./chart-plot";
-import { ChartSourceDrawer } from "./chart-source-drawer";
+import { ChartSourceSheet } from "./chart-source-sheet";
 
 export async function ChartGallery({
   initialCategory,
@@ -103,7 +103,7 @@ function ChartCategoryContent({
         >
           {category.title}
         </h2>
-        <ChartSourceDrawer title={category.title}>
+        <ChartSourceSheet title={category.title}>
           <CodeFrame
             code={shared}
             filename="src/components/charts/chart-plot.tsx"
@@ -115,7 +115,7 @@ function ChartCategoryContent({
           <CodeFrame code={source} filename={sourcePath} embedded scrollable>
             <CodeSnippet code={source} />
           </CodeFrame>
-        </ChartSourceDrawer>
+        </ChartSourceSheet>
       </div>
       <div className="mt-5 grid gap-4 lg:grid-cols-2">
         {category.examples.map((example) => {

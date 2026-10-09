@@ -226,7 +226,7 @@ export default async function InstallationPage() {
         </h2>
         <div className="mt-4 grid max-w-[670px] gap-4 text-sm leading-7 text-muted-foreground">
           <p>
-            Menus, popovers, selects, dialogs, drawers, tooltips, and toasts
+            Menus, popovers, selects, dialogs, sheets, tooltips, and toasts
             render in a portal on{" "}
             <code className="font-mono text-foreground">document.body</code> by
             default. That is why tokens live on{" "}

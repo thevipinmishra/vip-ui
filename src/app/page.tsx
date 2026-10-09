@@ -66,8 +66,8 @@ export default function Home() {
             Accessible components <span className="text-primary">you own.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
-            React Aria components in working examples: change a state, see the
-            result, copy the source, and install it in your app.
+            Accessible shadcn compatible components, built with React Aria,
+            Tailwind CSS and motion.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <ButtonLink as={Link} href="/components/installation" size="lg">

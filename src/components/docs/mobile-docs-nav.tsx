@@ -2,16 +2,16 @@
 
 import { useEffect, useState } from "react";
 import { Menu } from "reicon-react";
+import { Button } from "@/components/ui/button";
 import {
-  Drawer,
-  DrawerBody,
-  DrawerClose,
-  DrawerContent,
-  DrawerHandle,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
+  Sheet,
+  SheetBody,
+  SheetClose,
+  SheetHandle,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { DocsNav } from "./docs-nav";
 
 export function MobileDocsNav() {
@@ -28,21 +28,21 @@ export function MobileDocsNav() {
 
   return (
     <div className="lg:hidden">
-      <Drawer isOpen={open} onOpenChange={setOpen}>
-        <DrawerTrigger variant="outline" size="sm">
+      <SheetTrigger isOpen={open} onOpenChange={setOpen}>
+        <Button variant="outline" size="sm">
           <Menu size={17} aria-hidden="true" /> Browse docs
-        </DrawerTrigger>
-        <DrawerContent>
-          <DrawerHandle />
-          <DrawerHeader className="flex items-center justify-between gap-4 border-b border-border/70 pb-4">
-            <DrawerTitle>Browse docs</DrawerTitle>
-            <DrawerClose />
-          </DrawerHeader>
-          <DrawerBody className="pb-[max(1.25rem,env(safe-area-inset-bottom))]">
+        </Button>
+        <Sheet>
+          <SheetHandle />
+          <SheetHeader className="flex items-center justify-between gap-4 border-b border-border/70 pb-4">
+            <SheetTitle>Browse docs</SheetTitle>
+            <SheetClose />
+          </SheetHeader>
+          <SheetBody className="pb-[max(1.25rem,env(safe-area-inset-bottom))]">
             <DocsNav mobile onNavigate={() => setOpen(false)} />
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
+          </SheetBody>
+        </Sheet>
+      </SheetTrigger>
     </div>
   );
 }
