@@ -19,10 +19,10 @@ import {
   UNSTABLE_ToastQueue as ToastQueue,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import { easeOut } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 const MotionToast = motion.create(AriaToast);
-const MotionToastClose = motion.create(AriaButton);
 
 type MotionHandlers =
   | "onAnimationStart"
@@ -42,10 +42,7 @@ type ToastSurfaceProps = Omit<
   React.ComponentProps<typeof AriaToast>,
   MotionHandlers | "style"
 >;
-type ToastCloseProps = Omit<
-  React.ComponentProps<typeof AriaButton>,
-  MotionHandlers | "style"
->;
+type ToastCloseProps = React.ComponentProps<typeof AriaButton>;
 
 const toastIconStyles = tv({
   base: "grid size-9 shrink-0 place-items-center rounded-lg",
@@ -184,7 +181,7 @@ export function Toast({ className, children, ...props }: ToastSurfaceProps) {
       }
       transition={{
         duration: reduceMotion ? 0 : isClosing ? 0.18 : 0.24,
-        ease: [0.23, 1, 0.32, 1],
+        ease: easeOut,
       }}
       onAnimationComplete={() => {
         if (isClosing) toastQueue.finishClose(key);
@@ -225,7 +222,10 @@ export function ToastTitle({
       {...props}
       slot="title"
       data-slot="toast-title"
-      className={cn("block text-sm font-semibold", className)}
+      className={cn(
+        "block text-sm font-semibold [overflow-wrap:anywhere]",
+        className,
+      )}
     />
   );
 }
@@ -240,7 +240,7 @@ export function ToastDescription({
       slot="description"
       data-slot="toast-description"
       className={cn(
-        "mt-1 block text-sm leading-5 text-muted-foreground",
+        "mt-1 block text-sm leading-5 text-muted-foreground [overflow-wrap:anywhere]",
         className,
       )}
     />
@@ -248,27 +248,21 @@ export function ToastDescription({
 }
 
 export function ToastClose({ className, children, ...props }: ToastCloseProps) {
-  const reduceMotion = useReducedMotion();
   return (
-    <MotionToastClose
+    <AriaButton
       {...props}
-      whileHover={
-        reduceMotion || props.isDisabled ? undefined : { scale: 1.06 }
-      }
-      whileTap={reduceMotion || props.isDisabled ? undefined : { scale: 0.94 }}
-      transition={{ type: "spring", stiffness: 500, damping: 36 }}
       slot="close"
       data-slot="toast-close"
       aria-label={props["aria-label"] ?? "Dismiss notification"}
       className={composeRenderProps(className, (className) =>
         cn(
-          "-m-1 grid size-11 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none hover:bg-muted hover:text-foreground pressed:bg-muted focus-visible:outline-2 focus-visible:outline-ring",
+          "-m-1 grid size-11 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted hover:text-foreground pressed:bg-muted pressed:text-foreground motion-safe:pressed:scale-[0.96] focus-visible:outline-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-50 [&_svg]:pointer-events-none",
           className,
         ),
       )}
     >
       {children ?? <XIcon size={16} aria-hidden="true" />}
-    </MotionToastClose>
+    </AriaButton>
   );
 }
 

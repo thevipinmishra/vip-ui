@@ -5,7 +5,7 @@ test("spinner patterns animate and a pending button shows one", async ({
 }) => {
   await page.goto("/components/spinner");
 
-  const preview = page.locator("#example-loading-patterns");
+  const preview = page.locator("#example-variants");
   await expect(preview.locator('[data-slot="spinner"]')).toHaveCount(7);
   const orbit = preview
     .locator('[data-variant="orbit"]')
@@ -43,7 +43,7 @@ test("gallery indicators and pulse rings share their centers", async ({
   page,
 }) => {
   await page.goto("/components/spinner");
-  const preview = page.locator("#example-loading-patterns");
+  const preview = page.locator("#example-variants");
 
   for (const width of [1280, 375]) {
     await page.setViewportSize({ width, height: 800 });
@@ -94,7 +94,7 @@ test("reduced motion keeps all variants visible and still", async ({
   const page = await context.newPage();
   await page.goto("/components/spinner");
 
-  const preview = page.locator("#example-loading-patterns");
+  const preview = page.locator("#example-variants");
   for (const variant of [
     "ring",
     "segments",

@@ -28,6 +28,11 @@
       },
       "files": [
         {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
@@ -67,6 +72,11 @@
         }
       },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -226,7 +236,10 @@
       "type": "registry:ui",
       "title": "Avatar",
       "description": "Show a person with an image or initials.",
-      "dependencies": ["tailwind-variants@^3.3.1"],
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "tailwind-variants@^3.3.1"
+      ],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -650,6 +663,11 @@
       },
       "files": [
         {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
@@ -879,11 +897,6 @@
           "path": "registry/generated/src/components/vip-ui/popover.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/popover.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/press-button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/press-button.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/tag-group.tsx",
@@ -1505,6 +1518,11 @@
       },
       "files": [
         {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
@@ -2079,6 +2097,11 @@
       },
       "files": [
         {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
@@ -2176,7 +2199,7 @@
       "type": "registry:ui",
       "title": "Pagination",
       "description": "Navigate between pages of results.",
-      "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
+      "dependencies": ["tailwind-variants@^3.3.1"],
       "cssVars": {
         "light": {
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
@@ -2288,6 +2311,11 @@
       },
       "files": [
         {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
@@ -2351,6 +2379,11 @@
       "description": "Animate additions and removals in a semantic list.",
       "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -2447,6 +2480,11 @@
       },
       "files": [
         {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
@@ -2473,6 +2511,11 @@
         "@plugin tailwindcss-react-aria-components": {}
       },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -2995,6 +3038,11 @@
       ],
       "files": [
         {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
@@ -3044,6 +3092,7 @@
       "title": "Table",
       "description": "Present rows and columns with sortable headers.",
       "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
         "react-aria-components@^1.22.0",
         "tailwind-variants@^3.3.1"
       ],
@@ -3090,6 +3139,11 @@
       },
       "files": [
         {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
@@ -3108,7 +3162,6 @@
       "description": "Navigate and remove tags with the keyboard.",
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "motion@^13.5.1",
         "react-aria-components@^1.22.0",
         "tailwind-variants@^3.3.1"
       ],
@@ -3129,11 +3182,6 @@
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/press-button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/press-button.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/tag-group.tsx",
@@ -3386,6 +3434,11 @@
       },
       "files": [
         {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
@@ -3553,6 +3606,11 @@
       },
       "files": [
         {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
@@ -3673,6 +3731,11 @@
       },
       "files": [
         {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
@@ -3738,6 +3801,11 @@
           "target": "@components/vip-ui/badge.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/progress-bar.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/progress-bar.tsx"
@@ -3751,11 +3819,6 @@
           "path": "registry/generated/src/components/vip-ui/avatar.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/avatar.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/motion.ts",
-          "type": "registry:file",
-          "target": "@components/vip-ui/motion.ts"
         },
         {
           "path": "registry/generated/src/components/vip-ui/button-styles.tsx",

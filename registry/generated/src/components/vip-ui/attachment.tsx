@@ -16,6 +16,7 @@ import {
   useReducedMotion,
 } from "motion/react";
 import type { ComponentProps, ReactNode } from "react";
+import { duration, easeOut, springLayout, transitionFor } from "./motion";
 import { cn } from "./utils";
 import { Button } from "./button";
 import { ProgressBar } from "./progress-bar";
@@ -115,7 +116,11 @@ export function Attachment({
       initial={reduceMotion ? false : { opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
       exit={reduceMotion ? { opacity: 1 } : { opacity: 0, y: -6 }}
-      transition={{ duration: reduceMotion ? 0 : 0.18, ease: "easeOut" }}
+      transition={transitionFor(reduceMotion, {
+        duration: duration.base,
+        ease: easeOut,
+        layout: springLayout,
+      })}
       className={cn(
         "flex min-w-0 items-center gap-3 rounded-lg border border-border bg-card p-2.5 text-sm shadow-[var(--shadow-card)]",
         status === "error" && "border-destructive/60",

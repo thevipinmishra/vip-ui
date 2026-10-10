@@ -1,6 +1,11 @@
 "use client";
 
 import {
+  ArrowDownIcon,
+  ArrowsDownUpIcon,
+  ArrowUpIcon,
+} from "@phosphor-icons/react";
+import {
   Cell as AriaCell,
   Column as AriaColumn,
   Row as AriaRow,
@@ -59,18 +64,46 @@ export function TableBody<T extends object>({
     />
   );
 }
-export function Column({ className, ...props }: ColumnProps) {
+export function Column({ className, children, ...props }: ColumnProps) {
   return (
     <AriaColumn
       {...props}
       data-slot="table-column"
       className={composeRenderProps(className, (className) =>
         cn(
-          "border-b border-border px-4 py-3 text-start text-xs font-semibold outline-none focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring",
+          "border-b border-border px-4 py-3 text-start text-xs font-semibold outline-none transition-[color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] allows-sorting:cursor-pointer allows-sorting:hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring",
           className,
         ),
       )}
-    />
+    >
+      {composeRenderProps(
+        children,
+        (content, { allowsSorting, sortDirection }) =>
+          allowsSorting ? (
+            <span className="inline-flex items-center gap-1.5">
+              {content}
+              <span
+                aria-hidden="true"
+                data-slot="table-sort-indicator"
+                className={cn(
+                  "grid shrink-0 place-items-center",
+                  sortDirection ? "text-foreground" : "text-muted-foreground",
+                )}
+              >
+                {sortDirection === "ascending" ? (
+                  <ArrowUpIcon size={14} weight="bold" />
+                ) : sortDirection === "descending" ? (
+                  <ArrowDownIcon size={14} weight="bold" />
+                ) : (
+                  <ArrowsDownUpIcon size={14} />
+                )}
+              </span>
+            </span>
+          ) : (
+            content
+          ),
+      )}
+    </AriaColumn>
   );
 }
 export function Row<T extends object>({ className, ...props }: RowProps<T>) {
@@ -80,7 +113,7 @@ export function Row<T extends object>({ className, ...props }: RowProps<T>) {
       data-slot="table-row"
       className={composeRenderProps(className, (className) =>
         cn(
-          "outline-none hover:bg-muted focus:bg-muted selected:bg-accent focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring",
+          "outline-none hover:bg-muted focus:bg-muted selected:bg-accent disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring",
           className,
         ),
       )}

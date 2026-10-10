@@ -21,36 +21,45 @@ export function Breadcrumbs<T extends object>({
     <AriaBreadcrumbs
       {...props}
       data-slot="breadcrumbs"
-      className={cn("flex flex-wrap items-center gap-2 text-sm", className)}
+      className={cn(
+        "flex min-w-0 flex-wrap items-center gap-2 text-sm",
+        className,
+      )}
     />
   );
 }
 
 export function Breadcrumb({
+  id,
+  style,
   children,
   className,
-  ...props
+  ...linkProps
 }: BreadcrumbProps &
   Omit<LinkProps, "children" | "className"> & { children: ReactNode }) {
   return (
     <AriaBreadcrumb
-      {...props}
+      id={id}
+      style={style}
       data-slot="breadcrumb"
       className={composeRenderProps(className, (className) =>
-        cn("flex items-center gap-2", className),
+        cn("flex min-w-0 items-center gap-2", className),
       )}
     >
       {({ isCurrent }) => (
         <>
           {isCurrent ? (
-            <span aria-current="page" className="font-medium text-foreground">
+            <span
+              aria-current="page"
+              className="min-w-0 font-medium text-foreground [overflow-wrap:anywhere]"
+            >
               {children}
             </span>
           ) : (
             <Link
-              {...props}
+              {...linkProps}
               data-slot="breadcrumb-link"
-              className="rounded-sm text-muted-foreground hover:text-foreground hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              className="min-w-0 rounded-sm text-muted-foreground underline-offset-4 [overflow-wrap:anywhere] transition-[color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:text-foreground hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-60"
             >
               {children}
             </Link>
@@ -59,7 +68,7 @@ export function Breadcrumb({
             <CaretRightIcon
               size={14}
               aria-hidden="true"
-              className="text-muted-foreground"
+              className="shrink-0 text-muted-foreground rtl:rotate-180"
             />
           )}
         </>

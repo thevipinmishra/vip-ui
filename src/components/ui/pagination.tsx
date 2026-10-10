@@ -1,15 +1,14 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
-import type { AnchorHTMLAttributes, HTMLAttributes } from "react";
+import type { ComponentProps, HTMLAttributes } from "react";
 import { tv } from "tailwind-variants";
 import { cn } from "@/lib/utils";
 
 const paginationLinkStyles = tv({
-  base: "inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-lg px-3 text-sm font-medium text-foreground hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring aria-disabled:hover:bg-transparent",
+  base: "inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center gap-1.5 rounded-lg px-3 text-sm font-medium whitespace-nowrap text-foreground tabular-nums transition-[color,background-color,box-shadow,scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-safe:not-aria-disabled:active:scale-[0.96] aria-disabled:cursor-default aria-disabled:text-muted-foreground/60 aria-disabled:hover:bg-transparent [&_svg]:pointer-events-none [&_svg]:shrink-0",
   variants: {
     isCurrent: {
-      true: "bg-card text-primary shadow-[var(--shadow-card)] ring-1 ring-primary/25 hover:bg-card",
+      true: "bg-card text-primary shadow-[var(--shadow-card)] ring-1 ring-primary/25 hover:bg-card forced-colors:border",
     },
   },
 });
@@ -57,20 +56,7 @@ export function PaginationItem({
   );
 }
 
-export interface PaginationLinkProps
-  extends Omit<
-    AnchorHTMLAttributes<HTMLAnchorElement>,
-    | "onAnimationStart"
-    | "onAnimationEnd"
-    | "onAnimationIteration"
-    | "onDrag"
-    | "onDragStart"
-    | "onDragEnd"
-    | "onDragEnter"
-    | "onDragExit"
-    | "onDragLeave"
-    | "onDragOver"
-  > {
+export interface PaginationLinkProps extends ComponentProps<"a"> {
   href: string;
   isCurrent?: boolean;
   isDisabled?: boolean;
@@ -84,9 +70,8 @@ export function PaginationLink({
   onClick,
   ...props
 }: PaginationLinkProps) {
-  const reduceMotion = useReducedMotion();
   return (
-    <motion.a
+    <a
       {...props}
       href={isDisabled ? undefined : href}
       aria-current={isCurrent ? "page" : undefined}
@@ -94,16 +79,7 @@ export function PaginationLink({
       tabIndex={isDisabled ? -1 : props.tabIndex}
       onClick={isDisabled ? (event) => event.preventDefault() : onClick}
       data-slot="pagination-link"
-      whileHover={isDisabled || reduceMotion ? undefined : { scale: 1.03 }}
-      whileTap={isDisabled || reduceMotion ? undefined : { scale: 0.96 }}
-      transition={{ type: "spring", stiffness: 500, damping: 36 }}
-      className={paginationLinkStyles({
-        isCurrent,
-        className: cn(
-          isDisabled && "cursor-default text-muted-foreground/60",
-          className,
-        ),
-      })}
+      className={paginationLinkStyles({ isCurrent, className })}
     />
   );
 }

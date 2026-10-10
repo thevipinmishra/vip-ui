@@ -11,7 +11,7 @@ import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Dialog | vip/ui",
-  description: "A focused task above the page.",
+  description: componentPageData.dialog.description,
 };
 
 export default function DialogPage() {

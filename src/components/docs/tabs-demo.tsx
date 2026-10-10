@@ -19,14 +19,14 @@ export function TabsDemo() {
           <UsersIcon size={15} aria-hidden="true" />
           Team
         </TabsTrigger>
-        <TabsTrigger value="billing" isDisabled>
-          Billing
-        </TabsTrigger>
       </TabsList>
-      <TabsContent value="overview">Overview panel</TabsContent>
-      <TabsContent value="activity">Activity panel</TabsContent>
-      <TabsContent value="team">Team panel</TabsContent>
-      <TabsContent value="billing">Billing is not available yet.</TabsContent>
+      <TabsContent value="overview">
+        Three of five tasks are complete.
+      </TabsContent>
+      <TabsContent value="activity">
+        Maya Chen updated the homepage draft.
+      </TabsContent>
+      <TabsContent value="team">Four people can edit this project.</TabsContent>
     </Tabs>
   );
 }

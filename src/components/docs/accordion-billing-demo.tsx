@@ -9,12 +9,7 @@ import {
 
 export function AccordionBillingDemo() {
   return (
-    <Accordion
-      variant="divided"
-      allowsMultipleExpanded
-      defaultExpandedKeys={["invoices", "plans"]}
-      className="w-full max-w-md"
-    >
+    <Accordion variant="divided" className="w-full max-w-md">
       <AccordionItem id="invoices">
         <AccordionTrigger>Where can I find invoices?</AccordionTrigger>
         <AccordionContent>
@@ -26,13 +21,14 @@ export function AccordionBillingDemo() {
         <AccordionTrigger>Can I change plans?</AccordionTrigger>
         <AccordionContent>
           Yes. Choose a plan in Billing. The new price starts on your next
-          renewal, and you can switch again later.
+          renewal.
         </AccordionContent>
       </AccordionItem>
-      <AccordionItem id="receipts" isDisabled>
-        <AccordionTrigger>Can I download a tax receipt?</AccordionTrigger>
+      <AccordionItem id="cancel">
+        <AccordionTrigger>How do I cancel?</AccordionTrigger>
         <AccordionContent>
-          Tax receipts are not available for this workspace.
+          Choose Cancel plan in Billing. Your workspace stays active until the
+          end of the period.
         </AccordionContent>
       </AccordionItem>
     </Accordion>

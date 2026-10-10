@@ -9,7 +9,7 @@ import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Attachment | vip/ui",
-  description: "File previews, upload states, and removable attachments.",
+  description: componentPageData.attachment.description,
 };
 
 export default function AttachmentPage() {

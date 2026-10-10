@@ -103,10 +103,22 @@ export const componentPageData = {
     description: "Displays collapsible sections of related content.",
     examples: [
       {
-        title: "Divided list",
+        title: "Divided",
         description:
-          'Use variant="divided" to show dividers, allowsMultipleExpanded to keep several sections open, and isDisabled to keep a section visible but unavailable.',
+          'Set variant="divided" to separate sections with lines instead of cards. Use it inside a container that already has a surface.',
         sourcePath: "accordion-billing-demo.tsx",
+      },
+      {
+        title: "Multiple open sections",
+        description:
+          "Set allowsMultipleExpanded to keep several sections open at once. defaultExpandedKeys opens sections on the first render.",
+        sourcePath: "accordion-multiple-demo.tsx",
+      },
+      {
+        title: "Disabled section",
+        description:
+          "Set isDisabled on an AccordionItem to keep the section visible but closed.",
+        sourcePath: "accordion-disabled-demo.tsx",
       },
     ],
   },
@@ -115,16 +127,16 @@ export const componentPageData = {
     description: "Displays an inline message about a status or event.",
     examples: [
       {
-        title: "Action",
+        title: "Variants",
         description:
-          "Place ButtonLink beside the message for a navigation action. Keep the link outside the title and description so it remains a separate control.",
-        sourcePath: "alert-action-demo.tsx",
+          'Set variant to "info", "success", "warning", "error", or "neutral". Each variant shows its own icon, so the status does not depend on color.',
+        sourcePath: "alert-demo.tsx",
       },
       {
-        title: "Status messages",
+        title: "Action",
         description:
-          "Choose a message variant that matches the outcome, and include the next step when attention is needed.",
-        sourcePath: "alert-demo.tsx",
+          "Build the alert from AlertIcon, AlertTitle, and AlertDescription, and put a ButtonLink after the text. Keep the link outside the title and description so it stays a separate control. Install Button link separately.",
+        sourcePath: "alert-action-demo.tsx",
       },
     ],
   },
@@ -168,16 +180,16 @@ export const componentPageData = {
     description: "Displays an image or initials for a person.",
     examples: [
       {
-        title: "Fallback",
-        description:
-          "Avatar shows initials while the image loads, and when src is missing or does not load. Avatar takes the initials from the first two words of name. Set initials to use different letters.",
-        sourcePath: "avatar-fallback-demo.tsx",
-      },
-      {
         title: "Sizes",
         description:
           'Set size to "sm", "md", or "lg". The initials scale with the avatar.',
         sourcePath: "avatar-sizes-demo.tsx",
+      },
+      {
+        title: "Fallback",
+        description:
+          "Avatar shows initials while the image loads, and when src is missing or does not load. Avatar takes the initials from the first two words of name. Set initials to use different letters. Without a name or initials, Avatar shows a person icon.",
+        sourcePath: "avatar-fallback-demo.tsx",
       },
       {
         title: "Group",
@@ -192,9 +204,15 @@ export const componentPageData = {
     description: "Shows a short label, status, or count.",
     examples: [
       {
-        title: "Status variants",
+        title: "Variants",
         description:
-          "Use the variant prop for status styles and BadgeDot for a status marker.",
+          "Set variant to match the status: neutral, accent, success, warning, error, or outline.",
+        sourcePath: "badge-variants-demo.tsx",
+      },
+      {
+        title: "Dot",
+        description:
+          "Set dot to show a status marker before the label. The dot uses the badge's text color, so the label still names the status.",
         sourcePath: "badge-demo.tsx",
       },
     ],
@@ -515,7 +533,20 @@ export const componentPageData = {
   disclosure: {
     usage: "disclosure-demo.tsx",
     description: "Shows or hides a section of content.",
-    examples: [],
+    examples: [
+      {
+        title: "Expanded by default",
+        description:
+          "Set defaultExpanded to show the panel on the first render. People can still close it.",
+        sourcePath: "disclosure-expanded-demo.tsx",
+      },
+      {
+        title: "Disabled",
+        description:
+          "Set isDisabled to keep the header visible while the panel stays closed.",
+        sourcePath: "disclosure-disabled-demo.tsx",
+      },
+    ],
   },
   sheet: {
     usage: "sheet-basic-demo.tsx",
@@ -1034,10 +1065,16 @@ export const componentPageData = {
     description: "Displays an indeterminate loading indicator.",
     examples: [
       {
-        title: "Loading patterns",
+        title: "Variants",
         description:
-          "Use the variant prop to compare all seven styles, and size to fit the space.",
+          "Set variant to one of seven styles. Each card names the kind of wait the style suits.",
         sourcePath: "spinner-demo.tsx",
+      },
+      {
+        title: "Sizes",
+        description:
+          'Set size to "xs", "sm", "md", "lg", or "xl". The spinner draws with the current text color.',
+        sourcePath: "spinner-sizes-demo.tsx",
       },
       {
         title: "Loading in context",
@@ -1125,10 +1162,22 @@ export const componentPageData = {
     description: "Displays related content in switchable panels.",
     examples: [
       {
-        title: "Icons and disabled tabs",
+        title: "With icons",
         description:
-          "Add icons to tab triggers and keep an unavailable tab visible with isDisabled.",
+          "Put an icon before the label in TabsTrigger. Set aria-hidden on the icon so the label stays the tab's name.",
         sourcePath: "tabs-demo.tsx",
+      },
+      {
+        title: "Disabled tab",
+        description:
+          "Set isDisabled on a TabsTrigger to keep an unavailable tab visible. The arrow keys skip it.",
+        sourcePath: "tabs-disabled-demo.tsx",
+      },
+      {
+        title: "Vertical",
+        description:
+          'Set orientation="vertical" to stack the tabs beside the panel. The Up and Down arrow keys move between tabs.',
+        sourcePath: "tabs-vertical-demo.tsx",
       },
     ],
   },
@@ -1349,10 +1398,16 @@ export const componentPageData = {
     description: "Displays a brief notification.",
     examples: [
       {
-        title: "Notification types",
+        title: "Variants",
         description:
-          "Pass variant for a success or warning toast. Set timeout to change how long a toast stays open.",
+          'Set variant to "success" or "warning" in the toast content. The default is "info". Each variant has its own icon.',
         sourcePath: "toast-status-demo.tsx",
+      },
+      {
+        title: "Timeout",
+        description:
+          "Pass timeout in milliseconds to close the toast on its own. Toasts stay open for at least 5 seconds. Without a timeout, a toast stays until it is dismissed.",
+        sourcePath: "toast-timeout-demo.tsx",
       },
     ],
   },

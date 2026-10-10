@@ -9,7 +9,7 @@ import {
   useReducedMotion,
 } from "motion/react";
 import { type ComponentProps, useEffect, useMemo, useState } from "react";
-import { easeOut } from "./motion";
+import { easeOut, springSnappy } from "./motion";
 import { cn } from "./utils";
 
 export interface AnimatedNumberProps
@@ -130,7 +130,7 @@ function SlidingDigit({
           initial="enter"
           animate="center"
           exit="exit"
-          transition={{ duration: 0.24, ease: easeOut }}
+          transition={springSnappy}
           className="col-start-1 row-start-1"
         >
           {digit}

@@ -9,8 +9,7 @@ import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Message | vip/ui",
-  description:
-    "Readable incoming, outgoing, and system messages for conversations.",
+  description: componentPageData.message.description,
 };
 
 export default function MessagePage() {

@@ -7,6 +7,7 @@ import {
   composeRenderProps,
   Label,
 } from "react-aria-components";
+import { duration, easeOut } from "./motion";
 import { cn } from "./utils";
 
 export interface MeterProps
@@ -30,31 +31,34 @@ export function Meter({ label, className, children, ...props }: MeterProps) {
       {children ??
         (({ percentage, valueText }) => (
           <>
-            <div className="flex justify-between gap-3 text-sm">
+            <div className="flex items-baseline gap-3 text-sm">
               {label && (
-                <Label data-slot="meter-label" className="font-medium">
+                <Label
+                  data-slot="meter-label"
+                  className="min-w-0 font-medium [overflow-wrap:anywhere]"
+                >
                   {label}
                 </Label>
               )}
               <span
                 data-slot="meter-value"
-                className="font-mono tabular-nums text-muted-foreground"
+                className="ms-auto min-w-0 text-end font-mono tabular-nums text-muted-foreground"
               >
                 {valueText}
               </span>
             </div>
             <div
               data-slot="meter-track"
-              className="h-2 overflow-hidden rounded-full bg-secondary shadow-[var(--shadow-inset)]"
+              className="h-2 overflow-hidden rounded-full bg-secondary shadow-[var(--shadow-inset)] forced-colors:border rtl:-scale-x-100"
             >
               <motion.div
                 data-slot="meter-fill"
-                className="h-full w-full origin-left rounded-full bg-primary"
+                className="h-full w-full origin-left rounded-full bg-primary forced-colors:bg-[Highlight]"
                 initial={false}
                 animate={{ scaleX: percentage / 100 }}
                 transition={{
-                  duration: reduceMotion ? 0 : 0.2,
-                  ease: [0.23, 1, 0.32, 1],
+                  duration: reduceMotion ? 0 : duration.base,
+                  ease: easeOut,
                 }}
               />
             </div>

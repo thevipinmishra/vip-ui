@@ -10,7 +10,7 @@ import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Alert | vip/ui",
-  description: "Inline messages for useful information and status.",
+  description: componentPageData.alert.description,
 };
 
 export default function AlertPage() {
@@ -22,8 +22,8 @@ export default function AlertPage() {
       preview={<AlertBasicDemo />}
       previewSourcePath={page.usage}
       examples={withExamplePreviews(page.examples, [
-        <AlertActionDemo key="example-1" />,
-        <AlertDemo key="example-2" />,
+        <AlertDemo key="variants" />,
+        <AlertActionDemo key="action" />,
       ])}
       sourcePath="src/components/ui/alert.tsx"
     />

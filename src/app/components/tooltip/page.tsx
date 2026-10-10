@@ -9,7 +9,7 @@ import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Tooltip | vip/ui",
-  description: "Short supplementary help on hover or focus.",
+  description: componentPageData.tooltip.description,
 };
 
 export default function TooltipPage() {

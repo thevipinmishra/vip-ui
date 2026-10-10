@@ -2,9 +2,11 @@
 
 import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
-import type { ComponentProps, ReactNode } from "react";
+import type { ComponentProps } from "react";
+import { easeInOut } from "./motion";
 import { cn } from "./utils";
-import { Disclosure, DisclosureHeader, DisclosurePanel } from "./disclosure";
+import { CollapsiblePanel } from "./collapsible-panel";
+import { Disclosure, DisclosureHeader } from "./disclosure";
 
 export type ToolCallStatus = "running" | "complete" | "error";
 
@@ -47,7 +49,7 @@ export function ToolCallTrigger({
       {...props}
       data-slot="tool-call-trigger"
       className={cn(
-        "min-h-14 rounded-xl px-4 py-3 hover:bg-muted/70 [&>span:first-child]:min-w-0 [&>span:first-child]:flex-1",
+        "min-h-14 rounded-xl px-4 py-3 hover:bg-muted/70 focus-visible:-outline-offset-2 [&>span:first-child]:min-w-0 [&>span:first-child]:flex-1",
         className,
       )}
     >
@@ -62,7 +64,7 @@ export function ToolCallTrigger({
         >
           {status === "running" ? (
             <motion.span
-              className="size-2 rounded-full bg-current"
+              className="size-2 rounded-full bg-current forced-colors:bg-[CanvasText]"
               initial={false}
               animate={
                 reduceMotion ? { opacity: 1 } : { opacity: [0.4, 1, 0.4] }
@@ -70,7 +72,7 @@ export function ToolCallTrigger({
               transition={
                 reduceMotion
                   ? { duration: 0 }
-                  : { duration: 1.2, repeat: Infinity }
+                  : { duration: 1.2, repeat: Infinity, ease: easeInOut }
               }
             />
           ) : status === "complete" ? (
@@ -84,7 +86,7 @@ export function ToolCallTrigger({
             {name}
           </span>
           {summary && (
-            <span className="mt-0.5 block text-xs font-normal leading-5 text-muted-foreground">
+            <span className="mt-0.5 block text-xs font-normal leading-5 text-muted-foreground [overflow-wrap:anywhere]">
               {summary}
             </span>
           )}
@@ -108,18 +110,16 @@ export function ToolCallPanel({
   children,
   className,
   ...props
-}: Omit<ComponentProps<typeof DisclosurePanel>, "children"> & {
-  children?: ReactNode;
-}) {
+}: ComponentProps<typeof CollapsiblePanel>) {
   return (
-    <DisclosurePanel
-      {...props}
+    <CollapsiblePanel
       data-slot="tool-call-panel"
-      className={cn("border-t border-border/70", className)}
+      {...props}
+      className={cn("text-sm leading-6 text-foreground", className)}
     >
-      <div className="min-w-0 pt-3 text-sm leading-6 text-foreground [overflow-wrap:anywhere]">
+      <div className="min-w-0 border-t border-border/70 px-4 pt-3 pb-4 [overflow-wrap:anywhere]">
         {children}
       </div>
-    </DisclosurePanel>
+    </CollapsiblePanel>
   );
 }

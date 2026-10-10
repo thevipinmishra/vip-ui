@@ -20,6 +20,7 @@ import {
   DisclosureStateContext,
   Heading,
 } from "react-aria-components";
+import { duration, easeOut } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { CollapsibleIdsContext, CollapsiblePanel } from "./collapsible-panel";
 
@@ -75,7 +76,7 @@ export function AccordionItem({
         className={composeRenderProps(className, (className) =>
           cn(
             variant === "card" &&
-              "overflow-hidden rounded-lg bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70",
+              "overflow-hidden rounded-lg bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70 forced-colors:border",
             className,
           ),
         )}
@@ -112,22 +113,23 @@ export function AccordionTrigger({
         aria-controls={ids?.panelId}
         className={composeRenderProps(className, (className) =>
           cn(
-            "flex min-h-12 w-full cursor-pointer items-center justify-between gap-4 py-3 text-start text-foreground outline-none disabled:cursor-default disabled:opacity-50 hover:bg-muted/60 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring",
-            variant === "card" ? "px-4" : "px-0",
+            "flex min-h-12 w-full cursor-pointer items-center justify-between gap-4 py-3 text-start text-foreground outline-none transition-[background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring",
+            variant === "card"
+              ? "px-4 hover:bg-muted/60"
+              : "px-0 decoration-muted-foreground/60 underline-offset-4 hover:underline",
             className,
           ),
         )}
       >
-        {children}
+        <span className="min-w-0 [overflow-wrap:anywhere]">{children}</span>
         <motion.span
           className="shrink-0 text-muted-foreground"
           aria-hidden="true"
           initial={false}
           animate={{ rotate: isExpanded ? 180 : 0 }}
           transition={{
-            type: "tween",
-            duration: reduceMotion ? 0 : 0.2,
-            ease: [0.23, 1, 0.32, 1],
+            duration: reduceMotion ? 0 : duration.base,
+            ease: easeOut,
           }}
         >
           <CaretDownIcon size={16} />
@@ -150,9 +152,10 @@ export function AccordionContent({
       className={cn("text-sm leading-6 text-muted-foreground", className)}
     >
       <div
-        className={
-          variant === "card" ? "border-t border-border/70 px-4 py-3" : "pb-4"
-        }
+        className={cn(
+          "[overflow-wrap:anywhere]",
+          variant === "card" ? "border-t border-border/70 px-4 py-3" : "pb-4",
+        )}
       >
         {children}
       </div>

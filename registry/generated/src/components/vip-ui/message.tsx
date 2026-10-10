@@ -47,7 +47,10 @@ export function Message({
         {side !== "system" && (
           <p
             data-slot="message-sender"
-            className="mb-1 px-1 text-xs font-medium text-muted-foreground"
+            className={cn(
+              "mb-1 px-1 text-xs font-medium text-muted-foreground [overflow-wrap:anywhere]",
+              side === "outgoing" && "text-end",
+            )}
           >
             {sender}
           </p>
@@ -57,16 +60,22 @@ export function Message({
           className={cn(
             "min-w-0 whitespace-pre-wrap [overflow-wrap:anywhere] rounded-2xl px-4 py-3 text-sm leading-6",
             side === "outgoing" &&
-              "rounded-tr-md bg-accent text-accent-foreground",
+              "rounded-se-md bg-accent text-accent-foreground",
             side === "incoming" &&
-              "rounded-tl-md border border-border bg-card text-card-foreground shadow-[var(--shadow-card)]",
+              "rounded-ss-md border border-border bg-card text-card-foreground shadow-[var(--shadow-card)]",
             side === "system" && "bg-muted/70 text-muted-foreground",
           )}
         >
           {children}
         </div>
         {(timestamp || status || actions) && (
-          <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 px-1 text-xs text-muted-foreground">
+          <div
+            className={cn(
+              "mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 px-1 text-xs text-muted-foreground",
+              side === "outgoing" && "justify-end",
+              side === "system" && "justify-center",
+            )}
+          >
             {timestamp && (
               <time dateTime={dateTime} data-slot="message-time">
                 {timestamp}

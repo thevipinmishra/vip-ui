@@ -1,40 +1,33 @@
 "use client";
 
-import { CheckCircleIcon, InfoIcon, WarningIcon } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { showToast } from "@/components/ui/toast";
 
 export function ToastStatusDemo() {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap justify-center gap-2">
       <Button
         variant="outline"
         onPress={() =>
-          showToast(
-            {
-              title: "Update available",
-              description: "Version 2.6 is ready to install.",
-            },
-            { timeout: 5000 },
-          )
+          showToast({
+            title: "Update available",
+            description: "Version 2.6 is ready to install.",
+          })
         }
       >
-        <InfoIcon size={16} aria-hidden="true" /> Check for updates
+        Info
       </Button>
       <Button
         variant="outline"
         onPress={() =>
-          showToast(
-            {
-              title: "Release published",
-              description: "Version 2.6 is live.",
-              variant: "success",
-            },
-            { timeout: 5000 },
-          )
+          showToast({
+            title: "Release published",
+            description: "Version 2.6 is live.",
+            variant: "success",
+          })
         }
       >
-        <CheckCircleIcon size={16} aria-hidden="true" /> Publish release
+        Success
       </Button>
       <Button
         variant="outline"
@@ -46,7 +39,7 @@ export function ToastStatusDemo() {
           })
         }
       >
-        <WarningIcon size={16} aria-hidden="true" /> Review billing
+        Warning
       </Button>
     </div>
   );

@@ -6,7 +6,7 @@ export function Card({ className, ...props }: ComponentPropsWithRef<"div">) {
     <div
       data-slot="card"
       className={cn(
-        "rounded-xl bg-card text-card-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70",
+        "min-w-0 rounded-xl bg-card text-card-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70 forced-colors:border",
         className,
       )}
       {...props}
@@ -99,7 +99,10 @@ export function CardFooter({
   return (
     <div
       data-slot="card-footer"
-      className={cn("flex flex-wrap items-center gap-3 px-6 pb-6", className)}
+      className={cn(
+        "flex flex-wrap items-center gap-3 px-6 pb-6 first:pt-6 [[data-slot=card-header]+&]:pt-5",
+        className,
+      )}
       {...props}
     />
   );

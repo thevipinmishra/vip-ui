@@ -10,8 +10,7 @@ import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Sheet | vip/ui",
-  description:
-    "An accessible swipeable sheet with snap points and a blurred backdrop.",
+  description: componentPageData.sheet.description,
 };
 
 export default function SheetPage() {

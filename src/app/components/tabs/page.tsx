@@ -5,11 +5,13 @@ import {
 } from "@/components/docs/component-page";
 import { TabsBasicDemo } from "@/components/docs/tabs-basic-demo";
 import { TabsDemo } from "@/components/docs/tabs-demo";
+import { TabsDisabledDemo } from "@/components/docs/tabs-disabled-demo";
+import { TabsVerticalDemo } from "@/components/docs/tabs-vertical-demo";
 import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Tabs | vip/ui",
-  description: "Switch between related panels.",
+  description: componentPageData.tabs.description,
 };
 
 export default function TabsPage() {
@@ -21,7 +23,9 @@ export default function TabsPage() {
       preview={<TabsBasicDemo />}
       previewSourcePath={page.usage}
       examples={withExamplePreviews(page.examples, [
-        <TabsDemo key="example-1" />,
+        <TabsDemo key="with-icons" />,
+        <TabsDisabledDemo key="disabled-tab" />,
+        <TabsVerticalDemo key="vertical" />,
       ])}
       sourcePath="src/components/ui/tabs.tsx"
     />

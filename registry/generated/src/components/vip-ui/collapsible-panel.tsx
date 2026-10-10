@@ -3,6 +3,7 @@
 import { type HTMLMotionProps, motion, useReducedMotion } from "motion/react";
 import { createContext, type ReactNode, useContext } from "react";
 import { DisclosureStateContext } from "react-aria-components";
+import { duration, easeOut } from "./motion";
 import { cn } from "./utils";
 
 export const CollapsibleIdsContext = createContext<{
@@ -45,8 +46,8 @@ export function CollapsiblePanel({
       initial={false}
       animate={{ height: isExpanded ? "auto" : 0, opacity: isExpanded ? 1 : 0 }}
       transition={{
-        height: { duration: reduceMotion ? 0 : 0.22, ease: [0.23, 1, 0.32, 1] },
-        opacity: { duration: reduceMotion ? 0 : 0.15, ease: "easeOut" },
+        height: { duration: reduceMotion ? 0 : duration.base, ease: easeOut },
+        opacity: { duration: reduceMotion ? 0 : duration.fast, ease: easeOut },
       }}
     >
       {children}

@@ -1,22 +1,20 @@
 "use client";
 
-import { WarningIcon } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { showToast } from "@/components/ui/toast";
 
 export function ToastDemo() {
   return (
     <Button
+      variant="outline"
       onPress={() =>
         showToast({
-          title: "Upload paused",
-          description:
-            "The connection dropped. Retry when you are back online.",
-          variant: "warning",
+          title: "Draft saved",
+          description: "Your changes are saved in this workspace.",
         })
       }
     >
-      <WarningIcon size={16} aria-hidden="true" /> Show upload warning
+      Save draft
     </Button>
   );
 }

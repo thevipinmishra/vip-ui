@@ -1,8 +1,8 @@
 "use client";
 
 import { XIcon } from "@phosphor-icons/react";
-import { type HTMLMotionProps, motion, useReducedMotion } from "motion/react";
 import {
+  Button as AriaButton,
   Tag as AriaTag,
   TagGroup as AriaTagGroup,
   type TagGroupProps as AriaTagGroupProps,
@@ -12,7 +12,6 @@ import {
   type TagProps,
 } from "react-aria-components";
 import { cn } from "@/lib/utils";
-import { PressButton } from "./press-button";
 
 export function TagGroup({ className, ...props }: AriaTagGroupProps) {
   return (
@@ -53,50 +52,39 @@ export function TagListView<T extends object>({
 }
 
 export function Tag({ className, children, ...props }: TagProps) {
-  const reduceMotion = useReducedMotion();
   return (
     <AriaTag
       {...props}
       data-slot="tag"
-      render={
-        props.render ??
-        ((domProps, { isPressed, isDisabled }) => (
-          <motion.div
-            {...(domProps as HTMLMotionProps<"div">)}
-            initial={false}
-            animate={{ scale: isPressed && !isDisabled ? 0.96 : 1 }}
-            transition={
-              reduceMotion
-                ? { duration: 0 }
-                : { type: "spring", stiffness: 500, damping: 36 }
-            }
-          />
-        ))
-      }
       textValue={
         props.textValue ?? (typeof children === "string" ? children : undefined)
       }
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex min-h-11 cursor-pointer items-center gap-1 rounded-lg bg-card ps-3 pe-1 text-sm font-medium shadow-[var(--shadow-card)] ring-1 ring-border/80 hover:bg-muted selected:bg-accent selected:text-accent-foreground selected:ring-primary/35 disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+          "flex min-h-11 max-w-full cursor-default items-center gap-1 rounded-lg bg-card ps-3 pe-1 text-sm font-medium shadow-[var(--shadow-card)] ring-1 ring-border/80 data-[selection-mode]:not-data-disabled:cursor-pointer transition-[color,background-color,box-shadow,scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted motion-safe:pressed:scale-[0.96] selected:bg-accent selected:text-accent-foreground selected:ring-primary/35 disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring forced-colors:border",
           className,
         ),
       )}
     >
       {(state) => (
         <>
-          <span className={state.allowsRemoving ? "pe-1" : "pe-2"}>
+          <span
+            className={cn(
+              "min-w-0 py-1.5 [overflow-wrap:anywhere]",
+              state.allowsRemoving ? "pe-1" : "pe-2",
+            )}
+          >
             {typeof children === "function" ? children(state) : children}
           </span>
           {state.allowsRemoving && (
-            <PressButton
+            <AriaButton
               slot="remove"
               data-slot="tag-remove"
               aria-label={`Remove ${props.textValue ?? (typeof children === "string" ? children : "tag")}`}
-              className="grid size-11 cursor-pointer place-items-center rounded-md text-muted-foreground hover:bg-card hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring"
+              className="grid size-11 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-card hover:text-foreground motion-safe:pressed:scale-[0.96] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
             >
               <XIcon size={14} weight="bold" aria-hidden="true" />
-            </PressButton>
+            </AriaButton>
           )}
         </>
       )}

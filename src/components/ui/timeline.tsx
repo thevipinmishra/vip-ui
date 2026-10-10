@@ -20,21 +20,21 @@ export function TimelineItem({
       data-slot="timeline-item"
       data-status={status}
       className={cn(
-        "relative min-w-0 pb-8 pl-10 before:absolute before:top-7 before:bottom-0 before:left-[0.6875rem] before:w-px before:bg-primary/25 last:pb-0 last:before:hidden",
+        "relative min-w-0 ps-10 pb-8 before:absolute before:start-[0.6875rem] before:top-7 before:bottom-0 before:w-px before:bg-primary/25 last:pb-0 last:before:hidden forced-colors:before:bg-[CanvasText]",
         className,
       )}
     >
       <span
         aria-hidden="true"
         className={cn(
-          "absolute top-0 left-0 grid size-6 place-items-center rounded-full ring-4 ring-card",
+          "absolute start-0 top-0 grid size-6 place-items-center rounded-full ring-4 ring-card",
           status === "latest"
             ? "border-2 border-primary bg-accent text-primary"
-            : "bg-primary text-primary-foreground",
+            : "bg-primary text-primary-foreground forced-colors:border",
         )}
       >
         {status === "latest" ? (
-          <span className="size-2 rounded-full bg-primary" />
+          <span className="size-2 rounded-full bg-primary forced-colors:bg-[CanvasText]" />
         ) : (
           <CheckIcon size={14} weight="bold" />
         )}
@@ -51,7 +51,7 @@ export function TimelineTitle({ className, ...props }: ComponentProps<"h3">) {
       {...props}
       data-slot="timeline-title"
       className={cn(
-        "text-sm font-semibold leading-6 tracking-[-0.01em] text-foreground",
+        "text-sm font-semibold leading-6 tracking-[-0.01em] text-foreground [overflow-wrap:anywhere]",
         className,
       )}
     />
@@ -79,7 +79,10 @@ export function TimelineDescription({
     <p
       {...props}
       data-slot="timeline-description"
-      className={cn("mt-2 text-sm leading-6 text-muted-foreground", className)}
+      className={cn(
+        "mt-2 text-sm leading-6 text-muted-foreground [overflow-wrap:anywhere]",
+        className,
+      )}
     />
   );
 }

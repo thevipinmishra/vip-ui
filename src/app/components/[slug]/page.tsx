@@ -58,6 +58,8 @@ import { DateRangePickerLimitsDemo } from "@/components/docs/date-range-picker-l
 import { DescriptionListComponentsDemo } from "@/components/docs/description-list-components-demo";
 import { DescriptionListDemo } from "@/components/docs/description-list-demo";
 import { DisclosureDemo } from "@/components/docs/disclosure-demo";
+import { DisclosureDisabledDemo } from "@/components/docs/disclosure-disabled-demo";
+import { DisclosureExpandedDemo } from "@/components/docs/disclosure-expanded-demo";
 import { DropZoneBasicDemo } from "@/components/docs/drop-zone-basic-demo";
 import { DropZoneDemo } from "@/components/docs/drop-zone-demo";
 import { EmptyStateDemo } from "@/components/docs/empty-state-demo";
@@ -119,6 +121,7 @@ import { SkeletonLoadingDemo } from "@/components/docs/skeleton-loading-demo";
 import { SourceLinkDemo } from "@/components/docs/source-link-demo";
 import { SpinnerBasicDemo } from "@/components/docs/spinner-basic-demo";
 import { SpinnerDemo } from "@/components/docs/spinner-demo";
+import { SpinnerSizesDemo } from "@/components/docs/spinner-sizes-demo";
 import { SpinnerUsageDemo } from "@/components/docs/spinner-usage-demo";
 import { StaggerGroupBasicDemo } from "@/components/docs/stagger-group-basic-demo";
 import { StaggerGroupDemo } from "@/components/docs/stagger-group-demo";
@@ -563,8 +566,8 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <AnimatedNumberFormatDemo key="preview-2" />,
   ],
   avatar: [
-    <AvatarFallbackDemo key="preview-1" />,
-    <AvatarSizesDemo key="preview-2" />,
+    <AvatarSizesDemo key="preview-1" />,
+    <AvatarFallbackDemo key="preview-2" />,
     <AvatarDemo key="preview-3" />,
   ],
   card: [<CardActionDemo key="preview-1" />, <CardDemo key="preview-2" />],
@@ -642,6 +645,10 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <DateRangePickerLimitsDemo key="preview-1" />,
     <DateRangePickerDisabledDemo key="preview-2" />,
   ],
+  disclosure: [
+    <DisclosureExpandedDemo key="preview-1" />,
+    <DisclosureDisabledDemo key="preview-2" />,
+  ],
   "drop-zone": [<DropZoneDemo key="preview-1" />],
   "empty-state": [<EmptyStateNoActionDemo key="preview-1" />],
   "file-trigger": [<FileTriggerDemo key="preview-1" />],
@@ -674,7 +681,8 @@ const examplePreviews: Record<string, ReactNode[]> = {
   ],
   spinner: [
     <SpinnerDemo key="preview-1" />,
-    <SpinnerUsageDemo key="preview-2" />,
+    <SpinnerSizesDemo key="preview-2" />,
+    <SpinnerUsageDemo key="preview-3" />,
   ],
   stepper: [<StepperDemo key="preview-1" />],
   table: [

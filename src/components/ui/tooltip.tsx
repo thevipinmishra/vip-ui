@@ -56,7 +56,7 @@ export function Tooltip({ className, offset = 8, ...props }: TooltipProps) {
       }
       className={composeRenderProps(className, (className) =>
         cn(
-          "max-w-[min(14rem,calc(100vw-1.5rem))] overflow-auto overscroll-contain rounded-md bg-foreground px-3 py-2 text-xs leading-5 text-background shadow-[var(--shadow-float)] outline-none",
+          "max-w-[min(14rem,calc(100vw-1.5rem))] overflow-auto overscroll-contain rounded-md bg-foreground px-3 py-2 text-xs leading-5 text-background [overflow-wrap:anywhere] shadow-[var(--shadow-float)] outline-none forced-colors:border",
           className,
         ),
       )}

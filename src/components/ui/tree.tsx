@@ -17,6 +17,7 @@ import {
   type TreeItemProps,
   type TreeProps,
 } from "react-aria-components";
+import { duration, easeOut } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 export function Tree<T extends object>({ className, ...props }: TreeProps<T>) {
@@ -74,7 +75,7 @@ export function TreeItem({
               <AriaButton
                 slot="chevron"
                 data-slot="tree-item-chevron"
-                className="grid size-9 shrink-0 place-items-center rounded-md text-muted-foreground outline-none hover:bg-accent hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring"
+                className="grid size-9 shrink-0 place-items-center rounded-md text-muted-foreground outline-none transition-[color,background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-accent hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring rtl:-scale-x-100"
               >
                 <motion.span
                   aria-hidden="true"
@@ -82,8 +83,8 @@ export function TreeItem({
                   initial={false}
                   animate={{ rotate: isExpanded ? 90 : 0 }}
                   transition={{
-                    duration: reducedMotion ? 0 : 0.2,
-                    ease: [0.23, 1, 0.32, 1],
+                    duration: reducedMotion ? 0 : duration.base,
+                    ease: easeOut,
                   }}
                 >
                   <CaretRightIcon size={16} />
@@ -95,7 +96,7 @@ export function TreeItem({
             <span
               data-slot="tree-item-icon"
               aria-hidden="true"
-              className="shrink-0 text-muted-foreground group-selected/tree-item:text-accent-foreground"
+              className="grid shrink-0 place-items-center text-muted-foreground group-selected/tree-item:text-accent-foreground"
             >
               {icon ??
                 (hasChildItems ? (

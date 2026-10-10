@@ -7,6 +7,7 @@ import {
   composeRenderProps,
   Label,
 } from "react-aria-components";
+import { duration, easeOut } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 export interface ProgressRingProps
@@ -77,8 +78,8 @@ export function ProgressRing({
                   pathLength: isIndeterminate ? 0.28 : (percentage ?? 0) / 100,
                 }}
                 transition={{
-                  duration: reducedMotion ? 0 : 0.3,
-                  ease: "easeOut",
+                  duration: reducedMotion ? 0 : duration.slow,
+                  ease: easeOut,
                 }}
               />
             </motion.svg>
@@ -96,7 +97,10 @@ export function ProgressRing({
           </span>
           <Label
             data-slot="progress-ring-label"
-            className={cn("font-medium", size === "lg" ? "text-sm" : "text-xs")}
+            className={cn(
+              "max-w-full text-center font-medium [overflow-wrap:anywhere]",
+              size === "lg" ? "text-sm" : "text-xs",
+            )}
           >
             {label}
           </Label>

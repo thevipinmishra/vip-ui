@@ -8,6 +8,7 @@ import {
   useReducedMotion,
 } from "motion/react";
 import { type ComponentProps, useId } from "react";
+import { duration, easeOut, springLayout, transitionFor } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 export interface Step {
@@ -28,9 +29,7 @@ export function Stepper({
 }: StepperProps) {
   const groupId = useId();
   const reduceMotion = useReducedMotion();
-  const transition = reduceMotion
-    ? { duration: 0 }
-    : { type: "spring" as const, duration: 0.28, bounce: 0 };
+  const transition = transitionFor(reduceMotion, springLayout);
 
   return (
     <LayoutGroup id={groupId}>
@@ -86,8 +85,8 @@ export function Stepper({
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: reduceMotion ? 1 : 0.9 }}
                       transition={{
-                        duration: reduceMotion ? 0 : 0.16,
-                        ease: [0.23, 1, 0.32, 1],
+                        duration: reduceMotion ? 0 : duration.fast,
+                        ease: easeOut,
                       }}
                     >
                       {completed ? (
@@ -104,7 +103,7 @@ export function Stepper({
                     className="relative h-1 min-w-6 flex-1 overflow-hidden rounded-full bg-secondary ring-1 ring-border/60"
                   >
                     <motion.span
-                      className="absolute inset-0 origin-left rounded-full bg-primary rtl:origin-right"
+                      className="absolute inset-0 origin-left rounded-full bg-primary forced-colors:bg-[Highlight] rtl:origin-right"
                       initial={false}
                       animate={{ scaleX: completed ? 1 : 0 }}
                       transition={transition}
@@ -112,7 +111,7 @@ export function Stepper({
                   </span>
                 )}
               </div>
-              <div className="min-w-0 pr-3 pt-3">
+              <div className="min-w-0 pe-3 pt-3">
                 <span className="relative inline-flex max-w-full items-center rounded-md px-2 py-1">
                   {active && (
                     <motion.span
@@ -138,7 +137,7 @@ export function Stepper({
                   </span>
                 </span>
                 {step.description && (
-                  <span className="mt-1 block px-2 text-xs leading-5 text-muted-foreground">
+                  <span className="mt-1 block px-2 text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]">
                     {step.description}
                   </span>
                 )}

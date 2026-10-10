@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { AccordionBillingDemo } from "@/components/docs/accordion-billing-demo";
 import { AccordionDemo } from "@/components/docs/accordion-demo";
+import { AccordionDisabledDemo } from "@/components/docs/accordion-disabled-demo";
+import { AccordionMultipleDemo } from "@/components/docs/accordion-multiple-demo";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -9,7 +11,7 @@ import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Accordion | vip/ui",
-  description: "Reveal related content on demand.",
+  description: componentPageData.accordion.description,
 };
 
 export default function AccordionPage() {
@@ -21,7 +23,9 @@ export default function AccordionPage() {
       preview={<AccordionDemo />}
       previewSourcePath={page.usage}
       examples={withExamplePreviews(page.examples, [
-        <AccordionBillingDemo key="example-1" />,
+        <AccordionBillingDemo key="divided" />,
+        <AccordionMultipleDemo key="multiple" />,
+        <AccordionDisabledDemo key="disabled" />,
       ])}
       sourcePath="src/components/ui/accordion.tsx"
     />

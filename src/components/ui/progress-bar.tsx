@@ -7,6 +7,7 @@ import {
   composeRenderProps,
   Label,
 } from "react-aria-components";
+import { duration, easeOut } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 export interface ProgressBarProps
@@ -35,27 +36,29 @@ export function ProgressBar({
       {children ??
         (({ percentage, valueText, isIndeterminate }) => (
           <>
-            <div className="flex justify-between gap-3 text-sm">
-              {label && (
-                <Label
-                  data-slot="progress-bar-label"
-                  className="font-medium text-foreground"
-                >
-                  {label}
-                </Label>
-              )}
-              {!isIndeterminate && (
-                <span
-                  data-slot="progress-bar-value"
-                  className="font-mono tabular-nums text-muted-foreground"
-                >
-                  {valueText}
-                </span>
-              )}
-            </div>
+            {(label || !isIndeterminate) && (
+              <div className="flex items-baseline gap-3 text-sm">
+                {label && (
+                  <Label
+                    data-slot="progress-bar-label"
+                    className="min-w-0 font-medium text-foreground [overflow-wrap:anywhere]"
+                  >
+                    {label}
+                  </Label>
+                )}
+                {!isIndeterminate && (
+                  <span
+                    data-slot="progress-bar-value"
+                    className="ms-auto shrink-0 font-mono tabular-nums text-muted-foreground"
+                  >
+                    {valueText}
+                  </span>
+                )}
+              </div>
+            )}
             <div
               data-slot="progress-bar-track"
-              className="h-2 overflow-hidden rounded-full bg-secondary shadow-[var(--shadow-inset)]"
+              className="h-2 overflow-hidden rounded-full bg-secondary shadow-[var(--shadow-inset)] forced-colors:border rtl:-scale-x-100"
             >
               {isIndeterminate ? (
                 <motion.div
@@ -78,8 +81,8 @@ export function ProgressBar({
                   initial={false}
                   animate={{ scaleX: (percentage ?? 0) / 100 }}
                   transition={{
-                    duration: reduceMotion ? 0 : 0.22,
-                    ease: [0.23, 1, 0.32, 1],
+                    duration: reduceMotion ? 0 : duration.base,
+                    ease: easeOut,
                   }}
                 />
               )}

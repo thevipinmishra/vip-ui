@@ -3,7 +3,7 @@ import { tv, type VariantProps } from "tailwind-variants";
 import { cn } from "./utils";
 
 const badgeStyles = tv({
-  base: "inline-flex min-h-7 items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium leading-4 tracking-normal shadow-[var(--shadow-card)] ring-1",
+  base: "inline-flex min-h-7 w-fit max-w-full shrink-0 items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium leading-4 tracking-normal [overflow-wrap:anywhere] shadow-[var(--shadow-card)] ring-1 forced-colors:border [&_svg]:pointer-events-none [&_svg]:shrink-0",
   variants: {
     variant: {
       neutral: "bg-secondary text-secondary-foreground ring-border",
@@ -51,7 +51,10 @@ export function BadgeDot({
       aria-hidden="true"
       {...props}
       data-slot="badge-dot"
-      className={cn("size-1.5 rounded-full bg-current", className)}
+      className={cn(
+        "size-1.5 shrink-0 rounded-full bg-current forced-colors:bg-[CanvasText]",
+        className,
+      )}
     />
   );
 }

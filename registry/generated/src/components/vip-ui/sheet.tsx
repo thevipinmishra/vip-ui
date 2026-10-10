@@ -34,6 +34,7 @@ import {
   type TextProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import { duration, easeOut } from "./motion";
 import { cn } from "./utils";
 import { Button, type ButtonProps as StyledButtonProps } from "./button";
 
@@ -578,7 +579,10 @@ export function SheetHandle({ className, ...props }: ButtonProps) {
                   ? { scaleY: isPressed ? 0.78 : isHovered ? 1.16 : 1 }
                   : { scaleX: isPressed ? 0.78 : isHovered ? 1.16 : 1 }
               }
-              transition={{ duration: reduceMotion ? 0 : 0.15 }}
+              transition={{
+                duration: reduceMotion ? 0 : duration.fast,
+                ease: easeOut,
+              }}
             />
           ),
       )}
@@ -605,7 +609,10 @@ export function SheetTitle({ className, ...props }: HeadingProps) {
       {...props}
       slot="title"
       data-slot="sheet-title"
-      className={cn("text-xl font-semibold tracking-[-0.04em]", className)}
+      className={cn(
+        "min-w-0 text-xl font-semibold tracking-[-0.04em] [overflow-wrap:anywhere]",
+        className,
+      )}
     />
   );
 }
@@ -617,7 +624,7 @@ export function SheetDescription({ className, ...props }: TextProps) {
       slot="description"
       data-slot="sheet-description"
       className={cn(
-        "mt-2 block text-sm leading-6 text-muted-foreground",
+        "mt-2 block text-sm leading-6 text-muted-foreground [overflow-wrap:anywhere]",
         className,
       )}
     />
@@ -649,7 +656,7 @@ export function SheetFooter({
       {...props}
       data-slot="sheet-footer"
       className={cn(
-        "flex shrink-0 justify-end gap-2 border-t border-border px-6 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]",
+        "flex shrink-0 flex-wrap justify-end gap-2 border-t border-border px-6 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]",
         className,
       )}
     />

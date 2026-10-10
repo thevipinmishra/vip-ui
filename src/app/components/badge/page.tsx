@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { BadgeBasicDemo } from "@/components/docs/badge-basic-demo";
 import { BadgeDemo } from "@/components/docs/badge-demo";
+import { BadgeVariantsDemo } from "@/components/docs/badge-variants-demo";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -9,7 +10,7 @@ import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Badge | vip/ui",
-  description: "Compact labels for status and metadata.",
+  description: componentPageData.badge.description,
 };
 
 export default function BadgePage() {
@@ -21,7 +22,8 @@ export default function BadgePage() {
       preview={<BadgeBasicDemo />}
       previewSourcePath={page.usage}
       examples={withExamplePreviews(page.examples, [
-        <BadgeDemo key="example-1" />,
+        <BadgeVariantsDemo key="variants" />,
+        <BadgeDemo key="dot" />,
       ])}
       sourcePath="src/components/ui/badge.tsx"
     />

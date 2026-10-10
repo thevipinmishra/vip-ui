@@ -1,11 +1,6 @@
 "use client";
 
 import {
-  ArrowDownIcon,
-  ArrowsDownUpIcon,
-  ArrowUpIcon,
-} from "@phosphor-icons/react";
-import {
   type ColumnDef,
   type ColumnFiltersState,
   getCoreRowModel,
@@ -164,12 +159,12 @@ export function DataTable<T extends object>({
     <div
       data-slot="data-table"
       className={cn(
-        "w-full rounded-xl border border-border bg-card shadow-[var(--shadow-card)]",
+        "w-full min-w-0 overflow-hidden rounded-xl border border-border bg-card text-card-foreground shadow-[var(--shadow-card)]",
         className,
       )}
     >
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-4 py-3 sm:px-5">
-        <p className="text-base font-semibold tracking-tight text-foreground">
+        <p className="min-w-0 text-base font-semibold tracking-tight text-foreground [overflow-wrap:anywhere]">
           {label}
         </p>
         {selectable && selectedCount > 0 && (
@@ -294,35 +289,11 @@ export function DataTable<T extends object>({
                 isRowHeader={index === 0}
                 allowsSorting={Boolean(column.sortValue)}
                 className={cn(
-                  column.sortValue &&
-                    "cursor-pointer hover:text-foreground motion-safe:transition-colors",
+                  "whitespace-nowrap",
                   column.align === "end" && "text-end",
                 )}
               >
-                <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
-                  {column.header}
-                  {column.sortValue && (
-                    <span aria-hidden="true" className="text-muted-foreground">
-                      {sortDescriptor?.column === column.id ? (
-                        sortDescriptor.direction === "ascending" ? (
-                          <ArrowUpIcon
-                            size={14}
-                            weight="bold"
-                            className="text-foreground"
-                          />
-                        ) : (
-                          <ArrowDownIcon
-                            size={14}
-                            weight="bold"
-                            className="text-foreground"
-                          />
-                        )
-                      ) : (
-                        <ArrowsDownUpIcon size={14} />
-                      )}
-                    </span>
-                  )}
-                </span>
+                {column.header}
               </Column>
             ))}
           </TableHeader>
