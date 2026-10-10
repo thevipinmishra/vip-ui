@@ -11,6 +11,12 @@ const installCommand: Record<PackageManager, string> = {
   pnpm: "pnpm add",
   bun: "bun add",
 };
+const devInstallCommand: Record<PackageManager, string> = {
+  npm: "npm install -D",
+  yarn: "yarn add -D",
+  pnpm: "pnpm add -D",
+  bun: "bun add -d",
+};
 const runCommand: Record<PackageManager, string> = {
   npm: "npx",
   yarn: "yarn dlx",
@@ -22,13 +28,13 @@ export function PackageManagerCommand({
   action,
   args,
 }: {
-  action: "run" | "add";
+  action: "run" | "add" | "add-dev";
   args: string;
 }) {
   const commands = Object.fromEntries(
     managers.map((manager) => [
       manager,
-      `${(action === "add" ? installCommand : runCommand)[manager]} ${args}`,
+      `${{ add: installCommand, "add-dev": devInstallCommand, run: runCommand }[action][manager]} ${args}`,
     ]),
   ) as Record<PackageManager, string>;
 

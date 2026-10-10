@@ -1,5 +1,5 @@
+import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
-import { ArrowRight } from "reicon-react";
 import { ButtonLink } from "@/components/ui/button-link";
 import {
   EmptyState,
@@ -18,7 +18,7 @@ export default function ComponentNotFound() {
       </EmptyStateDescription>
       <EmptyStateActions>
         <ButtonLink as={Link} href="/components" variant="outline">
-          Browse components <ArrowRight size={16} aria-hidden="true" />
+          Browse components <ArrowRightIcon size={16} aria-hidden="true" />
         </ButtonLink>
       </EmptyStateActions>
     </EmptyState>

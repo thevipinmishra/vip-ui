@@ -1,4 +1,3 @@
-/** vip/ui-specific props shared by component pages and their Markdown exports. */
 export interface ApiProp {
   component: string;
   prop: string;
@@ -24,7 +23,8 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "text",
       type: "string",
       defaultValue: "required",
-      description: "Plain text announced once to assistive technology.",
+      description:
+        "The text to show. Screen readers read it once, as plain text.",
     },
     {
       component: "TextReveal",
@@ -32,7 +32,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: '"words" | "characters"',
       defaultValue: '"words"',
       description:
-        "Unit used for the masked entrance; characters follow grapheme boundaries.",
+        "Reveal by word or by character. Characters follow grapheme boundaries.",
     },
     {
       component: "TextReveal",
@@ -40,7 +40,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: '"mount" | "in-view"',
       defaultValue: '"in-view"',
       description:
-        "Starts on mount or the first time text enters the viewport.",
+        "Start on mount, or the first time the text comes into view.",
     },
     {
       component: "TextReveal",
@@ -48,6 +48,13 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "number",
       defaultValue: "0.045",
       description: "Delay in seconds between units.",
+    },
+    {
+      component: "TextReveal",
+      prop: "delay",
+      type: "number",
+      defaultValue: "0",
+      description: "Delay in seconds before the first unit starts.",
     },
   ],
   "text-scramble": [
@@ -57,21 +64,23 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "string",
       defaultValue: "required",
       description:
-        "Current text; changing it starts a new scramble. Screen readers receive the final text immediately.",
+        "The text to show. A change starts a scramble. The first value shows without a scramble. Screen readers get the final text at once.",
     },
     {
       component: "TextScramble",
       prop: "duration",
       type: "number",
       defaultValue: "0.7",
-      description: "Time in seconds to resolve the text.",
+      description:
+        "Time in seconds to resolve the text. Set 0 to change the text without a scramble.",
     },
     {
       component: "TextScramble",
       prop: "glyphs",
       type: "string",
       defaultValue: "A-Z and 0-9",
-      description: "Characters used for the temporary visual scramble.",
+      description:
+        "Characters that show during the scramble. The default monospace font keeps the width the same.",
     },
   ],
   presence: [
@@ -81,31 +90,38 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "boolean",
       defaultValue: "required",
       description:
-        "Keeps exiting content mounted but inert until the exit ends. Move focus before hiding focused content.",
+        "Shows or hides the content. Hidden content stays inert until its exit ends. Move focus before you hide focused content.",
     },
     {
       component: "Presence",
       prop: "as",
       type: '"div" | "span"',
       defaultValue: '"div"',
-      description: "Outer element for the conditional content.",
+      description: "Outer element. A span is inline-block, so it can move.",
     },
     {
       component: "Presence",
-      prop: "distance / duration",
-      type: "number / number",
-      defaultValue: "8 / 0.22",
-      description:
-        "Exit and entrance travel in pixels, and transition time in seconds.",
+      prop: "distance",
+      type: "number",
+      defaultValue: "8",
+      description: "Travel in pixels for the entrance and the exit.",
+    },
+    {
+      component: "Presence",
+      prop: "duration",
+      type: "number",
+      defaultValue: "0.2",
+      description: "Entrance time in seconds. The exit takes 70% of this time.",
     },
   ],
   "stagger-group": [
     {
       component: "StaggerGroup",
       prop: "as",
-      type: '"div" | "ul"',
+      type: '"div" | "ul" | "ol"',
       defaultValue: '"div"',
-      description: "Use ul with li StaggerItem children for a semantic list.",
+      description:
+        "Use ul or ol with li StaggerItem children for a semantic list.",
     },
     {
       component: "StaggerGroup",
@@ -113,21 +129,22 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: '"mount" | "in-view"',
       defaultValue: '"in-view"',
       description:
-        "Starts the sequence on mount or the first time the group enters view.",
+        "Start the sequence on mount, or the first time the group comes into view.",
     },
     {
       component: "StaggerGroup",
       prop: "stagger",
       type: "number",
       defaultValue: "0.08",
-      description: "Delay in seconds between StaggerItem children.",
+      description:
+        "Delay in seconds between StaggerItem children. A long group uses a shorter delay, so the last item starts within 0.6 seconds.",
     },
     {
       component: "StaggerItem",
       prop: "as",
       type: '"div" | "li"',
       defaultValue: '"div"',
-      description: "Element receiving the group animation.",
+      description: "Element that receives the group animation.",
     },
   ],
   "layout-morph": [
@@ -137,7 +154,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "string | number",
       defaultValue: "required",
       description:
-        "Change with the content to crossfade it and animate the container height.",
+        "Change it with the content to crossfade the content and animate the height. Other size changes, such as a window resize, do not animate.",
     },
   ],
   marquee: [
@@ -147,7 +164,22 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "number",
       defaultValue: "50",
       description:
-        "Movement in pixels per second. Zero stops movement; hover, focus, and the built-in button pause it.",
+        "Movement in pixels per second. Hover, focus, and the built-in button pause it. Set 0, or prefer reduced motion, to stop it and wrap the items.",
+    },
+    {
+      component: "Marquee",
+      prop: "reverse",
+      type: "boolean",
+      defaultValue: "false",
+      description:
+        "Move the content toward the end edge instead of the start edge.",
+    },
+    {
+      component: "Marquee",
+      prop: "--marquee-gap",
+      type: "CSS length",
+      defaultValue: "1.5rem",
+      description: "Space between items. Set it in className.",
     },
     {
       component: "Marquee",
@@ -155,7 +187,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "ReactNode",
       defaultValue: "required",
       description:
-        "Use presentational content without duplicate IDs. The second copy is inert and hidden from assistive technology.",
+        "Use presentational content without duplicate IDs. The copies are inert and hidden from assistive technology.",
     },
   ],
   "combo-box": [
@@ -743,7 +775,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
     {
       component: "CardTitle",
       prop: "as",
-      type: '"h2" | "h3" | "h4"',
+      type: '"h1" | "h2" | "h3" | "h4"',
       defaultValue: '"h3"',
       description: "Heading level for the card title.",
     },
@@ -769,6 +801,22 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "string",
       defaultValue: "derived from name",
       description: "Overrides the displayed initials.",
+    },
+    {
+      component: "Avatar",
+      prop: "size",
+      type: '"sm" | "md" | "lg"',
+      defaultValue: '"md"',
+      description: "Diameter of the avatar. The initials scale with it.",
+    },
+  ],
+  "empty-state": [
+    {
+      component: "EmptyStateTitle",
+      prop: "as",
+      type: '"h2" | "h3" | "h4"',
+      defaultValue: '"h3"',
+      description: "Heading level for the empty state title.",
     },
   ],
   spinner: [
@@ -1288,7 +1336,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "string / string",
       defaultValue: "—",
       description:
-        "Renders the group label and supporting text. Keep a label or pass aria-label.",
+        "Renders the group label, supporting text, and validation error. Keep a label or pass aria-label.",
     },
     {
       component: "RadioGroup",

@@ -1,6 +1,6 @@
+import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight } from "reicon-react";
 import { SiteFooter } from "@/components/docs/site-footer";
 import { SiteHeader } from "@/components/docs/site-header";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -23,7 +23,7 @@ export default function NotFound() {
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <ButtonLink as={Link} href="/components">
-            Browse components <ArrowRight size={16} aria-hidden="true" />
+            Browse components <ArrowRightIcon size={16} aria-hidden="true" />
           </ButtonLink>
           <ButtonLink as={Link} href="/" variant="outline">
             Back home

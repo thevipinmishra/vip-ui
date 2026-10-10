@@ -1,7 +1,7 @@
 "use client";
 
+import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { type ReactNode, useEffect } from "react";
-import { Search } from "reicon-react";
 import { cn } from "@/lib/utils";
 import { Autocomplete } from "./autocomplete";
 import { Dialog, DialogContent, DialogTitle } from "./dialog";
@@ -59,7 +59,7 @@ export function CommandPalette({
         modalSlot="command-palette"
         className="flex min-h-0 flex-col"
         modalProps={{
-          className: cn("flex max-w-lg flex-col p-0 sm:p-0", className),
+          className: cn("flex flex-col p-0 sm:max-w-lg sm:p-0", className),
         }}
       >
         <DialogTitle className="sr-only">{title}</DialogTitle>
@@ -67,7 +67,7 @@ export function CommandPalette({
           <SearchField autoFocus aria-label={placeholder} className="shrink-0">
             {({ isEmpty }) => (
               <div className="relative flex items-center border-b border-border/70 focus-within:border-ring">
-                <Search
+                <MagnifyingGlassIcon
                   size={18}
                   aria-hidden="true"
                   className="pointer-events-none absolute start-4 text-muted-foreground"
@@ -82,7 +82,7 @@ export function CommandPalette({
           </SearchField>
           <MenuContent
             aria-label={title}
-            className="min-h-0 max-h-80 flex-1 gap-1 overflow-y-auto p-2"
+            className="min-h-0 max-h-80 flex-1 gap-1 overflow-y-auto overscroll-contain p-2"
             renderEmptyState={() => (
               <p className="px-3 py-8 text-center text-sm text-muted-foreground">
                 {emptyMessage}
@@ -93,7 +93,10 @@ export function CommandPalette({
             {children}
           </MenuContent>
         </Autocomplete>
-        <div className="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-1 border-t border-border/70 px-4 py-2.5 text-xs text-muted-foreground">
+        <div
+          aria-hidden="true"
+          className="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-1 border-t border-border/70 px-4 py-2.5 text-xs text-muted-foreground pointer-coarse:hidden"
+        >
           <span className="inline-flex items-center gap-1.5">
             <Kbd>↑</Kbd>
             <Kbd>↓</Kbd> Navigate

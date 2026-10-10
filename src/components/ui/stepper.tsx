@@ -1,5 +1,6 @@
 "use client";
 
+import { CheckIcon } from "@phosphor-icons/react";
 import {
   AnimatePresence,
   LayoutGroup,
@@ -7,7 +8,6 @@ import {
   useReducedMotion,
 } from "motion/react";
 import { type ComponentProps, useId } from "react";
-import { Check } from "reicon-react";
 import { cn } from "@/lib/utils";
 
 export interface Step {
@@ -90,7 +90,11 @@ export function Stepper({
                         ease: [0.23, 1, 0.32, 1],
                       }}
                     >
-                      {completed ? <Check size={15} /> : index + 1}
+                      {completed ? (
+                        <CheckIcon size={15} weight="bold" />
+                      ) : (
+                        index + 1
+                      )}
                     </motion.span>
                   </AnimatePresence>
                 </span>

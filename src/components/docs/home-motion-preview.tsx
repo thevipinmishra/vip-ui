@@ -1,8 +1,8 @@
 "use client";
 
+import { ArrowRightIcon, CheckIcon, StackIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
-import { ArrowRight, Check, Layers } from "reicon-react";
 import { Button } from "@/components/ui/button";
 
 const cards = [
@@ -44,7 +44,7 @@ function CardArtwork({
             transition={transition}
             className="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[var(--shadow-float)]"
           >
-            Continue <ArrowRight size={16} aria-hidden="true" />
+            Continue <ArrowRightIcon size={16} aria-hidden="true" />
           </motion.span>
           <span className="font-mono text-[11px] text-muted-foreground">
             scale: 0.96
@@ -59,7 +59,7 @@ function CardArtwork({
       <>
         <div className="flex items-center justify-between text-xs font-semibold">
           <span>Layout</span>
-          <Layers size={16} aria-hidden="true" className="text-primary" />
+          <StackIcon size={16} aria-hidden="true" className="text-primary" />
         </div>
         <div className="flex flex-1 flex-col justify-center gap-2.5">
           {["Sketch", "Build", "Ship"].map((step, index) => (
@@ -96,7 +96,7 @@ function CardArtwork({
           className="mt-2 flex items-center gap-3 rounded-xl bg-success-subtle px-4 py-4 text-success-foreground"
         >
           <span className="grid size-8 shrink-0 place-items-center rounded-full bg-success/15">
-            <Check size={17} aria-hidden="true" />
+            <CheckIcon size={17} aria-hidden="true" />
           </span>
           <div>
             <span className="block text-xs font-semibold">Changes saved</span>
@@ -187,7 +187,7 @@ export function HomeMotionPreview() {
           size="sm"
           onPress={() => setActive((current) => (current + 1) % cards.length)}
         >
-          Move cards <ArrowRight size={15} aria-hidden="true" />
+          Move cards <ArrowRightIcon size={15} aria-hidden="true" />
         </Button>
       </div>
     </div>

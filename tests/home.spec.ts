@@ -1,24 +1,4 @@
-import { expect, type Locator, test } from "@playwright/test";
-
-async function expectTriggerCentered(trigger: Locator) {
-  const value = trigger.locator("[data-slot=select-value]");
-  const icon = trigger.locator("[data-slot=select-chevron] svg");
-  const [valueBox, iconBox, triggerBox] = await Promise.all([
-    value.boundingBox(),
-    icon.boundingBox(),
-    trigger.boundingBox(),
-  ]);
-  expect(valueBox).toBeTruthy();
-  expect(iconBox).toBeTruthy();
-  expect(triggerBox).toBeTruthy();
-  if (!valueBox || !iconBox || !triggerBox) return;
-  const triggerMid = triggerBox.y + triggerBox.height / 2;
-  expect(Math.abs(valueBox.y + valueBox.height / 2 - triggerMid)).toBeLessThan(
-    2,
-  );
-  expect(Math.abs(iconBox.y + iconBox.height / 2 - triggerMid)).toBeLessThan(2);
-  expect(iconBox.x).toBeGreaterThan(valueBox.x);
-}
+import { expect, test } from "@playwright/test";
 
 test("the homepage leads to real components and working examples", async ({
   page,
@@ -35,27 +15,35 @@ test("the homepage leads to real components and working examples", async ({
     page.getByRole("link", { name: "Browse components" }),
   ).toHaveAttribute("href", "/components");
 
-  const workspace = page.getByRole("button", { name: "Workspace" }).first();
-  await expectTriggerCentered(workspace);
-  await workspace.click();
-  await page.getByRole("option", { name: "Billing operations" }).click();
-  await expect(workspace).toContainText("Billing operations");
-  await expectTriggerCentered(workspace);
-
-  await page.getByRole("button", { name: "View project details" }).click();
+  const overview = page.getByRole("tabpanel", { name: "Overview" });
+  await overview.getByRole("radio", { name: "7 days" }).click();
   await expect(
-    page.getByRole("dialog", { name: "Project details" }),
+    overview.getByText("Last 7 days", { exact: true }),
   ).toBeVisible();
-  await page.keyboard.press("Escape");
   await expect(
-    page.getByRole("dialog", { name: "Project details" }),
-  ).toHaveCount(0);
+    overview.getByText(
+      "Revenue by plan for the last 7 days, in thousands of dollars: exact values",
+    ),
+  ).toBeAttached();
 
-  await page.getByRole("button", { name: "Save draft" }).click();
-  await expect(page.getByText("Draft saved")).toBeVisible();
+  await page.getByRole("tab", { name: "Settings" }).click();
+  const settings = page.getByRole("tabpanel", { name: "Settings" });
+  await expect(
+    settings.getByRole("heading", { name: "Appearance" }),
+  ).toBeVisible();
+  await page.getByRole("tab", { name: "Overview" }).click();
+  await expect(
+    overview.getByText("Last 7 days", { exact: true }),
+  ).toBeVisible();
 
-  await page.getByRole("link", { name: "Select", exact: true }).click();
-  await expect(page).toHaveURL(/\/components\/select/);
+  const tableLink = page.getByRole("link", { name: "Table component" });
+  await expect(tableLink).toHaveCount(0);
+  const inspect = page.getByRole("switch", { name: "Show components" });
+  await page.getByText("Show components", { exact: true }).click();
+  await expect(inspect).toBeChecked();
+  await expect(tableLink).toBeVisible();
+  await tableLink.click();
+  await expect(page).toHaveURL(/\/components\/table/);
 });
 
 test("the homepage fits a narrow screen and honors reduced motion", async ({
@@ -69,8 +57,9 @@ test("the homepage fits a narrow screen and honors reduced motion", async ({
     page.getByRole("link", { name: "Browse components" }),
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "Components", exact: true }),
+    page.getByRole("heading", { name: "Built with vip/ui" }),
   ).toBeVisible();
+  await expect(page.getByRole("tab", { name: "Settings" })).toBeAttached();
   const width = await page.evaluate(() => document.documentElement.scrollWidth);
   expect(width).toBeLessThanOrEqual(320);
 });

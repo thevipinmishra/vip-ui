@@ -1,6 +1,6 @@
 "use client";
 
-import { Pin, PinOff } from "reicon-react";
+import { PushPinIcon } from "@phosphor-icons/react";
 import { ToggleButton } from "@/components/ui/toggle-button";
 
 export function ToggleButtonDemo() {
@@ -8,11 +8,11 @@ export function ToggleButtonDemo() {
     <ToggleButton>
       {({ isSelected }) => (
         <>
-          {isSelected ? (
-            <Pin size={16} aria-hidden="true" />
-          ) : (
-            <PinOff size={16} aria-hidden="true" />
-          )}
+          <PushPinIcon
+            size={16}
+            weight={isSelected ? "fill" : "regular"}
+            aria-hidden="true"
+          />
           Pin to favorites
         </>
       )}

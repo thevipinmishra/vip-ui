@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Presence List",
   "description": "Animate additions and removals in a semantic list.",
-  "dependencies": ["motion", "tailwind-variants"],
+  "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
   "files": [
     {
       "path": "src/lib/utils.ts",

@@ -1,7 +1,7 @@
 "use client";
 
+import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "reicon-react";
 import { Button } from "@/components/ui/button";
 import { Stepper } from "@/components/ui/stepper";
 
@@ -28,14 +28,14 @@ export function StepperDemo() {
           isDisabled={currentStep === 0}
           onPress={() => setCurrentStep((step) => step - 1)}
         >
-          <ChevronLeft size={16} aria-hidden="true" /> Back
+          <CaretLeftIcon size={16} aria-hidden="true" /> Back
         </Button>
         <Button
           size="sm"
           isDisabled={currentStep === steps.length - 1}
           onPress={() => setCurrentStep((step) => step + 1)}
         >
-          Next <ChevronRight size={16} aria-hidden="true" />
+          Next <CaretRightIcon size={16} aria-hidden="true" />
         </Button>
       </div>
     </div>

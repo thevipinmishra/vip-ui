@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "motion/react";
 import type { HTMLAttributes } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
+import { easeInOut } from "@/lib/motion";
 
 const spinnerStyles = tv({
   base: "relative inline-flex shrink-0 items-center justify-center align-middle text-current",
@@ -21,11 +22,9 @@ const spinnerStyles = tv({
 type SpinnerProps = Omit<HTMLAttributes<HTMLOutputElement>, "children"> & {
   variant?: "orbit" | "ring" | "pulse" | "dots" | "bars" | "spark" | "segments";
   size?: NonNullable<VariantProps<typeof spinnerStyles>["size"]>;
-  /** Hide the spinner when nearby text already announces the loading state. */
   decorative?: boolean;
 };
 
-const flow = [0.77, 0, 0.175, 1] as const;
 const ticks = [0, 45, 90, 135, 180, 225, 270, 315];
 
 export function Spinner({
@@ -189,7 +188,7 @@ export function Spinner({
                       duration: 1.7,
                       delay: -index * 0.85,
                       repeat: Infinity,
-                      ease: flow,
+                      ease: easeInOut,
                     }
               }
             />
@@ -222,7 +221,7 @@ export function Spinner({
                       duration: 1.05,
                       delay: -index * 0.16,
                       repeat: Infinity,
-                      ease: flow,
+                      ease: easeInOut,
                     }
               }
             />
@@ -250,7 +249,7 @@ export function Spinner({
                       duration: 1.1,
                       delay: -index * 0.13,
                       repeat: Infinity,
-                      ease: flow,
+                      ease: easeInOut,
                     }
               }
             />
@@ -276,7 +275,7 @@ export function Spinner({
             transition={
               still
                 ? { duration: 0 }
-                : { duration: 1.9, repeat: Infinity, ease: flow }
+                : { duration: 1.9, repeat: Infinity, ease: easeInOut }
             }
           />
           <motion.circle
@@ -288,7 +287,12 @@ export function Spinner({
             transition={
               still
                 ? { duration: 0 }
-                : { duration: 1.9, delay: -0.7, repeat: Infinity, ease: flow }
+                : {
+                    duration: 1.9,
+                    delay: -0.7,
+                    repeat: Infinity,
+                    ease: easeInOut,
+                  }
             }
           />
           <motion.circle
@@ -300,7 +304,12 @@ export function Spinner({
             transition={
               still
                 ? { duration: 0 }
-                : { duration: 1.9, delay: -1.3, repeat: Infinity, ease: flow }
+                : {
+                    duration: 1.9,
+                    delay: -1.3,
+                    repeat: Infinity,
+                    ease: easeInOut,
+                  }
             }
           />
         </svg>
@@ -335,7 +344,7 @@ export function Spinner({
                       duration: 0.96,
                       delay: -index * 0.12,
                       repeat: Infinity,
-                      ease: flow,
+                      ease: easeInOut,
                     }
               }
             />

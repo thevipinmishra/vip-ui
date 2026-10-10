@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
 
-/** The vip/ui mark and wordmark, shared by the site header and footer. */
 export function SiteLogo({ className }: { className?: string }) {
   return (
     <span

@@ -4,13 +4,17 @@
   "type": "registry:ui",
   "title": "Preview Trigger",
   "description": "Open a preview without leaving the current context.",
-  "dependencies": ["react-aria-components"],
+  "dependencies": ["react-aria-components@^1.22.0"],
+  "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
   "files": [
     {
       "path": "src/components/ui/preview-trigger.tsx",
       "type": "registry:file",
       "target": "@components/vip-ui/preview-trigger.tsx",
-      "content": "\"use client\";\n\nimport {\n  PreviewTrigger as AriaPreviewTrigger,\n  type PreviewTriggerProps,\n} from \"react-aria-components\";\n\n// Pair with a focusable React Aria trigger and a Popover containing the preview.\nexport function PreviewTrigger(props: PreviewTriggerProps) {\n  return <AriaPreviewTrigger {...props} />;\n}\n"
+      "content": "\"use client\";\n\nimport {\n  PreviewTrigger as AriaPreviewTrigger,\n  type PreviewTriggerProps,\n} from \"react-aria-components\";\n\nexport function PreviewTrigger(props: PreviewTriggerProps) {\n  return <AriaPreviewTrigger {...props} />;\n}\n"
     }
   ]
 }

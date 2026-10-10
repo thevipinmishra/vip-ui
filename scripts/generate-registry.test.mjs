@@ -3,15 +3,22 @@ import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
 import {
-  createExampleItem,
+  createBlockItem,
   createItem,
+  dependencyName,
   packageName,
   portableSource,
-  readExampleFiles,
+  readBlockCatalog,
+  readRouteFiles,
+  versioned,
 } from "./generate-registry.mjs";
+import { setupCss, themeVars } from "./registry-theme.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
 const ui = path.join(root, "src/components/ui");
+
+const blocks = await readBlockCatalog();
+const blockItemFiles = new Set(blocks.map(({ name }) => `vip-${name}.json`));
 
 const sources = new Map(
   await Promise.all(
@@ -27,10 +34,18 @@ test("package subpaths resolve to installable package names", () => {
   assert.equal(packageName("@tanstack/charts/scales/band"), "@tanstack/charts");
   assert.equal(packageName("motion/react"), "motion");
   assert.equal(packageName("react-aria-components"), "react-aria-components");
-  assert.deepEqual(createItem("chart", sources).dependencies, [
-    "@tanstack/charts",
-    "tailwind-variants",
-  ]);
+  assert.deepEqual(
+    createItem("chart", sources).dependencies.map(dependencyName),
+    ["@tanstack/charts", "tailwind-variants"],
+  );
+  assert.equal(dependencyName("@tanstack/charts@^0.18.0"), "@tanstack/charts");
+});
+
+test("dependencies carry the ranges the site builds against", () => {
+  const item = createItem("sheet", sources);
+  assert.ok(item.dependencies.includes("react-aria-components@^1.22.0"));
+  for (const dependency of item.dependencies)
+    assert.match(dependency, /^@?[\w./-]+@[\^~]?\d/);
 });
 
 test("every component has a current, complete registry item", async () => {
@@ -38,7 +53,7 @@ test("every component has a current, complete registry item", async () => {
     (file) =>
       file.startsWith("vip-") &&
       file.endsWith(".json") &&
-      !file.startsWith("vip-example-"),
+      !blockItemFiles.has(file),
   );
   assert.equal(items.length, sources.size);
   for (const name of sources.keys()) {
@@ -56,12 +71,25 @@ test("every component has a current, complete registry item", async () => {
       ),
     );
     assert.ok(generated.files.every((file) => !file.target.startsWith("@ui/")));
-    assert.equal(generated.cssVars, undefined);
+    const usesReactAria = generated.dependencies.some(
+      (dependency) => dependencyName(dependency) === "react-aria-components",
+    );
+    assert.equal(Boolean(generated.css), usesReactAria, name);
+    assert.equal(Boolean(generated.devDependencies), usesReactAria, name);
+    for (const [variable, value] of Object.entries(
+      generated.cssVars?.light ?? {},
+    )) {
+      assert.equal(value, themeVars.light[variable]);
+      assert.equal(generated.cssVars.dark[variable], themeVars.dark[variable]);
+    }
     for (const file of generated.files) {
-      assert.doesNotMatch(
-        file.content,
-        /\b(group-)?(selection-start|selection-end|outside-month|unavailable|selected|pressed|invalid|indeterminate|disabled|empty):/,
-      );
+      for (const variable of Object.keys(themeVars.light)) {
+        if (file.content.includes(`--${variable})`))
+          assert.ok(
+            generated.cssVars?.light[variable],
+            `${name} uses --${variable} without shipping it`,
+          );
+      }
       assert.doesNotMatch(file.content, /vip-(primary|radius|shadow)/);
       for (const [, specifier] of file.content.matchAll(
         /\bfrom\s+["']\.\/([\w-]+)["']/g,
@@ -79,195 +107,41 @@ test("every component has a current, complete registry item", async () => {
   }
 });
 
-test("consumer setup mirrors the site's status roles", async () => {
+test("shipped theme variables match the site", async () => {
+  const normalize = (value) => value.replace(/\s+/g, " ").trim();
+  const declarations = (source, block) => {
+    const start = source.indexOf(block);
+    const body = source.slice(start, source.indexOf("\n}", start));
+    return new Map(
+      [...body.matchAll(/--([\w-]+):\s*([^;]+);/g)].map(([, name, value]) => [
+        name,
+        normalize(value),
+      ]),
+    );
+  };
   const site = (
     await readFile(path.join(root, "src/app/globals.css"), "utf8")
   ).replace(/\r\n/g, "\n");
   const setup = (
     await readFile(path.join(root, "public/r/setup.css"), "utf8")
   ).replace(/\r\n/g, "\n");
-  const statusRoles = (source, block) => {
-    const start = source.indexOf(block);
-    const end = source.indexOf("\n}", start);
-    return new Map(
-      source
-        .slice(start, end)
-        .split("\n")
-        .map((line) => line.trim())
-        .filter((line) => /^--(success|warning)[\w-]*:/.test(line))
-        .map((line) => [
-          line.slice(0, line.indexOf(":")),
-          line.slice(line.indexOf(":") + 1).trim(),
-        ]),
-    );
-  };
-  for (const block of [":root {", ".dark {"]) {
-    const siteRoles = statusRoles(site, block);
-    const setupRoles = statusRoles(setup, block);
-    assert.ok(siteRoles.size > 0, `globals.css ${block} has no status roles`);
-    assert.ok(setupRoles.size > 0, `setup.css ${block} has no status roles`);
-    for (const [property, value] of setupRoles) {
+  for (const [mode, block] of [
+    ["light", ":root {"],
+    ["dark", ".dark {"],
+  ]) {
+    const siteValues = declarations(site, block);
+    const setupValues = declarations(setup, block);
+    for (const [variable, value] of Object.entries(themeVars[mode])) {
       assert.equal(
-        siteRoles.get(property),
+        siteValues.get(variable),
         value,
-        `setup.css ${block} does not match globals.css for ${property}`,
+        `globals.css --${variable}`,
       );
+      assert.equal(setupValues.get(variable), value, `setup.css --${variable}`);
     }
   }
-});
-
-test("the repository example installs its routes and component dependencies", async () => {
-  const exampleFiles = await readExampleFiles(
-    path.join(root, "src/app/examples/repository"),
-  );
-  const generated = createExampleItem("repository", sources, exampleFiles);
-  const onDisk = JSON.parse(
-    await readFile(
-      path.join(root, "public/r/vip-example-repository.json"),
-      "utf8",
-    ),
-  );
-  assert.deepEqual(onDisk, generated);
-  assert.equal(generated.type, "registry:block");
-  assert.equal(
-    generated.files.filter(
-      (file) =>
-        file.target.endsWith("/page.tsx") && file.target.startsWith("src/app/"),
-    ).length,
-    6,
-  );
-  for (const component of [
-    "table",
-    "select",
-    "date-picker",
-    "accordion",
-    "stat",
-    "empty-state",
-  ]) {
-    assert.ok(
-      generated.files.some(
-        (file) => file.target === `@components/vip-ui/${component}.tsx`,
-      ),
-    );
-  }
-  for (const file of generated.files.filter((file) =>
-    file.target.startsWith("src/app/"),
-  )) {
-    assert.doesNotMatch(file.content, /@\/components\/ui\//);
-    for (const specifier of file.content.matchAll(
-      /\bfrom\s+["'](\.{1,2}\/[^"']+)["']/g,
-    )) {
-      const resolved = path.posix.normalize(
-        path.posix.join(path.posix.dirname(file.target), specifier[1]),
-      );
-      assert.ok(
-        generated.files.some((entry) => {
-          const target = entry.target.replace(
-            /^@components\//,
-            "src/components/",
-          );
-          return target === `${resolved}.tsx` || target === `${resolved}.ts`;
-        }),
-        `Missing ${specifier[1]} for ${file.target}`,
-      );
-    }
-  }
-});
-
-test("the business example installs seven sections and customer details", async () => {
-  const exampleFiles = await readExampleFiles(
-    path.join(root, "src/app/examples/business"),
-  );
-  const generated = createExampleItem("business", sources, exampleFiles);
-  const onDisk = JSON.parse(
-    await readFile(
-      path.join(root, "public/r/vip-example-business.json"),
-      "utf8",
-    ),
-  );
-  assert.deepEqual(onDisk, generated);
-  assert.equal(
-    generated.files.filter(
-      (file) =>
-        file.target.startsWith("src/app/") && file.target.endsWith("/page.tsx"),
-    ).length,
-    8,
-  );
-  for (const component of ["stat", "badge", "card", "button"]) {
-    assert.ok(
-      generated.files.some(
-        (file) => file.target === `@components/vip-ui/${component}.tsx`,
-      ),
-    );
-  }
-  for (const file of generated.files.filter((file) =>
-    file.target.startsWith("src/app/"),
-  )) {
-    assert.doesNotMatch(file.content, /@\/components\/ui\//);
-    for (const [, specifier] of file.content.matchAll(
-      /\bfrom\s+["'](\.{1,2}\/[^"']+)["']/g,
-    )) {
-      const resolved = path.posix.normalize(
-        path.posix.join(path.posix.dirname(file.target), specifier),
-      );
-      assert.ok(
-        generated.files.some((entry) => {
-          const target = entry.target.replace(
-            /^@components\//,
-            "src/components/",
-          );
-          return target === `${resolved}.tsx` || target === `${resolved}.ts`;
-        }),
-        `Missing ${specifier} for ${file.target}`,
-      );
-    }
-  }
-});
-
-test("the chat example installs its flow and shared controls", async () => {
-  const exampleFiles = await readExampleFiles(
-    path.join(root, "src/app/examples/chat"),
-  );
-  const generated = createExampleItem("chat", sources, exampleFiles);
-  const onDisk = JSON.parse(
-    await readFile(path.join(root, "public/r/vip-example-chat.json"), "utf8"),
-  );
-  assert.deepEqual(onDisk, generated);
-  for (const component of [
-    "avatar",
-    "button",
-    "card",
-    "search-field",
-    "text-area",
-  ]) {
-    assert.ok(
-      generated.files.some(
-        (file) => file.target === `@components/vip-ui/${component}.tsx`,
-      ),
-    );
-  }
-  for (const file of generated.files.filter((file) =>
-    file.target.startsWith("src/app/"),
-  )) {
-    assert.doesNotMatch(file.content, /@\/components\/ui\//);
-    for (const [, specifier] of file.content.matchAll(
-      /\bfrom\s+["'](\.{1,2}\/[^"']+)["']/g,
-    )) {
-      const resolved = path.posix.normalize(
-        path.posix.join(path.posix.dirname(file.target), specifier),
-      );
-      assert.ok(
-        generated.files.some((entry) => {
-          const target = entry.target.replace(
-            /^@components\//,
-            "src/components/",
-          );
-          return target === `${resolved}.tsx` || target === `${resolved}.ts`;
-        }),
-        `Missing ${specifier} for ${file.target}`,
-      );
-    }
-  }
+  assert.match(setup, /@plugin "tailwindcss-react-aria-components";/);
+  assert.match(setupCss(), /--color-success-subtle: var\(--success-subtle\);/);
 });
 
 test("dependent components bring their files and packages", () => {
@@ -283,34 +157,98 @@ test("dependent components bring their files and packages", () => {
   ]) {
     assert.ok(targets.includes(dependency), `Missing ${dependency}`);
   }
-  assert.ok(item.dependencies.includes("motion"));
-  assert.ok(item.dependencies.includes("react-aria-components"));
-  assert.ok(item.dependencies.includes("reicon-react"));
-  assert.ok(
-    item.dependencies.includes("tailwind-variants"),
-    "the scoped helper must be self-contained",
-  );
+  const names = item.dependencies.map(dependencyName);
+  for (const dependency of [
+    "@phosphor-icons/react",
+    "motion",
+    "react-aria-components",
+    "tailwind-variants",
+  ])
+    assert.ok(names.includes(dependency), `Missing ${dependency}`);
   assert.ok(targets.includes("utils.ts"));
 });
 
-test("the portable source uses React Aria data states and shadcn tokens", () => {
-  const output = portableSource(
-    '"group-selected/item:bg-primary pressed:text-foreground disabled:opacity-50 selection-start:rounded-s-md selection-end:rounded-e-md placeholder:text-muted-foreground rounded-md shadow-[var(--shadow-card)]"',
-  );
-  assert.match(output, /group-data-\[selected\]\/item:bg-primary/);
-  assert.match(output, /data-\[pressed\]:text-foreground/);
-  assert.match(output, /data-\[disabled\]:opacity-50/);
-  assert.match(output, /data-\[selection-start\]:rounded-s-md/);
-  assert.match(output, /data-\[selection-end\]:rounded-e-md/);
-  // `placeholder:` stays native so `::placeholder` on the installed inputs and
-  // textareas keeps working without the site's React Aria Tailwind plugin.
-  // Components that need the React Aria state write `data-[placeholder]:`.
-  assert.match(output, /placeholder:text-muted-foreground/);
-  assert.doesNotMatch(output, /data-\[placeholder\]:text-muted-foreground/);
-  assert.match(output, /rounded-md/);
-  assert.match(output, /var\(--shadow-card\)/);
+test("installed source matches the site source", () => {
+  const classes =
+    '"group-selected/item:bg-primary pressed:text-foreground disabled:opacity-50 focus-visible:outline-ring placeholder:text-muted-foreground"';
+  assert.equal(portableSource(classes), classes);
+  assert.equal(portableSource("a\r\nb"), "a\nb");
   assert.match(
     portableSource('import { cn } from "@/lib/utils"'),
     /from "\.\/utils"/,
+  );
+});
+
+test("every block installs as a route with the components it imports", async () => {
+  for (const block of blocks) {
+    const blockFiles = await readRouteFiles(
+      path.join(root, "src/app/blocks", block.name),
+    );
+    const generated = createBlockItem(block, sources, blockFiles);
+    const onDisk = JSON.parse(
+      await readFile(
+        path.join(root, "public/r", `vip-${block.name}.json`),
+        "utf8",
+      ),
+    );
+    assert.deepEqual(
+      onDisk,
+      generated,
+      `Stale registry entry for ${block.name}`,
+    );
+    assert.equal(generated.type, "registry:block");
+    assert.deepEqual(generated.categories, [block.category]);
+    assert.ok(
+      generated.files.some(
+        (file) =>
+          file.type === "registry:page" &&
+          file.target === `src/app/blocks/${block.name}/page.tsx`,
+      ),
+    );
+    for (const file of generated.files.filter((file) =>
+      file.target.startsWith("src/app/"),
+    )) {
+      assert.doesNotMatch(file.content, /@\/(components\/ui|lib)\//);
+      for (const specifier of file.content.matchAll(
+        /\bfrom\s+["'](\.{1,2}\/[^"']+)["']/g,
+      )) {
+        const resolved = path.posix.normalize(
+          path.posix.join(path.posix.dirname(file.target), specifier[1]),
+        );
+        assert.ok(
+          generated.files.some((entry) => {
+            const target = entry.target.replace(
+              /^@components\//,
+              "src/components/",
+            );
+            return target === `${resolved}.tsx` || target === `${resolved}.ts`;
+          }),
+          `Missing ${specifier[1]} for ${file.target}`,
+        );
+      }
+    }
+  }
+});
+
+test("blocks bring the packages their routes import", async () => {
+  const dashboard = createBlockItem(
+    blocks.find(({ name }) => name === "dashboard-01"),
+    sources,
+    await readRouteFiles(path.join(root, "src/app/blocks/dashboard-01")),
+  );
+  assert.ok(dashboard.dependencies.includes(versioned("@tanstack/charts")));
+  assert.ok(
+    dashboard.files.some(
+      (file) => file.target === "@components/vip-ui/utils.ts",
+    ),
+  );
+  assert.throws(
+    () =>
+      createBlockItem(
+        { name: "empty-01", description: "", category: "dashboard" },
+        sources,
+        new Map(),
+      ),
+    /no page\.tsx/,
   );
 });

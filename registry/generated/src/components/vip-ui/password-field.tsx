@@ -1,8 +1,9 @@
 "use client";
 
+import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
-import { Eye, EyeOff } from "reicon-react";
+import { duration, easeOut } from "./motion";
 import { Button } from "./button";
 import { fieldTriggerStyles } from "./field-styles";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "./input-group";
@@ -31,8 +32,8 @@ export function PasswordField({
   const [pointerReveal, setPointerReveal] = useState(false);
   const reduceMotion = useReducedMotion();
   const iconTransition = {
-    duration: reduceMotion || !pointerReveal ? 0 : 0.16,
-    ease: [0.23, 1, 0.32, 1] as const,
+    duration: reduceMotion || !pointerReveal ? 0 : duration.fast,
+    ease: easeOut,
   };
 
   return (
@@ -73,7 +74,7 @@ export function PasswordField({
                 animate={{ opacity: visible ? 0 : 1, scale: visible ? 0.9 : 1 }}
                 transition={iconTransition}
               >
-                <Eye size={18} />
+                <EyeIcon size={18} />
               </motion.span>
               <motion.span
                 className="col-start-1 row-start-1"
@@ -81,7 +82,7 @@ export function PasswordField({
                 animate={{ opacity: visible ? 1 : 0, scale: visible ? 1 : 0.9 }}
                 transition={iconTransition}
               >
-                <EyeOff size={18} />
+                <EyeSlashIcon size={18} />
               </motion.span>
             </span>
           </Button>

@@ -1,5 +1,6 @@
 "use client";
 
+import { MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
 import {
   Button as AriaButton,
   SearchField as AriaSearchField,
@@ -10,7 +11,6 @@ import {
   Label,
   Text,
 } from "react-aria-components";
-import { Search, X } from "reicon-react";
 import { cn } from "./utils";
 import {
   fieldDescriptionStyles,
@@ -51,10 +51,10 @@ export function SearchField({
           <>
             {label && <SearchFieldLabel>{label}</SearchFieldLabel>}
             <div className="relative flex items-center">
-              <Search
+              <MagnifyingGlassIcon
                 size={17}
                 aria-hidden="true"
-                className="pointer-events-none absolute start-3.5 text-muted-foreground"
+                className="pointer-events-none absolute start-3.5 text-muted-foreground group-disabled:opacity-60"
               />
               <SearchFieldInput placeholder={placeholder} />
               {!isEmpty && <SearchFieldClear />}
@@ -114,12 +114,12 @@ export function SearchFieldClear({
       className={composeRenderProps(className, (className) =>
         cn(
           fieldTriggerStyles,
-          "absolute inset-y-0 end-1 my-auto group-data-[empty]:hidden",
+          "absolute inset-y-0 end-1 my-auto group-empty:hidden",
           className,
         ),
       )}
     >
-      {children ?? <X size={16} aria-hidden="true" />}
+      {children ?? <XIcon size={16} aria-hidden="true" />}
     </AriaButton>
   );
 }

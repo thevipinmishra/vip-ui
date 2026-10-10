@@ -32,27 +32,43 @@ test("skeleton styles work in both themes and respect reduced motion", async ({
   page,
 }) => {
   await page.goto("/components/skeleton");
-  const skeleton = page.locator("[data-slot=skeleton]").first();
+  const skeleton = page.locator("#preview [data-slot=skeleton]").first();
+  const shimmer = skeleton.locator("> div");
   for (const theme of ["light", "dark"]) {
     if (theme === "dark") {
       await page.getByRole("button", { name: "Switch to dark theme" }).click();
+      const lightness = await skeleton.evaluate((element) => {
+        const context = document.createElement("canvas").getContext("2d");
+        const read = (color: string) => {
+          if (!context) return 0;
+          context.fillStyle = color;
+          context.fillRect(0, 0, 1, 1);
+          const [r, g, b] = context.getImageData(0, 0, 1, 1).data;
+          return r + g + b;
+        };
+        const via = getComputedStyle(element.firstElementChild as Element)
+          .getPropertyValue("--tw-gradient-via")
+          .replace(/\s*\/\s*[\d.]+\s*\)/, ")");
+        return {
+          base: read(getComputedStyle(element).backgroundColor),
+          highlight: read(via),
+        };
+      });
+      expect(lightness.highlight).toBeGreaterThan(lightness.base);
     }
+    const before = await shimmer.evaluate(
+      (element) => element.getBoundingClientRect().x,
+    );
     await expect
       .poll(() =>
-        skeleton.evaluate(
-          (element) => getComputedStyle(element, "::after").animationName,
-        ),
+        shimmer.evaluate((element) => element.getBoundingClientRect().x),
       )
-      .toBe("skeleton-shimmer");
+      .not.toBe(before);
   }
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await expect
-    .poll(() =>
-      skeleton.evaluate(
-        (element) => getComputedStyle(element, "::after").animationName,
-      ),
-    )
-    .toBe("none");
+  await page.reload();
+  await expect(skeleton).toBeVisible();
+  await expect(shimmer).toHaveCount(0);
 });
 
 test("switch and slider keep keyboard state and visible feedback", async ({

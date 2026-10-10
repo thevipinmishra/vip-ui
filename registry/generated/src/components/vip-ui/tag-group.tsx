@@ -1,5 +1,6 @@
 "use client";
 
+import { XIcon } from "@phosphor-icons/react";
 import { type HTMLMotionProps, motion, useReducedMotion } from "motion/react";
 import {
   Tag as AriaTag,
@@ -10,7 +11,6 @@ import {
   TagList,
   type TagProps,
 } from "react-aria-components";
-import { X } from "reicon-react";
 import { cn } from "./utils";
 import { PressButton } from "./press-button";
 
@@ -78,7 +78,7 @@ export function Tag({ className, children, ...props }: TagProps) {
       }
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex min-h-11 cursor-pointer items-center gap-1 rounded-lg bg-card ps-3 pe-1 text-sm font-medium shadow-[var(--shadow-card)] ring-1 ring-border/80 hover:bg-muted data-[selected]:bg-accent data-[selected]:text-accent-foreground data-[selected]:ring-primary/35 data-[disabled]:cursor-default data-[disabled]:opacity-50 data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring",
+          "flex min-h-11 cursor-pointer items-center gap-1 rounded-lg bg-card ps-3 pe-1 text-sm font-medium shadow-[var(--shadow-card)] ring-1 ring-border/80 hover:bg-muted selected:bg-accent selected:text-accent-foreground selected:ring-primary/35 disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
           className,
         ),
       )}
@@ -93,9 +93,9 @@ export function Tag({ className, children, ...props }: TagProps) {
               slot="remove"
               data-slot="tag-remove"
               aria-label={`Remove ${props.textValue ?? (typeof children === "string" ? children : "tag")}`}
-              className="grid size-11 cursor-pointer place-items-center rounded-md text-muted-foreground hover:bg-card hover:text-foreground data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring"
+              className="grid size-11 cursor-pointer place-items-center rounded-md text-muted-foreground hover:bg-card hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring"
             >
-              <X size={14} aria-hidden="true" />
+              <XIcon size={14} weight="bold" aria-hidden="true" />
             </PressButton>
           )}
         </>

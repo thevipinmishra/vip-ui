@@ -1,7 +1,7 @@
 "use client";
 
+import { CaretDownIcon } from "@phosphor-icons/react";
 import { type ComponentProps, useId } from "react";
-import { ChevronDown } from "reicon-react";
 import { cn } from "@/lib/utils";
 import {
   fieldDescriptionStyles,
@@ -62,18 +62,18 @@ export function NativeSelect({
             undefined
           }
           className={cn(
-            "min-h-12 w-full cursor-pointer appearance-none rounded-lg border border-input bg-card ps-3.5 pe-10 text-base text-foreground shadow-[var(--shadow-card)] outline-none hover:border-primary/45 focus:border-ring focus:ring-3 focus:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 aria-invalid:hover:border-destructive aria-invalid:focus:border-destructive aria-invalid:focus:ring-destructive/30 disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 disabled:hover:border-input sm:text-sm",
+            "peer min-h-12 w-full cursor-pointer appearance-none rounded-lg border border-input bg-card ps-3.5 pe-10 text-base text-foreground shadow-[var(--shadow-card)] outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-primary/45 focus:border-ring focus:ring-3 focus:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 aria-invalid:hover:border-destructive aria-invalid:focus:border-destructive aria-invalid:focus:ring-destructive/30 disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 disabled:hover:border-input sm:text-sm",
             className,
           )}
         >
           {placeholder && <option value="">{placeholder}</option>}
           {children}
         </select>
-        <ChevronDown
+        <CaretDownIcon
           size={17}
           data-slot="native-select-chevron"
           aria-hidden="true"
-          className="pointer-events-none absolute top-1/2 end-3.5 -translate-y-1/2 text-muted-foreground"
+          className="pointer-events-none absolute top-1/2 end-3.5 -translate-y-1/2 text-muted-foreground peer-disabled:opacity-60"
         />
       </div>
       {description && (

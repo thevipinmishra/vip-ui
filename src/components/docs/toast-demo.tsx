@@ -1,6 +1,6 @@
 "use client";
 
-import { Warning } from "reicon-react";
+import { WarningIcon } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { showToast } from "@/components/ui/toast";
 
@@ -16,9 +16,7 @@ export function ToastDemo() {
         })
       }
     >
-      <Warning size={16} aria-hidden="true" /> Show upload warning
+      <WarningIcon size={16} aria-hidden="true" /> Show upload warning
     </Button>
   );
 }
-
-// Mount <ToastViewport /> once in your app layout, outside the demos.

@@ -1,29 +1,41 @@
 import type { Metadata } from "next";
-import { officialThemes } from "./official-themes";
+import { findTheme, officialThemes } from "./official-themes";
+import { pageThemeCss, specimenCss } from "./theme-fonts";
 import { ThemeGallery } from "./theme-gallery";
+import { ThemeInstall } from "./theme-install";
+import { ThemeShowcase } from "./theme-showcase";
 import { ThemeStudio } from "./theme-studio";
 
 export const metadata: Metadata = {
   title: "Themes | vip/ui",
   description:
-    "Preview six vip/ui themes on live components and copy the CSS. Light and dark follow the site theme switcher.",
+    "Six themes for vip/ui and shadcn/ui with a live preview on real product screens. Install with the shadcn CLI or copy the CSS.",
 };
+
+const pageCss = Object.fromEntries(
+  officialThemes.map((theme) => [theme.slug, pageThemeCss(theme)]),
+);
 
 export default async function ThemesPage({
   searchParams,
 }: PageProps<"/themes">) {
   const { theme } = await searchParams;
-  const initialTheme =
-    typeof theme === "string" &&
-    officialThemes.some((item) => item.slug === theme)
-      ? theme
-      : undefined;
+  const initial =
+    (typeof theme === "string" && findTheme(theme)) || officialThemes[0];
 
   return (
-    <article className="min-w-0">
-      <ThemeStudio initialTheme={initialTheme}>
-        <ThemeGallery />
-      </ThemeStudio>
-    </article>
+    <ThemeStudio
+      initialSlug={initial.slug}
+      pageCss={pageCss}
+      specimenCss={specimenCss}
+      showcase={<ThemeShowcase />}
+      gallery={<ThemeGallery />}
+      install={Object.fromEntries(
+        officialThemes.map((option) => [
+          option.slug,
+          <ThemeInstall key={option.slug} theme={option} />,
+        ]),
+      )}
+    />
   );
 }

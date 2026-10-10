@@ -66,7 +66,7 @@ export function Column({ className, ...props }: ColumnProps) {
       data-slot="table-column"
       className={composeRenderProps(className, (className) =>
         cn(
-          "border-b border-border px-4 py-3 text-start text-xs font-semibold outline-none data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-[-2px] data-[focus-visible]:outline-ring",
+          "border-b border-border px-4 py-3 text-start text-xs font-semibold outline-none focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring",
           className,
         ),
       )}
@@ -80,7 +80,7 @@ export function Row<T extends object>({ className, ...props }: RowProps<T>) {
       data-slot="table-row"
       className={composeRenderProps(className, (className) =>
         cn(
-          "outline-none hover:bg-muted data-[focused]:bg-muted data-[selected]:bg-accent data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-[-2px] data-[focus-visible]:outline-ring",
+          "outline-none hover:bg-muted focus:bg-muted selected:bg-accent focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring",
           className,
         ),
       )}
@@ -94,7 +94,7 @@ export function Cell({ className, ...props }: CellProps) {
       data-slot="table-cell"
       className={composeRenderProps(className, (className) =>
         cn(
-          "border-b border-border px-4 py-3 text-foreground outline-none data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-[-2px] data-[focus-visible]:outline-ring",
+          "border-b border-border px-4 py-3 text-foreground outline-none focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring",
           className,
         ),
       )}

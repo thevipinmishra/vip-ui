@@ -1,7 +1,12 @@
 "use client";
 
+import {
+  FolderPlusIcon,
+  GearSixIcon,
+  MagnifyingGlassIcon,
+  UserPlusIcon,
+} from "@phosphor-icons/react";
 import { useState } from "react";
-import { FolderPlus, Search, Settings, UserAdd } from "reicon-react";
 import { Button } from "@/components/ui/button";
 import {
   CommandPalette,
@@ -18,7 +23,7 @@ export function CommandPaletteDemo({
   return (
     <div className="grid justify-items-start gap-3">
       <Button variant="outline" onPress={() => setOpen(true)}>
-        <Search size={16} aria-hidden="true" /> Search commands
+        <MagnifyingGlassIcon size={16} aria-hidden="true" /> Search commands
       </Button>
       <CommandPalette
         isOpen={isOpen}
@@ -26,7 +31,7 @@ export function CommandPaletteDemo({
         shortcut={shortcut}
       >
         <CommandPaletteItem>
-          <FolderPlus
+          <FolderPlusIcon
             size={17}
             aria-hidden="true"
             className="text-muted-foreground"
@@ -34,7 +39,7 @@ export function CommandPaletteDemo({
           New project
         </CommandPaletteItem>
         <CommandPaletteItem>
-          <Settings
+          <GearSixIcon
             size={17}
             aria-hidden="true"
             className="text-muted-foreground"
@@ -42,7 +47,7 @@ export function CommandPaletteDemo({
           Open settings
         </CommandPaletteItem>
         <CommandPaletteItem>
-          <UserAdd
+          <UserPlusIcon
             size={17}
             aria-hidden="true"
             className="text-muted-foreground"

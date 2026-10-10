@@ -1,7 +1,7 @@
 "use client";
 
+import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { useState } from "react";
-import { Search } from "reicon-react";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import {
@@ -30,7 +30,7 @@ export function InputGroupDemo() {
         <TextFieldLabel>Find a project</TextFieldLabel>
         <InputGroup>
           <InputGroupAddon>
-            <Search size={17} aria-hidden="true" />
+            <MagnifyingGlassIcon size={17} aria-hidden="true" />
           </InputGroupAddon>
           <InputGroupInput placeholder="Project name" />
           <InputGroupAddon>

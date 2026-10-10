@@ -1,13 +1,12 @@
 "use client";
 
+import { ArrowRightIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { ArrowRight } from "reicon-react";
 
 const MotionLink = motion.create(Link);
 
-/** Text link whose arrow nudges on pointer hover and keyboard focus. */
 export function DocsArrowLink({
   href,
   children,
@@ -34,7 +33,7 @@ export function DocsArrowLink({
         variants={{ rest: { x: 0 }, active: { x: 3 } }}
         transition={{ type: "spring", stiffness: 500, damping: 36 }}
       >
-        <ArrowRight size={15} />
+        <ArrowRightIcon size={15} />
       </motion.span>
     </MotionLink>
   );

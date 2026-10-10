@@ -17,12 +17,12 @@ export function DatePickerControlledDemo() {
   const formatter = new Intl.DateTimeFormat(locale, { dateStyle: "full" });
 
   return (
-    <div className="flex w-full max-w-sm flex-col gap-4">
+    <div className="grid w-full max-w-xs gap-4">
       <DatePicker label="Delivery date" value={date} onChange={setDate} />
-      <output className="rounded-lg bg-card px-4 py-3 text-[13px] text-muted-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70">
+      <output className="text-sm text-muted-foreground">
         {date
-          ? `Scheduled for ${formatter.format(date.toDate(getLocalTimeZone()))}`
-          : "Choose a delivery date."}
+          ? `Selected: ${formatter.format(date.toDate(getLocalTimeZone()))}`
+          : "No date selected."}
       </output>
     </div>
   );

@@ -1,5 +1,6 @@
 "use client";
 
+import { MinusIcon, PlusIcon } from "@phosphor-icons/react";
 import {
   NumberField as AriaNumberField,
   type NumberFieldProps as AriaNumberFieldProps,
@@ -10,7 +11,6 @@ import {
   Label,
   Text,
 } from "react-aria-components";
-import { Minus, Plus } from "reicon-react";
 import { cn } from "./utils";
 import {
   fieldDescriptionStyles,
@@ -23,7 +23,7 @@ import { PressButton } from "./press-button";
 
 const stepperButtonStyles = cn(
   fieldTriggerStyles,
-  "bg-muted/70 text-foreground hover:bg-accent hover:text-accent-foreground data-[pressed]:bg-accent data-[pressed]:text-accent-foreground data-[disabled]:opacity-40",
+  "bg-muted/70 text-foreground hover:bg-accent hover:text-accent-foreground pressed:bg-accent pressed:text-accent-foreground disabled:opacity-40",
 );
 
 export interface NumberFieldProps
@@ -67,11 +67,11 @@ export function NumberField({
               aria-label="Decrease"
               className={stepperButtonStyles}
             >
-              <Minus size={16} aria-hidden="true" />
+              <MinusIcon size={16} aria-hidden="true" />
             </PressButton>
             <Input
               data-slot="number-field-input"
-              className="min-h-11 min-w-0 flex-1 cursor-text bg-transparent px-2 text-center text-sm font-medium tabular-nums outline-none data-[disabled]:cursor-not-allowed"
+              className="min-h-11 min-w-0 flex-1 cursor-text bg-transparent px-2 text-center text-base font-medium tabular-nums outline-none placeholder:text-muted-foreground/80 disabled:cursor-not-allowed sm:text-sm"
             />
             <PressButton
               slot="increment"
@@ -79,7 +79,7 @@ export function NumberField({
               aria-label="Increase"
               className={stepperButtonStyles}
             >
-              <Plus size={16} aria-hidden="true" />
+              <PlusIcon size={16} aria-hidden="true" />
             </PressButton>
           </Group>
           {description && (

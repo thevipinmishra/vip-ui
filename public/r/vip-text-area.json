@@ -4,7 +4,19 @@
   "type": "registry:ui",
   "title": "Text Area",
   "description": "Enter a longer answer with a labeled field.",
-  "dependencies": ["react-aria-components", "tailwind-variants"],
+  "dependencies": ["react-aria-components@^1.22.0", "tailwind-variants@^3.3.1"],
+  "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
+  "cssVars": {
+    "light": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+    },
+    "dark": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+    }
+  },
   "files": [
     {
       "path": "src/lib/utils.ts",
@@ -16,7 +28,7 @@
       "path": "src/components/ui/field-styles.tsx",
       "type": "registry:file",
       "target": "@components/vip-ui/field-styles.tsx",
-      "content": "// Shared field styles keep standalone inputs and segmented date/time controls in sync.\nexport const fieldLabelStyles = \"text-sm font-medium text-foreground\";\nexport const fieldDescriptionStyles = \"text-xs leading-5 text-muted-foreground\";\nexport const fieldErrorStyles = \"text-xs leading-5 text-destructive\";\n\nexport const fieldInputStyles =\n  \"min-h-12 w-full cursor-text rounded-lg border border-input bg-card text-base text-foreground shadow-[var(--shadow-card)] outline-none placeholder:text-muted-foreground/80 hover:border-primary/45 data-[focused]:border-ring data-[focused]:ring-3 data-[focused]:ring-ring/50 data-[invalid]:border-destructive data-[invalid]:ring-3 data-[invalid]:ring-destructive/20 data-[invalid]:hover:border-destructive data-[invalid]:data-[focused]:border-destructive data-[invalid]:data-[focused]:ring-destructive/30 read-only:bg-muted/40 read-only:hover:border-input data-[disabled]:cursor-not-allowed data-[disabled]:bg-muted data-[disabled]:opacity-60 data-[disabled]:hover:border-input sm:text-sm\";\n\nexport const segmentedFieldStyles =\n  \"flex min-h-12 min-w-0 items-center rounded-lg border border-input bg-card shadow-[var(--shadow-card)] hover:border-primary/45 focus-within:border-ring focus-within:hover:border-ring focus-within:ring-3 focus-within:ring-ring/50 group-data-[invalid]:border-destructive group-data-[invalid]:hover:border-destructive group-data-[invalid]:focus-within:border-destructive group-data-[invalid]:focus-within:hover:border-destructive group-data-[invalid]:focus-within:ring-destructive/30 group-data-[readonly]:bg-muted/40 group-data-[readonly]:hover:border-input group-data-[disabled]:bg-muted group-data-[disabled]:opacity-60 group-data-[disabled]:hover:border-input\";\n\nexport const fieldTriggerStyles =\n  \"grid size-11 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none hover:bg-muted hover:text-foreground data-[pressed]:bg-muted data-[pressed]:text-foreground data-[focus-visible]:-outline-offset-2 data-[focus-visible]:outline-2 data-[focus-visible]:outline-solid data-[focus-visible]:outline-ring data-[disabled]:cursor-default data-[disabled]:opacity-50\";\n"
+      "content": "export const fieldLabelStyles = \"text-sm font-medium text-foreground\";\nexport const fieldDescriptionStyles = \"text-xs leading-5 text-muted-foreground\";\nexport const fieldErrorStyles = \"text-xs leading-5 text-destructive\";\n\nexport const fieldInputStyles =\n  \"min-h-12 w-full cursor-text rounded-lg border border-input bg-card text-base text-foreground shadow-[var(--shadow-card)] outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] placeholder:text-muted-foreground/80 hover:border-primary/45 focus:border-ring focus:ring-3 focus:ring-ring/50 invalid:border-destructive invalid:ring-3 invalid:ring-destructive/20 invalid:hover:border-destructive invalid:focus:border-destructive invalid:focus:ring-destructive/30 [&[readonly]]:bg-muted/40 [&[readonly]]:hover:border-input disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 disabled:hover:border-input sm:text-sm\";\n\nexport const segmentedFieldStyles =\n  \"flex min-h-12 min-w-0 items-center rounded-lg border border-input bg-card shadow-[var(--shadow-card)] transition-[color,background-color,border-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-primary/45 focus-within:border-ring focus-within:hover:border-ring focus-within:ring-3 focus-within:ring-ring/50 group-invalid:border-destructive group-invalid:ring-3 group-invalid:ring-destructive/20 group-invalid:hover:border-destructive group-invalid:focus-within:border-destructive group-invalid:focus-within:hover:border-destructive group-invalid:focus-within:ring-destructive/30 group-data-[readonly]:bg-muted/40 group-data-[readonly]:hover:border-input group-disabled:bg-muted group-disabled:opacity-60 group-disabled:hover:border-input\";\n\nexport const fieldTriggerStyles =\n  \"grid size-11 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none transition-[color,background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted hover:text-foreground pressed:bg-muted pressed:text-foreground focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring disabled:cursor-default disabled:opacity-50\";\n"
     },
     {
       "path": "src/components/ui/text-area.tsx",

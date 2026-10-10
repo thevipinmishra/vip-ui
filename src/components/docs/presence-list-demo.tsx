@@ -1,7 +1,12 @@
 "use client";
 
+import {
+  CaretDownIcon,
+  CaretUpIcon,
+  PlusIcon,
+  TrashIcon,
+} from "@phosphor-icons/react";
 import { useState } from "react";
-import { ChevronDown, ChevronUp, Plus, Trash } from "reicon-react";
 import { Button } from "@/components/ui/button";
 import { PresenceList } from "@/components/ui/presence-list";
 
@@ -51,7 +56,7 @@ export function PresenceListDemo() {
               isDisabled={rows[0]?.id === row.id}
               onPress={() => move(row.id, -1)}
             >
-              <ChevronUp size={16} aria-hidden="true" />
+              <CaretUpIcon size={16} aria-hidden="true" />
             </Button>
             <Button
               variant="ghost"
@@ -60,7 +65,7 @@ export function PresenceListDemo() {
               isDisabled={rows[rows.length - 1]?.id === row.id}
               onPress={() => move(row.id, 1)}
             >
-              <ChevronDown size={16} aria-hidden="true" />
+              <CaretDownIcon size={16} aria-hidden="true" />
             </Button>
             <Button
               variant="ghost"
@@ -72,14 +77,14 @@ export function PresenceListDemo() {
                 )
               }
             >
-              <Trash size={16} aria-hidden="true" />
+              <TrashIcon size={16} aria-hidden="true" />
             </Button>
           </span>
         )}
       </PresenceList>
       <div>
         <Button variant="secondary" size="sm" onPress={add}>
-          <Plus size={16} aria-hidden="true" /> Add item
+          <PlusIcon size={16} aria-hidden="true" /> Add item
         </Button>
       </div>
     </div>

@@ -2,7 +2,6 @@ import { expect, type Page, test } from "@playwright/test";
 
 async function openSheetPage(page: Page) {
   await page.goto("/components/sheet");
-  // Clicks before hydration don't open the sheet.
   await page.waitForLoadState("networkidle");
 }
 
@@ -10,7 +9,6 @@ async function openSheet(page: Page, trigger: string, title: string) {
   await page.getByRole("button", { name: trigger, exact: true }).click();
   const dialog = page.getByRole("dialog", { name: title });
   await expect(dialog).toBeVisible();
-  // Interacting mid-slide would interrupt React Aria's enter scroll.
   let previous = "";
   await expect
     .poll(
@@ -18,7 +16,6 @@ async function openSheet(page: Page, trigger: string, title: string) {
         const box = await dialog.boundingBox();
         const viewport = page.viewportSize();
         const key = JSON.stringify(box);
-        // It rests at the exit position briefly before sliding in.
         const settled =
           key === previous &&
           !!box &&
@@ -36,7 +33,6 @@ async function openSheet(page: Page, trigger: string, title: string) {
   return dialog;
 }
 
-// Records a value every frame until stopped, to catch single-frame glitches.
 async function recordFrames(page: Page, read: () => unknown) {
   await page.evaluate((source) => {
     const read = new Function(`return (${source})()`);
@@ -129,8 +125,6 @@ test("dragging the handle with a mouse settles or dismisses", async ({
     .poll(async () => Math.abs((await dialog.boundingBox())?.x ?? 99))
     .toBeLessThan(1);
 
-  // The sheet is 26rem wide; dragging past 35% of that dismisses it.
-
   await page.mouse.move(x, y);
   await page.mouse.down();
   await page.mouse.move(x - 180, y, { steps: 12 });
@@ -141,7 +135,6 @@ test("dragging the handle with a mouse settles or dismisses", async ({
   );
   await page.mouse.up();
   await expect(dialog).toHaveCount(0);
-  // It keeps sliding out from where it was released, never back open first.
   const positions = (await stop()).filter((x) => typeof x === "number");
   for (let i = 1; i < positions.length; i++)
     expect(positions[i]).toBeLessThanOrEqual(positions[i - 1] + 1);
@@ -163,7 +156,6 @@ test("the handle can be grabbed again while the sheet settles", async ({
   await page.mouse.move(x - 40, y, { steps: 8 });
   await page.waitForTimeout(150);
   await page.mouse.up();
-  // Grab it mid-settle and hold past the settle's own snap restore.
   await page.mouse.down();
   await page.mouse.move(x - 60, y, { steps: 4 });
   await page.waitForTimeout(1100);

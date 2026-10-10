@@ -25,7 +25,10 @@ export function FieldsetLegend({
     <legend
       {...props}
       data-slot="fieldset-legend"
-      className={cn("px-1 text-sm font-semibold text-foreground", className)}
+      className={cn(
+        "float-left mb-1 w-full text-sm font-semibold text-foreground [&+*]:clear-both",
+        className,
+      )}
     />
   );
 }

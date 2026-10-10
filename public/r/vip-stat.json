@@ -4,7 +4,15 @@
   "type": "registry:ui",
   "title": "Stat",
   "description": "Display a labeled value and its context.",
-  "dependencies": ["tailwind-variants"],
+  "dependencies": ["tailwind-variants@^3.3.1"],
+  "cssVars": {
+    "light": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+    },
+    "dark": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+    }
+  },
   "files": [
     {
       "path": "src/lib/utils.ts",
@@ -16,7 +24,7 @@
       "path": "src/components/ui/stat.tsx",
       "type": "registry:file",
       "target": "@components/vip-ui/stat.tsx",
-      "content": "import type { HTMLAttributes } from \"react\";\nimport { cn } from \"./utils\";\n\nexport function Stat({ className, ...props }: HTMLAttributes<HTMLDivElement>) {\n  return (\n    <div\n      data-slot=\"stat\"\n      className={cn(\n        \"rounded-xl bg-card p-5 shadow-[var(--shadow-card)] ring-1 ring-border/70\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nexport function StatLabel({\n  className,\n  ...props\n}: HTMLAttributes<HTMLParagraphElement>) {\n  return (\n    <p\n      data-slot=\"stat-label\"\n      className={cn(\"text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  );\n}\n\nexport function StatValue({\n  className,\n  ...props\n}: HTMLAttributes<HTMLParagraphElement>) {\n  return (\n    <p\n      data-slot=\"stat-value\"\n      className={cn(\n        \"mt-2 text-3xl font-semibold tracking-[-0.045em] tabular-nums\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nexport function StatDetail({\n  className,\n  ...props\n}: HTMLAttributes<HTMLParagraphElement>) {\n  return (\n    <p\n      data-slot=\"stat-detail\"\n      className={cn(\"mt-2 text-xs leading-5 text-muted-foreground\", className)}\n      {...props}\n    />\n  );\n}\n"
+      "content": "import type { ComponentProps } from \"react\";\nimport { cn } from \"./utils\";\n\nexport function Stat({ className, ...props }: ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"stat\"\n      className={cn(\n        \"min-w-0 rounded-xl bg-card p-5 text-card-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nexport function StatLabel({ className, ...props }: ComponentProps<\"p\">) {\n  return (\n    <p\n      data-slot=\"stat-label\"\n      className={cn(\n        \"text-sm text-muted-foreground [overflow-wrap:anywhere]\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nexport function StatValue({ className, ...props }: ComponentProps<\"p\">) {\n  return (\n    <p\n      data-slot=\"stat-value\"\n      className={cn(\n        \"mt-2 text-3xl font-semibold tracking-[-0.045em] tabular-nums [overflow-wrap:anywhere]\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nexport function StatDetail({ className, ...props }: ComponentProps<\"p\">) {\n  return (\n    <p\n      data-slot=\"stat-detail\"\n      className={cn(\"mt-2 text-xs leading-5 text-muted-foreground\", className)}\n      {...props}\n    />\n  );\n}\n"
     }
   ]
 }

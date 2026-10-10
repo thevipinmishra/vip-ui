@@ -1,5 +1,11 @@
 "use client";
 
+import {
+  CaretRightIcon,
+  FileTextIcon,
+  FolderIcon,
+  FolderOpenIcon,
+} from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 import {
@@ -11,7 +17,6 @@ import {
   type TreeItemProps,
   type TreeProps,
 } from "react-aria-components";
-import { ChevronRight, FileText, Folder, FolderOpen } from "reicon-react";
 import { cn } from "@/lib/utils";
 
 export function Tree<T extends object>({ className, ...props }: TreeProps<T>) {
@@ -39,9 +44,7 @@ export function TreeItem({
 }: Omit<TreeItemProps, "children" | "textValue"> & {
   textValue?: string;
   title: string;
-  /** Visible row content. `title` remains the accessible text value for typeahead. */
   content?: ReactNode;
-  /** Overrides the default folder or file icon. */
   icon?: ReactNode;
   children?: ReactNode;
 }) {
@@ -83,7 +86,7 @@ export function TreeItem({
                     ease: [0.23, 1, 0.32, 1],
                   }}
                 >
-                  <ChevronRight size={16} />
+                  <CaretRightIcon size={16} />
                 </motion.span>
               </AriaButton>
             ) : (
@@ -97,12 +100,12 @@ export function TreeItem({
               {icon ??
                 (hasChildItems ? (
                   isExpanded ? (
-                    <FolderOpen size={16} />
+                    <FolderOpenIcon size={16} />
                   ) : (
-                    <Folder size={16} />
+                    <FolderIcon size={16} />
                   )
                 ) : (
-                  <FileText size={16} />
+                  <FileTextIcon size={16} />
                 ))}
             </span>
             <div data-slot="tree-item-label" className="min-w-0 flex-1">

@@ -15,15 +15,6 @@ interface LineSpan {
   height: number;
 }
 
-/**
- * Discovers the sections rendered in the current page's main element. Labels
- * come from data-toc-label, then the first heading inside the section, then the
- * section's aria-label.
- *
- * Every section visible in the reading area is highlighted and its label is
- * brightened. A single line spans from the first visible section to the last,
- * springing between ranges as the reader scrolls or jumps through the list.
- */
 export function OnThisPage() {
   const pathname = usePathname();
   const reduceMotion = useReducedMotion();
@@ -79,7 +70,6 @@ export function OnThisPage() {
         setVisibleIds(nextVisible);
         if (nextVisible[0]) setCurrentId(nextVisible[0]);
       },
-      // Ignore sections that only peek in at the viewport edges.
       { rootMargin: "-24px 0px -12% 0px", threshold: 0 },
     );
 
@@ -87,7 +77,6 @@ export function OnThisPage() {
     return () => observer.disconnect();
   }, [pathname]);
 
-  // Re-measure when label wrapping or the viewport changes.
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -98,7 +87,6 @@ export function OnThisPage() {
     return () => observer.disconnect();
   }, []);
 
-  // Stretch the single line across the full range of highlighted sections.
   // biome-ignore lint/correctness/useExhaustiveDependencies: layoutTick re-measures after container resizes
   useLayoutEffect(() => {
     const container = containerRef.current;

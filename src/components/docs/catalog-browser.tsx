@@ -1,8 +1,8 @@
 "use client";
 
+import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useState } from "react";
-import { Search } from "reicon-react";
 import {
   EmptyState,
   EmptyStateDescription,
@@ -99,7 +99,7 @@ export function CatalogBrowser() {
         <div className="mt-12">
           <EmptyState>
             <EmptyStateIcon>
-              <Search size={19} aria-hidden="true" />
+              <MagnifyingGlassIcon size={19} aria-hidden="true" />
             </EmptyStateIcon>
             <EmptyStateTitle>No matching components</EmptyStateTitle>
             <EmptyStateDescription>

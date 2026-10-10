@@ -1,10 +1,3 @@
-/**
- * Single source of truth for component identity, grouping, and order across the
- * docs site: catalog page, sidebar, search, previous/next navigation, and sitemap.
- *
- * Keep this module free of Node-only imports so client components can use it.
- */
-
 interface CatalogDefinition {
   title: string;
   description: string;
@@ -503,10 +496,6 @@ const catalog: CatalogDefinition[] = [
   },
 ];
 
-/**
- * React Aria APIs for inherited props on wrappers and their composed parts.
- * The URL appears in the component's API reference.
- */
 const reactAriaDocs: Record<string, string> = {
   button: "https://react-aria.adobe.com/Button",
   link: "https://react-aria.adobe.com/Link",
@@ -596,7 +585,6 @@ export const catalogGroups: CatalogGroup[] = catalog.map((group) => ({
   })),
 }));
 
-/** Every component in catalog order: the sequence used by the catalog, search, and docs navigation. */
 export const catalogComponents: CatalogComponent[] = catalogGroups.flatMap(
   (group) => group.components,
 );

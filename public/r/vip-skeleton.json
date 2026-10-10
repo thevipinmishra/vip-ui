@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Skeleton",
   "description": "Reserve space while content is loading.",
-  "dependencies": ["motion", "tailwind-variants"],
+  "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
   "files": [
     {
       "path": "src/lib/utils.ts",
@@ -16,7 +16,7 @@
       "path": "src/components/ui/skeleton.tsx",
       "type": "registry:file",
       "target": "@components/vip-ui/skeleton.tsx",
-      "content": "\"use client\";\n\nimport { motion, useReducedMotion } from \"motion/react\";\nimport type { HTMLAttributes } from \"react\";\nimport { cn } from \"./utils\";\n\nexport function Skeleton({\n  className,\n  children,\n  ...props\n}: HTMLAttributes<HTMLDivElement>) {\n  const reduceMotion = useReducedMotion();\n  return (\n    <div\n      {...props}\n      aria-hidden=\"true\"\n      data-slot=\"skeleton\"\n      className={cn(\"relative overflow-hidden rounded-md bg-muted\", className)}\n    >\n      {children}\n      {!reduceMotion && (\n        <motion.div\n          className=\"pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-card/55 to-transparent\"\n          initial={{ transform: \"translateX(-100%)\" }}\n          animate={{ transform: \"translateX(100%)\" }}\n          transition={{ duration: 1.6, ease: \"linear\", repeat: Infinity }}\n        />\n      )}\n    </div>\n  );\n}\n"
+      "content": "\"use client\";\n\nimport { motion, useReducedMotion } from \"motion/react\";\nimport type { ComponentProps } from \"react\";\nimport { cn } from \"./utils\";\n\nexport function Skeleton({\n  className,\n  children,\n  ...props\n}: ComponentProps<\"div\">) {\n  const reduceMotion = useReducedMotion();\n  return (\n    <div\n      {...props}\n      aria-hidden=\"true\"\n      data-slot=\"skeleton\"\n      className={cn(\n        \"relative isolate overflow-hidden rounded-md bg-muted\",\n        className,\n      )}\n    >\n      {children}\n      {!reduceMotion && (\n        <motion.div\n          className=\"pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-card/60 to-transparent dark:via-foreground/[0.06]\"\n          initial={{ transform: \"translateX(-100%)\" }}\n          animate={{ transform: \"translateX(100%)\" }}\n          transition={{ duration: 1.6, ease: \"linear\", repeat: Infinity }}\n        />\n      )}\n    </div>\n  );\n}\n"
     }
   ]
 }

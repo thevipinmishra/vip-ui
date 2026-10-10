@@ -4,15 +4,26 @@ import {
   RangeCalendar as AriaRangeCalendar,
   CalendarCell,
   CalendarGrid,
-  CalendarHeading,
+  CalendarGridBody,
+  CalendarGridHeader,
+  CalendarHeaderCell,
   composeRenderProps,
   type DateValue,
   type RangeCalendarProps,
 } from "react-aria-components";
-import { ChevronLeft, ChevronRight } from "reicon-react";
 import { cn } from "./utils";
-import { Button } from "./button";
-import { calendarCellBaseClass } from "./calendar";
+import {
+  CalendarHeader,
+  calendarCellBaseClass,
+  calendarGridStyles,
+  calendarHeaderCellStyles,
+  calendarStyles,
+} from "./calendar";
+
+const rangeCellClass = cn(
+  calendarCellBaseClass,
+  "rounded-md selected:rounded-none selected:bg-accent selected:text-accent-foreground selected:hover:bg-accent selected:focus:bg-accent selected:[td:first-child_&]:rounded-s-md selected:[td:last-child_&]:rounded-e-md selection-start:rounded-s-md selection-start:bg-primary selection-start:text-primary-foreground selection-start:hover:bg-primary selection-start:focus:bg-primary selection-end:rounded-e-md selection-end:bg-primary selection-end:text-primary-foreground selection-end:hover:bg-primary selection-end:focus:bg-primary invalid:selected:bg-destructive/15 invalid:selected:text-destructive invalid:selected:hover:bg-destructive/15 invalid:selected:focus:bg-destructive/15 invalid:selection-start:bg-destructive invalid:selection-start:text-destructive-foreground invalid:selection-start:hover:bg-destructive invalid:selection-start:focus:bg-destructive invalid:selection-end:bg-destructive invalid:selection-end:text-destructive-foreground invalid:selection-end:hover:bg-destructive invalid:selection-end:focus:bg-destructive",
+);
 
 export function RangeCalendar<T extends DateValue>({
   className,
@@ -24,43 +35,25 @@ export function RangeCalendar<T extends DateValue>({
       {...props}
       data-slot="range-calendar"
       className={composeRenderProps(className, (className) =>
-        cn("w-fit max-w-full text-foreground", className),
+        cn(calendarStyles, className),
       )}
     >
       {children ?? (
         <>
-          <div className="mb-3 flex items-center justify-between gap-2">
-            <Button
-              slot="previous"
-              aria-label="Previous month"
-              variant="ghost"
-              size="icon"
-            >
-              <ChevronLeft size={17} aria-hidden="true" />
-            </Button>
-            <CalendarHeading className="text-sm font-semibold" />
-            <Button
-              slot="next"
-              aria-label="Next month"
-              variant="ghost"
-              size="icon"
-            >
-              <ChevronRight size={17} aria-hidden="true" />
-            </Button>
-          </div>
-          <CalendarGrid
-            className="border-separate border-spacing-0 text-center text-xs"
-            weekdayStyle="short"
-          >
-            {(date) => (
-              <CalendarCell
-                date={date}
-                className={cn(
-                  calendarCellBaseClass,
-                  "rounded-md data-[selected]:rounded-none data-[selected]:bg-accent data-[selected]:text-accent-foreground data-[selected]:hover:bg-accent data-[selected]:data-[focused]:bg-accent data-[selected]:[td:first-child_&]:rounded-s-md data-[selected]:[td:last-child_&]:rounded-e-md data-[selection-start]:rounded-s-md data-[selection-start]:bg-primary data-[selection-start]:text-primary-foreground data-[selection-start]:hover:bg-primary data-[selection-start]:data-[focused]:bg-primary data-[selection-end]:rounded-e-md data-[selection-end]:bg-primary data-[selection-end]:text-primary-foreground data-[selection-end]:hover:bg-primary data-[selection-end]:data-[focused]:bg-primary",
-                )}
-              />
-            )}
+          <CalendarHeader />
+          <CalendarGrid className={calendarGridStyles} weekdayStyle="short">
+            <CalendarGridHeader>
+              {(day) => (
+                <CalendarHeaderCell className={calendarHeaderCellStyles}>
+                  {day}
+                </CalendarHeaderCell>
+              )}
+            </CalendarGridHeader>
+            <CalendarGridBody>
+              {(date) => (
+                <CalendarCell date={date} className={rangeCellClass} />
+              )}
+            </CalendarGridBody>
           </CalendarGrid>
         </>
       )}

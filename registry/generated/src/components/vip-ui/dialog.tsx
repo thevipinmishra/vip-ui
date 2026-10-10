@@ -1,5 +1,6 @@
 "use client";
 
+import { XIcon } from "@phosphor-icons/react";
 import { type HTMLMotionProps, motion, useReducedMotion } from "motion/react";
 import {
   createContext,
@@ -22,7 +23,6 @@ import {
   Text,
   type TextProps,
 } from "react-aria-components";
-import { X } from "reicon-react";
 import { cn } from "./utils";
 import { Button, type ButtonProps } from "./button";
 
@@ -57,8 +57,6 @@ export function Dialog({
   );
   const [previousIsOpen, setPreviousIsOpen] = useState(isOpen);
 
-  // Controlled changes don't call onOpenChange. Sync before rendering children
-  // so an external close retains the overlay for its exit animation.
   if (isOpen !== previousIsOpen) {
     setPreviousIsOpen(isOpen);
     if (isOpen !== undefined) setAnimation(isOpen ? "visible" : "hidden");
@@ -278,7 +276,7 @@ export function DialogClose({
       }}
       className={className}
     >
-      {children ?? <X size={17} aria-hidden="true" />}
+      {children ?? <XIcon size={17} aria-hidden="true" />}
     </Button>
   );
 }

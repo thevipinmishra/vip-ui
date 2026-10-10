@@ -1,6 +1,5 @@
 "use client";
 
-import { type HTMLMotionProps, motion, useReducedMotion } from "motion/react";
 import {
   ColorSwatchPicker as AriaColorSwatchPicker,
   ColorSwatchPickerItem as AriaColorSwatchPickerItem,
@@ -31,29 +30,13 @@ export function ColorSwatchPickerItem({
   children,
   ...props
 }: ColorSwatchPickerItemProps) {
-  const reduceMotion = useReducedMotion();
   return (
     <AriaColorSwatchPickerItem
       {...props}
       data-slot="color-swatch-picker-item"
-      render={
-        props.render ??
-        ((domProps, { isPressed, isDisabled }) => (
-          <motion.div
-            {...(domProps as HTMLMotionProps<"div">)}
-            initial={false}
-            animate={{ scale: isPressed && !isDisabled ? 0.95 : 1 }}
-            transition={
-              reduceMotion
-                ? { duration: 0 }
-                : { type: "spring", stiffness: 500, damping: 36 }
-            }
-          />
-        ))
-      }
       className={composeRenderProps(className, (className) =>
         cn(
-          "grid size-11 cursor-pointer place-items-center rounded-lg border-2 border-transparent hover:border-border hover:bg-muted/50 selected:border-primary selected:bg-accent/50 selected:hover:border-primary disabled:cursor-default focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:opacity-50",
+          "grid size-11 cursor-pointer place-items-center rounded-lg border-2 border-transparent transition-[scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-border hover:bg-muted/50 motion-safe:pressed:scale-[0.96] selected:border-primary selected:bg-accent/50 selected:hover:border-primary disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring forced-colors:selected:border-[Highlight]",
           className,
         ),
       )}

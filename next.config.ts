@@ -1,10 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   reactCompiler: true,
-  // Next's dev compression can retain drain listeners on its Gzip stream
-  // while streaming React responses. Keep gzip enabled in production.
+  experimental: {
+    optimizePackageImports: [
+      "@phosphor-icons/react",
+      "@phosphor-icons/react/ssr",
+    ],
+  },
   compress: process.env.NODE_ENV !== "development",
   async redirects() {
     return [
@@ -16,6 +19,16 @@ const nextConfig: NextConfig = {
       {
         source: "/components/drawer",
         destination: "/components/sheet",
+        permanent: true,
+      },
+      {
+        source: "/examples/:path*",
+        destination: "/blocks",
+        permanent: true,
+      },
+      {
+        source: "/r/vip-drawer.json",
+        destination: "/r/vip-sheet.json",
         permanent: true,
       },
     ];

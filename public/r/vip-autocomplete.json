@@ -4,7 +4,11 @@
   "type": "registry:ui",
   "title": "Autocomplete",
   "description": "Find suggestions as you type in a text field.",
-  "dependencies": ["react-aria-components"],
+  "dependencies": ["react-aria-components@^1.22.0"],
+  "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
   "files": [
     {
       "path": "src/components/ui/autocomplete.tsx",

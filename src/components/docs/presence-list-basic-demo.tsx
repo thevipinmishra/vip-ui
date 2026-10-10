@@ -1,7 +1,7 @@
 "use client";
 
+import { ArrowCounterClockwiseIcon, CheckIcon } from "@phosphor-icons/react";
 import { useState } from "react";
-import { Check, Refresh } from "reicon-react";
 import { Button } from "@/components/ui/button";
 import { PresenceList } from "@/components/ui/presence-list";
 
@@ -35,9 +35,9 @@ export function PresenceListBasicDemo() {
           onPress={() => setItems((current) => (current.length ? [] : tasks))}
         >
           {items.length ? (
-            <Check size={16} aria-hidden="true" />
+            <CheckIcon size={16} aria-hidden="true" />
           ) : (
-            <Refresh size={16} aria-hidden="true" />
+            <ArrowCounterClockwiseIcon size={16} aria-hidden="true" />
           )}
           {items.length ? "Complete tasks" : "Restore tasks"}
         </Button>

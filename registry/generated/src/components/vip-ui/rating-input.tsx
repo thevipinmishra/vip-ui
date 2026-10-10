@@ -1,7 +1,8 @@
 "use client";
 
+import { StarIcon } from "@phosphor-icons/react";
 import { useState } from "react";
-import { Star } from "reicon-react";
+import { cn } from "./utils";
 import { Radio, RadioGroup, type RadioGroupProps } from "./radio-group";
 
 export interface RatingInputProps
@@ -56,11 +57,14 @@ export function RatingInput({
               key={rating}
               value={String(rating)}
               aria-label={`${rating} of ${max} stars`}
-              className={`size-11 justify-center p-0 ${rating <= selected ? "text-primary" : "text-muted-foreground"}`}
+              className={cn(
+                "size-11 justify-center hover:bg-muted/70",
+                rating <= selected ? "text-primary" : "text-muted-foreground",
+              )}
             >
-              <Star
+              <StarIcon
                 size={34}
-                weight={rating <= selected ? "Filled" : "Outline"}
+                weight={rating <= selected ? "fill" : "regular"}
                 aria-hidden="true"
               />
             </Radio>

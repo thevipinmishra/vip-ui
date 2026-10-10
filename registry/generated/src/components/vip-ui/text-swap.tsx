@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import type { ComponentProps } from "react";
+import { duration, easeOut, transitionFor } from "./motion";
 import { cn } from "./utils";
 
 export interface TextSwapProps
@@ -26,10 +27,10 @@ export function TextSwap({ value, className, ...props }: TextSwapProps) {
           initial={reduceMotion ? false : { opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
           exit={reduceMotion ? { opacity: 1 } : { opacity: 0, y: -4 }}
-          transition={{
-            duration: reduceMotion ? 0 : 0.18,
-            ease: [0.23, 1, 0.32, 1],
-          }}
+          transition={transitionFor(reduceMotion, {
+            duration: duration.base,
+            ease: easeOut,
+          })}
         >
           {value}
         </motion.span>

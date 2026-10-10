@@ -4,7 +4,23 @@
   "type": "registry:ui",
   "title": "Progress Bar",
   "description": "Show progress for a task with a known completion point.",
-  "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+  "dependencies": [
+    "motion@^13.5.1",
+    "react-aria-components@^1.22.0",
+    "tailwind-variants@^3.3.1"
+  ],
+  "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
+  "cssVars": {
+    "light": {
+      "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+    },
+    "dark": {
+      "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+    }
+  },
   "files": [
     {
       "path": "src/lib/utils.ts",

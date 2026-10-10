@@ -1,7 +1,7 @@
 "use client";
 
+import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { useState } from "react";
-import { Search } from "reicon-react";
 import { Badge } from "@/components/ui/badge";
 import { SearchField } from "@/components/ui/search-field";
 import { Select } from "@/components/ui/select";
@@ -119,7 +119,7 @@ export function TableFilterDemo() {
             items={results}
             renderEmptyState={() => (
               <div className="flex flex-col items-center gap-2 px-4 py-10 text-center">
-                <Search
+                <MagnifyingGlassIcon
                   size={20}
                   aria-hidden="true"
                   className="text-muted-foreground"

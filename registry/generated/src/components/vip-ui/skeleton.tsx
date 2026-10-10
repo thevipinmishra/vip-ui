@@ -1,26 +1,29 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import type { HTMLAttributes } from "react";
+import type { ComponentProps } from "react";
 import { cn } from "./utils";
 
 export function Skeleton({
   className,
   children,
   ...props
-}: HTMLAttributes<HTMLDivElement>) {
+}: ComponentProps<"div">) {
   const reduceMotion = useReducedMotion();
   return (
     <div
       {...props}
       aria-hidden="true"
       data-slot="skeleton"
-      className={cn("relative overflow-hidden rounded-md bg-muted", className)}
+      className={cn(
+        "relative isolate overflow-hidden rounded-md bg-muted",
+        className,
+      )}
     >
       {children}
       {!reduceMotion && (
         <motion.div
-          className="pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-card/55 to-transparent"
+          className="pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-card/60 to-transparent dark:via-foreground/[0.06]"
           initial={{ transform: "translateX(-100%)" }}
           animate={{ transform: "translateX(100%)" }}
           transition={{ duration: 1.6, ease: "linear", repeat: Infinity }}

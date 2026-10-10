@@ -4,17 +4,19 @@ import {
   withExamplePreviews,
 } from "@/components/docs/component-page";
 import { NativeSelectDemo } from "@/components/docs/native-select-demo";
-import { NativeSelectGroupedDemo } from "@/components/docs/native-select-grouped-demo";
+import { NativeSelectDisabledDemo } from "@/components/docs/native-select-disabled-demo";
+import { NativeSelectGroupsDemo } from "@/components/docs/native-select-groups-demo";
+import { NativeSelectInvalidDemo } from "@/components/docs/native-select-invalid-demo";
 import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Native select | vip/ui",
-  description:
-    "A labeled HTML select that uses the device's own option picker.",
+  description: componentPageData["native-select"].description,
 };
 
 export default function NativeSelectPage() {
   const page = componentPageData["native-select"];
+
   return (
     <ComponentPage
       name="Native select"
@@ -22,7 +24,9 @@ export default function NativeSelectPage() {
       preview={<NativeSelectDemo />}
       previewSourcePath={page.usage}
       examples={withExamplePreviews(page.examples, [
-        <NativeSelectGroupedDemo key="example-1" />,
+        <NativeSelectGroupsDemo key="groups" />,
+        <NativeSelectDisabledDemo key="disabled" />,
+        <NativeSelectInvalidDemo key="invalid-selection" />,
       ])}
       sourcePath="src/components/ui/native-select.tsx"
     />

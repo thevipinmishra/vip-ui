@@ -17,9 +17,7 @@ function getManager(): PackageManager {
     if (managers.some((manager) => manager === saved)) {
       return saved as PackageManager;
     }
-  } catch {
-    // Storage may be unavailable in private or restricted contexts.
-  }
+  } catch {}
   return fallbackManager;
 }
 
@@ -39,9 +37,7 @@ function selectManager(manager: PackageManager) {
   fallbackManager = manager;
   try {
     window.localStorage.setItem(storageKey, manager);
-  } catch {
-    // Keep the current page usable when storage is blocked.
-  }
+  } catch {}
   window.dispatchEvent(new Event(changeEvent));
 }
 

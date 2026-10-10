@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ComboBoxBasicDemo } from "@/components/docs/combo-box-basic-demo";
 import { ComboBoxDemo } from "@/components/docs/combo-box-demo";
+import { ComboBoxDisabledDemo } from "@/components/docs/combo-box-disabled-demo";
 import { ComboBoxMultipleDemo } from "@/components/docs/combo-box-multiple-demo";
 import {
   ComponentPage,
@@ -10,11 +11,12 @@ import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Combo box | vip/ui",
-  description: "Search and select an option from a longer list.",
+  description: componentPageData["combo-box"].description,
 };
 
 export default function ComboBoxPage() {
   const page = componentPageData["combo-box"];
+
   return (
     <ComponentPage
       name="Combo box"
@@ -22,8 +24,9 @@ export default function ComboBoxPage() {
       preview={<ComboBoxBasicDemo />}
       previewSourcePath={page.usage}
       examples={withExamplePreviews(page.examples, [
-        <ComboBoxDemo key="example-1" />,
-        <ComboBoxMultipleDemo key="example-2" />,
+        <ComboBoxDemo key="described-options" />,
+        <ComboBoxDisabledDemo key="disabled" />,
+        <ComboBoxMultipleDemo key="multiple-selection" />,
       ])}
       sourcePath="src/components/ui/combo-box.tsx"
     />

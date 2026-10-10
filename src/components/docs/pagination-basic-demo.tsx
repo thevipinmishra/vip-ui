@@ -1,7 +1,7 @@
 "use client";
 
+import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "reicon-react";
 import {
   Pagination,
   PaginationItem,
@@ -24,7 +24,7 @@ export function PaginationBasicDemo() {
               setPage((current) => current - 1);
             }}
           >
-            <ChevronLeft size={17} aria-hidden="true" />
+            <CaretLeftIcon size={17} aria-hidden="true" />
             <span className="hidden sm:inline">Previous</span>
           </PaginationLink>
         </PaginationItem>
@@ -54,7 +54,7 @@ export function PaginationBasicDemo() {
             }}
           >
             <span className="hidden sm:inline">Next</span>
-            <ChevronRight size={17} aria-hidden="true" />
+            <CaretRightIcon size={17} aria-hidden="true" />
           </PaginationLink>
         </PaginationItem>
       </PaginationList>

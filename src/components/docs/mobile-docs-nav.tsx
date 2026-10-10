@@ -1,7 +1,7 @@
 "use client";
 
+import { ListIcon } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
-import { Menu } from "reicon-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -30,7 +30,7 @@ export function MobileDocsNav() {
     <div className="lg:hidden">
       <SheetTrigger isOpen={open} onOpenChange={setOpen}>
         <Button variant="outline" size="sm">
-          <Menu size={17} aria-hidden="true" /> Browse docs
+          <ListIcon size={17} aria-hidden="true" /> Browse docs
         </Button>
         <Sheet>
           <SheetHandle />

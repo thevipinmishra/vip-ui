@@ -1,6 +1,6 @@
 "use client";
 
-import { FileText } from "reicon-react";
+import { FileTextIcon } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { Popover } from "@/components/ui/popover";
 import { PreviewTrigger } from "@/components/ui/preview-trigger";
@@ -9,13 +9,13 @@ export function PreviewTriggerDemo() {
   return (
     <PreviewTrigger>
       <Button variant="outline">
-        <FileText size={16} aria-hidden="true" />
+        <FileTextIcon size={16} aria-hidden="true" />
         autumn-campaign.fig
       </Button>
       <Popover className="w-80">
         <div className="flex items-start gap-3">
           <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-accent text-accent-foreground">
-            <FileText size={18} aria-hidden="true" />
+            <FileTextIcon size={18} aria-hidden="true" />
           </span>
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold">

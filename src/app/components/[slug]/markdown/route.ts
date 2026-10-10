@@ -23,9 +23,7 @@ async function findUsageFile(slug: string): Promise<string | null> {
     try {
       await access(path.join(demoDirectory, filename));
       return filename;
-    } catch {
-      // Try the next candidate.
-    }
+    } catch {}
   }
   return null;
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { CaretDownIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import { useContext } from "react";
 import {
@@ -14,7 +15,7 @@ import {
   Label,
   Text,
 } from "react-aria-components";
-import { ChevronDown } from "reicon-react";
+import { duration, easeOut } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { Button } from "./button";
 import { Calendar } from "./calendar";
@@ -63,7 +64,7 @@ export function DatePicker<T extends DateValue>({
           >
             <DateInput
               data-slot="date-picker-input"
-              className="flex min-w-0 flex-1 items-center px-3.5 text-sm data-[focus-visible]:outline-none"
+              className="flex min-w-0 flex-1 items-center px-2.5 text-base data-[focus-visible]:outline-none sm:text-sm"
             >
               {(segment) => <DateSegment segment={segment} />}
             </DateInput>
@@ -107,9 +108,9 @@ function DatePickerChevron() {
       aria-hidden="true"
       initial={false}
       animate={{ rotate: isOpen ? 180 : 0 }}
-      transition={{ duration: reduceMotion ? 0 : 0.2, ease: "easeOut" }}
+      transition={{ duration: reduceMotion ? 0 : duration.base, ease: easeOut }}
     >
-      <ChevronDown size={17} />
+      <CaretDownIcon size={16} />
     </motion.span>
   );
 }

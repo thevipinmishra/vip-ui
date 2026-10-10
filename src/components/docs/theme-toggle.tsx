@@ -1,8 +1,8 @@
 "use client";
 
+import { MoonIcon, SunIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
-import { Moon, Sun } from "reicon-react";
 import { updateSiteTheme } from "@/lib/update-site-theme";
 
 const storageKey = "vip-ui-theme";
@@ -13,7 +13,12 @@ export function ThemeToggle() {
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    setIsDark(document.documentElement.classList.contains("dark"));
+    const root = document.documentElement;
+    const sync = () => setIsDark(root.classList.contains("dark"));
+    sync();
+    const observer = new MutationObserver(sync);
+    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
   }, []);
 
   function toggleTheme(event: React.MouseEvent<HTMLButtonElement>) {
@@ -22,9 +27,7 @@ export function ThemeToggle() {
     updateSiteTheme((root) => root.classList.toggle("dark", next));
     try {
       window.localStorage.setItem(storageKey, next ? "dark" : "light");
-    } catch {
-      // Private browsing may block storage; the current appearance still works.
-    }
+    } catch {}
     setIsDark(next);
   }
 
@@ -56,7 +59,7 @@ export function ThemeToggle() {
             ease: [0.23, 1, 0.32, 1],
           }}
         >
-          <Sun size={17} />
+          <SunIcon size={17} />
         </motion.span>
         <motion.span
           className="col-start-1 row-start-1"
@@ -71,7 +74,7 @@ export function ThemeToggle() {
             ease: [0.23, 1, 0.32, 1],
           }}
         >
-          <Moon size={17} />
+          <MoonIcon size={17} />
         </motion.span>
       </span>
     </motion.button>

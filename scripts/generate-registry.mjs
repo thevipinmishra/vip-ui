@@ -1,12 +1,29 @@
 import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  reactAriaPlugin,
+  referencedVars,
+  setupCss,
+} from "./registry-theme.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const uiDirectory = path.join(root, "src/components/ui");
 const outputDirectory = path.join(root, "public/r");
 const sourceDirectory = path.join(root, "registry/generated");
-const utilsSource = await readFile(path.join(root, "src/lib/utils.ts"), "utf8");
+const libSources = new Map(
+  await Promise.all(
+    ["utils", "motion"].map(async (name) => [
+      name,
+      await readFile(path.join(root, `src/lib/${name}.ts`), "utf8"),
+    ]),
+  ),
+);
+const packageJson = JSON.parse(
+  await readFile(path.join(root, "package.json"), "utf8"),
+);
+const registryOrigin =
+  process.env.NEXT_PUBLIC_REGISTRY_URL || "https://vip-ui.vercel.app";
 const descriptions = {
   "agent-status": "Show an agent's current step and outcome.",
   accordion: "Reveal one or more sections of related content.",
@@ -62,7 +79,7 @@ const descriptions = {
   "kbd-code": "Display keyboard shortcuts and inline code.",
   link: "Navigate with an accessible text link.",
   "list-box": "Select an option from a visible list.",
-  "layout-morph": "Resize around changing content without distorting it.",
+  "layout-morph": "Resize around changing content without stretching it.",
   menu: "Choose an action from a popover menu.",
   marquee: "Loop a strip of content with a pause control.",
   message: "Display an entry in a conversation.",
@@ -115,31 +132,49 @@ const descriptions = {
   tooltip: "Show short supplementary help on hover or focus.",
   tree: "Browse and select items in a nested collection.",
 };
+const groupItems = {
+  "button-group": ["button"],
+  "toggle-button-group": ["toggle-button"],
+};
 export function portableSource(source) {
-  // React Aria exposes these states as data attributes on its elements.
-  // Unlike the site's shorthand variants, these work without a Tailwind plugin.
-  // `placeholder:` on native inputs styles ::placeholder, not a React Aria state.
-  // React Aria placeholder states use the explicit `data-[placeholder]:` selector.
-  const states =
-    "selection-start|selection-end|outside-month|focus-visible|unavailable|selected|pressed|invalid|indeterminate|disabled|dragging|empty";
   return source
     .replace(/\r\n/g, "\n")
-    .replaceAll('from "@/lib/utils"', 'from "./utils"')
-    .replace(
-      new RegExp(`group-(${states})(\\/[\\w-]+)?:`, "g"),
-      (_, state, group) => `group-data-[${state}]${group ?? ""}:`,
-    )
-    .replace(
-      new RegExp(`(?<![\\w-])(${states}):`, "g"),
-      (_, state) => `data-[${state}]:`,
-    )
-    .replace(/(?<![\w-])focus:/g, "data-[focused]:");
+    .replace(/from "@\/lib\/(utils|motion)"/g, 'from "./$1"');
 }
 
 export function importsFrom(source) {
-  return [...source.matchAll(/\bfrom\s+["']([^"']+)["']/g)].map(
+  return [...source.matchAll(/\b(?:from|import)\s+["']([^"']+)["']/g)].map(
     (match) => match[1],
   );
+}
+
+export function versioned(name) {
+  const range =
+    packageJson.dependencies?.[name] ?? packageJson.devDependencies?.[name];
+  if (!range) throw new Error(`${name} is not in package.json`);
+  return `${name}@${/^\d/.test(range) ? `^${range}` : range}`;
+}
+
+export function dependencyName(dependency) {
+  const at = dependency.indexOf("@", 1);
+  return at === -1 ? dependency : dependency.slice(0, at);
+}
+
+function styleSetup(contents, dependencies) {
+  const setup = {};
+  const cssVars = { light: {}, dark: {} };
+  for (const content of contents) {
+    const vars = referencedVars(content);
+    if (!vars) continue;
+    Object.assign(cssVars.light, vars.light);
+    Object.assign(cssVars.dark, vars.dark);
+  }
+  if (dependencies.has("react-aria-components")) {
+    setup.devDependencies = [versioned(reactAriaPlugin)];
+    setup.css = { [`@plugin ${reactAriaPlugin}`]: {} };
+  }
+  if (Object.keys(cssVars.light).length) setup.cssVars = cssVars;
+  return setup;
 }
 
 export function packageName(specifier) {
@@ -153,7 +188,7 @@ export function createItem(name, sources) {
   const seen = new Set();
   const dependencies = new Set();
   const files = [];
-  let needsUtils = false;
+  const libs = new Set();
   function visit(slug) {
     if (seen.has(slug)) return;
     const source = sources.get(slug);
@@ -162,10 +197,9 @@ export function createItem(name, sources) {
     for (const specifier of importsFrom(source)) {
       if (specifier.startsWith("./")) {
         visit(specifier.slice(2).replace(/\.tsx$/, ""));
-      } else if (specifier === "@/lib/utils") {
-        needsUtils = true;
+      } else if (libSources.has(specifier.replace(/^@\/lib\//, ""))) {
+        libs.add(specifier.replace(/^@\/lib\//, ""));
       } else if (specifier === "react") {
-        // React is a peer dependency of the app.
       } else if (
         !specifier.startsWith("@/") &&
         !specifier.startsWith("node:")
@@ -183,16 +217,17 @@ export function createItem(name, sources) {
     });
   }
   visit(name);
-  // ChartFrame styles TanStack Charts; install the renderer with the frame.
+  for (const item of groupItems[name] ?? []) visit(item);
   if (name === "chart") dependencies.add("@tanstack/charts");
-  if (needsUtils) {
-    for (const specifier of importsFrom(utilsSource))
+  for (const lib of [...libs].sort().reverse()) {
+    const source = libSources.get(lib);
+    for (const specifier of importsFrom(source))
       dependencies.add(packageName(specifier));
     files.unshift({
-      path: "src/lib/utils.ts",
+      path: `src/lib/${lib}.ts`,
       type: "registry:file",
-      target: "@components/vip-ui/utils.ts",
-      content: utilsSource.replace(/\r\n/g, "\n"),
+      target: `@components/vip-ui/${lib}.ts`,
+      content: portableSource(source),
     });
   }
   return {
@@ -205,55 +240,73 @@ export function createItem(name, sources) {
       .join(" "),
     description:
       descriptions[name] || `A ${name.replaceAll("-", " ")} component.`,
-    dependencies: [...dependencies].sort(),
+    dependencies: [...dependencies].sort().map(versioned),
+    ...styleSetup(
+      files.map((file) => file.content),
+      dependencies,
+    ),
     files,
   };
 }
 
-export function createExampleItem(name, sources, exampleFiles) {
-  const dependencies = new Set(["server-only"]);
+function relativeImport(from, target) {
+  const relative = path.posix.relative(path.posix.dirname(from), target);
+  return relative.startsWith(".") ? relative : `./${relative}`;
+}
+
+function createRouteItem(routeDirectory, sources, routeFiles) {
+  const dependencies = new Set();
   const files = [];
   const installed = new Set();
-  for (const [relative, source] of exampleFiles) {
-    const pathInApp = `src/app/examples/${name}/${relative}`;
+  function install(file) {
+    if (installed.has(file.target)) return;
+    files.push(file);
+    installed.add(file.target);
+  }
+  for (const [relative, source] of routeFiles) {
+    const pathInApp = `${routeDirectory}/${relative}`;
     let content = source.replace(/\r\n/g, "\n");
     for (const specifier of importsFrom(source)) {
+      const lib = specifier.replace(/^@\/lib\//, "");
       if (specifier.startsWith("@/components/ui/")) {
         const slug = specifier.slice("@/components/ui/".length);
         const uiItem = createItem(slug, sources);
-        for (const file of uiItem.files) {
-          if (!installed.has(file.target)) {
-            files.push(file);
-            installed.add(file.target);
-          }
-        }
+        for (const file of uiItem.files) install(file);
         for (const dependency of uiItem.dependencies)
-          dependencies.add(dependency);
-        const target = `src/components/vip-ui/${slug}`;
-        const relativeImport = path.posix.relative(
-          path.posix.dirname(pathInApp),
-          target,
-        );
+          dependencies.add(dependencyName(dependency));
         content = content.replaceAll(
           specifier,
-          relativeImport.startsWith(".")
-            ? relativeImport
-            : `./${relativeImport}`,
+          relativeImport(pathInApp, `src/components/vip-ui/${slug}`),
+        );
+      } else if (specifier.startsWith("@/lib/") && libSources.has(lib)) {
+        const libSource = libSources.get(lib);
+        install({
+          path: `src/lib/${lib}.ts`,
+          type: "registry:file",
+          target: `@components/vip-ui/${lib}.ts`,
+          content: portableSource(libSource),
+        });
+        for (const libImport of importsFrom(libSource))
+          dependencies.add(packageName(libImport));
+        content = content.replaceAll(
+          specifier,
+          relativeImport(pathInApp, `src/components/vip-ui/${lib}`),
         );
       } else if (
-        ["reicon-react", "react-aria-components"].includes(specifier)
+        specifier === "server-only" ||
+        (!specifier.startsWith(".") &&
+          !specifier.startsWith("@/") &&
+          packageJson.dependencies?.[packageName(specifier)] &&
+          !["next", "react", "react-dom"].includes(packageName(specifier)))
       ) {
-        dependencies.add(specifier);
+        dependencies.add(packageName(specifier));
       } else if (
         !specifier.startsWith(".") &&
         !specifier.startsWith("next/") &&
         specifier !== "next" &&
-        specifier !== "react" &&
-        specifier !== "server-only"
+        specifier !== "react"
       ) {
-        throw new Error(
-          `Unhandled import in example ${pathInApp}: ${specifier}`,
-        );
+        throw new Error(`Unhandled import in ${pathInApp}: ${specifier}`);
       }
     }
     files.push({
@@ -267,22 +320,42 @@ export function createExampleItem(name, sources, exampleFiles) {
     });
   }
   return {
-    $schema: "https://ui.shadcn.com/schema/registry-item.json",
-    name: `vip-example-${name}`,
-    type: "registry:block",
-    title: `${name} example`,
-    description: `A Next.js App Router ${name} example built with vip/ui.`,
-    dependencies: [...dependencies].sort(),
+    dependencies: [...dependencies]
+      .sort()
+      .map((dependency) =>
+        dependency === "server-only" ? dependency : versioned(dependency),
+      ),
+    ...styleSetup(
+      files.map((file) => file.content),
+      dependencies,
+    ),
     files,
   };
 }
 
-export async function readExampleFiles(directory, prefix = "") {
+export function createBlockItem(block, sources, blockFiles) {
+  if (!blockFiles.has("page.tsx"))
+    throw new Error(`Block ${block.name} has no page.tsx`);
+  return {
+    $schema: "https://ui.shadcn.com/schema/registry-item.json",
+    name: `vip-${block.name}`,
+    type: "registry:block",
+    title: block.name
+      .split("-")
+      .map((word) => word[0].toUpperCase() + word.slice(1))
+      .join(" "),
+    description: block.description,
+    categories: [block.category],
+    ...createRouteItem(`src/app/blocks/${block.name}`, sources, blockFiles),
+  };
+}
+
+export async function readRouteFiles(directory, prefix = "") {
   const files = new Map();
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     const relative = `${prefix}${entry.name}`;
     if (entry.isDirectory()) {
-      for (const [name, source] of await readExampleFiles(
+      for (const [name, source] of await readRouteFiles(
         path.join(directory, entry.name),
         `${relative}/`,
       )) {
@@ -298,14 +371,26 @@ export async function readExampleFiles(directory, prefix = "") {
   return files;
 }
 
+const blocksDirectory = path.join(root, "src/app/blocks");
+
+export async function readBlockCatalog() {
+  const { blocks } = JSON.parse(
+    await readFile(path.join(root, "src/lib/blocks.json"), "utf8"),
+  );
+  const listed = new Set(blocks.map((block) => block.name));
+  for (const entry of await readdir(blocksDirectory, { withFileTypes: true })) {
+    if (!entry.isDirectory() || /^[[(]/.test(entry.name)) continue;
+    if (!listed.has(entry.name))
+      throw new Error(`src/lib/blocks.json does not list block ${entry.name}`);
+  }
+  return blocks;
+}
+
 function catalogItem(item, sources) {
+  const { $schema: _schema, files, ...rest } = item;
   return {
-    name: item.name,
-    type: item.type,
-    title: item.title,
-    description: item.description,
-    dependencies: item.dependencies,
-    files: item.files.map(({ content, ...file }) => {
+    ...rest,
+    files: files.map(({ content, ...file }) => {
       const destination = file.target.startsWith("@components/")
         ? `src/components/${file.target.slice("@components/".length)}`
         : file.target;
@@ -330,7 +415,6 @@ export async function generate() {
     }
   }
   await mkdir(outputDirectory, { recursive: true });
-  // Keep static assets in public/r, but drop items for removed components.
   for (const filename of await readdir(outputDirectory)) {
     if (filename === "registry.json" || /^vip-.*\.json$/.test(filename)) {
       await rm(path.join(outputDirectory, filename));
@@ -347,24 +431,20 @@ export async function generate() {
       `${JSON.stringify(item, null, 2)}\n`,
     );
   }
-  const examplesDirectory = path.join(root, "src/app/examples");
-  let exampleCount = 0;
-  for (const entry of await readdir(examplesDirectory, {
-    withFileTypes: true,
-  })) {
-    if (!entry.isDirectory()) continue;
-    const exampleFiles = await readExampleFiles(
-      path.join(examplesDirectory, entry.name),
+  const blocks = await readBlockCatalog();
+  for (const block of blocks) {
+    if (sources.has(block.name))
+      throw new Error(`Block ${block.name} has the name of a component`);
+    const item = createBlockItem(
+      block,
+      sources,
+      await readRouteFiles(path.join(blocksDirectory, block.name)),
     );
-    if (!exampleFiles.has("layout.tsx") || !exampleFiles.has("page.tsx"))
-      continue;
-    const item = createExampleItem(entry.name, sources, exampleFiles);
     catalogItems.push(catalogItem(item, registrySources));
     await writeFile(
       path.join(outputDirectory, `${item.name}.json`),
       `${JSON.stringify(item, null, 2)}\n`,
     );
-    exampleCount++;
   }
   for (const [filename, content] of registrySources) {
     const destination = path.join(root, filename);
@@ -374,14 +454,15 @@ export async function generate() {
   const catalog = {
     $schema: "https://ui.shadcn.com/schema/registry.json",
     name: "vip-ui",
-    homepage: process.env.NEXT_PUBLIC_REGISTRY_URL || "http://localhost:3000",
+    homepage: registryOrigin,
     items: catalogItems,
   };
   const json = `${JSON.stringify(catalog, null, 2)}\n`;
   await writeFile(path.join(root, "registry.json"), json);
   await writeFile(path.join(outputDirectory, "registry.json"), json);
+  await writeFile(path.join(outputDirectory, "setup.css"), setupCss());
   console.log(
-    `Generated ${sources.size} components and ${exampleCount} examples in public/r`,
+    `Generated ${sources.size} components and ${blocks.length} blocks in public/r`,
   );
 }
 

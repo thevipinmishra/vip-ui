@@ -4,32 +4,28 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { StaggerGroup, StaggerItem } from "@/components/ui/stagger-group";
 
-const words = ["Type", "Form", "Light"];
+const tasks = ["Write the brief", "Choose the typefaces", "Send the proofs"];
 
 export function StaggerGroupDemo() {
   const [replay, setReplay] = useState(0);
 
   return (
-    <div className="grid w-full max-w-md gap-4">
+    <div className="grid w-full max-w-sm gap-4">
       <StaggerGroup
         key={replay}
-        as="ul"
-        trigger="mount"
-        className="grid grid-cols-3 gap-2"
+        as="ol"
+        className="divide-y divide-border rounded-xl border border-border bg-card shadow-[var(--shadow-card)]"
       >
-        {words.map((word) => (
+        {tasks.map((task, index) => (
           <StaggerItem
             as="li"
-            key={word}
-            className="grid min-h-32 content-between rounded-xl border border-border bg-card p-3 shadow-[var(--shadow-card)] sm:p-4"
+            key={task}
+            className="flex min-w-0 items-center gap-3 px-4 py-3 text-sm"
           >
-            <span
-              aria-hidden="true"
-              className="h-1 w-7 rounded-full bg-primary"
-            />
-            <span className="min-w-0 text-lg font-semibold tracking-tight sm:text-xl">
-              {word}
+            <span className="font-mono text-xs text-muted-foreground">
+              0{index + 1}
             </span>
+            <span className="min-w-0 [overflow-wrap:anywhere]">{task}</span>
           </StaggerItem>
         ))}
       </StaggerGroup>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, InfoCircle } from "reicon-react";
+import { CheckIcon, InfoIcon } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -13,7 +13,7 @@ export function TooltipActionsDemo() {
           variant="outline"
           aria-label="Mark this item as reviewed"
         >
-          <Check size={17} aria-hidden="true" />
+          <CheckIcon size={17} aria-hidden="true" />
         </Button>
         <TooltipContent placement="top">Mark as reviewed</TooltipContent>
       </TooltipTrigger>
@@ -23,7 +23,7 @@ export function TooltipActionsDemo() {
           variant="ghost"
           aria-label="Show assignment details"
         >
-          <InfoCircle size={17} aria-hidden="true" />
+          <InfoIcon size={17} aria-hidden="true" />
         </Button>
         <TooltipContent placement="bottom">
           Show assignment details

@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { blockCategories } from "@/lib/blocks";
 import { catalogComponents } from "@/lib/catalog";
 import { siteUrl } from "@/lib/site-url";
 
@@ -9,26 +10,8 @@ const staticRoutes = [
   { path: "/components/react-aria", priority: 0.8 },
   { path: "/themes", priority: 0.8 },
   { path: "/charts", priority: 0.8 },
-  { path: "/examples", priority: 0.7 },
+  { path: "/blocks", priority: 0.8 },
   { path: "/license", priority: 0.3 },
-];
-
-const exampleRoutes = [
-  "/examples/repository",
-  "/examples/repository/issues",
-  "/examples/repository/pulls",
-  "/examples/repository/commits",
-  "/examples/repository/releases",
-  "/examples/repository/contributors",
-  "/examples/business",
-  "/examples/business/customers",
-  "/examples/business/subscriptions",
-  "/examples/business/invoices",
-  "/examples/business/payments",
-  "/examples/business/reports",
-  "/examples/business/settings",
-  "/examples/chat",
-  "/examples/studio",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -44,10 +27,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
-    ...exampleRoutes.map((path) => ({
-      url: `${base}${path}`,
+    ...blockCategories.map((category) => ({
+      url: `${base}/blocks/${category.slug}`,
       changeFrequency: "monthly" as const,
-      priority: 0.4,
+      priority: 0.6,
     })),
   ];
 }

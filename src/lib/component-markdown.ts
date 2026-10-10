@@ -5,29 +5,21 @@ export interface ComponentMarkdownInput {
   slug: string;
   name: string;
   description: string;
-  /** Public site origin, without a trailing slash. */
   site: string;
   registryItem: RegistryItem;
   cliUrl?: string | null;
-  /** Primary preview source, rendered once before Installation. */
   usage?: { code: string; filename: string };
   api?: ApiProp[];
   examples?: {
     title: string;
     description?: string;
-    /** Example source, already rewritten to the consumer import path. */
     code?: string;
     filename?: string;
-    /** Setup the install list does not already cover. */
     prerequisite?: string;
   }[];
   reactAriaDocsHref?: string;
 }
 
-/**
- * Builds the Markdown version of a component page, served from
- * `/components/<slug>.md` for agents.
- */
 export function buildComponentMarkdown({
   slug,
   name,

@@ -6,7 +6,7 @@ import { tv } from "tailwind-variants";
 import { cn } from "./utils";
 
 const paginationLinkStyles = tv({
-  base: "inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-lg px-3 text-sm font-medium text-foreground hover:bg-muted data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring aria-disabled:hover:bg-transparent",
+  base: "inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-lg px-3 text-sm font-medium text-foreground hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring aria-disabled:hover:bg-transparent",
   variants: {
     isCurrent: {
       true: "bg-card text-primary shadow-[var(--shadow-card)] ring-1 ring-primary/25 hover:bg-card",

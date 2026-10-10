@@ -1,5 +1,6 @@
 "use client";
 
+import { XIcon } from "@phosphor-icons/react";
 import { type HTMLMotionProps, motion, useReducedMotion } from "motion/react";
 import {
   Tag as AriaTag,
@@ -10,7 +11,6 @@ import {
   TagList,
   type TagProps,
 } from "react-aria-components";
-import { X } from "reicon-react";
 import { cn } from "@/lib/utils";
 import { PressButton } from "./press-button";
 
@@ -95,7 +95,7 @@ export function Tag({ className, children, ...props }: TagProps) {
               aria-label={`Remove ${props.textValue ?? (typeof children === "string" ? children : "tag")}`}
               className="grid size-11 cursor-pointer place-items-center rounded-md text-muted-foreground hover:bg-card hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring"
             >
-              <X size={14} aria-hidden="true" />
+              <XIcon size={14} weight="bold" aria-hidden="true" />
             </PressButton>
           )}
         </>

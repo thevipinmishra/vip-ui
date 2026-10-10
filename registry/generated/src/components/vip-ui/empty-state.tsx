@@ -1,10 +1,7 @@
-import type { HTMLAttributes } from "react";
+import type { ComponentProps } from "react";
 import { cn } from "./utils";
 
-export function EmptyState({
-  className,
-  ...props
-}: HTMLAttributes<HTMLDivElement>) {
+export function EmptyState({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       data-slot="empty-state"
@@ -17,17 +14,14 @@ export function EmptyState({
   );
 }
 
-export function EmptyStateIcon({
-  className,
-  ...props
-}: HTMLAttributes<HTMLDivElement>) {
+export function EmptyStateIcon({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       {...props}
       aria-hidden="true"
       data-slot="empty-state-icon"
       className={cn(
-        "grid size-11 place-items-center rounded-lg bg-accent text-accent-foreground",
+        "grid size-11 shrink-0 place-items-center rounded-lg bg-accent text-accent-foreground [&_svg:not([class*='size-'])]:size-5",
         className,
       )}
     />
@@ -35,13 +29,17 @@ export function EmptyStateIcon({
 }
 
 export function EmptyStateTitle({
+  as: Heading = "h3",
   className,
   ...props
-}: HTMLAttributes<HTMLHeadingElement>) {
+}: ComponentProps<"h3"> & { as?: "h2" | "h3" | "h4" }) {
   return (
-    <h3
+    <Heading
       data-slot="empty-state-title"
-      className={cn("text-base font-semibold tracking-[-0.025em]", className)}
+      className={cn(
+        "max-w-full text-base font-semibold tracking-[-0.025em] [overflow-wrap:anywhere] [text-wrap:balance]",
+        className,
+      )}
       {...props}
     />
   );
@@ -50,12 +48,12 @@ export function EmptyStateTitle({
 export function EmptyStateDescription({
   className,
   ...props
-}: HTMLAttributes<HTMLParagraphElement>) {
+}: ComponentProps<"p">) {
   return (
     <p
       data-slot="empty-state-description"
       className={cn(
-        "max-w-sm text-sm leading-6 text-muted-foreground",
+        "max-w-sm text-sm leading-6 text-muted-foreground [overflow-wrap:anywhere] [text-wrap:pretty]",
         className,
       )}
       {...props}
@@ -66,11 +64,11 @@ export function EmptyStateDescription({
 export function EmptyStateActions({
   className,
   ...props
-}: HTMLAttributes<HTMLDivElement>) {
+}: ComponentProps<"div">) {
   return (
     <div
       data-slot="empty-state-actions"
-      className={cn("flex flex-wrap justify-center gap-3", className)}
+      className={cn("mt-1 flex flex-wrap justify-center gap-3", className)}
       {...props}
     />
   );

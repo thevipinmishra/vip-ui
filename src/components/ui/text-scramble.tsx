@@ -6,10 +6,23 @@ import {
   useMotionValueEvent,
   useReducedMotion,
 } from "motion/react";
-import { type ComponentProps, useEffect, useState } from "react";
+import {
+  type ComponentProps,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { cn } from "@/lib/utils";
 
 const DEFAULT_GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+function graphemes(text: string) {
+  return Array.from(
+    new Intl.Segmenter(undefined, { granularity: "grapheme" }).segment(text),
+    ({ segment }) => segment,
+  );
+}
 
 export interface TextScrambleProps
   extends Omit<ComponentProps<"span">, "children"> {
@@ -26,18 +39,11 @@ export function TextScramble({
   ...props
 }: TextScrambleProps) {
   const [display, setDisplay] = useState(value);
+  const previousValue = useRef(value);
   const progress = useMotionValue(1);
   const reducedMotion = useReducedMotion();
-  const characters = Array.from(
-    new Intl.Segmenter(undefined, { granularity: "grapheme" }).segment(value),
-    ({ segment }) => segment,
-  );
-  const alphabet = Array.from(
-    new Intl.Segmenter(undefined, { granularity: "grapheme" }).segment(
-      glyphs || DEFAULT_GLYPHS,
-    ),
-    ({ segment }) => segment,
-  );
+  const characters = useMemo(() => graphemes(value), [value]);
+  const alphabet = useMemo(() => graphemes(glyphs || DEFAULT_GLYPHS), [glyphs]);
 
   useMotionValueEvent(progress, "change", (latest) => {
     const resolved = Math.floor(latest * characters.length);
@@ -52,7 +58,12 @@ export function TextScramble({
     );
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    if (previousValue.current === value) {
+      progress.set(1);
+      return;
+    }
+    previousValue.current = value;
     if (!value || reducedMotion || duration <= 0) {
       progress.set(1);
       return;

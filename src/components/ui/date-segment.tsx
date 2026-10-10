@@ -7,8 +7,13 @@ import {
 } from "react-aria-components";
 import { cn } from "@/lib/utils";
 
-/** Keep the active segment legible across date and time fields and pickers. */
-export function DateSegment({ className, ...props }: DateSegmentProps) {
+const literalSpace = /[   ]/g;
+
+export function DateSegment({
+  className,
+  children,
+  ...props
+}: DateSegmentProps) {
   return (
     <AriaDateSegment
       {...props}
@@ -19,6 +24,10 @@ export function DateSegment({ className, ...props }: DateSegmentProps) {
           className,
         ),
       )}
-    />
+    >
+      {children ??
+        (({ text, type }) =>
+          type === "literal" ? text.replace(literalSpace, " ") : text)}
+    </AriaDateSegment>
   );
 }

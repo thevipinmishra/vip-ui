@@ -1,6 +1,6 @@
 "use client";
 
-import { More } from "reicon-react";
+import { DotsThreeIcon } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import {
@@ -16,7 +16,7 @@ export function ButtonGroupDemo() {
       <Button variant="ghost">Save draft</Button>
       <MenuTrigger>
         <Button variant="ghost" size="icon" aria-label="More draft actions">
-          <More size={18} aria-hidden="true" />
+          <DotsThreeIcon size={18} aria-hidden="true" />
         </Button>
         <MenuPopover>
           <MenuContent>

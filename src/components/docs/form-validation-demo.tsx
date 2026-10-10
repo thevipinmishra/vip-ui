@@ -21,18 +21,6 @@ export function FormValidationDemo() {
           value.trim().length < 3 ? "Enter at least three characters." : null
         }
       />
-      <TextField
-        label="Account ID"
-        name="accountId"
-        defaultValue="VIP-204"
-        isReadOnly
-      />
-      <TextField
-        label="Invite code"
-        name="inviteCode"
-        defaultValue="Not available"
-        isDisabled
-      />
       <Button type="submit">Create workspace</Button>
     </Form>
   );

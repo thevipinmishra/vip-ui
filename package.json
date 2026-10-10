@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@internationalized/date": "^3.12.4",
+    "@phosphor-icons/react": "^2.1.10",
     "@tanstack/charts": "^0.18.0",
     "@tanstack/react-table": "^8.21.3",
     "@vercel/analytics": "^2.0.1",
@@ -31,7 +32,6 @@
     "react-aria": "3.53.0",
     "react-aria-components": "^1.22.0",
     "react-dom": "19.2.8",
-    "reicon-react": "^1.2.6",
     "shiki": "^4.5.0",
     "tailwind-variants": "^3.3.1"
   },
@@ -48,5 +48,5 @@
     "tailwindcss-react-aria-components": "^2.2.0",
     "typescript": "^5.9.3"
   },
-  "packageManager": "pnpm@11.25.0"
+  "packageManager": "pnpm@12.10.1"
 }

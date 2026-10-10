@@ -1,5 +1,6 @@
 "use client";
 
+import { CaretDownIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import { type ReactNode, useContext } from "react";
 import {
@@ -15,7 +16,7 @@ import {
   SelectStateContext,
   Text,
 } from "react-aria-components";
-import { ChevronDown } from "reicon-react";
+import { duration, easeOut } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import {
   fieldDescriptionStyles,
@@ -27,7 +28,7 @@ import { Popover } from "./popover";
 import { PressButton } from "./press-button";
 
 const selectTriggerStyles =
-  "relative flex min-h-12 w-full min-w-0 cursor-pointer items-center rounded-lg border border-input bg-card ps-3.5 pe-10 text-start text-base leading-6 text-foreground shadow-[var(--shadow-card)] hover:border-primary/45 hover:bg-muted/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring group-invalid:border-destructive group-invalid:ring-3 group-invalid:ring-destructive/20 disabled:cursor-default disabled:bg-muted disabled:opacity-50 sm:text-sm sm:leading-5";
+  "relative flex min-h-12 w-full min-w-0 cursor-pointer items-center rounded-lg border border-input bg-card ps-3.5 pe-10 text-start text-base leading-6 text-foreground shadow-[var(--shadow-card)] outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-primary/45 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 group-invalid:border-destructive group-invalid:ring-3 group-invalid:ring-destructive/20 group-invalid:hover:border-destructive group-invalid:focus-visible:border-destructive group-invalid:focus-visible:ring-destructive/30 disabled:cursor-default disabled:bg-muted disabled:opacity-60 sm:text-sm sm:leading-5";
 const selectValueStyles =
   "min-w-0 flex-1 self-center truncate text-start data-[placeholder]:text-muted-foreground";
 const selectItemStyles =
@@ -218,9 +219,9 @@ function SelectChevron({
         className="grid size-4 place-items-center"
         initial={false}
         animate={{ rotate: isOpen ? 180 : 0 }}
-        transition={{ duration: reduce ? 0 : 0.2, ease: "easeOut" }}
+        transition={{ duration: reduce ? 0 : duration.base, ease: easeOut }}
       >
-        <ChevronDown size={16} />
+        <CaretDownIcon size={16} />
       </motion.span>
     </span>
   );

@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import type { HTMLAttributes, ReactNode } from "react";
+import { easeOut, transitionFor } from "./motion";
 import { cn } from "./utils";
 
 type StaggerAttributes = Omit<
@@ -14,9 +15,11 @@ type StaggerAttributes = Omit<
   | "onAnimationIteration"
 >;
 
+const MAX_TOTAL_DELAY = 0.6;
+
 export interface StaggerGroupProps extends StaggerAttributes {
   children: ReactNode;
-  as?: "div" | "ul";
+  as?: "div" | "ul" | "ol";
   trigger?: "mount" | "in-view";
   stagger?: number;
 }
@@ -30,10 +33,19 @@ export function StaggerGroup({
   ...props
 }: StaggerGroupProps) {
   const reducedMotion = useReducedMotion();
-  const Element = as === "ul" ? motion.ul : motion.div;
+  const Element =
+    as === "ul" ? motion.ul : as === "ol" ? motion.ol : motion.div;
   const variants = {
     hidden: {},
-    visible: { transition: { staggerChildren: reducedMotion ? 0 : stagger } },
+    visible: {
+      transition: {
+        delayChildren: (index: number, total: number) =>
+          reducedMotion
+            ? 0
+            : index *
+              Math.min(stagger, MAX_TOTAL_DELAY / Math.max(total - 1, 1)),
+      },
+    },
   };
 
   return (
@@ -42,10 +54,10 @@ export function StaggerGroup({
       data-slot="stagger-group"
       className={cn(className)}
       variants={variants}
-      initial={reducedMotion ? false : "hidden"}
+      initial="hidden"
       animate={trigger === "mount" || reducedMotion ? "visible" : undefined}
       whileInView={trigger === "in-view" ? "visible" : undefined}
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: "some" }}
     >
       {children}
     </Element>
@@ -56,6 +68,11 @@ export interface StaggerItemProps extends StaggerAttributes {
   children: ReactNode;
   as?: "div" | "li";
 }
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: { opacity: 1, y: 0 },
+};
 
 export function StaggerItem({
   as = "div",
@@ -70,14 +87,11 @@ export function StaggerItem({
       {...props}
       data-slot="stagger-item"
       className={cn(className)}
-      variants={{
-        hidden: reducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 },
-        visible: { opacity: 1, y: 0 },
-      }}
-      transition={{
-        duration: reducedMotion ? 0 : 0.4,
-        ease: [0.22, 1, 0.36, 1],
-      }}
+      variants={itemVariants}
+      transition={transitionFor(reducedMotion, {
+        duration: 0.4,
+        ease: easeOut,
+      })}
     >
       {children}
     </Element>

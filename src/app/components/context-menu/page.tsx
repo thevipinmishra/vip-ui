@@ -9,7 +9,7 @@ import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Context menu | vip/ui",
-  description: "Open actions beside a file with pointer, touch, or keyboard.",
+  description: componentPageData["context-menu"].description,
 };
 
 export default function ContextMenuPage() {

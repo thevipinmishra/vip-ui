@@ -1,8 +1,8 @@
 "use client";
 
+import { ArrowClockwiseIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useEffect } from "react";
-import { Refresh } from "reicon-react";
 import { SiteFooter } from "@/components/docs/site-footer";
 import { SiteHeader } from "@/components/docs/site-header";
 import { Button } from "@/components/ui/button";
@@ -32,7 +32,7 @@ export default function ErrorPage({
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Button onPress={() => retry()}>
-            <Refresh size={16} aria-hidden="true" /> Try again
+            <ArrowClockwiseIcon size={16} aria-hidden="true" /> Try again
           </Button>
           <ButtonLink as={Link} href="/components" variant="outline">
             Browse components

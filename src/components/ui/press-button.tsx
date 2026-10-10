@@ -3,7 +3,6 @@
 import { type HTMLMotionProps, motion, useReducedMotion } from "motion/react";
 import { Button, type ButtonProps } from "react-aria-components";
 
-/** React Aria handles presses; Motion supplies the visual feedback. */
 export function PressButton({ isDisabled, ...props }: ButtonProps) {
   const reduceMotion = useReducedMotion();
 

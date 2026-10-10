@@ -4,8 +4,30 @@
   "type": "registry:ui",
   "title": "Button Group",
   "description": "Group related actions without turning them into a selection control.",
-  "dependencies": ["tailwind-variants"],
+  "dependencies": [
+    "motion@^13.5.1",
+    "react-aria-components@^1.22.0",
+    "tailwind-variants@^3.3.1"
+  ],
+  "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
+  "cssVars": {
+    "light": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+    },
+    "dark": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+    }
+  },
   "files": [
+    {
+      "path": "src/lib/motion.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/motion.ts",
+      "content": "import type { Transition } from \"motion/react\";\n\nexport const easeOut = [0.23, 1, 0.32, 1] as const;\n\nexport const easeInOut = [0.77, 0, 0.175, 1] as const;\n\nexport const easeOutClass = \"ease-[cubic-bezier(0.23,1,0.32,1)]\";\n\nexport const duration = {\n  fast: 0.14,\n  base: 0.2,\n  slow: 0.28,\n} as const;\n\nexport const springSnappy = {\n  type: \"spring\",\n  duration: 0.24,\n  bounce: 0,\n} as const satisfies Transition;\n\nexport const springLayout = {\n  type: \"spring\",\n  duration: 0.3,\n  bounce: 0,\n} as const satisfies Transition;\n\nexport function transitionFor(\n  reduceMotion: boolean | null,\n  transition: Transition,\n): Transition {\n  return reduceMotion ? { duration: 0 } : transition;\n}\n\nexport function edgeOffset(placement: string | null, distance: number) {\n  switch (placement) {\n    case \"top\":\n      return { x: 0, y: distance };\n    case \"left\":\n      return { x: distance, y: 0 };\n    case \"right\":\n      return { x: -distance, y: 0 };\n    default:\n      return { x: 0, y: -distance };\n  }\n}\n"
+    },
     {
       "path": "src/lib/utils.ts",
       "type": "registry:file",
@@ -17,6 +39,18 @@
       "type": "registry:file",
       "target": "@components/vip-ui/button-group.tsx",
       "content": "import type { ComponentProps } from \"react\";\nimport { cn } from \"./utils\";\n\nexport interface ButtonGroupProps extends ComponentProps<\"div\"> {\n  orientation?: \"horizontal\" | \"vertical\";\n}\n\nexport function ButtonGroup({\n  orientation = \"horizontal\",\n  className,\n  ...props\n}: ButtonGroupProps) {\n  return (\n    // biome-ignore lint/a11y/useSemanticElements: Independent actions do not belong in a fieldset.\n    <div\n      {...props}\n      role=\"group\"\n      data-slot=\"button-group\"\n      data-orientation={orientation}\n      className={cn(\n        \"inline-flex w-fit max-w-full items-stretch rounded-lg border border-border bg-card shadow-[var(--shadow-card)]\",\n        \"[&>*]:relative [&>*]:rounded-none [&>*]:border-0 [&>*]:shadow-none [&>*:focus-visible]:z-10\",\n        \"data-[orientation=horizontal]:[&>*+*]:border-s data-[orientation=horizontal]:[&>*:first-child]:rounded-s-lg data-[orientation=horizontal]:[&>*:last-child]:rounded-e-lg\",\n        \"data-[orientation=vertical]:flex-col data-[orientation=vertical]:[&>*+*]:border-t data-[orientation=vertical]:[&>*:first-child]:rounded-t-lg data-[orientation=vertical]:[&>*:last-child]:rounded-b-lg\",\n        \"[&>*+*]:border-border\",\n        className,\n      )}\n    />\n  );\n}\n"
+    },
+    {
+      "path": "src/components/ui/button-styles.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/button-styles.tsx",
+      "content": "import { tv, type VariantProps } from \"tailwind-variants\";\n\nexport const buttonStyles = tv({\n  base: \"inline-flex shrink-0 cursor-default items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium tracking-[-0.01em] transition-[color,background-color,border-color,box-shadow,scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] disabled:cursor-default disabled:opacity-50 disabled:shadow-none focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-ring [&_svg]:pointer-events-none [&_svg]:shrink-0\",\n  variants: {\n    variant: {\n      default:\n        \"bg-primary text-primary-foreground shadow-[var(--shadow-card)] hover:bg-primary/90 pressed:bg-primary/90\",\n      secondary:\n        \"bg-secondary text-secondary-foreground hover:bg-border/70 pressed:bg-border/70\",\n      outline:\n        \"border border-border bg-card text-foreground shadow-[var(--shadow-card)] hover:bg-muted pressed:bg-muted\",\n      ghost:\n        \"text-foreground hover:bg-muted pressed:bg-muted aria-[pressed=true]:bg-accent aria-[pressed=true]:text-accent-foreground aria-[pressed=true]:hover:bg-accent\",\n      minimal:\n        \"text-muted-foreground hover:bg-muted hover:text-foreground pressed:bg-muted pressed:text-foreground\",\n      destructive:\n        \"bg-destructive text-background shadow-[var(--shadow-card)] hover:bg-destructive/90 pressed:bg-destructive/90\",\n    },\n    size: {\n      default: \"h-11 px-5 text-sm\",\n      sm: \"h-9 px-3.5 text-sm\",\n      lg: \"h-12 px-6 text-sm\",\n      icon: \"size-11 cursor-pointer p-0\",\n    },\n  },\n  defaultVariants: { variant: \"default\", size: \"default\" },\n});\n\nexport const buttonLinkStyles = tv({\n  extend: buttonStyles,\n  base: \"cursor-pointer\",\n});\n\nexport type ButtonVariant = NonNullable<\n  VariantProps<typeof buttonStyles>[\"variant\"]\n>;\nexport type ButtonSize = NonNullable<VariantProps<typeof buttonStyles>[\"size\"]>;\n"
+    },
+    {
+      "path": "src/components/ui/button.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/button.tsx",
+      "content": "\"use client\";\n\nimport { type MotionProps, motion, useReducedMotion } from \"motion/react\";\nimport {\n  Button as AriaButton,\n  type ButtonProps as AriaButtonProps,\n  composeRenderProps,\n} from \"react-aria-components\";\nimport { springLayout } from \"./motion\";\nimport {\n  type ButtonSize,\n  type ButtonVariant,\n  buttonStyles,\n} from \"./button-styles\";\n\nexport interface ButtonProps\n  extends Omit<\n    AriaButtonProps,\n    | \"style\"\n    | \"onAnimationStart\"\n    | \"onAnimationEnd\"\n    | \"onAnimationIteration\"\n    | \"onHoverStart\"\n    | \"onHoverEnd\"\n  > {\n  ref?: React.Ref<HTMLButtonElement>;\n  variant?: ButtonVariant;\n  size?: ButtonSize;\n  static?: boolean;\n  layout?: MotionProps[\"layout\"];\n}\n\nconst MotionButton = motion.create(AriaButton);\n\nconst pressStyles = \"motion-safe:pressed:not-aria-expanded:scale-[0.96]\";\n\nexport function Button({\n  className,\n  variant = \"default\",\n  size = \"default\",\n  static: isStatic = false,\n  layout,\n  ...props\n}: ButtonProps) {\n  const reduceMotion = useReducedMotion();\n  return (\n    <MotionButton\n      data-slot=\"button\"\n      data-variant={variant}\n      data-size={size}\n      layout={reduceMotion ? false : layout}\n      transition={springLayout}\n      className={composeRenderProps(className, (className) =>\n        buttonStyles({\n          variant,\n          size,\n          className: [!isStatic && pressStyles, className],\n        }),\n      )}\n      {...props}\n    />\n  );\n}\n"
     }
   ]
 }

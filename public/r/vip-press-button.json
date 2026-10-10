@@ -4,13 +4,17 @@
   "type": "registry:ui",
   "title": "Press Button",
   "description": "Handle press interactions for shared button controls.",
-  "dependencies": ["motion", "react-aria-components"],
+  "dependencies": ["motion@^13.5.1", "react-aria-components@^1.22.0"],
+  "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
   "files": [
     {
       "path": "src/components/ui/press-button.tsx",
       "type": "registry:file",
       "target": "@components/vip-ui/press-button.tsx",
-      "content": "\"use client\";\n\nimport { type HTMLMotionProps, motion, useReducedMotion } from \"motion/react\";\nimport { Button, type ButtonProps } from \"react-aria-components\";\n\n/** React Aria handles presses; Motion supplies the visual feedback. */\nexport function PressButton({ isDisabled, ...props }: ButtonProps) {\n  const reduceMotion = useReducedMotion();\n\n  return (\n    <Button\n      data-slot=\"press-button\"\n      {...props}\n      isDisabled={isDisabled}\n      render={\n        props.render ??\n        ((domProps) => (\n          <motion.button\n            {...(domProps as HTMLMotionProps<\"button\">)}\n            whileTap={reduceMotion || isDisabled ? undefined : { scale: 0.96 }}\n            transition={{ type: \"spring\", stiffness: 500, damping: 36 }}\n          />\n        ))\n      }\n    />\n  );\n}\n"
+      "content": "\"use client\";\n\nimport { type HTMLMotionProps, motion, useReducedMotion } from \"motion/react\";\nimport { Button, type ButtonProps } from \"react-aria-components\";\n\nexport function PressButton({ isDisabled, ...props }: ButtonProps) {\n  const reduceMotion = useReducedMotion();\n\n  return (\n    <Button\n      data-slot=\"press-button\"\n      {...props}\n      isDisabled={isDisabled}\n      render={\n        props.render ??\n        ((domProps) => (\n          <motion.button\n            {...(domProps as HTMLMotionProps<\"button\">)}\n            whileTap={reduceMotion || isDisabled ? undefined : { scale: 0.96 }}\n            transition={{ type: \"spring\", stiffness: 500, damping: 36 }}\n          />\n        ))\n      }\n    />\n  );\n}\n"
     }
   ]
 }

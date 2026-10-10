@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle, InfoCircle, Warning } from "reicon-react";
+import { CheckCircleIcon, InfoIcon, WarningIcon } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { showToast } from "@/components/ui/toast";
 
@@ -19,7 +19,7 @@ export function ToastStatusDemo() {
           )
         }
       >
-        <InfoCircle size={16} aria-hidden="true" /> Check for updates
+        <InfoIcon size={16} aria-hidden="true" /> Check for updates
       </Button>
       <Button
         variant="outline"
@@ -34,7 +34,7 @@ export function ToastStatusDemo() {
           )
         }
       >
-        <CheckCircle size={16} aria-hidden="true" /> Publish release
+        <CheckCircleIcon size={16} aria-hidden="true" /> Publish release
       </Button>
       <Button
         variant="outline"
@@ -46,7 +46,7 @@ export function ToastStatusDemo() {
           })
         }
       >
-        <Warning size={16} aria-hidden="true" /> Review billing
+        <WarningIcon size={16} aria-hidden="true" /> Review billing
       </Button>
     </div>
   );

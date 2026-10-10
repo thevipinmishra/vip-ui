@@ -1,5 +1,11 @@
 "use client";
 
+import {
+  CheckCircleIcon,
+  InfoIcon,
+  WarningIcon,
+  XIcon,
+} from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useSyncExternalStore } from "react";
 import {
@@ -12,17 +18,12 @@ import {
   type ToastOptions,
   UNSTABLE_ToastQueue as ToastQueue,
 } from "react-aria-components";
-import { CheckCircle, InfoCircle, Warning, X } from "reicon-react";
 import { tv } from "tailwind-variants";
 import { cn } from "@/lib/utils";
 
 const MotionToast = motion.create(AriaToast);
 const MotionToastClose = motion.create(AriaButton);
 
-/**
- * Motion owns these handlers, so React Aria's DOM versions cannot be spread
- * into a motion component.
- */
 type MotionHandlers =
   | "onAnimationStart"
   | "onAnimationEnd"
@@ -71,11 +72,6 @@ function prefersReducedMotion() {
   );
 }
 
-/**
- * React Aria removes a toast as soon as it closes, which leaves no room for an
- * exit animation. This queue holds the removal until the toast reports that
- * its Motion exit finished.
- */
 class AnimatedToastQueue extends ToastQueue<ToastMessage> {
   private closing = new Set<string>();
   private exitListeners = new Set<() => void>();
@@ -105,7 +101,6 @@ class AnimatedToastQueue extends ToastQueue<ToastMessage> {
     super.close(key);
   }
 
-  /** Resolve deferred closes when a viewport unmounts before they finish. */
   finishAll() {
     for (const key of [...this.closing]) this.finishClose(key);
   }
@@ -142,10 +137,10 @@ export function ToastViewport({
         const variant = toast.content.variant ?? "info";
         const Icon =
           variant === "success"
-            ? CheckCircle
+            ? CheckCircleIcon
             : variant === "warning"
-              ? Warning
-              : InfoCircle;
+              ? WarningIcon
+              : InfoIcon;
         return (
           <Toast toast={toast}>
             <Icon
@@ -272,7 +267,7 @@ export function ToastClose({ className, children, ...props }: ToastCloseProps) {
         ),
       )}
     >
-      {children ?? <X size={16} aria-hidden="true" />}
+      {children ?? <XIcon size={16} aria-hidden="true" />}
     </MotionToastClose>
   );
 }

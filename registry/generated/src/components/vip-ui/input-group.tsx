@@ -34,7 +34,7 @@ export function InputGroupInput({
       data-slot="input-group-input"
       className={composeRenderProps(className, (className) =>
         cn(
-          "min-h-11 min-w-0 flex-1 cursor-text bg-transparent py-2.5 text-base leading-6 text-foreground outline-none [&::placeholder]:text-muted-foreground/80 data-[disabled]:cursor-not-allowed sm:text-sm [&::-webkit-search-cancel-button]:hidden",
+          "min-h-11 min-w-0 flex-1 cursor-text bg-transparent py-2.5 text-base leading-6 text-foreground outline-none [&::placeholder]:text-muted-foreground/80 disabled:cursor-not-allowed sm:text-sm [&::-webkit-search-cancel-button]:hidden",
           className,
         ),
       )}
@@ -52,7 +52,7 @@ export function InputGroupTextArea({
       data-slot="input-group-text-area"
       className={composeRenderProps(className, (className) =>
         cn(
-          "min-h-28 min-w-0 basis-full resize-y bg-transparent py-3 text-base leading-6 text-foreground outline-none [&::placeholder]:text-muted-foreground/80 data-[disabled]:cursor-not-allowed sm:text-sm",
+          "min-h-28 min-w-0 basis-full resize-y bg-transparent py-3 text-base leading-6 text-foreground outline-none [&::placeholder]:text-muted-foreground/80 disabled:cursor-not-allowed sm:text-sm",
           className,
         ),
       )}

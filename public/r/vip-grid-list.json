@@ -4,7 +4,19 @@
   "type": "registry:ui",
   "title": "Grid List",
   "description": "Select and act on rows with keyboard navigation.",
-  "dependencies": ["react-aria-components", "tailwind-variants"],
+  "dependencies": ["react-aria-components@^1.22.0", "tailwind-variants@^3.3.1"],
+  "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
+  "cssVars": {
+    "light": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+    },
+    "dark": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+    }
+  },
   "files": [
     {
       "path": "src/lib/utils.ts",
@@ -16,7 +28,7 @@
       "path": "src/components/ui/grid-list.tsx",
       "type": "registry:file",
       "target": "@components/vip-ui/grid-list.tsx",
-      "content": "\"use client\";\n\nimport {\n  GridList as AriaGridList,\n  GridListItem as AriaGridListItem,\n  composeRenderProps,\n  type GridListItemProps,\n  type GridListProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport function GridList<T extends object>({\n  className,\n  ...props\n}: GridListProps<T>) {\n  return (\n    <AriaGridList\n      {...props}\n      data-slot=\"grid-list\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"grid gap-1 rounded-lg border border-border bg-card p-1.5 shadow-[var(--shadow-card)] outline-none\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n\nexport function GridListItem({ className, ...props }: GridListItemProps) {\n  return (\n    <AriaGridListItem\n      {...props}\n      data-slot=\"grid-list-item\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"flex min-h-12 cursor-pointer items-center gap-3 rounded-md px-3 text-sm outline-none hover:bg-muted data-[focused]:bg-muted data-[selected]:bg-accent data-[selected]:text-accent-foreground data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-[-2px] data-[focus-visible]:outline-ring data-[disabled]:cursor-default data-[disabled]:opacity-50\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n"
+      "content": "\"use client\";\n\nimport {\n  GridList as AriaGridList,\n  GridListItem as AriaGridListItem,\n  composeRenderProps,\n  type GridListItemProps,\n  type GridListProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport function GridList<T extends object>({\n  className,\n  ...props\n}: GridListProps<T>) {\n  return (\n    <AriaGridList\n      {...props}\n      data-slot=\"grid-list\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"grid gap-1 rounded-lg border border-border bg-card p-1.5 shadow-[var(--shadow-card)] outline-none\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n\nexport function GridListItem({ className, ...props }: GridListItemProps) {\n  return (\n    <AriaGridListItem\n      {...props}\n      data-slot=\"grid-list-item\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"flex min-h-12 cursor-pointer items-center gap-3 rounded-md px-3 text-sm outline-none hover:bg-muted focus:bg-muted selected:bg-accent selected:text-accent-foreground focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring disabled:cursor-default disabled:opacity-50\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n"
     }
   ]
 }

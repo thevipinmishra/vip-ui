@@ -1,5 +1,6 @@
 "use client";
 
+import { CaretDownIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import {
   type ComponentProps,
@@ -19,7 +20,6 @@ import {
   DisclosureStateContext,
   Heading,
 } from "react-aria-components";
-import { ChevronDown } from "reicon-react";
 import { cn } from "./utils";
 import { CollapsibleIdsContext, CollapsiblePanel } from "./collapsible-panel";
 
@@ -112,7 +112,7 @@ export function AccordionTrigger({
         aria-controls={ids?.panelId}
         className={composeRenderProps(className, (className) =>
           cn(
-            "flex min-h-12 w-full cursor-pointer items-center justify-between gap-4 py-3 text-start text-foreground outline-none data-[disabled]:cursor-default data-[disabled]:opacity-50 hover:bg-muted/60 data-[focus-visible]:outline-2 data-[focus-visible]:-outline-offset-2 data-[focus-visible]:outline-ring",
+            "flex min-h-12 w-full cursor-pointer items-center justify-between gap-4 py-3 text-start text-foreground outline-none disabled:cursor-default disabled:opacity-50 hover:bg-muted/60 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring",
             variant === "card" ? "px-4" : "px-0",
             className,
           ),
@@ -130,7 +130,7 @@ export function AccordionTrigger({
             ease: [0.23, 1, 0.32, 1],
           }}
         >
-          <ChevronDown size={16} />
+          <CaretDownIcon size={16} />
         </motion.span>
       </Button>
     </Heading>

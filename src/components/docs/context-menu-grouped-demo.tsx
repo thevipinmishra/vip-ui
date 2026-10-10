@@ -1,6 +1,6 @@
 "use client";
 
-import { FileText } from "reicon-react";
+import { FileMdIcon } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import {
   ContextMenuContent,
@@ -14,7 +14,7 @@ export function ContextMenuGroupedDemo() {
   return (
     <ContextMenuTrigger>
       <Button variant="outline">
-        <FileText size={18} aria-hidden="true" /> Notes.md
+        <FileMdIcon size={18} aria-hidden="true" /> Notes.md
       </Button>
       <ContextMenuPopover>
         <ContextMenuContent aria-label="Notes actions">

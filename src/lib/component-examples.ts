@@ -1,29 +1,12 @@
-/**
- * Named-example metadata for the flagship component pages.
- *
- * Plain data only: no JSX and no client imports. The HTML pages attach their
- * React previews to these entries, and `/components/<slug>.md` reads the same
- * source files from disk. Sharing one module is what keeps the page and the
- * Markdown export from drifting.
- *
- * Keep example titles stable. `exampleAnchor()` derives the section id, and
- * other pages link to `#example-<slugified title>`.
- */
-
 export interface ComponentExampleMetadata {
   title: string;
-  /** Essential facts not already clear from the title and source. */
   description?: string;
-  /** Demo file name in `src/components/docs/`. */
   sourcePath: string;
-  /** Extra setup the example needs beyond the page's install list. */
   prerequisite?: string;
 }
 
 export interface ComponentPageData {
-  /** Usage/preview source file name in `src/components/docs/`. */
   usage: string;
-  /** Core-component summary for the preview and Markdown export. */
   description: string;
   examples: readonly ComponentExampleMetadata[];
 }
@@ -38,8 +21,32 @@ export const componentPageData = {
         sourcePath: "button-variants-demo.tsx",
       },
       {
+        title: "Sizes",
+        sourcePath: "button-sizes-demo.tsx",
+      },
+      {
+        title: "With icon",
+        description:
+          "Put the icon before or after the label. Set aria-hidden on the icon so the label stays the accessible name.",
+        sourcePath: "button-with-icon-demo.tsx",
+      },
+      {
         title: "Icon buttons",
+        description:
+          'Set size="icon" and give each button an aria-label. The label replaces the missing visible text.',
         sourcePath: "button-icon-demo.tsx",
+      },
+      {
+        title: "Loading",
+        description:
+          "Set isPending while a task runs. The button keeps focus and ignores presses until isPending is false. Install Spinner separately.",
+        sourcePath: "button-loading-demo.tsx",
+      },
+      {
+        title: "Link",
+        description:
+          "Use ButtonLink for navigation that looks like a button. It renders an anchor. Pass your router's link component to the as prop. Install Button link separately.",
+        sourcePath: "button-link-demo.tsx",
       },
     ],
   },
@@ -91,8 +98,6 @@ export const componentPageData = {
       },
     ],
   },
-  // Generated from the page descriptions and named examples. Keep in sync with
-  // the page components via withExamplePreviews; the build fails on a count mismatch.
   accordion: {
     usage: "accordion-demo.tsx",
     description: "Displays collapsible sections of related content.",
@@ -128,10 +133,16 @@ export const componentPageData = {
     description: "Displays a number that animates when its value changes.",
     examples: [
       {
-        title: "Task counter variants",
+        title: "Digit slide",
         description:
-          "Use the variant prop to choose a count or slide animation. Each number updates from its own value.",
-        sourcePath: "animated-number-demo.tsx",
+          'Set variant="slide" to move only the digits that change. Digits slide up when the value increases and down when it decreases.',
+        sourcePath: "animated-number-slide-demo.tsx",
+      },
+      {
+        title: "Number format",
+        description:
+          "Set locale and formatOptions to show a currency, a percent, or a unit. The accessible text uses the same format.",
+        sourcePath: "animated-number-format-demo.tsx",
       },
     ],
   },
@@ -157,9 +168,21 @@ export const componentPageData = {
     description: "Displays an image or initials for a person.",
     examples: [
       {
-        title: "Fallbacks and groups",
+        title: "Fallback",
         description:
-          "Set initials when no image is available; Avatar derives them from the name when initials is not set. Group avatars with AvatarGroup and give the group an aria-label.",
+          "Avatar shows initials while the image loads, and when src is missing or does not load. Avatar takes the initials from the first two words of name. Set initials to use different letters.",
+        sourcePath: "avatar-fallback-demo.tsx",
+      },
+      {
+        title: "Sizes",
+        description:
+          'Set size to "sm", "md", or "lg". The initials scale with the avatar.',
+        sourcePath: "avatar-sizes-demo.tsx",
+      },
+      {
+        title: "Group",
+        description:
+          "Put avatars in AvatarGroup to overlap them, and give the group an aria-label. For people not shown, add an Avatar with a count as its initials.",
         sourcePath: "avatar-demo.tsx",
       },
     ],
@@ -182,15 +205,21 @@ export const componentPageData = {
     examples: [],
   },
   "button-group": {
-    usage: "button-group-demo.tsx",
+    usage: "button-group-basic-demo.tsx",
     description:
       "Joins related actions with shared edges while keeping each button independently focusable.",
     examples: [
       {
         title: "Orientations",
         description:
-          'Use orientation="vertical" for a column; the default orientation is a row. Each button stays in the Tab order.',
+          'The default orientation is a row. Set orientation="vertical" for a column. Each button stays in the Tab order.',
         sourcePath: "button-group-orientations-demo.tsx",
+      },
+      {
+        title: "Split button",
+        description:
+          "Put a MenuTrigger in the group for more actions. Give the icon button an aria-label. Install Menu separately.",
+        sourcePath: "button-group-demo.tsx",
       },
     ],
   },
@@ -199,27 +228,57 @@ export const componentPageData = {
     description: "Displays a calendar for selecting a date.",
     examples: [
       {
-        title: "Unavailable days",
+        title: "Unavailable dates",
         description:
-          "Use isDateUnavailable to mark dates unavailable, and minValue and maxValue to limit the selectable range.",
+          "Use isDateUnavailable to mark dates unavailable. Set minValue and maxValue to limit the selectable range.",
         sourcePath: "calendar-unavailable-demo.tsx",
+      },
+      {
+        title: "Controlled value",
+        description:
+          "Control the selected date with the value and onChange props.",
+        sourcePath: "calendar-controlled-demo.tsx",
       },
     ],
   },
   card: {
-    usage: "card-demo.tsx",
+    usage: "card-basic-demo.tsx",
     description:
       "Groups related content in a card with header, content, and footer sections.",
-    examples: [],
+    examples: [
+      {
+        title: "Action",
+        description:
+          "Put CardAction in CardHeader to show a control beside the title.",
+        sourcePath: "card-action-demo.tsx",
+      },
+      {
+        title: "Form",
+        description:
+          "Wrap CardContent and CardFooter in a Form so the footer button submits the fields. Install Form and Text field separately.",
+        sourcePath: "card-demo.tsx",
+      },
+    ],
   },
   checkbox: {
     usage: "checkbox-basic-demo.tsx",
     description: "A control for selecting or clearing a single option.",
     examples: [
       {
-        title: "Notification preferences",
+        title: "Description",
+        description: "Set description to show help below the label.",
+        sourcePath: "checkbox-description-demo.tsx",
+      },
+      {
+        title: "Disabled",
         description:
-          'Set checked to "indeterminate" when only some options in the group are selected. Use isDisabled to keep an option visible but unavailable.',
+          "Use isDisabled to keep the option visible and prevent changes.",
+        sourcePath: "checkbox-disabled-demo.tsx",
+      },
+      {
+        title: "Indeterminate",
+        description:
+          'Set checked to "indeterminate" when only some child options are selected.',
         sourcePath: "checkbox-demo.tsx",
       },
     ],
@@ -229,9 +288,14 @@ export const componentPageData = {
     description: "Groups checkboxes for selecting multiple options.",
     examples: [
       {
+        title: "Disabled",
+        description: "Set isDisabled on CheckboxGroup to disable every option.",
+        sourcePath: "checkbox-group-disabled-demo.tsx",
+      },
+      {
         title: "Required choice",
         description:
-          "Set isInvalid until at least one option is selected. CheckboxGroupError shows the message beside the choices.",
+          "Set isInvalid until at least one option is selected. CheckboxGroupError shows the message below the choices.",
         sourcePath: "checkbox-group-required-demo.tsx",
       },
     ],
@@ -239,12 +303,38 @@ export const componentPageData = {
   "color-field": {
     usage: "color-field-demo.tsx",
     description: "A text field for entering a color value.",
-    examples: [],
+    examples: [
+      {
+        title: "Single channel",
+        description:
+          "Set colorSpace and channel to edit one channel as a number.",
+        sourcePath: "color-field-channel-demo.tsx",
+      },
+      {
+        title: "Disabled",
+        description:
+          "Use isDisabled to keep the current value visible and prevent changes.",
+        sourcePath: "color-field-disabled-demo.tsx",
+      },
+      {
+        title: "Controlled value",
+        description:
+          "Control the color with value and onChange. A ColorSwatch shows the current value. Install Color swatch separately.",
+        sourcePath: "color-field-controlled-demo.tsx",
+      },
+    ],
   },
   "color-picker": {
     usage: "color-picker-demo.tsx",
     description: "A control for choosing a color with visual and text inputs.",
-    examples: [],
+    examples: [
+      {
+        title: "Controlled value",
+        description:
+          "Control the color with value and onChange. The trigger swatch, area, hue slider, and hex field stay in sync.",
+        sourcePath: "color-picker-controlled-demo.tsx",
+      },
+    ],
   },
   "color-swatch": {
     usage: "color-swatch-basic-demo.tsx",
@@ -256,22 +346,47 @@ export const componentPageData = {
           "Set color and colorName to pair each swatch with its name.",
         sourcePath: "color-swatch-demo.tsx",
       },
+      {
+        title: "Transparency",
+        description:
+          "A color with an alpha value shows a checkerboard behind it.",
+        sourcePath: "color-swatch-transparency-demo.tsx",
+      },
     ],
   },
   "color-swatch-picker": {
     usage: "color-swatch-picker-demo.tsx",
     description: "Displays a set of swatches for choosing a color.",
-    examples: [],
+    examples: [
+      {
+        title: "Disabled",
+        description:
+          "Set isDisabled on a ColorSwatchPickerItem to make one color unavailable.",
+        sourcePath: "color-swatch-picker-disabled-demo.tsx",
+      },
+      {
+        title: "Controlled value",
+        description:
+          "Control the selected color with value and onChange. Give each item an aria-label.",
+        sourcePath: "color-swatch-picker-controlled-demo.tsx",
+      },
+    ],
   },
   "combo-box": {
     usage: "combo-box-basic-demo.tsx",
     description: "A searchable list for choosing an option.",
     examples: [
       {
-        title: "Descriptive results",
+        title: "Described options",
         description:
-          "Put a description inside each ComboBoxItem and set textValue for filtering. Use isDisabled to keep the current value visible and prevent changes.",
+          "Put a description inside each ComboBoxItem and set textValue for filtering.",
         sourcePath: "combo-box-demo.tsx",
+      },
+      {
+        title: "Disabled",
+        description:
+          "Use isDisabled to keep the current value visible and prevent changes.",
+        sourcePath: "combo-box-disabled-demo.tsx",
       },
       {
         title: "Multiple selection",
@@ -322,7 +437,26 @@ export const componentPageData = {
   "date-field": {
     usage: "date-field-demo.tsx",
     description: "A field for entering a date in editable segments.",
-    examples: [],
+    examples: [
+      {
+        title: "Minimum and maximum",
+        description:
+          "Set minValue and maxValue to limit the date. A date outside the limits is invalid.",
+        sourcePath: "date-field-limits-demo.tsx",
+      },
+      {
+        title: "Date and time",
+        description:
+          "Pass a CalendarDateTime value to add time segments. Set granularity to change the smallest segment.",
+        sourcePath: "date-field-time-demo.tsx",
+      },
+      {
+        title: "Disabled",
+        description:
+          "Use isDisabled to keep the current value visible and prevent changes.",
+        sourcePath: "date-field-disabled-demo.tsx",
+      },
+    ],
   },
   "date-picker": {
     usage: "date-picker-demo.tsx",
@@ -331,8 +465,14 @@ export const componentPageData = {
       {
         title: "Unavailable dates",
         description:
-          "Use isDateUnavailable to mark dates unavailable, and minValue and maxValue to limit the selectable range.",
+          "Use isDateUnavailable to mark dates unavailable. Set minValue and maxValue to limit the selectable range.",
         sourcePath: "date-picker-unavailable-demo.tsx",
+      },
+      {
+        title: "Disabled",
+        description:
+          "Use isDisabled to keep the current value visible and prevent changes.",
+        sourcePath: "date-picker-disabled-demo.tsx",
       },
       {
         title: "Controlled value",
@@ -347,17 +487,30 @@ export const componentPageData = {
     description: "A field for entering or selecting a date range.",
     examples: [
       {
-        title: "Restricted range",
+        title: "Unavailable dates",
         description:
-          "Use isDateUnavailable to mark dates unavailable, and minValue and maxValue to limit the selectable range.",
+          "Use isDateUnavailable to mark dates unavailable. Set minValue and maxValue to limit the selectable range.",
         sourcePath: "date-range-picker-limits-demo.tsx",
+      },
+      {
+        title: "Disabled",
+        description:
+          "Use isDisabled to keep the current value visible and prevent changes.",
+        sourcePath: "date-range-picker-disabled-demo.tsx",
       },
     ],
   },
   "description-list": {
     usage: "description-list-demo.tsx",
     description: "Displays pairs of terms and descriptions.",
-    examples: [],
+    examples: [
+      {
+        title: "Inline components",
+        description:
+          "Put a Badge, Link, or other inline component in DescriptionDetail. Long values wrap inside the detail column. Install Badge and Link separately.",
+        sourcePath: "description-list-components-demo.tsx",
+      },
+    ],
   },
   disclosure: {
     usage: "disclosure-demo.tsx",
@@ -428,10 +581,16 @@ export const componentPageData = {
     description: "Groups fields and handles validation and submission.",
     examples: [
       {
-        title: "Validation and field states",
+        title: "Custom validation",
         description:
-          "Use validate for errors, isReadOnly to keep a value selectable, and isDisabled to prevent input.",
+          "Pass validate to a field. Return an error message, or null when the value is valid.",
         sourcePath: "form-validation-demo.tsx",
+      },
+      {
+        title: "Server errors",
+        description:
+          'Pass server errors to validationErrors, keyed by field name. Submit "maya" to see the error. The error clears when the value changes.',
+        sourcePath: "form-server-errors-demo.tsx",
       },
     ],
   },
@@ -452,34 +611,66 @@ export const componentPageData = {
     description: "Groups an input with related text, icons, or actions.",
     examples: [
       {
-        title: "Search action",
+        title: "Icon",
+        description:
+          "Put an icon in InputGroupAddon. Set aria-hidden on the icon so the label stays the accessible name.",
+        sourcePath: "input-group-icon-demo.tsx",
+      },
+      {
+        title: "Button",
         description:
           "Put a submit Button in InputGroupAddon. Disable it until the input has a value.",
         sourcePath: "input-group-demo.tsx",
       },
       {
-        title: "Multiline note",
+        title: "Text area",
         description:
           "Use InputGroupTextArea with a bottom row for a live character counter.",
         sourcePath: "input-group-notes-demo.tsx",
       },
       {
-        title: "Invalid and disabled",
+        title: "Disabled",
         description:
-          "Set isInvalid or isDisabled on the TextField. InputGroup inherits the state.",
-        sourcePath: "input-group-states-demo.tsx",
+          "Set isDisabled on the TextField. InputGroup inherits the state.",
+        sourcePath: "input-group-disabled-demo.tsx",
+      },
+      {
+        title: "Invalid",
+        description:
+          "Set isInvalid on the TextField and add TextFieldError. InputGroup inherits the state.",
+        sourcePath: "input-group-invalid-demo.tsx",
       },
     ],
   },
   "kbd-code": {
     usage: "kbd-code-demo.tsx",
     description: "Displays keyboard keys and inline code in text.",
-    examples: [],
+    examples: [
+      {
+        title: "Key combination",
+        description:
+          "Put each key in a Kbd, and put the keys of one shortcut in KbdGroup. The outer kbd element marks the keys as one combination.",
+        sourcePath: "kbd-code-group-demo.tsx",
+      },
+      {
+        title: "Long code",
+        description:
+          "InlineCode breaks a long value to fit the line. Each line keeps its padding and rounded corners.",
+        sourcePath: "kbd-code-wrap-demo.tsx",
+      },
+    ],
   },
   link: {
     usage: "link-demo.tsx",
     description: "Displays a link to another page or location.",
-    examples: [],
+    examples: [
+      {
+        title: "External link",
+        description:
+          'Set target="_blank" to open the page in a new tab. Add hidden text that tells screen reader users about the new tab.',
+        sourcePath: "link-external-demo.tsx",
+      },
+    ],
   },
   "list-box": {
     usage: "list-box-demo.tsx",
@@ -494,14 +685,19 @@ export const componentPageData = {
     ],
   },
   menu: {
-    usage: "menu-demo.tsx",
-    description:
-      "Opens a list of actions from a trigger, with icons, shortcuts, and separators.",
+    usage: "menu-basic-demo.tsx",
+    description: "Opens a list of actions from a trigger.",
     examples: [
+      {
+        title: "Icons and shortcuts",
+        description:
+          "Put an icon before the label and a Kbd after it. Use href for an item that opens a page, MenuSeparator to group items, and isDisabled to keep an item visible but unavailable.",
+        sourcePath: "menu-demo.tsx",
+      },
       {
         title: "Nested menu",
         description:
-          "Use href on a MenuItem for links, including links inside submenus.",
+          "Wrap a MenuItem and a MenuPopover in SubmenuTrigger. The item shows an arrow and opens the submenu beside the menu.",
         sourcePath: "menu-nested-demo.tsx",
       },
       {
@@ -547,22 +743,46 @@ export const componentPageData = {
     description: "Chooses one option with a native HTML select.",
     examples: [
       {
-        title: "Grouped choices and validation",
+        title: "Groups",
         description:
-          "Group options with optgroup and disable an unavailable option. Use required with isInvalid to show the error beside the field.",
-        sourcePath: "native-select-grouped-demo.tsx",
+          "Wrap options in optgroup to group them. Set disabled on an option that is not available.",
+        sourcePath: "native-select-groups-demo.tsx",
+      },
+      {
+        title: "Disabled",
+        description:
+          "Set disabled to keep the current value visible and prevent changes.",
+        sourcePath: "native-select-disabled-demo.tsx",
+      },
+      {
+        title: "Invalid selection",
+        description:
+          "Set isInvalid and error to show a message below the field. Use required for native form validation.",
+        sourcePath: "native-select-invalid-demo.tsx",
       },
     ],
   },
   "number-field": {
-    usage: "number-field-demo.tsx",
+    usage: "number-field-basic-demo.tsx",
     description: "A field for entering and adjusting numeric values.",
     examples: [
+      {
+        title: "Minimum and maximum",
+        description:
+          "Set minValue and maxValue to limit the value. The buttons stop at each limit.",
+        sourcePath: "number-field-limits-demo.tsx",
+      },
       {
         title: "Currency formatting",
         description:
           "Use formatOptions for currency and step to set the increment.",
         sourcePath: "number-field-currency-demo.tsx",
+      },
+      {
+        title: "Disabled",
+        description:
+          "Use isDisabled to keep the current value visible and prevent changes.",
+        sourcePath: "number-field-disabled-demo.tsx",
       },
     ],
   },
@@ -579,9 +799,21 @@ export const componentPageData = {
     ],
   },
   "inline-edit": {
-    usage: "inline-edit-demo.tsx",
+    usage: "inline-edit-basic-demo.tsx",
     description: "Edits text in place and keeps the draft when saving fails.",
-    examples: [],
+    examples: [
+      {
+        title: "Disabled",
+        description: "Use isDisabled to show the value without an edit action.",
+        sourcePath: "inline-edit-disabled-demo.tsx",
+      },
+      {
+        title: "Save error",
+        description:
+          "Throw an error from onSave to keep the editor open. The error message shows below the field.",
+        sourcePath: "inline-edit-demo.tsx",
+      },
+    ],
   },
   "password-strength-meter": {
     usage: "password-strength-meter-demo.tsx",
@@ -601,7 +833,13 @@ export const componentPageData = {
       "Accepts a password with an optional reveal action beside the input.",
     examples: [
       {
-        title: "Choose a new password",
+        title: "Disabled",
+        description:
+          "Use isDisabled to prevent input. The reveal button is also disabled.",
+        sourcePath: "password-field-disabled-demo.tsx",
+      },
+      {
+        title: "New password",
         description:
           "Use new-password autocomplete and native minimum-length validation. The example checks the value but never saves or displays it.",
         sourcePath: "password-field-demo.tsx",
@@ -665,17 +903,47 @@ export const componentPageData = {
   "rating-input": {
     usage: "rating-input-demo.tsx",
     description: "Selects a star rating with radio controls.",
-    examples: [],
+    examples: [
+      {
+        title: "Read only",
+        description: "Use isReadOnly to show a rating that cannot change.",
+        sourcePath: "rating-input-read-only-demo.tsx",
+      },
+    ],
   },
   "radio-group": {
     usage: "radio-group-demo.tsx",
     description: "Groups options for choosing one item.",
     examples: [
       {
+        title: "Described options",
+        description:
+          "Set description on each Radio to show help below its label.",
+        sourcePath: "radio-group-description-demo.tsx",
+      },
+      {
+        title: "Horizontal",
+        description:
+          'Set orientation="horizontal" to show the options in a row.',
+        sourcePath: "radio-group-horizontal-demo.tsx",
+      },
+      {
         title: "Card options",
         description:
-          'Set variant="card" when each choice needs a label and description.',
+          'Set variant="card" when each choice needs a label and description. Use RadioGroupItems to change the gap.',
         sourcePath: "radio-group-card-demo.tsx",
+      },
+      {
+        title: "Disabled",
+        description:
+          "Set isDisabled on a Radio to make one option unavailable. Set it on RadioGroup to disable all options.",
+        sourcePath: "radio-group-disabled-demo.tsx",
+      },
+      {
+        title: "Invalid selection",
+        description:
+          "Use isInvalid with RadioGroupError while no option is selected. The error clears when an option is selected.",
+        sourcePath: "radio-group-invalid-demo.tsx",
       },
     ],
   },
@@ -684,10 +952,16 @@ export const componentPageData = {
     description: "Displays a calendar for selecting a date range.",
     examples: [
       {
-        title: "Restricted range",
+        title: "Unavailable dates",
         description:
-          "Use isDateUnavailable to mark dates unavailable, and minValue and maxValue to limit the selectable range.",
+          "Use isDateUnavailable to mark dates unavailable. Set minValue and maxValue to limit the selectable range.",
         sourcePath: "range-calendar-limits-demo.tsx",
+      },
+      {
+        title: "Controlled value",
+        description:
+          "Control the selected range with the value and onChange props.",
+        sourcePath: "range-calendar-controlled-demo.tsx",
       },
     ],
   },
@@ -695,6 +969,11 @@ export const componentPageData = {
     usage: "search-field-basic-demo.tsx",
     description: "A field for entering a search query.",
     examples: [
+      {
+        title: "Disabled",
+        description: "Use isDisabled to prevent input.",
+        sourcePath: "search-field-disabled-demo.tsx",
+      },
       {
         title: "Filtered results",
         description:
@@ -709,19 +988,44 @@ export const componentPageData = {
     examples: [],
   },
   skeleton: {
-    usage: "skeleton-demo.tsx",
+    usage: "skeleton-basic-demo.tsx",
     description: "Displays a placeholder while content loads.",
-    examples: [],
+    examples: [
+      {
+        title: "Card",
+        description:
+          "Match each Skeleton to the size and shape of the content it replaces. Skeleton is hidden from screen readers, so put a loading message in an output.",
+        sourcePath: "skeleton-demo.tsx",
+      },
+      {
+        title: "Loading state",
+        description:
+          "Show the content in place of the skeletons when it loads. Keep the same size so the layout does not move. Install Avatar separately.",
+        sourcePath: "skeleton-loading-demo.tsx",
+      },
+    ],
   },
   slider: {
     usage: "slider-demo.tsx",
     description: "Selects a value or range on a track.",
     examples: [
       {
-        title: "Range and disabled state",
+        title: "Range",
         description:
-          "Pass an array to defaultValue for two SliderHandles. Use isDisabled to keep a value visible when it cannot change.",
-        sourcePath: "slider-budget-demo.tsx",
+          "Pass an array to defaultValue for two SliderHandles. Give each handle an aria-label.",
+        sourcePath: "slider-range-demo.tsx",
+      },
+      {
+        title: "Step",
+        description:
+          "Set step to change the increment. Use formatOptions to format the value.",
+        sourcePath: "slider-step-demo.tsx",
+      },
+      {
+        title: "Disabled",
+        description:
+          "Use isDisabled to keep the current value visible and prevent changes.",
+        sourcePath: "slider-disabled-demo.tsx",
       },
     ],
   },
@@ -738,7 +1042,7 @@ export const componentPageData = {
       {
         title: "Loading in context",
         description:
-          'Put a size="sm" Spinner inside a disabled Button, or pair a larger Spinner with a status message.',
+          'Set isPending on a Button and put a size="sm" Spinner inside it. Pair a larger Spinner with a status message.',
         sourcePath: "spinner-usage-demo.tsx",
       },
     ],
@@ -746,7 +1050,14 @@ export const componentPageData = {
   stat: {
     usage: "stat-demo.tsx",
     description: "Displays a labeled value with supporting details.",
-    examples: [],
+    examples: [
+      {
+        title: "Trend",
+        description:
+          "Put a Badge in StatDetail to show the change. Include a plus or minus sign so the direction does not depend on color. Install Badge separately.",
+        sourcePath: "stat-trend-demo.tsx",
+      },
+    ],
   },
   stepper: {
     usage: "stepper-basic-demo.tsx",
@@ -758,9 +1069,20 @@ export const componentPageData = {
     description: "Turns a setting on or off.",
     examples: [
       {
-        title: "Account settings",
+        title: "Description",
+        description: "Set description to show help below the label.",
+        sourcePath: "switch-description-demo.tsx",
+      },
+      {
+        title: "Disabled",
         description:
-          "Control each switch with checked and onCheckedChange. Use isDisabled for a managed setting.",
+          "Use isDisabled for a setting that the user cannot change.",
+        sourcePath: "switch-disabled-demo.tsx",
+      },
+      {
+        title: "Custom layout",
+        description:
+          "Compose SwitchLabel, SwitchDescription, SwitchControl, and SwitchThumb for your own layout. Control each switch with checked and onCheckedChange.",
         sourcePath: "switch-demo.tsx",
       },
     ],
@@ -820,10 +1142,27 @@ export const componentPageData = {
     description: "A field for entering multiline text.",
     examples: [
       {
-        title: "Field states",
+        title: "Description",
+        description: "Set description to show help below the field.",
+        sourcePath: "text-area-description-demo.tsx",
+      },
+      {
+        title: "Disabled",
         description:
-          "Use isInvalid with TextAreaError for errors, isReadOnly for selectable text, and isDisabled to prevent input.",
-        sourcePath: "text-area-demo.tsx",
+          "Use isDisabled to keep the current value visible and prevent changes.",
+        sourcePath: "text-area-disabled-demo.tsx",
+      },
+      {
+        title: "Read only",
+        description:
+          "Use isReadOnly to keep the value selectable but prevent changes.",
+        sourcePath: "text-area-read-only-demo.tsx",
+      },
+      {
+        title: "Invalid",
+        description:
+          "Use isInvalid with TextAreaError to show an error. The error clears when the value is valid.",
+        sourcePath: "text-area-invalid-demo.tsx",
       },
     ],
   },
@@ -832,28 +1171,78 @@ export const componentPageData = {
     description: "A field for entering a single line of text.",
     examples: [
       {
-        title: "Field states",
+        title: "Description",
+        description: "Set description to show help below the field.",
+        sourcePath: "text-field-description-demo.tsx",
+      },
+      {
+        title: "Disabled",
         description:
-          "Use isInvalid with TextFieldError for errors, isReadOnly for selectable text, and isDisabled to prevent input.",
-        sourcePath: "text-field-demo.tsx",
+          "Use isDisabled to keep the current value visible and prevent changes.",
+        sourcePath: "text-field-disabled-demo.tsx",
+      },
+      {
+        title: "Read only",
+        description:
+          "Use isReadOnly to keep the value selectable but prevent changes.",
+        sourcePath: "text-field-read-only-demo.tsx",
+      },
+      {
+        title: "Invalid",
+        description:
+          "Use isInvalid with TextFieldError to show an error. The error clears when the value is valid.",
+        sourcePath: "text-field-invalid-demo.tsx",
       },
     ],
   },
   "text-reveal": {
-    usage: "text-reveal-demo.tsx",
+    usage: "text-reveal-basic-demo.tsx",
     description: "Reveals text by word or character with staggered movement.",
-    examples: [],
+    examples: [
+      {
+        title: "Characters",
+        description:
+          'Set split="characters" to reveal one character at a time. A word stays on one line unless it is wider than its container.',
+        sourcePath: "text-reveal-characters-demo.tsx",
+      },
+      {
+        title: "Sequence",
+        description:
+          "Set delay to start one reveal after another. The default trigger starts each reveal when its text comes into view.",
+        sourcePath: "text-reveal-demo.tsx",
+      },
+    ],
   },
   "text-scramble": {
-    usage: "text-scramble-demo.tsx",
+    usage: "text-scramble-basic-demo.tsx",
     description: "Resolves changing text from scrambled characters.",
-    examples: [],
+    examples: [
+      {
+        title: "Glyphs",
+        description:
+          "Set glyphs to choose the characters that show during the scramble. Use characters that have the same width in your font.",
+        sourcePath: "text-scramble-demo.tsx",
+      },
+      {
+        title: "Duration",
+        description:
+          "Set duration to the time in seconds that the text takes to resolve. Use a short duration for status labels.",
+        sourcePath: "text-scramble-duration-demo.tsx",
+      },
+    ],
   },
   presence: {
     usage: "presence-demo.tsx",
     description:
       "Animates conditional content when it enters or leaves the page.",
-    examples: [],
+    examples: [
+      {
+        title: "Inline status",
+        description:
+          'Set as="span" to show content in a line of text or beside a control. Keep the output element outside Presence, so screen readers announce the change.',
+        sourcePath: "presence-inline-demo.tsx",
+      },
+    ],
   },
   "source-link": {
     usage: "source-link-demo.tsx",
@@ -862,24 +1251,64 @@ export const componentPageData = {
     examples: [],
   },
   "stagger-group": {
-    usage: "stagger-group-demo.tsx",
+    usage: "stagger-group-basic-demo.tsx",
     description: "Sequences the entrance of grouped content.",
-    examples: [],
+    examples: [
+      {
+        title: "List",
+        description:
+          'Set as="ul" or as="ol" on StaggerGroup and as="li" on each StaggerItem. The list keeps its semantics.',
+        sourcePath: "stagger-group-demo.tsx",
+      },
+      {
+        title: "Timing",
+        description:
+          "Set stagger to the delay in seconds between items. In a long group the delay gets shorter, so the last item starts within 0.6 seconds.",
+        sourcePath: "stagger-group-timing-demo.tsx",
+      },
+    ],
   },
   "layout-morph": {
     usage: "layout-morph-demo.tsx",
     description: "Animates height and content when a keyed section changes.",
-    examples: [],
+    examples: [
+      {
+        title: "Switching views",
+        description:
+          "Set contentKey to the selected view. Keep the control outside LayoutMorph, so focus stays on the control. Install Toggle button group separately.",
+        sourcePath: "layout-morph-views-demo.tsx",
+      },
+    ],
   },
   marquee: {
     usage: "marquee-demo.tsx",
     description: "Loops a strip of content with a pause control.",
-    examples: [],
+    examples: [
+      {
+        title: "Reverse",
+        description:
+          "Set reverse to move the content toward the end edge. In a right-to-left layout, both directions change sides.",
+        sourcePath: "marquee-reverse-demo.tsx",
+      },
+      {
+        title: "Speed and spacing",
+        description:
+          "Set speed in pixels per second. Set --marquee-gap in className to change the space between items.",
+        sourcePath: "marquee-speed-demo.tsx",
+      },
+    ],
   },
   "text-swap": {
     usage: "text-swap-demo.tsx",
     description: "Displays text that transitions when its value changes.",
-    examples: [],
+    examples: [
+      {
+        title: "Button label",
+        description:
+          "Put TextSwap in a Button to change its label after an action. Set a minimum width so the button keeps its size.",
+        sourcePath: "text-swap-button-demo.tsx",
+      },
+    ],
   },
   "tool-call": {
     usage: "tool-call-demo.tsx",
@@ -889,7 +1318,26 @@ export const componentPageData = {
   "time-field": {
     usage: "time-field-demo.tsx",
     description: "A field for entering a time in editable segments.",
-    examples: [],
+    examples: [
+      {
+        title: "24-hour clock",
+        description:
+          "Set hourCycle to 24 to use a 24-hour clock in every locale.",
+        sourcePath: "time-field-24-hour-demo.tsx",
+      },
+      {
+        title: "Minimum and maximum",
+        description:
+          "Set minValue and maxValue to limit the time. A time outside the limits is invalid.",
+        sourcePath: "time-field-limits-demo.tsx",
+      },
+      {
+        title: "Disabled",
+        description:
+          "Use isDisabled to keep the current value visible and prevent changes.",
+        sourcePath: "time-field-disabled-demo.tsx",
+      },
+    ],
   },
   timeline: {
     usage: "timeline-demo.tsx",
@@ -938,6 +1386,12 @@ export const componentPageData = {
     description: "A field for entering and editing multiple text tokens.",
     examples: [
       {
+        title: "Disabled",
+        description:
+          "Use isDisabled to keep the tokens visible and prevent changes.",
+        sourcePath: "token-field-disabled-demo.tsx",
+      },
+      {
         title: "Project tags",
         description:
           "Pass a TagFieldValue as the value and commit the draft with onSubmit. Uncommitted text is not a token.",
@@ -952,8 +1406,14 @@ export const componentPageData = {
       {
         title: "Formatting toolbar",
         description:
-          'Use orientation="vertical" for a vertical toolbar. In ToggleButtonGroup, selectionMode sets single or multiple selection.',
+          'Set selectionMode="multiple" on ToggleButtonGroup for styles that combine. A Separator divides groups of controls.',
         sourcePath: "toolbar-demo.tsx",
+      },
+      {
+        title: "Vertical toolbar",
+        description:
+          'Set orientation="vertical". The up and down arrow keys move focus.',
+        sourcePath: "toolbar-vertical-demo.tsx",
       },
     ],
   },
@@ -993,7 +1453,6 @@ export function getComponentPageData(
   ];
 }
 
-/** Section id for a named example. Matches `#example-<slugified title>`. */
 export function exampleAnchor(title: string) {
   return `example-${title
     .toLowerCase()

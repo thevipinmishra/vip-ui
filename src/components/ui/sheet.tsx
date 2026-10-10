@@ -1,5 +1,6 @@
 "use client";
 
+import { XIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import {
   createContext,
@@ -32,7 +33,6 @@ import {
   Text,
   type TextProps,
 } from "react-aria-components";
-import { X } from "reicon-react";
 import { tv } from "tailwind-variants";
 import { cn } from "@/lib/utils";
 import { Button, type ButtonProps as StyledButtonProps } from "./button";
@@ -41,7 +41,6 @@ type Axis = "x" | "y";
 type Position = SheetRenderProps["position"];
 type SwipeDirection = SheetRenderProps["swipeDirection"];
 
-// React hoists and de-duplicates this, so the file needs no global CSS.
 const keyframes = "@keyframes vip-sheet-backdrop{from{opacity:0}to{opacity:1}}";
 
 const sheetSurfaceStyles = tv({
@@ -102,8 +101,6 @@ function getScroll(scroller: HTMLElement, axis: Axis) {
   return axis === "y" ? scroller.scrollTop : scroller.scrollLeft;
 }
 
-// Resolves the scroll offset of every snap marker React Aria renders: the exit
-// and entered markers on the scroller, and one detent per snap point.
 function getSnapPositions(scroller: HTMLElement, axis: Axis) {
   const y = axis === "y";
   const box = scroller.getBoundingClientRect();
@@ -154,7 +151,6 @@ function getStops(scroller: HTMLElement, sheet: SheetFrameState) {
         ...(sheet.after ? [positions[0]] : []),
         ...(sheet.before ? [positions[positions.length - 1]] : []),
       ];
-  // Ordered from least to most revealed.
   const open = positions
     .filter((position) => !exits.includes(position))
     .sort(
@@ -164,8 +160,6 @@ function getStops(scroller: HTMLElement, sheet: SheetFrameState) {
     );
   if (!exits.length && sheet.before && !sheet.after) open.reverse();
   const full = open[open.length - 1];
-  // React Aria's exit stops are a viewport away, but the sheet is already
-  // hidden once it has moved its own size. Gestures settle against that.
   const content = scroller.querySelector<HTMLElement>("[data-sheet-content]");
   const size = content
     ? sheet.axis === "y"
@@ -194,10 +188,6 @@ function scrollToStop(
   resumeSnap(scroller, true);
 }
 
-// Mandatory snapping retargets drags and programmatic scrolls, so it's off
-// while they run. There's one override per scroller: a new drag or settle
-// takes over a pending restore rather than having it re-enable snapping
-// underneath, and keeps the original value to restore.
 const snapOverrides = new WeakMap<
   HTMLElement,
   { snapType: string; cancel: () => void }
@@ -248,11 +238,9 @@ export interface SheetProps
   extends Omit<SheetContentProps, "children" | "className" | "style"> {
   ref?: React.Ref<HTMLDivElement>;
   children: ReactNode;
-  /** Classes for the sheet surface. */
   className?: AriaSheetProps["className"];
   position?: SheetOverlayProps["position"];
   swipeDirection?: SheetOverlayProps["swipeDirection"];
-  /** Visible amount at each stop: numbers are pixels, `%` is relative to the sheet. Opens at the first. */
   snapPoints?: SheetOverlayProps["snapPoints"];
   preventDismissal?: boolean;
   isOpen?: boolean;
@@ -351,10 +339,6 @@ function SheetFrame({
   const [visible, setVisible] = useState(0);
   const { axis, before, after } = getSwipe(swipeDirection);
 
-  // React Aria unlocks page scroll as soon as the sheet starts closing, but the
-  // page-sized overlay stays until the exit scroll ends, so the returning
-  // scrollbar makes it overflow. The lock is ref-counted: hold it until unmount,
-  // with the same options SheetOverlay uses.
   usePreventScroll({ UNSTABLE_overrideFocus: true });
 
   useEffect(() => {
@@ -377,8 +361,6 @@ function SheetFrame({
     if (!content || preventDismissal) return;
     const onKeyDown = (event: Event) => {
       if ((event as KeyboardEvent).key !== "Escape") return;
-      // Some child controls stop propagation without handling Escape.
-      // Close once dispatch finishes unless something consumed it.
       window.setTimeout(() => {
         if (!event.defaultPrevented) state?.close();
       });
@@ -448,9 +430,6 @@ export function SheetHandle({ className, ...props }: ButtonProps) {
         if (next !== undefined) target = next;
       }
     }
-    // Dismiss the way a touch swipe does: keep scrolling out to React Aria's
-    // exit stop and let its observer close the sheet once it's out of view.
-    // Closing from here would re-enable snapping and snap it back open first.
     const exit = hidden.indexOf(target);
     scrollToStop(
       scroller,
@@ -460,8 +439,6 @@ export function SheetHandle({ className, ...props }: ButtonProps) {
     );
   };
 
-  // Touch and trackpad swipes scroll the sheet natively. A mouse can't drag a
-  // scroll container, so translate handle drags into scrolling.
   const startDrag = (event: React.PointerEvent<HTMLButtonElement>) => {
     dragged.current = false;
     if (event.pointerType !== "mouse" || event.button !== 0) return;
@@ -488,9 +465,7 @@ export function SheetHandle({ className, ...props }: ButtonProps) {
       window.removeEventListener("pointermove", move);
       window.removeEventListener("pointerup", end);
       window.removeEventListener("pointercancel", end);
-      // Dragging fully out of view closes the sheet before release.
       if (!dragged.current || !scroller.isConnected) return;
-      // Holding still before release cancels the fling.
       const recent = [
         ...samples.filter((sample) => endEvent.timeStamp - sample.time < 100),
         {
@@ -514,7 +489,6 @@ export function SheetHandle({ className, ...props }: ButtonProps) {
   const onHandleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
     if (event.key === "Enter" || event.key === " ") dragged.current = false;
     const y = sheet.axis === "y";
-    // Scrolling forward moves the sheet up or left.
     const step =
       event.key === (y ? "ArrowUp" : "ArrowLeft")
         ? 1
@@ -697,7 +671,7 @@ export function SheetClose({
       size={size ?? (children ? "default" : "icon")}
       aria-label={props["aria-label"] ?? (children ? undefined : "Close sheet")}
     >
-      {children ?? <X size={17} aria-hidden="true" />}
+      {children ?? <XIcon size={17} aria-hidden="true" />}
     </Button>
   );
 }

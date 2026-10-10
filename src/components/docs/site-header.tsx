@@ -1,9 +1,9 @@
 "use client";
 
+import { ListIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Menu } from "reicon-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -13,25 +13,16 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { activeSection, mainNav } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 import { DocsSearch } from "./docs-search";
 import { SiteLogo } from "./site-logo";
 import { ThemeToggle } from "./theme-toggle";
 
-const links = [
-  { href: "/components", label: "Components" },
-  { href: "/components/installation", label: "Installation" },
-  { href: "/themes", label: "Themes" },
-  { href: "/charts", label: "Charts" },
-  { href: "/examples", label: "Examples" },
-] as const;
-
 export function SiteHeader({ wide = false }: { wide?: boolean }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const active = links.findLast(
-    ({ href }) => pathname === href || pathname.startsWith(`${href}/`),
-  )?.href;
+  const active = activeSection(pathname);
 
   useEffect(() => {
     const desktop = window.matchMedia("(min-width: 768px)");
@@ -85,7 +76,7 @@ export function SiteHeader({ wide = false }: { wide?: boolean }) {
             aria-label="Main navigation"
             className="mr-auto hidden h-16 items-center gap-1 md:flex"
           >
-            {links.map((link) => (
+            {mainNav.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -118,17 +109,17 @@ export function SiteHeader({ wide = false }: { wide?: boolean }) {
                   aria-label="Open site navigation"
                   className="size-10 rounded-md text-muted-foreground hover:text-foreground"
                 >
-                  <Menu size={20} aria-hidden="true" />
+                  <ListIcon size={20} aria-hidden="true" />
                 </Button>
                 <Sheet position="right">
                   <SheetHeader className="flex items-center justify-between gap-4 border-b border-border/70 pb-4">
-                    <SheetTitle>Navigate</SheetTitle>
+                    <SheetTitle>Menu</SheetTitle>
                     <SheetClose />
                   </SheetHeader>
                   <SheetBody className="pb-[max(1.25rem,env(safe-area-inset-bottom))]">
                     <nav aria-label="Mobile navigation" className="grid gap-1">
                       {renderMobileLink("/", "Home")}
-                      {links.map((link) =>
+                      {mainNav.map((link) =>
                         renderMobileLink(link.href, link.label),
                       )}
                     </nav>

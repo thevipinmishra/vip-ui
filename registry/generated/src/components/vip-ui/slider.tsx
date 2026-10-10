@@ -12,6 +12,7 @@ import {
   SliderThumb,
 } from "react-aria-components";
 import { cn } from "./utils";
+import { fieldLabelStyles } from "./field-styles";
 
 export interface SliderProps
   extends Omit<AriaSliderProps, "children" | "className"> {
@@ -56,7 +57,7 @@ export function SliderLabel({
     <Label
       {...props}
       data-slot="slider-label"
-      className={cn("font-medium text-foreground", className)}
+      className={cn(fieldLabelStyles, className)}
     />
   );
 }
@@ -89,7 +90,7 @@ export function SliderTrack({
       data-slot="slider-track"
       className={composeRenderProps(className, (className) =>
         cn(
-          "relative h-11 w-full cursor-pointer touch-none data-[disabled]:cursor-default data-[disabled]:opacity-50",
+          "relative h-11 w-full cursor-pointer touch-none disabled:cursor-default disabled:opacity-50",
           className,
         ),
       )}
@@ -135,14 +136,13 @@ export function SliderHandle({
   ...props
 }: React.ComponentProps<typeof SliderThumb>) {
   const reduceMotion = useReducedMotion();
-  // React Aria owns the thumb's position. Only animate its visual layer.
   return (
     <SliderThumb
       {...props}
       data-slot="slider-handle"
       className={composeRenderProps(className, (className) =>
         cn(
-          "relative top-1/2 h-7 w-5 cursor-grab rounded-md outline-none data-[dragging]:cursor-grabbing data-[disabled]:cursor-default data-[focus-visible]:outline-2 data-[focus-visible]:outline-solid data-[focus-visible]:outline-offset-3 data-[focus-visible]:outline-ring",
+          "relative top-1/2 h-7 w-5 cursor-grab rounded-md outline-none dragging:cursor-grabbing disabled:cursor-default focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-3 focus-visible:outline-ring",
           className,
         ),
       )}

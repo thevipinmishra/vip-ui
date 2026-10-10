@@ -108,25 +108,3 @@ test("accordion respects reduced motion and still shows its state", async ({
     "matrix(-1, 0, 0, -1, 0, 0)",
   );
 });
-
-test("release notes use the accordion panel animation", async ({ page }) => {
-  await page.goto("/examples/repository/releases");
-  const trigger = page.locator("button[aria-expanded]").first();
-  // GitHub is an external data source; still test the preview if it is unavailable.
-  test.skip((await trigger.count()) === 0, "GitHub releases are unavailable");
-  const panel = page.locator("[role=group]").first();
-
-  const opening = await observePanelHeight(panel, () => trigger.click());
-  await expect(panel).toHaveCSS("transition-property", "all");
-  await expect(trigger).toHaveAttribute("aria-expanded", "true");
-  expect(
-    opening.samples.some((height) => height > 0 && height < opening.fullHeight),
-  ).toBe(true);
-  await expect(trigger.locator("span[aria-hidden=true]")).toHaveCSS(
-    "transform",
-    "matrix(-1, 0, 0, -1, 0, 0)",
-  );
-  await trigger.click();
-  await expect(trigger).toHaveAttribute("aria-expanded", "false");
-  await expect(panel).toBeHidden();
-});
