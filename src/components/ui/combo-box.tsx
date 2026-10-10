@@ -1,5 +1,6 @@
 "use client";
 
+import { CaretDownIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import { type ReactNode, useContext } from "react";
 import {
@@ -16,7 +17,7 @@ import {
   ListBoxItem,
   Text,
 } from "react-aria-components";
-import { ChevronDown } from "reicon-react";
+import { duration, easeOut } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import {
   fieldDescriptionStyles,
@@ -308,9 +309,9 @@ function ComboBoxChevron() {
       aria-hidden="true"
       initial={false}
       animate={{ rotate: isOpen ? 180 : 0 }}
-      transition={{ duration: reduceMotion ? 0 : 0.2, ease: "easeOut" }}
+      transition={{ duration: reduceMotion ? 0 : duration.base, ease: easeOut }}
     >
-      <ChevronDown size={16} />
+      <CaretDownIcon size={16} />
     </motion.span>
   );
 }

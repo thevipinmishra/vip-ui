@@ -6,6 +6,7 @@ import {
   type ButtonProps as AriaButtonProps,
   composeRenderProps,
 } from "react-aria-components";
+import { springLayout } from "@/lib/motion";
 import {
   type ButtonSize,
   type ButtonVariant,
@@ -31,6 +32,8 @@ export interface ButtonProps
 
 const MotionButton = motion.create(AriaButton);
 
+const pressStyles = "motion-safe:pressed:not-aria-expanded:scale-[0.96]";
+
 export function Button({
   className,
   variant = "default",
@@ -46,19 +49,13 @@ export function Button({
       data-variant={variant}
       data-size={size}
       layout={reduceMotion ? false : layout}
-      whileHover={
-        isStatic || reduceMotion || props.isDisabled
-          ? undefined
-          : { scale: 1.015 }
-      }
-      whileTap={
-        isStatic || reduceMotion || props.isDisabled
-          ? undefined
-          : { scale: 0.96 }
-      }
-      transition={{ type: "spring", stiffness: 500, damping: 36 }}
+      transition={springLayout}
       className={composeRenderProps(className, (className) =>
-        buttonStyles({ variant, size, className }),
+        buttonStyles({
+          variant,
+          size,
+          className: [!isStatic && pressStyles, className],
+        }),
       )}
       {...props}
     />

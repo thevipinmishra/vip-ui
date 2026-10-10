@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 export function ButtonVariantsDemo() {
   return (
-    <div className="flex w-full max-w-xl flex-wrap items-center gap-3">
+    <div className="flex flex-wrap items-center justify-center gap-3">
       <Button>Default</Button>
       <Button variant="secondary">Secondary</Button>
       <Button variant="outline">Outline</Button>

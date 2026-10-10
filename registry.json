@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "vip-ui",
-  "homepage": "http://localhost:3000",
+  "homepage": "https://vip-ui.vercel.app",
   "items": [
     {
       "name": "vip-accordion",
@@ -9,11 +9,23 @@
       "title": "Accordion",
       "description": "Reveal one or more sections of related content.",
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -37,7 +49,23 @@
       "type": "registry:ui",
       "title": "Agent Status",
       "description": "Show an agent's current step and outcome.",
-      "dependencies": ["motion", "reicon-react", "tailwind-variants"],
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "tailwind-variants@^3.3.1"
+      ],
+      "cssVars": {
+        "light": {
+          "success": "oklch(0.43 0.12 155)",
+          "success-subtle": "oklch(0.955 0.035 155)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)",
+          "success-subtle": "oklch(0.24 0.045 155)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -56,7 +84,30 @@
       "type": "registry:ui",
       "title": "Alert",
       "description": "Show information, success, warning, or error messages.",
-      "dependencies": ["reicon-react", "tailwind-variants"],
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "tailwind-variants@^3.3.1"
+      ],
+      "cssVars": {
+        "light": {
+          "success": "oklch(0.43 0.12 155)",
+          "success-subtle": "oklch(0.955 0.035 155)",
+          "success-foreground": "oklch(0.32 0.09 155)",
+          "warning": "oklch(0.54 0.13 75)",
+          "warning-subtle": "oklch(0.965 0.045 85)",
+          "warning-foreground": "oklch(0.36 0.09 75)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)",
+          "success-subtle": "oklch(0.24 0.045 155)",
+          "success-foreground": "oklch(0.86 0.085 155)",
+          "warning": "oklch(0.78 0.11 75)",
+          "warning-subtle": "oklch(0.27 0.045 75)",
+          "warning-foreground": "oklch(0.89 0.07 75)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -75,8 +126,13 @@
       "type": "registry:ui",
       "title": "Animated Number",
       "description": "Animate a changing value while keeping its accessible text stable.",
-      "dependencies": ["motion", "tailwind-variants"],
+      "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -95,12 +151,31 @@
       "title": "Attachment",
       "description": "Preview and manage files before or during an upload.",
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -133,7 +208,11 @@
       "type": "registry:ui",
       "title": "Autocomplete",
       "description": "Find suggestions as you type in a text field.",
-      "dependencies": ["react-aria-components"],
+      "dependencies": ["react-aria-components@^1.22.0"],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/autocomplete.tsx",
@@ -147,7 +226,7 @@
       "type": "registry:ui",
       "title": "Avatar",
       "description": "Show a person with an image or initials.",
-      "dependencies": ["tailwind-variants"],
+      "dependencies": ["tailwind-variants@^3.3.1"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -166,7 +245,27 @@
       "type": "registry:ui",
       "title": "Badge",
       "description": "Label an item with short status or metadata.",
-      "dependencies": ["tailwind-variants"],
+      "dependencies": ["tailwind-variants@^3.3.1"],
+      "cssVars": {
+        "light": {
+          "success": "oklch(0.43 0.12 155)",
+          "success-subtle": "oklch(0.955 0.035 155)",
+          "success-foreground": "oklch(0.32 0.09 155)",
+          "warning": "oklch(0.54 0.13 75)",
+          "warning-subtle": "oklch(0.965 0.045 85)",
+          "warning-foreground": "oklch(0.36 0.09 75)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)",
+          "success-subtle": "oklch(0.24 0.045 155)",
+          "success-foreground": "oklch(0.86 0.085 155)",
+          "warning": "oklch(0.78 0.11 75)",
+          "warning-subtle": "oklch(0.27 0.045 75)",
+          "warning-foreground": "oklch(0.89 0.07 75)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -186,10 +285,14 @@
       "title": "Breadcrumbs",
       "description": "Link back through a page hierarchy.",
       "dependencies": [
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -208,8 +311,29 @@
       "type": "registry:ui",
       "title": "Button Group",
       "description": "Group related actions without turning them into a selection control.",
-      "dependencies": ["tailwind-variants"],
+      "dependencies": [
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -219,6 +343,16 @@
           "path": "registry/generated/src/components/vip-ui/button-group.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/button-group.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button.tsx"
         }
       ]
     },
@@ -227,7 +361,15 @@
       "type": "registry:ui",
       "title": "Button Link",
       "description": "Style a navigation link like a button without tying it to a router.",
-      "dependencies": ["tailwind-variants"],
+      "dependencies": ["tailwind-variants@^3.3.1"],
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
@@ -246,7 +388,15 @@
       "type": "registry:ui",
       "title": "Button Styles",
       "description": "Shared variants and sizes used by vip/ui buttons and links.",
-      "dependencies": ["tailwind-variants"],
+      "dependencies": ["tailwind-variants@^3.3.1"],
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
@@ -260,8 +410,29 @@
       "type": "registry:ui",
       "title": "Button",
       "description": "Trigger an action with primary, secondary, or destructive emphasis.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
           "type": "registry:file",
@@ -280,12 +451,29 @@
       "title": "Calendar",
       "description": "Choose a date in a keyboard-accessible calendar.",
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -313,7 +501,15 @@
       "type": "registry:ui",
       "title": "Card",
       "description": "Group related content, actions, and metadata.",
-      "dependencies": ["tailwind-variants"],
+      "dependencies": ["tailwind-variants@^3.3.1"],
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -332,7 +528,19 @@
       "type": "registry:ui",
       "title": "Chart",
       "description": "Frame a TanStack chart with shadcn chart colors and tooltip styles.",
-      "dependencies": ["@tanstack/charts", "tailwind-variants"],
+      "dependencies": ["@tanstack/charts@^0.18.0", "tailwind-variants@^3.3.1"],
+      "cssVars": {
+        "light": {
+          "success": "oklch(0.43 0.12 155)",
+          "warning": "oklch(0.54 0.13 75)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)",
+          "warning": "oklch(0.78 0.11 75)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -351,12 +559,32 @@
       "type": "registry:ui",
       "title": "Checkbox Group",
       "description": "Select any number of related options in a form.",
-      "dependencies": ["react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/checkbox-group.tsx",
@@ -371,12 +599,29 @@
       "title": "Checkbox",
       "description": "Toggle an independent choice in a form.",
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+        },
+        "dark": {
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -394,7 +639,15 @@
       "type": "registry:ui",
       "title": "Collapsible Panel",
       "description": "Animate a disclosure panel while keeping its content accessible.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -413,7 +666,22 @@
       "type": "registry:ui",
       "title": "Color Field",
       "description": "Enter a color using a text value.",
-      "dependencies": ["react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -437,8 +705,31 @@
       "type": "registry:ui",
       "title": "Color Picker",
       "description": "Choose a color with visual controls and a hex field.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -486,7 +777,14 @@
       "type": "registry:ui",
       "title": "Color Swatch Picker",
       "description": "Choose from a set of color swatches.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -510,7 +808,14 @@
       "type": "registry:ui",
       "title": "Color Swatch",
       "description": "Show a named color sample.",
-      "dependencies": ["react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -530,12 +835,31 @@
       "title": "Combo Box",
       "description": "Filter and select one or several options.",
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -579,12 +903,31 @@
       "title": "Command Palette",
       "description": "Find and run actions with keyboard search.",
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -653,12 +996,31 @@
       "title": "Context Menu",
       "description": "Open actions beside an item with pointer, touch, or keyboard.",
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -692,12 +1054,29 @@
       "title": "Copy Button",
       "description": "Copy a value with success and failure feedback.",
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -726,13 +1105,34 @@
       "title": "Data Table",
       "description": "Search, filter, sort, select, and paginate rows in a client-side table.",
       "dependencies": [
-        "@tanstack/react-table",
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "@tanstack/react-table@^8.21.3",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -800,7 +1200,22 @@
       "type": "registry:ui",
       "title": "Date Field",
       "description": "Enter a date one editable segment at a time.",
-      "dependencies": ["react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -830,12 +1245,31 @@
       "title": "Date Picker",
       "description": "Choose a single date from a field and calendar.",
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -884,12 +1318,31 @@
       "title": "Date Range Picker",
       "description": "Choose a start and end date from a field and calendar.",
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -942,7 +1395,14 @@
       "type": "registry:ui",
       "title": "Date Segment",
       "description": "Render the editable segments used in date and time fields.",
-      "dependencies": ["react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -961,7 +1421,7 @@
       "type": "registry:ui",
       "title": "Description List",
       "description": "Pair labels with related values.",
-      "dependencies": ["tailwind-variants"],
+      "dependencies": ["tailwind-variants@^3.3.1"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -981,12 +1441,31 @@
       "title": "Dialog",
       "description": "Show a focused task above the current page.",
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -1015,11 +1494,15 @@
       "title": "Disclosure",
       "description": "Reveal optional details in place.",
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1043,7 +1526,14 @@
       "type": "registry:ui",
       "title": "Drop Zone",
       "description": "Accept files by drag and drop or file picker.",
-      "dependencies": ["react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1062,7 +1552,7 @@
       "type": "registry:ui",
       "title": "Empty State",
       "description": "Explain why a collection is empty and what to do next.",
-      "dependencies": ["tailwind-variants"],
+      "dependencies": ["tailwind-variants@^3.3.1"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1082,6 +1572,14 @@
       "title": "Field Styles",
       "description": "Shared theme-aware styling for text and segmented fields.",
       "dependencies": [],
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
@@ -1095,7 +1593,15 @@
       "type": "registry:ui",
       "title": "Fieldset",
       "description": "Group related native form controls under a legend.",
-      "dependencies": ["tailwind-variants"],
+      "dependencies": ["tailwind-variants@^3.3.1"],
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1114,8 +1620,29 @@
       "type": "registry:ui",
       "title": "File Trigger",
       "description": "Open a file picker from an accessible trigger.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
           "type": "registry:file",
@@ -1138,7 +1665,14 @@
       "type": "registry:ui",
       "title": "Form",
       "description": "Group fields and handle form validation.",
-      "dependencies": ["react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1157,7 +1691,22 @@
       "type": "registry:ui",
       "title": "Grid List",
       "description": "Select and act on rows with keyboard navigation.",
-      "dependencies": ["react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1177,12 +1726,29 @@
       "title": "Inline Edit",
       "description": "Edit text in place and handle save errors.",
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -1220,7 +1786,22 @@
       "type": "registry:ui",
       "title": "Input Group",
       "description": "Combine an input with a prefix, suffix, or action.",
-      "dependencies": ["react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1239,7 +1820,7 @@
       "type": "registry:ui",
       "title": "Kbd Code",
       "description": "Display keyboard shortcuts and inline code.",
-      "dependencies": ["tailwind-variants"],
+      "dependencies": ["tailwind-variants@^3.3.1"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1257,9 +1838,14 @@
       "name": "vip-layout-morph",
       "type": "registry:ui",
       "title": "Layout Morph",
-      "description": "Resize around changing content without distorting it.",
-      "dependencies": ["motion", "tailwind-variants"],
+      "description": "Resize around changing content without stretching it.",
+      "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -1277,7 +1863,14 @@
       "type": "registry:ui",
       "title": "Link",
       "description": "Navigate with an accessible text link.",
-      "dependencies": ["react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1297,12 +1890,29 @@
       "title": "List Box",
       "description": "Select an option from a visible list.",
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -1320,8 +1930,29 @@
       "type": "registry:ui",
       "title": "Marquee",
       "description": "Loop a strip of content with a pause control.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -1350,12 +1981,31 @@
       "title": "Menu",
       "description": "Choose an action from a popover menu.",
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -1383,7 +2033,15 @@
       "type": "registry:ui",
       "title": "Message",
       "description": "Display an entry in a conversation.",
-      "dependencies": ["tailwind-variants"],
+      "dependencies": ["tailwind-variants@^3.3.1"],
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1402,7 +2060,23 @@
       "type": "registry:ui",
       "title": "Meter",
       "description": "Display a measured value against a known range.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+        },
+        "dark": {
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1421,7 +2095,18 @@
       "type": "registry:ui",
       "title": "Native Select",
       "description": "Choose an option with the device's native select menu.",
-      "dependencies": ["reicon-react", "tailwind-variants"],
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "tailwind-variants@^3.3.1"
+      ],
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1446,11 +2131,23 @@
       "title": "Number Field",
       "description": "Enter or step through numeric values.",
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1479,7 +2176,15 @@
       "type": "registry:ui",
       "title": "Pagination",
       "description": "Navigate between pages of results.",
-      "dependencies": ["motion", "tailwind-variants"],
+      "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1499,12 +2204,29 @@
       "title": "Password Field",
       "description": "Enter a password and toggle its visibility.",
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -1547,7 +2269,23 @@
       "type": "registry:ui",
       "title": "Password Strength Meter",
       "description": "Estimate password strength beside any password field.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+        },
+        "dark": {
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1571,8 +2309,29 @@
       "type": "registry:ui",
       "title": "Popover",
       "description": "Show contextual content anchored to a trigger.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+        },
+        "dark": {
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -1590,7 +2349,7 @@
       "type": "registry:ui",
       "title": "Presence List",
       "description": "Animate additions and removals in a semantic list.",
-      "dependencies": ["motion", "tailwind-variants"],
+      "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1609,8 +2368,13 @@
       "type": "registry:ui",
       "title": "Presence",
       "description": "Animate conditional content when it enters or leaves.",
-      "dependencies": ["motion", "tailwind-variants"],
+      "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -1628,7 +2392,11 @@
       "type": "registry:ui",
       "title": "Press Button",
       "description": "Handle press interactions for shared button controls.",
-      "dependencies": ["motion", "react-aria-components"],
+      "dependencies": ["motion@^13.5.1", "react-aria-components@^1.22.0"],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/press-button.tsx",
@@ -1642,7 +2410,11 @@
       "type": "registry:ui",
       "title": "Preview Trigger",
       "description": "Open a preview without leaving the current context.",
-      "dependencies": ["react-aria-components"],
+      "dependencies": ["react-aria-components@^1.22.0"],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/preview-trigger.tsx",
@@ -1656,7 +2428,23 @@
       "type": "registry:ui",
       "title": "Progress Bar",
       "description": "Show progress for a task with a known completion point.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+        },
+        "dark": {
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1675,7 +2463,15 @@
       "type": "registry:ui",
       "title": "Progress Ring",
       "description": "Show known or unknown progress in a circular indicator.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1694,12 +2490,40 @@
       "type": "registry:ui",
       "title": "Radio Group",
       "description": "Choose one option from a visible set.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/radio-group.tsx",
@@ -1714,12 +2538,29 @@
       "title": "Range Calendar",
       "description": "Select a start and end date in a calendar.",
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -1753,16 +2594,40 @@
       "title": "Rating Input",
       "description": "Choose a star rating with radio controls.",
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/radio-group.tsx",
@@ -1782,10 +2647,22 @@
       "title": "Search Field",
       "description": "Search with a labeled input and clear control.",
       "dependencies": [
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1810,12 +2687,31 @@
       "title": "Select",
       "description": "Choose one option from a list in a popover.",
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -1853,7 +2749,14 @@
       "type": "registry:ui",
       "title": "Separator",
       "description": "Divide related groups of content.",
-      "dependencies": ["react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/separator.tsx",
@@ -1868,13 +2771,32 @@
       "title": "Sheet",
       "description": "Show a swipeable panel of content from the edge of the screen.",
       "dependencies": [
-        "motion",
-        "react-aria",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria@^3.53.0",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -1902,7 +2824,7 @@
       "type": "registry:ui",
       "title": "Skeleton",
       "description": "Reserve space while content is loading.",
-      "dependencies": ["motion", "tailwind-variants"],
+      "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1921,12 +2843,33 @@
       "type": "registry:ui",
       "title": "Slider",
       "description": "Adjust a value by dragging or with the keyboard.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/slider.tsx",
@@ -1941,10 +2884,22 @@
       "title": "Source Link",
       "description": "Link an answer to a named source.",
       "dependencies": [
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -1963,8 +2918,13 @@
       "type": "registry:ui",
       "title": "Spinner",
       "description": "Indicate that a task is running without a known end time.",
-      "dependencies": ["motion", "tailwind-variants"],
+      "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/spinner.tsx",
           "type": "registry:file",
@@ -1977,8 +2937,13 @@
       "type": "registry:ui",
       "title": "Stagger Group",
       "description": "Sequence the entrance of grouped content.",
-      "dependencies": ["motion", "tailwind-variants"],
+      "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -1996,7 +2961,15 @@
       "type": "registry:ui",
       "title": "Stat",
       "description": "Display a labeled value and its context.",
-      "dependencies": ["tailwind-variants"],
+      "dependencies": ["tailwind-variants@^3.3.1"],
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2015,7 +2988,11 @@
       "type": "registry:ui",
       "title": "Stepper",
       "description": "Show the current stage of a multi-step process.",
-      "dependencies": ["motion", "reicon-react", "tailwind-variants"],
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "tailwind-variants@^3.3.1"
+      ],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2034,8 +3011,21 @@
       "type": "registry:ui",
       "title": "Switch",
       "description": "Turn a setting on or off.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -2053,7 +3043,14 @@
       "type": "registry:ui",
       "title": "Table",
       "description": "Present rows and columns with sortable headers.",
-      "dependencies": ["react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2072,7 +3069,25 @@
       "type": "registry:ui",
       "title": "Tabs",
       "description": "Switch between related content panels.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2092,11 +3107,23 @@
       "title": "Tag Group",
       "description": "Navigate and remove tags with the keyboard.",
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2120,7 +3147,22 @@
       "type": "registry:ui",
       "title": "Text Area",
       "description": "Enter a longer answer with a labeled field.",
-      "dependencies": ["react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2144,7 +3186,22 @@
       "type": "registry:ui",
       "title": "Text Field",
       "description": "Enter and validate a single line of text.",
-      "dependencies": ["react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2168,8 +3225,13 @@
       "type": "registry:ui",
       "title": "Text Reveal",
       "description": "Reveal text by word or character with staggered movement.",
-      "dependencies": ["motion", "tailwind-variants"],
+      "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -2187,7 +3249,7 @@
       "type": "registry:ui",
       "title": "Text Scramble",
       "description": "Resolve changing text from scrambled characters.",
-      "dependencies": ["motion", "tailwind-variants"],
+      "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2206,8 +3268,13 @@
       "type": "registry:ui",
       "title": "Text Swap",
       "description": "Transition short changing labels without duplicating accessible text.",
-      "dependencies": ["motion", "tailwind-variants"],
+      "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -2225,7 +3292,22 @@
       "type": "registry:ui",
       "title": "Time Field",
       "description": "Enter a time one editable segment at a time.",
-      "dependencies": ["react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2254,7 +3336,10 @@
       "type": "registry:ui",
       "title": "Timeline",
       "description": "Show dated events in a semantic sequence.",
-      "dependencies": ["reicon-react", "tailwind-variants"],
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "tailwind-variants@^3.3.1"
+      ],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2274,11 +3359,31 @@
       "title": "Toast",
       "description": "Show feedback after an action without interrupting the page.",
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "success-subtle": "oklch(0.955 0.035 155)",
+          "success-foreground": "oklch(0.32 0.09 155)",
+          "warning-subtle": "oklch(0.965 0.045 85)",
+          "warning-foreground": "oklch(0.36 0.09 75)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+        },
+        "dark": {
+          "success-subtle": "oklch(0.24 0.045 155)",
+          "success-foreground": "oklch(0.86 0.085 155)",
+          "warning-subtle": "oklch(0.27 0.045 75)",
+          "warning-foreground": "oklch(0.89 0.07 75)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2297,8 +3402,29 @@
       "type": "registry:ui",
       "title": "Toggle Button Group",
       "description": "Choose one or more persistent actions in a group.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -2308,6 +3434,11 @@
           "path": "registry/generated/src/components/vip-ui/toggle-button-group.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/toggle-button-group.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/toggle-button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/toggle-button.tsx"
         }
       ]
     },
@@ -2316,8 +3447,29 @@
       "type": "registry:ui",
       "title": "Toggle Button",
       "description": "Turn a persistent action on or off.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -2340,12 +3492,32 @@
       "type": "registry:ui",
       "title": "Token Field",
       "description": "Enter and edit several tags in one field.",
-      "dependencies": ["react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/token-field.tsx",
@@ -2360,11 +3532,25 @@
       "title": "Tool Call",
       "description": "Inspect a tool request and result behind a disclosure.",
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "success": "oklch(0.43 0.12 155)",
+          "success-subtle": "oklch(0.955 0.035 155)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)",
+          "success-subtle": "oklch(0.24 0.045 155)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2393,7 +3579,22 @@
       "type": "registry:ui",
       "title": "Toolbar",
       "description": "Group related actions with arrow-key navigation.",
-      "dependencies": ["react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2412,8 +3613,29 @@
       "type": "registry:ui",
       "title": "Tooltip",
       "description": "Show short supplementary help on hover or focus.",
-      "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+      "dependencies": [
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+        },
+        "dark": {
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+        }
+      },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -2432,11 +3654,23 @@
       "title": "Tree",
       "description": "Browse and select items in a nested collection.",
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -2451,192 +3685,52 @@
       ]
     },
     {
-      "name": "vip-example-agent",
+      "name": "vip-dashboard-01",
       "type": "registry:block",
-      "title": "agent example",
-      "description": "A Next.js App Router agent example built with vip/ui.",
+      "title": "Dashboard 01",
+      "description": "A dashboard with a sidebar, key metrics, a revenue chart, and recent orders.",
+      "categories": ["dashboard"],
       "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "server-only",
-        "tailwind-variants"
+        "@phosphor-icons/react@^2.1.10",
+        "@tanstack/charts@^0.18.0",
+        "motion@^13.5.1",
+        "react-aria@^3.53.0",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
       ],
-      "files": [
-        {
-          "path": "registry/generated/src/app/examples/agent/layout.tsx",
-          "type": "registry:file",
-          "target": "src/app/examples/agent/layout.tsx"
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "success": "oklch(0.43 0.12 155)",
+          "success-subtle": "oklch(0.955 0.035 155)",
+          "success-foreground": "oklch(0.32 0.09 155)",
+          "warning": "oklch(0.54 0.13 75)",
+          "warning-subtle": "oklch(0.965 0.045 85)",
+          "warning-foreground": "oklch(0.36 0.09 75)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
         },
-        {
-          "path": "registry/generated/src/app/examples/agent/page.tsx",
-          "type": "registry:page",
-          "target": "src/app/examples/agent/page.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/utils.ts",
-          "type": "registry:file",
-          "target": "@components/vip-ui/utils.ts"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/agent-status.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/agent-status.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-link.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-link.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/message.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/message.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/presence.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/presence.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/source-link.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/source-link.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/collapsible-panel.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/collapsible-panel.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/disclosure.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/disclosure.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/tool-call.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/tool-call.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/agent/workspace.tsx",
-          "type": "registry:file",
-          "target": "src/app/examples/agent/workspace.tsx"
+        "dark": {
+          "success": "oklch(0.74 0.13 155)",
+          "success-subtle": "oklch(0.24 0.045 155)",
+          "success-foreground": "oklch(0.86 0.085 155)",
+          "warning": "oklch(0.78 0.11 75)",
+          "warning-subtle": "oklch(0.27 0.045 75)",
+          "warning-foreground": "oklch(0.89 0.07 75)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
         }
-      ]
-    },
-    {
-      "name": "vip-example-business",
-      "type": "registry:block",
-      "title": "business example",
-      "description": "A Next.js App Router business example built with vip/ui.",
-      "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "server-only",
-        "tailwind-variants"
-      ],
+      },
       "files": [
-        {
-          "path": "registry/generated/src/app/examples/business/customers/page.tsx",
-          "type": "registry:page",
-          "target": "src/app/examples/business/customers/page.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/business/customers/[id]/page.tsx",
-          "type": "registry:page",
-          "target": "src/app/examples/business/customers/[id]/page.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/business/data.ts",
-          "type": "registry:file",
-          "target": "src/app/examples/business/data.ts"
-        },
-        {
-          "path": "registry/generated/src/app/examples/business/invoices/page.tsx",
-          "type": "registry:page",
-          "target": "src/app/examples/business/invoices/page.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/business/layout.tsx",
-          "type": "registry:file",
-          "target": "src/app/examples/business/layout.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/business/navigation.tsx",
-          "type": "registry:file",
-          "target": "src/app/examples/business/navigation.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-link.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-link.tsx"
-        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/card.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/card.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/stat.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/stat.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/business/page.tsx",
-          "type": "registry:page",
-          "target": "src/app/examples/business/page.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/business/payments/page.tsx",
-          "type": "registry:page",
-          "target": "src/app/examples/business/payments/page.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/business/reports/page.tsx",
-          "type": "registry:page",
-          "target": "src/app/examples/business/reports/page.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/business/settings/page.tsx",
-          "type": "registry:page",
-          "target": "src/app/examples/business/settings/page.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/business/subscriptions/page.tsx",
-          "type": "registry:page",
-          "target": "src/app/examples/business/subscriptions/page.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/business/theme-toggle.tsx",
-          "type": "registry:file",
-          "target": "src/app/examples/business/theme-toggle.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/badge.tsx",
@@ -2644,94 +3738,14 @@
           "target": "@components/vip-ui/badge.tsx"
         },
         {
-          "path": "registry/generated/src/components/vip-ui/form.tsx",
+          "path": "registry/generated/src/components/vip-ui/progress-bar.tsx",
           "type": "registry:file",
-          "target": "@components/vip-ui/form.tsx"
+          "target": "@components/vip-ui/progress-bar.tsx"
         },
         {
-          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "path": "registry/generated/src/app/blocks/dashboard-01/app-sidebar.tsx",
           "type": "registry:file",
-          "target": "@components/vip-ui/field-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/search-field.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/search-field.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/list-box.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/list-box.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/popover.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/popover.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/press-button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/press-button.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/select.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/select.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/business/ui.tsx",
-          "type": "registry:file",
-          "target": "src/app/examples/business/ui.tsx"
-        }
-      ]
-    },
-    {
-      "name": "vip-example-chat",
-      "type": "registry:block",
-      "title": "chat example",
-      "description": "A Next.js App Router chat example built with vip/ui.",
-      "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "server-only",
-        "tailwind-variants"
-      ],
-      "files": [
-        {
-          "path": "registry/generated/src/app/examples/chat/data.ts",
-          "type": "registry:file",
-          "target": "src/app/examples/chat/data.ts"
-        },
-        {
-          "path": "registry/generated/src/app/examples/chat/layout.tsx",
-          "type": "registry:file",
-          "target": "src/app/examples/chat/layout.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/chat/page.tsx",
-          "type": "registry:page",
-          "target": "src/app/examples/chat/page.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/chat/theme-toggle.tsx",
-          "type": "registry:file",
-          "target": "src/app/examples/chat/theme-toggle.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/utils.ts",
-          "type": "registry:file",
-          "target": "@components/vip-ui/utils.ts"
+          "target": "src/app/blocks/dashboard-01/app-sidebar.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/avatar.tsx",
@@ -2739,89 +3753,9 @@
           "target": "@components/vip-ui/avatar.tsx"
         },
         {
-          "path": "registry/generated/src/components/vip-ui/card.tsx",
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
           "type": "registry:file",
-          "target": "@components/vip-ui/card.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/field-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/search-field.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/search-field.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/text-area.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/text-area.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/chat/workspace.tsx",
-          "type": "registry:file",
-          "target": "src/app/examples/chat/workspace.tsx"
-        }
-      ]
-    },
-    {
-      "name": "vip-example-repository",
-      "type": "registry:block",
-      "title": "repository example",
-      "description": "A Next.js App Router repository example built with vip/ui.",
-      "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "server-only",
-        "tailwind-variants"
-      ],
-      "files": [
-        {
-          "path": "registry/generated/src/app/examples/repository/commits/page.tsx",
-          "type": "registry:page",
-          "target": "src/app/examples/repository/commits/page.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/repository/config.ts",
-          "type": "registry:file",
-          "target": "src/app/examples/repository/config.ts"
-        },
-        {
-          "path": "registry/generated/src/app/examples/repository/contributors/page.tsx",
-          "type": "registry:page",
-          "target": "src/app/examples/repository/contributors/page.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/repository/data.ts",
-          "type": "registry:file",
-          "target": "src/app/examples/repository/data.ts"
-        },
-        {
-          "path": "registry/generated/src/app/examples/repository/issues/page.tsx",
-          "type": "registry:page",
-          "target": "src/app/examples/repository/issues/page.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/repository/layout.tsx",
-          "type": "registry:file",
-          "target": "src/app/examples/repository/layout.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/utils.ts",
-          "type": "registry:file",
-          "target": "@components/vip-ui/utils.ts"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/avatar.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/avatar.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/badge.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/badge.tsx"
+          "target": "@components/vip-ui/motion.ts"
         },
         {
           "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
@@ -2834,34 +3768,9 @@
           "target": "@components/vip-ui/button.tsx"
         },
         {
-          "path": "registry/generated/src/components/vip-ui/calendar.tsx",
+          "path": "registry/generated/src/components/vip-ui/card.tsx",
           "type": "registry:file",
-          "target": "@components/vip-ui/calendar.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/date-segment.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/date-segment.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/field-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/popover.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/popover.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/date-picker.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/date-picker.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/search-field.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/search-field.tsx"
+          "target": "@components/vip-ui/card.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/list-box.tsx",
@@ -2869,199 +3778,9 @@
           "target": "@components/vip-ui/list-box.tsx"
         },
         {
-          "path": "registry/generated/src/components/vip-ui/press-button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/press-button.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/select.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/select.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/table.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/table.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/repository/lists.tsx",
-          "type": "registry:file",
-          "target": "src/app/examples/repository/lists.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/skeleton.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/skeleton.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/repository/loading.tsx",
-          "type": "registry:file",
-          "target": "src/app/examples/repository/loading.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/repository/navigation.tsx",
-          "type": "registry:file",
-          "target": "src/app/examples/repository/navigation.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/card.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/card.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/stat.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/stat.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/repository/page.tsx",
-          "type": "registry:page",
-          "target": "src/app/examples/repository/page.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/repository/pulls/page.tsx",
-          "type": "registry:page",
-          "target": "src/app/examples/repository/pulls/page.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/collapsible-panel.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/collapsible-panel.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/accordion.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/accordion.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/repository/releases/page.tsx",
-          "type": "registry:page",
-          "target": "src/app/examples/repository/releases/page.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/repository/theme-toggle.tsx",
-          "type": "registry:file",
-          "target": "src/app/examples/repository/theme-toggle.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/alert.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/alert.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-link.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-link.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/empty-state.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/empty-state.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/pagination.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/pagination.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/repository/ui.tsx",
-          "type": "registry:file",
-          "target": "src/app/examples/repository/ui.tsx"
-        }
-      ]
-    },
-    {
-      "name": "vip-example-studio",
-      "type": "registry:block",
-      "title": "studio example",
-      "description": "A Next.js App Router studio example built with vip/ui.",
-      "dependencies": [
-        "motion",
-        "react-aria-components",
-        "reicon-react",
-        "server-only",
-        "tailwind-variants"
-      ],
-      "files": [
-        {
-          "path": "registry/generated/src/app/examples/studio/layout.tsx",
-          "type": "registry:file",
-          "target": "src/app/examples/studio/layout.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/studio/page.tsx",
-          "type": "registry:page",
-          "target": "src/app/examples/studio/page.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/button.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/button.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/studio/theme-toggle.tsx",
-          "type": "registry:file",
-          "target": "src/app/examples/studio/theme-toggle.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/utils.ts",
-          "type": "registry:file",
-          "target": "@components/vip-ui/utils.ts"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/card.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/card.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/field-styles.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/color-field.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/color-field.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/color-swatch.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/color-swatch.tsx"
-        },
-        {
           "path": "registry/generated/src/components/vip-ui/popover.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/popover.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/color-picker.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/color-picker.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/autocomplete.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/autocomplete.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/dialog.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/dialog.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/kbd-code.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/kbd-code.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/list-box.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/list-box.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/menu.tsx",
@@ -3069,14 +3788,1072 @@
           "target": "@components/vip-ui/menu.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/search-field.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/search-field.tsx"
         },
         {
-          "path": "registry/generated/src/components/vip-ui/command-palette.tsx",
+          "path": "registry/generated/src/components/vip-ui/sheet.tsx",
           "type": "registry:file",
-          "target": "@components/vip-ui/command-palette.tsx"
+          "target": "@components/vip-ui/sheet.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/stat.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/stat.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/dashboard-01/dashboard.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/dashboard-01/dashboard.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/dashboard-01/data.ts",
+          "type": "registry:file",
+          "target": "src/app/blocks/dashboard-01/data.ts"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/dashboard-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/dashboard-01/page.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/table.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/table.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/toggle-button-group.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/toggle-button-group.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/toggle-button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/toggle-button.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/dashboard-01/recent-orders.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/dashboard-01/recent-orders.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/chart.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/chart.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/dashboard-01/revenue-chart.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/dashboard-01/revenue-chart.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-stats-01",
+      "type": "registry:block",
+      "title": "Stats 01",
+      "description": "Metric cards that change with the selected period.",
+      "categories": ["dashboard"],
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "success": "oklch(0.43 0.12 155)",
+          "success-subtle": "oklch(0.955 0.035 155)",
+          "success-foreground": "oklch(0.32 0.09 155)",
+          "warning": "oklch(0.54 0.13 75)",
+          "warning-subtle": "oklch(0.965 0.045 85)",
+          "warning-foreground": "oklch(0.36 0.09 75)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)",
+          "success-subtle": "oklch(0.24 0.045 155)",
+          "success-foreground": "oklch(0.86 0.085 155)",
+          "warning": "oklch(0.78 0.11 75)",
+          "warning-subtle": "oklch(0.27 0.045 75)",
+          "warning-foreground": "oklch(0.89 0.07 75)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/stats-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/stats-01/page.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/animated-number.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/animated-number.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/badge.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/badge.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/stat.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/stat.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/toggle-button-group.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/toggle-button-group.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/toggle-button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/toggle-button.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/stats-01/stats-cards.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/stats-01/stats-cards.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-login-01",
+      "type": "registry:block",
+      "title": "Login 01",
+      "description": "A sign-in form in a card.",
+      "categories": ["authentication"],
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "success": "oklch(0.43 0.12 155)",
+          "success-subtle": "oklch(0.955 0.035 155)",
+          "success-foreground": "oklch(0.32 0.09 155)",
+          "warning": "oklch(0.54 0.13 75)",
+          "warning-subtle": "oklch(0.965 0.045 85)",
+          "warning-foreground": "oklch(0.36 0.09 75)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)",
+          "success-subtle": "oklch(0.24 0.045 155)",
+          "success-foreground": "oklch(0.86 0.085 155)",
+          "warning": "oklch(0.78 0.11 75)",
+          "warning-subtle": "oklch(0.27 0.045 75)",
+          "warning-foreground": "oklch(0.89 0.07 75)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/alert.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/alert.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/card.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/card.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/checkbox.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/checkbox.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/form.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/form.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/link.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/link.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/input-group.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/input-group.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/text-field.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/text-field.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/password-field.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/password-field.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/separator.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/separator.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/login-01/login-form.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/login-01/login-form.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/login-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/login-01/page.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-login-02",
+      "type": "registry:block",
+      "title": "Login 02",
+      "description": "A two-column sign-in page with an email link and a brand panel.",
+      "categories": ["authentication"],
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/login-02/brand-panel.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/login-02/brand-panel.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/form.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/form.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/link.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/link.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/separator.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/separator.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/text-field.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/text-field.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/login-02/email-link-form.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/login-02/email-link-form.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/login-02/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/login-02/page.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-signup-01",
+      "type": "registry:block",
+      "title": "Signup 01",
+      "description": "A sign-up form with a password strength meter.",
+      "categories": ["authentication"],
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)",
+          "success": "oklch(0.43 0.12 155)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)",
+          "success": "oklch(0.74 0.13 155)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/signup-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/signup-01/page.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/card.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/card.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/checkbox.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/checkbox.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/form.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/form.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/link.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/link.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/input-group.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/input-group.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/text-field.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/text-field.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/password-field.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/password-field.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/meter.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/meter.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/password-strength-meter.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/password-strength-meter.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/list-box.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/list-box.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/popover.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/popover.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/press-button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/press-button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/select.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/select.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/signup-01/signup-form.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/signup-01/signup-form.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-settings-01",
+      "type": "registry:block",
+      "title": "Settings 01",
+      "description": "A profile form with a save bar for unsaved changes.",
+      "categories": ["settings"],
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/settings-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/settings-01/page.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/avatar.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/avatar.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/card.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/card.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/file-trigger.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/file-trigger.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/form.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/form.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/input-group.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/input-group.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/list-box.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/list-box.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/popover.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/popover.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/press-button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/press-button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/select.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/select.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/text-area.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/text-area.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/text-field.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/text-field.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/settings-01/profile-form.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/settings-01/profile-form.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-settings-02",
+      "type": "registry:block",
+      "title": "Settings 02",
+      "description": "Notification settings for each event and channel.",
+      "categories": ["settings"],
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/card.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/card.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/checkbox.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/checkbox.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/radio-group.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/radio-group.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/switch.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/switch.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/settings-02/notification-settings.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/settings-02/notification-settings.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/settings-02/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/settings-02/page.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-billing-01",
+      "type": "registry:block",
+      "title": "Billing 01",
+      "description": "A plan picker with usage meters and a payment method.",
+      "categories": ["settings"],
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "success": "oklch(0.43 0.12 155)",
+          "success-subtle": "oklch(0.955 0.035 155)",
+          "success-foreground": "oklch(0.32 0.09 155)",
+          "warning": "oklch(0.54 0.13 75)",
+          "warning-subtle": "oklch(0.965 0.045 85)",
+          "warning-foreground": "oklch(0.36 0.09 75)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)",
+          "success-subtle": "oklch(0.24 0.045 155)",
+          "success-foreground": "oklch(0.86 0.085 155)",
+          "warning": "oklch(0.78 0.11 75)",
+          "warning-subtle": "oklch(0.27 0.045 75)",
+          "warning-foreground": "oklch(0.89 0.07 75)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/badge.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/badge.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/card.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/card.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/meter.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/meter.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/radio-group.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/radio-group.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/billing-01/billing-settings.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/billing-01/billing-settings.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/billing-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/billing-01/page.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-pricing-01",
+      "type": "registry:block",
+      "title": "Pricing 01",
+      "description": "Pricing plans with a monthly and yearly toggle.",
+      "categories": ["marketing"],
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "success": "oklch(0.43 0.12 155)",
+          "success-subtle": "oklch(0.955 0.035 155)",
+          "success-foreground": "oklch(0.32 0.09 155)",
+          "warning": "oklch(0.54 0.13 75)",
+          "warning-subtle": "oklch(0.965 0.045 85)",
+          "warning-foreground": "oklch(0.36 0.09 75)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)",
+          "success-subtle": "oklch(0.24 0.045 155)",
+          "success-foreground": "oklch(0.86 0.085 155)",
+          "warning": "oklch(0.78 0.11 75)",
+          "warning-subtle": "oklch(0.27 0.045 75)",
+          "warning-foreground": "oklch(0.89 0.07 75)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/pricing-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/pricing-01/page.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/animated-number.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/animated-number.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/badge.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/badge.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/toggle-button-group.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/toggle-button-group.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/toggle-button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/toggle-button.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/pricing-01/pricing-plans.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/pricing-01/pricing-plans.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-team-01",
+      "type": "registry:block",
+      "title": "Team 01",
+      "description": "A team list with invites, roles, and member actions.",
+      "categories": ["application"],
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "success": "oklch(0.43 0.12 155)",
+          "success-subtle": "oklch(0.955 0.035 155)",
+          "success-foreground": "oklch(0.32 0.09 155)",
+          "warning": "oklch(0.54 0.13 75)",
+          "warning-subtle": "oklch(0.965 0.045 85)",
+          "warning-foreground": "oklch(0.36 0.09 75)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)",
+          "success-subtle": "oklch(0.24 0.045 155)",
+          "success-foreground": "oklch(0.86 0.085 155)",
+          "warning": "oklch(0.78 0.11 75)",
+          "warning-subtle": "oklch(0.27 0.045 75)",
+          "warning-foreground": "oklch(0.89 0.07 75)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/team-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/team-01/page.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/avatar.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/avatar.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/badge.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/badge.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/card.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/card.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/form.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/form.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/list-box.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/list-box.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/popover.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/popover.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/menu.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/menu.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/press-button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/press-button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/select.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/select.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/text-field.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/text-field.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/team-01/team-members.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/team-01/team-members.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-upload-01",
+      "type": "registry:block",
+      "title": "Upload 01",
+      "description": "A file upload area with progress for each file.",
+      "categories": ["application"],
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.0",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/progress-bar.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/progress-bar.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/attachment.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/attachment.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/card.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/card.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/drop-zone.tsx",
@@ -3089,19 +4866,14 @@
           "target": "@components/vip-ui/file-trigger.tsx"
         },
         {
-          "path": "registry/generated/src/components/vip-ui/token-field.tsx",
+          "path": "registry/generated/src/app/blocks/upload-01/file-upload.tsx",
           "type": "registry:file",
-          "target": "@components/vip-ui/token-field.tsx"
+          "target": "src/app/blocks/upload-01/file-upload.tsx"
         },
         {
-          "path": "registry/generated/src/components/vip-ui/tree.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/tree.tsx"
-        },
-        {
-          "path": "registry/generated/src/app/examples/studio/workspace.tsx",
-          "type": "registry:file",
-          "target": "src/app/examples/studio/workspace.tsx"
+          "path": "registry/generated/src/app/blocks/upload-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/upload-01/page.tsx"
         }
       ]
     }

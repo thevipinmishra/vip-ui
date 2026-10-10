@@ -45,7 +45,6 @@ export function HomeReveal({
   const [belowFold, setBelowFold] = useState(false);
   const [focused, setFocused] = useState(false);
 
-  // Server-rendered content stays visible until JS can confirm it is offscreen.
   useEffect(() => {
     if (
       ref.current &&

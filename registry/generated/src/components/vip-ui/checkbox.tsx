@@ -1,5 +1,6 @@
 "use client";
 
+import { CheckIcon, MinusIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import { createContext, useContext, useState } from "react";
 import {
@@ -7,7 +8,7 @@ import {
   type CheckboxProps as AriaCheckboxProps,
   composeRenderProps,
 } from "react-aria-components";
-import { Check, Minus } from "reicon-react";
+import { duration, easeOut } from "./motion";
 import { cn } from "./utils";
 
 const CheckboxStateContext = createContext({
@@ -62,7 +63,7 @@ export function Checkbox({
       data-slot="checkbox"
       className={composeRenderProps(className, (className) =>
         cn(
-          "group inline-flex min-h-11 cursor-pointer items-start gap-3 rounded-md text-sm text-foreground data-[disabled]:cursor-default data-[disabled]:opacity-50 data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring",
+          "group inline-flex min-h-11 cursor-pointer items-start gap-3 rounded-md text-sm text-foreground disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
           typeof children === "string" && !description && "items-center",
           className,
         ),
@@ -111,7 +112,7 @@ export function CheckboxIndicator({
       aria-hidden="true"
       data-slot="checkbox-indicator"
       className={cn(
-        "mt-0.5 grid size-5 shrink-0 place-items-center rounded-md border border-input bg-card shadow-[var(--shadow-inset)] group-hover:border-primary/60 group-data-[selected]:border-primary group-data-[selected]:bg-primary group-data-[indeterminate]:border-primary group-data-[indeterminate]:bg-primary",
+        "mt-0.5 grid size-5 shrink-0 place-items-center rounded-md border border-input bg-card shadow-[var(--shadow-inset)] transition-[background-color,border-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:border-primary/60 group-invalid:border-destructive group-invalid:group-hover:border-destructive group-selected:border-primary group-selected:bg-primary group-indeterminate:border-primary group-indeterminate:bg-primary",
         className,
       )}
     >
@@ -122,15 +123,15 @@ export function CheckboxIndicator({
           opacity: isChecked ? 1 : 0,
         }}
         transition={{
-          duration: reduceMotion ? 0 : 0.16,
-          ease: [0.23, 1, 0.32, 1],
+          duration: reduceMotion ? 0 : duration.fast,
+          ease: easeOut,
         }}
         className="text-primary-foreground"
       >
         {isIndeterminate ? (
-          <Minus size={13} strokeWidth={2.5} />
+          <MinusIcon size={13} weight="bold" />
         ) : (
-          <Check size={13} strokeWidth={2.5} />
+          <CheckIcon size={13} weight="bold" />
         )}
       </motion.span>
     </span>

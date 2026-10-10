@@ -46,6 +46,7 @@ import { ProgressBarBasicDemo } from "@/components/docs/progress-bar-basic-demo"
 import { ProgressRingBasicDemo } from "@/components/docs/progress-ring-basic-demo";
 import { RadioGroupDemo } from "@/components/docs/radio-group-demo";
 import { RangeCalendarDemo } from "@/components/docs/range-calendar-demo";
+import { SearchFieldBasicDemo } from "@/components/docs/search-field-basic-demo";
 import { SelectDemo } from "@/components/docs/select-demo";
 import { SeparatorDemo } from "@/components/docs/separator-demo";
 import { SheetBasicDemo } from "@/components/docs/sheet-basic-demo";
@@ -70,103 +71,168 @@ import { TokenFieldDemo } from "@/components/docs/token-field-demo";
 import { ToolbarDemo } from "@/components/docs/toolbar-demo";
 import { TooltipDemo } from "@/components/docs/tooltip-demo";
 import { TreeDemo } from "@/components/docs/tree-demo";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { SearchField } from "@/components/ui/search-field";
 
-function SearchPreview() {
-  return <SearchField label="Search projects" placeholder="Search projects" />;
-}
+type Example = { title: string; Demo: ComponentType };
 
-const examples: { title: string; Demo: ComponentType; wide?: boolean }[] = [
-  { title: "Buttons", Demo: ButtonVariantsDemo, wide: true },
-  { title: "Text field", Demo: TextFieldBasicDemo },
-  { title: "Select", Demo: SelectDemo },
-  { title: "Dialog", Demo: DialogDemo },
-  { title: "Sheet", Demo: SheetBasicDemo },
-  { title: "Toast", Demo: ToastDemo },
-  { title: "Badge", Demo: BadgeBasicDemo },
-  { title: "Bar chart", Demo: BarOrders, wide: true },
-  { title: "Line chart", Demo: LineResponse, wide: true },
-  { title: "Checkbox", Demo: CheckboxBasicDemo },
-  { title: "Switch", Demo: SwitchBasicDemo },
-  { title: "Tabs", Demo: TabsBasicDemo },
-  { title: "Combo box", Demo: ComboBoxBasicDemo },
-  { title: "Text area", Demo: TextAreaBasicDemo },
-  { title: "Search field", Demo: SearchPreview },
-  { title: "Form", Demo: FormDemo },
-  { title: "Menu", Demo: MenuDemo },
-  { title: "Popover", Demo: PopoverDemo },
-  { title: "Tooltip", Demo: TooltipDemo },
-  { title: "Alert", Demo: AlertBasicDemo },
-  { title: "Avatar", Demo: AvatarBasicDemo },
-  { title: "Area chart", Demo: AreaVisits, wide: true },
-  { title: "Donut chart", Demo: PieDonut, wide: true },
-  { title: "Accordion", Demo: AccordionDemo },
-  { title: "Slider", Demo: SliderDemo },
-  { title: "Radio group", Demo: RadioGroupDemo },
-  { title: "Date picker", Demo: DatePickerDemo },
-  { title: "Table", Demo: TableBasicDemo, wide: true },
-  { title: "Progress bar", Demo: ProgressBarBasicDemo },
-  { title: "Checkbox group", Demo: CheckboxGroupDemo },
-  { title: "Date range picker", Demo: DateRangePickerDemo },
-  { title: "Command palette", Demo: CommandPaletteDemo },
-  { title: "Button group", Demo: ButtonGroupDemo },
-  { title: "Input group", Demo: InputGroupBasicDemo },
-  { title: "Number field", Demo: NumberFieldDemo },
-  { title: "Toggle button", Demo: ToggleButtonDemo },
-  { title: "Toggle button group", Demo: ToggleButtonGroupDemo },
-  { title: "Autocomplete", Demo: AutocompleteDemo },
-  { title: "Token field", Demo: TokenFieldDemo },
-  { title: "Progress ring", Demo: ProgressRingBasicDemo },
-  { title: "Skeleton", Demo: SkeletonDemo },
-  { title: "Calendar", Demo: CalendarDemo },
-  { title: "Tag group", Demo: TagGroupDemo },
-  { title: "File trigger", Demo: FileTriggerDemo },
-  { title: "Color picker", Demo: ColorPickerDemo },
-  { title: "Date field", Demo: DateFieldDemo },
-  { title: "Stepper", Demo: StepperDemo },
-  { title: "List box", Demo: ListBoxDemo },
-  { title: "Grid list", Demo: GridListDemo },
-  { title: "Description list", Demo: DescriptionListDemo },
-  { title: "Stat", Demo: StatDemo },
-  { title: "Color field", Demo: ColorFieldDemo },
-  { title: "Color swatch", Demo: ColorSwatchDemo },
-  { title: "Time field", Demo: TimeFieldDemo },
-  { title: "Range calendar", Demo: RangeCalendarDemo },
-  { title: "Tree", Demo: TreeDemo },
-  { title: "Drop zone", Demo: DropZoneDemo },
-  { title: "Fieldset", Demo: FieldsetDemo },
-  { title: "Meter", Demo: MeterDemo },
-  { title: "Text swap", Demo: TextSwapDemo },
-  { title: "Toolbar", Demo: ToolbarDemo },
-  { title: "Timeline", Demo: TimelineDemo },
-  { title: "Disclosure", Demo: DisclosureDemo },
-  { title: "Animated number", Demo: AnimatedNumberBasicDemo },
-  { title: "Presence list", Demo: PresenceListDemo },
-  { title: "Spinner", Demo: SpinnerBasicDemo },
-  { title: "Breadcrumbs", Demo: BreadcrumbsDemo },
-  { title: "Kbd and code", Demo: KbdCodeDemo },
-  { title: "Separator", Demo: SeparatorDemo },
-  { title: "Link", Demo: LinkDemo },
-  { title: "Preview trigger", Demo: PreviewTriggerDemo },
-  { title: "Empty state", Demo: EmptyStateDemo },
+const groups: { title: string; examples: Example[] }[] = [
+  {
+    title: "Actions",
+    examples: [
+      { title: "Button", Demo: ButtonVariantsDemo },
+      { title: "Button group", Demo: ButtonGroupDemo },
+      { title: "Toggle button", Demo: ToggleButtonDemo },
+      { title: "Toggle button group", Demo: ToggleButtonGroupDemo },
+      { title: "Toolbar", Demo: ToolbarDemo },
+      { title: "Link", Demo: LinkDemo },
+    ],
+  },
+  {
+    title: "Forms",
+    examples: [
+      { title: "Text field", Demo: TextFieldBasicDemo },
+      { title: "Text area", Demo: TextAreaBasicDemo },
+      { title: "Search field", Demo: SearchFieldBasicDemo },
+      { title: "Input group", Demo: InputGroupBasicDemo },
+      { title: "Number field", Demo: NumberFieldDemo },
+      { title: "Select", Demo: SelectDemo },
+      { title: "Combo box", Demo: ComboBoxBasicDemo },
+      { title: "Autocomplete", Demo: AutocompleteDemo },
+      { title: "Token field", Demo: TokenFieldDemo },
+      { title: "Checkbox", Demo: CheckboxBasicDemo },
+      { title: "Checkbox group", Demo: CheckboxGroupDemo },
+      { title: "Radio group", Demo: RadioGroupDemo },
+      { title: "Switch", Demo: SwitchBasicDemo },
+      { title: "Slider", Demo: SliderDemo },
+      { title: "Form", Demo: FormDemo },
+      { title: "Fieldset", Demo: FieldsetDemo },
+      { title: "File trigger", Demo: FileTriggerDemo },
+      { title: "Drop zone", Demo: DropZoneDemo },
+    ],
+  },
+  {
+    title: "Color",
+    examples: [
+      { title: "Color picker", Demo: ColorPickerDemo },
+      { title: "Color field", Demo: ColorFieldDemo },
+      { title: "Color swatch", Demo: ColorSwatchDemo },
+    ],
+  },
+  {
+    title: "Dates",
+    examples: [
+      { title: "Calendar", Demo: CalendarDemo },
+      { title: "Range calendar", Demo: RangeCalendarDemo },
+      { title: "Date field", Demo: DateFieldDemo },
+      { title: "Time field", Demo: TimeFieldDemo },
+      { title: "Date picker", Demo: DatePickerDemo },
+      { title: "Date range picker", Demo: DateRangePickerDemo },
+    ],
+  },
+  {
+    title: "Overlays",
+    examples: [
+      { title: "Dialog", Demo: DialogDemo },
+      { title: "Sheet", Demo: SheetBasicDemo },
+      { title: "Popover", Demo: PopoverDemo },
+      { title: "Tooltip", Demo: TooltipDemo },
+      { title: "Menu", Demo: MenuDemo },
+      { title: "Command palette", Demo: CommandPaletteDemo },
+      { title: "Preview trigger", Demo: PreviewTriggerDemo },
+      { title: "Toast", Demo: ToastDemo },
+    ],
+  },
+  {
+    title: "Data display",
+    examples: [
+      { title: "Table", Demo: TableBasicDemo },
+      { title: "Tree", Demo: TreeDemo },
+      { title: "List box", Demo: ListBoxDemo },
+      { title: "Grid list", Demo: GridListDemo },
+      { title: "Tag group", Demo: TagGroupDemo },
+      { title: "Description list", Demo: DescriptionListDemo },
+      { title: "Stat", Demo: StatDemo },
+      { title: "Avatar", Demo: AvatarBasicDemo },
+      { title: "Badge", Demo: BadgeBasicDemo },
+      { title: "Timeline", Demo: TimelineDemo },
+      { title: "Kbd and code", Demo: KbdCodeDemo },
+      { title: "Separator", Demo: SeparatorDemo },
+    ],
+  },
+  {
+    title: "Feedback",
+    examples: [
+      { title: "Alert", Demo: AlertBasicDemo },
+      { title: "Progress bar", Demo: ProgressBarBasicDemo },
+      { title: "Progress ring", Demo: ProgressRingBasicDemo },
+      { title: "Meter", Demo: MeterDemo },
+      { title: "Spinner", Demo: SpinnerBasicDemo },
+      { title: "Skeleton", Demo: SkeletonDemo },
+      { title: "Stepper", Demo: StepperDemo },
+      { title: "Empty state", Demo: EmptyStateDemo },
+    ],
+  },
+  {
+    title: "Navigation",
+    examples: [
+      { title: "Tabs", Demo: TabsBasicDemo },
+      { title: "Accordion", Demo: AccordionDemo },
+      { title: "Disclosure", Demo: DisclosureDemo },
+      { title: "Breadcrumbs", Demo: BreadcrumbsDemo },
+    ],
+  },
+  {
+    title: "Charts",
+    examples: [
+      { title: "Bar chart", Demo: BarOrders },
+      { title: "Line chart", Demo: LineResponse },
+      { title: "Area chart", Demo: AreaVisits },
+      { title: "Donut chart", Demo: PieDonut },
+    ],
+  },
+  {
+    title: "Motion",
+    examples: [
+      { title: "Animated number", Demo: AnimatedNumberBasicDemo },
+      { title: "Text swap", Demo: TextSwapDemo },
+      { title: "Presence list", Demo: PresenceListDemo },
+    ],
+  },
 ];
 
 export function ThemeGallery() {
   return (
-    <div className="grid min-w-0 grid-cols-1 items-start gap-[var(--theme-space)] md:grid-cols-2">
-      {examples.map(({ title, Demo, wide }) => (
-        <Card
-          key={title}
-          className={wide ? "min-w-0 md:col-span-2" : "min-w-0"}
+    <div className="grid gap-14">
+      {groups.map((group) => (
+        <section
+          key={group.title}
+          aria-labelledby={`components-${group.title}`}
+          className="grid gap-5"
         >
-          <CardHeader className="px-5 pt-5">
-            <CardTitle as="h3">{title}</CardTitle>
-          </CardHeader>
-          <CardContent className="min-w-0 overflow-x-auto px-5 pb-5 pt-4">
-            <Demo />
-          </CardContent>
-        </Card>
+          <h3
+            id={`components-${group.title}`}
+            className="flex items-baseline gap-3 text-base font-semibold tracking-[-0.02em]"
+          >
+            {group.title}
+            <span className="font-mono text-xs font-normal text-muted-foreground tabular-nums">
+              {group.examples.length}
+            </span>
+          </h3>
+          <div className="gap-4 sm:columns-2 xl:columns-3">
+            {group.examples.map(({ title, Demo }) => (
+              <figure
+                key={title}
+                className="relative mb-4 break-inside-avoid overflow-hidden rounded-xl bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70"
+              >
+                <figcaption className="border-b border-border/70 px-4 py-2.5 text-xs font-medium text-muted-foreground">
+                  {title}
+                </figcaption>
+                <div className="flex min-h-32 min-w-0 items-center justify-center overflow-x-auto p-5 [&>*]:min-w-0 [&>*]:max-w-full">
+                  <Demo />
+                </div>
+              </figure>
+            ))}
+          </div>
+        </section>
       ))}
     </div>
   );

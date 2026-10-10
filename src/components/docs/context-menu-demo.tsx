@@ -1,6 +1,6 @@
 "use client";
 
-import { FilePdf } from "reicon-react";
+import { FilePdfIcon } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import {
   ContextMenu,
@@ -12,7 +12,7 @@ export function ContextMenuDemo() {
   return (
     <ContextMenuTrigger>
       <Button variant="outline">
-        <FilePdf size={18} aria-hidden="true" /> brief.pdf
+        <FilePdfIcon size={18} aria-hidden="true" /> brief.pdf
       </Button>
       <ContextMenu aria-label="File actions">
         <ContextMenuItem>Rename</ContextMenuItem>

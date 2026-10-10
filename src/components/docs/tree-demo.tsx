@@ -1,6 +1,6 @@
 "use client";
 
-import { DocumentCode } from "reicon-react";
+import { FileMdIcon } from "@phosphor-icons/react";
 import { Tree, TreeItem } from "@/components/ui/tree";
 
 export function TreeDemo() {
@@ -23,7 +23,7 @@ export function TreeDemo() {
         <TreeItem
           id="readme"
           title="README.md"
-          icon={<DocumentCode size={16} />}
+          icon={<FileMdIcon size={16} />}
           content={
             <span className="flex min-w-0 items-center justify-between gap-2">
               <span className="truncate">README.md</span>

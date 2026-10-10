@@ -1,5 +1,6 @@
 "use client";
 
+import { CaretRightIcon } from "@phosphor-icons/react";
 import type { ReactNode } from "react";
 import {
   Breadcrumb as AriaBreadcrumb,
@@ -10,7 +11,6 @@ import {
   Link,
   type LinkProps,
 } from "react-aria-components";
-import { ChevronRight } from "reicon-react";
 import { cn } from "@/lib/utils";
 
 export function Breadcrumbs<T extends object>({
@@ -56,7 +56,7 @@ export function Breadcrumb({
             </Link>
           )}
           {!isCurrent && (
-            <ChevronRight
+            <CaretRightIcon
               size={14}
               aria-hidden="true"
               className="text-muted-foreground"

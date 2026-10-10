@@ -12,11 +12,12 @@ export interface RegistryItem {
   title?: string;
   description?: string;
   dependencies: string[];
+  devDependencies?: string[];
   files: RegistryFile[];
 }
 
 export async function readRegistryItem(slug: string): Promise<RegistryItem> {
-  if (!/^[a-z]+(?:-[a-z]+)*$/.test(slug))
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug))
     throw new Error("Invalid component slug");
   return JSON.parse(
     await readFile(
@@ -26,12 +27,6 @@ export async function readRegistryItem(slug: string): Promise<RegistryItem> {
   ) as RegistryItem;
 }
 
-/**
- * CLI install URL for a component item. Reads only `NEXT_PUBLIC_REGISTRY_URL`
- * on purpose: incomplete registry configuration must hide the install command
- * rather than assume `NEXT_PUBLIC_SITE_URL` is a registry. The localhost
- * fallback applies to development only.
- */
 export function registryUrl(slug: string) {
   const base =
     process.env.NEXT_PUBLIC_REGISTRY_URL ||

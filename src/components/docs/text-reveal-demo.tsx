@@ -15,15 +15,13 @@ export function TextRevealDemo() {
             key={`kicker-${replay}`}
             text="Studio notes"
             split="characters"
-            trigger="mount"
           />
         </p>
         <p className="mt-3 text-4xl leading-[1.15] font-semibold tracking-[-0.06em] text-foreground">
           <TextReveal
             key={`title-${replay}`}
             text="Make room for the unusual."
-            split="words"
-            trigger="mount"
+            delay={0.3}
           />
         </p>
       </div>

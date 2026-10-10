@@ -4,7 +4,11 @@
   "type": "registry:ui",
   "title": "Date Segment",
   "description": "Render the editable segments used in date and time fields.",
-  "dependencies": ["react-aria-components", "tailwind-variants"],
+  "dependencies": ["react-aria-components@^1.22.0", "tailwind-variants@^3.3.1"],
+  "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
   "files": [
     {
       "path": "src/lib/utils.ts",
@@ -16,7 +20,7 @@
       "path": "src/components/ui/date-segment.tsx",
       "type": "registry:file",
       "target": "@components/vip-ui/date-segment.tsx",
-      "content": "\"use client\";\n\nimport {\n  DateSegment as AriaDateSegment,\n  composeRenderProps,\n  type DateSegmentProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\n/** Keep the active segment legible across date and time fields and pickers. */\nexport function DateSegment({ className, ...props }: DateSegmentProps) {\n  return (\n    <AriaDateSegment\n      {...props}\n      data-slot=\"date-segment\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"rounded-md px-1 py-0.5 tabular-nums outline-none caret-transparent data-[placeholder]:text-muted-foreground data-[invalid]:text-destructive [&[data-type=literal]]:px-0 [&:focus]:bg-primary [&:focus]:text-primary-foreground forced-colors:[&:focus]:bg-[Highlight] forced-colors:[&:focus]:text-[HighlightText]\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n"
+      "content": "\"use client\";\n\nimport {\n  DateSegment as AriaDateSegment,\n  composeRenderProps,\n  type DateSegmentProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nconst literalSpace = /[   ]/g;\n\nexport function DateSegment({\n  className,\n  children,\n  ...props\n}: DateSegmentProps) {\n  return (\n    <AriaDateSegment\n      {...props}\n      data-slot=\"date-segment\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"rounded-md px-1 py-0.5 tabular-nums outline-none caret-transparent data-[placeholder]:text-muted-foreground invalid:text-destructive [&[data-type=literal]]:px-0 [&:focus]:bg-primary [&:focus]:text-primary-foreground forced-colors:[&:focus]:bg-[Highlight] forced-colors:[&:focus]:text-[HighlightText]\",\n          className,\n        ),\n      )}\n    >\n      {children ??\n        (({ text, type }) =>\n          type === \"literal\" ? text.replace(literalSpace, \" \") : text)}\n    </AriaDateSegment>\n  );\n}\n"
     }
   ]
 }

@@ -1,6 +1,11 @@
 "use client";
 
 import {
+  ArrowDownIcon,
+  ArrowsDownUpIcon,
+  ArrowUpIcon,
+} from "@phosphor-icons/react";
+import {
   type ColumnDef,
   type ColumnFiltersState,
   getCoreRowModel,
@@ -12,7 +17,6 @@ import {
 } from "@tanstack/react-table";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import type { Key } from "react-aria-components";
-import { ArrowDown, ArrowUp, Sort } from "reicon-react";
 import { cn } from "./utils";
 import { Button } from "./button";
 import { Checkbox, CheckboxIndicator } from "./checkbox";
@@ -50,7 +54,6 @@ export interface DataTableProps<T> {
   className?: string;
 }
 
-/** Client-side search, column filters, sorting, and pagination. Select all affects the current page. */
 export function DataTable<T extends object>({
   label,
   rows,
@@ -302,12 +305,20 @@ export function DataTable<T extends object>({
                     <span aria-hidden="true" className="text-muted-foreground">
                       {sortDescriptor?.column === column.id ? (
                         sortDescriptor.direction === "ascending" ? (
-                          <ArrowUp size={14} className="text-foreground" />
+                          <ArrowUpIcon
+                            size={14}
+                            weight="bold"
+                            className="text-foreground"
+                          />
                         ) : (
-                          <ArrowDown size={14} className="text-foreground" />
+                          <ArrowDownIcon
+                            size={14}
+                            weight="bold"
+                            className="text-foreground"
+                          />
                         )
                       ) : (
-                        <Sort size={14} />
+                        <ArrowsDownUpIcon size={14} />
                       )}
                     </span>
                   )}

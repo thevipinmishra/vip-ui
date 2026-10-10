@@ -4,7 +4,15 @@
   "type": "registry:ui",
   "title": "Collapsible Panel",
   "description": "Animate a disclosure panel while keeping its content accessible.",
-  "dependencies": ["motion", "react-aria-components", "tailwind-variants"],
+  "dependencies": [
+    "motion@^13.5.1",
+    "react-aria-components@^1.22.0",
+    "tailwind-variants@^3.3.1"
+  ],
+  "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
   "files": [
     {
       "path": "src/lib/utils.ts",

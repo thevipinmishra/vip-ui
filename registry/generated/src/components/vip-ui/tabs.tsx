@@ -115,7 +115,7 @@ export function Tab({ className, children, ...props }: AriaTabProps) {
       }
       className={composeRenderProps(className, (className) =>
         cn(
-          "relative isolate inline-flex min-h-11 shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 text-sm font-medium leading-5 text-muted-foreground outline-none hover:bg-card/70 data-[selected]:hover:bg-transparent data-[selected]:text-foreground data-[focus-visible]:outline-2 data-[focus-visible]:-outline-offset-2 data-[focus-visible]:outline-ring data-[disabled]:cursor-default data-[disabled]:opacity-50 sm:min-h-9",
+          "relative isolate inline-flex min-h-11 shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 text-sm font-medium leading-5 text-muted-foreground outline-none hover:bg-card/70 selected:hover:bg-transparent selected:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-50 sm:min-h-9",
           className,
         ),
       )}
@@ -149,7 +149,7 @@ export function TabPanel({ className, ...props }: AriaTabPanelProps) {
       data-slot="tabs-content"
       className={composeRenderProps(className, (className) =>
         cn(
-          "mt-5 rounded-xl bg-card p-5 text-sm leading-6 text-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70 outline-none data-[focus-visible]:shadow-[inset_3px_0_0_var(--ring)] forced-colors:data-[focus-visible]:outline-2 forced-colors:data-[focus-visible]:outline-solid forced-colors:data-[focus-visible]:-outline-offset-2 forced-colors:data-[focus-visible]:outline-[Highlight]",
+          "mt-5 rounded-xl bg-card p-5 text-sm leading-6 text-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70 outline-none focus-visible:shadow-[inset_3px_0_0_var(--ring)] forced-colors:focus-visible:outline-2 forced-colors:focus-visible:outline-solid forced-colors:focus-visible:-outline-offset-2 forced-colors:focus-visible:outline-[Highlight]",
           className,
         ),
       )}

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { CheckboxBasicDemo } from "@/components/docs/checkbox-basic-demo";
 import { CheckboxDemo } from "@/components/docs/checkbox-demo";
+import { CheckboxDescriptionDemo } from "@/components/docs/checkbox-description-demo";
+import { CheckboxDisabledDemo } from "@/components/docs/checkbox-disabled-demo";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -9,11 +11,12 @@ import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Checkbox | vip/ui",
-  description: "An accessible checkbox for independent choices.",
+  description: componentPageData.checkbox.description,
 };
 
 export default function CheckboxPage() {
   const page = componentPageData.checkbox;
+
   return (
     <ComponentPage
       name="Checkbox"
@@ -21,7 +24,9 @@ export default function CheckboxPage() {
       preview={<CheckboxBasicDemo />}
       previewSourcePath={page.usage}
       examples={withExamplePreviews(page.examples, [
-        <CheckboxDemo key="example-1" />,
+        <CheckboxDescriptionDemo key="description" />,
+        <CheckboxDisabledDemo key="disabled" />,
+        <CheckboxDemo key="indeterminate" />,
       ])}
       sourcePath="src/components/ui/checkbox.tsx"
     />

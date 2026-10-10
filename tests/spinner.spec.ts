@@ -1,12 +1,12 @@
 import { expect, test } from "@playwright/test";
 
-test("spinner patterns animate and the assistant status changes", async ({
+test("spinner patterns animate and a pending button shows one", async ({
   page,
 }) => {
   await page.goto("/components/spinner");
 
-  const preview = page.locator("#preview");
-  await expect(preview.locator('[data-slot="spinner"]')).toHaveCount(9);
+  const preview = page.locator("#example-loading-patterns");
+  await expect(preview.locator('[data-slot="spinner"]')).toHaveCount(7);
   const orbit = preview
     .locator('[data-variant="orbit"]')
     .first()
@@ -32,18 +32,18 @@ test("spinner patterns animate and the assistant status changes", async ({
     )
     .toBe(true);
 
-  await page.getByRole("button", { name: "Finish response" }).click();
-  await expect(preview.getByText("Response ready")).toBeVisible();
-  await expect(preview.locator('[data-variant="spark"]')).toHaveCount(0);
-  await page.getByRole("button", { name: "Try again" }).click();
-  await expect(preview.locator('[data-variant="spark"]')).toHaveCount(1);
+  const saving = page
+    .locator("#example-loading-in-context")
+    .getByRole("button", { name: "Saving" });
+  await expect(saving).toHaveAttribute("data-pending", "true");
+  await expect(saving.locator('[data-slot="spinner"]')).toHaveCount(1);
 });
 
 test("gallery indicators and pulse rings share their centers", async ({
   page,
 }) => {
   await page.goto("/components/spinner");
-  const preview = page.locator("#preview");
+  const preview = page.locator("#example-loading-patterns");
 
   for (const width of [1280, 375]) {
     await page.setViewportSize({ width, height: 800 });
@@ -94,7 +94,7 @@ test("reduced motion keeps all variants visible and still", async ({
   const page = await context.newPage();
   await page.goto("/components/spinner");
 
-  const preview = page.locator("#preview");
+  const preview = page.locator("#example-loading-patterns");
   for (const variant of [
     "ring",
     "segments",

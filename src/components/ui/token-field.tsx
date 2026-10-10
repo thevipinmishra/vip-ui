@@ -15,11 +15,10 @@ import {
 } from "react-aria-components";
 import type { TokenFieldSegment } from "react-aria-components/TokenField";
 import { cn } from "@/lib/utils";
+import { fieldDescriptionStyles, fieldLabelStyles } from "./field-styles";
 
 export { TokenFieldValue };
 
-// A ready-to-use value for comma-separated tags. For mentions or structured
-// search, extend TokenFieldValue with a tokenizer suited to that syntax.
 export class TagFieldValue extends TokenFieldValue {
   commit(): this {
     return this.replaceRange(this.caretPosition, this.caretPosition, ",");
@@ -97,7 +96,7 @@ export function TokenFieldLabel({
     <Label
       {...props}
       data-slot="token-field-label"
-      className={cn("text-sm font-medium", className)}
+      className={cn(fieldLabelStyles, className)}
     />
   );
 }
@@ -116,11 +115,14 @@ export function TokenFieldInput<T extends TokenFieldValue = TokenFieldValue>({
       {...props}
       data-slot="token-field-input"
       data-placeholder={placeholder}
-      className={composeRenderProps(className, (className) =>
-        cn(
-          "min-h-12 cursor-text rounded-lg border border-input bg-card px-3 py-2.5 text-sm leading-7 shadow-[var(--shadow-card)] outline-none empty:before:pointer-events-none empty:before:text-muted-foreground empty:before:content-[attr(data-placeholder)] hover:border-primary/45 data-[focused]:border-ring data-[focused]:ring-3 data-[focused]:ring-ring/50 data-[disabled]:cursor-not-allowed data-[disabled]:bg-muted data-[disabled]:opacity-60",
-          className,
-        ),
+      className={composeRenderProps(
+        className,
+        (className, { isHovered, isDisabled, isReadOnly }) =>
+          cn(
+            "min-h-12 cursor-text rounded-lg border border-input bg-card px-3.5 py-2.5 text-base leading-7 text-foreground shadow-[var(--shadow-card)] outline-none [overflow-wrap:anywhere] transition-[color,background-color,border-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] [&:empty]:before:pointer-events-none [&:empty]:before:text-muted-foreground/80 [&:empty]:before:content-[attr(data-placeholder)] data-[focused]:border-ring data-[focused]:ring-3 data-[focused]:ring-ring/50 data-[readonly]:bg-muted/40 data-[disabled]:cursor-not-allowed data-[disabled]:bg-muted data-[disabled]:opacity-60 sm:text-sm",
+            isHovered && !isDisabled && !isReadOnly && "border-primary/45",
+            className,
+          ),
       )}
     >
       {children ?? ((segment) => <Token>{segment.text}</Token>)}
@@ -137,7 +139,7 @@ export function TokenFieldDescription({
       {...props}
       slot="description"
       data-slot="token-field-description"
-      className={cn("text-xs text-muted-foreground", className)}
+      className={cn(fieldDescriptionStyles, className)}
     />
   );
 }
@@ -149,7 +151,7 @@ export function Token({ className, ...props }: TokenProps) {
       data-slot="token"
       className={composeRenderProps(className, (className) =>
         cn(
-          "mx-0.5 inline-block rounded-md bg-accent px-2 py-0.5 text-xs font-medium text-accent-foreground data-[selected]:bg-primary data-[selected]:text-primary-foreground data-[disabled]:opacity-50",
+          "mx-0.5 inline-block max-w-full rounded-md bg-accent px-2 py-0.5 text-xs font-medium text-accent-foreground transition-[color,background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] data-[selected]:bg-primary data-[selected]:text-primary-foreground",
           className,
         ),
       )}

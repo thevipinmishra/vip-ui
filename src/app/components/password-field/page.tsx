@@ -5,16 +5,17 @@ import {
 } from "@/components/docs/component-page";
 import { PasswordFieldBasicDemo } from "@/components/docs/password-field-basic-demo";
 import { PasswordFieldDemo } from "@/components/docs/password-field-demo";
+import { PasswordFieldDisabledDemo } from "@/components/docs/password-field-disabled-demo";
 import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Password field | vip/ui",
-  description:
-    "A validated password field with an accessible visibility control.",
+  description: componentPageData["password-field"].description,
 };
 
 export default function PasswordFieldPage() {
   const page = componentPageData["password-field"];
+
   return (
     <ComponentPage
       name="Password field"
@@ -22,7 +23,8 @@ export default function PasswordFieldPage() {
       preview={<PasswordFieldBasicDemo />}
       previewSourcePath={page.usage}
       examples={withExamplePreviews(page.examples, [
-        <PasswordFieldDemo key="example-1" />,
+        <PasswordFieldDisabledDemo key="disabled" />,
+        <PasswordFieldDemo key="new-password" />,
       ])}
       sourcePath="src/components/ui/password-field.tsx"
     />

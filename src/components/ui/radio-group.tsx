@@ -1,25 +1,33 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import { createContext, type ReactNode, useContext } from "react";
+import {
+  createContext,
+  type HTMLAttributes,
+  type ReactNode,
+  useContext,
+} from "react";
 import {
   Radio as AriaRadio,
   RadioGroup as AriaRadioGroup,
   type RadioGroupProps as AriaRadioGroupProps,
   type RadioProps as AriaRadioProps,
   composeRenderProps,
+  FieldError,
   Label,
   Text,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
+import { duration, easeOut } from "@/lib/motion";
 import { cn } from "@/lib/utils";
+import { fieldDescriptionStyles, fieldErrorStyles } from "./field-styles";
 
 const radioStyles = tv({
-  base: "group flex min-h-11 cursor-pointer items-center gap-3 rounded-md px-2 py-2 text-foreground hover:bg-muted/70 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-ring disabled:cursor-default disabled:opacity-50",
+  base: "group flex min-h-11 cursor-pointer items-center gap-3 rounded-md text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring read-only:cursor-default disabled:cursor-default disabled:opacity-50",
   variants: {
     variant: {
       default: "",
-      card: "min-h-14 rounded-lg bg-card px-4 py-3 shadow-[var(--shadow-card)] ring-1 ring-border hover:bg-muted selected:bg-accent selected:ring-primary/40",
+      card: "min-h-14 rounded-lg bg-card px-4 py-3 shadow-[var(--shadow-card)] ring-1 ring-border transition-[background-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted selected:bg-accent selected:ring-primary/40",
     },
   },
   defaultVariants: { variant: "default" },
@@ -58,7 +66,7 @@ export function RadioGroup({
         onValueChange?.(value);
       }}
       className={composeRenderProps(className, (className) =>
-        cn("grid gap-1", className),
+        cn("group/radio-group grid gap-1", className),
       )}
     >
       {label && <RadioGroupLabel>{label}</RadioGroupLabel>}
@@ -66,9 +74,10 @@ export function RadioGroup({
         <RadioGroupDescription>{description}</RadioGroupDescription>
       )}
       {label ? (
-        <div data-slot="radio-group-items" className="grid gap-1 pt-2">
-          {children}
-        </div>
+        <>
+          <RadioGroupItems>{children}</RadioGroupItems>
+          <RadioGroupError />
+        </>
       ) : (
         children
       )}
@@ -100,7 +109,10 @@ export function Radio({
       data-slot="radio"
       data-variant={variant}
       className={composeRenderProps(className, (className) =>
-        radioStyles({ variant, className }),
+        radioStyles({
+          variant,
+          className: cn(description && "items-start", className),
+        }),
       )}
     >
       {(state) => (
@@ -146,7 +158,36 @@ export function RadioGroupDescription({
       {...props}
       slot="description"
       data-slot="radio-group-description"
-      className={cn("text-xs leading-5 text-muted-foreground", className)}
+      className={cn(fieldDescriptionStyles, className)}
+    />
+  );
+}
+
+export function RadioGroupItems({
+  className,
+  ...props
+}: HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div
+      {...props}
+      data-slot="radio-group-items"
+      className={cn(
+        "grid gap-1 pt-2 group-data-[orientation=horizontal]/radio-group:flex group-data-[orientation=horizontal]/radio-group:flex-wrap group-data-[orientation=horizontal]/radio-group:gap-x-6",
+        className,
+      )}
+    />
+  );
+}
+
+export function RadioGroupError({
+  className,
+  ...props
+}: React.ComponentProps<typeof FieldError>) {
+  return (
+    <FieldError
+      {...props}
+      data-slot="radio-group-error"
+      className={cn(fieldErrorStyles, className)}
     />
   );
 }
@@ -163,7 +204,7 @@ export function RadioIndicator({
       aria-hidden="true"
       data-slot="radio-indicator"
       className={cn(
-        "grid size-5 shrink-0 place-items-center rounded-full border border-input bg-card group-selected:border-primary",
+        "grid size-5 shrink-0 place-items-center rounded-full border border-input bg-card shadow-[var(--shadow-inset)] transition-[border-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:border-primary/60 group-invalid:border-destructive group-invalid:group-hover:border-destructive group-selected:border-primary",
         className,
       )}
     >
@@ -174,8 +215,8 @@ export function RadioIndicator({
           opacity: isSelected ? 1 : 0,
         }}
         transition={{
-          duration: reduceMotion ? 0 : 0.16,
-          ease: [0.23, 1, 0.32, 1],
+          duration: reduceMotion ? 0 : duration.fast,
+          ease: easeOut,
         }}
         className="size-2 rounded-full bg-primary"
       />
@@ -205,7 +246,7 @@ export function RadioDescription({
       {...props}
       data-slot="radio-description"
       className={cn(
-        "mt-0.5 block text-xs leading-5 text-muted-foreground",
+        "mt-1 block text-xs leading-5 text-muted-foreground",
         className,
       )}
     />

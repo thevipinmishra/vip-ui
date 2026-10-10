@@ -5,12 +5,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { catalogGroups } from "@/lib/catalog";
+import { docsGuides } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 
 const gettingStarted = [
-  { href: "/components", label: "Catalog" },
-  { href: "/components/installation", label: "Installation" },
-  { href: "/components/react-aria", label: "React Aria" },
+  ...docsGuides,
+  { href: "/components", label: "All components" },
 ];
 
 export function DocsNav({

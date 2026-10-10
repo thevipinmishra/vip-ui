@@ -8,6 +8,7 @@ import {
   composeRenderProps,
   type TooltipTriggerComponentProps,
 } from "react-aria-components";
+import { easeOut, edgeOffset } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 type TooltipProps = AriaTooltipProps;
@@ -17,19 +18,6 @@ export function TooltipTrigger({
   ...props
 }: TooltipTriggerComponentProps) {
   return <AriaTooltipTrigger {...props} delay={delay} />;
-}
-
-function edgeOffset(placement: string | null) {
-  switch (placement) {
-    case "top":
-      return { x: 0, y: 3 };
-    case "left":
-      return { x: 3, y: 0 };
-    case "right":
-      return { x: -3, y: 0 };
-    default:
-      return { x: 0, y: -3 };
-  }
 }
 
 export function Tooltip({ className, offset = 8, ...props }: TooltipProps) {
@@ -48,20 +36,20 @@ export function Tooltip({ className, offset = 8, ...props }: TooltipProps) {
             initial={
               reduceMotion
                 ? false
-                : { opacity: 0, ...edgeOffset(placement), scale: 0.98 }
+                : { opacity: 0, ...edgeOffset(placement, 3), scale: 0.98 }
             }
             animate={
               isExiting
                 ? {
                     opacity: 0,
-                    ...(reduceMotion ? {} : edgeOffset(placement)),
+                    ...(reduceMotion ? {} : edgeOffset(placement, 3)),
                     scale: reduceMotion ? 1 : 0.99,
                   }
                 : { opacity: 1, x: 0, y: 0, scale: 1 }
             }
             transition={{
               duration: reduceMotion ? 0 : isExiting ? 0.12 : 0.18,
-              ease: [0.23, 1, 0.32, 1],
+              ease: easeOut,
             }}
           />
         ))

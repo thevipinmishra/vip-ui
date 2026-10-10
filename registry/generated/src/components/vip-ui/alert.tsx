@@ -1,5 +1,10 @@
+import {
+  CheckCircleIcon,
+  InfoIcon,
+  WarningIcon,
+  XCircleIcon,
+} from "@phosphor-icons/react/ssr";
 import type { HTMLAttributes, ReactNode } from "react";
-import { CheckCircle, CloseCircle, InfoCircle, Warning } from "reicon-react";
 import { tv, type VariantProps } from "tailwind-variants";
 import { cn } from "./utils";
 
@@ -74,19 +79,19 @@ export function AlertIcon({
     >
       {children ?? (
         <>
-          <InfoCircle
+          <InfoIcon
             size={20}
             className="hidden group-data-[variant=info]/alert:block group-data-[variant=neutral]/alert:block group-data-[variant=neutral]/alert:text-muted-foreground"
           />
-          <CheckCircle
+          <CheckCircleIcon
             size={20}
             className="hidden group-data-[variant=success]/alert:block"
           />
-          <Warning
+          <WarningIcon
             size={20}
             className="hidden group-data-[variant=warning]/alert:block"
           />
-          <CloseCircle
+          <XCircleIcon
             size={20}
             className="hidden group-data-[variant=error]/alert:block group-data-[variant=error]/alert:text-destructive"
           />

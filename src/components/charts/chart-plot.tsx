@@ -5,8 +5,6 @@ import { motion } from "@tanstack/charts/motion";
 import { createContext, type ReactNode, useContext } from "react";
 import { ChartCaption, ChartFrame, ChartTitle } from "@/components/ui/chart";
 
-// One renderer for every gallery chart. Initial SVG is already present in the
-// server response; only interaction and subsequent changes need motion.
 export const galleryRenderer = motion({
   initial: false,
   transition: { type: "spring", stiffness: 420, damping: 38 },

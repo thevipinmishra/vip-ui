@@ -1,5 +1,6 @@
 "use client";
 
+import { CaretDownIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import { type ReactNode, useContext } from "react";
 import {
@@ -16,7 +17,7 @@ import {
   ListBoxItem,
   Text,
 } from "react-aria-components";
-import { ChevronDown } from "reicon-react";
+import { duration, easeOut } from "./motion";
 import { cn } from "./utils";
 import {
   fieldDescriptionStyles,
@@ -32,7 +33,7 @@ import { Tag, TagGroup, TagListView } from "./tag-group";
 const comboBoxPopoverStyles =
   "w-[var(--trigger-width)] rounded-lg border-0 p-1.5 ring-1 ring-border/70";
 const comboBoxItemStyles =
-  "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted data-[focused]:bg-muted data-[focus-visible]:-outline-offset-2 data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring data-[selected]:bg-accent data-[selected]:text-accent-foreground data-[disabled]:cursor-default data-[disabled]:opacity-50";
+  "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted focus:bg-muted focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-ring selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50";
 
 export interface ComboBoxOption {
   id: string;
@@ -193,7 +194,7 @@ function ComboBoxDefaults({
                   <span className="min-w-0">
                     <span className="block font-medium">{option.name}</span>
                     {option.description && (
-                      <span className="mt-0.5 block text-xs text-muted-foreground group-data-[selected]/item:text-accent-foreground">
+                      <span className="mt-0.5 block text-xs text-muted-foreground group-selected/item:text-accent-foreground">
                         {option.description}
                       </span>
                     )}
@@ -308,9 +309,9 @@ function ComboBoxChevron() {
       aria-hidden="true"
       initial={false}
       animate={{ rotate: isOpen ? 180 : 0 }}
-      transition={{ duration: reduceMotion ? 0 : 0.2, ease: "easeOut" }}
+      transition={{ duration: reduceMotion ? 0 : duration.base, ease: easeOut }}
     >
-      <ChevronDown size={16} />
+      <CaretDownIcon size={16} />
     </motion.span>
   );
 }

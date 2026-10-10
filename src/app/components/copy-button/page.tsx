@@ -9,7 +9,7 @@ import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Copy button | vip/ui",
-  description: "Copy text with visible success and failure feedback.",
+  description: componentPageData["copy-button"].description,
 };
 
 export default function CopyButtonPage() {

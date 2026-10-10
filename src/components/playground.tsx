@@ -1,16 +1,16 @@
 "use client";
 
+import {
+  CaretDownIcon,
+  MoonIcon,
+  PaletteIcon,
+  SparkleIcon,
+  SquaresFourIcon,
+  StackIcon,
+  SunIcon,
+} from "@phosphor-icons/react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
-import {
-  ChevronDown,
-  Grid,
-  Layers,
-  Moon,
-  Palette,
-  Sparkle,
-  Sun,
-} from "reicon-react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { TextField } from "@/components/ui/text-field";
@@ -44,7 +44,7 @@ export function Playground() {
         <aside className="flex w-16 shrink-0 flex-col items-center gap-1 border-r border-border bg-background/70 px-1.5 py-5 sm:w-44 sm:items-stretch sm:px-3">
           <div className="mb-7 flex items-center justify-center gap-2 px-1 sm:justify-start sm:px-2">
             <span className="grid size-7 place-items-center rounded-[8px] bg-primary text-primary-foreground">
-              <Sparkle size={15} aria-hidden="true" />
+              <SparkleIcon size={15} aria-hidden="true" />
             </span>
             <span className="hidden text-xs font-semibold tracking-[-0.025em] sm:inline">
               Studio North
@@ -61,7 +61,7 @@ export function Playground() {
             aria-label="Show overview"
             aria-pressed={view === "overview"}
           >
-            <Grid size={16} aria-hidden="true" />
+            <SquaresFourIcon size={16} aria-hidden="true" />
             <span className="hidden sm:inline">Overview</span>
           </Button>
           <Button
@@ -72,13 +72,13 @@ export function Playground() {
             aria-label="Show tokens"
             aria-pressed={view === "tokens"}
           >
-            <Palette size={16} aria-hidden="true" />
+            <PaletteIcon size={16} aria-hidden="true" />
             <span className="hidden sm:inline">Tokens</span>
           </Button>
           <div className="mt-auto hidden rounded-[11px] border border-border bg-card p-2.5 sm:block">
             <div className="flex items-center gap-2 text-[10px] font-semibold">
               <span className="grid size-6 place-items-center rounded-md bg-accent text-accent-foreground">
-                <Layers size={13} aria-hidden="true" />
+                <StackIcon size={13} weight="bold" aria-hidden="true" />
               </span>{" "}
               Built to grow
             </div>
@@ -91,7 +91,8 @@ export function Playground() {
         <div className="min-w-0 flex-1 bg-background/65">
           <div className="flex h-14 items-center justify-between border-b border-border px-4 sm:px-6">
             <div className="flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground">
-              Workspace <ChevronDown size={12} aria-hidden="true" />{" "}
+              Workspace{" "}
+              <CaretDownIcon size={12} weight="bold" aria-hidden="true" />{" "}
               <span className="text-border">/</span>{" "}
               <span className="text-foreground">
                 {view === "overview" ? "Overview" : "Tokens"}
@@ -104,9 +105,9 @@ export function Playground() {
               aria-label={`Switch preview to ${isDark ? "light" : "dark"} theme`}
             >
               {isDark ? (
-                <Sun size={16} aria-hidden="true" />
+                <SunIcon size={16} aria-hidden="true" />
               ) : (
-                <Moon size={16} aria-hidden="true" />
+                <MoonIcon size={16} aria-hidden="true" />
               )}
             </Button>
           </div>

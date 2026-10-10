@@ -1,7 +1,7 @@
 "use client";
 
+import { CheckIcon, FloppyDiskIcon, TrashIcon } from "@phosphor-icons/react";
 import { useState } from "react";
-import { Check, Save, Trash } from "reicon-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
@@ -58,7 +58,7 @@ export function HomeProjectScene() {
               isDisabled={status === "published"}
               onPress={() => setStatus("published")}
             >
-              <Check size={16} aria-hidden="true" />
+              <CheckIcon size={16} aria-hidden="true" />
               Publish
             </Button>
             <Button
@@ -66,7 +66,7 @@ export function HomeProjectScene() {
               size="sm"
               onPress={() => setRevision((value) => value + 1)}
             >
-              <Save size={16} aria-hidden="true" />
+              <FloppyDiskIcon size={16} aria-hidden="true" />
               Save revision
             </Button>
             <Button
@@ -74,7 +74,7 @@ export function HomeProjectScene() {
               size="sm"
               onPress={() => setStatus("archived")}
             >
-              <Trash size={16} aria-hidden="true" />
+              <TrashIcon size={16} aria-hidden="true" />
               Archive
             </Button>
           </>

@@ -1,6 +1,13 @@
 "use client";
 
-import { Archive, Copy, Edit, Eye, Link as LinkIcon, More } from "reicon-react";
+import {
+  ArchiveIcon,
+  CopyIcon,
+  DotsThreeIcon,
+  EyeIcon,
+  LinkIcon,
+  PencilSimpleIcon,
+} from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { Kbd } from "@/components/ui/kbd-code";
 import {
@@ -11,38 +18,42 @@ import {
   MenuTrigger,
 } from "@/components/ui/menu";
 
-const iconClass = "shrink-0 text-muted-foreground";
+const iconClass = "text-muted-foreground";
 
 export function MenuDemo() {
   return (
     <MenuTrigger>
       <Button variant="outline">
-        <More size={16} aria-hidden="true" />
+        <DotsThreeIcon size={16} aria-hidden="true" />
         Project actions
       </Button>
       <MenuPopover>
         <MenuContent aria-label="Project actions">
-          <MenuItem href="/examples/repository">
-            <Eye size={16} aria-hidden="true" className={iconClass} />
+          <MenuItem href="/blocks/dashboard-01">
+            <EyeIcon size={16} aria-hidden="true" className={iconClass} />
             View project
           </MenuItem>
           <MenuItem>
-            <Edit size={16} aria-hidden="true" className={iconClass} />
+            <PencilSimpleIcon
+              size={16}
+              aria-hidden="true"
+              className={iconClass}
+            />
             Rename
           </MenuItem>
           <MenuItem>
-            <Copy size={16} aria-hidden="true" className={iconClass} />
-            <span className="min-w-0 flex-1">Duplicate</span>
+            <CopyIcon size={16} aria-hidden="true" className={iconClass} />
+            Duplicate
             <Kbd>Ctrl D</Kbd>
           </MenuItem>
           <MenuItem>
             <LinkIcon size={16} aria-hidden="true" className={iconClass} />
-            <span className="min-w-0 flex-1">Copy link</span>
+            Copy link
             <Kbd>Ctrl L</Kbd>
           </MenuItem>
           <MenuSeparator />
           <MenuItem isDisabled>
-            <Archive size={16} aria-hidden="true" className={iconClass} />
+            <ArchiveIcon size={16} aria-hidden="true" className={iconClass} />
             Archive
           </MenuItem>
         </MenuContent>

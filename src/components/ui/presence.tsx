@@ -8,6 +8,7 @@ import {
   useReducedMotion,
 } from "motion/react";
 import type { ReactNode } from "react";
+import { duration as durations, easeOut } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 export interface PresenceProps
@@ -27,7 +28,7 @@ function PresenceContent({
   children,
   className,
   distance = 8,
-  duration = 0.22,
+  duration = durations.base,
   ...props
 }: Omit<PresenceProps, "show">) {
   const isPresent = useIsPresent();
@@ -38,16 +39,21 @@ function PresenceContent({
     <Element
       {...props}
       data-slot="presence"
-      className={cn(className)}
+      className={cn(as === "span" && "inline-block", className)}
       inert={!isPresent}
       aria-hidden={!isPresent || undefined}
       initial={reducedMotion ? false : { opacity: 0, y: distance }}
       animate={{ opacity: 1, y: 0 }}
-      exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: -distance }}
-      transition={{
-        duration: reducedMotion ? 0 : duration,
-        ease: [0.22, 1, 0.36, 1],
-      }}
+      exit={
+        reducedMotion
+          ? { opacity: 0, transition: { duration: 0 } }
+          : {
+              opacity: 0,
+              y: -distance,
+              transition: { duration: duration * 0.7, ease: easeOut },
+            }
+      }
+      transition={{ duration: reducedMotion ? 0 : duration, ease: easeOut }}
     >
       {children}
     </Element>

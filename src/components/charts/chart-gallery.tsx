@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { ArrowRight } from "reicon-react";
+import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import { CodeFrame } from "@/components/docs/code-frame";
 import { CodeSnippet } from "@/components/docs/code-snippet";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -56,7 +56,7 @@ export async function ChartGallery({
             Screen readers can access exact values in a table for each chart.
           </p>
           <ButtonLink href="#installation" variant="outline" size="sm">
-            Install charts <ArrowRight size={15} aria-hidden="true" />
+            Install charts <ArrowRightIcon size={15} aria-hidden="true" />
           </ButtonLink>
         </div>
         <ChartFilters
@@ -139,7 +139,6 @@ function ChartCategoryContent({
   );
 }
 
-/** Stable deep link for one chart example, for example `bar-monthly-orders`. */
 function chartExampleAnchor(categorySlug: string, name: string) {
   const exampleSlug = name
     .toLowerCase()

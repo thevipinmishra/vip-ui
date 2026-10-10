@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Copy, Warning } from "reicon-react";
+import { CheckIcon, CopyIcon, WarningIcon } from "@phosphor-icons/react";
 import type { ButtonVariant } from "@/components/ui/button-styles";
 import { CopyButton as SharedCopyButton } from "@/components/ui/copy-button";
 
@@ -32,11 +32,11 @@ export function CopyButton({
         : (status) => (
             <>
               {status === "copied" ? (
-                <Check size={16} />
+                <CheckIcon size={16} />
               ) : status === "failed" ? (
-                <Warning size={16} />
+                <WarningIcon size={16} />
               ) : (
-                <Copy size={16} />
+                <CopyIcon size={16} />
               )}
               {status === "copied"
                 ? "Copied"

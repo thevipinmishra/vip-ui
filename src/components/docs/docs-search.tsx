@@ -1,18 +1,18 @@
 "use client";
 
+import {
+  AtomIcon,
+  ChartBarIcon,
+  CubeIcon,
+  HouseIcon,
+  MagnifyingGlassIcon,
+  PaletteIcon,
+  ScalesIcon,
+  SquaresFourIcon,
+  TerminalWindowIcon,
+} from "@phosphor-icons/react";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import {
-  BookOpen,
-  ChartBar,
-  Component,
-  FolderOpen,
-  House,
-  Palette,
-  Puzzle,
-  Scale,
-  Search,
-} from "reicon-react";
 import { Button } from "@/components/ui/button";
 import {
   CommandPalette,
@@ -20,25 +20,21 @@ import {
 } from "@/components/ui/command-palette";
 import { catalogComponents } from "@/lib/catalog";
 
-/**
- * Pages that mount a demo with its own Ctrl/Command+K palette. There the demo
- * owns the shortcut; docs search stays available from the header button.
- */
-const shortcutTakenByDemo = new Set([
-  "/components/command-palette",
-  "/themes",
-  "/examples/studio",
-]);
+const shortcutTakenByDemo = new Set(["/components/command-palette", "/themes"]);
 
 const pages = [
-  { href: "/", label: "Home", icon: House },
-  { href: "/components", label: "Components", icon: Component },
-  { href: "/components/installation", label: "Installation", icon: BookOpen },
-  { href: "/components/react-aria", label: "React Aria", icon: Puzzle },
-  { href: "/themes", label: "Themes", icon: Palette },
-  { href: "/charts", label: "Charts", icon: ChartBar },
-  { href: "/examples", label: "Examples", icon: FolderOpen },
-  { href: "/license", label: "License", icon: Scale },
+  { href: "/", label: "Home", icon: HouseIcon },
+  {
+    href: "/components/installation",
+    label: "Installation",
+    icon: TerminalWindowIcon,
+  },
+  { href: "/components/react-aria", label: "React Aria", icon: AtomIcon },
+  { href: "/components", label: "Components", icon: CubeIcon },
+  { href: "/blocks", label: "Blocks", icon: SquaresFourIcon },
+  { href: "/charts", label: "Charts", icon: ChartBarIcon },
+  { href: "/themes", label: "Themes", icon: PaletteIcon },
+  { href: "/license", label: "License", icon: ScalesIcon },
 ];
 
 export function DocsSearch() {
@@ -54,7 +50,7 @@ export function DocsSearch() {
         onPress={() => setOpen(true)}
         className="size-10 gap-2 rounded-md p-0 text-muted-foreground hover:text-foreground lg:w-auto lg:px-3"
       >
-        <Search size={17} aria-hidden="true" />
+        <MagnifyingGlassIcon size={17} aria-hidden="true" />
         <span className="hidden lg:inline">Search</span>
       </Button>
       <CommandPalette

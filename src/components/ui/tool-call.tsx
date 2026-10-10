@@ -1,8 +1,8 @@
 "use client";
 
+import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import type { ComponentProps, ReactNode } from "react";
-import { CheckCircle, CloseCircle } from "reicon-react";
 import { cn } from "@/lib/utils";
 import { Disclosure, DisclosureHeader, DisclosurePanel } from "./disclosure";
 
@@ -74,9 +74,9 @@ export function ToolCallTrigger({
               }
             />
           ) : status === "complete" ? (
-            <CheckCircle size={17} />
+            <CheckCircleIcon size={17} />
           ) : (
-            <CloseCircle size={17} />
+            <XCircleIcon size={17} />
           )}
         </span>
         <span className="min-w-0 text-start">

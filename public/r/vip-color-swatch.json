@@ -4,7 +4,11 @@
   "type": "registry:ui",
   "title": "Color Swatch",
   "description": "Show a named color sample.",
-  "dependencies": ["react-aria-components", "tailwind-variants"],
+  "dependencies": ["react-aria-components@^1.22.0", "tailwind-variants@^3.3.1"],
+  "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
   "files": [
     {
       "path": "src/lib/utils.ts",
@@ -16,7 +20,7 @@
       "path": "src/components/ui/color-swatch.tsx",
       "type": "registry:file",
       "target": "@components/vip-ui/color-swatch.tsx",
-      "content": "\"use client\";\n\nimport {\n  ColorSwatch as AriaColorSwatch,\n  type ColorSwatchProps,\n  composeRenderProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport function ColorSwatch({ className, style, ...props }: ColorSwatchProps) {\n  return (\n    <AriaColorSwatch\n      {...props}\n      data-slot=\"color-swatch\"\n      className={composeRenderProps(className, (className) =>\n        cn(\"size-9 shrink-0 rounded-md ring-1 ring-foreground/20\", className),\n      )}\n      style={composeRenderProps(style, (style, { color }) => ({\n        background: `linear-gradient(${color}, ${color}), repeating-conic-gradient(var(--border) 0% 25%, var(--background) 0% 50%) 50% / 12px 12px`,\n        ...style,\n      }))}\n    />\n  );\n}\n"
+      "content": "\"use client\";\n\nimport {\n  ColorSwatch as AriaColorSwatch,\n  type ColorSwatchProps,\n  composeRenderProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport function ColorSwatch({ className, style, ...props }: ColorSwatchProps) {\n  return (\n    <AriaColorSwatch\n      {...props}\n      data-slot=\"color-swatch\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"size-9 shrink-0 rounded-md ring-1 ring-foreground/20 ring-inset\",\n          className,\n        ),\n      )}\n      style={composeRenderProps(style, (style, { color }) => ({\n        background: `linear-gradient(${color}, ${color}), repeating-conic-gradient(var(--border) 0% 25%, var(--background) 0% 50%) 50% / 12px 12px`,\n        ...style,\n      }))}\n    />\n  );\n}\n"
     }
   ]
 }

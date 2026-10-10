@@ -1,5 +1,11 @@
 "use client";
 
+import {
+  CheckCircleIcon,
+  InfoIcon,
+  WarningIcon,
+  XIcon,
+} from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useSyncExternalStore } from "react";
 import {
@@ -12,17 +18,12 @@ import {
   type ToastOptions,
   UNSTABLE_ToastQueue as ToastQueue,
 } from "react-aria-components";
-import { CheckCircle, InfoCircle, Warning, X } from "reicon-react";
 import { tv } from "tailwind-variants";
 import { cn } from "./utils";
 
 const MotionToast = motion.create(AriaToast);
 const MotionToastClose = motion.create(AriaButton);
 
-/**
- * Motion owns these handlers, so React Aria's DOM versions cannot be spread
- * into a motion component.
- */
 type MotionHandlers =
   | "onAnimationStart"
   | "onAnimationEnd"
@@ -71,11 +72,6 @@ function prefersReducedMotion() {
   );
 }
 
-/**
- * React Aria removes a toast as soon as it closes, which leaves no room for an
- * exit animation. This queue holds the removal until the toast reports that
- * its Motion exit finished.
- */
 class AnimatedToastQueue extends ToastQueue<ToastMessage> {
   private closing = new Set<string>();
   private exitListeners = new Set<() => void>();
@@ -105,7 +101,6 @@ class AnimatedToastQueue extends ToastQueue<ToastMessage> {
     super.close(key);
   }
 
-  /** Resolve deferred closes when a viewport unmounts before they finish. */
   finishAll() {
     for (const key of [...this.closing]) this.finishClose(key);
   }
@@ -133,7 +128,7 @@ export function ToastViewport({
       aria-label="Notifications"
       className={composeRenderProps(className, (className) =>
         cn(
-          "fixed inset-x-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-50 flex flex-col-reverse gap-2 outline-none data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring sm:inset-x-auto sm:end-4 sm:w-96",
+          "fixed inset-x-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-50 flex flex-col-reverse gap-2 outline-none focus-visible:outline-2 focus-visible:outline-ring sm:inset-x-auto sm:end-4 sm:w-96",
           className,
         ),
       )}
@@ -142,10 +137,10 @@ export function ToastViewport({
         const variant = toast.content.variant ?? "info";
         const Icon =
           variant === "success"
-            ? CheckCircle
+            ? CheckCircleIcon
             : variant === "warning"
-              ? Warning
-              : InfoCircle;
+              ? WarningIcon
+              : InfoIcon;
         return (
           <Toast toast={toast}>
             <Icon
@@ -196,7 +191,7 @@ export function Toast({ className, children, ...props }: ToastSurfaceProps) {
       }}
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex shrink-0 items-start gap-3 rounded-xl bg-popover p-4 text-popover-foreground shadow-[var(--shadow-float)] ring-1 ring-border/70 outline-none data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring forced-colors:border",
+          "flex shrink-0 items-start gap-3 rounded-xl bg-popover p-4 text-popover-foreground shadow-[var(--shadow-float)] ring-1 ring-border/70 outline-none focus-visible:outline-2 focus-visible:outline-ring forced-colors:border",
           className,
         ),
       )}
@@ -267,12 +262,12 @@ export function ToastClose({ className, children, ...props }: ToastCloseProps) {
       aria-label={props["aria-label"] ?? "Dismiss notification"}
       className={composeRenderProps(className, (className) =>
         cn(
-          "-m-1 grid size-11 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none hover:bg-muted hover:text-foreground data-[pressed]:bg-muted data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring",
+          "-m-1 grid size-11 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none hover:bg-muted hover:text-foreground pressed:bg-muted focus-visible:outline-2 focus-visible:outline-ring",
           className,
         ),
       )}
     >
-      {children ?? <X size={16} aria-hidden="true" />}
+      {children ?? <XIcon size={16} aria-hidden="true" />}
     </MotionToastClose>
   );
 }

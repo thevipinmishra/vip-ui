@@ -1,5 +1,6 @@
 "use client";
 
+import { CheckIcon } from "@phosphor-icons/react";
 import {
   AnimatePresence,
   LayoutGroup,
@@ -7,7 +8,6 @@ import {
   useReducedMotion,
 } from "motion/react";
 import { type ComponentProps, useId } from "react";
-import { Check } from "reicon-react";
 import { cn } from "./utils";
 
 export interface Step {
@@ -39,7 +39,7 @@ export function Stepper({
         data-slot="stepper"
         tabIndex={props.tabIndex ?? (steps.length > 0 ? 0 : undefined)}
         className={cn(
-          "flex w-full max-w-full overflow-x-auto rounded-xl px-1 py-3 outline-none data-[focus-visible]:outline-2 data-[focus-visible]:outline-solid data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring",
+          "flex w-full max-w-full overflow-x-auto rounded-xl px-1 py-3 outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring",
           className,
         )}
       >
@@ -90,7 +90,11 @@ export function Stepper({
                         ease: [0.23, 1, 0.32, 1],
                       }}
                     >
-                      {completed ? <Check size={15} /> : index + 1}
+                      {completed ? (
+                        <CheckIcon size={15} weight="bold" />
+                      ) : (
+                        index + 1
+                      )}
                     </motion.span>
                   </AnimatePresence>
                 </span>

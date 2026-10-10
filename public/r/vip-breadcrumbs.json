@@ -5,10 +5,14 @@
   "title": "Breadcrumbs",
   "description": "Link back through a page hierarchy.",
   "dependencies": [
-    "react-aria-components",
-    "reicon-react",
-    "tailwind-variants"
+    "@phosphor-icons/react@^2.1.10",
+    "react-aria-components@^1.22.0",
+    "tailwind-variants@^3.3.1"
   ],
+  "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
   "files": [
     {
       "path": "src/lib/utils.ts",
@@ -20,7 +24,7 @@
       "path": "src/components/ui/breadcrumbs.tsx",
       "type": "registry:file",
       "target": "@components/vip-ui/breadcrumbs.tsx",
-      "content": "\"use client\";\n\nimport type { ReactNode } from \"react\";\nimport {\n  Breadcrumb as AriaBreadcrumb,\n  Breadcrumbs as AriaBreadcrumbs,\n  type BreadcrumbProps,\n  type BreadcrumbsProps,\n  composeRenderProps,\n  Link,\n  type LinkProps,\n} from \"react-aria-components\";\nimport { ChevronRight } from \"reicon-react\";\nimport { cn } from \"./utils\";\n\nexport function Breadcrumbs<T extends object>({\n  className,\n  ...props\n}: BreadcrumbsProps<T>) {\n  return (\n    <AriaBreadcrumbs\n      {...props}\n      data-slot=\"breadcrumbs\"\n      className={cn(\"flex flex-wrap items-center gap-2 text-sm\", className)}\n    />\n  );\n}\n\nexport function Breadcrumb({\n  children,\n  className,\n  ...props\n}: BreadcrumbProps &\n  Omit<LinkProps, \"children\" | \"className\"> & { children: ReactNode }) {\n  return (\n    <AriaBreadcrumb\n      {...props}\n      data-slot=\"breadcrumb\"\n      className={composeRenderProps(className, (className) =>\n        cn(\"flex items-center gap-2\", className),\n      )}\n    >\n      {({ isCurrent }) => (\n        <>\n          {isCurrent ? (\n            <span aria-current=\"page\" className=\"font-medium text-foreground\">\n              {children}\n            </span>\n          ) : (\n            <Link\n              {...props}\n              data-slot=\"breadcrumb-link\"\n              className=\"rounded-sm text-muted-foreground hover:text-foreground hover:underline data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring\"\n            >\n              {children}\n            </Link>\n          )}\n          {!isCurrent && (\n            <ChevronRight\n              size={14}\n              aria-hidden=\"true\"\n              className=\"text-muted-foreground\"\n            />\n          )}\n        </>\n      )}\n    </AriaBreadcrumb>\n  );\n}\n"
+      "content": "\"use client\";\n\nimport { CaretRightIcon } from \"@phosphor-icons/react\";\nimport type { ReactNode } from \"react\";\nimport {\n  Breadcrumb as AriaBreadcrumb,\n  Breadcrumbs as AriaBreadcrumbs,\n  type BreadcrumbProps,\n  type BreadcrumbsProps,\n  composeRenderProps,\n  Link,\n  type LinkProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport function Breadcrumbs<T extends object>({\n  className,\n  ...props\n}: BreadcrumbsProps<T>) {\n  return (\n    <AriaBreadcrumbs\n      {...props}\n      data-slot=\"breadcrumbs\"\n      className={cn(\"flex flex-wrap items-center gap-2 text-sm\", className)}\n    />\n  );\n}\n\nexport function Breadcrumb({\n  children,\n  className,\n  ...props\n}: BreadcrumbProps &\n  Omit<LinkProps, \"children\" | \"className\"> & { children: ReactNode }) {\n  return (\n    <AriaBreadcrumb\n      {...props}\n      data-slot=\"breadcrumb\"\n      className={composeRenderProps(className, (className) =>\n        cn(\"flex items-center gap-2\", className),\n      )}\n    >\n      {({ isCurrent }) => (\n        <>\n          {isCurrent ? (\n            <span aria-current=\"page\" className=\"font-medium text-foreground\">\n              {children}\n            </span>\n          ) : (\n            <Link\n              {...props}\n              data-slot=\"breadcrumb-link\"\n              className=\"rounded-sm text-muted-foreground hover:text-foreground hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring\"\n            >\n              {children}\n            </Link>\n          )}\n          {!isCurrent && (\n            <CaretRightIcon\n              size={14}\n              aria-hidden=\"true\"\n              className=\"text-muted-foreground\"\n            />\n          )}\n        </>\n      )}\n    </AriaBreadcrumb>\n  );\n}\n"
     }
   ]
 }

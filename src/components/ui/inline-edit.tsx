@@ -1,9 +1,10 @@
 "use client";
 
+import { PencilSimpleIcon } from "@phosphor-icons/react";
 import { useEffect, useId, useRef, useState } from "react";
-import { Edit } from "reicon-react";
 import { cn } from "@/lib/utils";
 import { Button } from "./button";
+import { fieldErrorStyles, fieldLabelStyles } from "./field-styles";
 import { TextField } from "./text-field";
 
 export interface InlineEditProps {
@@ -100,7 +101,7 @@ export function InlineEdit({
                 isDisabled={isSaving}
                 onPress={() => void save()}
               >
-                {isSaving ? "Saving..." : "Save"}
+                {isSaving ? "Saving…" : "Save"}
               </Button>
               <Button
                 type="button"
@@ -117,7 +118,7 @@ export function InlineEdit({
             <p
               id={errorId}
               role="alert"
-              className="mt-2 text-sm text-destructive"
+              className={cn("mt-2", fieldErrorStyles)}
             >
               {error}
             </p>
@@ -125,7 +126,7 @@ export function InlineEdit({
         </div>
       ) : (
         <>
-          <span className="text-sm font-medium text-foreground">{label}</span>
+          <span className={fieldLabelStyles}>{label}</span>
           <div className="flex min-w-0">
             <Button
               ref={triggerRef}
@@ -133,7 +134,7 @@ export function InlineEdit({
               variant="ghost"
               size="default"
               isDisabled={isDisabled}
-              className="min-w-0 max-w-full"
+              className="-ms-3 min-w-0 max-w-full px-3"
               aria-label={`Edit ${label}: ${current || "Not set"}`}
               onPress={() => {
                 setDraft(current);
@@ -150,7 +151,7 @@ export function InlineEdit({
               >
                 {current || "Not set"}
               </span>
-              <Edit
+              <PencilSimpleIcon
                 size={16}
                 aria-hidden="true"
                 className="shrink-0 text-muted-foreground"

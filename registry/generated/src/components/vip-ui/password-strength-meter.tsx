@@ -7,7 +7,6 @@ export interface PasswordStrengthMeterProps {
   className?: MeterProps["className"];
 }
 
-/** A length and character-mix estimate, not a security check. */
 export function PasswordStrengthMeter({
   password,
   className,

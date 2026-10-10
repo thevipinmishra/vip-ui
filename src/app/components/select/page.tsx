@@ -11,8 +11,7 @@ import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
   title: "Select | vip/ui",
-  description:
-    "An accessible select field with descriptive options and Motion feedback.",
+  description: componentPageData.select.description,
 };
 
 export default function SelectPage() {

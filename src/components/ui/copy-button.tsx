@@ -1,9 +1,10 @@
 "use client";
 
+import { CheckIcon, CopyIcon, WarningIcon } from "@phosphor-icons/react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { composeRenderProps } from "react-aria-components";
-import { Check, Copy, Warning } from "reicon-react";
+import { duration, easeOut } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { Button, type ButtonProps } from "./button";
 
@@ -17,8 +18,6 @@ export interface CopyButtonProps
   value: string;
   children?: ReactNode | ((status: CopyButtonStatus) => ReactNode);
 }
-
-const feedbackEase = [0.23, 1, 0.32, 1] as const;
 
 export function CopyButton({
   value,
@@ -64,11 +63,11 @@ export function CopyButton({
   const defaultContent = (
     <>
       {status === "copied" ? (
-        <Check size={16} />
+        <CheckIcon size={16} />
       ) : status === "failed" ? (
-        <Warning size={16} />
+        <WarningIcon size={16} />
       ) : (
-        <Copy size={16} />
+        <CopyIcon size={16} />
       )}
       {size !== "icon" &&
         (status === "copied"
@@ -108,8 +107,8 @@ export function CopyButton({
             animate={{ opacity: 1 }}
             exit={{ opacity: reduceMotion ? 1 : 0 }}
             transition={{
-              duration: reduceMotion ? 0 : 0.16,
-              ease: feedbackEase,
+              duration: reduceMotion ? 0 : duration.fast,
+              ease: easeOut,
             }}
             className="inline-flex items-center justify-center gap-2 whitespace-nowrap"
           >

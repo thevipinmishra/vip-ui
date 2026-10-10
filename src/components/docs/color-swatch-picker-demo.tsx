@@ -8,10 +8,13 @@ import {
 export function ColorSwatchPickerDemo() {
   return (
     <div className="grid gap-3">
-      <span className="text-[13px] font-medium" id="palette-label">
+      <span id="accent-color-label" className="text-sm font-medium">
         Accent color
       </span>
-      <ColorSwatchPicker aria-labelledby="palette-label" defaultValue="#4567d4">
+      <ColorSwatchPicker
+        aria-labelledby="accent-color-label"
+        defaultValue="#4567d4"
+      >
         <ColorSwatchPickerItem color="#4567d4" aria-label="Blue" />
         <ColorSwatchPickerItem color="#af4d65" aria-label="Rose" />
         <ColorSwatchPickerItem color="#228571" aria-label="Teal" />

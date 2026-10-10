@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Kbd Code",
   "description": "Display keyboard shortcuts and inline code.",
-  "dependencies": ["tailwind-variants"],
+  "dependencies": ["tailwind-variants@^3.3.1"],
   "files": [
     {
       "path": "src/lib/utils.ts",
@@ -16,7 +16,7 @@
       "path": "src/components/ui/kbd-code.tsx",
       "type": "registry:file",
       "target": "@components/vip-ui/kbd-code.tsx",
-      "content": "import type { HTMLAttributes } from \"react\";\nimport { cn } from \"./utils\";\n\nexport function Kbd({ className, ...props }: HTMLAttributes<HTMLElement>) {\n  return (\n    <kbd\n      data-slot=\"kbd\"\n      className={cn(\n        \"inline-flex min-h-6 items-center rounded-sm border border-border bg-muted px-1.5 font-mono text-xs font-medium text-foreground shadow-xs\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nexport function InlineCode({\n  className,\n  ...props\n}: HTMLAttributes<HTMLElement>) {\n  return (\n    <code\n      data-slot=\"inline-code\"\n      className={cn(\n        \"break-words rounded-sm bg-muted px-1.5 py-0.5 font-mono text-[0.85em] text-foreground\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n"
+      "content": "import type { ComponentProps } from \"react\";\nimport { cn } from \"./utils\";\n\nexport function Kbd({ className, ...props }: ComponentProps<\"kbd\">) {\n  return (\n    <kbd\n      data-slot=\"kbd\"\n      className={cn(\n        \"inline-flex min-h-6 min-w-6 items-center justify-center gap-1 rounded-sm border border-border bg-muted px-1.5 font-mono text-xs font-medium whitespace-nowrap text-foreground shadow-xs [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nexport function KbdGroup({ className, ...props }: ComponentProps<\"kbd\">) {\n  return (\n    <kbd\n      data-slot=\"kbd-group\"\n      className={cn(\n        \"inline-flex items-center gap-1 font-sans whitespace-nowrap\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nexport function InlineCode({ className, ...props }: ComponentProps<\"code\">) {\n  return (\n    <code\n      data-slot=\"inline-code\"\n      className={cn(\n        \"rounded-sm bg-muted px-1.5 py-0.5 font-mono text-[0.85em] text-foreground [overflow-wrap:anywhere] box-decoration-clone\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n"
     }
   ]
 }

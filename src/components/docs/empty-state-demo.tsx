@@ -1,4 +1,4 @@
-import { Search } from "reicon-react";
+import { MagnifyingGlassIcon } from "@phosphor-icons/react/ssr";
 import { ButtonLink } from "@/components/ui/button-link";
 import {
   EmptyState,
@@ -12,7 +12,7 @@ export function EmptyStateDemo() {
   return (
     <EmptyState className="w-full max-w-md">
       <EmptyStateIcon>
-        <Search size={20} aria-hidden="true" />
+        <MagnifyingGlassIcon aria-hidden="true" />
       </EmptyStateIcon>
       <EmptyStateTitle>No saved components</EmptyStateTitle>
       <EmptyStateDescription>

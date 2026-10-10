@@ -1,7 +1,7 @@
 "use client";
 
+import { ArrowUpRightIcon } from "@phosphor-icons/react";
 import { Link as AriaLink, type LinkProps } from "react-aria-components";
-import { ArrowUpRight } from "reicon-react";
 import { cn } from "@/lib/utils";
 
 export interface SourceLinkProps
@@ -35,7 +35,7 @@ export function SourceLink({
         aria-hidden="true"
         className="grid size-8 shrink-0 place-items-center rounded-lg bg-accent font-mono text-xs font-semibold text-primary"
       >
-        {index ?? <ArrowUpRight size={16} />}
+        {index ?? <ArrowUpRightIcon size={16} />}
       </span>
       <span className="min-w-0 flex-1">
         <span className="block text-sm font-medium leading-5 text-foreground [overflow-wrap:anywhere]">
@@ -50,7 +50,7 @@ export function SourceLink({
           </span>
         )}
       </span>
-      <ArrowUpRight
+      <ArrowUpRightIcon
         size={16}
         aria-hidden="true"
         className="mt-0.5 shrink-0 text-muted-foreground motion-safe:transition-transform motion-safe:duration-200 motion-safe:group-hover:-translate-y-0.5 motion-safe:group-hover:translate-x-0.5"

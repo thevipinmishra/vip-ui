@@ -1,7 +1,7 @@
+import { ArrowUpRightIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { ArrowUpRight } from "reicon-react";
 import { GuideHeader } from "@/components/docs/guide-header";
 
 export const metadata: Metadata = {
@@ -140,7 +140,7 @@ function ReactAriaLink({
       className="inline-flex items-center gap-1 rounded-md text-sm font-medium text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
     >
       {children}
-      <ArrowUpRight size={16} aria-hidden="true" />
+      <ArrowUpRightIcon size={16} aria-hidden="true" />
       <span className="sr-only"> (opens in a new tab)</span>
     </a>
   );

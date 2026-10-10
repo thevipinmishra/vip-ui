@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Folder } from "reicon-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -21,15 +20,8 @@ export function CardDemo() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
-        <div className="flex items-center gap-3">
-          <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-accent text-accent-foreground">
-            <Folder size={18} aria-hidden="true" />
-          </span>
-          <div className="min-w-0">
-            <CardTitle className="truncate">{savedName}</CardTitle>
-            <CardDescription>Website refresh · Due October 18</CardDescription>
-          </div>
-        </div>
+        <CardTitle>{savedName}</CardTitle>
+        <CardDescription>Website refresh · Due October 18</CardDescription>
       </CardHeader>
       <Form
         className="gap-0"

@@ -1,5 +1,6 @@
 "use client";
 
+import { CaretDownIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import { type ComponentProps, type ReactNode, useContext, useId } from "react";
 import {
@@ -11,7 +12,6 @@ import {
   DisclosureStateContext,
   Heading,
 } from "react-aria-components";
-import { ChevronDown } from "reicon-react";
 import { cn } from "./utils";
 import { CollapsibleIdsContext, CollapsiblePanel } from "./collapsible-panel";
 
@@ -56,7 +56,7 @@ export function DisclosureHeader({
         aria-controls={ids?.panelId}
         className={composeRenderProps(className, (className) =>
           cn(
-            "flex min-h-11 w-full cursor-pointer items-center justify-between gap-3 rounded-lg px-4 text-start data-[disabled]:cursor-default data-[disabled]:opacity-50 data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring hover:bg-muted",
+            "flex min-h-11 w-full cursor-pointer items-center justify-between gap-3 rounded-lg px-4 text-start disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring hover:bg-muted",
             className,
           ),
         )}
@@ -73,7 +73,7 @@ export function DisclosureHeader({
             ease: [0.23, 1, 0.32, 1],
           }}
         >
-          <ChevronDown size={16} />
+          <CaretDownIcon size={16} />
         </motion.span>
       </Button>
     </Heading>

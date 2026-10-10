@@ -29,6 +29,21 @@ export const compositions: Record<string, Composition> = {
       },
     ],
   },
+  "stagger-group": {
+    parts: [
+      {
+        part: "StaggerGroup",
+        purpose:
+          "Starts the sequence on mount or in view and sets the delay between items.",
+        children: [
+          {
+            part: "StaggerItem",
+            purpose: "Fades and rises into place in its turn.",
+          },
+        ],
+      },
+    ],
+  },
   attachment: {
     parts: [
       {
@@ -337,9 +352,20 @@ export const compositions: Record<string, Composition> = {
         part: "RadioGroup",
         purpose: "Owns the single selected value.",
         children: [
+          { part: "RadioGroupLabel", purpose: "Names the group." },
           {
-            part: "Radio",
-            purpose: "Defines one choice. Repeat for each option.",
+            part: "RadioGroupItems",
+            purpose: "Contains the choices and follows the orientation.",
+            children: [
+              {
+                part: "Radio",
+                purpose: "Defines one choice. Repeat for each option.",
+              },
+            ],
+          },
+          {
+            part: "RadioGroupError",
+            purpose: "Explains invalid selection.",
           },
         ],
       },
@@ -448,6 +474,77 @@ export const compositions: Record<string, Composition> = {
           },
         ],
       },
+    ],
+  },
+  card: {
+    parts: [
+      {
+        part: "Card",
+        purpose: "Groups related content and actions.",
+        children: [
+          {
+            part: "CardHeader",
+            purpose: "Holds the title, description, and action.",
+            children: [
+              {
+                part: "CardTitle",
+                purpose: "Names the card. Set as for the heading level.",
+              },
+              {
+                part: "CardDescription",
+                purpose: "Gives short supporting text.",
+              },
+              {
+                part: "CardAction",
+                purpose: "Puts an optional control beside the title.",
+              },
+            ],
+          },
+          { part: "CardContent", purpose: "Holds the main content." },
+          { part: "CardFooter", purpose: "Holds actions or a summary." },
+        ],
+      },
+    ],
+  },
+  "description-list": {
+    parts: [
+      {
+        part: "DescriptionList",
+        purpose: "Puts terms and details in two columns on wider screens.",
+        children: [
+          { part: "DescriptionTerm", purpose: "Names a value." },
+          {
+            part: "DescriptionDetail",
+            purpose: "Gives the value. Repeat it for more than one value.",
+          },
+        ],
+      },
+    ],
+  },
+  stat: {
+    parts: [
+      {
+        part: "Stat",
+        purpose: "Groups one metric on a card surface.",
+        children: [
+          { part: "StatLabel", purpose: "Names the metric." },
+          { part: "StatValue", purpose: "Shows the value." },
+          {
+            part: "StatDetail",
+            purpose: "Gives optional context, such as a change.",
+          },
+        ],
+      },
+    ],
+  },
+  "kbd-code": {
+    parts: [
+      {
+        part: "KbdGroup",
+        purpose: "Joins the keys of one shortcut.",
+        children: [{ part: "Kbd", purpose: "Shows one key." }],
+      },
+      { part: "InlineCode", purpose: "Shows code inside a sentence." },
     ],
   },
   "empty-state": {

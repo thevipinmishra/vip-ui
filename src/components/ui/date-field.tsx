@@ -49,7 +49,7 @@ export function DateField<T extends DateValue>({
             data-slot="date-field-input"
             className={cn(
               segmentedFieldStyles,
-              "px-3 text-sm data-[focus-visible]:outline-none",
+              "px-2.5 text-base data-[focus-visible]:outline-none sm:text-sm",
             )}
           >
             {(segment) => <DateSegment segment={segment} />}

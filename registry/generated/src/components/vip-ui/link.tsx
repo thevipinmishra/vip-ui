@@ -14,7 +14,7 @@ export function Link({ className, ...props }: LinkProps) {
       data-slot="link"
       className={composeRenderProps(className, (className) =>
         cn(
-          "cursor-pointer rounded-sm font-medium text-primary underline underline-offset-4 hover:text-primary/80 data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring data-[disabled]:cursor-default data-[disabled]:opacity-50",
+          "cursor-pointer rounded-sm font-medium text-primary underline underline-offset-4 hover:text-primary/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-50",
           className,
         ),
       )}

@@ -67,10 +67,13 @@ test("range trail is square in the middle and capped only at its edges", async (
   for (const route of ["range-calendar", "date-range-picker"]) {
     await page.goto(`/components/${route}`);
     if (route === "date-range-picker") {
-      await page
+      const trigger = page
         .getByRole("button", { name: "Choose date range" })
-        .first()
-        .click();
+        .first();
+      await expect(async () => {
+        await trigger.click();
+        await expect(page.getByRole("dialog")).toBeVisible({ timeout: 1000 });
+      }).toPass();
     }
     const grid =
       route === "date-range-picker"
@@ -134,7 +137,6 @@ test("sheet primary action keeps a primary hover surface", async ({ page }) => {
   await page.getByRole("button", { name: "Filter projects" }).click();
   const action = page.getByRole("button", { name: "Show results" });
   await expect(action).toBeVisible();
-  // Wait for the sheet to finish sliding in before hovering.
   let previous = "";
   await expect
     .poll(
@@ -142,7 +144,6 @@ test("sheet primary action keeps a primary hover surface", async ({ page }) => {
         const box = await action.boundingBox();
         const viewport = page.viewportSize();
         const key = JSON.stringify(box);
-        // It rests at the exit position briefly before sliding in.
         const settled =
           key === previous &&
           !!box &&
@@ -171,4 +172,27 @@ test("sheet primary action keeps a primary hover surface", async ({ page }) => {
   expect(colors.text).not.toBe(colors.background);
   await action.click();
   await expect(action).not.toBeVisible();
+});
+
+test("calendar popover fits a 320px screen without scrolling", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 320, height: 700 });
+  await page.goto("/components/date-picker");
+  await page.getByRole("button", { name: "Choose date" }).first().click();
+  const popover = page.locator('[data-slot="date-picker-popover"]');
+  await expect(popover.getByRole("grid")).toBeVisible();
+  const size = await popover.evaluate((element) => ({
+    scroll: element.scrollWidth,
+    client: element.clientWidth,
+  }));
+  expect(size.scroll).toBe(size.client);
+  const sunday = popover.locator("td:last-child [data-rac]").first();
+  const [cell, frame] = await Promise.all([
+    sunday.boundingBox(),
+    popover.boundingBox(),
+  ]);
+  expect(cell && frame && cell.x + cell.width).toBeLessThanOrEqual(
+    (frame?.x ?? 0) + (frame?.width ?? 0),
+  );
 });

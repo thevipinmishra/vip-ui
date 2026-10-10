@@ -4,11 +4,13 @@ import type { HTMLAttributes } from "react";
 import {
   CheckboxGroup as AriaCheckboxGroup,
   type CheckboxGroupProps,
+  composeRenderProps,
   FieldError,
   Label,
   Text,
 } from "react-aria-components";
 import { cn } from "./utils";
+import { fieldDescriptionStyles, fieldErrorStyles } from "./field-styles";
 
 export function CheckboxGroup({
   className,
@@ -26,7 +28,9 @@ export function CheckboxGroup({
     <AriaCheckboxGroup
       {...props}
       data-slot="checkbox-group"
-      className={cn("grid gap-1", className)}
+      className={composeRenderProps(className, (className) =>
+        cn("grid gap-1", className),
+      )}
     >
       {label === undefined ? (
         children
@@ -79,7 +83,7 @@ export function CheckboxGroupDescription({
       {...props}
       slot="description"
       data-slot="checkbox-group-description"
-      className={cn("text-xs leading-5 text-muted-foreground", className)}
+      className={cn(fieldDescriptionStyles, className)}
     />
   );
 }
@@ -92,7 +96,7 @@ export function CheckboxGroupError({
     <FieldError
       {...props}
       data-slot="checkbox-group-error"
-      className={cn("text-xs text-destructive", className)}
+      className={cn(fieldErrorStyles, className)}
     />
   );
 }

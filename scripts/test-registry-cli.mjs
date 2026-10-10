@@ -115,8 +115,7 @@ try {
   );
   await writeFile(
     path.join(fixture, "src/app/globals.css"),
-    '@import "tailwindcss";\n:root { --primary: #123456; --accent: #abcdef; --radius: 1rem; }\n@theme inline { --color-primary: var(--primary); --color-accent: var(--accent); --radius-md: calc(var(--radius) - 0.375rem); }\n' +
-      (await readFile(path.join(root, "public/r/setup.css"), "utf8")),
+    '@import "tailwindcss";\n@custom-variant dark (&:is(.dark *));\n:root { --primary: #123456; --accent: #abcdef; --radius: 0.625rem; --shadow-card: none; }\n.dark { --primary: #654321; }\n@theme inline { --color-primary: var(--primary); --color-accent: var(--accent); --radius-md: calc(var(--radius) * 0.8); }\n',
   );
   await writeFile(
     path.join(fixture, "src/lib/utils.ts"),
@@ -131,16 +130,18 @@ try {
   const base = `http://127.0.0.1:${server.address().port}/r`;
   await run("pnpm", [
     "dlx",
-    "shadcn@latest",
+    "shadcn@4.21.0",
     "add",
     "-y",
     "-c",
     fixture,
     `${base}/vip-select.json`,
+    `${base}/vip-native-select.json`,
+    `${base}/vip-badge.json`,
     `${base}/vip-date-picker.json`,
     `${base}/vip-chart.json`,
-    `${base}/vip-example-repository.json`,
-    `${base}/vip-example-business.json`,
+    `${base}/vip-dashboard-01.json`,
+    `${base}/vip-login-02.json`,
   ]);
   const output = path.join(fixture, "src/components/vip-ui");
   for (const file of [
@@ -155,36 +156,14 @@ try {
     await readFile(path.join(output, file), "utf8");
   }
   for (const file of [
-    "page.tsx",
-    "layout.tsx",
-    "data.ts",
-    "issues/page.tsx",
-    "pulls/page.tsx",
-    "commits/page.tsx",
-    "releases/page.tsx",
-    "contributors/page.tsx",
+    "dashboard-01/page.tsx",
+    "dashboard-01/dashboard.tsx",
+    "dashboard-01/data.ts",
+    "dashboard-01/revenue-chart.tsx",
+    "login-02/page.tsx",
+    "login-02/email-link-form.tsx",
   ]) {
-    await readFile(
-      path.join(fixture, "src/app/examples/repository", file),
-      "utf8",
-    );
-  }
-  for (const file of [
-    "page.tsx",
-    "layout.tsx",
-    "data.ts",
-    "customers/page.tsx",
-    "customers/[id]/page.tsx",
-    "subscriptions/page.tsx",
-    "invoices/page.tsx",
-    "payments/page.tsx",
-    "reports/page.tsx",
-    "settings/page.tsx",
-  ]) {
-    await readFile(
-      path.join(fixture, "src/app/examples/business", file),
-      "utf8",
-    );
+    await readFile(path.join(fixture, "src/app/blocks", file), "utf8");
   }
   assert.equal(
     await readFile(path.join(fixture, "src/components/ui/button.tsx"), "utf8"),
@@ -195,9 +174,11 @@ try {
     "utf8",
   );
   assert.match(installedCss, /--primary: #123456/);
-  // `public/r/setup.css` is static theme input. Component styling now lives in
-  // Tailwind classes and Motion, so verify the appended status-role mappings.
+  assert.match(installedCss, /--shadow-card: none/);
+  assert.match(installedCss, /@plugin "tailwindcss-react-aria-components";/);
   for (const marker of [
+    "--shadow-float:",
+    "--success:",
     "--color-success: var(--success)",
     "--color-warning: var(--warning)",
     "--color-success-subtle: var(--success-subtle)",
@@ -207,16 +188,18 @@ try {
       `Missing installed style ${marker}`,
     );
   }
-  assert.match(
-    await readFile(path.join(fixture, "package.json"), "utf8"),
-    /"@tanstack\/charts"/,
+  const installedPackage = await readFile(
+    path.join(fixture, "package.json"),
+    "utf8",
   );
+  assert.match(installedPackage, /"@tanstack\/charts"/);
+  assert.match(installedPackage, /"react-aria-components": "\^1\.22/);
+  assert.match(installedPackage, /"tailwindcss-react-aria-components"/);
   assert.doesNotMatch(installedCss, /--vip-primary/);
   assert.match(
     await readFile(path.join(output, "select.tsx"), "utf8"),
     /from "\.\/utils"/,
   );
-  // Copy the same published files by hand into a separate directory.
   const manual = JSON.parse(
     await readFile(path.join(root, "public/r/vip-select.json"), "utf8"),
   );
@@ -252,8 +235,10 @@ async function check(file) {
     "bg-primary",
     "bg-accent[data-selected]",
     "bg-linear-to-r",
-    "opacity-0[data-entering]",
-    "opacity-0[data-exiting]",
+    "bg-primary\\\\/90[data-pressed]",
+    // NativeSelect renders a plain <select>, so its states stay native.
+    ":where(:not([data-rac])):focus",
+    ":where(:not([data-rac])):disabled",
   ]) {
     if (!css.css.includes(rule)) throw new Error(file + " is missing " + rule);
   }

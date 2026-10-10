@@ -1,5 +1,6 @@
 "use client";
 
+import { CheckIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import {
   ListBox as AriaListBox,
@@ -8,7 +9,7 @@ import {
   type ListBoxItemProps,
   type ListBoxProps,
 } from "react-aria-components";
-import { Check } from "reicon-react";
+import { duration, easeOut } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 export function ListBox<T extends object>({
@@ -58,7 +59,6 @@ export function ListBoxItem({
   );
 }
 
-/** Keep the check in the layout when an option is not selected. */
 export function SelectionMark({
   isSelected,
   className,
@@ -73,12 +73,9 @@ export function SelectionMark({
       className={cn("ms-auto shrink-0", className)}
       initial={false}
       animate={{ opacity: isSelected ? 1 : 0, scale: isSelected ? 1 : 0.85 }}
-      transition={{
-        duration: reduceMotion ? 0 : 0.16,
-        ease: [0.23, 1, 0.32, 1],
-      }}
+      transition={{ duration: reduceMotion ? 0 : duration.fast, ease: easeOut }}
     >
-      <Check size={16} />
+      <CheckIcon size={16} weight="bold" />
     </motion.span>
   );
 }

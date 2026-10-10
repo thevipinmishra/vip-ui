@@ -12,6 +12,7 @@ import {
   SliderThumb,
 } from "react-aria-components";
 import { cn } from "@/lib/utils";
+import { fieldLabelStyles } from "./field-styles";
 
 export interface SliderProps
   extends Omit<AriaSliderProps, "children" | "className"> {
@@ -56,7 +57,7 @@ export function SliderLabel({
     <Label
       {...props}
       data-slot="slider-label"
-      className={cn("font-medium text-foreground", className)}
+      className={cn(fieldLabelStyles, className)}
     />
   );
 }
@@ -135,7 +136,6 @@ export function SliderHandle({
   ...props
 }: React.ComponentProps<typeof SliderThumb>) {
   const reduceMotion = useReducedMotion();
-  // React Aria owns the thumb's position. Only animate its visual layer.
   return (
     <SliderThumb
       {...props}

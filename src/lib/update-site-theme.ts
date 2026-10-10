@@ -4,7 +4,6 @@ export function updateSiteTheme(update: (root: HTMLElement) => void) {
   const root = document.documentElement;
   root.classList.add("theme-switching");
   update(root);
-  // Commit the new colors without starting every component transition.
   void root.offsetHeight;
   if (restoreFrame !== undefined) cancelAnimationFrame(restoreFrame);
   restoreFrame = requestAnimationFrame(() => {

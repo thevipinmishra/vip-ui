@@ -4,7 +4,19 @@
   "type": "registry:ui",
   "title": "Toolbar",
   "description": "Group related actions with arrow-key navigation.",
-  "dependencies": ["react-aria-components", "tailwind-variants"],
+  "dependencies": ["react-aria-components@^1.22.0", "tailwind-variants@^3.3.1"],
+  "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
+  "cssVars": {
+    "light": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+    },
+    "dark": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+    }
+  },
   "files": [
     {
       "path": "src/lib/utils.ts",
@@ -16,7 +28,7 @@
       "path": "src/components/ui/toolbar.tsx",
       "type": "registry:file",
       "target": "@components/vip-ui/toolbar.tsx",
-      "content": "\"use client\";\n\nimport {\n  Toolbar as AriaToolbar,\n  composeRenderProps,\n  SeparatorContext,\n  ToggleButtonGroupContext,\n  type ToolbarProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport function Toolbar({ className, ...props }: ToolbarProps) {\n  const orientation = props.orientation ?? \"horizontal\";\n  return (\n    <ToggleButtonGroupContext.Provider value={{ orientation }}>\n      <SeparatorContext.Provider\n        value={{\n          orientation: orientation === \"horizontal\" ? \"vertical\" : \"horizontal\",\n        }}\n      >\n        <AriaToolbar\n          {...props}\n          data-slot=\"toolbar\"\n          className={composeRenderProps(className, (className) =>\n            cn(\n              \"flex w-fit max-w-full flex-wrap items-center gap-1.5 rounded-lg border border-border bg-card p-1.5 shadow-[var(--shadow-card)] data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-stretch [&_[data-slot=toggle-button-group]]:border-0 [&_[data-slot=toggle-button-group]]:bg-transparent [&_[data-slot=toggle-button-group]]:p-0\",\n              className,\n            ),\n          )}\n        />\n      </SeparatorContext.Provider>\n    </ToggleButtonGroupContext.Provider>\n  );\n}\n"
+      "content": "\"use client\";\n\nimport {\n  Toolbar as AriaToolbar,\n  composeRenderProps,\n  SeparatorContext,\n  ToggleButtonGroupContext,\n  type ToolbarProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport function Toolbar({ className, ...props }: ToolbarProps) {\n  const orientation = props.orientation ?? \"horizontal\";\n  return (\n    <ToggleButtonGroupContext.Provider value={{ orientation }}>\n      <SeparatorContext.Provider\n        value={{\n          orientation: orientation === \"horizontal\" ? \"vertical\" : \"horizontal\",\n        }}\n      >\n        <AriaToolbar\n          {...props}\n          data-slot=\"toolbar\"\n          className={composeRenderProps(className, (className) =>\n            cn(\n              \"flex w-fit max-w-full flex-wrap items-center gap-1.5 rounded-lg border border-border bg-card p-1.5 shadow-[var(--shadow-card)] data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-stretch [&_[data-slot=toggle-button-group]]:border-0 [&_[data-slot=toggle-button-group]]:bg-transparent [&_[data-slot=toggle-button-group]]:p-0\",\n              \"[&_[data-variant=segmented][data-hovered]:not([data-selected])]:bg-muted [&_[data-variant=segmented][data-pressed]:not([data-selected])]:bg-muted\",\n              className,\n            ),\n          )}\n        />\n      </SeparatorContext.Provider>\n    </ToggleButtonGroupContext.Provider>\n  );\n}\n"
     }
   ]
 }

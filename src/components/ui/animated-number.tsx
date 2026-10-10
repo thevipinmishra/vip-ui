@@ -8,11 +8,12 @@ import {
   useMotionValueEvent,
   useReducedMotion,
 } from "motion/react";
-import { type HTMLAttributes, useEffect, useMemo, useState } from "react";
+import { type ComponentProps, useEffect, useMemo, useState } from "react";
+import { easeOut } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 export interface AnimatedNumberProps
-  extends Omit<HTMLAttributes<HTMLSpanElement>, "children"> {
+  extends Omit<ComponentProps<"span">, "children"> {
   value: number;
   locale?: string;
   formatOptions?: Intl.NumberFormatOptions;
@@ -85,7 +86,7 @@ function CountingNumber({
     }
     const controls = animate(number, value, {
       duration: 0.45,
-      ease: [0.22, 1, 0.36, 1],
+      ease: easeOut,
     });
     return () => controls.stop();
   }, [number, reducedMotion, value]);
@@ -129,7 +130,7 @@ function SlidingDigit({
           initial="enter"
           animate="center"
           exit="exit"
-          transition={{ duration: 0.24, ease: [0.23, 1, 0.32, 1] }}
+          transition={{ duration: 0.24, ease: easeOut }}
           className="col-start-1 row-start-1"
         >
           {digit}

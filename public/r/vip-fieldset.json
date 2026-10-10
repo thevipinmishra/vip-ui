@@ -4,7 +4,15 @@
   "type": "registry:ui",
   "title": "Fieldset",
   "description": "Group related native form controls under a legend.",
-  "dependencies": ["tailwind-variants"],
+  "dependencies": ["tailwind-variants@^3.3.1"],
+  "cssVars": {
+    "light": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+    },
+    "dark": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+    }
+  },
   "files": [
     {
       "path": "src/lib/utils.ts",
@@ -16,7 +24,7 @@
       "path": "src/components/ui/fieldset.tsx",
       "type": "registry:file",
       "target": "@components/vip-ui/fieldset.tsx",
-      "content": "import type { FieldsetHTMLAttributes, HTMLAttributes } from \"react\";\nimport { cn } from \"./utils\";\n\nexport function Fieldset({\n  className,\n  ...props\n}: FieldsetHTMLAttributes<HTMLFieldSetElement>) {\n  return (\n    <fieldset\n      {...props}\n      data-slot=\"fieldset\"\n      className={cn(\n        \"min-w-0 rounded-xl bg-card p-5 shadow-[var(--shadow-card)] ring-1 ring-border/70 data-[disabled]:opacity-60\",\n        className,\n      )}\n    />\n  );\n}\n\nexport function FieldsetLegend({\n  className,\n  ...props\n}: HTMLAttributes<HTMLLegendElement>) {\n  return (\n    <legend\n      {...props}\n      data-slot=\"fieldset-legend\"\n      className={cn(\"px-1 text-sm font-semibold text-foreground\", className)}\n    />\n  );\n}\n\nexport function FieldsetDescription({\n  className,\n  ...props\n}: HTMLAttributes<HTMLParagraphElement>) {\n  return (\n    <p\n      {...props}\n      data-slot=\"fieldset-description\"\n      className={cn(\"text-xs leading-5 text-muted-foreground\", className)}\n    />\n  );\n}\n"
+      "content": "import type { FieldsetHTMLAttributes, HTMLAttributes } from \"react\";\nimport { cn } from \"./utils\";\n\nexport function Fieldset({\n  className,\n  ...props\n}: FieldsetHTMLAttributes<HTMLFieldSetElement>) {\n  return (\n    <fieldset\n      {...props}\n      data-slot=\"fieldset\"\n      className={cn(\n        \"min-w-0 rounded-xl bg-card p-5 shadow-[var(--shadow-card)] ring-1 ring-border/70 disabled:opacity-60\",\n        className,\n      )}\n    />\n  );\n}\n\nexport function FieldsetLegend({\n  className,\n  ...props\n}: HTMLAttributes<HTMLLegendElement>) {\n  return (\n    <legend\n      {...props}\n      data-slot=\"fieldset-legend\"\n      className={cn(\n        \"float-left mb-1 w-full text-sm font-semibold text-foreground [&+*]:clear-both\",\n        className,\n      )}\n    />\n  );\n}\n\nexport function FieldsetDescription({\n  className,\n  ...props\n}: HTMLAttributes<HTMLParagraphElement>) {\n  return (\n    <p\n      {...props}\n      data-slot=\"fieldset-description\"\n      className={cn(\"text-xs leading-5 text-muted-foreground\", className)}\n    />\n  );\n}\n"
     }
   ]
 }

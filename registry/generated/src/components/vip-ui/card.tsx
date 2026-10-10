@@ -21,7 +21,10 @@ export function CardHeader({
   return (
     <div
       data-slot="card-header"
-      className={cn("flex flex-col gap-1 px-6 pt-6", className)}
+      className={cn(
+        "flex flex-col gap-1 px-6 pt-6 last:pb-6 has-data-[slot=card-action]:grid has-data-[slot=card-action]:grid-cols-[minmax(0,1fr)_auto] has-data-[slot=card-action]:gap-x-4",
+        className,
+      )}
       {...props}
     />
   );
@@ -31,11 +34,14 @@ export function CardTitle({
   as: Heading = "h3",
   className,
   ...props
-}: ComponentPropsWithRef<"h3"> & { as?: "h2" | "h3" | "h4" }) {
+}: ComponentPropsWithRef<"h3"> & { as?: "h1" | "h2" | "h3" | "h4" }) {
   return (
     <Heading
       data-slot="card-title"
-      className={cn("text-base font-semibold tracking-[-0.025em]", className)}
+      className={cn(
+        "text-base font-semibold tracking-[-0.025em] [overflow-wrap:anywhere]",
+        className,
+      )}
       {...props}
     />
   );
@@ -48,7 +54,26 @@ export function CardDescription({
   return (
     <p
       data-slot="card-description"
-      className={cn("text-sm leading-6 text-muted-foreground", className)}
+      className={cn(
+        "text-sm leading-6 text-muted-foreground [overflow-wrap:anywhere]",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+export function CardAction({
+  className,
+  ...props
+}: ComponentPropsWithRef<"div">) {
+  return (
+    <div
+      data-slot="card-action"
+      className={cn(
+        "col-start-2 row-span-2 row-start-1 flex items-center gap-2 self-start justify-self-end",
+        className,
+      )}
       {...props}
     />
   );

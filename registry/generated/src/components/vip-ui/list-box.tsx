@@ -1,5 +1,6 @@
 "use client";
 
+import { CheckIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import {
   ListBox as AriaListBox,
@@ -8,7 +9,7 @@ import {
   type ListBoxItemProps,
   type ListBoxProps,
 } from "react-aria-components";
-import { Check } from "reicon-react";
+import { duration, easeOut } from "./motion";
 import { cn } from "./utils";
 
 export function ListBox<T extends object>({
@@ -43,7 +44,7 @@ export function ListBoxItem({
       }
       className={composeRenderProps(className, (className) =>
         cn(
-          "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-3 text-sm text-foreground outline-none hover:bg-muted data-[focused]:bg-muted data-[selected]:bg-accent data-[selected]:text-accent-foreground data-[disabled]:cursor-default data-[disabled]:opacity-50 data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-[-2px] data-[focus-visible]:outline-ring",
+          "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-3 text-sm text-foreground outline-none hover:bg-muted focus:bg-muted selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring",
           className,
         ),
       )}
@@ -58,7 +59,6 @@ export function ListBoxItem({
   );
 }
 
-/** Keep the check in the layout when an option is not selected. */
 export function SelectionMark({
   isSelected,
   className,
@@ -73,12 +73,9 @@ export function SelectionMark({
       className={cn("ms-auto shrink-0", className)}
       initial={false}
       animate={{ opacity: isSelected ? 1 : 0, scale: isSelected ? 1 : 0.85 }}
-      transition={{
-        duration: reduceMotion ? 0 : 0.16,
-        ease: [0.23, 1, 0.32, 1],
-      }}
+      transition={{ duration: reduceMotion ? 0 : duration.fast, ease: easeOut }}
     >
-      <Check size={16} />
+      <CheckIcon size={16} weight="bold" />
     </motion.span>
   );
 }

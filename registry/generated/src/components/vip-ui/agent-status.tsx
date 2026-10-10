@@ -1,8 +1,8 @@
 "use client";
 
+import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import type { ComponentProps } from "react";
-import { CheckCircle, CloseCircle } from "reicon-react";
 import { cn } from "./utils";
 
 export type AgentStatusState = "thinking" | "working" | "complete" | "error";
@@ -77,9 +77,9 @@ export function AgentStatus({
             ))}
           </span>
         ) : state === "complete" ? (
-          <CheckCircle size={17} />
+          <CheckCircleIcon size={17} />
         ) : (
-          <CloseCircle size={17} />
+          <XCircleIcon size={17} />
         )}
       </span>
       <span className="min-w-0 flex-1">

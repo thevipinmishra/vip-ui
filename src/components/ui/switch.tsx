@@ -8,6 +8,7 @@ import {
   composeRenderProps,
   useLocale,
 } from "react-aria-components";
+import { springSnappy, transitionFor } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 const SwitchStateContext = createContext({
@@ -48,7 +49,7 @@ export function Switch({
       data-slot="switch"
       className={composeRenderProps(className, (className) =>
         cn(
-          "group inline-flex min-h-11 cursor-pointer items-center justify-between gap-4 text-sm text-foreground disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+          "group inline-flex min-h-11 cursor-pointer items-center justify-between gap-4 text-sm text-foreground outline-none disabled:cursor-default disabled:opacity-50",
           className,
         ),
       )}
@@ -150,11 +151,7 @@ export function SwitchThumb({
           x: isSelected ? (direction === "rtl" ? -16 : 16) : 0,
           scaleX: !isDisabled && isPressed ? 1.1 : 1,
         }}
-        transition={
-          reduceMotion
-            ? { duration: 0 }
-            : { type: "spring", duration: 0.24, bounce: 0 }
-        }
+        transition={transitionFor(reduceMotion, springSnappy)}
         className="size-5 rounded-full bg-card group-selected:bg-primary-foreground forced-colors:bg-[ButtonText] motion-safe:transition-colors motion-safe:duration-200"
       />
     </span>

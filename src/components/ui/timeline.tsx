@@ -1,5 +1,5 @@
+import { CheckIcon } from "@phosphor-icons/react/ssr";
 import type { ComponentProps } from "react";
-import { Check } from "reicon-react";
 import { cn } from "@/lib/utils";
 
 export function Timeline({ className, ...props }: ComponentProps<"ol">) {
@@ -36,7 +36,7 @@ export function TimelineItem({
         {status === "latest" ? (
           <span className="size-2 rounded-full bg-primary" />
         ) : (
-          <Check size={14} />
+          <CheckIcon size={14} weight="bold" />
         )}
       </span>
       {status === "latest" && <span className="sr-only">Latest: </span>}

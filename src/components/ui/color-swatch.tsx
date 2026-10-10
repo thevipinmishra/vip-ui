@@ -13,7 +13,10 @@ export function ColorSwatch({ className, style, ...props }: ColorSwatchProps) {
       {...props}
       data-slot="color-swatch"
       className={composeRenderProps(className, (className) =>
-        cn("size-9 shrink-0 rounded-md ring-1 ring-foreground/20", className),
+        cn(
+          "size-9 shrink-0 rounded-md ring-1 ring-foreground/20 ring-inset",
+          className,
+        ),
       )}
       style={composeRenderProps(style, (style, { color }) => ({
         background: `linear-gradient(${color}, ${color}), repeating-conic-gradient(var(--border) 0% 25%, var(--background) 0% 50%) 50% / 12px 12px`,

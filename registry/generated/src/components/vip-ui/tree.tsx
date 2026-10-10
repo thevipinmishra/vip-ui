@@ -1,5 +1,11 @@
 "use client";
 
+import {
+  CaretRightIcon,
+  FileTextIcon,
+  FolderIcon,
+  FolderOpenIcon,
+} from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 import {
@@ -11,7 +17,6 @@ import {
   type TreeItemProps,
   type TreeProps,
 } from "react-aria-components";
-import { ChevronRight, FileText, Folder, FolderOpen } from "reicon-react";
 import { cn } from "./utils";
 
 export function Tree<T extends object>({ className, ...props }: TreeProps<T>) {
@@ -21,7 +26,7 @@ export function Tree<T extends object>({ className, ...props }: TreeProps<T>) {
       data-slot="tree"
       className={composeRenderProps(className, (className) =>
         cn(
-          "grid max-h-96 gap-1 overflow-y-auto rounded-lg border border-border bg-card p-2 text-sm shadow-[var(--shadow-card)] outline-none data-[empty]:min-h-24 data-[empty]:place-items-center data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-2 data-[focus-visible]:outline-ring",
+          "grid max-h-96 gap-1 overflow-y-auto rounded-lg border border-border bg-card p-2 text-sm shadow-[var(--shadow-card)] outline-none empty:min-h-24 empty:place-items-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
           className,
         ),
       )}
@@ -39,9 +44,7 @@ export function TreeItem({
 }: Omit<TreeItemProps, "children" | "textValue"> & {
   textValue?: string;
   title: string;
-  /** Visible row content. `title` remains the accessible text value for typeahead. */
   content?: ReactNode;
-  /** Overrides the default folder or file icon. */
   icon?: ReactNode;
   children?: ReactNode;
 }) {
@@ -53,7 +56,7 @@ export function TreeItem({
       textValue={props.textValue ?? title}
       className={composeRenderProps(className, (className) =>
         cn(
-          "group/tree-item rounded-md text-foreground outline-none hover:bg-muted data-[focused]:bg-muted data-[pressed]:bg-muted data-[selected]:bg-accent data-[selected]:text-accent-foreground data-[selected]:font-medium data-[selected]:ring-1 data-[selected]:ring-primary/15 data-[focus-visible]:outline-2 data-[focus-visible]:outline-offset-[-2px] data-[focus-visible]:outline-ring data-[disabled]:opacity-50",
+          "group/tree-item rounded-md text-foreground outline-none hover:bg-muted focus:bg-muted pressed:bg-muted selected:bg-accent selected:text-accent-foreground selected:font-medium selected:ring-1 selected:ring-primary/15 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring disabled:opacity-50",
           className,
         ),
       )}
@@ -71,7 +74,7 @@ export function TreeItem({
               <AriaButton
                 slot="chevron"
                 data-slot="tree-item-chevron"
-                className="grid size-9 shrink-0 place-items-center rounded-md text-muted-foreground outline-none hover:bg-accent hover:text-foreground data-[focus-visible]:outline-2 data-[focus-visible]:outline-ring"
+                className="grid size-9 shrink-0 place-items-center rounded-md text-muted-foreground outline-none hover:bg-accent hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring"
               >
                 <motion.span
                   aria-hidden="true"
@@ -83,7 +86,7 @@ export function TreeItem({
                     ease: [0.23, 1, 0.32, 1],
                   }}
                 >
-                  <ChevronRight size={16} />
+                  <CaretRightIcon size={16} />
                 </motion.span>
               </AriaButton>
             ) : (
@@ -92,17 +95,17 @@ export function TreeItem({
             <span
               data-slot="tree-item-icon"
               aria-hidden="true"
-              className="shrink-0 text-muted-foreground group-data-[selected]/tree-item:text-accent-foreground"
+              className="shrink-0 text-muted-foreground group-selected/tree-item:text-accent-foreground"
             >
               {icon ??
                 (hasChildItems ? (
                   isExpanded ? (
-                    <FolderOpen size={16} />
+                    <FolderOpenIcon size={16} />
                   ) : (
-                    <Folder size={16} />
+                    <FolderIcon size={16} />
                   )
                 ) : (
-                  <FileText size={16} />
+                  <FileTextIcon size={16} />
                 ))}
             </span>
             <div data-slot="tree-item-label" className="min-w-0 flex-1">

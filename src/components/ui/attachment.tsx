@@ -1,21 +1,21 @@
 "use client";
 
 import {
+  FileCodeIcon,
+  FileImageIcon,
+  FilePdfIcon,
+  FileTextIcon,
+  FileZipIcon,
+  WarningIcon,
+  XIcon,
+} from "@phosphor-icons/react";
+import {
   AnimatePresence,
   motion,
   useIsPresent,
   useReducedMotion,
 } from "motion/react";
 import type { ComponentProps, ReactNode } from "react";
-import {
-  CodeFile,
-  FilePdf,
-  FileText,
-  FileZip,
-  Image,
-  Warning,
-  X,
-} from "reicon-react";
 import { cn } from "@/lib/utils";
 import { Button } from "./button";
 import { ProgressBar } from "./progress-bar";
@@ -85,16 +85,16 @@ export function Attachment({
   const extension = name.split(".").pop()?.toLowerCase();
   const FileIcon =
     extension === "pdf"
-      ? FilePdf
+      ? FilePdfIcon
       : extension === "zip"
-        ? FileZip
+        ? FileZipIcon
         : ["png", "jpg", "jpeg", "gif", "webp", "svg"].includes(extension ?? "")
-          ? Image
+          ? FileImageIcon
           : ["js", "jsx", "ts", "tsx", "json", "html", "css"].includes(
                 extension ?? "",
               )
-            ? CodeFile
-            : FileText;
+            ? FileCodeIcon
+            : FileTextIcon;
   const statusText =
     status === "uploading"
       ? "Uploading"
@@ -148,7 +148,9 @@ export function Attachment({
             status === "error" && "text-destructive",
           )}
         >
-          {status === "error" && <Warning size={13} aria-hidden="true" />}
+          {status === "error" && (
+            <WarningIcon size={13} weight="bold" aria-hidden="true" />
+          )}
           {size !== undefined && <span>{formatSize(size)}</span>}
           {size !== undefined && <span aria-hidden="true">·</span>}
           <span>{statusText}</span>
@@ -175,7 +177,7 @@ export function Attachment({
           aria-label={`Remove ${name}`}
           onPress={onRemove}
         >
-          <X size={17} aria-hidden="true" />
+          <XIcon size={17} aria-hidden="true" />
         </Button>
       )}
     </motion.li>

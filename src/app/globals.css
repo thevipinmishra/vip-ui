@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @plugin "tailwindcss-react-aria-components";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --neutral-0: oklch(0.998 0.002 85);
   --neutral-25: oklch(0.984 0.005 85);
@@ -62,12 +64,12 @@
   --code-foreground: var(--neutral-900);
   --code-dark: oklch(0.2 0.015 257);
   --code-dark-foreground: oklch(0.93 0.005 257);
-  --radius: 1rem;
+  --radius: 0.625rem;
   --shadow-card:
     0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07);
   --shadow-float:
     0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11);
-  --shadow-inset: inset 0 1px 2px oklch(0.18 0.014 85 / 0.045);
+  --shadow-inset: inset 0 1px 2px oklch(0 0 0 / 0.045);
 }
 
 .dark {
@@ -152,15 +154,15 @@
   --color-warning: var(--warning);
   --color-warning-subtle: var(--warning-subtle);
   --color-warning-foreground: var(--warning-foreground);
-  --radius-sm: calc(var(--radius) - 0.5rem);
-  --radius-md: calc(var(--radius) - 0.375rem);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 0.375rem);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
   --font-sans: var(--font-geist-sans), sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
-/* Prevent mixed light/dark colors on components with state transitions. */
 .theme-switching *,
 .theme-switching *::before,
 .theme-switching *::after {
@@ -186,15 +188,12 @@
     background: var(--accent);
     color: var(--accent-foreground);
   }
-  /* React Aria can set data-focus-visible on containers with focus within.
-     Style that state on the actual control, not across the whole page. */
   :focus-visible {
     outline: 2px solid var(--ring);
     outline-offset: 3px;
   }
 }
 
-/* Older WebKit browsers need the scrollbar pseudo-elements instead. */
 @supports not (scrollbar-color: auto) {
   *::-webkit-scrollbar {
     width: 10px;
@@ -281,8 +280,6 @@
 .code-scroll-viewport::-webkit-scrollbar {
   display: none;
 }
-/* React Aria tabs focus empty panels so keyboard users can reach their content.
-   Mark that stop without outlining the entire example or code frame. */
 .docs-tab-panel:focus-visible,
 .docs-tab-panel[data-focus-visible],
 .code-scroll-viewport:focus-visible {
@@ -364,8 +361,6 @@
   min-height: 1.8em;
   counter-increment: code-line;
 }
-/* Match the gutter to the snippet's digit count so short files do not
-   reserve a three-digit column of empty space to the left of the numbers. */
 .code-block .shiki .line::before {
   display: inline-block;
   width: calc(var(--code-line-digits, 2) * 1ch);

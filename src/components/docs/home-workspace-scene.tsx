@@ -1,7 +1,7 @@
 "use client";
 
+import { CheckIcon } from "@phosphor-icons/react";
 import { useState } from "react";
-import { Check } from "reicon-react";
 import {
   Select,
   SelectContent,
@@ -45,7 +45,7 @@ export function HomeWorkspaceScene() {
       >
         {selected ? (
           <>
-            <Check
+            <CheckIcon
               size={16}
               aria-hidden="true"
               className="mt-0.5 shrink-0 text-success-foreground"

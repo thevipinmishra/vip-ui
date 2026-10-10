@@ -1,8 +1,12 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  ArrowUpRightIcon,
+} from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { ArrowLeft, ArrowRight, ArrowUpRight } from "reicon-react";
 import { Breadcrumb, Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { getComponent, getNeighbors } from "@/lib/catalog";
 import { customComponentApi, groupApiProps } from "@/lib/component-api";
@@ -22,11 +26,6 @@ export interface ComponentExample extends ComponentExampleMetadata {
   preview: ReactNode;
 }
 
-/**
- * Pairs shared example metadata with the previews a page renders. The count
- * check fails the build when a page adds or drops a preview without updating
- * `src/lib/component-examples.ts` to match.
- */
 export function withExamplePreviews(
   metadata: readonly ComponentExampleMetadata[],
   previews: readonly ReactNode[],
@@ -93,6 +92,7 @@ export async function ComponentPage({
     ),
   );
   const packages = item.dependencies;
+  const devPackages = item.devDependencies ?? [];
   const cliUrl = registryUrl(componentSlug);
   const customApi = customComponentApi[componentSlug];
   const apiGroups = customApi ? groupApiProps(customApi) : [];
@@ -133,14 +133,15 @@ export async function ComponentPage({
             <div className="space-y-4">
               <p className="text-[13px] leading-6 text-muted-foreground">
                 Requires TypeScript, Tailwind v4, and shadcn CSS-variable
-                theming. Complete the{" "}
+                theming. The CLI also adds the theme variables and Tailwind
+                plugin this component uses. See{" "}
                 <Link
                   href="/components/installation#setup"
                   className="text-primary underline underline-offset-4"
                 >
-                  one-time setup
+                  installation
                 </Link>{" "}
-                before running this command.
+                for project setup.
               </p>
               {cliUrl ? (
                 <PackageManagerCommand
@@ -173,6 +174,12 @@ export async function ComponentPage({
               </p>
               {packages.length > 0 && (
                 <PackageManagerCommand action="add" args={packages.join(" ")} />
+              )}
+              {devPackages.length > 0 && (
+                <PackageManagerCommand
+                  action="add-dev"
+                  args={devPackages.join(" ")}
+                />
               )}
               {item.files.map((file) => (
                 <div key={file.target}>
@@ -226,7 +233,7 @@ export async function ComponentPage({
                 className="inline-flex items-center gap-1 rounded-md text-sm font-medium text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
               >
                 React Aria props
-                <ArrowUpRight size={16} aria-hidden="true" />
+                <ArrowUpRightIcon size={16} aria-hidden="true" />
                 <span className="sr-only"> (opens in a new tab)</span>
               </a>
             )}
@@ -298,7 +305,7 @@ export async function ComponentPage({
               Previous component
             </span>
             <span className="mt-1 inline-flex items-center gap-2 text-sm font-semibold">
-              <ArrowLeft size={16} aria-hidden="true" />
+              <ArrowLeftIcon size={16} aria-hidden="true" />
               {previous.name}
             </span>
           </Link>
@@ -309,7 +316,7 @@ export async function ComponentPage({
           >
             <span className="text-[11px] text-muted-foreground">Back to</span>
             <span className="mt-1 inline-flex items-center gap-2 text-sm font-semibold">
-              <ArrowLeft size={16} aria-hidden="true" />
+              <ArrowLeftIcon size={16} aria-hidden="true" />
               All components
             </span>
           </Link>
@@ -324,7 +331,7 @@ export async function ComponentPage({
             </span>
             <span className="mt-1 inline-flex items-center gap-2 text-sm font-semibold">
               {next.name}
-              <ArrowRight size={16} aria-hidden="true" />
+              <ArrowRightIcon size={16} aria-hidden="true" />
             </span>
           </Link>
         ) : (
@@ -335,7 +342,7 @@ export async function ComponentPage({
             <span className="text-[11px]">Explore more</span>
             <span className="mt-1 inline-flex items-center gap-2 text-sm font-semibold">
               All components
-              <ArrowUpRight size={16} aria-hidden="true" />
+              <ArrowUpRightIcon size={16} aria-hidden="true" />
             </span>
           </Link>
         )}
