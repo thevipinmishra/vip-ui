@@ -1,0 +1,168 @@
+"use client";
+
+import { CheckIcon, MinusIcon } from "@phosphor-icons/react";
+import { motion, useReducedMotion } from "motion/react";
+import { createContext, useContext, useState } from "react";
+import {
+  Checkbox as AriaCheckbox,
+  type CheckboxProps as AriaCheckboxProps,
+  composeRenderProps,
+} from "react-aria-components";
+import { duration, easeOut } from "./motion";
+import { cn } from "./utils";
+
+const CheckboxStateContext = createContext({
+  isSelected: false,
+  isIndeterminate: false,
+  isHovered: false,
+  isPressed: false,
+});
+
+export interface CheckboxProps
+  extends Omit<AriaCheckboxProps, "className" | "children"> {
+  ref?: React.Ref<HTMLLabelElement>;
+  className?: AriaCheckboxProps["className"];
+  description?: string;
+  children?: AriaCheckboxProps["children"];
+  checked?: boolean | "indeterminate";
+  defaultChecked?: boolean | "indeterminate";
+  onCheckedChange?: (checked: boolean) => void;
+}
+
+export function Checkbox({
+  children,
+  description,
+  className,
+  checked,
+  defaultChecked,
+  onCheckedChange,
+  ...props
+}: CheckboxProps) {
+  const [initialIndeterminate, setInitialIndeterminate] = useState(
+    defaultChecked === "indeterminate",
+  );
+  return (
+    <AriaCheckbox
+      {...props}
+      isSelected={checked === undefined ? props.isSelected : checked === true}
+      defaultSelected={
+        defaultChecked === undefined
+          ? props.defaultSelected
+          : defaultChecked === true
+      }
+      isIndeterminate={
+        checked === undefined
+          ? initialIndeterminate || props.isIndeterminate
+          : checked === "indeterminate"
+      }
+      onChange={(value) => {
+        setInitialIndeterminate(false);
+        props.onChange?.(value);
+        onCheckedChange?.(value);
+      }}
+      data-slot="checkbox"
+      className={composeRenderProps(className, (className) =>
+        cn(
+          "group inline-flex min-h-11 cursor-pointer items-start gap-3 rounded-md text-sm text-foreground disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+          typeof children === "string" && !description && "items-center",
+          className,
+        ),
+      )}
+    >
+      {(state) => (
+        <CheckboxStateContext.Provider value={state}>
+          {typeof children === "function" ? (
+            children(state)
+          ) : typeof children === "string" || children == null ? (
+            <>
+              <CheckboxIndicator />
+              {(children || description) && (
+                <span className="pt-0.5">
+                  {children && (
+                    <span className="block font-medium">{children}</span>
+                  )}
+                  {description && (
+                    <span className="mt-1 block text-xs leading-5 text-muted-foreground">
+                      {description}
+                    </span>
+                  )}
+                </span>
+              )}
+            </>
+          ) : (
+            children
+          )}
+        </CheckboxStateContext.Provider>
+      )}
+    </AriaCheckbox>
+  );
+}
+
+export function CheckboxIndicator({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLSpanElement>) {
+  const { isSelected, isIndeterminate, isHovered, isPressed } =
+    useContext(CheckboxStateContext);
+  const reduceMotion = useReducedMotion();
+  const isChecked = isSelected || isIndeterminate;
+  return (
+    <span
+      {...props}
+      aria-hidden="true"
+      data-slot="checkbox-indicator"
+      className={cn(
+        "mt-0.5 grid size-5 shrink-0 place-items-center rounded-md border border-input bg-card shadow-[var(--shadow-inset)] transition-[background-color,border-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:border-primary/60 group-invalid:border-destructive group-invalid:group-hover:border-destructive group-selected:border-primary group-selected:bg-primary group-indeterminate:border-primary group-indeterminate:bg-primary",
+        className,
+      )}
+    >
+      <motion.span
+        initial={false}
+        animate={{
+          scale: isChecked ? (isPressed ? 0.9 : isHovered ? 1.06 : 1) : 0.86,
+          opacity: isChecked ? 1 : 0,
+        }}
+        transition={{
+          duration: reduceMotion ? 0 : duration.fast,
+          ease: easeOut,
+        }}
+        className="text-primary-foreground"
+      >
+        {isIndeterminate ? (
+          <MinusIcon size={13} weight="bold" />
+        ) : (
+          <CheckIcon size={13} weight="bold" />
+        )}
+      </motion.span>
+    </span>
+  );
+}
+
+export function CheckboxLabel({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLSpanElement>) {
+  return (
+    <span
+      {...props}
+      data-slot="checkbox-label"
+      className={cn("block font-medium", className)}
+    />
+  );
+}
+
+export function CheckboxDescription({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLSpanElement>) {
+  return (
+    <span
+      {...props}
+      data-slot="checkbox-description"
+      className={cn(
+        "mt-1 block text-xs leading-5 text-muted-foreground",
+        className,
+      )}
+    />
+  );
+}

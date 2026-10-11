@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-stagger-group",
+  "type": "registry:ui",
+  "title": "Stagger Group",
+  "description": "Sequence the entrance of grouped content.",
+  "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
+  "files": [
+    {
+      "path": "src/lib/motion.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/motion.ts",
+      "content": "import type { Transition } from \"motion/react\";\n\nexport const easeOut = [0.23, 1, 0.32, 1] as const;\n\nexport const easeInOut = [0.77, 0, 0.175, 1] as const;\n\nexport const easeOutClass = \"ease-[cubic-bezier(0.23,1,0.32,1)]\";\n\nexport const duration = {\n  fast: 0.14,\n  base: 0.2,\n  slow: 0.28,\n} as const;\n\nexport const springSnappy = {\n  type: \"spring\",\n  duration: 0.24,\n  bounce: 0,\n} as const satisfies Transition;\n\nexport const springLayout = {\n  type: \"spring\",\n  duration: 0.3,\n  bounce: 0,\n} as const satisfies Transition;\n\nexport function transitionFor(\n  reduceMotion: boolean | null,\n  transition: Transition,\n): Transition {\n  return reduceMotion ? { duration: 0 } : transition;\n}\n\nexport function edgeOffset(placement: string | null, distance: number) {\n  switch (placement) {\n    case \"top\":\n      return { x: 0, y: distance };\n    case \"left\":\n      return { x: distance, y: 0 };\n    case \"right\":\n      return { x: -distance, y: 0 };\n    default:\n      return { x: 0, y: -distance };\n  }\n}\n"
+    },
+    {
+      "path": "src/lib/utils.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/utils.ts",
+      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
+    },
+    {
+      "path": "src/components/ui/stagger-group.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/stagger-group.tsx",
+      "content": "\"use client\";\n\nimport { motion, useReducedMotion } from \"motion/react\";\nimport type { HTMLAttributes, ReactNode } from \"react\";\nimport { easeOut, transitionFor } from \"./motion\";\nimport { cn } from \"./utils\";\n\ntype StaggerAttributes = Omit<\n  HTMLAttributes<HTMLElement>,\n  | \"onDrag\"\n  | \"onDragStart\"\n  | \"onDragEnd\"\n  | \"onAnimationStart\"\n  | \"onAnimationEnd\"\n  | \"onAnimationIteration\"\n>;\n\nconst MAX_TOTAL_DELAY = 0.6;\n\nexport interface StaggerGroupProps extends StaggerAttributes {\n  children: ReactNode;\n  as?: \"div\" | \"ul\" | \"ol\";\n  trigger?: \"mount\" | \"in-view\";\n  stagger?: number;\n}\n\nexport function StaggerGroup({\n  as = \"div\",\n  trigger = \"in-view\",\n  stagger = 0.08,\n  children,\n  className,\n  ...props\n}: StaggerGroupProps) {\n  const reducedMotion = useReducedMotion();\n  const Element =\n    as === \"ul\" ? motion.ul : as === \"ol\" ? motion.ol : motion.div;\n  const variants = {\n    hidden: {},\n    visible: {\n      transition: {\n        delayChildren: (index: number, total: number) =>\n          reducedMotion\n            ? 0\n            : index *\n              Math.min(stagger, MAX_TOTAL_DELAY / Math.max(total - 1, 1)),\n      },\n    },\n  };\n\n  return (\n    <Element\n      {...props}\n      data-slot=\"stagger-group\"\n      className={cn(className)}\n      variants={variants}\n      initial=\"hidden\"\n      animate={trigger === \"mount\" || reducedMotion ? \"visible\" : undefined}\n      whileInView={trigger === \"in-view\" ? \"visible\" : undefined}\n      viewport={{ once: true, amount: \"some\" }}\n    >\n      {children}\n    </Element>\n  );\n}\n\nexport interface StaggerItemProps extends StaggerAttributes {\n  children: ReactNode;\n  as?: \"div\" | \"li\";\n}\n\nconst itemVariants = {\n  hidden: { opacity: 0, y: 12 },\n  visible: { opacity: 1, y: 0 },\n};\n\nexport function StaggerItem({\n  as = \"div\",\n  children,\n  className,\n  ...props\n}: StaggerItemProps) {\n  const reducedMotion = useReducedMotion();\n  const Element = as === \"li\" ? motion.li : motion.div;\n  return (\n    <Element\n      {...props}\n      data-slot=\"stagger-item\"\n      className={cn(className)}\n      variants={itemVariants}\n      transition={transitionFor(reducedMotion, {\n        duration: 0.4,\n        ease: easeOut,\n      })}\n    >\n      {children}\n    </Element>\n  );\n}\n"
+    }
+  ]
+}

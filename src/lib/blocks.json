@@ -1,0 +1,80 @@
+{
+  "categories": [
+    { "slug": "dashboard", "label": "Dashboard" },
+    { "slug": "authentication", "label": "Authentication" },
+    { "slug": "settings", "label": "Settings" },
+    { "slug": "marketing", "label": "Marketing" },
+    { "slug": "application", "label": "Application" }
+  ],
+  "blocks": [
+    {
+      "name": "dashboard-01",
+      "description": "A dashboard with a sidebar, key metrics, a revenue chart, and recent orders.",
+      "category": "dashboard",
+      "height": 940,
+      "featured": true
+    },
+    {
+      "name": "stats-01",
+      "description": "Metric cards that change with the selected period.",
+      "category": "dashboard",
+      "height": 420
+    },
+    {
+      "name": "login-01",
+      "description": "A sign-in form in a card.",
+      "category": "authentication",
+      "height": 720
+    },
+    {
+      "name": "login-02",
+      "description": "A two-column sign-in page with an email link and a brand panel.",
+      "category": "authentication",
+      "height": 720,
+      "featured": true
+    },
+    {
+      "name": "signup-01",
+      "description": "A sign-up form with a password strength meter.",
+      "category": "authentication",
+      "height": 820
+    },
+    {
+      "name": "settings-01",
+      "description": "A profile form with a save bar for unsaved changes.",
+      "category": "settings",
+      "height": 900
+    },
+    {
+      "name": "settings-02",
+      "description": "Notification settings for each event and channel.",
+      "category": "settings",
+      "height": 760
+    },
+    {
+      "name": "billing-01",
+      "description": "A plan picker with usage meters and a payment method.",
+      "category": "settings",
+      "height": 880
+    },
+    {
+      "name": "pricing-01",
+      "description": "Pricing plans with a monthly and yearly toggle.",
+      "category": "marketing",
+      "height": 860,
+      "featured": true
+    },
+    {
+      "name": "team-01",
+      "description": "A team list with invites, roles, and member actions.",
+      "category": "application",
+      "height": 720
+    },
+    {
+      "name": "upload-01",
+      "description": "A file upload area with progress for each file.",
+      "category": "application",
+      "height": 680
+    }
+  ]
+}

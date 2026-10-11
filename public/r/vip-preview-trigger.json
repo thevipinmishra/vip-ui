@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-preview-trigger",
+  "type": "registry:ui",
+  "title": "Preview Trigger",
+  "description": "Open a preview without leaving the current context.",
+  "dependencies": ["react-aria-components@^1.22.1"],
+  "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
+  "files": [
+    {
+      "path": "src/components/ui/preview-trigger.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/preview-trigger.tsx",
+      "content": "\"use client\";\n\nimport {\n  PreviewTrigger as AriaPreviewTrigger,\n  type PreviewTriggerProps,\n} from \"react-aria-components\";\n\nexport function PreviewTrigger(props: PreviewTriggerProps) {\n  return <AriaPreviewTrigger {...props} />;\n}\n"
+    }
+  ]
+}

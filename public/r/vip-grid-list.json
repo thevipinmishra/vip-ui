@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-grid-list",
+  "type": "registry:ui",
+  "title": "Grid List",
+  "description": "Select and act on rows with keyboard navigation.",
+  "dependencies": ["react-aria-components@^1.22.1", "tailwind-variants@^3.3.1"],
+  "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
+  "cssVars": {
+    "light": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+    },
+    "dark": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+    }
+  },
+  "files": [
+    {
+      "path": "src/lib/utils.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/utils.ts",
+      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
+    },
+    {
+      "path": "src/components/ui/grid-list.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/grid-list.tsx",
+      "content": "\"use client\";\n\nimport {\n  GridList as AriaGridList,\n  GridListItem as AriaGridListItem,\n  composeRenderProps,\n  type GridListItemProps,\n  type GridListProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport function GridList<T extends object>({\n  className,\n  ...props\n}: GridListProps<T>) {\n  return (\n    <AriaGridList\n      {...props}\n      data-slot=\"grid-list\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"grid min-w-0 gap-1 rounded-lg border border-border bg-card p-1.5 shadow-[var(--shadow-card)] outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n\nexport function GridListItem({ className, ...props }: GridListItemProps) {\n  return (\n    <AriaGridListItem\n      {...props}\n      data-slot=\"grid-list-item\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"flex min-h-12 cursor-pointer items-center gap-3 rounded-md px-3 py-2 text-sm text-foreground outline-none [overflow-wrap:anywhere] hover:bg-muted focus:bg-muted selected:bg-accent selected:text-accent-foreground focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring disabled:cursor-default disabled:opacity-50 forced-colors:border-2 forced-colors:border-[Canvas] forced-colors:selected:border-[Highlight]\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n"
+    }
+  ]
+}
