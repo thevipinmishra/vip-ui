@@ -419,9 +419,9 @@ export const componentPageData = {
     description: "Displays a searchable menu for finding and running commands.",
     examples: [
       {
-        title: "Commands with icons",
+        title: "Sections and icons",
         description:
-          "Give each CommandPaletteItem an icon and a readable label. The shortcut prop controls the keyboard shortcut that opens the palette.",
+          "Put related items in a CommandPaletteSection. When an item has an icon, set textValue so that search can find it.",
         sourcePath: "command-palette-demo.tsx",
       },
     ],
@@ -1400,13 +1400,13 @@ export const componentPageData = {
       {
         title: "Variants",
         description:
-          'Set variant to "success" or "warning" in the toast content. The default is "info". Each variant has its own icon.',
+          'Set variant to "success", "warning", or "error" in the toast content. The default is "info". Each variant has its own icon.',
         sourcePath: "toast-status-demo.tsx",
       },
       {
         title: "Timeout",
         description:
-          "Pass timeout in milliseconds to close the toast on its own. Toasts stay open for at least 5 seconds. Without a timeout, a toast stays until it is dismissed.",
+          "A toast closes after 5 seconds. Pass a longer timeout in milliseconds to keep it open longer. Set timeout to 0 to keep it open until the user closes it.",
         sourcePath: "toast-timeout-demo.tsx",
       },
     ],

@@ -17,6 +17,7 @@ import { Button } from "react-aria-components";
 import {
   CommandPalette,
   CommandPaletteItem,
+  CommandPaletteSection,
 } from "@/components/ui/command-palette";
 import { Kbd, KbdGroup } from "@/components/ui/kbd-code";
 import { catalogComponents } from "@/lib/catalog";
@@ -74,32 +75,36 @@ export function DocsSearch() {
         placeholder="Search components and pages"
         emptyMessage="No components or pages match."
       >
-        {pages.map((page) => (
-          <CommandPaletteItem
-            key={page.href}
-            textValue={page.label}
-            onAction={() => router.push(page.href)}
-          >
-            <page.icon
-              size={17}
-              aria-hidden="true"
-              className="text-muted-foreground"
-            />
-            {page.label}
-          </CommandPaletteItem>
-        ))}
-        {catalogComponents.map((component) => (
-          <CommandPaletteItem
-            key={component.slug}
-            textValue={`${component.name} ${component.group} ${component.useFor}`}
-            onAction={() => router.push(`/components/${component.slug}`)}
-          >
-            <span className="min-w-0 flex-1 truncate">{component.name}</span>
-            <span className="shrink-0 text-xs text-muted-foreground">
-              {component.group}
-            </span>
-          </CommandPaletteItem>
-        ))}
+        <CommandPaletteSection title="Pages">
+          {pages.map((page) => (
+            <CommandPaletteItem
+              key={page.href}
+              textValue={page.label}
+              onAction={() => router.push(page.href)}
+            >
+              <page.icon
+                size={17}
+                aria-hidden="true"
+                className="text-muted-foreground"
+              />
+              {page.label}
+            </CommandPaletteItem>
+          ))}
+        </CommandPaletteSection>
+        <CommandPaletteSection title="Components">
+          {catalogComponents.map((component) => (
+            <CommandPaletteItem
+              key={component.slug}
+              textValue={`${component.name} ${component.group} ${component.useFor}`}
+              onAction={() => router.push(`/components/${component.slug}`)}
+            >
+              <span className="min-w-0 flex-1 truncate">{component.name}</span>
+              <span className="shrink-0 text-xs text-muted-foreground">
+                {component.group}
+              </span>
+            </CommandPaletteItem>
+          ))}
+        </CommandPaletteSection>
       </CommandPalette>
     </>
   );

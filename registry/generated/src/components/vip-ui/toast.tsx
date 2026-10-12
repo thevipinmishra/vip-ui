@@ -4,6 +4,7 @@ import {
   CheckCircleIcon,
   InfoIcon,
   WarningIcon,
+  XCircleIcon,
   XIcon,
 } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
@@ -51,6 +52,7 @@ const toastIconStyles = tv({
       info: "bg-accent text-accent-foreground",
       success: "bg-success-subtle text-success-foreground",
       warning: "bg-warning-subtle text-warning-foreground",
+      error: "bg-destructive/10 text-destructive",
     },
   },
   defaultVariants: { variant: "info" },
@@ -59,8 +61,15 @@ const toastIconStyles = tv({
 export interface ToastMessage {
   title: string;
   description?: string;
-  variant?: "info" | "success" | "warning";
+  variant?: "info" | "success" | "warning" | "error";
 }
+
+const toastIcons = {
+  info: InfoIcon,
+  success: CheckCircleIcon,
+  warning: WarningIcon,
+  error: XCircleIcon,
+};
 
 function prefersReducedMotion() {
   return (
@@ -85,7 +94,11 @@ class AnimatedToastQueue extends ToastQueue<ToastMessage> {
   };
 
   close(key: string) {
-    if (this.closing.has(key) || prefersReducedMotion()) {
+    if (
+      this.closing.has(key) ||
+      prefersReducedMotion() ||
+      !this.visibleToasts.some((toast) => toast.key === key)
+    ) {
       super.close(key);
       return;
     }
@@ -103,12 +116,17 @@ class AnimatedToastQueue extends ToastQueue<ToastMessage> {
   }
 }
 
-export const toastQueue = new AnimatedToastQueue();
+export const toastQueue = new AnimatedToastQueue({ maxVisibleToasts: 3 });
 
 export function showToast(message: ToastMessage, options?: ToastOptions) {
-  const timeout =
-    options?.timeout && options.timeout < 5000 ? 5000 : options?.timeout;
-  return toastQueue.add(message, { ...options, timeout });
+  const timeout = options?.timeout ?? 5000;
+  return toastQueue.add(message, {
+    ...options,
+    timeout:
+      timeout > 0 && Number.isFinite(timeout)
+        ? Math.max(timeout, 5000)
+        : undefined,
+  });
 }
 
 export function ToastViewport({
@@ -125,19 +143,14 @@ export function ToastViewport({
       aria-label="Notifications"
       className={composeRenderProps(className, (className) =>
         cn(
-          "fixed inset-x-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-50 flex flex-col-reverse gap-2 outline-none focus-visible:outline-2 focus-visible:outline-ring sm:inset-x-auto sm:end-4 sm:w-96",
+          "fixed inset-x-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-60 flex flex-col-reverse gap-2 outline-none focus-visible:outline-2 focus-visible:outline-ring sm:inset-x-auto sm:end-4 sm:w-96",
           className,
         ),
       )}
     >
       {({ toast }) => {
         const variant = toast.content.variant ?? "info";
-        const Icon =
-          variant === "success"
-            ? CheckCircleIcon
-            : variant === "warning"
-              ? WarningIcon
-              : InfoIcon;
+        const Icon = toastIcons[variant];
         return (
           <Toast toast={toast}>
             <Icon

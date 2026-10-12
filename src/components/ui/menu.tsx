@@ -101,6 +101,9 @@ export function MenuItem<T extends object>({
   return (
     <AriaMenuItem
       {...props}
+      textValue={
+        props.textValue ?? (typeof children === "string" ? children : undefined)
+      }
       data-slot="menu-item"
       className={composeRenderProps(className, (className) =>
         cn(

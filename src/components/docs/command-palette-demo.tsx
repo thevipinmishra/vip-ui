@@ -4,6 +4,7 @@ import {
   FolderPlusIcon,
   GearSixIcon,
   MagnifyingGlassIcon,
+  MoonIcon,
   UserPlusIcon,
 } from "@phosphor-icons/react";
 import { useState } from "react";
@@ -11,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import {
   CommandPalette,
   CommandPaletteItem,
+  CommandPaletteSection,
 } from "@/components/ui/command-palette";
 
 export function CommandPaletteDemo({
@@ -30,30 +32,42 @@ export function CommandPaletteDemo({
         onOpenChange={setOpen}
         shortcut={shortcut}
       >
-        <CommandPaletteItem>
-          <FolderPlusIcon
-            size={17}
-            aria-hidden="true"
-            className="text-muted-foreground"
-          />
-          New project
-        </CommandPaletteItem>
-        <CommandPaletteItem>
-          <GearSixIcon
-            size={17}
-            aria-hidden="true"
-            className="text-muted-foreground"
-          />
-          Open settings
-        </CommandPaletteItem>
-        <CommandPaletteItem>
-          <UserPlusIcon
-            size={17}
-            aria-hidden="true"
-            className="text-muted-foreground"
-          />
-          Invite teammate
-        </CommandPaletteItem>
+        <CommandPaletteSection title="Project">
+          <CommandPaletteItem textValue="New project">
+            <FolderPlusIcon
+              size={17}
+              aria-hidden="true"
+              className="text-muted-foreground"
+            />
+            New project
+          </CommandPaletteItem>
+          <CommandPaletteItem textValue="Invite teammate">
+            <UserPlusIcon
+              size={17}
+              aria-hidden="true"
+              className="text-muted-foreground"
+            />
+            Invite teammate
+          </CommandPaletteItem>
+        </CommandPaletteSection>
+        <CommandPaletteSection title="Preferences">
+          <CommandPaletteItem textValue="Open settings">
+            <GearSixIcon
+              size={17}
+              aria-hidden="true"
+              className="text-muted-foreground"
+            />
+            Open settings
+          </CommandPaletteItem>
+          <CommandPaletteItem textValue="Change theme">
+            <MoonIcon
+              size={17}
+              aria-hidden="true"
+              className="text-muted-foreground"
+            />
+            Change theme
+          </CommandPaletteItem>
+        </CommandPaletteSection>
       </CommandPalette>
     </div>
   );

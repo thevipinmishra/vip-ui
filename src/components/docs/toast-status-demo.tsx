@@ -41,6 +41,18 @@ export function ToastStatusDemo() {
       >
         Warning
       </Button>
+      <Button
+        variant="outline"
+        onPress={() =>
+          showToast({
+            title: "Upload failed",
+            description: "Check the connection and try again.",
+            variant: "error",
+          })
+        }
+      >
+        Error
+      </Button>
     </div>
   );
 }

@@ -713,7 +713,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "boolean",
       defaultValue: "true",
       description:
-        "Open with Ctrl+K or Command+K. Disable when another palette owns that shortcut.",
+        "Ctrl+K or Command+K opens and closes the palette. Disable it when another palette owns that shortcut.",
     },
     {
       component: "CommandPalette",
@@ -735,6 +735,22 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "string",
       defaultValue: '"No matching commands."',
       description: "Text shown when search has no results.",
+    },
+    {
+      component: "CommandPaletteSection",
+      prop: "title",
+      type: "string",
+      defaultValue: "required",
+      description:
+        "Heading for a group of items. A section with no matching items is hidden.",
+    },
+    {
+      component: "CommandPaletteItem",
+      prop: "textValue",
+      type: "string",
+      defaultValue: "text children",
+      description:
+        "Text that search matches. Set it when the item has an icon or other elements.",
     },
   ],
   button: [
@@ -1376,15 +1392,31 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "message",
       type: "ToastMessage",
       defaultValue: "required",
-      description: "Title and optional description for the toast.",
+      description:
+        'Title, optional description, and variant: "info", "success", "warning", or "error".',
     },
     {
       component: "showToast",
-      prop: "options",
-      type: "ToastOptions",
+      prop: "options.timeout",
+      type: "number",
+      defaultValue: "5000",
+      description:
+        "Milliseconds before the toast closes. Values under 5000 become 5000. Set 0 to keep the toast open until the user closes it.",
+    },
+    {
+      component: "showToast",
+      prop: "options.onClose",
+      type: "() => void",
+      defaultValue: "—",
+      description: "Runs after the toast closes.",
+    },
+    {
+      component: "toastQueue",
+      prop: "close",
+      type: "(key: string) => void",
       defaultValue: "—",
       description:
-        "Optional timeout and onClose callback. Timeouts under 5 seconds become 5000 ms; omit timeout for a persistent toast.",
+        "Closes the toast with the key that showToast returns. Three toasts show at a time. Older toasts wait until a newer one closes.",
     },
   ],
   "toggle-button": [

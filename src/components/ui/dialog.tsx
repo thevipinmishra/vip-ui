@@ -45,14 +45,9 @@ const CloseContext = createContext<(() => void) | null>(null);
 const DialogAnimationContext = createContext<{
   animation: DialogAnimation;
   complete: (state: string) => void;
-}>({ animation: "unmounted", complete: () => {} });
+} | null>(null);
 
-export function Dialog({
-  defaultOpen,
-  isOpen,
-  onOpenChange,
-  ...props
-}: DialogTriggerProps) {
+function useDialogAnimation(isOpen?: boolean, defaultOpen?: boolean) {
   const [animation, setAnimation] = useState<DialogAnimation>(
     defaultOpen || isOpen ? "visible" : "unmounted",
   );
@@ -63,19 +58,32 @@ export function Dialog({
     if (isOpen !== undefined) setAnimation(isOpen ? "visible" : "hidden");
   }
 
+  return {
+    animation,
+    setAnimation,
+    complete: (state: string) => {
+      if (state === "hidden") {
+        setAnimation((current) =>
+          current === "hidden" ? "unmounted" : current,
+        );
+      }
+    },
+  };
+}
+
+export function Dialog({
+  defaultOpen,
+  isOpen,
+  onOpenChange,
+  ...props
+}: DialogTriggerProps) {
+  const { animation, setAnimation, complete } = useDialogAnimation(
+    isOpen,
+    defaultOpen,
+  );
+
   return (
-    <DialogAnimationContext.Provider
-      value={{
-        animation,
-        complete: (state) => {
-          if (state === "hidden") {
-            setAnimation((current) =>
-              current === "hidden" ? "unmounted" : current,
-            );
-          }
-        },
-      }}
-    >
+    <DialogAnimationContext.Provider value={{ animation, complete }}>
       <AriaDialogTrigger
         {...props}
         defaultOpen={defaultOpen}
@@ -115,7 +123,9 @@ export function DialogContent({
     isMobileViewport,
     () => false,
   );
-  const { animation, complete } = useContext(DialogAnimationContext);
+  const ownAnimation = useDialogAnimation(overlayProps?.isOpen);
+  const { animation, complete } =
+    useContext(DialogAnimationContext) ?? ownAnimation;
   return (
     <ModalOverlay
       {...overlayProps}

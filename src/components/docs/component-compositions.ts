@@ -192,6 +192,41 @@ export const compositions: Record<string, Composition> = {
       },
     ],
   },
+  "command-palette": {
+    parts: [
+      {
+        part: "CommandPalette",
+        purpose:
+          "Opens the modal search, filters the items, and closes after an action.",
+        children: [
+          {
+            part: "CommandPaletteSection",
+            purpose: "Groups related items under a heading.",
+            children: [
+              {
+                part: "CommandPaletteItem",
+                purpose: "Runs an action. Repeat for each command.",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  toast: {
+    parts: [
+      {
+        part: "ToastViewport",
+        purpose:
+          "Shows queued toasts in the bottom corner. Render it once in the root layout.",
+      },
+    ],
+    helper: {
+      part: "showToast",
+      purpose:
+        "Adds a toast to the queue and returns its key. Call it from an event handler; it is not a JSX child.",
+    },
+  },
   menu: {
     parts: [
       {
