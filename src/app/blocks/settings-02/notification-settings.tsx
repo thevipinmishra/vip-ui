@@ -80,7 +80,7 @@ export function NotificationSettings() {
               <tr>
                 <th
                   scope="col"
-                  className="border-b border-border pb-3 text-start text-xs font-semibold text-muted-foreground"
+                  className="border-be border-border pbe-3 text-start text-xs font-semibold text-muted-foreground"
                 >
                   Event
                 </th>
@@ -88,7 +88,7 @@ export function NotificationSettings() {
                   <th
                     key={channel}
                     scope="col"
-                    className="w-20 border-b border-border pb-3 text-center text-xs font-semibold text-muted-foreground"
+                    className="w-20 border-be border-border pbe-3 text-center text-xs font-semibold text-muted-foreground"
                   >
                     {channel}
                   </th>
@@ -100,7 +100,7 @@ export function NotificationSettings() {
                 <tr key={event.id}>
                   <th
                     scope="row"
-                    className="border-b border-border/70 py-3 pe-4 text-start font-normal"
+                    className="border-be border-border/70 py-3 pe-4 text-start font-normal"
                   >
                     <span className="block font-medium">{event.label}</span>
                     <span className="block text-xs text-muted-foreground">
@@ -110,7 +110,7 @@ export function NotificationSettings() {
                   {channels.map((channel) => (
                     <td
                       key={channel}
-                      className="border-b border-border/70 text-center"
+                      className="border-be border-border/70 text-center"
                     >
                       <Checkbox
                         aria-label={`${event.label} by ${channel}`}
@@ -145,7 +145,7 @@ export function NotificationSettings() {
           />
         </RadioGroup>
       </CardContent>
-      <CardFooter className="justify-end border-t border-border/70 pt-5">
+      <CardFooter className="justify-end border-bs border-border/70 pbs-5">
         <output className="me-auto text-sm text-muted-foreground">
           {saved ? "Settings saved." : ""}
         </output>

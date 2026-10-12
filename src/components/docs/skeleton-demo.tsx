@@ -11,9 +11,9 @@ export function SkeletonDemo() {
           <Skeleton className="h-3 w-1/3" />
         </div>
       </div>
-      <Skeleton className="mt-6 h-3 w-full" />
-      <Skeleton className="mt-2 h-3 w-4/5" />
-      <Skeleton className="mt-6 h-9 w-28" />
+      <Skeleton className="mbs-6 h-3 w-full" />
+      <Skeleton className="mbs-2 h-3 w-4/5" />
+      <Skeleton className="mbs-6 h-9 w-28" />
     </output>
   );
 }

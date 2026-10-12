@@ -125,7 +125,7 @@ export function AlertDescription({
       {...props}
       data-slot="alert-description"
       className={cn(
-        "mt-1 text-sm leading-6 [overflow-wrap:anywhere]",
+        "mbs-1 text-sm leading-6 [overflow-wrap:anywhere]",
         className,
       )}
     />

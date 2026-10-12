@@ -71,7 +71,7 @@ export function NumberField({
             </PressButton>
             <Input
               data-slot="number-field-input"
-              className="min-h-11 min-w-0 flex-1 cursor-text bg-transparent px-2 text-center text-base font-medium tabular-nums outline-none placeholder:text-muted-foreground/80 disabled:cursor-not-allowed sm:text-sm"
+              className="min-h-11 min-w-0 flex-1 cursor-text bg-transparent px-2 text-center text-base font-medium tabular-nums focus:outline-hidden placeholder:text-muted-foreground/80 disabled:cursor-not-allowed sm:text-sm"
             />
             <PressButton
               slot="increment"

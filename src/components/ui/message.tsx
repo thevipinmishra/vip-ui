@@ -48,7 +48,7 @@ export function Message({
           <p
             data-slot="message-sender"
             className={cn(
-              "mb-1 px-1 text-xs font-medium text-muted-foreground [overflow-wrap:anywhere]",
+              "mbe-1 px-1 text-xs font-medium text-muted-foreground [overflow-wrap:anywhere]",
               side === "outgoing" && "text-end",
             )}
           >
@@ -71,7 +71,7 @@ export function Message({
         {(timestamp || status || actions) && (
           <div
             className={cn(
-              "mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 px-1 text-xs text-muted-foreground",
+              "mbs-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 px-1 text-xs text-muted-foreground",
               side === "outgoing" && "justify-end",
               side === "system" && "justify-center",
             )}

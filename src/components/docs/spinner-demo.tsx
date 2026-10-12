@@ -26,9 +26,9 @@ export function SpinnerDemo() {
                 className="text-primary"
               />
             </div>
-            <div className="mt-auto pt-3 text-center">
+            <div className="mbs-auto pbs-3 text-center">
               <p className="text-sm font-medium capitalize">{variant}</p>
-              <p className="mt-1 text-xs text-muted-foreground">{use}</p>
+              <p className="mbs-1 text-xs text-muted-foreground">{use}</p>
             </div>
           </div>
         ))}

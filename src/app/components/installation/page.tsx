@@ -42,12 +42,14 @@ export default async function InstallationPage() {
       <Section id="requirements" title="Requirements">
         <ul className="grid list-disc gap-1.5 ps-5 marker:text-muted-foreground">
           <li>React 19 and TypeScript</li>
-          <li>Tailwind CSS v4</li>
+          <li>Tailwind CSS v4.2 or later</li>
           <li>shadcn with CSS variables</li>
         </ul>
         <p>
-          vip/ui does not support Tailwind CSS v3, JavaScript-only projects, or
-          the shadcn <Code>--no-css-variables</Code> mode.
+          vip/ui does not support Tailwind CSS v3 or v4.0–4.1, JavaScript-only
+          projects, or the shadcn <Code>--no-css-variables</Code> mode. The
+          components use logical utilities such as <Code>mbs-*</Code> and{" "}
+          <Code>inset-bs-*</Code>, which Tailwind added in v4.2.
         </p>
         <p>
           Components do not import from <Code>next/</Code>. You can use them in
@@ -131,7 +133,7 @@ export default async function InstallationPage() {
 
       <Section id="manual" title="Manual installation">
         <p>Use these steps if you do not use the CLI.</p>
-        <ol className="mt-2 grid gap-8">
+        <ol className="mbs-2 grid gap-8">
           <Step number={1} title="Install the Tailwind plugin">
             <p>
               The plugin adds Tailwind variants for React Aria states, such as{" "}
@@ -224,9 +226,9 @@ function Section({
   children: ReactNode;
 }) {
   return (
-    <section id={id} className="mt-14 scroll-mt-28">
+    <section id={id} className="mbs-14 scroll-mbs-28">
       <h2 className="text-[23px] font-semibold tracking-[-0.045em]">{title}</h2>
-      <div className="mt-4 grid gap-4 text-sm leading-7 text-muted-foreground">
+      <div className="mbs-4 grid gap-4 text-sm leading-7 text-muted-foreground">
         {children}
       </div>
     </section>

@@ -125,7 +125,7 @@ function SlidingDigit({
   return (
     <span
       data-slot="animated-number-digit"
-      className="-mx-[0.06em] inline-grid overflow-hidden px-[0.06em] align-baseline"
+      className="-mx-[0.06em] inline-grid overflow-clip px-[0.06em] align-baseline"
     >
       <AnimatePresence initial={false} custom={direction}>
         <motion.span

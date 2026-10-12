@@ -19,7 +19,7 @@ export function DescriptionTerm({ className, ...props }: ComponentProps<"dt">) {
     <dt
       data-slot="description-term"
       className={cn(
-        "min-w-0 text-sm text-muted-foreground [overflow-wrap:anywhere] not-first:max-sm:mt-3 sm:col-start-1",
+        "min-w-0 text-sm text-muted-foreground [overflow-wrap:anywhere] not-first:max-sm:mbs-3 sm:col-start-1",
         className,
       )}
       {...props}

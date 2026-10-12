@@ -123,7 +123,7 @@ export function BlockViewer({
     <section
       id={name}
       aria-labelledby={titleId}
-      className="min-w-0 scroll-mt-24"
+      className="min-w-0 scroll-mbs-24"
     >
       <Tabs defaultSelectedKey="preview">
         <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
@@ -137,7 +137,7 @@ export function BlockViewer({
           >
             <a
               href={`#${name}`}
-              className="rounded-sm font-medium text-foreground hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              className="rounded-sm font-medium text-foreground hover:underline hover:underline-offset-4 active:underline active:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
             >
               {name}
             </a>
@@ -196,7 +196,7 @@ export function BlockViewer({
         <TabPanel
           id="preview"
           shouldForceMount
-          className="preview-canvas mt-4 overflow-hidden rounded-2xl bg-muted/40 p-0 [&[inert]]:hidden"
+          className="preview-canvas mbs-4 overflow-clip rounded-2xl bg-muted/40 p-0 [&[inert]]:hidden"
         >
           <div ref={stageRef} className="relative min-w-0 lg:me-4">
             <div
@@ -230,7 +230,7 @@ export function BlockViewer({
                 onPointerUp={() => setDragging(false)}
                 onPointerCancel={() => setDragging(false)}
                 onKeyDown={resizeWithKeys}
-                className="group absolute inset-y-0 -end-4 z-10 hidden w-4 cursor-ew-resize touch-none items-center justify-center outline-none lg:flex"
+                className="group absolute inset-y-0 -end-4 z-10 hidden w-4 cursor-ew-resize touch-none items-center justify-center focus:outline-hidden lg:flex"
               >
                 <span className="h-10 w-1.5 rounded-full bg-border shadow-[var(--shadow-card)] group-hover:bg-muted-foreground group-focus-visible:bg-ring group-focus-visible:ring-4 group-focus-visible:ring-ring/30" />
               </div>
@@ -239,11 +239,11 @@ export function BlockViewer({
         </TabPanel>
         <TabPanel
           id="code"
-          className="code-frame mt-4 grid overflow-hidden rounded-2xl bg-code p-0 text-code-foreground md:grid-cols-[14rem_minmax(0,1fr)]"
+          className="code-frame mbs-4 grid overflow-clip rounded-2xl bg-code p-0 text-code-foreground md:grid-cols-[14rem_minmax(0,1fr)]"
           style={{ height: Math.max(height, 480) }}
         >
-          <div className="min-h-0 overflow-auto border-b border-border/70 p-2 md:border-e md:border-b-0">
-            <p className="flex items-center gap-1.5 px-2 pb-2 pt-1 font-mono text-[11px] text-muted-foreground">
+          <div className="min-h-0 overflow-auto overscroll-contain border-be border-border/70 p-2 md:border-e md:border-be-0">
+            <p className="flex items-center gap-1.5 px-2 pbe-2 pbs-1 font-mono text-[11px] text-muted-foreground">
               <FolderOpenIcon size={14} aria-hidden="true" />
               <span className="truncate" title={directory}>
                 {directory}
@@ -281,7 +281,7 @@ export function BlockViewer({
           </div>
           {file && (
             <div className="flex min-h-0 min-w-0 flex-col">
-              <div className="flex min-h-12 items-center justify-between gap-3 border-b border-border/70 px-4 py-2">
+              <div className="flex min-h-12 items-center justify-between gap-3 border-be border-border/70 px-4 py-2">
                 <span
                   className="min-w-0 truncate font-mono text-[11px]"
                   title={file.path}
@@ -301,7 +301,7 @@ export function BlockViewer({
                 aria-label={`Code for ${file.path}`}
                 // biome-ignore lint/a11y/noNoninteractiveTabindex: Keyboard users scroll long code with the arrow keys.
                 tabIndex={0}
-                className="min-h-0 flex-1 overflow-auto overscroll-contain outline-none focus-visible:shadow-[inset_3px_0_0_var(--ring)]"
+                className="min-h-0 flex-1 overflow-auto overscroll-contain focus-visible:outline-hidden focus-visible:shadow-[inset_3px_0_0_var(--ring)]"
               >
                 {file.highlighted}
               </section>
@@ -309,7 +309,7 @@ export function BlockViewer({
           )}
         </TabPanel>
       </Tabs>
-      <div className="mt-3 flex flex-wrap items-center gap-x-6 gap-y-3">
+      <div className="mbs-3 flex flex-wrap items-center gap-x-6 gap-y-3">
         {command && (
           <div className="flex min-w-0 flex-1 basis-80 items-center gap-2 rounded-lg bg-muted/50 py-1 ps-3 pe-1 ring-1 ring-border/70">
             <code
@@ -337,7 +337,7 @@ export function BlockViewer({
                 >
                   <Badge
                     variant="outline"
-                    className="min-h-6 px-2.5 text-[11px] shadow-none hover:bg-muted"
+                    className="min-h-6 px-2.5 text-[11px] shadow-none hover:bg-muted active:bg-muted"
                   >
                     {component.name}
                   </Badge>

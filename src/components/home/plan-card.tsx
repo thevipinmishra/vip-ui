@@ -42,7 +42,7 @@ export function PlanCard() {
       description="Renews on November 1."
       action={<Badge variant="accent">Pro</Badge>}
     >
-      <BlockBody className="gap-0 pt-2">
+      <BlockBody className="gap-0 pbs-2">
         <Part slug="tabs">
           <Tabs defaultValue="usage">
             <TabsList aria-label="Plan details" className="w-full">
@@ -55,7 +55,7 @@ export function PlanCard() {
             </TabsList>
             <TabsContent
               value="usage"
-              className="mt-4 grid gap-4 rounded-none bg-transparent p-0 shadow-none ring-0"
+              className="mbs-4 grid gap-4 rounded-none bg-transparent p-0 shadow-none ring-0"
             >
               <Part slug="meter">
                 <Meter
@@ -74,7 +74,7 @@ export function PlanCard() {
             </TabsContent>
             <TabsContent
               value="billing"
-              className="mt-4 rounded-none bg-transparent p-0 shadow-none ring-0"
+              className="mbs-4 rounded-none bg-transparent p-0 shadow-none ring-0"
             >
               <Part slug="description-list">
                 <DescriptionList className="sm:grid-cols-[minmax(0,7rem)_minmax(0,1fr)] sm:gap-y-3">
@@ -94,7 +94,7 @@ export function PlanCard() {
           </Tabs>
         </Part>
       </BlockBody>
-      <BlockFooter className="pt-4">
+      <BlockFooter className="pbs-4">
         <Part slug="dialog" className="w-full">
           <Dialog>
             <DialogTrigger variant="outline" className="w-full">
@@ -116,9 +116,9 @@ export function PlanCard() {
                 value={seats}
                 onChange={(value) => setSeats(Number.isNaN(value) ? 12 : value)}
                 description="You use 12 seats now."
-                className="mt-5"
+                className="mbs-5"
               />
-              <p className="mt-4 text-sm">
+              <p className="mbs-4 text-sm">
                 New total:{" "}
                 <span className="font-semibold tabular-nums">
                   {money.format(seats * seatPrice)}

@@ -46,19 +46,19 @@ type SwipeDirection = SheetRenderProps["swipeDirection"];
 const sheetStack =
   "translate(var(--sheet-stack-x,0px),var(--sheet-stack-y,0px)) scale(var(--sheet-stack-scale,0.94))";
 
-const sheetCss = `@keyframes vip-sheet-backdrop{from{opacity:0}to{opacity:1}}@keyframes vip-sheet-stack{from{transform:translate(0px,0px) scale(1)}to{transform:${sheetStack}}}[data-sheet-scroll][data-sheet-unsnapped]{scroll-snap-type:none!important}@supports not (animation-timeline:view()){[data-slot=sheet]{transition:transform .32s cubic-bezier(.32,.72,0,1)}[data-slot=sheet][data-has-descendants]{transform:${sheetStack}}}@media (prefers-reduced-motion:reduce){[data-slot=sheet]{transition:none}}`;
+const sheetCss = `@keyframes vip-sheet-backdrop{from{opacity:0}to{opacity:1}}@keyframes vip-sheet-stack{from{transform:translate(0px,0px) scale(1)}to{transform:${sheetStack}}}[data-sheet-scroll][data-sheet-unsnapped]{scroll-snap-type:none!important}@supports not (animation-timeline:view()){@media (prefers-reduced-motion:no-preference){[data-slot=sheet]{transition:transform .32s cubic-bezier(.32,.72,0,1)}}[data-slot=sheet][data-has-descendants]{transform:${sheetStack}}}`;
 
 const sheetEase = [0.32, 0.72, 0, 1] as const;
 
 const sheetDuration = { enter: 0.32, exit: 0.24, settle: 0.3 } as const;
 
 const sheetSurfaceStyles = tv({
-  base: "flex max-h-[var(--visual-viewport-height,100dvh)] min-w-0 max-w-full flex-col bg-card text-card-foreground [overflow-wrap:anywhere] shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70 data-[has-descendants]:rounded-xl",
+  base: "flex max-h-[var(--visual-viewport-height,100dvh)] min-w-0 max-w-full flex-col bg-card text-card-foreground [overflow-wrap:anywhere] shadow-[var(--shadow-float)] focus:outline-hidden ring-1 ring-border/70 data-[has-descendants]:rounded-xl",
   variants: {
     position: {
       bottom:
-        "h-[calc(var(--visual-viewport-height,100dvh)*0.85)] w-full max-w-2xl origin-top overflow-clip rounded-t-xl [--sheet-stack-y:-0.5rem]",
-      top: "max-h-[min(26rem,calc(var(--visual-viewport-height,100dvh)-3.5rem))] w-full max-w-2xl origin-bottom overflow-clip rounded-b-xl [--sheet-stack-y:0.5rem]",
+        "h-[calc(var(--visual-viewport-height,100dvh)*0.85)] w-full max-w-2xl origin-top overflow-clip rounded-ss-xl rounded-se-xl [--sheet-stack-y:-0.5rem]",
+      top: "max-h-[min(26rem,calc(var(--visual-viewport-height,100dvh)-3.5rem))] w-full max-w-2xl origin-bottom overflow-clip rounded-es-xl rounded-ee-xl [--sheet-stack-y:0.5rem]",
       left: "h-[var(--visual-viewport-height,100dvh)] w-[min(26rem,calc(100vw-3.5rem))] max-w-[var(--visual-viewport-width,100vw)] origin-right overflow-clip rounded-r-xl [--sheet-stack-scale:0.96] [--sheet-stack-x:0.75rem]",
       right:
         "h-[var(--visual-viewport-height,100dvh)] w-[min(26rem,calc(100vw-3.5rem))] max-w-[var(--visual-viewport-width,100vw)] origin-left overflow-clip rounded-l-xl [--sheet-stack-scale:0.96] [--sheet-stack-x:-0.75rem]",
@@ -487,7 +487,7 @@ function SheetFrame({
       {...props}
       ref={mergeRefs(contentRef, ref)}
       data-slot="sheet-content"
-      className="flex min-h-0 flex-1 flex-col outline-none"
+      className="flex min-h-0 flex-1 flex-col focus:outline-hidden"
     >
       <SheetFrameContext.Provider
         value={{
@@ -728,11 +728,11 @@ export function SheetHeader({
       {...props}
       data-slot="sheet-header"
       className={cn(
-        "shrink-0 px-6 pt-4 *:data-[slot=sheet-close]:-my-2 *:data-[slot=sheet-close]:-me-3",
+        "shrink-0 px-6 pbs-4 *:data-[slot=sheet-close]:-my-2 *:data-[slot=sheet-close]:-me-3",
         (sheet?.position === "top" ||
           sheet?.position === "left" ||
           sheet?.position === "right") &&
-          "pt-[max(1rem,env(safe-area-inset-top))]",
+          "pbs-[max(1rem,env(safe-area-inset-top,0px))]",
         className,
       )}
     />
@@ -760,7 +760,7 @@ export function SheetDescription({ className, ...props }: TextProps) {
       slot="description"
       data-slot="sheet-description"
       className={cn(
-        "mt-2 block text-sm leading-6 text-muted-foreground [overflow-wrap:anywhere]",
+        "mbs-2 block text-sm leading-6 text-muted-foreground [overflow-wrap:anywhere]",
         className,
       )}
     />
@@ -794,7 +794,7 @@ export function SheetFooter({
       {...props}
       data-slot="sheet-footer"
       className={cn(
-        "flex shrink-0 flex-wrap justify-end gap-2 border-t border-border px-6 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]",
+        "flex shrink-0 flex-wrap justify-end gap-2 border-bs border-border px-6 py-4 pbe-[max(1rem,env(safe-area-inset-bottom,0px))]",
         className,
       )}
     />

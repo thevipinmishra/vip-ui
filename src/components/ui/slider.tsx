@@ -113,7 +113,7 @@ export function SliderRail({
       aria-hidden="true"
       data-slot="slider-rail"
       className={cn(
-        "pointer-events-none absolute -inset-x-2.5 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-secondary px-2.5 shadow-[var(--shadow-inset)] forced-colors:bg-[ButtonBorder]",
+        "pointer-events-none absolute -inset-x-2.5 inset-bs-1/2 h-1.5 -translate-y-1/2 rounded-full bg-secondary px-2.5 shadow-[var(--shadow-inset)] forced-colors:bg-[ButtonBorder]",
         className,
       )}
     >
@@ -152,7 +152,7 @@ export function SliderHandle({
       data-slot="slider-handle"
       className={composeRenderProps(className, (className) =>
         cn(
-          "top-1/2 size-5 cursor-grab rounded-full outline-none dragging:cursor-grabbing disabled:cursor-default focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring",
+          "inset-bs-1/2 size-5 cursor-grab rounded-full focus:outline-hidden dragging:cursor-grabbing disabled:cursor-default focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring",
           className,
         ),
       )}

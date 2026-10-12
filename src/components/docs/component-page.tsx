@@ -99,7 +99,7 @@ export async function ComponentPage({
   const reactAriaDocsHref = getComponent(componentSlug)?.reactAriaDocsHref;
   return (
     <article>
-      <nav aria-label="Breadcrumbs" className="mb-4">
+      <nav aria-label="Breadcrumbs" className="mbe-4">
         <Breadcrumbs>
           <Breadcrumb href="/components">Components</Breadcrumb>
           <Breadcrumb>{name}</Breadcrumb>
@@ -108,14 +108,14 @@ export async function ComponentPage({
       <h1 className="text-[clamp(2.25rem,4vw,3.5rem)] font-semibold leading-[1.08] tracking-[-0.055em] [text-wrap:balance]">
         {name}
       </h1>
-      <p className="mt-2 max-w-[670px] text-sm leading-7 text-muted-foreground">
+      <p className="mbs-2 max-w-[670px] text-sm leading-7 text-muted-foreground">
         {description}
       </p>
       <section
         id="preview"
         data-toc-label="Preview"
         aria-label={`${name} preview`}
-        className="mt-6 scroll-mt-24"
+        className="mbs-6 scroll-mbs-24"
       >
         <PreviewPanel
           code={previewSource}
@@ -125,14 +125,14 @@ export async function ComponentPage({
         </PreviewPanel>
       </section>
 
-      <section id="installation" className="mt-14 scroll-mt-24">
+      <section id="installation" className="mbs-14 scroll-mbs-24">
         <SectionHeading title="Installation" />
         <InstallTabs
           cliAvailable={Boolean(cliUrl)}
           cli={
             <div className="space-y-4">
               <p className="text-[13px] leading-6 text-muted-foreground">
-                Requires TypeScript, Tailwind v4, and shadcn CSS-variable
+                Requires TypeScript, Tailwind v4.2+, and shadcn CSS-variable
                 theming. The CLI also adds the theme variables and Tailwind
                 plugin this component uses. See{" "}
                 <Link
@@ -192,7 +192,7 @@ export async function ComponentPage({
       </section>
 
       {compositions[componentSlug] && (
-        <section id="composition" className="mt-14 scroll-mt-24">
+        <section id="composition" className="mbs-14 scroll-mbs-24">
           <SectionHeading title="Composition" />
           <ComponentComposition {...compositions[componentSlug]} />
         </section>
@@ -202,11 +202,11 @@ export async function ComponentPage({
         <section
           key={example.sourcePath}
           id={exampleAnchor(example.title)}
-          className="mt-14 scroll-mt-24"
+          className="mbs-14 scroll-mbs-24"
         >
           <SectionHeading title={example.title} />
           {example.description && (
-            <p className="mb-5 max-w-[670px] text-sm leading-7 text-muted-foreground">
+            <p className="mbe-5 max-w-[670px] text-sm leading-7 text-muted-foreground">
               {example.description}
             </p>
           )}
@@ -220,8 +220,8 @@ export async function ComponentPage({
       ))}
 
       {(apiGroups.length > 0 || reactAriaDocsHref) && (
-        <section id="api" className="mt-14 scroll-mt-24">
-          <div className="mb-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+        <section id="api" className="mbs-14 scroll-mbs-24">
+          <div className="mbe-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
             <h2 className="text-[23px] font-semibold tracking-[-0.045em]">
               API reference
             </h2>
@@ -230,7 +230,7 @@ export async function ComponentPage({
                 href={reactAriaDocsHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 rounded-md text-sm font-medium text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                className="inline-flex items-center gap-1 rounded-md text-sm font-medium text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary active:decoration-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
               >
                 React Aria props
                 <ArrowUpRightIcon size={16} aria-hidden="true" />
@@ -245,7 +245,7 @@ export async function ComponentPage({
                   {(apiGroups.length > 1 ||
                     component.toLowerCase() !==
                       componentSlug.replaceAll("-", "")) && (
-                    <h3 className="mb-3 text-sm font-semibold text-foreground">
+                    <h3 className="mbe-3 text-sm font-semibold text-foreground">
                       {component}
                     </h3>
                   )}
@@ -278,7 +278,7 @@ export async function ComponentPage({
                               </span>
                             )}
                           </div>
-                          <p className="mt-1.5 text-[13px] leading-5 text-muted-foreground">
+                          <p className="mbs-1.5 text-[13px] leading-5 text-muted-foreground">
                             {item.description}
                           </p>
                         </dd>
@@ -294,17 +294,17 @@ export async function ComponentPage({
 
       <nav
         aria-label="Component pagination"
-        className="mt-16 grid gap-3 sm:grid-cols-2"
+        className="mbs-16 grid gap-3 sm:grid-cols-2"
       >
         {previous ? (
           <Link
             href={`/components/${previous.slug}`}
-            className="group flex min-h-20 flex-col justify-center rounded-xl bg-card px-5 py-3 shadow-[var(--shadow-card)] ring-1 ring-border/70 hover:bg-muted"
+            className="group flex min-h-20 flex-col justify-center rounded-xl bg-card px-5 py-3 shadow-[var(--shadow-card)] ring-1 ring-border/70 hover:bg-muted active:bg-muted"
           >
             <span className="text-[11px] text-muted-foreground">
               Previous component
             </span>
-            <span className="mt-1 inline-flex items-center gap-2 text-sm font-semibold">
+            <span className="mbs-1 inline-flex items-center gap-2 text-sm font-semibold">
               <ArrowLeftIcon size={16} aria-hidden="true" />
               {previous.name}
             </span>
@@ -312,10 +312,10 @@ export async function ComponentPage({
         ) : (
           <Link
             href="/components"
-            className="group flex min-h-20 flex-col justify-center rounded-xl bg-card px-5 py-3 shadow-[var(--shadow-card)] ring-1 ring-border/70 hover:bg-muted"
+            className="group flex min-h-20 flex-col justify-center rounded-xl bg-card px-5 py-3 shadow-[var(--shadow-card)] ring-1 ring-border/70 hover:bg-muted active:bg-muted"
           >
             <span className="text-[11px] text-muted-foreground">Back to</span>
-            <span className="mt-1 inline-flex items-center gap-2 text-sm font-semibold">
+            <span className="mbs-1 inline-flex items-center gap-2 text-sm font-semibold">
               <ArrowLeftIcon size={16} aria-hidden="true" />
               All components
             </span>
@@ -324,12 +324,12 @@ export async function ComponentPage({
         {next ? (
           <Link
             href={`/components/${next.slug}`}
-            className="group flex min-h-20 flex-col items-end justify-center rounded-xl bg-card px-5 py-3 text-right shadow-[var(--shadow-card)] ring-1 ring-border/70 hover:bg-muted"
+            className="group flex min-h-20 flex-col items-end justify-center rounded-xl bg-card px-5 py-3 text-end shadow-[var(--shadow-card)] ring-1 ring-border/70 hover:bg-muted active:bg-muted"
           >
             <span className="text-[11px] text-muted-foreground">
               Next component
             </span>
-            <span className="mt-1 inline-flex items-center gap-2 text-sm font-semibold">
+            <span className="mbs-1 inline-flex items-center gap-2 text-sm font-semibold">
               {next.name}
               <ArrowRightIcon size={16} aria-hidden="true" />
             </span>
@@ -337,10 +337,10 @@ export async function ComponentPage({
         ) : (
           <Link
             href="/components"
-            className="group flex min-h-20 flex-col items-end justify-center rounded-xl bg-accent px-5 py-3 text-right text-accent-foreground shadow-[var(--shadow-card)] hover:bg-accent/70"
+            className="group flex min-h-20 flex-col items-end justify-center rounded-xl bg-accent px-5 py-3 text-end text-accent-foreground shadow-[var(--shadow-card)] hover:bg-accent/70 active:bg-accent/70"
           >
             <span className="text-[11px]">Explore more</span>
-            <span className="mt-1 inline-flex items-center gap-2 text-sm font-semibold">
+            <span className="mbs-1 inline-flex items-center gap-2 text-sm font-semibold">
               All components
               <ArrowUpRightIcon size={16} aria-hidden="true" />
             </span>
@@ -353,7 +353,7 @@ export async function ComponentPage({
 
 function SectionHeading({ title }: { title: string }) {
   return (
-    <h2 className="mb-5 text-[23px] font-semibold tracking-[-0.045em]">
+    <h2 className="mbe-5 text-[23px] font-semibold tracking-[-0.045em]">
       {title}
     </h2>
   );

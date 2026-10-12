@@ -94,7 +94,7 @@ function pageVariables(theme: OfficialTheme) {
       theme.display.role === "serif" ? "var(--font-serif)" : "var(--font-sans)",
     "theme-display-weight": theme.display.weight,
     "theme-display-tracking": theme.display.tracking,
-    code: "color-mix(in oklab, var(--muted) 70%, var(--card))",
+    code: "color-mix(in oklch, var(--muted) 70%, var(--card))",
     "code-foreground": "var(--foreground)",
     "font-geist-sans": "var(--font-sans)",
     "font-geist-mono": "var(--font-mono)",

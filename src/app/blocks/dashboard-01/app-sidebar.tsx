@@ -48,7 +48,7 @@ export function AppSidebar({ onNavigate }: { onNavigate?: () => void }) {
                   "flex min-h-10 items-center gap-3 rounded-md px-2.5 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
                   item.current
                     ? "bg-accent text-accent-foreground"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground active:bg-muted active:text-foreground",
                 )}
               >
                 <item.icon
@@ -68,14 +68,14 @@ export function AppSidebar({ onNavigate }: { onNavigate?: () => void }) {
           ))}
         </ul>
       </nav>
-      <div className="mt-auto rounded-lg bg-muted/60 p-3 ring-1 ring-border/70">
+      <div className="mbs-auto rounded-lg bg-muted/60 p-3 ring-1 ring-border/70">
         <ProgressBar
           label="Storage"
           value={68}
           valueLabel="6.8 of 10 GB"
           className="gap-1.5 [&_[data-slot=progress-bar-label]]:text-xs [&_[data-slot=progress-bar-value]]:text-xs"
         />
-        <p className="mt-2 text-xs leading-5 text-muted-foreground">
+        <p className="mbs-2 text-xs leading-5 text-muted-foreground">
           Upgrade to get 100 GB.
         </p>
       </div>

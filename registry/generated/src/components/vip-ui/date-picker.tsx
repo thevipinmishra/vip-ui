@@ -45,7 +45,7 @@ export function DatePicker<T extends DateValue>({
       {...props}
       data-slot="date-picker"
       className={composeRenderProps(className, (className) =>
-        cn("group grid gap-2 data-[focus-visible]:outline-none", className),
+        cn("group grid gap-2", className),
       )}
     >
       {children ?? (
@@ -55,16 +55,10 @@ export function DatePicker<T extends DateValue>({
               {label}
             </Label>
           )}
-          <Group
-            data-slot="date-picker-group"
-            className={cn(
-              segmentedFieldStyles,
-              "data-[focus-visible]:outline-none",
-            )}
-          >
+          <Group data-slot="date-picker-group" className={segmentedFieldStyles}>
             <DateInput
               data-slot="date-picker-input"
-              className="min-w-0 flex-1 px-2.5 py-2 text-base data-[focus-visible]:outline-none sm:text-sm"
+              className="min-w-0 flex-1 px-2.5 py-2 text-base sm:text-sm"
             >
               {(segment) => <DateSegment segment={segment} />}
             </DateInput>

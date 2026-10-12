@@ -19,7 +19,7 @@ export function CategoryTabs({
   return (
     <nav
       aria-label={label}
-      className="sticky top-0 z-30 border-b border-border/70 bg-background/90 backdrop-blur"
+      className="sticky inset-bs-0 z-30 border-be border-border/70 bg-background/90 backdrop-blur"
     >
       <ul className="site-container flex gap-1 overflow-x-auto [scrollbar-width:none]">
         {tabs.map((tab) => (
@@ -29,10 +29,10 @@ export function CategoryTabs({
               scroll={false}
               aria-current={tab.href === active ? "page" : undefined}
               className={cn(
-                "inline-flex min-h-12 items-center gap-2 border-b-2 px-3 text-sm font-medium focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring",
+                "inline-flex min-h-12 items-center gap-2 border-be-2 px-3 text-sm font-medium focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring",
                 tab.href === active
                   ? "border-primary text-foreground"
-                  : "border-transparent text-muted-foreground hover:border-border hover:text-foreground",
+                  : "border-transparent text-muted-foreground hover:border-border hover:text-foreground active:text-foreground",
               )}
             >
               {tab.label}

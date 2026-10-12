@@ -35,7 +35,7 @@ export function TimeField<T extends TimeValue>({
       {...props}
       data-slot="time-field"
       className={composeRenderProps(className, (className) =>
-        cn("group grid gap-2 data-[focus-visible]:outline-none", className),
+        cn("group grid gap-2", className),
       )}
     >
       {children ?? (
@@ -49,7 +49,7 @@ export function TimeField<T extends TimeValue>({
             data-slot="time-field-input"
             className={cn(
               segmentedFieldStyles,
-              "block content-center px-2.5 py-2 text-base data-[focus-visible]:outline-none sm:text-sm",
+              "block content-center px-2.5 py-2 text-base sm:text-sm",
             )}
           >
             {(segment) => <DateSegment segment={segment} />}

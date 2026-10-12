@@ -116,7 +116,7 @@ export function StatsCards() {
           >
             Business health
           </h1>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="mbs-1 text-sm text-muted-foreground">
             Compared with the previous {periodLabels[period]}
           </p>
         </div>
@@ -143,10 +143,10 @@ export function StatsCards() {
           const good = current.change * metric.direction > 0;
           const TrendIcon = current.change > 0 ? TrendUpIcon : TrendDownIcon;
           return (
-            <Stat key={metric.label} className="grid gap-0 overflow-hidden p-0">
-              <div className="px-5 pt-5">
+            <Stat key={metric.label} className="grid gap-0 overflow-clip p-0">
+              <div className="px-5 pbs-5">
                 <StatLabel>{metric.label}</StatLabel>
-                <p className="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                <p className="mbs-2 flex flex-wrap items-baseline gap-x-2 gap-y-1">
                   <AnimatedNumber
                     value={current.value}
                     formatOptions={metric.format}
@@ -166,7 +166,7 @@ export function StatsCards() {
                   {periodLabels[period]}
                 </StatDetail>
               </div>
-              <div className="mt-3 h-14">
+              <div className="mbs-3 h-14">
                 <Sparkline points={current.trend} good={good} />
               </div>
             </Stat>

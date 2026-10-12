@@ -138,7 +138,7 @@ export function DialogContent({
       data-slot="dialog-overlay"
       className={composeRenderProps(overlayProps?.className, (className) =>
         cn(
-          "fixed inset-x-0 top-0 z-50 grid h-[var(--visual-viewport-height,100dvh)] items-end overflow-y-auto sm:place-items-center sm:p-4",
+          "fixed inset-x-0 inset-bs-0 z-50 grid h-[var(--visual-viewport-height,100dvh)] items-end-safe overflow-y-auto overscroll-contain sm:place-items-center-safe sm:p-4",
           className,
         ),
       )}
@@ -194,14 +194,14 @@ export function DialogContent({
         )}
         data-slot={modalSlot}
         className={cn(
-          "relative max-h-[calc(var(--visual-viewport-height,100dvh)-1rem)] w-full min-w-0 max-w-full overflow-y-auto overscroll-contain rounded-t-2xl bg-card p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] text-card-foreground [overflow-wrap:anywhere] shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70 forced-colors:border sm:max-h-[calc(var(--visual-viewport-height,100dvh)-2rem)] sm:max-w-md sm:rounded-xl sm:p-7",
+          "relative max-h-[calc(var(--visual-viewport-height,100dvh)-1rem)] w-full min-w-0 max-w-full overflow-y-auto overscroll-contain rounded-ss-2xl rounded-se-2xl bg-card p-6 pbe-[max(1.5rem,env(safe-area-inset-bottom,0px))] text-card-foreground [overflow-wrap:anywhere] shadow-[var(--shadow-float)] focus:outline-hidden ring-1 ring-border/70 forced-colors:border sm:max-h-[calc(var(--visual-viewport-height,100dvh)-2rem)] sm:max-w-md sm:rounded-xl sm:p-7",
           modalProps?.className,
         )}
       >
         <AriaDialog
           {...props}
           data-slot="dialog-content"
-          className={cn("outline-none", className)}
+          className={cn("focus:outline-hidden", className)}
         >
           {({ close }) => (
             <CloseContext.Provider value={close}>
@@ -251,7 +251,7 @@ export function DialogDescription({ className, ...props }: TextProps) {
       slot="description"
       data-slot="dialog-description"
       className={cn(
-        "mt-2 block text-sm leading-6 text-muted-foreground [overflow-wrap:anywhere]",
+        "mbs-2 block text-sm leading-6 text-muted-foreground [overflow-wrap:anywhere]",
         className,
       )}
     />
@@ -266,7 +266,7 @@ export function DialogFooter({
     <div
       {...props}
       data-slot="dialog-footer"
-      className={cn("mt-6 flex flex-wrap justify-end gap-2", className)}
+      className={cn("mbs-6 flex flex-wrap justify-end gap-2", className)}
     />
   );
 }

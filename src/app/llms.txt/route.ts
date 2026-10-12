@@ -8,7 +8,7 @@ export function GET() {
   const lines: string[] = [
     "# vip/ui",
     "",
-    "> Copyable React components built on React Aria, Tailwind CSS v4, and Motion. Every component page is available as Markdown by appending `.md` to its URL, with the same description, installation files, usage source, named examples with source, and API tables as the HTML page. Pages without named examples export the description, installation, usage, and API sections.",
+    "> Copyable React components built on React Aria, Tailwind CSS v4.2+, and Motion. Every component page is available as Markdown by appending `.md` to its URL, with the same description, installation files, usage source, named examples with source, and API tables as the HTML page. Pages without named examples export the description, installation, usage, and API sections.",
     "",
     "## Guides",
     "",

@@ -15,13 +15,13 @@ export function SiteHeader() {
   const active = activeSection(pathname);
 
   return (
-    <header className="border-b border-border/70 bg-background">
+    <header className="border-be border-border/70 bg-background">
       <div className="site-container flex h-14 items-center gap-2">
         <Link
           href="/"
           aria-label="vip/ui home"
           aria-current={pathname === "/" ? "page" : undefined}
-          className="mr-4 inline-flex min-h-10 shrink-0 items-center rounded-md hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          className="me-4 inline-flex min-h-10 shrink-0 items-center rounded-md hover:opacity-75 active:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
         >
           <SiteLogo />
         </Link>
@@ -41,7 +41,7 @@ export function SiteHeader() {
                   : undefined
               }
               className={cn(
-                "inline-flex h-9 items-center rounded-md px-3 text-sm font-medium hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+                "inline-flex h-9 items-center rounded-md px-3 text-sm font-medium hover:bg-muted hover:text-foreground active:bg-muted active:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
                 active === link.href
                   ? "text-foreground"
                   : "text-muted-foreground",
@@ -51,7 +51,7 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
-        <div className="ml-auto flex items-center gap-1">
+        <div className="ms-auto flex items-center gap-1">
           <DocsSearch />
           <span
             aria-hidden="true"
@@ -63,7 +63,7 @@ export function SiteHeader() {
             rel="noopener noreferrer"
             aria-label="GitHub (opens in a new tab)"
             title="GitHub"
-            className="hidden size-10 shrink-0 place-items-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:grid"
+            className="relative after:absolute after:inset-[min(0px,(100%-44px)/2)] hidden size-10 shrink-0 place-items-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground active:bg-muted active:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:grid"
           >
             <GitHubMark className="size-[17px]" />
           </a>

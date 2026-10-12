@@ -10,7 +10,7 @@ export function ToggleButtonIndependentDemo() {
 
   return (
     <fieldset>
-      <legend className="mb-2 text-sm font-medium">Notify me by</legend>
+      <legend className="mbe-2 text-sm font-medium">Notify me by</legend>
       <div className="flex flex-wrap gap-2">
         {options.map((option) => (
           <ToggleButton

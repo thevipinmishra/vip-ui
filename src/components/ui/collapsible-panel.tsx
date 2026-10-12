@@ -42,7 +42,7 @@ export function CollapsiblePanel({
       aria-labelledby={ids.triggerId}
       aria-hidden={!isExpanded}
       inert={!isExpanded}
-      className={cn("overflow-hidden", className)}
+      className={cn("flow-root overflow-clip", className)}
       initial={false}
       animate={{ height: isExpanded ? "auto" : 0, opacity: isExpanded ? 1 : 0 }}
       transition={{

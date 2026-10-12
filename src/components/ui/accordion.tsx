@@ -77,7 +77,7 @@ export function AccordionItem({
           cn(
             "min-w-0",
             variant === "card" &&
-              "overflow-hidden rounded-lg bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70 forced-colors:border",
+              "overflow-clip rounded-lg bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70 forced-colors:border",
             className,
           ),
         )}
@@ -116,8 +116,8 @@ export function AccordionTrigger({
           cn(
             "flex min-h-12 w-full cursor-pointer items-center justify-between gap-4 py-3 text-start text-foreground transition-[background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-ring",
             variant === "card"
-              ? "rounded-lg px-4 hover:bg-muted/60 focus-visible:-outline-offset-2 aria-expanded:rounded-b-none"
-              : "rounded-sm px-0 decoration-muted-foreground/60 underline-offset-4 hover:underline focus-visible:outline-offset-2",
+              ? "rounded-lg px-4 hover:bg-muted/60 pressed:bg-muted/60 focus-visible:-outline-offset-2 aria-expanded:rounded-es-none aria-expanded:rounded-ee-none"
+              : "rounded-sm px-0 decoration-muted-foreground/60 underline-offset-4 hover:underline pressed:underline focus-visible:outline-offset-2",
             className,
           ),
         )}
@@ -155,7 +155,7 @@ export function AccordionContent({
       <div
         className={cn(
           "[overflow-wrap:anywhere]",
-          variant === "card" ? "border-t border-border/70 px-4 py-3" : "pb-4",
+          variant === "card" ? "border-bs border-border/70 px-4 py-3" : "pbe-4",
         )}
       >
         {children}

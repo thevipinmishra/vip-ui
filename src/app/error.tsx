@@ -26,11 +26,11 @@ export default function ErrorPage({
         <h1 className="text-[clamp(2.25rem,4vw,3rem)] font-semibold leading-[1.08] tracking-[-0.055em]">
           Something went wrong
         </h1>
-        <p className="mt-4 max-w-xl text-sm leading-7 text-muted-foreground">
+        <p className="mbs-4 max-w-xl text-sm leading-7 text-muted-foreground">
           This page failed to render. Try again, or return to the component
           catalog.
         </p>
-        <div className="mt-8 flex flex-wrap gap-3">
+        <div className="mbs-8 flex flex-wrap gap-3">
           <Button onPress={() => retry()}>
             <ArrowClockwiseIcon size={16} aria-hidden="true" /> Try again
           </Button>

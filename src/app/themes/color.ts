@@ -2,13 +2,13 @@ type Rgb = [number, number, number];
 
 function parseOklch(value: string) {
   const match = value.match(
-    /oklch\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)(?:\s*\/\s*([\d.]+))?\s*\)/,
+    /oklch\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+|none)(?:\s*\/\s*([\d.]+))?\s*\)/,
   );
   if (!match) throw new Error(`Expected an oklch() color, got ${value}`);
   return {
     l: Number(match[1]),
     c: Number(match[2]),
-    h: Number(match[3]),
+    h: match[3] === "none" ? 0 : Number(match[3]),
     alpha: match[4] === undefined ? 1 : Number(match[4]),
   };
 }

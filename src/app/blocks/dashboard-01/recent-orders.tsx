@@ -38,8 +38,8 @@ export function RecentOrders() {
   );
 
   return (
-    <Card className="min-w-0 overflow-hidden">
-      <CardHeader className="flex-row flex-wrap items-start justify-between gap-3 pb-4">
+    <Card className="min-w-0 overflow-clip">
+      <CardHeader className="flex-row flex-wrap items-start justify-between gap-3 pbe-4">
         <div className="grid gap-1">
           <CardTitle as="h2">Recent orders</CardTitle>
           <CardDescription>

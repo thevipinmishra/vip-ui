@@ -108,17 +108,17 @@ export async function ChartDocumentation() {
       id="documentation"
       aria-label="Chart documentation"
       data-toc-skip
-      className="scroll-mt-28 border-t border-border/70 pb-28 pt-14"
+      className="scroll-mbs-28 border-bs border-border/70 pbe-28 pbs-14"
     >
       <div className="max-w-4xl space-y-16">
         <section
           id="installation"
           aria-labelledby="chart-installation"
-          className="scroll-mt-28"
+          className="scroll-mbs-28"
         >
           <h2
             id="chart-installation"
-            className="mb-6 text-2xl font-semibold tracking-[-0.04em]"
+            className="mbe-6 text-2xl font-semibold tracking-[-0.04em]"
           >
             Installation
           </h2>
@@ -127,7 +127,7 @@ export async function ChartDocumentation() {
             cli={
               <div className="space-y-4">
                 <p className="text-[13px] leading-6 text-muted-foreground">
-                  Requires TypeScript, Tailwind v4, and shadcn CSS-variable
+                  Requires TypeScript, Tailwind v4.2+, and shadcn CSS-variable
                   theming. Complete the{" "}
                   <Link
                     href="/components/installation#setup"
@@ -189,15 +189,15 @@ export async function ChartDocumentation() {
         <section
           id="usage"
           aria-labelledby="chart-usage"
-          className="scroll-mt-28"
+          className="scroll-mbs-28"
         >
           <h2
             id="chart-usage"
-            className="mb-6 text-2xl font-semibold tracking-[-0.04em]"
+            className="mbe-6 text-2xl font-semibold tracking-[-0.04em]"
           >
             Usage
           </h2>
-          <p className="mb-5 max-w-2xl text-sm leading-7 text-muted-foreground">
+          <p className="mbe-5 max-w-2xl text-sm leading-7 text-muted-foreground">
             Compose TanStack marks and scales inside the installed vip/ui frame.{" "}
             <code>ChartFrame</code> maps shadcn&apos;s chart palette and tooltip
             styles; <code>Chart</code> comes from TanStack, not vip/ui. Keep
@@ -206,7 +206,7 @@ export async function ChartDocumentation() {
             table when exact values matter.
           </p>
           <CodeBlock code={usage} filename="signups-chart.tsx" />
-          <p className="mt-5 max-w-2xl text-sm leading-7 text-muted-foreground">
+          <p className="mbs-5 max-w-2xl text-sm leading-7 text-muted-foreground">
             Change <code>--chart-1</code> through <code>--chart-5</code> in both
             themes, or set <code>--ts-chart-1</code> on one frame via its{" "}
             <code>style</code> prop. The gallery above shows interactive updates
@@ -226,14 +226,14 @@ export async function ChartDocumentation() {
             <code>@types/d3-shape</code>.
           </p>
         </section>
-        <section id="api" aria-labelledby="chart-api" className="scroll-mt-28">
+        <section id="api" aria-labelledby="chart-api" className="scroll-mbs-28">
           <h2
             id="chart-api"
-            className="mb-6 text-2xl font-semibold tracking-[-0.04em]"
+            className="mbe-6 text-2xl font-semibold tracking-[-0.04em]"
           >
             API reference
           </h2>
-          <p className="mb-5 max-w-2xl text-sm leading-7 text-muted-foreground">
+          <p className="mbe-5 max-w-2xl text-sm leading-7 text-muted-foreground">
             These are vip/ui frame parts. TanStack owns the chart definition,
             renderer, sizing, tooltip, and keyboard behavior. See the{" "}
             <a
@@ -252,7 +252,7 @@ export async function ChartDocumentation() {
             for their props.
           </p>
           <div className="overflow-x-auto rounded-xl bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70">
-            <table className="w-full min-w-[650px] border-collapse text-left text-[12px]">
+            <table className="w-full min-w-[650px] border-collapse text-start text-[12px]">
               <thead className="bg-muted/60 text-muted-foreground">
                 <tr>
                   {(
@@ -267,7 +267,7 @@ export async function ChartDocumentation() {
                     <th
                       key={heading}
                       scope="col"
-                      className="px-4 py-3 font-semibold"
+                      className="px-4 py-3 text-start font-semibold"
                     >
                       {heading}
                     </th>
@@ -279,7 +279,7 @@ export async function ChartDocumentation() {
                   ([component, prop, type, defaultValue, description]) => (
                     <tr
                       key={`${component}-${prop}`}
-                      className="border-t border-border/70 align-top"
+                      className="border-bs border-border/70 align-top"
                     >
                       <th
                         scope="row"

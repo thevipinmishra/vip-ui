@@ -20,10 +20,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -63,12 +63,12 @@
         "light": {
           "success": "oklch(0.43 0.12 155)",
           "success-subtle": "oklch(0.955 0.035 155)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
           "success": "oklch(0.74 0.13 155)",
           "success-subtle": "oklch(0.24 0.045 155)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -106,7 +106,7 @@
           "warning": "oklch(0.54 0.13 75)",
           "warning-subtle": "oklch(0.965 0.045 85)",
           "warning-foreground": "oklch(0.36 0.09 75)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
           "success": "oklch(0.74 0.13 155)",
@@ -115,7 +115,7 @@
           "warning": "oklch(0.78 0.11 75)",
           "warning-subtle": "oklch(0.27 0.045 75)",
           "warning-foreground": "oklch(0.89 0.07 75)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -172,12 +172,12 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.045)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.15)"
         }
       },
       "files": [
@@ -267,7 +267,7 @@
           "warning": "oklch(0.54 0.13 75)",
           "warning-subtle": "oklch(0.965 0.045 85)",
           "warning-foreground": "oklch(0.36 0.09 75)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
           "success": "oklch(0.74 0.13 155)",
@@ -276,7 +276,7 @@
           "warning": "oklch(0.78 0.11 75)",
           "warning-subtle": "oklch(0.27 0.045 75)",
           "warning-foreground": "oklch(0.89 0.07 75)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -335,10 +335,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -377,10 +377,10 @@
       "dependencies": ["tailwind-variants@^3.3.1"],
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -404,10 +404,10 @@
       "dependencies": ["tailwind-variants@^3.3.1"],
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -434,10 +434,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -475,10 +475,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -517,10 +517,10 @@
       "dependencies": ["tailwind-variants@^3.3.1"],
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -546,12 +546,12 @@
         "light": {
           "success": "oklch(0.43 0.12 155)",
           "warning": "oklch(0.54 0.13 75)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.1), 0 8px 18px -9px oklch(0 0 none / 0.11)"
         },
         "dark": {
           "success": "oklch(0.74 0.13 155)",
           "warning": "oklch(0.78 0.11 75)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.3), 0 8px 18px -9px oklch(0 0 none / 0.34)"
         }
       },
       "files": [
@@ -582,10 +582,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -623,10 +623,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.045)"
         },
         "dark": {
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.15)"
         }
       },
       "files": [
@@ -694,10 +694,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -734,12 +734,12 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.1), 0 8px 18px -9px oklch(0 0 none / 0.11)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.3), 0 8px 18px -9px oklch(0 0 none / 0.34)"
         }
       },
       "files": [
@@ -864,12 +864,12 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.1), 0 8px 18px -9px oklch(0 0 none / 0.11)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.3), 0 8px 18px -9px oklch(0 0 none / 0.34)"
         }
       },
       "files": [
@@ -927,12 +927,12 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.1), 0 8px 18px -9px oklch(0 0 none / 0.11)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.3), 0 8px 18px -9px oklch(0 0 none / 0.34)"
         }
       },
       "files": [
@@ -1020,12 +1020,12 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.1), 0 8px 18px -9px oklch(0 0 none / 0.11)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.3), 0 8px 18px -9px oklch(0 0 none / 0.34)"
         }
       },
       "files": [
@@ -1078,10 +1078,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -1130,14 +1130,14 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.045)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.1), 0 8px 18px -9px oklch(0 0 none / 0.11)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.15)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.3), 0 8px 18px -9px oklch(0 0 none / 0.34)"
         }
       },
       "files": [
@@ -1223,10 +1223,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -1269,12 +1269,12 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.1), 0 8px 18px -9px oklch(0 0 none / 0.11)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.3), 0 8px 18px -9px oklch(0 0 none / 0.34)"
         }
       },
       "files": [
@@ -1342,12 +1342,12 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.1), 0 8px 18px -9px oklch(0 0 none / 0.11)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.3), 0 8px 18px -9px oklch(0 0 none / 0.34)"
         }
       },
       "files": [
@@ -1465,12 +1465,12 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.1), 0 8px 18px -9px oklch(0 0 none / 0.11)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.3), 0 8px 18px -9px oklch(0 0 none / 0.34)"
         }
       },
       "files": [
@@ -1592,10 +1592,10 @@
       "dependencies": [],
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -1614,10 +1614,10 @@
       "dependencies": ["tailwind-variants@^3.3.1"],
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -1649,10 +1649,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -1719,10 +1719,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -1755,10 +1755,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -1814,10 +1814,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -1919,10 +1919,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -1959,10 +1959,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -2010,12 +2010,12 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.1), 0 8px 18px -9px oklch(0 0 none / 0.11)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.3), 0 8px 18px -9px oklch(0 0 none / 0.34)"
         }
       },
       "files": [
@@ -2054,10 +2054,10 @@
       "dependencies": ["tailwind-variants@^3.3.1"],
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -2089,10 +2089,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.045)"
         },
         "dark": {
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.15)"
         }
       },
       "files": [
@@ -2124,10 +2124,10 @@
       ],
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -2165,10 +2165,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -2202,10 +2202,10 @@
       "dependencies": ["tailwind-variants@^3.3.1"],
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -2243,10 +2243,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -2308,12 +2308,12 @@
       },
       "cssVars": {
         "light": {
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.045)",
           "success": "oklch(0.43 0.12 155)",
           "warning": "oklch(0.54 0.13 75)"
         },
         "dark": {
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.15)",
           "success": "oklch(0.74 0.13 155)",
           "warning": "oklch(0.78 0.11 75)"
         }
@@ -2357,10 +2357,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.1), 0 8px 18px -9px oklch(0 0 none / 0.11)"
         },
         "dark": {
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.3), 0 8px 18px -9px oklch(0 0 none / 0.34)"
         }
       },
       "files": [
@@ -2463,10 +2463,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.045)"
         },
         "dark": {
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.15)"
         }
       },
       "files": [
@@ -2535,12 +2535,12 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.045)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.15)"
         }
       },
       "files": [
@@ -2583,10 +2583,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -2639,12 +2639,12 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.045)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.15)"
         }
       },
       "files": [
@@ -2691,10 +2691,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -2732,12 +2732,12 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.1), 0 8px 18px -9px oklch(0 0 none / 0.11)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.3), 0 8px 18px -9px oklch(0 0 none / 0.34)"
         }
       },
       "files": [
@@ -2817,12 +2817,12 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.1), 0 8px 18px -9px oklch(0 0 none / 0.11)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.3), 0 8px 18px -9px oklch(0 0 none / 0.34)"
         }
       },
       "files": [
@@ -2888,14 +2888,14 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.1), 0 8px 18px -9px oklch(0 0 none / 0.11)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.045)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.3), 0 8px 18px -9px oklch(0 0 none / 0.34)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.15)"
         }
       },
       "files": [
@@ -2937,10 +2937,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -3007,10 +3007,10 @@
       "dependencies": ["tailwind-variants@^3.3.1"],
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -3070,12 +3070,12 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.045)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.15)"
         }
       },
       "files": [
@@ -3139,12 +3139,12 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.045)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.15)"
         }
       },
       "files": [
@@ -3186,10 +3186,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -3220,10 +3220,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -3259,10 +3259,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -3365,10 +3365,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -3437,14 +3437,14 @@
           "success-foreground": "oklch(0.32 0.09 155)",
           "warning-subtle": "oklch(0.965 0.045 85)",
           "warning-foreground": "oklch(0.36 0.09 75)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.1), 0 8px 18px -9px oklch(0 0 none / 0.11)"
         },
         "dark": {
           "success-subtle": "oklch(0.24 0.045 155)",
           "success-foreground": "oklch(0.86 0.085 155)",
           "warning-subtle": "oklch(0.27 0.045 75)",
           "warning-foreground": "oklch(0.89 0.07 75)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.3), 0 8px 18px -9px oklch(0 0 none / 0.34)"
         }
       },
       "files": [
@@ -3481,10 +3481,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -3531,10 +3531,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -3580,10 +3580,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -3672,10 +3672,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -3707,10 +3707,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.1), 0 8px 18px -9px oklch(0 0 none / 0.11)"
         },
         "dark": {
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.3), 0 8px 18px -9px oklch(0 0 none / 0.34)"
         }
       },
       "files": [
@@ -3748,10 +3748,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -3798,9 +3798,9 @@
           "warning": "oklch(0.54 0.13 75)",
           "warning-subtle": "oklch(0.965 0.045 85)",
           "warning-foreground": "oklch(0.36 0.09 75)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.045)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.1), 0 8px 18px -9px oklch(0 0 none / 0.11)"
         },
         "dark": {
           "success": "oklch(0.74 0.13 155)",
@@ -3809,9 +3809,9 @@
           "warning": "oklch(0.78 0.11 75)",
           "warning-subtle": "oklch(0.27 0.045 75)",
           "warning-foreground": "oklch(0.89 0.07 75)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.15)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.3), 0 8px 18px -9px oklch(0 0 none / 0.34)"
         }
       },
       "files": [
@@ -3966,7 +3966,7 @@
           "warning": "oklch(0.54 0.13 75)",
           "warning-subtle": "oklch(0.965 0.045 85)",
           "warning-foreground": "oklch(0.36 0.09 75)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
           "success": "oklch(0.74 0.13 155)",
@@ -3975,7 +3975,7 @@
           "warning": "oklch(0.78 0.11 75)",
           "warning-subtle": "oklch(0.27 0.045 75)",
           "warning-foreground": "oklch(0.89 0.07 75)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -4055,8 +4055,8 @@
           "warning": "oklch(0.54 0.13 75)",
           "warning-subtle": "oklch(0.965 0.045 85)",
           "warning-foreground": "oklch(0.36 0.09 75)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.045)"
         },
         "dark": {
           "success": "oklch(0.74 0.13 155)",
@@ -4065,8 +4065,8 @@
           "warning": "oklch(0.78 0.11 75)",
           "warning-subtle": "oklch(0.27 0.045 75)",
           "warning-foreground": "oklch(0.89 0.07 75)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.15)"
         }
       },
       "files": [
@@ -4170,10 +4170,10 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -4257,18 +4257,18 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.045)",
           "success": "oklch(0.43 0.12 155)",
           "warning": "oklch(0.54 0.13 75)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.1), 0 8px 18px -9px oklch(0 0 none / 0.11)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.15)",
           "success": "oklch(0.74 0.13 155)",
           "warning": "oklch(0.78 0.11 75)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.3), 0 8px 18px -9px oklch(0 0 none / 0.34)"
         }
       },
       "files": [
@@ -4392,12 +4392,12 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.1), 0 8px 18px -9px oklch(0 0 none / 0.11)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.3), 0 8px 18px -9px oklch(0 0 none / 0.34)"
         }
       },
       "files": [
@@ -4511,12 +4511,12 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.045)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.15)"
         }
       },
       "files": [
@@ -4601,8 +4601,8 @@
           "warning": "oklch(0.54 0.13 75)",
           "warning-subtle": "oklch(0.965 0.045 85)",
           "warning-foreground": "oklch(0.36 0.09 75)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.045)"
         },
         "dark": {
           "success": "oklch(0.74 0.13 155)",
@@ -4611,8 +4611,8 @@
           "warning": "oklch(0.78 0.11 75)",
           "warning-subtle": "oklch(0.27 0.045 75)",
           "warning-foreground": "oklch(0.89 0.07 75)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.15)"
         }
       },
       "files": [
@@ -4697,7 +4697,7 @@
           "warning": "oklch(0.54 0.13 75)",
           "warning-subtle": "oklch(0.965 0.045 85)",
           "warning-foreground": "oklch(0.36 0.09 75)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)"
         },
         "dark": {
           "success": "oklch(0.74 0.13 155)",
@@ -4706,7 +4706,7 @@
           "warning": "oklch(0.78 0.11 75)",
           "warning-subtle": "oklch(0.27 0.045 75)",
           "warning-foreground": "oklch(0.89 0.07 75)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)"
         }
       },
       "files": [
@@ -4786,8 +4786,8 @@
           "warning": "oklch(0.54 0.13 75)",
           "warning-subtle": "oklch(0.965 0.045 85)",
           "warning-foreground": "oklch(0.36 0.09 75)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.1), 0 8px 18px -9px oklch(0 0 none / 0.11)"
         },
         "dark": {
           "success": "oklch(0.74 0.13 155)",
@@ -4796,8 +4796,8 @@
           "warning": "oklch(0.78 0.11 75)",
           "warning-subtle": "oklch(0.27 0.045 75)",
           "warning-foreground": "oklch(0.89 0.07 75)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 none / 0.3), 0 8px 18px -9px oklch(0 0 none / 0.34)"
         }
       },
       "files": [
@@ -4906,12 +4906,12 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.045)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.15)"
         }
       },
       "files": [

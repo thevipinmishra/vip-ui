@@ -18,7 +18,7 @@ export function AnimatedNumberFormatDemo() {
           locale="de-DE"
           formatOptions={euro}
           aria-live="polite"
-          className="mt-1 block text-5xl font-semibold tracking-[-0.06em]"
+          className="mbs-1 block text-5xl font-semibold tracking-[-0.06em]"
         />
       </div>
       <Button

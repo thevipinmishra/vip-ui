@@ -30,7 +30,7 @@ export function Part({
       <Link
         href={href ?? `/components/${slug}`}
         aria-label={`${label} component`}
-        className="invisible absolute start-2 top-0 z-20 -translate-y-[calc(100%-5px)] scale-90 whitespace-nowrap rounded-full bg-primary px-2 py-0.5 text-[0.6875rem] font-medium leading-4 text-primary-foreground opacity-0 shadow-sm transition-[opacity,scale,visibility] duration-200 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring group-data-inspect/showcase:visible group-data-inspect/showcase:scale-100 group-data-inspect/showcase:opacity-100 motion-reduce:transition-none"
+        className="invisible absolute start-2 inset-bs-0 z-20 -translate-y-[calc(100%-5px)] scale-90 whitespace-nowrap rounded-full bg-primary px-2 py-0.5 text-[0.6875rem] font-medium leading-4 text-primary-foreground opacity-0 shadow-sm transition-[opacity,visibility] motion-safe:transition-[opacity,scale,visibility] duration-200 hover:underline active:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring group-data-inspect/showcase:visible group-data-inspect/showcase:scale-100 group-data-inspect/showcase:opacity-100"
       >
         {label}
       </Link>

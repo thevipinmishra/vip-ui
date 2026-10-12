@@ -68,7 +68,7 @@ export function CommandPalette({
       overlayProps={{ isOpen, onOpenChange }}
       modalProps={{
         className: cn(
-          "flex flex-col p-0 pb-[env(safe-area-inset-bottom)] sm:max-w-lg sm:p-0",
+          "flex flex-col p-0 pbe-[env(safe-area-inset-bottom)] sm:max-w-lg sm:p-0",
           className,
         ),
       }}
@@ -77,7 +77,7 @@ export function CommandPalette({
       <Autocomplete>
         <SearchField autoFocus aria-label={placeholder} className="shrink-0">
           {({ isEmpty }) => (
-            <div className="relative flex items-center border-b border-border/70 focus-within:border-ring">
+            <div className="relative flex items-center border-be border-border/70 focus-within:border-ring">
               <MagnifyingGlassIcon
                 size={18}
                 aria-hidden="true"
@@ -107,7 +107,7 @@ export function CommandPalette({
       </Autocomplete>
       <div
         aria-hidden="true"
-        className="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-1 border-t border-border/70 px-4 py-2.5 text-xs text-muted-foreground pointer-coarse:hidden"
+        className="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-1 border-bs border-border/70 px-4 py-2.5 text-xs text-muted-foreground pointer-coarse:hidden"
       >
         <span className="inline-flex items-center gap-1.5">
           <Kbd>↑</Kbd>
@@ -141,9 +141,9 @@ export function CommandPaletteSection<T extends object>({
     <MenuSection
       {...props}
       data-slot="command-palette-section"
-      className={cn("grid gap-1 not-first:mt-2", className)}
+      className={cn("grid gap-1 not-first:mbs-2", className)}
     >
-      <Header className="px-3 pt-1 pb-0.5 text-xs font-medium text-muted-foreground">
+      <Header className="px-3 pbs-1 pbe-0.5 text-xs font-medium text-muted-foreground">
         {title}
       </Header>
       <Collection items={items} dependencies={dependencies}>

@@ -21,7 +21,7 @@ export function StepperDemo() {
         currentStep={currentStep}
         aria-label="Project setup progress"
       />
-      <div className="flex justify-end gap-2 border-t border-border pt-4">
+      <div className="flex justify-end gap-2 border-bs border-border pbs-4">
         <Button
           size="sm"
           variant="outline"

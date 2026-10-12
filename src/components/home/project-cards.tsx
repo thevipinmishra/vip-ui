@@ -94,7 +94,7 @@ export function FilesCard() {
         </Part>
       }
     >
-      <BlockBody className="gap-3 pt-3">
+      <BlockBody className="gap-3 pbs-3">
         <Part slug="breadcrumbs">
           <Breadcrumbs
             aria-label="File path"
@@ -233,10 +233,10 @@ export function EditorCard() {
           />
         </Part>
         <div className="rounded-lg border border-border">
-          <Part slug="toolbar" className="rounded-b-none">
+          <Part slug="toolbar" className="rounded-es-none rounded-ee-none">
             <Toolbar
               aria-label="Text format"
-              className="w-full max-w-none gap-1 rounded-none rounded-t-lg border-0 border-b border-border bg-muted/50 p-1 shadow-none"
+              className="w-full max-w-none gap-1 rounded-none rounded-ss-lg rounded-se-lg border-0 border-be border-border bg-muted/50 p-1 shadow-none"
             >
               <ToggleButtonGroup
                 aria-label="Text style"
@@ -330,17 +330,17 @@ const activity = [
 export function ActivityCard() {
   return (
     <Block title="Activity">
-      <BlockBody className="pb-5">
+      <BlockBody className="pbe-5">
         <Part slug="timeline">
           <Timeline aria-label="Activity">
             {activity.map((item, index) => (
               <TimelineItem
                 key={item.id}
                 status={index === 0 ? "latest" : "complete"}
-                className="pb-5"
+                className="pbe-5"
               >
                 <p className="text-sm font-semibold leading-6">{item.title}</p>
-                <TimelineTime className="mt-0">{item.time}</TimelineTime>
+                <TimelineTime className="mbs-0">{item.time}</TimelineTime>
               </TimelineItem>
             ))}
           </Timeline>

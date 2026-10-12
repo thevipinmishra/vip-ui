@@ -31,9 +31,9 @@ import { Popover } from "./popover";
 import { Tag, TagGroup, TagListView } from "./tag-group";
 
 const comboBoxPopoverStyles =
-  "w-[var(--trigger-width)] rounded-lg border-0 p-1.5 ring-1 ring-border/70";
+  "w-[var(--trigger-width)] rounded-[calc(var(--radius-md)+--spacing(1.5))] border-0 p-1.5 ring-1 ring-border/70";
 const comboBoxItemStyles =
-  "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted focus:bg-muted focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50";
+  "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm focus:outline-hidden hover:bg-muted focus:bg-muted pressed:bg-muted focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50";
 
 export interface ComboBoxOption {
   id: string;
@@ -180,7 +180,7 @@ function ComboBoxDefaults({
               No matching options.
             </div>
           )}
-          className="grid gap-1 outline-none"
+          className="grid gap-1 focus:outline-hidden"
         >
           {(option) => (
             <ListBoxItem
@@ -194,7 +194,7 @@ function ComboBoxDefaults({
                   <span className="min-w-0">
                     <span className="block font-medium">{option.name}</span>
                     {option.description && (
-                      <span className="mt-0.5 block text-xs text-muted-foreground group-selected/item:text-accent-foreground">
+                      <span className="mbs-0.5 block text-xs text-muted-foreground group-selected/item:text-accent-foreground">
                         {option.description}
                       </span>
                     )}
@@ -334,7 +334,7 @@ export function ComboBoxContent({
     >
       <ListBox
         data-slot="combo-box-list-box"
-        className="grid gap-1 outline-none"
+        className="grid gap-1 focus:outline-hidden"
         renderEmptyState={() => (
           <div className="px-3 py-3 text-sm text-muted-foreground">
             No matching options.

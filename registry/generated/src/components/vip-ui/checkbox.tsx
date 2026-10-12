@@ -77,12 +77,12 @@ export function Checkbox({
             <span className="flex min-w-0 items-start gap-3">
               <CheckboxIndicator />
               {(children || description) && (
-                <span className="min-w-0 pt-0.5 [overflow-wrap:anywhere]">
+                <span className="min-w-0 pbs-0.5 [overflow-wrap:anywhere]">
                   {children && (
                     <span className="block font-medium">{children}</span>
                   )}
                   {description && (
-                    <span className="mt-1 block text-xs leading-5 text-muted-foreground">
+                    <span className="mbs-1 block text-xs leading-5 text-muted-foreground">
                       {description}
                     </span>
                   )}
@@ -112,7 +112,7 @@ export function CheckboxIndicator({
       aria-hidden="true"
       data-slot="checkbox-indicator"
       className={cn(
-        "mt-0.5 grid size-5 shrink-0 place-items-center rounded-md border border-input bg-card shadow-[var(--shadow-inset)] transition-[background-color,border-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:border-primary/60 group-invalid:border-destructive group-invalid:group-hover:border-destructive group-selected:border-primary group-selected:bg-primary group-indeterminate:border-primary group-indeterminate:bg-primary",
+        "mbs-0.5 grid size-5 shrink-0 place-items-center rounded-md border border-input bg-card shadow-[var(--shadow-inset)] transition-[background-color,border-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:border-primary/60 group-pressed:border-primary/60 group-invalid:border-destructive group-invalid:group-hover:border-destructive group-selected:border-primary group-selected:bg-primary group-indeterminate:border-primary group-indeterminate:bg-primary",
         className,
       )}
     >
@@ -160,7 +160,7 @@ export function CheckboxDescription({
       {...props}
       data-slot="checkbox-description"
       className={cn(
-        "mt-1 block text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]",
+        "mbs-1 block text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]",
         className,
       )}
     />

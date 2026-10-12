@@ -51,7 +51,7 @@ export function DocsNav({
         onNavigate={onNavigate && ((event) => onNavigate(event, link.href))}
         aria-current={isActive ? "page" : undefined}
         className={cn(
-          "relative isolate inline-flex min-h-10 items-center rounded-lg px-3 text-[13px] font-medium whitespace-nowrap hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring",
+          "relative isolate inline-flex min-h-10 items-center rounded-lg px-3 text-[13px] font-medium whitespace-nowrap hover:bg-muted hover:text-foreground active:bg-muted active:text-foreground focus-visible:outline-2 focus-visible:outline-ring",
           isActive ? "text-accent-foreground" : "text-muted-foreground",
         )}
       >
@@ -74,14 +74,14 @@ export function DocsNav({
   return (
     <nav aria-label="Documentation navigation" className="grid gap-6">
       <div className="grid gap-1">
-        <p className="mb-2 px-3 text-xs font-semibold text-foreground">
+        <p className="mbe-2 px-3 text-xs font-semibold text-foreground">
           Getting started
         </p>
         {(mobile ? docsGuides : gettingStarted).map(renderLink)}
       </div>
       {catalogGroups.map((group) => (
         <div key={group.title} className="grid gap-1">
-          <p className="mb-2 px-3 text-xs font-semibold text-foreground">
+          <p className="mbe-2 px-3 text-xs font-semibold text-foreground">
             {group.title}
           </p>
           {group.components.map((component) =>

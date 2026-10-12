@@ -81,7 +81,7 @@ export function LoginForm() {
           </Form>
         )}
       </CardContent>
-      <CardFooter className="justify-center gap-1 border-t border-border/70 pt-5 text-sm text-muted-foreground">
+      <CardFooter className="justify-center gap-1 border-bs border-border/70 pbs-5 text-sm text-muted-foreground">
         No account?
         <Link href="#">Create one</Link>
       </CardFooter>

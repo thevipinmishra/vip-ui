@@ -15,7 +15,7 @@ export function AnimatedNumberSlideDemo() {
           value={open}
           variant="slide"
           aria-live="polite"
-          className="mt-1 block text-5xl font-semibold tracking-[-0.06em]"
+          className="mbs-1 block text-5xl font-semibold tracking-[-0.06em]"
         />
       </div>
       <div className="flex flex-wrap justify-center gap-2">

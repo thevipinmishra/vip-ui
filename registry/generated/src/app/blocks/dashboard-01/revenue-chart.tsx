@@ -78,8 +78,8 @@ export function RevenueChart() {
 
   return (
     <ChartFrame className="shadow-[var(--shadow-card)] ring-1 ring-border/70">
-      <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
-        <ChartCaption className="mb-0">
+      <div className="mbe-4 flex flex-wrap items-start justify-between gap-3">
+        <ChartCaption className="mbe-0">
           <ChartTitle>Revenue</ChartTitle>
           <ChartDescription>
             ${(total * 1000).toLocaleString("en-US")} in the{" "}

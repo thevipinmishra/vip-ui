@@ -58,7 +58,7 @@ export function ProgressBar({
             )}
             <div
               data-slot="progress-bar-track"
-              className="h-2 overflow-hidden rounded-full bg-secondary shadow-[var(--shadow-inset)] forced-colors:border rtl:-scale-x-100"
+              className="h-2 overflow-clip rounded-full bg-secondary shadow-[var(--shadow-inset)] forced-colors:border rtl:-scale-x-100"
             >
               {isIndeterminate ? (
                 <motion.div

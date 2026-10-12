@@ -121,7 +121,7 @@ export function TeamMembers() {
             {notice}
           </output>
         </div>
-        <ul className="-mx-6 divide-y divide-border/70 border-t border-border/70">
+        <ul className="-mx-6 divide-y divide-border/70 border-bs border-border/70">
           {members.map((member) => (
             <li
               key={member.id}

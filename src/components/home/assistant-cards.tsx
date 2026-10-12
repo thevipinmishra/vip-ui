@@ -100,7 +100,7 @@ export function ChatCard() {
         aria-label="Conversation"
         // biome-ignore lint/a11y/noNoninteractiveTabindex: Keyboard users must be able to scroll the conversation.
         tabIndex={0}
-        className="max-h-[32rem] min-h-0 flex-1 overflow-y-auto outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring"
+        className="max-h-[32rem] min-h-0 flex-1 overflow-y-auto focus:outline-hidden focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring"
       >
         <BlockBody className="gap-3">
           <Part slug="message">
@@ -169,7 +169,7 @@ export function ChatCard() {
           ))}
         </BlockBody>
       </div>
-      <BlockFooter className="border-t border-border/70 pt-4">
+      <BlockFooter className="border-bs border-border/70 pbs-4">
         <Form
           className="w-full"
           onSubmit={(event) => {
@@ -262,7 +262,7 @@ export function DeployCard() {
           />
         </div>
       </BlockBody>
-      <BlockFooter className="justify-between border-t border-border/70 pt-4">
+      <BlockFooter className="justify-between border-bs border-border/70 pbs-4">
         <span className="font-mono text-xs text-muted-foreground">
           main · 8c4e21a
         </span>

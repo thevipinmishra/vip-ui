@@ -1,6 +1,14 @@
 @import "tailwindcss";
 @plugin "tailwindcss-react-aria-components";
 
+@custom-variant hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:is(:where([data-rac])[data-hovered], :where(:not([data-rac])):hover) {
+      @slot;
+    }
+  }
+}
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
@@ -50,12 +58,12 @@
   --border: oklch(0.88 0.009 85);
   --input: oklch(0.82 0.014 85);
   --scrollbar-thumb: color-mix(
-    in oklab,
+    in oklch,
     var(--muted-foreground) 55%,
     transparent
   );
   --scrollbar-thumb-hover: color-mix(
-    in oklab,
+    in oklch,
     var(--muted-foreground) 80%,
     transparent
   );
@@ -66,10 +74,10 @@
   --code-dark-foreground: oklch(0.93 0.005 257);
   --radius: 0.625rem;
   --shadow-card:
-    0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07);
+    0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07);
   --shadow-float:
-    0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11);
-  --shadow-inset: inset 0 1px 2px oklch(0 0 0 / 0.045);
+    0 2px 4px -2px oklch(0 0 none / 0.1), 0 8px 18px -9px oklch(0 0 none / 0.11);
+  --shadow-inset: inset 0 1px 2px oklch(0 0 none / 0.045);
 }
 
 .dark {
@@ -93,12 +101,12 @@
   --border: oklch(0.68 0.015 257 / 0.2);
   --input: oklch(0.72 0.018 257 / 0.28);
   --scrollbar-thumb: color-mix(
-    in oklab,
+    in oklch,
     var(--muted-foreground) 65%,
     transparent
   );
   --scrollbar-thumb-hover: color-mix(
-    in oklab,
+    in oklch,
     var(--muted-foreground) 90%,
     transparent
   );
@@ -120,10 +128,10 @@
   --chart-5: oklch(0.73 0.14 25);
   --chart-6: oklch(0.7 0.09 265);
   --shadow-card:
-    0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25);
+    0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25);
   --shadow-float:
-    0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34);
-  --shadow-inset: inset 0 1px 2px oklch(0 0 0 / 0.15);
+    0 2px 4px -2px oklch(0 0 none / 0.3), 0 8px 18px -9px oklch(0 0 none / 0.34);
+  --shadow-inset: inset 0 1px 2px oklch(0 0 none / 0.15);
 }
 
 @theme inline {
@@ -218,9 +226,11 @@
     background: var(--scrollbar-thumb);
     background-clip: padding-box;
   }
-  *::-webkit-scrollbar-thumb:hover {
-    background: var(--scrollbar-thumb-hover);
-    background-clip: padding-box;
+  @media (hover: hover) and (pointer: fine) {
+    *::-webkit-scrollbar-thumb:hover {
+      background: var(--scrollbar-thumb-hover);
+      background-clip: padding-box;
+    }
   }
 }
 
@@ -233,13 +243,14 @@
 
 .preview-canvas {
   background-image: radial-gradient(
-    color-mix(in oklab, var(--muted-foreground) 20%, transparent) 1px,
+    color-mix(in oklch, var(--muted-foreground) 20%, transparent) 1px,
     transparent 1px
   );
   background-size: 18px 18px;
 }
 
 .sidebar-scroll-viewport {
+  overscroll-behavior: contain;
   scrollbar-width: none;
 }
 .sidebar-scroll-viewport::-webkit-scrollbar {
@@ -259,9 +270,13 @@
   border-radius: 999px;
   background: var(--scrollbar-thumb);
 }
-.sidebar-scrollbar:hover .sidebar-scroll-thumb,
 .sidebar-scrollbar[data-dragging] .sidebar-scroll-thumb {
   background: var(--scrollbar-thumb-hover);
+}
+@media (hover: hover) and (pointer: fine) {
+  .sidebar-scrollbar:hover .sidebar-scroll-thumb {
+    background: var(--scrollbar-thumb-hover);
+  }
 }
 .sidebar-scrollbar[data-dragging] .sidebar-scroll-thumb {
   cursor: grabbing;
@@ -281,7 +296,7 @@
 .docs-tab-panel:focus-visible,
 .docs-tab-panel[data-focus-visible],
 .code-scroll-viewport:focus-visible {
-  outline: none;
+  outline-color: transparent;
   box-shadow: inset 3px 0 0 var(--ring);
 }
 
@@ -326,13 +341,19 @@
 .code-scrollbar-y .code-scroll-thumb {
   width: 100%;
 }
-.code-scrollbar:hover,
 .code-scrollbar[data-dragging] {
   background: var(--border);
 }
-.code-scrollbar:hover .code-scroll-thumb,
 .code-scrollbar[data-dragging] .code-scroll-thumb {
   background: var(--scrollbar-thumb-hover);
+}
+@media (hover: hover) and (pointer: fine) {
+  .code-scrollbar:hover {
+    background: var(--border);
+  }
+  .code-scrollbar:hover .code-scroll-thumb {
+    background: var(--scrollbar-thumb-hover);
+  }
 }
 .code-scrollbar[data-dragging] .code-scroll-thumb {
   cursor: grabbing;
@@ -346,7 +367,8 @@
 .code-block .shiki {
   margin: 0;
   min-width: max-content;
-  padding: 1.25rem 1.5rem 1.75rem 1rem;
+  padding-block: 1.25rem 1.75rem;
+  padding-inline: 1rem 1.5rem;
   background: transparent;
   font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-size: 0.8125rem;

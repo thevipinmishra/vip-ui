@@ -46,8 +46,8 @@ export function CardActionDemo() {
                 aria-hidden="true"
                 className={
                   isRead
-                    ? "mt-2.5 size-1.5 shrink-0 rounded-full bg-border"
-                    : "mt-2.5 size-1.5 shrink-0 rounded-full bg-primary"
+                    ? "mbs-2.5 size-1.5 shrink-0 rounded-full bg-border"
+                    : "mbs-2.5 size-1.5 shrink-0 rounded-full bg-primary"
                 }
               />
               {notification.text}

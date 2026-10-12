@@ -40,14 +40,14 @@ export function SignupForm() {
             className="text-success"
             aria-hidden="true"
           />
-          <CardTitle as="h1" className="mt-2 text-xl">
+          <CardTitle as="h1" className="mbs-2 text-xl">
             Welcome, {name}
           </CardTitle>
           <CardDescription>
             Your account is ready. We sent a confirmation to your email.
           </CardDescription>
         </CardHeader>
-        <CardFooter className="justify-center pt-5">
+        <CardFooter className="justify-center pbs-5">
           <Button
             variant="outline"
             onPress={() => {
@@ -122,7 +122,7 @@ export function SignupForm() {
           </Button>
         </Form>
       </CardContent>
-      <CardFooter className="justify-center gap-1 border-t border-border/70 pt-5 text-sm text-muted-foreground">
+      <CardFooter className="justify-center gap-1 border-bs border-border/70 pbs-5 text-sm text-muted-foreground">
         Have an account?
         <Link href="#">Sign in</Link>
       </CardFooter>

@@ -69,7 +69,7 @@ export function EmptyStateActions({
     <div
       data-slot="empty-state-actions"
       className={cn(
-        "mt-1 flex max-w-full flex-wrap justify-center gap-3",
+        "mbs-1 flex max-w-full flex-wrap justify-center gap-3",
         className,
       )}
       {...props}

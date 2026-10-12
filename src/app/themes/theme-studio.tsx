@@ -43,7 +43,7 @@ const display =
   "font-[family-name:var(--theme-display-family)] [font-weight:var(--theme-display-weight)] tracking-[var(--theme-display-tracking)]";
 
 const panelClass =
-  "docs-tab-panel mt-8 min-w-0 rounded-none bg-transparent p-0 shadow-none ring-0";
+  "docs-tab-panel mbs-8 min-w-0 rounded-none bg-transparent p-0 shadow-none ring-0";
 
 function subscribeToMode(onChange: () => void) {
   const observer = new MutationObserver(onChange);
@@ -85,7 +85,7 @@ function reveal(origin: Point | null, update: () => void) {
           ],
         },
         {
-          duration: 640,
+          duration: 300,
           easing: `cubic-bezier(${easeInOut.join(",")})`,
           pseudoElement: "::view-transition-new(root)",
         },
@@ -124,7 +124,7 @@ function ThemeOption({ theme }: { theme: OfficialTheme }) {
   return (
     <AriaRadio
       value={theme.slug}
-      className="inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-md border border-transparent px-3 text-sm font-medium text-muted-foreground outline-none hover:bg-card/70 hover:text-foreground selected:border-border selected:bg-card selected:text-foreground selected:shadow-[var(--shadow-card)] focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring sm:min-h-9"
+      className="inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-md border border-transparent px-3 text-sm font-medium text-muted-foreground focus:outline-hidden hover:bg-card/70 hover:text-foreground pressed:bg-card/70 pressed:text-foreground selected:border-border selected:bg-card selected:text-foreground selected:shadow-[var(--shadow-card)] focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring sm:min-h-9"
     >
       <span data-specimen={theme.slug} className="flex items-center gap-2">
         <span
@@ -268,7 +268,7 @@ export function ThemeStudio({
       </PageHeader>
 
       <div
-        className="sticky top-0 z-30 border-y border-border/70 bg-background/85 py-3 backdrop-blur-md"
+        className="sticky inset-bs-0 z-30 border-y border-border/70 bg-background/85 py-3 backdrop-blur-md"
         onPointerDownCapture={origin.onPointerDown}
       >
         <div className="site-container flex items-center gap-3">
@@ -278,7 +278,7 @@ export function ThemeStudio({
             orientation="horizontal"
             value={slug}
             onChange={selectTheme}
-            className="flex min-w-0 gap-1 overflow-x-auto rounded-lg border border-border bg-secondary p-1 [scrollbar-width:none]"
+            className="flex min-w-0 gap-1 overflow-x-auto rounded-[calc(var(--radius-md)+--spacing(1))] border border-border bg-secondary p-1 [scrollbar-width:none]"
           >
             {officialThemes.map((option) => (
               <ThemeOption key={option.slug} theme={option} />
@@ -287,7 +287,7 @@ export function ThemeStudio({
           <ModeSwitch
             mode={mode}
             onChange={selectMode}
-            className="ml-auto shrink-0"
+            className="ms-auto shrink-0"
           />
         </div>
       </div>
@@ -312,9 +312,9 @@ export function ThemeStudio({
       <section
         id="install"
         aria-labelledby="install-title"
-        className="site-container mt-8 scroll-mt-24"
+        className="site-container mbs-8 scroll-mbs-24"
       >
-        <div className="grid gap-10 border-t border-border/70 pt-12">
+        <div className="grid gap-10 border-bs border-border/70 pbs-12">
           <div className="grid max-w-2xl gap-3">
             <h2
               id="install-title"

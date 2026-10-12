@@ -11,22 +11,22 @@ export default function ComponentsLayout({
     <div className="flex min-h-screen flex-col bg-background">
       <a
         href="#main"
-        className="sr-only fixed left-4 top-4 z-50 rounded-md bg-primary px-4 py-2 text-primary-foreground focus:not-sr-only"
+        className="sr-only fixed start-4 inset-bs-4 z-50 rounded-md bg-primary px-4 py-2 text-primary-foreground focus:not-sr-only"
       >
         Skip to content
       </a>
       <SiteHeader />
-      <div className="site-container flex-1 pt-10 sm:pt-14 lg:grid lg:grid-cols-[224px_minmax(0,1fr)] lg:gap-14 xl:grid-cols-[224px_minmax(0,1fr)_160px] xl:gap-8">
-        <aside className="hidden border-r border-border/70 lg:block">
+      <div className="site-container flex-1 pbs-10 sm:pbs-14 lg:grid lg:grid-cols-[224px_minmax(0,1fr)] lg:gap-14 xl:grid-cols-[224px_minmax(0,1fr)_160px] xl:gap-8">
+        <aside className="hidden border-e border-border/70 lg:block">
           <SidebarScrollArea>
             <DocsNav />
           </SidebarScrollArea>
         </aside>
-        <main id="main" className="min-w-0 pb-28">
+        <main id="main" className="min-w-0 pbe-28">
           {children}
         </main>
         <div className="hidden xl:block">
-          <div className="sticky top-6 max-h-[calc(100dvh-1.5rem)] overflow-y-auto pb-10">
+          <div className="sticky inset-bs-6 max-h-[calc(100dvh-1.5rem)] overflow-y-auto overscroll-contain pbe-10">
             <OnThisPage />
           </div>
         </div>

@@ -151,16 +151,16 @@ function Section({
   children: ReactNode;
 }) {
   return (
-    <section id={id} className="mt-14 scroll-mt-28">
+    <section id={id} className="mbs-14 scroll-mbs-28">
       <h2 className="text-[23px] font-semibold tracking-[-0.045em]">{title}</h2>
-      <div className="mt-4 grid gap-4 text-sm leading-7 text-muted-foreground">
+      <div className="mbs-4 grid gap-4 text-sm leading-7 text-muted-foreground">
         {children}
         <p>
           <a
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 rounded-md font-medium text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            className="inline-flex items-center gap-1 rounded-md font-medium text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary active:decoration-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
             {linkLabel}
             <ArrowUpRightIcon size={16} aria-hidden="true" />

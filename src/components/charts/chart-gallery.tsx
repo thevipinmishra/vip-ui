@@ -50,7 +50,7 @@ export async function ChartGallery({
 
   return (
     <>
-      <PageHeader className="site-container pb-10 pt-10 sm:pt-14">
+      <PageHeader className="site-container pbe-10 pbs-10 sm:pbs-14">
         <PageHeaderHeading>Charts</PageHeaderHeading>
         <PageHeaderDescription>
           Accessible charts, built with TanStack Charts. Add a chart to your
@@ -94,7 +94,7 @@ function ChartCategoryContent({
   shared: string;
 }) {
   return (
-    <section aria-labelledby="category-title" className="pb-16 pt-10">
+    <section aria-labelledby="category-title" className="pbe-16 pbs-10">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h2
           id="category-title"
@@ -116,14 +116,14 @@ function ChartCategoryContent({
           </CodeFrame>
         </ChartSourceSheet>
       </div>
-      <div className="mt-5 grid gap-4 lg:grid-cols-2">
+      <div className="mbs-5 grid gap-4 lg:grid-cols-2">
         {category.examples.map((example) => {
           const anchor = chartExampleAnchor(category.slug, example.name);
           return (
             <Card
               key={example.name}
               id={anchor}
-              className="relative z-0 flex min-w-0 scroll-mt-28 flex-col rounded-2xl hover:z-10 focus-within:z-10"
+              className="relative z-0 flex min-w-0 scroll-mbs-28 flex-col rounded-2xl hover:z-10 focus-within:z-10"
             >
               <CardContent className="min-w-0 flex-1 p-0">
                 <ChartGalleryItem name={example.name} href={`#${anchor}`}>

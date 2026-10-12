@@ -240,7 +240,7 @@ function RevenueScene({ className }: { className?: string }) {
           ))}
         </ToggleButtonGroup>
       </CardHeader>
-      <CardContent className="grid gap-2 pb-0">
+      <CardContent className="grid gap-2 pbe-0">
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
           <AnimatedNumber
             value={total}
@@ -279,7 +279,7 @@ function RevenueScene({ className }: { className?: string }) {
           </ChartPlot>
         </div>
       </CardContent>
-      <dl className="grid grid-cols-3 border-t border-border/70">
+      <dl className="grid grid-cols-3 border-bs border-border/70">
         {[
           { label: "Subscriptions", value: "2,431", detail: "+4.1%" },
           { label: "Average order", value: "$86.40", detail: "+$3.10" },
@@ -289,7 +289,7 @@ function RevenueScene({ className }: { className?: string }) {
             key={stat.label}
             className={cn(
               "grid gap-1 px-6 py-4",
-              index > 0 && "border-l border-border/70",
+              index > 0 && "border-s border-border/70",
             )}
           >
             <dt className="text-xs text-muted-foreground">{stat.label}</dt>
@@ -416,7 +416,7 @@ function TeamScene({ className }: { className?: string }) {
           ))}
         </ul>
       </CardContent>
-      <CardFooter className="border-t border-border/70 pt-5">
+      <CardFooter className="border-bs border-border/70 pbs-5">
         <Form
           className="w-full"
           onSubmit={(event) => {
@@ -549,7 +549,7 @@ function AssistantScene({ className }: { className?: string }) {
           }
         />
       </CardContent>
-      <CardFooter className="border-t border-border/70 pt-5">
+      <CardFooter className="border-bs border-border/70 pbs-5">
         <Form
           className="w-full"
           onSubmit={(event) => {
@@ -723,7 +723,7 @@ function NotificationsScene({ className }: { className?: string }) {
           </Switch>
         ))}
       </CardContent>
-      <CardFooter className="flex-nowrap justify-between border-t border-border/70 pt-4 pb-4">
+      <CardFooter className="flex-nowrap justify-between border-bs border-border/70 pbs-4 pbe-4">
         <p id={digestId} className="text-sm font-medium">
           Digest
         </p>
@@ -973,7 +973,7 @@ function InvoicesScene({ className }: { className?: string }) {
           </Button>
         </div>
       </CardHeader>
-      <CardContent className="flex-1 pb-6">
+      <CardContent className="flex-1 pbe-6">
         <div className="relative overflow-x-auto rounded-lg border border-border">
           <Table aria-label="Invoices" className="min-w-[36rem]">
             <TableHeader>
@@ -981,7 +981,7 @@ function InvoicesScene({ className }: { className?: string }) {
               <Column>Customer</Column>
               <Column>Status</Column>
               <Column>Due</Column>
-              <Column className="text-right">Amount</Column>
+              <Column className="text-end">Amount</Column>
               <Column className="w-12">
                 <span className="sr-only">Actions</span>
               </Column>
@@ -1004,7 +1004,7 @@ function InvoicesScene({ className }: { className?: string }) {
                     </Badge>
                   </Cell>
                   <Cell className="text-muted-foreground">{invoice.due}</Cell>
-                  <Cell className="text-right tabular-nums">
+                  <Cell className="text-end tabular-nums">
                     {money.format(invoice.amount)}
                   </Cell>
                   <Cell>

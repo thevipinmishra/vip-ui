@@ -15,22 +15,22 @@ export default function Home() {
     <div className="min-h-screen overflow-x-clip bg-background text-foreground">
       <a
         href="#main"
-        className="sr-only fixed start-4 top-4 z-50 rounded-md bg-primary px-4 py-2 text-primary-foreground focus:not-sr-only"
+        className="sr-only fixed start-4 inset-bs-4 z-50 rounded-md bg-primary px-4 py-2 text-primary-foreground focus:not-sr-only"
       >
         Skip to content
       </a>
       <SiteHeader />
 
       <main id="main">
-        <section className="mx-auto max-w-7xl px-5 pb-14 pt-16 text-center sm:px-8 sm:pb-20 sm:pt-24">
+        <section className="mx-auto max-w-7xl px-5 pbe-14 pbs-16 text-center sm:px-8 sm:pbe-20 sm:pbs-24">
           <h1 className="mx-auto max-w-4xl text-[clamp(3.25rem,7vw,6rem)] font-semibold leading-[1.02] tracking-[-0.075em] [text-wrap:balance]">
             Accessible components <span className="text-primary">you own.</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
+          <p className="mx-auto mbs-6 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
             Copy accessible components into your shadcn project. They use React
             Aria, Tailwind CSS, and Motion.
           </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <div className="mbs-8 flex flex-wrap items-center justify-center gap-3">
             <ButtonLink as={Link} href="/components/installation" size="lg">
               Get started <ArrowRightIcon size={16} aria-hidden="true" />
             </ButtonLink>
@@ -48,9 +48,9 @@ export default function Home() {
         <section
           id="components"
           aria-labelledby="components-heading"
-          className="mx-auto max-w-7xl scroll-mt-28 px-5 pb-24 sm:px-8 sm:pb-32"
+          className="mx-auto max-w-7xl scroll-mbs-28 px-5 pbe-24 sm:px-8 sm:pbe-32"
         >
-          <div className="mb-8 flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
+          <div className="mbe-8 flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
             <div className="max-w-xl">
               <h2
                 id="components-heading"
@@ -58,7 +58,7 @@ export default function Home() {
               >
                 Built with vip/ui
               </h2>
-              <p className="mt-2 text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7">
+              <p className="mbs-2 text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7">
                 Each card uses only components from this library.
               </p>
             </div>
@@ -67,7 +67,7 @@ export default function Home() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="inline-flex min-h-10 items-center gap-2 rounded-sm text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                  className="inline-flex min-h-10 items-center gap-2 rounded-sm text-sm font-medium text-primary underline-offset-4 hover:underline active:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                 >
                   {link.label} <ArrowRightIcon size={15} aria-hidden="true" />
                 </Link>

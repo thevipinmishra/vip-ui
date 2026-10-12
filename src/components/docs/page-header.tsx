@@ -43,7 +43,7 @@ export function PageHeaderDescription({
 export function PageActions({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
-      className={cn("mt-2 flex flex-wrap items-center gap-3", className)}
+      className={cn("mbs-2 flex flex-wrap items-center gap-3", className)}
       {...props}
     />
   );

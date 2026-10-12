@@ -56,12 +56,12 @@ export function DocsSearch() {
         aria-label="Search components and pages"
         aria-keyshortcuts={shortcut ? "Control+K Meta+K" : undefined}
         onPress={() => setOpen(true)}
-        className="inline-flex size-10 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:h-9 sm:w-44 sm:justify-start sm:border sm:border-border/70 sm:bg-muted/40 sm:ps-2.5 sm:pe-1.5 lg:w-52 xl:w-64"
+        className="relative after:absolute after:inset-[min(0px,(100%-44px)/2)] inline-flex size-10 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm text-muted-foreground hover:bg-muted hover:text-foreground pressed:bg-muted pressed:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:h-9 sm:w-44 sm:justify-start sm:border sm:border-border/70 sm:bg-muted/40 sm:ps-2.5 sm:pe-1.5 lg:w-52 xl:w-64"
       >
         <MagnifyingGlassIcon size={17} aria-hidden="true" />
         <span className="hidden sm:inline">Search…</span>
         {shortcut && modifier && (
-          <KbdGroup className="ml-auto hidden sm:inline-flex">
+          <KbdGroup className="ms-auto hidden sm:inline-flex">
             <Kbd>{modifier}</Kbd>
             <Kbd>K</Kbd>
           </KbdGroup>

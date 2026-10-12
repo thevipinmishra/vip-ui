@@ -129,7 +129,7 @@ export function Attachment({
         layout: springLayout,
       })}
       className={cn(
-        "flex min-w-0 items-center gap-3 rounded-lg border border-border bg-card p-2.5 text-sm shadow-[var(--shadow-card)]",
+        "flex min-w-0 items-center gap-3 rounded-[calc(var(--radius-md)+--spacing(2.5))] border border-border bg-card p-2.5 text-sm shadow-[var(--shadow-card)]",
         status === "error" && "border-destructive/60",
         className,
       )}
@@ -137,7 +137,7 @@ export function Attachment({
       <span
         aria-hidden="true"
         data-slot="attachment-preview"
-        className="flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-md bg-muted text-muted-foreground"
+        className="flex size-11 shrink-0 items-center justify-center overflow-clip rounded-md bg-muted text-muted-foreground"
       >
         {previewUrl ? (
           // biome-ignore lint/performance/noImgElement: Files can be object URLs in any React app.
@@ -182,7 +182,7 @@ export function Attachment({
               aria-label={`${name} upload`}
               value={progress ?? 0}
               isIndeterminate={progress === undefined}
-              className="mt-2"
+              className="mbs-2"
             />
           )}
         </div>

@@ -16,7 +16,7 @@ export function Skeleton({
       aria-hidden="true"
       data-slot="skeleton"
       className={cn(
-        "relative isolate overflow-hidden rounded-md bg-muted forced-colors:bg-[GrayText]",
+        "relative isolate overflow-clip rounded-md bg-muted forced-colors:bg-[GrayText]",
         className,
       )}
     >

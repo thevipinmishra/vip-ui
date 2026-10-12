@@ -22,7 +22,7 @@ export function Block({
 }) {
   return (
     <Card className={cn("flex min-w-0 flex-col", className)}>
-      <CardHeader className="min-h-9 flex-row items-start justify-between gap-3 px-5 pt-5">
+      <CardHeader className="min-h-9 flex-row items-start justify-between gap-3 px-5 pbs-5">
         <div className="grid min-w-0 gap-0.5 self-center">
           <CardTitle>{title}</CardTitle>
           {description && (
@@ -56,7 +56,7 @@ export function BlockFooter({
 }: ComponentPropsWithRef<"div">) {
   return (
     <div
-      className={cn("flex flex-wrap items-center gap-2 px-5 pb-5", className)}
+      className={cn("flex flex-wrap items-center gap-2 px-5 pbe-5", className)}
       {...props}
     />
   );

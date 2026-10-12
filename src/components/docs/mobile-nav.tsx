@@ -59,17 +59,17 @@ export function MobileNav() {
       <SheetTrigger isOpen={open} onOpenChange={setOpen}>
         <Button
           aria-label="Open menu"
-          className="grid size-10 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          className="relative after:absolute after:inset-[min(0px,(100%-44px)/2)] grid size-10 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground pressed:bg-muted pressed:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
         >
           <ListIcon size={20} aria-hidden="true" />
         </Button>
         <Sheet>
           <SheetHandle />
-          <SheetHeader className="flex items-center justify-between gap-4 border-b border-border/70 pb-4">
+          <SheetHeader className="flex items-center justify-between gap-4 border-be border-border/70 pbe-4">
             <SheetTitle>Menu</SheetTitle>
             <SheetClose />
           </SheetHeader>
-          <SheetBody className="grid content-start gap-8 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
+          <SheetBody className="grid content-start gap-8 pbe-[max(1.25rem,env(safe-area-inset-bottom,0px))]">
             <nav aria-label="Main navigation">
               <ul className="grid grid-cols-3 gap-2">
                 {sections.map((link) => {
@@ -91,7 +91,7 @@ export function MobileNav() {
                           "flex min-h-16 flex-col items-center justify-center gap-1.5 rounded-lg border px-2 text-[13px] font-medium focus-visible:outline-2 focus-visible:outline-ring",
                           isActive
                             ? "border-transparent bg-accent text-accent-foreground"
-                            : "border-border/70 text-muted-foreground hover:bg-muted hover:text-foreground",
+                            : "border-border/70 text-muted-foreground hover:bg-muted hover:text-foreground active:bg-muted active:text-foreground",
                         )}
                       >
                         <SectionIcon size={18} aria-hidden="true" />

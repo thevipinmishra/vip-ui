@@ -49,7 +49,7 @@ export function Switch({
       data-slot="switch"
       className={composeRenderProps(className, (className) =>
         cn(
-          "group inline-flex min-h-11 min-w-0 max-w-full cursor-pointer items-center justify-between gap-4 text-sm text-foreground outline-none disabled:cursor-default disabled:opacity-50",
+          "group inline-flex min-h-11 min-w-0 max-w-full cursor-pointer items-center justify-between gap-4 text-sm text-foreground disabled:cursor-default disabled:opacity-50",
           className,
         ),
       )}
@@ -66,7 +66,7 @@ export function Switch({
                     <span className="block font-medium">{children}</span>
                   )}
                   {description && (
-                    <span className="mt-1 block text-xs leading-5 text-muted-foreground">
+                    <span className="mbs-1 block text-xs leading-5 text-muted-foreground">
                       {description}
                     </span>
                   )}
@@ -107,7 +107,7 @@ export function SwitchDescription({
       {...props}
       data-slot="switch-description"
       className={cn(
-        "mt-1 block text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]",
+        "mbs-1 block text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]",
         className,
       )}
     />
@@ -124,7 +124,7 @@ export function SwitchControl({
       aria-hidden="true"
       data-slot="switch-control"
       className={cn(
-        "flex h-6 w-10 shrink-0 items-center rounded-full bg-muted-foreground/75 p-0.5 shadow-[var(--shadow-inset)] transition-colors duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:bg-muted-foreground group-selected:bg-primary group-selected:group-hover:bg-primary/90 group-focus-visible:outline-2 group-focus-visible:outline-solid group-focus-visible:outline-offset-2 group-focus-visible:outline-ring forced-colors:border forced-colors:border-[ButtonText] forced-colors:p-px forced-colors:group-selected:border-[Highlight]",
+        "flex h-6 w-10 shrink-0 items-center rounded-full bg-muted-foreground/75 p-0.5 shadow-[var(--shadow-inset)] transition-colors duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:bg-muted-foreground group-pressed:bg-muted-foreground group-selected:bg-primary group-selected:group-hover:bg-primary/90 group-selected:group-pressed:bg-primary/90 group-focus-visible:outline-2 group-focus-visible:outline-solid group-focus-visible:outline-offset-2 group-focus-visible:outline-ring forced-colors:border forced-colors:border-[ButtonText] forced-colors:p-px forced-colors:group-selected:border-[Highlight]",
         className,
       )}
     />

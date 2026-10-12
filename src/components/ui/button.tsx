@@ -33,7 +33,7 @@ export interface ButtonProps
 
 const MotionButton = motion.create(AriaButton);
 
-const pressStyles = "motion-safe:pressed:not-aria-expanded:scale-[0.96]";
+const pressStyles = "pressed:not-aria-expanded:scale-[0.96]";
 
 export function Button({
   className,

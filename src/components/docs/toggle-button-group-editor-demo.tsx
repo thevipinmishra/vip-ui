@@ -34,7 +34,7 @@ export function ToggleButtonGroupEditorDemo() {
       <div className="rounded-lg border border-border p-4 text-sm">
         <p className="text-xs text-muted-foreground">Selection preview</p>
         <p
-          className={`mt-2 ${selected.has("bold") ? "font-bold" : ""} ${selected.has("italic") ? "italic" : ""} ${selected.has("underline") ? "underline" : ""}`}
+          className={`mbs-2 ${selected.has("bold") ? "font-bold" : ""} ${selected.has("italic") ? "italic" : ""} ${selected.has("underline") ? "underline" : ""}`}
         >
           The quick brown fox jumps over the lazy dog.
         </p>

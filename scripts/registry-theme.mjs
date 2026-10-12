@@ -7,10 +7,10 @@ export const themeVars = {
     "warning-subtle": "oklch(0.965 0.045 85)",
     "warning-foreground": "oklch(0.36 0.09 75)",
     "shadow-card":
-      "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+      "0 1px 2px -1px oklch(0 0 none / 0.08), 0 3px 8px -4px oklch(0 0 none / 0.07)",
     "shadow-float":
-      "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)",
-    "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)",
+      "0 2px 4px -2px oklch(0 0 none / 0.1), 0 8px 18px -9px oklch(0 0 none / 0.11)",
+    "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.045)",
   },
   dark: {
     success: "oklch(0.74 0.13 155)",
@@ -20,10 +20,10 @@ export const themeVars = {
     "warning-subtle": "oklch(0.27 0.045 75)",
     "warning-foreground": "oklch(0.89 0.07 75)",
     "shadow-card":
-      "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+      "0 1px 2px -1px oklch(0 0 none / 0.24), 0 3px 8px -4px oklch(0 0 none / 0.25)",
     "shadow-float":
-      "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)",
-    "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)",
+      "0 2px 4px -2px oklch(0 0 none / 0.3), 0 8px 18px -9px oklch(0 0 none / 0.34)",
+    "shadow-inset": "inset 0 1px 2px oklch(0 0 none / 0.15)",
   },
 };
 

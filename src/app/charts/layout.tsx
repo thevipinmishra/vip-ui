@@ -6,7 +6,7 @@ export default function ChartsLayout({ children }: LayoutProps<"/charts">) {
     <div className="flex min-h-screen flex-col bg-background">
       <a
         href="#main"
-        className="sr-only fixed left-4 top-4 z-50 rounded-md bg-primary px-4 py-2 text-primary-foreground focus:not-sr-only"
+        className="sr-only fixed start-4 inset-bs-4 z-50 rounded-md bg-primary px-4 py-2 text-primary-foreground focus:not-sr-only"
       >
         Skip to content
       </a>

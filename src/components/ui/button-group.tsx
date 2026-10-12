@@ -21,7 +21,7 @@ export function ButtonGroup({
         "inline-flex w-fit max-w-full items-stretch rounded-lg border border-border bg-card shadow-[var(--shadow-card)]",
         "[&>:not(output)]:relative [&>:not(output)]:min-w-0 [&>:not(output)]:shrink [&>:not(output)]:rounded-none [&>:not(output)]:border-0 [&>:not(output)]:shadow-none [&>[data-size=icon]]:shrink-0 [&>:focus-visible]:z-10",
         "data-[orientation=horizontal]:[&>:not(output)~:not(output)]:border-s data-[orientation=horizontal]:[&>:nth-child(1_of_:not(output))]:rounded-s-lg data-[orientation=horizontal]:[&>:nth-last-child(1_of_:not(output))]:rounded-e-lg",
-        "data-[orientation=vertical]:flex-col data-[orientation=vertical]:[&>:not(output)~:not(output)]:border-t data-[orientation=vertical]:[&>:nth-child(1_of_:not(output))]:rounded-t-lg data-[orientation=vertical]:[&>:nth-last-child(1_of_:not(output))]:rounded-b-lg",
+        "data-[orientation=vertical]:flex-col data-[orientation=vertical]:[&>:not(output)~:not(output)]:border-bs data-[orientation=vertical]:[&>:nth-child(1_of_:not(output))]:rounded-ss-lg data-[orientation=vertical]:[&>:nth-child(1_of_:not(output))]:rounded-se-lg data-[orientation=vertical]:[&>:nth-last-child(1_of_:not(output))]:rounded-es-lg data-[orientation=vertical]:[&>:nth-last-child(1_of_:not(output))]:rounded-ee-lg",
         "[&>:not(output)~:not(output)]:border-border",
         className,
       )}

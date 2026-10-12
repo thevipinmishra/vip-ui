@@ -9,7 +9,7 @@ export function FieldsetDemo() {
   return (
     <Fieldset aria-describedby="digest-help" className="w-full max-w-sm">
       <FieldsetLegend>Weekly digest</FieldsetLegend>
-      <FieldsetDescription id="digest-help" className="mb-4">
+      <FieldsetDescription id="digest-help" className="mbe-4">
         Choose the updates you want in your Monday email.
       </FieldsetDescription>
       <div className="grid gap-2">

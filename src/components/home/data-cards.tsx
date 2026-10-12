@@ -188,7 +188,7 @@ export function RevenueCard() {
         </Part>
       }
     >
-      <BlockBody className="gap-1 pb-0">
+      <BlockBody className="gap-1 pbe-0">
         <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
           <Part slug="animated-number">
             <AnimatedNumber
@@ -287,7 +287,7 @@ export function InvoicesCard() {
         </Part>
       }
     >
-      <BlockBody className="@container gap-3 pb-3">
+      <BlockBody className="@container gap-3 pbe-3">
         <Part slug="table">
           <div className="overflow-x-auto rounded-lg border border-border">
             <Table aria-label="Invoices">
@@ -322,7 +322,7 @@ export function InvoicesCard() {
                       <Badge
                         variant={statusVariant[invoice.status]}
                         dot
-                        className="mt-1 @min-[22rem]:hidden"
+                        className="mbs-1 @min-[22rem]:hidden"
                       >
                         {invoice.status}
                       </Badge>

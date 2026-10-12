@@ -159,7 +159,7 @@ export function FileUpload() {
           {notice}
         </output>
       </CardContent>
-      <CardFooter className="justify-between border-t border-border/70 pt-5">
+      <CardFooter className="justify-between border-bs border-border/70 pbs-5">
         <p className="text-sm text-muted-foreground">
           {done} of {uploads.length} uploaded
         </p>

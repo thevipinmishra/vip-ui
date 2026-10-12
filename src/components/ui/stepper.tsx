@@ -93,7 +93,7 @@ export function Stepper({
         data-slot="stepper"
         tabIndex={props.tabIndex ?? (scrollable ? 0 : undefined)}
         className={cn(
-          "flex w-full max-w-full overflow-x-auto rounded-xl p-1.5 outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring",
+          "flex w-full max-w-full overflow-x-auto rounded-xl p-1.5 focus:outline-hidden focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring",
           className,
         )}
       >
@@ -155,7 +155,7 @@ export function Stepper({
                 {index < steps.length - 1 && (
                   <span
                     aria-hidden="true"
-                    className="relative h-0.5 min-w-6 flex-1 overflow-hidden rounded-full bg-border forced-colors:bg-[GrayText]"
+                    className="relative h-0.5 min-w-6 flex-1 overflow-clip rounded-full bg-border forced-colors:bg-[GrayText]"
                   >
                     <motion.span
                       className="absolute inset-0 origin-left rounded-full bg-primary forced-colors:bg-[Highlight] rtl:origin-right"
@@ -166,7 +166,7 @@ export function Stepper({
                   </span>
                 )}
               </div>
-              <div className="min-w-0 pe-3 pt-2.5">
+              <div className="min-w-0 pe-3 pbs-2.5">
                 <span
                   className={cn(
                     "block text-sm font-medium leading-5 transition-[color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] [overflow-wrap:anywhere]",
@@ -179,7 +179,7 @@ export function Stepper({
                   {step.label}
                 </span>
                 {step.description && (
-                  <span className="mt-0.5 block text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]">
+                  <span className="mbs-0.5 block text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]">
                     {step.description}
                   </span>
                 )}

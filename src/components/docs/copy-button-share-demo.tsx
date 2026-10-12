@@ -24,7 +24,7 @@ export function CopyButtonShareDemo() {
           </CopyButton>
         </div>
       </div>
-      <div className="flex items-center justify-between gap-3 border-t border-border/70 pt-4">
+      <div className="flex items-center justify-between gap-3 border-bs border-border/70 pbs-4">
         <div className="min-w-0">
           <p className="text-xs text-muted-foreground">Workspace ID</p>
           <code className="break-all font-mono text-sm text-foreground">

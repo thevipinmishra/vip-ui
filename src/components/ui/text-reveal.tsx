@@ -56,7 +56,7 @@ export function TextReveal({
     return (
       <span
         key={key}
-        className="-mx-[0.1em] -my-[0.2em] inline-block overflow-hidden px-[0.1em] py-[0.2em] align-bottom"
+        className="-mx-[0.1em] -my-[0.2em] inline-block overflow-clip px-[0.1em] py-[0.2em] align-bottom"
       >
         <motion.span
           className="inline-block"

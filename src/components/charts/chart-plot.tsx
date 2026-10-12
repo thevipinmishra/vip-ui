@@ -68,18 +68,18 @@ export function ChartPlot({
   const galleryItem = useContext(GalleryItemContext);
 
   return (
-    <ChartFrame className="flex h-full w-full flex-col bg-transparent p-0 pb-4 sm:p-0 sm:pb-5">
+    <ChartFrame className="flex h-full w-full flex-col bg-transparent p-0 pbe-4 sm:p-0 sm:pbe-5">
       <ChartCaption className="sr-only">
         <ChartTitle>{title}</ChartTitle>
       </ChartCaption>
       {(galleryItem || controls) && (
-        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 px-4 pt-4 sm:px-5 lg:min-h-16">
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 px-4 pbs-4 sm:px-5 lg:min-h-16">
           {galleryItem && (
             <h3 className="min-w-0 text-base font-semibold leading-6 tracking-[-0.025em]">
               <a
                 href={galleryItem.href}
                 aria-label={`Link to ${galleryItem.name}`}
-                className="rounded-sm hover:text-primary hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-ring"
+                className="rounded-sm hover:text-primary hover:underline hover:underline-offset-4 active:text-primary active:underline active:underline-offset-4 focus-visible:outline-2 focus-visible:outline-ring"
               >
                 {galleryItem.name}
               </a>
@@ -92,9 +92,9 @@ export function ChartPlot({
           )}
         </div>
       )}
-      <div className="mt-3 min-w-0 px-4 sm:mt-4 sm:px-5">{children}</div>
+      <div className="mbs-3 min-w-0 px-4 sm:mbs-4 sm:px-5">{children}</div>
       {legend && (
-        <ul className="mt-3 flex flex-wrap justify-center gap-x-4 gap-y-1 px-4 text-xs text-muted-foreground sm:px-5">
+        <ul className="mbs-3 flex flex-wrap justify-center gap-x-4 gap-y-1 px-4 text-xs text-muted-foreground sm:px-5">
           {legend.map((item) => (
             <li key={item.label} className="inline-flex items-center gap-2">
               <span

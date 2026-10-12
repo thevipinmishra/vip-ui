@@ -42,11 +42,11 @@ export function Dashboard() {
 
   return (
     <div className="min-h-svh bg-background lg:grid lg:grid-cols-[248px_minmax(0,1fr)]">
-      <aside className="hidden border-e border-border/70 bg-card px-3 py-5 lg:sticky lg:top-0 lg:block lg:h-svh">
+      <aside className="hidden border-e border-border/70 bg-card px-3 py-5 lg:sticky lg:inset-bs-0 lg:block lg:h-svh">
         <AppSidebar />
       </aside>
       <div className="min-w-0">
-        <header className="sticky top-0 z-20 flex h-16 items-center gap-3 border-b border-border/70 bg-card/90 px-4 backdrop-blur sm:px-6">
+        <header className="sticky inset-bs-0 z-20 flex h-16 items-center gap-3 border-be border-border/70 bg-card/90 px-4 backdrop-blur sm:px-6">
           <div className="lg:hidden">
             <SheetTrigger isOpen={navOpen} onOpenChange={setNavOpen}>
               <Button variant="ghost" size="icon" aria-label="Open navigation">
@@ -57,7 +57,7 @@ export function Dashboard() {
                   <SheetTitle className="sr-only">Navigation</SheetTitle>
                   <SheetClose />
                 </SheetHeader>
-                <SheetBody className="pb-6">
+                <SheetBody className="pbe-6">
                   <AppSidebar onNavigate={() => setNavOpen(false)} />
                 </SheetBody>
               </Sheet>
@@ -107,7 +107,7 @@ export function Dashboard() {
               <h1 className="text-2xl font-semibold tracking-[-0.04em]">
                 Overview
               </h1>
-              <p className="mt-1 text-sm text-muted-foreground">
+              <p className="mbs-1 text-sm text-muted-foreground">
                 Store activity for September 2026
               </p>
             </div>
@@ -159,7 +159,7 @@ export function Dashboard() {
                             {event.action}
                           </span>
                         </p>
-                        <p className="mt-0.5 text-xs text-muted-foreground">
+                        <p className="mbs-0.5 text-xs text-muted-foreground">
                           {event.time}
                         </p>
                       </div>

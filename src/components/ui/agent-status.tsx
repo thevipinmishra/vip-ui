@@ -89,7 +89,7 @@ export function AgentStatus({
             {label}
           </span>
           {detail && (
-            <span className="mt-0.5 text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]">
+            <span className="mbs-0.5 text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]">
               {detail}
             </span>
           )}

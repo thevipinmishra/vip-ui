@@ -58,7 +58,7 @@ export function RatingInput({
               value={String(rating)}
               aria-label={`${rating} of ${max} stars`}
               className={cn(
-                "size-11 justify-center hover:bg-muted/70",
+                "size-11 justify-center hover:bg-muted/70 pressed:bg-muted/70",
                 rating <= selected ? "text-primary" : "text-muted-foreground",
               )}
             >

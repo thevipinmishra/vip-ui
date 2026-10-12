@@ -256,7 +256,7 @@ export function LineTarget() {
         initialWidth={520}
         ariaLabel="Daily uptime Monday to Saturday in percent, with 97 percent target"
       />
-      <p className="mt-2 text-center text-xs text-muted-foreground">
+      <p className="mbs-2 text-center text-xs text-muted-foreground">
         Dashed line: 97% uptime target
       </p>
     </ChartPlot>

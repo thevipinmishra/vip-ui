@@ -181,7 +181,7 @@ export function TooltipCustom() {
           <div>
             {defaultBody}
             {pinned && (
-              <p className="mt-2 border-t border-border/70 pt-2 text-xs text-muted-foreground">
+              <p className="mbs-2 border-bs border-border/70 pbs-2 text-xs text-muted-foreground">
                 Pinned for closer inspection. Press Escape to close.
               </p>
             )}

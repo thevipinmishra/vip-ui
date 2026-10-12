@@ -72,7 +72,7 @@ export function CheckboxGroupItems({
     <div
       {...props}
       data-slot="checkbox-group-items"
-      className={cn("grid grid-cols-1 gap-1 pt-1", className)}
+      className={cn("grid grid-cols-1 gap-1 pbs-1", className)}
     />
   );
 }

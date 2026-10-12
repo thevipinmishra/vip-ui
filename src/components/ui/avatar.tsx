@@ -6,7 +6,7 @@ import { tv, type VariantProps } from "tailwind-variants";
 import { cn } from "@/lib/utils";
 
 const avatarStyles = tv({
-  base: "inline-grid shrink-0 place-items-center overflow-hidden rounded-full bg-accent font-semibold leading-none text-accent-foreground ring-1 ring-border/70 select-none *:col-start-1 *:row-start-1 forced-colors:border",
+  base: "inline-grid shrink-0 place-items-center overflow-clip rounded-full bg-accent font-semibold leading-none text-accent-foreground ring-1 ring-border/70 select-none *:col-start-1 *:row-start-1 forced-colors:border",
   variants: {
     size: {
       sm: "size-8 text-[0.6875rem]",

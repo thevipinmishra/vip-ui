@@ -10,16 +10,16 @@ const sections = ["Profile", "Account", "Notifications", "Billing"];
 export default function SettingsPage() {
   return (
     <div className="min-h-svh bg-background">
-      <div className="mx-auto max-w-4xl px-5 pt-10 sm:px-8">
+      <div className="mx-auto max-w-4xl px-5 pbs-10 sm:px-8">
         <h1 className="text-2xl font-semibold tracking-[-0.04em]">Settings</h1>
-        <nav aria-label="Settings" className="mt-5 border-b border-border/70">
-          <ul className="-mb-px flex gap-6 overflow-x-auto text-sm font-medium">
+        <nav aria-label="Settings" className="mbs-5 border-be border-border/70">
+          <ul className="-mbe-px flex gap-6 overflow-x-auto text-sm font-medium">
             {sections.map((section, index) => (
               <li key={section}>
                 <a
                   href={`#${section.toLowerCase()}`}
                   aria-current={index === 0 ? "page" : undefined}
-                  className="inline-flex min-h-11 items-center border-b-2 border-transparent text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring aria-[current=page]:border-primary aria-[current=page]:text-foreground"
+                  className="inline-flex min-h-11 items-center border-be-2 border-transparent text-muted-foreground hover:text-foreground active:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring aria-[current=page]:border-primary aria-[current=page]:text-foreground"
                 >
                   {section}
                 </a>

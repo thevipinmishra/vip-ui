@@ -63,7 +63,7 @@ const alerts = [
 export function NotificationsBlock() {
   return (
     <Block title="Notifications">
-      <BlockBody className="gap-0 pt-2">
+      <BlockBody className="gap-0 pbs-2">
         <Part slug="switch">
           {alerts.map((alert) => (
             <Switch
@@ -77,14 +77,14 @@ export function NotificationsBlock() {
           ))}
         </Part>
       </BlockBody>
-      <BlockFooter className="block border-t border-border/70 pt-4">
+      <BlockFooter className="block border-bs border-border/70 pbs-4">
         <Part slug="fieldset">
           <Fieldset
             aria-describedby="quiet-hours-help"
             className="rounded-none bg-transparent p-0 shadow-none ring-0"
           >
             <FieldsetLegend className="px-0">Quiet hours</FieldsetLegend>
-            <FieldsetDescription id="quiet-hours-help" className="mb-3">
+            <FieldsetDescription id="quiet-hours-help" className="mbe-3">
               We keep messages until this period ends.
             </FieldsetDescription>
             <div className="grid grid-cols-2 gap-3">
@@ -190,7 +190,7 @@ export function TimeOffBlock() {
           Send an automatic reply
         </Switch>
       </BlockBody>
-      <BlockFooter className="justify-between border-t border-border/70 pt-4">
+      <BlockFooter className="justify-between border-bs border-border/70 pbs-4">
         <p className="text-sm">
           <span className="font-semibold tabular-nums">{days}</span>{" "}
           <span className="text-muted-foreground">
@@ -267,7 +267,7 @@ export function TeamBlock() {
           Send {count === 1 ? "invite" : `${count} invites`}
         </Button>
       </BlockBody>
-      <BlockFooter className="flex-nowrap justify-between gap-3 border-t border-border/70 pt-4">
+      <BlockFooter className="flex-nowrap justify-between gap-3 border-bs border-border/70 pbs-4">
         <Part slug="avatar" className="flex items-center gap-3">
           <AvatarGroup
             aria-label="Members"

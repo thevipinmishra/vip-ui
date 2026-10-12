@@ -26,7 +26,7 @@ export function ToggleButtonGroup({
           data-slot="toggle-button-group"
           className={composeRenderProps(className, (className) =>
             cn(
-              "inline-flex w-fit max-w-full flex-wrap gap-1 rounded-lg border border-border bg-secondary p-1 data-[orientation=vertical]:flex-col",
+              "inline-flex w-fit max-w-full flex-wrap gap-1 rounded-[calc(var(--radius-md)+--spacing(1))] border border-border bg-secondary p-1 data-[orientation=vertical]:flex-col",
               className,
             ),
           )}

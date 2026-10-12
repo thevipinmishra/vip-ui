@@ -60,7 +60,7 @@ export function CatalogBrowser() {
 
   return (
     <>
-      <div className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-2">
+      <div className="mbs-8 flex flex-wrap items-center gap-x-4 gap-y-2">
         <SearchField
           aria-label="Filter components"
           value={query}
@@ -103,7 +103,7 @@ export function CatalogBrowser() {
       </div>
 
       {visibleGroups.length > 0 ? (
-        <div className="mt-12 grid gap-14">
+        <div className="mbs-12 grid gap-14">
           {visibleGroups.map((group) => {
             const headingId = group.title
               .toLowerCase()
@@ -114,7 +114,7 @@ export function CatalogBrowser() {
                 key={group.title}
                 id={headingId}
                 aria-labelledby={`${headingId}-title`}
-                className="scroll-mt-6"
+                className="scroll-mbs-6"
               >
                 <div className="flex items-baseline gap-2.5">
                   <h2
@@ -127,15 +127,15 @@ export function CatalogBrowser() {
                     {group.components.length}
                   </span>
                 </div>
-                <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                <p className="mbs-1 text-sm leading-6 text-muted-foreground">
                   {group.description}
                 </p>
-                <ul className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                <ul className="mbs-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
                   {group.components.map((component) => (
                     <li key={component.slug} className="flex">
                       <Link
                         href={`/components/${component.slug}`}
-                        className="group/card flex w-full flex-col rounded-xl bg-card px-4 py-3.5 text-card-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70 transition-[box-shadow,scale] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:shadow-[var(--shadow-float)] hover:ring-foreground/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-safe:active:scale-[0.985] forced-colors:border"
+                        className="group/card flex w-full flex-col rounded-xl bg-card px-4 py-3.5 text-card-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70 transition-[box-shadow] motion-safe:transition-[box-shadow,scale] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:shadow-[var(--shadow-float)] hover:ring-foreground/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring active:scale-[0.98] forced-colors:border"
                       >
                         <span className="flex items-center gap-2">
                           <span className="min-w-0 text-[15px] font-medium tracking-[-0.02em]">
@@ -144,10 +144,10 @@ export function CatalogBrowser() {
                           <ArrowRightIcon
                             size={14}
                             aria-hidden="true"
-                            className="ms-auto shrink-0 text-muted-foreground opacity-0 transition-[opacity,translate] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover/card:opacity-100 group-focus-visible/card:opacity-100 motion-safe:-translate-x-1 motion-safe:group-hover/card:translate-x-0 motion-safe:group-focus-visible/card:translate-x-0 rtl:-scale-x-100"
+                            className="ms-auto shrink-0 text-muted-foreground opacity-0 transition-[opacity] motion-safe:transition-[opacity,translate] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover/card:opacity-100 group-focus-visible/card:opacity-100 -translate-x-1 group-hover/card:translate-x-0 group-focus-visible/card:translate-x-0 rtl:-scale-x-100"
                           />
                         </span>
-                        <span className="mt-1 text-[13px] leading-5 text-muted-foreground">
+                        <span className="mbs-1 text-[13px] leading-5 text-muted-foreground">
                           {component.useFor}
                         </span>
                       </Link>
@@ -159,7 +159,7 @@ export function CatalogBrowser() {
           })}
         </div>
       ) : (
-        <div className="mt-12">
+        <div className="mbs-12">
           <EmptyState>
             <EmptyStateIcon>
               <MagnifyingGlassIcon size={19} aria-hidden="true" />

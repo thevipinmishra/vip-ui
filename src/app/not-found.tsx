@@ -17,11 +17,11 @@ export default function NotFound() {
         <h1 className="text-[clamp(2.25rem,4vw,3rem)] font-semibold leading-[1.08] tracking-[-0.055em]">
           Page not found
         </h1>
-        <p className="mt-4 max-w-xl text-sm leading-7 text-muted-foreground">
+        <p className="mbs-4 max-w-xl text-sm leading-7 text-muted-foreground">
           This address does not match a page on vip/ui. Browse the component
           catalog, or search with ⌘K from the header.
         </p>
-        <div className="mt-8 flex flex-wrap gap-3">
+        <div className="mbs-8 flex flex-wrap gap-3">
           <ButtonLink as={Link} href="/components">
             Browse components <ArrowRightIcon size={16} aria-hidden="true" />
           </ButtonLink>

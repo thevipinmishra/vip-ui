@@ -30,13 +30,13 @@ export function BlocksGallery({ category }: { category: string | null }) {
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <a
         href="#main"
-        className="sr-only fixed start-4 top-4 z-50 rounded-md bg-primary px-4 py-2 text-primary-foreground focus:not-sr-only"
+        className="sr-only fixed start-4 inset-bs-4 z-50 rounded-md bg-primary px-4 py-2 text-primary-foreground focus:not-sr-only"
       >
         Skip to content
       </a>
       <SiteHeader />
-      <main id="main" className="flex-1 pb-24">
-        <PageHeader className="site-container pb-10 pt-10 sm:pt-14">
+      <main id="main" className="flex-1 pbe-24">
+        <PageHeader className="site-container pbe-10 pbs-10 sm:pbs-14">
           <PageHeaderHeading>Blocks</PageHeaderHeading>
           <PageHeaderDescription>
             Complete page sections, built with vip/ui. Add a block to your app.
@@ -50,7 +50,7 @@ export function BlocksGallery({ category }: { category: string | null }) {
           </PageActions>
         </PageHeader>
         <CategoryTabs label="Block categories" tabs={tabs} active={active} />
-        <div className="site-container mt-10 grid gap-20">
+        <div className="site-container mbs-10 grid gap-20">
           {shown.map((block) => (
             <BlockDisplay key={block.name} block={block} />
           ))}

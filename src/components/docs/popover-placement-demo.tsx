@@ -38,11 +38,11 @@ export function PopoverPlacementDemo() {
         <DialogTrigger key={item.placement}>
           <Button variant="outline">{item.label}</Button>
           <Popover placement={item.placement} className="w-64">
-            <Dialog className="outline-none">
+            <Dialog className="focus:outline-hidden">
               <Heading slot="title" className="text-sm font-semibold">
                 {item.title}
               </Heading>
-              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+              <p className="mbs-2 text-sm leading-6 text-muted-foreground">
                 {item.body}
               </p>
             </Dialog>

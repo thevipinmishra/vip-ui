@@ -9,13 +9,13 @@ export function SidebarScrollArea({ children }: { children: ReactNode }) {
   const api = scrollArea.connect(service, normalizeProps);
 
   return (
-    <div className="sticky top-6">
+    <div className="sticky inset-bs-6">
       <div {...api.getRootProps()} className="sidebar-scroll-area">
         <div
           {...api.getViewportProps()}
           className="sidebar-scroll-viewport h-[calc(100dvh-1.5rem)]"
         >
-          <div {...api.getContentProps()} className="pb-10 pr-5">
+          <div {...api.getContentProps()} className="pbe-10 pe-5">
             {children}
           </div>
         </div>

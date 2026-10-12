@@ -20,13 +20,13 @@ export function InstallTabs({
       </TabList>
       <TabPanel
         id="cli"
-        className="docs-tab-panel mt-5 min-w-0 rounded-none bg-transparent p-0 shadow-none ring-0"
+        className="docs-tab-panel mbs-5 min-w-0 rounded-none bg-transparent p-0 shadow-none ring-0"
       >
         {cli}
       </TabPanel>
       <TabPanel
         id="manual"
-        className="docs-tab-panel mt-5 min-w-0 rounded-none bg-transparent p-0 shadow-none ring-0"
+        className="docs-tab-panel mbs-5 min-w-0 rounded-none bg-transparent p-0 shadow-none ring-0"
       >
         {custom}
       </TabPanel>

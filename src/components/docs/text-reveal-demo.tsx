@@ -17,7 +17,7 @@ export function TextRevealDemo() {
             split="characters"
           />
         </p>
-        <p className="mt-3 text-4xl leading-[1.15] font-semibold tracking-[-0.06em] text-foreground">
+        <p className="mbs-3 text-4xl leading-[1.15] font-semibold tracking-[-0.06em] text-foreground">
           <TextReveal
             key={`title-${replay}`}
             text="Make room for the unusual."

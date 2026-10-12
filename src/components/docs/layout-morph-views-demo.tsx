@@ -49,7 +49,7 @@ export function LayoutMorphViewsDemo() {
         className="rounded-xl border border-border bg-card px-5 py-4 shadow-[var(--shadow-card)]"
       >
         <p className="text-lg font-semibold tracking-tight">{price}</p>
-        <ul className="mt-3 grid gap-1.5 text-sm text-muted-foreground">
+        <ul className="mbs-3 grid gap-1.5 text-sm text-muted-foreground">
           {features.map((feature) => (
             <li key={feature}>{feature}</li>
           ))}

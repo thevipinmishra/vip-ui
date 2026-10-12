@@ -16,11 +16,13 @@ export function ToolCallDemo() {
       />
       <ToolCallPanel>
         <p className="text-xs font-medium text-muted-foreground">Input</p>
-        <pre className="mt-1 overflow-x-auto rounded-md bg-muted/60 p-3 font-mono text-xs leading-5">
+        <pre className="mbs-1 overflow-x-auto rounded-md bg-muted/60 p-3 font-mono text-xs leading-5">
           {`{ "query": "disclosure expansion" }`}
         </pre>
-        <p className="mt-3 text-xs font-medium text-muted-foreground">Output</p>
-        <p className="mt-1">
+        <p className="mbs-3 text-xs font-medium text-muted-foreground">
+          Output
+        </p>
+        <p className="mbs-1">
           Disclosure supports controlled and default expanded state.
         </p>
       </ToolCallPanel>

@@ -20,7 +20,7 @@ function CompositionBranch({
           key={part}
           className={
             nested
-              ? "relative before:absolute before:-start-5 before:top-[19px] before:size-2 before:rounded-full before:bg-border before:ring-2 before:ring-card"
+              ? "relative before:absolute before:-start-5 before:inset-bs-[19px] before:size-2 before:rounded-full before:bg-border before:ring-2 before:ring-card"
               : undefined
           }
         >
@@ -50,12 +50,12 @@ function CompositionBranch({
 export function ComponentComposition({ parts, helper }: Composition) {
   return (
     <div className="max-w-[700px] rounded-xl bg-card p-4 shadow-[var(--shadow-card)] ring-1 ring-border/70 sm:p-5">
-      <p className="mb-4 text-[13px] leading-6 text-muted-foreground">
+      <p className="mbe-4 text-[13px] leading-6 text-muted-foreground">
         Indentation shows JSX nesting. Parts on the same level are siblings.
       </p>
       <CompositionBranch parts={parts} />
       {helper && (
-        <p className="mt-5 border-t border-border/70 pt-4 text-[13px] leading-6 text-muted-foreground">
+        <p className="mbs-5 border-bs border-border/70 pbs-4 text-[13px] leading-6 text-muted-foreground">
           <code className="font-mono font-semibold text-foreground">
             {helper.part}
           </code>{" "}

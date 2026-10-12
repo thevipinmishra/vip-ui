@@ -25,7 +25,7 @@ export function LayoutMorphDemo() {
         <p className="text-xl font-semibold tracking-tight">
           {captions[index].title}
         </p>
-        <p className="mt-2 text-sm leading-6 text-muted-foreground">
+        <p className="mbs-2 text-sm leading-6 text-muted-foreground">
           {captions[index].detail}
         </p>
       </LayoutMorph>

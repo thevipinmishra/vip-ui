@@ -25,7 +25,7 @@ export function CodeScrollArea({
     <div
       {...api.getRootProps()}
       data-scrollbar-visible={showScrollbar || undefined}
-      className="code-scroll-area min-w-0 w-full max-w-full overflow-hidden"
+      className="code-scroll-area min-w-0 w-full max-w-full overflow-clip"
     >
       <section
         {...viewportProps}

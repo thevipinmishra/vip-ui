@@ -13,7 +13,7 @@ export function GuideHeader({
 }) {
   return (
     <header>
-      <nav aria-label="Breadcrumbs" className="mb-4">
+      <nav aria-label="Breadcrumbs" className="mbe-4">
         <Breadcrumbs>
           <Breadcrumb href="/components">Components</Breadcrumb>
           <Breadcrumb>{title}</Breadcrumb>
@@ -22,7 +22,7 @@ export function GuideHeader({
       <h1 className="text-[clamp(2.25rem,4vw,3.5rem)] font-semibold leading-[1.08] tracking-[-0.055em] [text-wrap:balance]">
         {title}
       </h1>
-      <p className="mt-2 text-sm leading-7 text-muted-foreground">
+      <p className="mbs-2 text-sm leading-7 text-muted-foreground">
         {description}
       </p>
     </header>
@@ -30,7 +30,7 @@ export function GuideHeader({
 }
 
 const pagerLink =
-  "flex min-h-20 flex-col justify-center rounded-xl bg-card px-5 py-3 shadow-[var(--shadow-card)] ring-1 ring-border/70 hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
+  "flex min-h-20 flex-col justify-center rounded-xl bg-card px-5 py-3 shadow-[var(--shadow-card)] ring-1 ring-border/70 hover:bg-muted active:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 
 export function GuidePager({
   previous,
@@ -42,12 +42,12 @@ export function GuidePager({
   return (
     <nav
       aria-label="Guide pagination"
-      className="mt-16 grid gap-3 sm:grid-cols-2"
+      className="mbs-16 grid gap-3 sm:grid-cols-2"
     >
       {previous && (
         <Link href={previous.href} className={pagerLink}>
           <span className="text-[11px] text-muted-foreground">Previous</span>
-          <span className="mt-1 inline-flex items-center gap-2 text-sm font-semibold">
+          <span className="mbs-1 inline-flex items-center gap-2 text-sm font-semibold">
             <ArrowLeftIcon size={16} aria-hidden="true" />
             {previous.label}
           </span>
@@ -56,10 +56,10 @@ export function GuidePager({
       {next && (
         <Link
           href={next.href}
-          className={`${pagerLink} items-end text-right sm:col-start-2`}
+          className={`${pagerLink} items-end text-end sm:col-start-2`}
         >
           <span className="text-[11px] text-muted-foreground">Next</span>
-          <span className="mt-1 inline-flex items-center gap-2 text-sm font-semibold">
+          <span className="mbs-1 inline-flex items-center gap-2 text-sm font-semibold">
             {next.label}
             <ArrowRightIcon size={16} aria-hidden="true" />
           </span>

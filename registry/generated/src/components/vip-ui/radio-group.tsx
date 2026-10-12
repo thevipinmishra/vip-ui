@@ -27,7 +27,7 @@ const radioStyles = tv({
   variants: {
     variant: {
       default: "",
-      card: "min-h-14 rounded-lg bg-card px-4 py-3 shadow-[var(--shadow-card)] ring-1 ring-border transition-[background-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted selected:bg-accent selected:ring-primary/40",
+      card: "min-h-14 rounded-lg bg-card px-4 py-3 shadow-[var(--shadow-card)] ring-1 ring-border transition-[background-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted pressed:bg-muted selected:bg-accent selected:ring-primary/40",
     },
   },
   defaultVariants: { variant: "default" },
@@ -172,7 +172,7 @@ export function RadioGroupItems({
       {...props}
       data-slot="radio-group-items"
       className={cn(
-        "grid grid-cols-1 gap-1 pt-2 group-data-[orientation=horizontal]/radio-group:flex group-data-[orientation=horizontal]/radio-group:flex-wrap group-data-[orientation=horizontal]/radio-group:gap-x-6",
+        "grid grid-cols-1 gap-1 pbs-2 group-data-[orientation=horizontal]/radio-group:flex group-data-[orientation=horizontal]/radio-group:flex-wrap group-data-[orientation=horizontal]/radio-group:gap-x-6",
         className,
       )}
     />
@@ -204,7 +204,7 @@ export function RadioIndicator({
       aria-hidden="true"
       data-slot="radio-indicator"
       className={cn(
-        "grid size-5 shrink-0 place-items-center rounded-full border border-input bg-card shadow-[var(--shadow-inset)] transition-[border-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:border-primary/60 group-invalid:border-destructive group-invalid:group-hover:border-destructive group-selected:border-primary",
+        "grid size-5 shrink-0 place-items-center rounded-full border border-input bg-card shadow-[var(--shadow-inset)] transition-[border-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:border-primary/60 group-pressed:border-primary/60 group-invalid:border-destructive group-invalid:group-hover:border-destructive group-selected:border-primary",
         className,
       )}
     >
@@ -249,7 +249,7 @@ export function RadioDescription({
       {...props}
       data-slot="radio-description"
       className={cn(
-        "mt-1 block text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]",
+        "mbs-1 block text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]",
         className,
       )}
     />

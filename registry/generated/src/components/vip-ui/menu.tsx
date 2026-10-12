@@ -68,7 +68,7 @@ export function MenuPopover({
       maxHeight={props.maxHeight ?? 300}
       className={composeRenderProps(className, (className) =>
         cn(
-          "min-w-[min(11rem,calc(100vw-2rem))] rounded-lg border-0 p-1.5 ring-1 ring-border/70",
+          "min-w-[min(11rem,calc(100vw-2rem))] rounded-[calc(var(--radius-md)+--spacing(1.5))] border-0 p-1.5 ring-1 ring-border/70",
           className,
         ),
       )}
@@ -87,7 +87,10 @@ export function MenuContent<T extends object>({
       {...props}
       data-slot="menu-content"
       className={composeRenderProps(className, (className) =>
-        cn("grid gap-1 outline-none [overflow-wrap:anywhere]", className),
+        cn(
+          "grid gap-1 focus:outline-hidden [overflow-wrap:anywhere]",
+          className,
+        ),
       )}
     />
   );
@@ -107,7 +110,7 @@ export function MenuItem<T extends object>({
       data-slot="menu-item"
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex min-h-11 cursor-pointer items-center gap-2.5 rounded-md px-3 py-2 text-sm text-foreground outline-none hover:bg-muted focus:bg-muted open:bg-muted focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&>[data-slot=kbd]]:ms-auto",
+          "flex min-h-11 cursor-pointer items-center gap-2.5 rounded-md px-3 py-2 text-sm text-foreground focus:outline-hidden hover:bg-muted focus:bg-muted pressed:bg-muted open:bg-muted focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&>[data-slot=kbd]]:ms-auto",
           className,
         ),
       )}
@@ -139,7 +142,7 @@ export function MenuSeparator({ className, ...props }: SeparatorProps) {
     <Separator
       {...props}
       data-slot="menu-separator"
-      className={cn("border-t border-border/70", className)}
+      className={cn("border-bs border-border/70", className)}
     />
   );
 }

@@ -64,7 +64,7 @@ export function BillingSettings() {
     <div className="grid gap-6">
       <div>
         <h1 className="text-2xl font-semibold tracking-[-0.04em]">Billing</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <p className="mbs-1 text-sm text-muted-foreground">
           Manage your plan, usage, and payment details.
         </p>
       </div>
@@ -107,7 +107,7 @@ export function BillingSettings() {
               ))}
             </RadioGroup>
           </CardContent>
-          <CardFooter className="justify-end border-t border-border/70 pt-5">
+          <CardFooter className="justify-end border-bs border-border/70 pbs-5">
             <Button
               variant="ghost"
               isDisabled={!changed}
@@ -162,7 +162,7 @@ export function BillingSettings() {
         <CardHeader>
           <CardTitle as="h2">Invoices</CardTitle>
         </CardHeader>
-        <CardContent className="pt-3">
+        <CardContent className="pbs-3">
           <ul className="divide-y divide-border/70">
             {invoices.map((invoice) => (
               <li

@@ -73,7 +73,7 @@ export function PackageManagerTabs({
               <Tab
                 key={manager}
                 id={manager}
-                className="inline-flex h-8 min-w-0 cursor-pointer items-center justify-center rounded-md px-2 font-mono text-[11px] text-muted-foreground outline-none hover:text-foreground selected:bg-foreground/8 selected:font-medium selected:text-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring"
+                className="inline-flex h-8 min-w-0 cursor-pointer items-center justify-center rounded-md px-2 font-mono text-[11px] text-muted-foreground focus:outline-hidden hover:text-foreground pressed:text-foreground selected:bg-foreground/8 selected:font-medium selected:text-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring"
               >
                 {manager}
               </Tab>
@@ -85,7 +85,7 @@ export function PackageManagerTabs({
           <TabPanel
             key={manager}
             id={manager}
-            className="docs-tab-panel min-w-0 outline-none"
+            className="docs-tab-panel min-w-0"
           >
             {children[index]}
           </TabPanel>

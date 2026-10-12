@@ -9,11 +9,11 @@ export function PopoverDemo() {
     <DialogTrigger>
       <Button variant="outline">View details</Button>
       <Popover placement="bottom start" className="w-72">
-        <Dialog className="outline-none">
+        <Dialog className="focus:outline-hidden">
           <Heading slot="title" className="text-sm font-semibold">
             Project details
           </Heading>
-          <dl className="mt-3 grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-2 text-sm">
+          <dl className="mbs-3 grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-2 text-sm">
             <dt className="text-muted-foreground">Owner</dt>
             <dd>Maya Chen</dd>
             <dt className="text-muted-foreground">Status</dt>

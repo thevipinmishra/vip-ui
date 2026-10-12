@@ -57,12 +57,12 @@ export function CodeFrame({
     <div
       data-slot="code-frame"
       className={cn(
-        "code-frame min-w-0 overflow-hidden bg-code text-code-foreground",
+        "code-frame min-w-0 overflow-clip bg-code text-code-foreground",
         !embedded &&
           "rounded-xl shadow-[var(--shadow-card)] ring-1 ring-border/70",
       )}
     >
-      <div className="flex min-h-12 flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-border/70 px-3 py-2 sm:px-4">
+      <div className="flex min-h-12 flex-wrap items-center justify-between gap-x-3 gap-y-2 border-be border-border/70 px-3 py-2 sm:px-4">
         {header ?? (
           <div
             className={cn(
@@ -97,7 +97,7 @@ export function CodeFrame({
         </div>
       </div>
       <motion.div
-        className={cn("relative", canExpand && "overflow-hidden")}
+        className={cn("relative", canExpand && "overflow-clip")}
         initial={false}
         animate={canExpand ? { height: expanded ? "auto" : 176 } : undefined}
         transition={{
@@ -119,7 +119,7 @@ export function CodeFrame({
           </CodeScrollArea>
         </div>
         {canExpand && !expanded && (
-          <div className="absolute inset-x-0 bottom-0 z-10 flex justify-center bg-gradient-to-b from-transparent to-code pb-3 pt-12">
+          <div className="absolute inset-x-0 inset-be-0 z-10 flex justify-center bg-gradient-to-b from-transparent to-code pbe-3 pbs-12">
             <Button
               ref={overlayButtonRef}
               variant="ghost"

@@ -23,7 +23,7 @@ export default function ComponentsPage() {
           Add a component to your app, then change it as necessary.{" "}
           <Link
             href="/components/installation"
-            className="rounded-sm font-medium text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            className="rounded-sm font-medium text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary active:decoration-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
             Set up your project
           </Link>{" "}

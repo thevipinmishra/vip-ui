@@ -64,7 +64,7 @@ function Step({
 }) {
   return (
     <li className="grid min-w-0 gap-4 md:grid-cols-[12rem_minmax(0,1fr)] md:gap-10">
-      <div className="flex items-center gap-3 md:items-start md:pt-1">
+      <div className="flex items-center gap-3 md:items-start md:pbs-1">
         <span
           aria-hidden="true"
           className="grid size-7 shrink-0 place-items-center rounded-full bg-primary font-mono text-xs font-semibold text-primary-foreground"
@@ -172,7 +172,7 @@ export async function ThemeInstall({ theme }: { theme: OfficialTheme }) {
         </CodeFrame>
       </Step>
       <Step number={3} title="Check the details">
-        <ul className="grid list-disc gap-2 pl-5 marker:text-border">
+        <ul className="grid list-disc gap-2 ps-5 marker:text-border">
           <li>
             Components follow <code className={code}>--radius</code> (
             {theme.radius}) through the shadcn scale: sm is 0.6×, md 0.8×, xl

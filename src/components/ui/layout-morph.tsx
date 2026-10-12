@@ -32,7 +32,7 @@ function MorphContent({
   return (
     <motion.div
       data-slot="layout-morph-content"
-      className={cn("w-full", !isPresent && "absolute inset-x-0 top-0")}
+      className={cn("w-full", !isPresent && "absolute inset-x-0 inset-bs-0")}
       inert={!isPresent}
       aria-hidden={!isPresent || undefined}
       initial={reducedMotion ? false : { opacity: 0, y: 6 }}

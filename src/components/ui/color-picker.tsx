@@ -21,7 +21,7 @@ import { fieldLabelStyles } from "./field-styles";
 import { Popover } from "./popover";
 
 const colorThumbStyles =
-  "size-6 rounded-full border-2 border-white shadow-[var(--shadow-card)] ring-1 ring-black/50 outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring";
+  "size-6 rounded-full border-2 border-white shadow-[var(--shadow-card)] ring-1 ring-black/50 focus:outline-hidden focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring";
 
 export interface ColorPickerProps
   extends Omit<AriaColorPickerProps, "children"> {
@@ -49,7 +49,7 @@ export function ColorPicker({
           >
             <AriaDialog
               aria-label={`${label} controls`}
-              className="grid gap-4 outline-none"
+              className="grid gap-4 focus:outline-hidden"
             >
               <ColorArea
                 data-slot="color-picker-area"
@@ -78,7 +78,7 @@ export function ColorPicker({
                 <SliderTrack className="relative h-5 rounded-full ring-1 ring-inset ring-foreground/20">
                   <ColorThumb
                     data-slot="color-picker-hue-thumb"
-                    className={cn(colorThumbStyles, "top-1/2")}
+                    className={cn(colorThumbStyles, "inset-bs-1/2")}
                   >
                     {({ isDragging }) => (
                       <ThumbDragRing isDragging={isDragging} />

@@ -34,8 +34,10 @@ export function SheetDemo() {
             <dd>$18.00</dd>
             <dt>Shipping</dt>
             <dd>$4.00</dd>
-            <dt className="border-t border-border pt-3 font-semibold">Total</dt>
-            <dd className="border-t border-border pt-3 font-semibold">
+            <dt className="border-bs border-border pbs-3 font-semibold">
+              Total
+            </dt>
+            <dd className="border-bs border-border pbs-3 font-semibold">
               $22.00
             </dd>
           </dl>

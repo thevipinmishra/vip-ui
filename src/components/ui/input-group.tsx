@@ -34,7 +34,7 @@ export function InputGroupInput({
       data-slot="input-group-input"
       className={composeRenderProps(className, (className) =>
         cn(
-          "min-h-11 min-w-[min(8rem,50%)] flex-1 cursor-text bg-transparent py-2.5 text-base leading-6 text-foreground outline-none [&::placeholder]:text-muted-foreground/80 disabled:cursor-not-allowed sm:text-sm [&::-webkit-search-cancel-button]:hidden",
+          "min-h-11 min-w-[min(8rem,50%)] flex-1 cursor-text bg-transparent py-2.5 text-base leading-6 text-foreground focus:outline-hidden [&::placeholder]:text-muted-foreground/80 disabled:cursor-not-allowed sm:text-sm [&::-webkit-search-cancel-button]:hidden",
           className,
         ),
       )}
@@ -52,7 +52,7 @@ export function InputGroupTextArea({
       data-slot="input-group-text-area"
       className={composeRenderProps(className, (className) =>
         cn(
-          "min-h-28 min-w-0 basis-full resize-y bg-transparent py-3 text-base leading-6 text-foreground outline-none [&::placeholder]:text-muted-foreground/80 disabled:cursor-not-allowed sm:text-sm",
+          "min-h-28 min-w-0 basis-full resize-y bg-transparent py-3 text-base leading-6 text-foreground focus:outline-hidden [&::placeholder]:text-muted-foreground/80 disabled:cursor-not-allowed sm:text-sm",
           className,
         ),
       )}
@@ -74,7 +74,7 @@ export function InputGroupAddon({
       className={cn(
         "inline-flex min-w-0 items-center gap-2 text-sm text-muted-foreground [&_svg]:shrink-0",
         align === "block-end" &&
-          "w-full justify-end border-t border-border/70 py-2",
+          "w-full justify-end border-bs border-border/70 py-2",
         className,
       )}
     >

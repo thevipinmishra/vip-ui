@@ -3,7 +3,7 @@ import { tv, type VariantProps } from "tailwind-variants";
 import { cn } from "./utils";
 
 const badgeStyles = tv({
-  base: "inline-flex min-h-7 w-fit min-w-0 max-w-full shrink-0 items-center gap-1.5 overflow-hidden whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium leading-4 tracking-normal shadow-[var(--shadow-card)] ring-1 forced-colors:border [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  base: "inline-flex min-h-7 w-fit min-w-0 max-w-full shrink-0 items-center gap-1.5 overflow-clip whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium leading-4 tracking-normal shadow-[var(--shadow-card)] ring-1 forced-colors:border [&_svg]:pointer-events-none [&_svg]:shrink-0",
   variants: {
     variant: {
       neutral: "bg-secondary text-secondary-foreground ring-border",

@@ -66,11 +66,11 @@ export function DialogScrollableDemo() {
         <DialogDescription>
           Review each section before sharing the project with your team.
         </DialogDescription>
-        <div className="mt-6 grid gap-6">
+        <div className="mbs-6 grid gap-6">
           {sections.map((section) => (
             <section key={section.title}>
               <h3 className="text-sm font-semibold">{section.title}</h3>
-              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+              <p className="mbs-2 text-sm leading-6 text-muted-foreground">
                 {section.details}
               </p>
             </section>

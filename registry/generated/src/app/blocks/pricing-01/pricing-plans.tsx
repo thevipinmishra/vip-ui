@@ -66,11 +66,11 @@ export function PricingPlans() {
         <Badge variant="accent">Pricing</Badge>
         <h1
           id="pricing-title"
-          className="mt-4 text-balance text-4xl font-semibold tracking-[-0.055em] sm:text-5xl"
+          className="mbs-4 text-balance text-4xl font-semibold tracking-[-0.055em] sm:text-5xl"
         >
           A plan for each stage of your team
         </h1>
-        <p className="mt-4 text-base leading-7 text-muted-foreground">
+        <p className="mbs-4 text-base leading-7 text-muted-foreground">
           Start for free. Change or cancel your plan at any time.
         </p>
         <ToggleButtonGroup
@@ -82,7 +82,7 @@ export function PricingPlans() {
             const [next] = keys;
             if (next === "monthly" || next === "yearly") setCycle(next);
           }}
-          className="mx-auto mt-8 rounded-full"
+          className="mx-auto mbs-8 rounded-full"
         >
           <ToggleButton
             id="monthly"
@@ -103,7 +103,7 @@ export function PricingPlans() {
           </ToggleButton>
         </ToggleButtonGroup>
       </div>
-      <ul className="mt-12 grid gap-5 lg:grid-cols-3">
+      <ul className="mbs-12 grid gap-5 lg:grid-cols-3">
         {plans.map((plan) => (
           <li
             key={plan.name}
@@ -115,7 +115,7 @@ export function PricingPlans() {
             {plan.popular && (
               <Badge
                 variant="accent"
-                className="absolute -top-3.5 start-1/2 -translate-x-1/2 rtl:translate-x-1/2"
+                className="absolute -inset-bs-3.5 start-1/2 -translate-x-1/2 rtl:translate-x-1/2"
               >
                 Most popular
               </Badge>
@@ -123,10 +123,10 @@ export function PricingPlans() {
             <h2 className="text-lg font-semibold tracking-[-0.03em]">
               {plan.name}
             </h2>
-            <p className="mt-1 text-sm leading-6 text-muted-foreground">
+            <p className="mbs-1 text-sm leading-6 text-muted-foreground">
               {plan.description}
             </p>
-            <p className="mt-6 flex items-baseline gap-1">
+            <p className="mbs-6 flex items-baseline gap-1">
               <AnimatedNumber
                 value={plan[cycle]}
                 formatOptions={priceFormat}
@@ -136,18 +136,18 @@ export function PricingPlans() {
                 per seat each month
               </span>
             </p>
-            <p className="mt-1 h-5 text-xs text-muted-foreground">
+            <p className="mbs-1 h-5 text-xs text-muted-foreground">
               {cycle === "yearly" && plan.yearly > 0
                 ? `$${plan.yearly * 12} billed once a year`
                 : ""}
             </p>
             <Button
               variant={plan.popular ? "default" : "outline"}
-              className="mt-6 w-full"
+              className="mbs-6 w-full"
             >
               {plan.action}
             </Button>
-            <ul className="mt-8 grid gap-3 border-t border-border/70 pt-6 text-sm">
+            <ul className="mbs-8 grid gap-3 border-bs border-border/70 pbs-6 text-sm">
               {plan.features.map((feature) => (
                 <li key={feature} className="flex items-center gap-3">
                   <CheckIcon
@@ -163,7 +163,7 @@ export function PricingPlans() {
           </li>
         ))}
       </ul>
-      <p className="mt-10 text-center text-sm text-muted-foreground">
+      <p className="mbs-10 text-center text-sm text-muted-foreground">
         Prices are in US dollars. Taxes can apply.
       </p>
     </section>

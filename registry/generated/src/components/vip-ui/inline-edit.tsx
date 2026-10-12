@@ -97,7 +97,7 @@ export function InlineEdit({
                 }
               }}
             />
-            <div className="mb-1.5 flex gap-2">
+            <div className="mbe-1.5 flex gap-2">
               <Button
                 type="button"
                 size="sm"
@@ -121,7 +121,7 @@ export function InlineEdit({
             <p
               id={errorId}
               role="alert"
-              className={cn("mt-2", fieldErrorStyles)}
+              className={cn("mbs-2", fieldErrorStyles)}
             >
               {error}
             </p>

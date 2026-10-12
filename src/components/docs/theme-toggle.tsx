@@ -37,7 +37,7 @@ export function ThemeToggle() {
       onClick={toggleTheme}
       aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
       title={`Switch to ${isDark ? "light" : "dark"} theme`}
-      className="grid size-10 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+      className="relative after:absolute after:inset-[min(0px,(100%-44px)/2)] grid size-10 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground active:bg-muted active:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
       whileHover={reduceMotion ? undefined : { scale: 1.06 }}
       whileTap={reduceMotion ? undefined : { scale: 0.94 }}
       transition={{ type: "spring", stiffness: 500, damping: 36 }}

@@ -26,7 +26,7 @@ export function ToolCall({
     <Disclosure
       {...props}
       data-slot="tool-call"
-      className={cn("min-w-0 overflow-hidden rounded-xl", className)}
+      className={cn("min-w-0 overflow-clip rounded-xl", className)}
     />
   );
 }
@@ -61,7 +61,7 @@ export function ToolCallTrigger({
         {...props}
         data-slot="tool-call-trigger"
         className={cn(
-          "min-h-14 items-start rounded-xl px-4 py-3 hover:bg-muted/70 aria-expanded:rounded-b-none focus-visible:-outline-offset-2 [&>span:first-child]:min-w-0 [&>span:first-child]:flex-1 [&>span:last-child]:mt-2",
+          "min-h-14 items-start rounded-xl px-4 py-3 hover:bg-muted/70 pressed:bg-muted/70 aria-expanded:rounded-es-none aria-expanded:rounded-ee-none focus-visible:-outline-offset-2 [&>span:first-child]:min-w-0 [&>span:first-child]:flex-1 [&>span:last-child]:mbs-2",
           className,
         )}
       >
@@ -99,7 +99,7 @@ export function ToolCallTrigger({
                 {name}
               </span>
               {summary && (
-                <span className="mt-0.5 text-xs font-normal leading-5 text-muted-foreground [overflow-wrap:anywhere]">
+                <span className="mbs-0.5 text-xs font-normal leading-5 text-muted-foreground [overflow-wrap:anywhere]">
                   {summary}
                 </span>
               )}
@@ -128,7 +128,7 @@ export function ToolCallPanel({
       {...props}
       className={cn("text-sm leading-6 text-foreground", className)}
     >
-      <div className="min-w-0 border-t border-border/70 px-4 pt-3 pb-4 [overflow-wrap:anywhere]">
+      <div className="min-w-0 border-bs border-border/70 px-4 pbs-3 pbe-4 [overflow-wrap:anywhere]">
         {children}
       </div>
     </CollapsiblePanel>

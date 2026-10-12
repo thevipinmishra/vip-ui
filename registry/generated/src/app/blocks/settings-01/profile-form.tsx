@@ -60,7 +60,7 @@ function Section({
     <section className="grid gap-5 md:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] md:gap-10">
       <div>
         <h2 className="text-base font-semibold tracking-[-0.025em]">{title}</h2>
-        <p className="mt-1 text-sm leading-6 text-muted-foreground">
+        <p className="mbs-1 text-sm leading-6 text-muted-foreground">
           {description}
         </p>
       </div>
@@ -100,7 +100,7 @@ export function ProfileForm() {
 
   return (
     <Form
-      className="gap-10 pb-24"
+      className="gap-10 pbe-24"
       onSubmit={(event) => {
         event.preventDefault();
         setSaved(draft);
@@ -201,7 +201,7 @@ export function ProfileForm() {
             animate={{ opacity: 1, y: 0 }}
             exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
             transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
-            className="fixed inset-x-0 bottom-4 z-30 mx-auto flex w-[calc(100%-2rem)] max-w-xl flex-wrap items-center justify-between gap-3 rounded-xl bg-popover px-4 py-3 text-popover-foreground shadow-[var(--shadow-float)] ring-1 ring-border/70"
+            className="fixed inset-x-0 inset-be-4 z-30 mx-auto flex w-[calc(100%-2rem)] max-w-xl flex-wrap items-center justify-between gap-3 rounded-xl bg-popover px-4 py-3 text-popover-foreground shadow-[var(--shadow-float)] ring-1 ring-border/70"
           >
             <p className="text-sm font-medium">
               {dirty ? "You have changes that are not saved." : notice}

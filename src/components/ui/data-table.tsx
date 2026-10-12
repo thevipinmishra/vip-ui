@@ -161,11 +161,11 @@ export function DataTable<T extends object>({
     <div
       data-slot="data-table"
       className={cn(
-        "w-full min-w-0 overflow-hidden rounded-xl border border-border bg-card text-card-foreground shadow-[var(--shadow-card)]",
+        "w-full min-w-0 overflow-clip rounded-xl border border-border bg-card text-card-foreground shadow-[var(--shadow-card)]",
         className,
       )}
     >
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-4 py-3 sm:px-5">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-be border-border px-4 py-3 sm:px-5">
         <p className="min-w-0 text-base font-semibold tracking-tight text-foreground [overflow-wrap:anywhere]">
           {label}
         </p>
@@ -185,7 +185,7 @@ export function DataTable<T extends object>({
       </div>
       {(getSearchText ||
         columns.some((column) => column.filter && column.sortValue)) && (
-        <div className="flex flex-wrap items-end gap-3 border-b border-border px-4 py-4 sm:px-5">
+        <div className="flex flex-wrap items-end gap-3 border-be border-border px-4 py-4 sm:px-5">
           {getSearchText && (
             <SearchField
               label={`Search ${label}`}
@@ -276,7 +276,7 @@ export function DataTable<T extends object>({
                   aria-label="Select all rows on this page"
                   className="min-h-11 w-full items-center justify-center"
                 >
-                  <CheckboxIndicator className="mt-0" />
+                  <CheckboxIndicator className="mbs-0" />
                 </Checkbox>
               </Column>
             )}
@@ -300,7 +300,7 @@ export function DataTable<T extends object>({
                   {hasFilters ? "No matching rows" : "No rows yet"}
                 </p>
                 {hasFilters && (
-                  <p className="mt-1 text-sm text-muted-foreground">
+                  <p className="mbs-1 text-sm text-muted-foreground">
                     Change your search or clear the filters.
                   </p>
                 )}
@@ -319,7 +319,7 @@ export function DataTable<T extends object>({
                       slot="selection"
                       className="min-h-11 w-full items-center justify-center"
                     >
-                      <CheckboxIndicator className="mt-0" />
+                      <CheckboxIndicator className="mbs-0" />
                     </Checkbox>
                   </Cell>
                 )}
@@ -336,7 +336,7 @@ export function DataTable<T extends object>({
           </TableBody>
         </Table>
       </div>
-      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border bg-muted/20 px-4 py-3 text-sm text-muted-foreground sm:px-5">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-bs border-border bg-muted/20 px-4 py-3 text-sm text-muted-foreground sm:px-5">
         <output aria-live="polite" aria-atomic="true" className="tabular-nums">
           {filteredCount === 0
             ? "No rows"

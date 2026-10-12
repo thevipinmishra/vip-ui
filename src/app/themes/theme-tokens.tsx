@@ -63,7 +63,7 @@ function Section({
   children: ReactNode;
 }) {
   return (
-    <section className="grid gap-5 border-t border-border/70 pt-8 first:border-t-0 first:pt-0 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-10">
+    <section className="grid gap-5 border-bs border-border/70 pbs-8 first:border-bs-0 first:pbs-0 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-10">
       <div className="grid content-start gap-1.5">
         <h3 className="text-base font-semibold tracking-[-0.02em]">{title}</h3>
         <p className="text-sm leading-6 text-muted-foreground">{description}</p>
@@ -128,7 +128,7 @@ export function ThemeTokens({
             return (
               <li
                 key={pair.surface}
-                className="overflow-hidden rounded-xl bg-card ring-1 ring-border/70"
+                className="overflow-clip rounded-xl bg-card ring-1 ring-border/70"
               >
                 <div
                   className="flex h-24 items-end justify-between gap-2 p-3"
@@ -147,7 +147,7 @@ export function ThemeTokens({
                   >
                     Aa
                   </span>
-                  <span className="rounded-full bg-[color-mix(in_oklab,currentColor_12%,transparent)] px-2 py-0.5 font-mono text-[11px] font-medium">
+                  <span className="rounded-full bg-[color-mix(in_oklch,currentColor_12%,transparent)] px-2 py-0.5 font-mono text-[11px] font-medium">
                     {ratio.toFixed(1)} · {contrastGrade(ratio)}
                   </span>
                 </div>
@@ -161,7 +161,7 @@ export function ThemeTokens({
             );
           })}
         </ul>
-        <div className="mt-6 grid gap-x-6 gap-y-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="mbs-6 grid gap-x-6 gap-y-4 sm:grid-cols-2 xl:grid-cols-3">
           {singles.map((name) => (
             <div key={name} className="flex min-w-0 items-center gap-3">
               <span
@@ -295,7 +295,7 @@ export function ThemeTokens({
           />
           <Button>Save</Button>
           <Button variant="outline">Cancel</Button>
-          <div className="ml-auto flex items-end gap-1" aria-hidden="true">
+          <div className="ms-auto flex items-end gap-1" aria-hidden="true">
             {[2, 4, 6, 8, 12].map((step) => (
               <span
                 key={step}
