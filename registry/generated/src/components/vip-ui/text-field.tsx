@@ -15,7 +15,6 @@ import {
   fieldErrorStyles,
   fieldInputStyles,
   fieldLabelStyles,
-  revalidateOnInput,
 } from "./field-styles";
 
 export interface TextFieldProps
@@ -73,16 +72,11 @@ export function TextFieldLabel({
 
 export function TextFieldInput({
   className,
-  onInput,
   ...props
 }: React.ComponentProps<typeof Input>) {
   return (
     <Input
       {...props}
-      onInput={(event) => {
-        revalidateOnInput(event);
-        onInput?.(event);
-      }}
       data-slot="text-field-input"
       className={composeRenderProps(className, (className) =>
         cn(fieldInputStyles, "px-3.5", className),

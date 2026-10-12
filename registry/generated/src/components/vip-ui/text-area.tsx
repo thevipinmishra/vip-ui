@@ -15,7 +15,6 @@ import {
   fieldErrorStyles,
   fieldInputStyles,
   fieldLabelStyles,
-  revalidateOnInput,
 } from "./field-styles";
 
 export interface TextAreaProps
@@ -75,16 +74,11 @@ export function TextAreaLabel({
 
 export function TextAreaInput({
   className,
-  onInput,
   ...props
 }: React.ComponentProps<typeof AriaTextArea>) {
   return (
     <AriaTextArea
       {...props}
-      onInput={(event) => {
-        revalidateOnInput(event);
-        onInput?.(event);
-      }}
       data-slot="text-area-input"
       className={composeRenderProps(className, (className) =>
         cn(

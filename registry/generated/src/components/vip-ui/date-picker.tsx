@@ -2,8 +2,7 @@
 
 import { CaretDownIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
-import { useContext, useRef } from "react";
-import { mergeRefs } from "react-aria/mergeRefs";
+import { useContext } from "react";
 import {
   DatePicker as AriaDatePicker,
   composeRenderProps,
@@ -26,7 +25,6 @@ import {
   fieldErrorStyles,
   fieldLabelStyles,
   fieldTriggerStyles,
-  revalidateField,
   segmentedFieldStyles,
 } from "./field-styles";
 import { Popover } from "./popover";
@@ -36,23 +34,15 @@ export function DatePicker<T extends DateValue>({
   label,
   description,
   children,
-  ref,
-  onChange,
   ...props
 }: DatePickerProps<T> &
   React.RefAttributes<HTMLDivElement> & {
     label?: string;
     description?: string;
   }) {
-  const fieldRef = useRef<HTMLDivElement>(null);
   return (
     <AriaDatePicker
       {...props}
-      ref={mergeRefs(fieldRef, ref)}
-      onChange={(value) => {
-        revalidateField(fieldRef.current);
-        onChange?.(value);
-      }}
       data-slot="date-picker"
       className={composeRenderProps(className, (className) =>
         cn("group grid gap-2 data-[focus-visible]:outline-none", className),

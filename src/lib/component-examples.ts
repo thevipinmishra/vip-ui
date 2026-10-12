@@ -618,13 +618,13 @@ export const componentPageData = {
       {
         title: "Custom validation",
         description:
-          "Pass validate to a field. Return an error message, or null when the value is valid. An error shows when the field loses focus or when you submit. Then the field checks the value again as you type.",
+          "Pass validate to a field. Return an error message, or null when the value is valid. The error shows or clears when the field loses focus or when you submit.",
         sourcePath: "form-validation-demo.tsx",
       },
       {
         title: "Server errors",
         description:
-          'Pass server errors to validationErrors, keyed by field name. Push Save to see the error for "maya". The error clears when you change the value.',
+          'Pass server errors to validationErrors, keyed by field name. Push Save to see the error for "maya". The error clears when you change the value and leave the field.',
         sourcePath: "form-server-errors-demo.tsx",
       },
     ],

@@ -18,7 +18,6 @@ import {
   fieldInputStyles,
   fieldLabelStyles,
   fieldTriggerStyles,
-  revalidateOnInput,
 } from "./field-styles";
 
 export interface SearchFieldProps
@@ -85,16 +84,11 @@ export function SearchFieldLabel({
 
 export function SearchFieldInput({
   className,
-  onInput,
   ...props
 }: React.ComponentProps<typeof Input>) {
   return (
     <Input
       {...props}
-      onInput={(event) => {
-        revalidateOnInput(event);
-        onInput?.(event);
-      }}
       data-slot="search-field-input"
       className={composeRenderProps(className, (className) =>
         cn(

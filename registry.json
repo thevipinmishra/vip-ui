@@ -1214,7 +1214,6 @@
       "title": "Date Field",
       "description": "Enter a date one editable segment at a time.",
       "dependencies": [
-        "react-aria@^3.53.0",
         "react-aria-components@^1.22.1",
         "tailwind-variants@^3.3.1"
       ],
@@ -1261,7 +1260,6 @@
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
         "motion@^13.5.1",
-        "react-aria@^3.53.0",
         "react-aria-components@^1.22.1",
         "tailwind-variants@^3.3.1"
       ],
@@ -1335,7 +1333,6 @@
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
         "motion@^13.5.1",
-        "react-aria@^3.53.0",
         "react-aria-components@^1.22.1",
         "tailwind-variants@^3.3.1"
       ],
@@ -1828,11 +1825,6 @@
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/field-styles.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/input-group.tsx",
@@ -3364,7 +3356,6 @@
       "title": "Time Field",
       "description": "Enter a time one editable segment at a time.",
       "dependencies": [
-        "react-aria@^3.53.0",
         "react-aria-components@^1.22.1",
         "tailwind-variants@^3.3.1"
       ],
@@ -4456,14 +4447,14 @@
           "target": "@components/vip-ui/form.tsx"
         },
         {
-          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/field-styles.tsx"
-        },
-        {
           "path": "registry/generated/src/components/vip-ui/input-group.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/input-group.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/list-box.tsx",

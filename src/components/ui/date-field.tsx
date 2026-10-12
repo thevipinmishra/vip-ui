@@ -1,7 +1,5 @@
 "use client";
 
-import { useRef } from "react";
-import { mergeRefs } from "react-aria/mergeRefs";
 import {
   DateField as AriaDateField,
   composeRenderProps,
@@ -18,7 +16,6 @@ import {
   fieldDescriptionStyles,
   fieldErrorStyles,
   fieldLabelStyles,
-  revalidateField,
   segmentedFieldStyles,
 } from "./field-styles";
 
@@ -27,23 +24,15 @@ export function DateField<T extends DateValue>({
   label,
   description,
   children,
-  ref,
-  onChange,
   ...props
 }: DateFieldProps<T> &
   React.RefAttributes<HTMLDivElement> & {
     label?: string;
     description?: string;
   }) {
-  const fieldRef = useRef<HTMLDivElement>(null);
   return (
     <AriaDateField
       {...props}
-      ref={mergeRefs(fieldRef, ref)}
-      onChange={(value) => {
-        revalidateField(fieldRef.current);
-        onChange?.(value);
-      }}
       data-slot="date-field"
       className={composeRenderProps(className, (className) =>
         cn("group grid gap-2 data-[focus-visible]:outline-none", className),

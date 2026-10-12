@@ -2,7 +2,7 @@
 
 import { CaretDownIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
-import { type ReactNode, useContext, useRef } from "react";
+import { type ReactNode, useContext } from "react";
 import {
   Button as AriaButton,
   ComboBox as AriaComboBox,
@@ -25,7 +25,6 @@ import {
   fieldInputStyles,
   fieldLabelStyles,
   fieldTriggerStyles,
-  revalidateField,
 } from "./field-styles";
 import { SelectionMark } from "./list-box";
 import { Popover } from "./popover";
@@ -87,18 +86,12 @@ function SingleComboBox({
   onValueChange,
   ...props
 }: ComboBoxProps) {
-  const fieldRef = useRef<HTMLDivElement>(null);
   return (
     <AriaComboBox
       {...props}
-      ref={fieldRef}
       data-slot="combo-box"
       selectedKey={value ?? props.selectedKey}
       defaultSelectedKey={defaultValue ?? props.defaultSelectedKey}
-      onChange={(key) => {
-        revalidateField(fieldRef.current);
-        props.onChange?.(key);
-      }}
       onSelectionChange={(key) => {
         props.onSelectionChange?.(key);
         onValueChange?.(key === null ? "" : String(key));
@@ -128,16 +121,10 @@ function MultipleComboBox({
   children,
   ...props
 }: MultiSelectComboBoxProps) {
-  const fieldRef = useRef<HTMLDivElement>(null);
   return (
     <AriaComboBox
       {...props}
-      ref={fieldRef}
       data-slot="combo-box"
-      onChange={(keys) => {
-        revalidateField(fieldRef.current);
-        props.onChange?.(keys);
-      }}
       className={composeRenderProps(className, (className) =>
         cn("group flex w-full min-w-0 flex-col gap-2", className),
       )}
