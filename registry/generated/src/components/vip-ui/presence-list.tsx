@@ -26,6 +26,7 @@ const PresenceListRow = forwardRef<
     <motion.li
       ref={ref}
       data-slot="presence-list-item"
+      className="min-w-0"
       inert={!isPresent}
       aria-hidden={!isPresent || undefined}
       layout={reducedMotion ? false : "position"}

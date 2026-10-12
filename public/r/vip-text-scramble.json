@@ -3,7 +3,7 @@
   "name": "vip-text-scramble",
   "type": "registry:ui",
   "title": "Text Scramble",
-  "description": "Resolve changing text from scrambled characters.",
+  "description": "Scramble the characters of text when it changes.",
   "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
   "files": [
     {

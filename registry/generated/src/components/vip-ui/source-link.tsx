@@ -31,12 +31,11 @@ export function SourceLink({
         className,
       )}
     >
-      <span
-        aria-hidden="true"
-        className="grid size-8 shrink-0 place-items-center rounded-lg bg-accent font-mono text-xs font-semibold text-primary"
-      >
-        {index ?? <ArrowUpRightIcon size={16} />}
-      </span>
+      {index !== undefined && (
+        <span className="grid h-8 min-w-8 shrink-0 place-items-center rounded-lg bg-accent px-1.5 font-mono text-xs font-semibold text-primary">
+          {index}
+        </span>
+      )}
       <span className="min-w-0 flex-1">
         <span className="block text-sm font-medium leading-5 text-foreground [overflow-wrap:anywhere]">
           {label}

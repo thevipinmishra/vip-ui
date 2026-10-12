@@ -161,7 +161,7 @@ export function ChatCard() {
                   <AgentStatus
                     state="working"
                     label="Reading the docs"
-                    detail="Searching 96 component pages"
+                    detail="Searching the component pages"
                   />
                 </Part>
               )}

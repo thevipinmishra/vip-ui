@@ -504,7 +504,7 @@ const catalog: CatalogDefinition[] = [
         slug: "layout-morph",
         name: "Layout morph",
         useFor:
-          "A container that resizes to new content without stretching it.",
+          "A container that animates its height when its content changes.",
       },
       {
         slug: "marquee",

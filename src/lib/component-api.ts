@@ -32,7 +32,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: '"words" | "characters"',
       defaultValue: '"words"',
       description:
-        "Reveal by word or by character. Characters follow grapheme boundaries.",
+        "Reveal by word or by character. Use words for scripts that join letters, such as Arabic.",
     },
     {
       component: "TextReveal",
@@ -47,7 +47,8 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "stagger",
       type: "number",
       defaultValue: "0.045",
-      description: "Delay in seconds between units.",
+      description:
+        "Delay in seconds between units. Long text uses a shorter delay, so the last unit starts within 0.6 seconds of the first.",
     },
     {
       component: "TextReveal",
@@ -90,7 +91,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "boolean",
       defaultValue: "required",
       description:
-        "Shows or hides the content. Hidden content stays inert until its exit ends. Move focus before you hide focused content.",
+        "Shows or hides the content. The content is inert during its exit. Move focus before you hide focused content.",
     },
     {
       component: "Presence",
@@ -164,7 +165,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "number",
       defaultValue: "50",
       description:
-        "Movement in pixels per second. Hover, focus, and the built-in button pause it. Set 0, or prefer reduced motion, to stop it and wrap the items.",
+        "Movement in pixels per second. Hover, focus, and the built-in button pause it. Set 0 to stop it and wrap the items. Reduced motion does the same.",
     },
     {
       component: "Marquee",
@@ -187,7 +188,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "ReactNode",
       defaultValue: "required",
       description:
-        "Use presentational content without duplicate IDs. The copies are inert and hidden from assistive technology.",
+        "Items to loop. Do not put IDs in them, because the copies repeat them. The copies are inert and hidden from assistive technology. A focused item moves into view.",
     },
   ],
   "combo-box": [
@@ -393,22 +394,21 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: '"thinking" | "working" | "complete" | "error"',
       defaultValue: "required",
       description:
-        "Current state. Thinking and working animate unless motion is reduced.",
+        "Sets the icon and the state text. Thinking and working animate unless reduced motion is on.",
     },
     {
       component: "AgentStatus",
       prop: "label",
       type: "string",
       defaultValue: "required",
-      description:
-        "Visible description of the current step, announced when it changes.",
+      description: "The current step. Screen readers announce changes.",
     },
     {
       component: "AgentStatus",
       prop: "detail",
       type: "string",
       defaultValue: "—",
-      description: "Optional visible detail under the step label.",
+      description: "Text below the label.",
     },
   ],
   message: [
@@ -417,58 +417,88 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "sender",
       type: "string",
       defaultValue: "required",
-      description: "Author's name and default accessible label.",
+      description:
+        'The sender name. The default accessible name is "Message from {sender}".',
     },
     {
       component: "Message",
       prop: "side",
       type: '"incoming" | "outgoing" | "system"',
       defaultValue: '"incoming"',
-      description: "Aligns and styles the message.",
+      description: "Sets the alignment and the style.",
     },
     {
       component: "Message",
       prop: "avatar",
       type: "ReactNode",
       defaultValue: "—",
-      description: "Shown beside incoming messages.",
+      description: "Shows beside an incoming message.",
     },
     {
       component: "Message",
-      prop: "timestamp / dateTime",
+      prop: "timestamp",
       type: "string",
       defaultValue: "—",
-      description: "Visible timestamp and its machine-readable value.",
+      description: "The visible time.",
+    },
+    {
+      component: "Message",
+      prop: "dateTime",
+      type: "string",
+      defaultValue: "—",
+      description:
+        "The machine-readable time. Set it to render the timestamp in a time element.",
     },
     {
       component: "Message",
       prop: "status",
       type: "string",
       defaultValue: "—",
-      description: "Delivery status shown below the message.",
+      description: 'The delivery status, for example "Sent".',
     },
     {
       component: "Message",
       prop: "actions",
       type: "ReactNode",
       defaultValue: "—",
-      description: "Actions displayed below the message.",
+      description: "Buttons below the message.",
     },
   ],
   "source-link": [
     {
       component: "SourceLink",
-      prop: "label / source",
-      type: "string / string",
+      prop: "href",
+      type: "string",
       defaultValue: "required",
-      description: "Visible title and source name for the destination.",
+      description: "The URL of the source.",
     },
     {
       component: "SourceLink",
-      prop: "index / description",
-      type: "number / string",
+      prop: "label",
+      type: "string",
+      defaultValue: "required",
+      description: "The title of the page.",
+    },
+    {
+      component: "SourceLink",
+      prop: "source",
+      type: "string",
+      defaultValue: "required",
+      description: "The name of the site or document.",
+    },
+    {
+      component: "SourceLink",
+      prop: "index",
+      type: "number",
       defaultValue: "—",
-      description: "Optional citation number and supporting text.",
+      description: "The citation number. Shows before the label.",
+    },
+    {
+      component: "SourceLink",
+      prop: "description",
+      type: "string",
+      defaultValue: "—",
+      description: "Text below the source.",
     },
   ],
   "tool-call": [
@@ -477,7 +507,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "name",
       type: "string",
       defaultValue: "required",
-      description: "Visible name of the tool that ran.",
+      description: "The tool name.",
     },
     {
       component: "ToolCallTrigger",
@@ -485,14 +515,14 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: '"running" | "complete" | "error"',
       defaultValue: "required",
       description:
-        "Visible execution state. Running animates unless motion is reduced.",
+        "Sets the icon and the status text. Running animates unless reduced motion is on. Screen readers announce changes.",
     },
     {
       component: "ToolCallTrigger",
       prop: "summary",
       type: "string",
       defaultValue: "—",
-      description: "Optional short description below the tool name.",
+      description: "Short text below the name.",
     },
   ],
   "inline-edit": [
@@ -607,7 +637,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "string",
       defaultValue: "required",
       description:
-        "The latest visible and accessible text; changes animate without an initial entrance.",
+        "The text to show. A change animates. The first value shows without animation. Where text cannot wrap, such as in a button, a long value truncates.",
     },
   ],
   stepper: [
@@ -635,7 +665,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "number",
       defaultValue: "required",
       description:
-        "Target value. The displayed number animates; accessible text uses the target immediately.",
+        "The number to show. A change animates. Screen readers get the new value at once. A number wider than its container wraps.",
     },
     {
       component: "AnimatedNumber",
@@ -643,21 +673,22 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: '"count" | "slide"',
       defaultValue: '"count"',
       description:
-        "Count toward the new value or slide only changed digits up on an increase and down on a decrease.",
+        "count counts to the new value. slide moves only the digits that change.",
     },
     {
       component: "AnimatedNumber",
       prop: "locale",
       type: "string",
       defaultValue: '"en-US"',
-      description: "Locale for displayed and accessible numbers.",
+      description: "Locale for the number format.",
     },
     {
       component: "AnimatedNumber",
       prop: "formatOptions",
       type: "Intl.NumberFormatOptions",
       defaultValue: "{ maximumFractionDigits: 0 }",
-      description: "Formatting options for both number representations.",
+      description:
+        "Options for Intl.NumberFormat, such as a currency or a unit.",
     },
   ],
   "progress-ring": [
@@ -690,14 +721,15 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "items",
       type: "readonly T[]",
       defaultValue: "required",
-      description: "Items to render in the list.",
+      description: "Items to show in the list.",
     },
     {
       component: "PresenceList",
       prop: "getKey",
       type: "(item: T) => string | number",
       defaultValue: "required",
-      description: "Stable unique key for each item and its exit animation.",
+      description:
+        "Returns a unique key for an item. Keep the key the same while the item is in the list.",
     },
     {
       component: "PresenceList",
@@ -705,7 +737,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "(item: T) => ReactNode",
       defaultValue: "required",
       description:
-        "Render each item's contents inside a list item. Move focus before removing a focused item.",
+        "Renders the content of each list item. Move focus before you remove a focused item.",
     },
   ],
   "input-group": [

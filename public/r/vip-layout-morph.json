@@ -3,7 +3,7 @@
   "name": "vip-layout-morph",
   "type": "registry:ui",
   "title": "Layout Morph",
-  "description": "Resize around changing content without stretching it.",
+  "description": "Animate the height of a container when its content changes.",
   "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
   "files": [
     {

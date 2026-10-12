@@ -9,7 +9,7 @@ import {
   useReducedMotion,
 } from "motion/react";
 import { type ComponentProps, useEffect, useMemo, useState } from "react";
-import { easeOut, springSnappy } from "./motion";
+import { easeOut, springSnappy, transitionFor } from "./motion";
 import { cn } from "./utils";
 
 export interface AnimatedNumberProps
@@ -43,7 +43,10 @@ export function AnimatedNumber({
       {...props}
       data-slot="animated-number"
       data-variant={variant}
-      className={cn("tabular-nums", className)}
+      className={cn(
+        "min-w-fit tabular-nums [overflow-wrap:anywhere]",
+        className,
+      )}
     >
       {variant === "slide" ? (
         <SlidingNumber
@@ -113,9 +116,11 @@ const slideVariants = {
 function SlidingDigit({
   digit,
   direction,
+  reducedMotion,
 }: {
   digit: string;
   direction: number;
+  reducedMotion: boolean | null;
 }) {
   return (
     <span
@@ -130,7 +135,7 @@ function SlidingDigit({
           initial="enter"
           animate="center"
           exit="exit"
-          transition={springSnappy}
+          transition={transitionFor(reducedMotion, springSnappy)}
           className="col-start-1 row-start-1"
         >
           {digit}
@@ -154,10 +159,6 @@ function SlidingNumber({
       value,
       direction: value > change.value ? 1 : -1,
     });
-  }
-
-  if (reducedMotion) {
-    return <span aria-hidden="true">{formatter.format(value)}</span>;
   }
 
   const parts = formatter.formatToParts(value);
@@ -201,11 +202,16 @@ function SlidingNumber({
   return (
     <span
       aria-hidden="true"
-      className="inline-flex whitespace-nowrap align-baseline"
+      className="inline-flex max-w-full flex-wrap align-baseline"
     >
       {segments.map(({ key, text, isDigit }) =>
         isDigit ? (
-          <SlidingDigit key={key} digit={text} direction={change.direction} />
+          <SlidingDigit
+            key={key}
+            digit={text}
+            direction={change.direction}
+            reducedMotion={reducedMotion}
+          />
         ) : (
           <span key={key}>{text}</span>
         ),

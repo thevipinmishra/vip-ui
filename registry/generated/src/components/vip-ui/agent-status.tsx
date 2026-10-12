@@ -17,9 +17,9 @@ export interface AgentStatusProps
 
 const stateLabels: Record<AgentStatusState, string> = {
   thinking: "Thinking",
-  working: "Using a tool",
-  complete: "Complete",
-  error: "Needs attention",
+  working: "Working",
+  complete: "Done",
+  error: "Failed",
 };
 
 export function AgentStatus({
@@ -40,7 +40,7 @@ export function AgentStatus({
       aria-live="polite"
       aria-atomic="true"
       className={cn(
-        "flex min-w-0 items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 text-sm shadow-[var(--shadow-card)]",
+        "flex min-w-0 items-start gap-3 rounded-xl border border-border bg-card px-4 py-3 text-sm shadow-[var(--shadow-card)]",
         className,
       )}
     >
@@ -83,18 +83,20 @@ export function AgentStatus({
           <XCircleIcon size={17} />
         )}
       </span>
-      <span className="min-w-0 flex-1">
-        <span className="block font-medium text-foreground [overflow-wrap:anywhere]">
-          {label}
-        </span>
-        {detail && (
-          <span className="mt-0.5 block text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]">
-            {detail}
+      <span className="flex min-w-0 flex-1 flex-wrap items-baseline gap-x-3 gap-y-0.5">
+        <span className="flex min-h-8 min-w-0 flex-[1_1_10rem] flex-col justify-center">
+          <span className="font-medium text-foreground [overflow-wrap:anywhere]">
+            {label}
           </span>
-        )}
-      </span>
-      <span className="shrink-0 self-start text-xs text-muted-foreground">
-        {stateLabels[state]}
+          {detail && (
+            <span className="mt-0.5 text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]">
+              {detail}
+            </span>
+          )}
+        </span>
+        <span className="text-xs text-muted-foreground">
+          {stateLabels[state]}
+        </span>
       </span>
     </output>
   );

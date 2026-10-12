@@ -28,7 +28,7 @@ export function Message({
       {...props}
       data-slot="message"
       data-side={side}
-      aria-label={props["aria-label"] ?? `${sender} message`}
+      aria-label={props["aria-label"] ?? `Message from ${sender}`}
       className={cn(
         "flex min-w-0 items-start gap-2.5",
         side === "outgoing" && "justify-end",
@@ -76,14 +76,17 @@ export function Message({
               side === "system" && "justify-center",
             )}
           >
-            {timestamp && (
-              <time dateTime={dateTime} data-slot="message-time">
-                {timestamp}
-              </time>
-            )}
+            {timestamp &&
+              (dateTime ? (
+                <time dateTime={dateTime} data-slot="message-time">
+                  {timestamp}
+                </time>
+              ) : (
+                <span data-slot="message-time">{timestamp}</span>
+              ))}
             {status && <span data-slot="message-status">{status}</span>}
             {actions && (
-              <div data-slot="message-actions" className="flex gap-1">
+              <div data-slot="message-actions" className="flex flex-wrap gap-1">
                 {actions}
               </div>
             )}

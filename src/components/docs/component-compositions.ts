@@ -15,15 +15,16 @@ export const compositions: Record<string, Composition> = {
       {
         part: "ToolCall",
         purpose:
-          "Owns the expanded state; accepts isExpanded, defaultExpanded, and onExpandedChange.",
+          "Holds the expanded state. Accepts isExpanded, defaultExpanded, and onExpandedChange.",
         children: [
           {
             part: "ToolCallTrigger",
-            purpose: "Names the tool, shows its status, and toggles the panel.",
+            purpose:
+              "Shows the tool name and status. Opens and closes the panel.",
           },
           {
             part: "ToolCallPanel",
-            purpose: "Contains the app-supplied input and result.",
+            purpose: "Contains the input and the output.",
           },
         ],
       },
@@ -38,7 +39,7 @@ export const compositions: Record<string, Composition> = {
         children: [
           {
             part: "StaggerItem",
-            purpose: "Fades and rises into place in its turn.",
+            purpose: "Fades in and moves up in its turn.",
           },
         ],
       },

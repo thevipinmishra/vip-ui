@@ -3,7 +3,7 @@
   "name": "vip-stagger-group",
   "type": "registry:ui",
   "title": "Stagger Group",
-  "description": "Sequence the entrance of grouped content.",
+  "description": "Animate a group of items into view one after another.",
   "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
   "files": [
     {

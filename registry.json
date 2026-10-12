@@ -135,7 +135,7 @@
       "name": "vip-animated-number",
       "type": "registry:ui",
       "title": "Animated Number",
-      "description": "Animate a changing value while keeping its accessible text stable.",
+      "description": "Animate a number when its value changes.",
       "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
       "files": [
         {
@@ -1856,7 +1856,7 @@
       "name": "vip-layout-morph",
       "type": "registry:ui",
       "title": "Layout Morph",
-      "description": "Resize around changing content without stretching it.",
+      "description": "Animate the height of a container when its content changes.",
       "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
       "files": [
         {
@@ -2385,7 +2385,7 @@
       "name": "vip-presence-list",
       "type": "registry:ui",
       "title": "Presence List",
-      "description": "Animate additions and removals in a semantic list.",
+      "description": "Animate list items when they enter, leave, or move.",
       "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
       "files": [
         {
@@ -2409,7 +2409,7 @@
       "name": "vip-presence",
       "type": "registry:ui",
       "title": "Presence",
-      "description": "Animate conditional content when it enters or leaves.",
+      "description": "Animate content when it is shown or hidden.",
       "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
       "files": [
         {
@@ -2979,7 +2979,7 @@
       "name": "vip-stagger-group",
       "type": "registry:ui",
       "title": "Stagger Group",
-      "description": "Sequence the entrance of grouped content.",
+      "description": "Animate a group of items into view one after another.",
       "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
       "files": [
         {
@@ -3287,7 +3287,7 @@
       "name": "vip-text-reveal",
       "type": "registry:ui",
       "title": "Text Reveal",
-      "description": "Reveal text by word or character with staggered movement.",
+      "description": "Reveal text one word or one character at a time.",
       "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
       "files": [
         {
@@ -3311,7 +3311,7 @@
       "name": "vip-text-scramble",
       "type": "registry:ui",
       "title": "Text Scramble",
-      "description": "Resolve changing text from scrambled characters.",
+      "description": "Scramble the characters of text when it changes.",
       "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
       "files": [
         {
@@ -3330,7 +3330,7 @@
       "name": "vip-text-swap",
       "type": "registry:ui",
       "title": "Text Swap",
-      "description": "Transition short changing labels without duplicating accessible text.",
+      "description": "Animate text when its value changes.",
       "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
       "files": [
         {

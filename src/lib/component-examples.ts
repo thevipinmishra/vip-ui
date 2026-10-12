@@ -745,18 +745,24 @@ export const componentPageData = {
   },
   "agent-status": {
     usage: "agent-status-demo.tsx",
-    description: "Shows an agent's current step with a persistent state cue.",
-    examples: [{ title: "States", sourcePath: "agent-status-states-demo.tsx" }],
+    description: "Shows the current step of an agent and its state.",
+    examples: [
+      {
+        title: "States",
+        description:
+          'Set state to "thinking", "working", "complete", or "error". Screen readers announce each change.',
+        sourcePath: "agent-status-states-demo.tsx",
+      },
+    ],
   },
   message: {
     usage: "message-basic-demo.tsx",
-    description:
-      "Displays a conversation entry with an author, content, and optional actions.",
+    description: "Displays a message in a conversation.",
     examples: [
       {
-        title: "Message states",
+        title: "Sides",
         description:
-          "Use the side prop for incoming, outgoing, or system. Add avatar, status, and actions per row.",
+          'Set side to "incoming", "outgoing", or "system". A system message shows no sender or avatar. Put buttons in actions.',
         sourcePath: "message-demo.tsx",
       },
     ],
@@ -894,12 +900,13 @@ export const componentPageData = {
   },
   "presence-list": {
     usage: "presence-list-basic-demo.tsx",
-    description: "Displays a list with animated item additions and removals.",
+    description:
+      "Displays a list that animates items when you add, remove, or move them.",
     examples: [
       {
         title: "Adding and reordering",
         description:
-          "Pass items and getKey so rows keep their identity when they enter, leave, or reorder.",
+          "Pass items and getKey so rows keep their identity when they enter, leave, or move. The example moves focus before a focused button is removed or disabled.",
         sourcePath: "presence-list-demo.tsx",
       },
     ],
@@ -1265,7 +1272,7 @@ export const componentPageData = {
   },
   "text-reveal": {
     usage: "text-reveal-basic-demo.tsx",
-    description: "Reveals text by word or character with staggered movement.",
+    description: "Reveals text one word or one character at a time.",
     examples: [
       {
         title: "Characters",
@@ -1283,7 +1290,7 @@ export const componentPageData = {
   },
   "text-scramble": {
     usage: "text-scramble-basic-demo.tsx",
-    description: "Resolves changing text from scrambled characters.",
+    description: "Scrambles the characters of text when it changes.",
     examples: [
       {
         title: "Glyphs",
@@ -1301,8 +1308,7 @@ export const componentPageData = {
   },
   presence: {
     usage: "presence-demo.tsx",
-    description:
-      "Animates conditional content when it enters or leaves the page.",
+    description: "Animates content when it is shown or hidden.",
     examples: [
       {
         title: "Inline status",
@@ -1314,13 +1320,19 @@ export const componentPageData = {
   },
   "source-link": {
     usage: "source-link-demo.tsx",
-    description:
-      "Links an answer to its source and identifies the source by name.",
-    examples: [],
+    description: "Links an answer to its source.",
+    examples: [
+      {
+        title: "Source list",
+        description:
+          "Put several sources in a list. Set index to the citation number in the answer.",
+        sourcePath: "source-link-list-demo.tsx",
+      },
+    ],
   },
   "stagger-group": {
     usage: "stagger-group-basic-demo.tsx",
-    description: "Sequences the entrance of grouped content.",
+    description: "Animates a group of items into view one after another.",
     examples: [
       {
         title: "List",
@@ -1338,7 +1350,7 @@ export const componentPageData = {
   },
   "layout-morph": {
     usage: "layout-morph-demo.tsx",
-    description: "Animates height and content when a keyed section changes.",
+    description: "Animates the height of a container when its content changes.",
     examples: [
       {
         title: "Switching views",
@@ -1380,8 +1392,16 @@ export const componentPageData = {
   },
   "tool-call": {
     usage: "tool-call-demo.tsx",
-    description: "Shows a tool's status with expandable input and output.",
-    examples: [{ title: "States", sourcePath: "tool-call-states-demo.tsx" }],
+    description:
+      "Shows a tool call and its status. Expand it to see the input and output.",
+    examples: [
+      {
+        title: "States",
+        description:
+          'Set status to "running", "complete", or "error". Screen readers announce each change.',
+        sourcePath: "tool-call-states-demo.tsx",
+      },
+    ],
   },
   "time-field": {
     usage: "time-field-demo.tsx",

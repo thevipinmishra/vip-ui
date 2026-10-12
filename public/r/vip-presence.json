@@ -3,7 +3,7 @@
   "name": "vip-presence",
   "type": "registry:ui",
   "title": "Presence",
-  "description": "Animate conditional content when it enters or leaves.",
+  "description": "Animate content when it is shown or hidden.",
   "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
   "files": [
     {

@@ -119,6 +119,7 @@ import { SkeletonBasicDemo } from "@/components/docs/skeleton-basic-demo";
 import { SkeletonDemo } from "@/components/docs/skeleton-demo";
 import { SkeletonLoadingDemo } from "@/components/docs/skeleton-loading-demo";
 import { SourceLinkDemo } from "@/components/docs/source-link-demo";
+import { SourceLinkListDemo } from "@/components/docs/source-link-list-demo";
 import { SpinnerBasicDemo } from "@/components/docs/spinner-basic-demo";
 import { SpinnerDemo } from "@/components/docs/spinner-demo";
 import { SpinnerSizesDemo } from "@/components/docs/spinner-sizes-demo";
@@ -556,6 +557,7 @@ const basicPreviews: Record<string, { demo: ReactNode; source: string }> = {
 const examplePreviews: Record<string, ReactNode[]> = {
   "agent-status": [<AgentStatusStatesDemo key="preview-1" />],
   "tool-call": [<ToolCallStatesDemo key="preview-1" />],
+  "source-link": [<SourceLinkListDemo key="preview-1" />],
   "animated-number": [
     <AnimatedNumberSlideDemo key="preview-1" />,
     <AnimatedNumberFormatDemo key="preview-2" />,

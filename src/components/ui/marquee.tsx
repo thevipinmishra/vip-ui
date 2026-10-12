@@ -76,6 +76,26 @@ export function Marquee({
     return () => animation.stop();
   }, [moving, playing, reverse, size.content, size.rtl, speed, x]);
 
+  function reveal(target: Element) {
+    const node = viewport.current;
+    if (!node || !moving) return;
+    const fade =
+      2 * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const view = node.getBoundingClientRect();
+    const box = target.getBoundingClientRect();
+    const shift =
+      box.left < view.left + fade
+        ? view.left + fade - box.left
+        : box.right > view.right - fade
+          ? view.right - fade - box.right
+          : 0;
+    if (!shift) return;
+    const end = size.rtl ? size.content : -size.content;
+    x.jump(
+      Math.min(Math.max(x.get() + shift, Math.min(0, end)), Math.max(0, end)),
+    );
+  }
+
   const copyClassName = cn(
     "flex shrink-0 items-center gap-[var(--marquee-gap)] pe-[var(--marquee-gap)] motion-reduce:flex-wrap motion-reduce:pe-0",
     isStatic && "flex-wrap pe-0",
@@ -90,13 +110,16 @@ export function Marquee({
       <div
         ref={viewport}
         className={cn(
-          "-my-2 overflow-hidden py-2",
+          "-my-2 min-w-0 overflow-clip py-2",
           !isStatic &&
             "[mask-image:linear-gradient(to_right,transparent,black_2rem,black_calc(100%-2rem),transparent)] motion-reduce:[mask-image:none]",
         )}
         onPointerEnter={() => setHovered(true)}
         onPointerLeave={() => setHovered(false)}
-        onFocusCapture={() => setFocused(true)}
+        onFocusCapture={(event) => {
+          setFocused(true);
+          reveal(event.target);
+        }}
         onBlurCapture={(event) => {
           if (!event.currentTarget.contains(event.relatedTarget))
             setFocused(false);

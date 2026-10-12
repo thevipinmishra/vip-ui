@@ -13,7 +13,7 @@ export function PresenceDemo() {
         size="sm"
         variant="secondary"
         aria-expanded={show}
-        aria-controls="presence-note"
+        aria-controls={show ? "presence-note" : undefined}
         onPress={() => setShow((value) => !value)}
       >
         {show ? "Hide note" : "Show note"}

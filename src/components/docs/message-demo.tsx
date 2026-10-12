@@ -42,7 +42,7 @@ export function MessageDemo() {
           side={entry.side}
           avatar={
             entry.side === "incoming" ? (
-              <Avatar name={entry.sender} initials="M" />
+              <Avatar name={entry.sender} />
             ) : undefined
           }
           status={entry.side === "outgoing" ? "Sent" : undefined}
@@ -50,8 +50,13 @@ export function MessageDemo() {
             entry.side === "system" ? undefined : (
               <CopyButton
                 value={entry.text}
-                aria-label={`Copy ${entry.sender}'s message`}
+                aria-label={
+                  entry.side === "outgoing"
+                    ? "Copy your message"
+                    : `Copy message from ${entry.sender}`
+                }
                 variant="ghost"
+                size="icon"
               />
             )
           }

@@ -21,7 +21,9 @@ export function PresenceListBasicDemo() {
             <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-accent font-mono text-xs font-semibold text-accent-foreground">
               {String(tasks.indexOf(item) + 1).padStart(2, "0")}
             </span>
-            <span className="font-medium">{item.title}</span>
+            <span className="min-w-0 font-medium [overflow-wrap:anywhere]">
+              {item.title}
+            </span>
           </span>
         )}
       </PresenceList>

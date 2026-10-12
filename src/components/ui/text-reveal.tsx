@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView, useReducedMotion } from "motion/react";
-import { type ComponentProps, useRef } from "react";
+import { type ComponentProps, useMemo, useRef } from "react";
 import { easeOut, transitionFor } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
@@ -14,14 +14,23 @@ export interface TextRevealProps
   delay?: number;
 }
 
+const MAX_TOTAL_STAGGER = 0.6;
+
 const hidden = { opacity: 0, y: "100%" };
 const shown = { opacity: 1, y: "0%" };
 
-function graphemes(text: string) {
-  return Array.from(
-    new Intl.Segmenter(undefined, { granularity: "grapheme" }).segment(text),
-    ({ segment }) => segment,
-  );
+const segmenter = new Intl.Segmenter(undefined, { granularity: "grapheme" });
+
+function tokenize(text: string, split: "words" | "characters") {
+  return Array.from(text.matchAll(/\s+|\S+/gu), (match) => ({
+    value: match[0],
+    offset: match.index,
+    units: /^\s+$/u.test(match[0])
+      ? []
+      : split === "words"
+        ? [match[0]]
+        : Array.from(segmenter.segment(match[0]), ({ segment }) => segment),
+  }));
 }
 
 export function TextReveal({
@@ -34,17 +43,16 @@ export function TextReveal({
   ...props
 }: TextRevealProps) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.25 });
+  const inView = useInView(ref, { once: true, amount: "some" });
   const reducedMotion = useReducedMotion();
   const visible = reducedMotion || trigger === "mount" || inView;
-  const words = Array.from(text.matchAll(/\s+|\S+/gu), (match) => ({
-    value: match[0],
-    offset: match.index,
-  }));
+  const tokens = useMemo(() => tokenize(text, split), [text, split]);
+  const total = tokens.reduce((count, token) => count + token.units.length, 0);
+  const step = Math.min(stagger, MAX_TOTAL_STAGGER / Math.max(total - 1, 1));
   let order = 0;
 
   function unit(value: string, key: string) {
-    const unitDelay = delay + order++ * stagger;
+    const unitDelay = delay + order++ * step;
     return (
       <span
         key={key}
@@ -75,13 +83,13 @@ export function TextReveal({
     >
       <span className="sr-only">{text}</span>
       <span aria-hidden="true">
-        {words.map(({ value, offset }) => {
+        {tokens.map(({ value, offset, units }) => {
           const key = `${text}-${offset}`;
-          if (/^\s+$/u.test(value)) return <span key={key}>{value}</span>;
+          if (!units.length) return <span key={key}>{value}</span>;
           if (split === "words") return unit(value, key);
           return (
             <span key={key} className="inline-block">
-              {graphemes(value).map((character, index) =>
+              {units.map((character, index) =>
                 unit(character, `${key}-${index}`),
               )}
             </span>

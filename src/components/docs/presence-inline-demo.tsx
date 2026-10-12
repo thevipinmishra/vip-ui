@@ -18,7 +18,7 @@ export function PresenceInlineDemo() {
       <Button size="sm" variant="secondary" onPress={() => setSaved(true)}>
         Save draft
       </Button>
-      <output className="text-sm text-muted-foreground">
+      <output className="min-w-0 text-sm text-muted-foreground">
         <Presence as="span" show={saved}>
           Draft saved
         </Presence>
