@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import { codeToTokensBase } from "shiki";
 
-export type CodeLanguage = "tsx" | "css" | "bash";
+export type CodeLanguage = "tsx" | "css" | "bash" | "json";
 
 export async function CodeSnippet({
   code,

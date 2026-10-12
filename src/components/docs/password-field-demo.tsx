@@ -19,7 +19,7 @@ export function PasswordFieldDemo() {
         label="New password"
         name="new-password"
         autoComplete="new-password"
-        description="Use at least eight characters. Password managers can fill this field."
+        description="Use 8 or more characters."
         placeholder="Choose a password"
         value={password}
         onChange={setPassword}

@@ -29,12 +29,15 @@ export function Slider({ label, className, children, ...props }: SliderProps) {
       {...props}
       data-slot="slider"
       className={composeRenderProps(className, (className) =>
-        cn("group grid w-full gap-1 disabled:opacity-50", className),
+        cn(
+          "group grid w-full min-w-0 grid-cols-1 gap-1 disabled:opacity-50",
+          className,
+        ),
       )}
     >
       {children ?? (
         <>
-          <div className="flex items-baseline gap-3">
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
             {label && <SliderLabel>{label}</SliderLabel>}
             <SliderValue />
           </div>
@@ -73,7 +76,7 @@ export function SliderValue({
       data-slot="slider-value"
       className={composeRenderProps(className, (className) =>
         cn(
-          "ms-auto font-mono text-sm tabular-nums text-muted-foreground",
+          "ms-auto text-end font-mono text-sm tabular-nums text-muted-foreground",
           className,
         ),
       )}

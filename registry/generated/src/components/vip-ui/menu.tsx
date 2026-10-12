@@ -87,7 +87,7 @@ export function MenuContent<T extends object>({
       {...props}
       data-slot="menu-content"
       className={composeRenderProps(className, (className) =>
-        cn("grid gap-1 outline-none", className),
+        cn("grid gap-1 outline-none [overflow-wrap:anywhere]", className),
       )}
     />
   );

@@ -150,7 +150,7 @@ import { TimelineDemo } from "@/components/docs/timeline-demo";
 import { ToggleButtonDemo } from "@/components/docs/toggle-button-demo";
 import { ToggleButtonGroupDemo } from "@/components/docs/toggle-button-group-demo";
 import { ToggleButtonGroupEditorDemo } from "@/components/docs/toggle-button-group-editor-demo";
-import { ToggleButtonProjectsDemo } from "@/components/docs/toggle-button-projects-demo";
+import { ToggleButtonIndependentDemo } from "@/components/docs/toggle-button-independent-demo";
 import { TokenFieldBasicDemo } from "@/components/docs/token-field-basic-demo";
 import { TokenFieldDemo } from "@/components/docs/token-field-demo";
 import { TokenFieldDisabledDemo } from "@/components/docs/token-field-disabled-demo";
@@ -684,7 +684,7 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <TableSortingDemo key="preview-2" />,
     <TableFilterDemo key="preview-3" />,
   ],
-  "toggle-button": [<ToggleButtonProjectsDemo key="preview-1" />],
+  "toggle-button": [<ToggleButtonIndependentDemo key="preview-1" />],
   "toggle-button-group": [<ToggleButtonGroupEditorDemo key="preview-1" />],
   "token-field": [
     <TokenFieldDisabledDemo key="preview-1" />,

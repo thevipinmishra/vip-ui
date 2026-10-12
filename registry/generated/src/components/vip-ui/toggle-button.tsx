@@ -10,10 +10,11 @@ import {
 import { tv, type VariantProps } from "tailwind-variants";
 import { springLayout, transitionFor } from "./motion";
 import { cn } from "./utils";
+import { buttonLabel } from "./button-styles";
 import { SingleToggleGroupContext } from "./toggle-button-group";
 
 const toggleButtonStyles = tv({
-  base: "inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-md px-4 text-sm font-medium transition-[color,background-color,border-color,box-shadow,scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] motion-safe:pressed:scale-[0.96] disabled:cursor-default disabled:opacity-50 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  base: "inline-flex min-h-11 max-w-full shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md px-4 text-sm font-medium transition-[color,background-color,border-color,box-shadow,scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] motion-safe:pressed:scale-[0.96] disabled:cursor-default disabled:opacity-50 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring [&_svg]:pointer-events-none [&_svg]:shrink-0",
   variants: {
     variant: {
       default:
@@ -67,7 +68,7 @@ export function ToggleButton({
               className="pointer-events-none absolute inset-0 -z-10 rounded-md border border-border bg-card shadow-[var(--shadow-card)] forced-colors:border-[Highlight]"
             />
           )}
-          {content}
+          {buttonLabel(content)}
         </>
       ))}
     </AriaToggleButton>

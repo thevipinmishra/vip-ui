@@ -6,7 +6,7 @@ export function Kbd({ className, ...props }: ComponentProps<"kbd">) {
     <kbd
       data-slot="kbd"
       className={cn(
-        "inline-flex min-h-6 min-w-6 items-center justify-center gap-1 rounded-sm border border-border bg-muted px-1.5 font-mono text-xs font-medium whitespace-nowrap text-foreground shadow-xs [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3",
+        "inline-flex min-h-6 min-w-6 shrink-0 items-center justify-center gap-1 rounded-sm border border-border bg-muted px-1.5 font-mono text-xs font-medium whitespace-nowrap text-foreground shadow-xs [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3",
         className,
       )}
       {...props}
@@ -19,7 +19,7 @@ export function KbdGroup({ className, ...props }: ComponentProps<"kbd">) {
     <kbd
       data-slot="kbd-group"
       className={cn(
-        "inline-flex items-center gap-1 font-sans whitespace-nowrap",
+        "inline-flex shrink-0 items-center gap-1 font-sans whitespace-nowrap",
         className,
       )}
       {...props}

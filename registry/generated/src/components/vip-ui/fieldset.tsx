@@ -26,7 +26,7 @@ export function FieldsetLegend({
       {...props}
       data-slot="fieldset-legend"
       className={cn(
-        "float-left mb-1 w-full text-sm font-semibold text-foreground [&+*]:clear-both",
+        "float-left mb-1 w-full text-sm font-semibold text-foreground [overflow-wrap:anywhere] [&+*]:clear-both",
         className,
       )}
     />
@@ -41,7 +41,10 @@ export function FieldsetDescription({
     <p
       {...props}
       data-slot="fieldset-description"
-      className={cn("text-xs leading-5 text-muted-foreground", className)}
+      className={cn(
+        "text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]",
+        className,
+      )}
     />
   );
 }

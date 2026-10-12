@@ -3494,6 +3494,11 @@
           "target": "@components/vip-ui/toggle-button-group.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/toggle-button.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/toggle-button.tsx"
@@ -3532,6 +3537,11 @@
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/toggle-button-group.tsx",
@@ -3988,6 +3998,11 @@
           "path": "registry/generated/src/components/vip-ui/stat.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/stat.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/toggle-button-group.tsx",

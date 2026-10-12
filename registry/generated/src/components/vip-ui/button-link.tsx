@@ -2,6 +2,7 @@ import type { ComponentProps, ElementType } from "react";
 import {
   type ButtonSize,
   type ButtonVariant,
+  buttonLabel,
   buttonLinkStyles,
 } from "./button-styles";
 
@@ -28,7 +29,7 @@ export function ButtonLink({
       data-size={size}
       className={buttonLinkStyles({ variant, size, className })}
     >
-      {children}
+      {buttonLabel(children)}
     </Element>
   );
 }

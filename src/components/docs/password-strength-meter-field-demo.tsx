@@ -15,7 +15,7 @@ export function PasswordStrengthMeterFieldDemo() {
         autoComplete="new-password"
         value={password}
         onChange={setPassword}
-        description="Use a unique password of at least 12 characters; longer is better. The score is only an estimate."
+        description="Use 12 or more characters. The score is an estimate only."
       />
       <PasswordStrengthMeter password={password} />
     </div>

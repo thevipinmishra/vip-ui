@@ -8,7 +8,7 @@ export function FileTriggerBasicDemo() {
   const [filename, setFilename] = useState("No file selected");
 
   return (
-    <div className="grid justify-items-start gap-3">
+    <div className="grid w-full max-w-sm justify-items-start gap-3">
       <FileTrigger
         acceptedFileTypes={["image/png", "image/jpeg"]}
         onSelect={(files) =>
@@ -17,7 +17,9 @@ export function FileTriggerBasicDemo() {
       >
         <Button variant="outline">Choose image</Button>
       </FileTrigger>
-      <output className="text-sm text-muted-foreground">{filename}</output>
+      <output className="max-w-full text-sm text-muted-foreground [overflow-wrap:anywhere]">
+        {filename}
+      </output>
     </div>
   );
 }

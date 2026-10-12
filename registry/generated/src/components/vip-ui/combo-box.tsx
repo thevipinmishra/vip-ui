@@ -97,7 +97,7 @@ function SingleComboBox({
         onValueChange?.(key === null ? "" : String(key));
       }}
       className={composeRenderProps(className, (className) =>
-        cn("group flex w-full flex-col gap-2", className),
+        cn("group flex w-full min-w-0 flex-col gap-2", className),
       )}
     >
       {children ?? (
@@ -126,7 +126,7 @@ function MultipleComboBox({
       {...props}
       data-slot="combo-box"
       className={composeRenderProps(className, (className) =>
-        cn("group flex w-full flex-col gap-2", className),
+        cn("group flex w-full min-w-0 flex-col gap-2", className),
       )}
     >
       {children ?? (

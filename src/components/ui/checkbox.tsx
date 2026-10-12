@@ -63,8 +63,8 @@ export function Checkbox({
       data-slot="checkbox"
       className={composeRenderProps(className, (className) =>
         cn(
-          "group inline-flex min-h-11 cursor-pointer items-start gap-3 rounded-md text-sm text-foreground disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
-          typeof children === "string" && !description && "items-center",
+          "group inline-flex min-h-11 min-w-0 max-w-full cursor-pointer items-start gap-3 rounded-md text-sm text-foreground disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+          (typeof children === "string" || children == null) && "items-center",
           className,
         ),
       )}
@@ -74,10 +74,10 @@ export function Checkbox({
           {typeof children === "function" ? (
             children(state)
           ) : typeof children === "string" || children == null ? (
-            <>
+            <span className="flex min-w-0 items-start gap-3">
               <CheckboxIndicator />
               {(children || description) && (
-                <span className="pt-0.5">
+                <span className="min-w-0 pt-0.5 [overflow-wrap:anywhere]">
                   {children && (
                     <span className="block font-medium">{children}</span>
                   )}
@@ -88,7 +88,7 @@ export function Checkbox({
                   )}
                 </span>
               )}
-            </>
+            </span>
           ) : (
             children
           )}
@@ -146,7 +146,7 @@ export function CheckboxLabel({
     <span
       {...props}
       data-slot="checkbox-label"
-      className={cn("block font-medium", className)}
+      className={cn("block font-medium [overflow-wrap:anywhere]", className)}
     />
   );
 }
@@ -160,7 +160,7 @@ export function CheckboxDescription({
       {...props}
       data-slot="checkbox-description"
       className={cn(
-        "mt-1 block text-xs leading-5 text-muted-foreground",
+        "mt-1 block text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]",
         className,
       )}
     />

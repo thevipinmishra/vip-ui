@@ -40,7 +40,7 @@ export function TextField({
       {...props}
       data-slot="text-field"
       className={composeRenderProps(className, (className) =>
-        cn("flex w-full flex-col gap-2", className),
+        cn("flex w-full min-w-0 flex-col gap-2", className),
       )}
     >
       {children ?? (

@@ -12,7 +12,7 @@ export function InlineEditDemo() {
       value={title}
       onSave={async (next) => {
         if (next.trim().length < 3) {
-          throw new Error("Use at least 3 characters.");
+          throw new Error("Enter 3 or more characters.");
         }
         setTitle(next.trim());
       }}

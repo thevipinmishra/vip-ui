@@ -23,7 +23,7 @@ import { cn } from "./utils";
 import { fieldDescriptionStyles, fieldErrorStyles } from "./field-styles";
 
 const radioStyles = tv({
-  base: "group flex min-h-11 cursor-pointer items-center gap-3 rounded-md text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring read-only:cursor-default disabled:cursor-default disabled:opacity-50",
+  base: "group flex min-h-11 min-w-0 cursor-pointer items-center gap-3 rounded-md text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring read-only:cursor-default disabled:cursor-default disabled:opacity-50",
   variants: {
     variant: {
       default: "",
@@ -66,7 +66,7 @@ export function RadioGroup({
         onValueChange?.(value);
       }}
       className={composeRenderProps(className, (className) =>
-        cn("group/radio-group grid gap-1", className),
+        cn("group/radio-group grid min-w-0 grid-cols-1 gap-1", className),
       )}
     >
       {label && <RadioGroupLabel>{label}</RadioGroupLabel>}
@@ -109,10 +109,7 @@ export function Radio({
       data-slot="radio"
       data-variant={variant}
       className={composeRenderProps(className, (className) =>
-        radioStyles({
-          variant,
-          className: cn(description && "items-start", className),
-        }),
+        radioStyles({ variant, className }),
       )}
     >
       {(state) => (
@@ -120,7 +117,7 @@ export function Radio({
           {typeof children === "function"
             ? children(state)
             : (children ?? (
-                <>
+                <span className="flex min-w-0 items-start gap-3">
                   <RadioIndicator />
                   <span className="min-w-0">
                     {label && <RadioLabel>{label}</RadioLabel>}
@@ -128,7 +125,7 @@ export function Radio({
                       <RadioDescription>{description}</RadioDescription>
                     )}
                   </span>
-                </>
+                </span>
               ))}
         </RadioStateContext.Provider>
       )}
@@ -144,7 +141,10 @@ export function RadioGroupLabel({
     <Label
       {...props}
       data-slot="radio-group-label"
-      className={cn("text-sm font-semibold text-foreground", className)}
+      className={cn(
+        "text-sm font-semibold text-foreground [overflow-wrap:anywhere]",
+        className,
+      )}
     />
   );
 }
@@ -172,7 +172,7 @@ export function RadioGroupItems({
       {...props}
       data-slot="radio-group-items"
       className={cn(
-        "grid gap-1 pt-2 group-data-[orientation=horizontal]/radio-group:flex group-data-[orientation=horizontal]/radio-group:flex-wrap group-data-[orientation=horizontal]/radio-group:gap-x-6",
+        "grid grid-cols-1 gap-1 pt-2 group-data-[orientation=horizontal]/radio-group:flex group-data-[orientation=horizontal]/radio-group:flex-wrap group-data-[orientation=horizontal]/radio-group:gap-x-6",
         className,
       )}
     />
@@ -232,7 +232,10 @@ export function RadioLabel({
     <span
       {...props}
       data-slot="radio-label"
-      className={cn("block text-sm font-medium", className)}
+      className={cn(
+        "block text-sm font-medium [overflow-wrap:anywhere]",
+        className,
+      )}
     />
   );
 }
@@ -246,7 +249,7 @@ export function RadioDescription({
       {...props}
       data-slot="radio-description"
       className={cn(
-        "mt-1 block text-xs leading-5 text-muted-foreground",
+        "mt-1 block text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]",
         className,
       )}
     />

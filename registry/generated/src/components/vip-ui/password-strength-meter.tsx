@@ -23,11 +23,12 @@ export function PasswordStrengthMeter({
   password,
   className,
 }: PasswordStrengthMeterProps) {
+  const length = Array.from(password).length;
   const score =
-    Number(password.length >= 8) +
-    Number(password.length >= 12) +
-    Number(password.length >= 16) +
-    Number(/[a-zA-Z]/.test(password) && /[0-9\W_]/.test(password));
+    Number(length >= 8) +
+    Number(length >= 12) +
+    Number(length >= 16) +
+    Number(/\p{L}/u.test(password) && /[^\p{L}\p{M}]/u.test(password));
 
   return (
     <Meter
@@ -39,7 +40,7 @@ export function PasswordStrengthMeter({
     >
       {({ valueText }) => (
         <>
-          <div className="flex items-baseline gap-3 text-sm">
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sm">
             <Label className="min-w-0 font-medium [overflow-wrap:anywhere]">
               Password strength
             </Label>

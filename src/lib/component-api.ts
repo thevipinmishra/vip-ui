@@ -224,7 +224,8 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "onValueChange",
       type: "(value: string) => void",
       defaultValue: "—",
-      description: "Receives the selected id in single-selection mode.",
+      description:
+        "Receives the selected id in single-selection mode, or an empty string when the selection is cleared.",
     },
     {
       component: "ComboBoxTags",
@@ -247,7 +248,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "children",
       type: "ReactNode",
       defaultValue: "required",
-      description: "Place keyed Attachment items in this semantic list.",
+      description: "Attachment items. Give each one a unique key.",
     },
     {
       component: "Attachment",
@@ -268,21 +269,22 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "previewUrl",
       type: "string",
       defaultValue: "—",
-      description: "Image preview URL; otherwise shows a file icon.",
+      description: "Image preview URL. Without it, the row shows a file icon.",
     },
     {
       component: "Attachment",
       prop: "status",
       type: '"ready" | "uploading" | "uploaded" | "error"',
       defaultValue: '"ready"',
-      description: "App-provided upload state.",
+      description: "Upload state. Your app sets it.",
     },
     {
       component: "Attachment",
       prop: "progress",
       type: "number",
       defaultValue: "—",
-      description: "Upload percentage; omitted progress is indeterminate.",
+      description:
+        "Upload percentage from 0 to 100. Without it, the progress bar is indeterminate.",
     },
     {
       component: "Attachment",
@@ -326,7 +328,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "isInvalid",
       type: "boolean",
       defaultValue: "false",
-      description: "Marks the select invalid.",
+      description: "Marks the select invalid. A value for error does the same.",
     },
     {
       component: "NativeSelect",
@@ -350,7 +352,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "SelectOption[]",
       defaultValue: "—",
       description:
-        "Render the default label, trigger, and list from data. Each option has a stable string id, a visible name, and an optional description shown as a second line.",
+        "Options for the default layout. Each option has an id, a name, and an optional description.",
     },
     {
       component: "Select",
@@ -358,7 +360,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "string",
       defaultValue: "—",
       description:
-        "Visible label and help text in the default layout. Keep a label or supply aria-label when you compose children yourself.",
+        "Label and help text for the default layout. When you compose the parts, add SelectLabel or pass aria-label.",
     },
     {
       component: "Select",
@@ -366,7 +368,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "string",
       defaultValue: "—",
       description:
-        "Single-selection convenience props. They set React Aria's selectedKey and defaultSelectedKey, so they hold option ids, not displayed names.",
+        "The selected option id, not its name. Sets selectedKey and defaultSelectedKey.",
     },
     {
       component: "Select",
@@ -374,7 +376,14 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "(value: string) => void",
       defaultValue: "—",
       description:
-        "Called with the selected option id, or an empty string when the selection is cleared. A supplied React Aria onSelectionChange also runs.",
+        "Receives the selected option id, or an empty string when the selection is cleared. onSelectionChange also runs.",
+    },
+    {
+      component: "Select",
+      prop: "placeholder",
+      type: "string",
+      defaultValue: '"Select an option"',
+      description: "Text in the trigger when no option is selected.",
     },
   ],
   "agent-status": [
@@ -498,9 +507,8 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       component: "InlineEdit",
       prop: "value / defaultValue",
       type: "string",
-      defaultValue: "undefined / empty",
-      description:
-        "Control the displayed value or set its initial local value.",
+      defaultValue: '— / ""',
+      description: "The saved value, controlled or uncontrolled.",
     },
     {
       component: "InlineEdit",
@@ -508,7 +516,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "(value: string) => void | Promise<void>",
       defaultValue: "undefined",
       description:
-        "Called on Save, not when the value is unchanged. A rejected promise keeps the draft open and shows its error; update value here when controlled.",
+        "Called when you save a changed value. If it throws, the editor stays open and shows the error message. When controlled, update value here.",
     },
     {
       component: "InlineEdit",
@@ -525,7 +533,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "string",
       defaultValue: "required",
       description:
-        "The password to estimate. Counts length and character mix, not actual resistance to guessing; a unique password matters more than the score.",
+        "The password to rate. The score uses only length and the mix of letters and other characters. It does not measure how easy the password is to guess.",
     },
   ],
   "password-field": [
@@ -563,8 +571,24 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       component: "CopyButton",
       prop: "children",
       type: "ReactNode | (status: CopyButtonStatus) => ReactNode",
-      defaultValue: "Copy / Copied / Retry",
-      description: "Custom content can render from the copy status.",
+      defaultValue: "icon and status text",
+      description:
+        'The button content. Pass a function to show content for each status. CopyButtonStatus is "idle", "copied", or "failed".',
+    },
+    {
+      component: "CopyButton",
+      prop: "aria-label",
+      type: "string",
+      defaultValue: 'idle text or "Copy"',
+      description:
+        "The accessible name. It does not change after a copy. A live region announces the result.",
+    },
+    {
+      component: "CopyButton",
+      prop: "variant",
+      type: "ButtonVariant",
+      defaultValue: '"outline"',
+      description: "Uses the Button variants.",
     },
   ],
   "button-group": [
@@ -768,7 +792,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: '"default" | "sm" | "lg" | "icon"',
       defaultValue: '"default"',
       description:
-        "Set the button's height and padding. Name icon-only buttons with aria-label.",
+        "Heights are 36px for sm, 44px for default, and 48px for lg. icon is a 44px square. Give icon buttons an aria-label.",
     },
     {
       component: "Button",
@@ -1141,8 +1165,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "description",
       type: "string",
       defaultValue: "—",
-      description:
-        "Renders supporting text inside the label, below the control text.",
+      description: "Help text below the label text.",
     },
     {
       component: "Checkbox",
@@ -1150,15 +1173,34 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: 'boolean | "indeterminate"',
       defaultValue: "—",
       description:
-        'Boolean convenience for isSelected / defaultSelected. Use defaultChecked="indeterminate" for a mixed state.',
+        'Convenience props for isSelected and defaultSelected. Pass "indeterminate" for a mixed state.',
     },
     {
       component: "Checkbox",
       prop: "onCheckedChange",
       type: "(checked: boolean) => void",
       defaultValue: "—",
+      description: "Receives the next checked value. onChange also runs.",
+    },
+  ],
+  "checkbox-group": [
+    {
+      component: "CheckboxGroup",
+      prop: "label / description",
+      type: "string",
+      defaultValue: "—",
       description:
-        "Receives the next checked value. React Aria's onChange stays available.",
+        "Label and help text for the group. With label, the group adds CheckboxGroupItems and CheckboxGroupError. Without label, pass aria-label.",
+    },
+  ],
+  autocomplete: [
+    {
+      component: "Autocomplete",
+      prop: "filter",
+      type: "(textValue: string, inputValue: string) => boolean",
+      defaultValue: "contains",
+      description:
+        "Decides which items match the input. The default ignores case and accents.",
     },
   ],
   switch: [
@@ -1167,14 +1209,14 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "description",
       type: "string",
       defaultValue: "—",
-      description: "Renders supporting text beside the label.",
+      description: "Help text below the label text.",
     },
     {
       component: "Switch",
       prop: "checked / defaultChecked",
       type: "boolean",
       defaultValue: "—",
-      description: "Boolean convenience for isSelected / defaultSelected.",
+      description: "Convenience props for isSelected and defaultSelected.",
     },
     {
       component: "Switch",
@@ -1277,7 +1319,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "string",
       defaultValue: '"Choose files"',
       description:
-        "Text for the built-in outline Button. Pass children instead to supply your own trigger; keep an accessible name.",
+        "Text for the default outline button. To use a different trigger, pass it as children.",
     },
   ],
   meter: [
@@ -1304,8 +1346,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "label / description",
       type: "string / string",
       defaultValue: "—",
-      description:
-        "Renders the field label and supporting text around the input and stepper buttons.",
+      description: "Label above the field and help text below it.",
     },
   ],
   "search-field": [
@@ -1315,7 +1356,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "string / string / string",
       defaultValue: "—",
       description:
-        "Renders the field label, supporting text, and input placeholder. The clear button is built in.",
+        "Label, help text, and placeholder for the default layout. The clear button shows when the field has a value.",
     },
   ],
   slider: [
@@ -1324,7 +1365,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "label",
       type: "string",
       defaultValue: "—",
-      description: "Renders a visible label beside the track and value output.",
+      description: "Label above the track, next to the value.",
     },
   ],
   "text-field": [
@@ -1333,8 +1374,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "label / description / placeholder",
       type: "string / string / string",
       defaultValue: "—",
-      description:
-        "Convenience props for the single-line input's label, supporting text, and placeholder.",
+      description: "Label, help text, and placeholder for the default layout.",
     },
   ],
   "text-area": [
@@ -1343,15 +1383,14 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "label / description / placeholder",
       type: "string / string / string",
       defaultValue: "—",
-      description:
-        "Convenience props for the multiline input's label, supporting text, and placeholder.",
+      description: "Label, help text, and placeholder for the default layout.",
     },
     {
       component: "TextArea",
       prop: "rows",
       type: "number",
       defaultValue: "4",
-      description: "Sets the visible height of the textarea.",
+      description: "Number of visible text lines.",
     },
   ],
   "radio-group": [
@@ -1361,15 +1400,14 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "string / string",
       defaultValue: "—",
       description:
-        "Renders the group label, supporting text, and validation error. Keep a label or pass aria-label.",
+        "Label and help text for the group. With label, the group adds RadioGroupItems and RadioGroupError. Without label, pass aria-label.",
     },
     {
       component: "RadioGroup",
       prop: "onValueChange",
       type: "(value: string) => void",
       defaultValue: "—",
-      description:
-        "Receives the selected value. React Aria's onChange also runs.",
+      description: "Receives the selected value. onChange also runs.",
     },
     {
       component: "Radio",
@@ -1426,7 +1464,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: '"default" | "segmented" | "ghost"',
       defaultValue: '"default"',
       description:
-        "Chooses the button surface. segmented joins a group of options; the selected state stays visible in all three variants.",
+        "Sets the surface. Use segmented inside a ToggleButtonGroup. All variants show the selected state.",
     },
   ],
   "token-field": [
@@ -1436,7 +1474,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "string / string / string",
       defaultValue: "—",
       description:
-        "Convenience props for the token input's label, supporting text, and placeholder. Keep a label or supply aria-label.",
+        "Label, help text, and placeholder for the default layout. Without label, pass aria-label.",
     },
   ],
 };

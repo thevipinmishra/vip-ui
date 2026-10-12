@@ -19,10 +19,10 @@ export function ButtonGroup({
       data-orientation={orientation}
       className={cn(
         "inline-flex w-fit max-w-full items-stretch rounded-lg border border-border bg-card shadow-[var(--shadow-card)]",
-        "[&>*]:relative [&>*]:rounded-none [&>*]:border-0 [&>*]:shadow-none [&>*:focus-visible]:z-10",
-        "data-[orientation=horizontal]:[&>*+*]:border-s data-[orientation=horizontal]:[&>*:first-child]:rounded-s-lg data-[orientation=horizontal]:[&>*:last-child]:rounded-e-lg",
-        "data-[orientation=vertical]:flex-col data-[orientation=vertical]:[&>*+*]:border-t data-[orientation=vertical]:[&>*:first-child]:rounded-t-lg data-[orientation=vertical]:[&>*:last-child]:rounded-b-lg",
-        "[&>*+*]:border-border",
+        "[&>:not(output)]:relative [&>:not(output)]:min-w-0 [&>:not(output)]:shrink [&>:not(output)]:rounded-none [&>:not(output)]:border-0 [&>:not(output)]:shadow-none [&>[data-size=icon]]:shrink-0 [&>:focus-visible]:z-10",
+        "data-[orientation=horizontal]:[&>:not(output)~:not(output)]:border-s data-[orientation=horizontal]:[&>:nth-child(1_of_:not(output))]:rounded-s-lg data-[orientation=horizontal]:[&>:nth-last-child(1_of_:not(output))]:rounded-e-lg",
+        "data-[orientation=vertical]:flex-col data-[orientation=vertical]:[&>:not(output)~:not(output)]:border-t data-[orientation=vertical]:[&>:nth-child(1_of_:not(output))]:rounded-t-lg data-[orientation=vertical]:[&>:nth-last-child(1_of_:not(output))]:rounded-b-lg",
+        "[&>:not(output)~:not(output)]:border-border",
         className,
       )}
     />

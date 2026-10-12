@@ -63,10 +63,17 @@ export interface AttachmentProps
   onRetry?: () => void;
 }
 
+const sizeUnits = ["B", "KB", "MB", "GB", "TB"];
+
 function formatSize(bytes: number) {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  let value = Math.max(0, bytes);
+  let unit = 0;
+  while (unit < sizeUnits.length - 1 && Number(value.toFixed(1)) >= 1024) {
+    value /= 1024;
+    unit += 1;
+  }
+  const amount = unit === 0 ? Math.round(value) : Number(value.toFixed(1));
+  return `${amount} ${sizeUnits[unit]}`;
 }
 
 export function Attachment({
@@ -139,41 +146,52 @@ export function Attachment({
           <FileIcon size={20} aria-hidden="true" />
         )}
       </span>
-      <div className="min-w-0 flex-1">
-        <p
-          data-slot="attachment-name"
-          className="font-medium text-foreground [overflow-wrap:anywhere]"
-        >
-          {name}
-        </p>
-        <p
-          data-slot="attachment-details"
-          className={cn(
-            "flex flex-wrap items-center gap-x-1.5 text-xs leading-5 text-muted-foreground",
-            status === "error" && "text-destructive",
+      <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-3">
+        <div className="min-w-[min(8rem,100%)] flex-1">
+          <p
+            data-slot="attachment-name"
+            className="font-medium text-foreground [overflow-wrap:anywhere]"
+          >
+            {name}
+          </p>
+          <p
+            data-slot="attachment-details"
+            className={cn(
+              "text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]",
+              status === "error" && "text-destructive",
+            )}
+          >
+            {status === "error" && (
+              <WarningIcon
+                size={13}
+                weight="bold"
+                aria-hidden="true"
+                className="me-1 inline-block align-[-2px]"
+              />
+            )}
+            {size !== undefined && (
+              <>
+                <span>{formatSize(size)}</span>
+                <span aria-hidden="true"> · </span>
+              </>
+            )}
+            <span>{statusText}</span>
+          </p>
+          {status === "uploading" && (
+            <ProgressBar
+              aria-label={`${name} upload`}
+              value={progress ?? 0}
+              isIndeterminate={progress === undefined}
+              className="mt-2"
+            />
           )}
-        >
-          {status === "error" && (
-            <WarningIcon size={13} weight="bold" aria-hidden="true" />
-          )}
-          {size !== undefined && <span>{formatSize(size)}</span>}
-          {size !== undefined && <span aria-hidden="true">·</span>}
-          <span>{statusText}</span>
-        </p>
-        {status === "uploading" && (
-          <ProgressBar
-            aria-label={`${name} upload`}
-            value={progress ?? 0}
-            isIndeterminate={progress === undefined}
-            className="mt-2"
-          />
+        </div>
+        {status === "error" && onRetry && (
+          <Button type="button" variant="ghost" size="sm" onPress={onRetry}>
+            Retry
+          </Button>
         )}
       </div>
-      {status === "error" && onRetry && (
-        <Button type="button" variant="ghost" onPress={onRetry}>
-          Retry
-        </Button>
-      )}
       {onRemove && (
         <Button
           type="button"

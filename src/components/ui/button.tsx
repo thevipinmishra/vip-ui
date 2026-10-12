@@ -10,6 +10,7 @@ import { springLayout } from "@/lib/motion";
 import {
   type ButtonSize,
   type ButtonVariant,
+  buttonLabel,
   buttonStyles,
 } from "./button-styles";
 
@@ -36,6 +37,7 @@ const pressStyles = "motion-safe:pressed:not-aria-expanded:scale-[0.96]";
 
 export function Button({
   className,
+  children,
   variant = "default",
   size = "default",
   static: isStatic = false,
@@ -58,6 +60,8 @@ export function Button({
         }),
       )}
       {...props}
-    />
+    >
+      {composeRenderProps(children, buttonLabel)}
+    </MotionButton>
   );
 }

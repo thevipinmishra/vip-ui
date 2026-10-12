@@ -1,7 +1,37 @@
+import { Children, type ReactNode } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 
+export function buttonLabel(children: ReactNode): ReactNode {
+  const parts: ReactNode[] = [];
+  let text = "";
+  const flush = () => {
+    if (text.trim()) {
+      parts.push(
+        <span
+          key={`label-${parts.length}`}
+          data-slot="button-label"
+          className="min-w-0 truncate"
+        >
+          {text}
+        </span>,
+      );
+    }
+    text = "";
+  };
+  for (const child of Children.toArray(children)) {
+    if (typeof child === "string" || typeof child === "number") {
+      text += child;
+    } else {
+      flush();
+      parts.push(child);
+    }
+  }
+  flush();
+  return parts;
+}
+
 export const buttonStyles = tv({
-  base: "inline-flex shrink-0 cursor-default items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium tracking-[-0.01em] transition-[color,background-color,border-color,box-shadow,scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] disabled:cursor-default disabled:opacity-50 disabled:shadow-none focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-ring [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  base: "inline-flex max-w-full shrink-0 cursor-default items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium tracking-[-0.01em] transition-[color,background-color,border-color,box-shadow,scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] disabled:cursor-default disabled:opacity-50 disabled:shadow-none focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-ring [&_svg]:pointer-events-none [&_svg]:shrink-0",
   variants: {
     variant: {
       default:

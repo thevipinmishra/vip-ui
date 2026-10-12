@@ -105,7 +105,9 @@ export function CatalogBrowser() {
       {visibleGroups.length > 0 ? (
         <div className="mt-12 grid gap-14">
           {visibleGroups.map((group) => {
-            const headingId = `group-${group.title.replaceAll(" ", "-")}`;
+            const headingId = group.title
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, "-");
 
             return (
               <section
@@ -164,7 +166,7 @@ export function CatalogBrowser() {
             </EmptyStateIcon>
             <EmptyStateTitle>No matching components</EmptyStateTitle>
             <EmptyStateDescription>
-              Nothing matches “{query.trim()}”. Try a shorter term.
+              No component matches “{query.trim()}”. Try a different word.
             </EmptyStateDescription>
             <EmptyStateActions>
               <Button

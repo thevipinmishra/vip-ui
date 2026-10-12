@@ -104,7 +104,7 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "ButtonGroup",
-        purpose: "Joins the edges of two or more independent actions.",
+        purpose: "Joins the edges of two or more related buttons.",
         children: [
           {
             part: "Button",
@@ -127,6 +127,7 @@ export const compositions: Record<string, Composition> = {
             part: "SelectDescription",
             purpose: "Adds help below the trigger.",
           },
+          { part: "SelectError", purpose: "Explains an invalid selection." },
           {
             part: "SelectContent",
             purpose: "Contains the options.",
@@ -172,11 +173,12 @@ export const compositions: Record<string, Composition> = {
       {
         part: "ContextMenuTrigger",
         purpose:
-          "Opens the menu from right-click, long press, or a keyboard shortcut.",
+          "Opens the menu on right-click or long press. On the keyboard, press Shift+F10, or Control+Enter on macOS.",
         children: [
           {
             part: "Button",
-            purpose: "Provides a focusable target and a primary action.",
+            purpose:
+              "The item. It must be focusable to open from the keyboard.",
           },
           {
             part: "ContextMenu",
@@ -264,6 +266,11 @@ export const compositions: Record<string, Composition> = {
           { part: "SearchFieldLabel", purpose: "Names the search." },
           { part: "SearchFieldInput", purpose: "Accepts the query." },
           { part: "SearchFieldClear", purpose: "Resets the query." },
+          {
+            part: "SearchFieldDescription",
+            purpose: "Adds help below the input.",
+          },
+          { part: "SearchFieldError", purpose: "Explains an invalid query." },
         ],
       },
     ],
@@ -300,7 +307,8 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "TextField or TextArea",
-        purpose: "Owns the label and validation state. Choose one.",
+        purpose:
+          "Owns the label and validation state. Choose one and install it separately.",
         children: [
           {
             part: "InputGroup",
@@ -342,6 +350,7 @@ export const compositions: Record<string, Composition> = {
             part: "ComboBoxDescription",
             purpose: "Adds help below the input.",
           },
+          { part: "ComboBoxError", purpose: "Explains an invalid value." },
           {
             part: "ComboBoxContent",
             purpose: "Contains the options.",
@@ -363,6 +372,10 @@ export const compositions: Record<string, Composition> = {
         purpose: "Owns the selected values.",
         children: [
           { part: "CheckboxGroupLabel", purpose: "Names the group." },
+          {
+            part: "CheckboxGroupDescription",
+            purpose: "Adds help below the label.",
+          },
           {
             part: "CheckboxGroupItems",
             purpose: "Contains the choices.",
@@ -388,6 +401,10 @@ export const compositions: Record<string, Composition> = {
         purpose: "Owns the single selected value.",
         children: [
           { part: "RadioGroupLabel", purpose: "Names the group." },
+          {
+            part: "RadioGroupDescription",
+            purpose: "Adds help below the label.",
+          },
           {
             part: "RadioGroupItems",
             purpose: "Contains the choices and follows the orientation.",
@@ -491,7 +508,7 @@ export const compositions: Record<string, Composition> = {
     helper: {
       part: "TagFieldValue",
       purpose:
-        "Tokenizes comma-separated tags. Pass an instance as the value prop; it is not a JSX child.",
+        "Splits text into tags at each comma or line break. Pass an instance to the value prop. It is not a JSX child.",
     },
   },
   "tag-group": {
@@ -677,7 +694,94 @@ export const compositions: Record<string, Composition> = {
           { part: "DropZoneLabel", purpose: "Names the target." },
           {
             part: "FileTrigger",
-            purpose: "Offers a file picker as an alternative.",
+            purpose:
+              "Opens a file picker as an alternative. Install File trigger separately.",
+          },
+        ],
+      },
+    ],
+  },
+  slider: {
+    parts: [
+      {
+        part: "Slider",
+        purpose: "Owns the value or range.",
+        children: [
+          { part: "SliderLabel", purpose: "Names the slider." },
+          { part: "SliderValue", purpose: "Shows the current value or range." },
+          {
+            part: "SliderTrack",
+            purpose: "Receives presses and drags.",
+            children: [
+              {
+                part: "SliderRail",
+                purpose: "Draws the track.",
+                children: [
+                  { part: "SliderRange", purpose: "Fills the selected part." },
+                ],
+              },
+              {
+                part: "SliderHandle",
+                purpose: "Moves one value. Add one for each value.",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  switch: {
+    parts: [
+      {
+        part: "Switch",
+        purpose: "Owns the on and off state.",
+        children: [
+          { part: "SwitchLabel", purpose: "Names the setting." },
+          { part: "SwitchDescription", purpose: "Adds help below the label." },
+          {
+            part: "SwitchControl",
+            purpose: "Draws the track.",
+            children: [
+              { part: "SwitchThumb", purpose: "Moves when the state changes." },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  autocomplete: {
+    parts: [
+      {
+        part: "Autocomplete",
+        purpose: "Connects the input to the list and filters it.",
+        children: [
+          {
+            part: "SearchField",
+            purpose:
+              "Accepts the filter text. Install Search field separately.",
+          },
+          {
+            part: "ListBox",
+            purpose: "Shows the matching items. Install List box separately.",
+          },
+        ],
+      },
+    ],
+  },
+  form: {
+    parts: [
+      {
+        part: "Form",
+        purpose: "Validates its fields when you submit.",
+        children: [
+          {
+            part: "TextField",
+            purpose:
+              "Adds a named value to the form. Install each field separately.",
+          },
+          {
+            part: "Button",
+            purpose: 'Submits the form. Set type="submit".',
           },
         ],
       },
@@ -687,7 +791,7 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "Fieldset",
-        purpose: "Groups related native controls.",
+        purpose: "Groups related controls.",
         children: [
           { part: "FieldsetLegend", purpose: "Names the group." },
           { part: "FieldsetDescription", purpose: "Adds shared guidance." },

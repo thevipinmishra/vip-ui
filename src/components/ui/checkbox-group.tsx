@@ -29,7 +29,7 @@ export function CheckboxGroup({
       {...props}
       data-slot="checkbox-group"
       className={composeRenderProps(className, (className) =>
-        cn("grid gap-1", className),
+        cn("grid min-w-0 grid-cols-1 gap-1", className),
       )}
     >
       {label === undefined ? (
@@ -56,7 +56,10 @@ export function CheckboxGroupLabel({
     <Label
       {...props}
       data-slot="checkbox-group-label"
-      className={cn("text-sm font-semibold text-foreground", className)}
+      className={cn(
+        "text-sm font-semibold text-foreground [overflow-wrap:anywhere]",
+        className,
+      )}
     />
   );
 }
@@ -69,7 +72,7 @@ export function CheckboxGroupItems({
     <div
       {...props}
       data-slot="checkbox-group-items"
-      className={cn("grid gap-1 pt-1", className)}
+      className={cn("grid grid-cols-1 gap-1 pt-1", className)}
     />
   );
 }

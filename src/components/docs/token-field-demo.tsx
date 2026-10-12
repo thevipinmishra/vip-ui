@@ -30,7 +30,8 @@ export function TokenFieldDemo() {
         <TokenFieldLabel>Project tags</TokenFieldLabel>
         <TokenFieldInput placeholder="Add a tag" />
         <TokenFieldDescription>
-          Type a tag and press comma or Enter. Select a tag to remove it.
+          Type a tag, then press comma or Enter. Press Backspace to remove a
+          tag.
         </TokenFieldDescription>
       </TokenField>
       <p className="text-xs text-muted-foreground" aria-live="polite">

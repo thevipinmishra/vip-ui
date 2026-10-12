@@ -13,12 +13,7 @@ export function CopyButtonShareDemo() {
           {link}
         </p>
         <div>
-          <CopyButton
-            value={link}
-            aria-label="Copy release link"
-            variant="secondary"
-            size="sm"
-          >
+          <CopyButton value={link} variant="secondary" size="sm">
             {(status) =>
               status === "copied"
                 ? "Link copied"

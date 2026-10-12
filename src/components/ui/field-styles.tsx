@@ -1,6 +1,9 @@
-export const fieldLabelStyles = "text-sm font-medium text-foreground";
-export const fieldDescriptionStyles = "text-xs leading-5 text-muted-foreground";
-export const fieldErrorStyles = "text-xs leading-5 text-destructive";
+export const fieldLabelStyles =
+  "text-sm font-medium text-foreground [overflow-wrap:anywhere]";
+export const fieldDescriptionStyles =
+  "text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]";
+export const fieldErrorStyles =
+  "text-xs leading-5 text-destructive [overflow-wrap:anywhere]";
 
 export const fieldInputStyles =
   "min-h-12 w-full cursor-text rounded-lg border border-input bg-card text-base text-foreground shadow-[var(--shadow-card)] outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] placeholder:text-muted-foreground/80 hover:border-primary/45 focus:border-ring focus:ring-3 focus:ring-ring/50 invalid:border-destructive invalid:ring-3 invalid:ring-destructive/20 invalid:hover:border-destructive invalid:focus:border-destructive invalid:focus:ring-destructive/30 [&[readonly]]:bg-muted/40 [&[readonly]]:hover:border-input disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 disabled:hover:border-input sm:text-sm";

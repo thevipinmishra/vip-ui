@@ -45,7 +45,7 @@ export const componentPageData = {
       {
         title: "Link",
         description:
-          "Use ButtonLink for navigation that looks like a button. It renders an anchor. Pass your router's link component to the as prop. Install Button link separately.",
+          "ButtonLink renders an anchor that looks like a button. To use your router, pass its link component to the as prop. Install Button link separately.",
         sourcePath: "button-link-demo.tsx",
       },
     ],
@@ -57,7 +57,7 @@ export const componentPageData = {
       {
         title: "Described options",
         description:
-          "Add a description inside each SelectItem, and set textValue to keep a readable option name. The trigger shows only the selected value.",
+          "Add a description inside each SelectItem. Set textValue to the option name, so the trigger shows only the name.",
         sourcePath: "select-descriptions-demo.tsx",
       },
       {
@@ -165,14 +165,14 @@ export const componentPageData = {
       {
         title: "Adding and removing files",
         description:
-          "Use getDropOperation for the drop result and acceptedFileTypes for the file picker. Remove a file with onRemove.",
+          "Check the type and size of each file before you add it. Pass onRemove to show a remove button. Install Drop zone and File trigger separately.",
         sourcePath: "attachment-demo.tsx",
       },
     ],
   },
   autocomplete: {
     usage: "autocomplete-demo.tsx",
-    description: "Filters a list of options as you type.",
+    description: "Filters a list from a search field as you type.",
     examples: [],
   },
   avatar: {
@@ -225,12 +225,12 @@ export const componentPageData = {
   "button-group": {
     usage: "button-group-basic-demo.tsx",
     description:
-      "Joins related actions with shared edges while keeping each button independently focusable.",
+      "Joins related buttons into one row or column. Each button stays in the Tab order.",
     examples: [
       {
         title: "Orientations",
         description:
-          'The default orientation is a row. Set orientation="vertical" for a column. Each button stays in the Tab order.',
+          'The default orientation is a row. Set orientation="vertical" for a column.',
         sourcePath: "button-group-orientations-demo.tsx",
       },
       {
@@ -280,7 +280,7 @@ export const componentPageData = {
   },
   checkbox: {
     usage: "checkbox-basic-demo.tsx",
-    description: "A control for selecting or clearing a single option.",
+    description: "Selects or clears one option.",
     examples: [
       {
         title: "Description",
@@ -392,12 +392,12 @@ export const componentPageData = {
   },
   "combo-box": {
     usage: "combo-box-basic-demo.tsx",
-    description: "A searchable list for choosing an option.",
+    description: "Selects options from a list that filters as you type.",
     examples: [
       {
         title: "Described options",
         description:
-          "Put a description inside each ComboBoxItem and set textValue for filtering.",
+          "Add a description inside each ComboBoxItem. Set textValue to the option name for filtering.",
         sourcePath: "combo-box-demo.tsx",
       },
       {
@@ -416,7 +416,7 @@ export const componentPageData = {
   },
   "command-palette": {
     usage: "command-palette-basic-demo.tsx",
-    description: "Displays a searchable menu for finding and running commands.",
+    description: "Shows a dialog to search and run commands.",
     examples: [
       {
         title: "Sections and icons",
@@ -434,20 +434,19 @@ export const componentPageData = {
       {
         title: "Grouped actions",
         description:
-          "Use a separator to group actions and isDisabled to leave an unavailable option visible.",
+          "Use ContextMenuSeparator to group actions. Set isDisabled to show an action that is not available.",
         sourcePath: "context-menu-grouped-demo.tsx",
       },
     ],
   },
   "copy-button": {
     usage: "copy-button-demo.tsx",
-    description:
-      "Copies a value and confirms whether the clipboard write succeeded.",
+    description: "Copies a value to the clipboard and shows the result.",
     examples: [
       {
-        title: "Label and icon variants",
+        title: "Custom label and icon button",
         description:
-          'Use the status render prop to change the label after a copy. Set size="icon" for an icon-only button.',
+          'Pass a function as children to show a label for each status. Set size="icon" for an icon-only button, and give it an aria-label.',
         sourcePath: "copy-button-share-demo.tsx",
       },
     ],
@@ -574,13 +573,12 @@ export const componentPageData = {
   },
   "drop-zone": {
     usage: "drop-zone-basic-demo.tsx",
-    description:
-      "A target for dropping files or choosing them from a file picker.",
+    description: "Accepts files that you drag onto it.",
     examples: [
       {
         title: "Accepted file types",
         description:
-          "Use getDropOperation to accept or cancel a drop. Add a FileTrigger with acceptedFileTypes as the file-picker alternative.",
+          "Use getDropOperation to accept or cancel a drop. Add a FileTrigger so users can also choose files. Install File trigger separately.",
         sourcePath: "drop-zone-demo.tsx",
       },
     ],
@@ -608,7 +606,7 @@ export const componentPageData = {
       {
         title: "Multiple images",
         description:
-          "Set allowsMultiple for a batch and acceptedFileTypes for the format. onSelect lists the selected file names.",
+          "Set allowsMultiple to select more than one file. acceptedFileTypes only filters the picker. Check each file in onSelect.",
         sourcePath: "file-trigger-demo.tsx",
       },
     ],
@@ -626,7 +624,7 @@ export const componentPageData = {
       {
         title: "Server errors",
         description:
-          'Pass server errors to validationErrors, keyed by field name. Submit "maya" to see the error. The error clears when the value changes.',
+          'Pass server errors to validationErrors, keyed by field name. Push Save to see the error for "maya". The error clears when you change the value and leave the field.',
         sourcePath: "form-server-errors-demo.tsx",
       },
     ],
@@ -662,7 +660,7 @@ export const componentPageData = {
       {
         title: "Text area",
         description:
-          "Use InputGroupTextArea with a bottom row for a live character counter.",
+          'Use InputGroupTextArea in a TextArea. Set align="block-end" on InputGroupAddon to add a row below the text.',
         sourcePath: "input-group-notes-demo.tsx",
       },
       {
@@ -728,19 +726,19 @@ export const componentPageData = {
       {
         title: "Icons and shortcuts",
         description:
-          "Put an icon before the label and a Kbd after it. Use href for an item that opens a page, MenuSeparator to group items, and isDisabled to keep an item visible but unavailable.",
+          "Put an icon before the label and a Kbd after it. Kbd only shows the shortcut. Add the key handler yourself.",
         sourcePath: "menu-demo.tsx",
       },
       {
         title: "Nested menu",
         description:
-          "Wrap a MenuItem and a MenuPopover in SubmenuTrigger. The item shows an arrow and opens the submenu beside the menu.",
+          "Wrap a MenuItem and a MenuPopover in SubmenuTrigger. The submenu opens next to the menu, or below the item on small screens.",
         sourcePath: "menu-nested-demo.tsx",
       },
       {
         title: "Selection",
         description:
-          "Use the selectionMode prop for single and multiple selection.",
+          'Set selectionMode to "single" or "multiple". Control the value with selectedKeys and onSelectionChange.',
         sourcePath: "menu-selection-demo.tsx",
       },
     ],
@@ -777,7 +775,7 @@ export const componentPageData = {
   },
   "native-select": {
     usage: "native-select-demo.tsx",
-    description: "Chooses one option with a native HTML select.",
+    description: "Selects one option with the native HTML select.",
     examples: [
       {
         title: "Groups",
@@ -794,14 +792,14 @@ export const componentPageData = {
       {
         title: "Invalid selection",
         description:
-          "Set isInvalid and error to show a message below the field. Use required for native form validation.",
+          "Set error to show a message below the field and mark it invalid. The example checks the value when you submit. Install Form separately.",
         sourcePath: "native-select-invalid-demo.tsx",
       },
     ],
   },
   "number-field": {
     usage: "number-field-basic-demo.tsx",
-    description: "A field for entering and adjusting numeric values.",
+    description: "Accepts a number, with buttons to increase and decrease it.",
     examples: [
       {
         title: "Minimum and maximum",
@@ -859,15 +857,14 @@ export const componentPageData = {
       {
         title: "With password field",
         description:
-          "Install Password field separately to use this composition.",
+          "Pass the field value to password. Install Password field separately.",
         sourcePath: "password-strength-meter-field-demo.tsx",
       },
     ],
   },
   "password-field": {
     usage: "password-field-basic-demo.tsx",
-    description:
-      "Accepts a password with an optional reveal action beside the input.",
+    description: "Accepts a password, with a button to show or hide it.",
     examples: [
       {
         title: "Disabled",
@@ -878,7 +875,7 @@ export const componentPageData = {
       {
         title: "New password",
         description:
-          "Use new-password autocomplete and native minimum-length validation. The example checks the value but never saves or displays it.",
+          'Set autoComplete="new-password" and minLength. The field shows an error on submit when the password is too short. Install Form separately.',
         sourcePath: "password-field-demo.tsx",
       },
     ],
@@ -944,7 +941,7 @@ export const componentPageData = {
   },
   "radio-group": {
     usage: "radio-group-demo.tsx",
-    description: "Groups options for choosing one item.",
+    description: "Groups radio buttons for selecting one option.",
     examples: [
       {
         title: "Described options",
@@ -998,7 +995,7 @@ export const componentPageData = {
   },
   "search-field": {
     usage: "search-field-basic-demo.tsx",
-    description: "A field for entering a search query.",
+    description: "Accepts a search query, with a button to clear it.",
     examples: [
       {
         title: "Disabled",
@@ -1188,7 +1185,7 @@ export const componentPageData = {
   },
   "text-area": {
     usage: "text-area-basic-demo.tsx",
-    description: "A field for entering multiline text.",
+    description: "Accepts multiple lines of text.",
     examples: [
       {
         title: "Description",
@@ -1217,7 +1214,7 @@ export const componentPageData = {
   },
   "text-field": {
     usage: "text-field-basic-demo.tsx",
-    description: "A field for entering a single line of text.",
+    description: "Accepts one line of text.",
     examples: [
       {
         title: "Description",
@@ -1413,20 +1410,19 @@ export const componentPageData = {
   },
   "toggle-button": {
     usage: "toggle-button-demo.tsx",
-    description:
-      "A button that switches between selected and unselected states.",
+    description: "Turns an option on or off.",
     examples: [
       {
         title: "Independent toggles",
         description:
           "Control each toggle with isSelected and onChange. Give every button a visible label.",
-        sourcePath: "toggle-button-projects-demo.tsx",
+        sourcePath: "toggle-button-independent-demo.tsx",
       },
     ],
   },
   "toggle-button-group": {
     usage: "toggle-button-group-demo.tsx",
-    description: "Groups toggle buttons for selecting one or more options.",
+    description: "Groups toggle buttons. Users select one option or more.",
     examples: [
       {
         title: "Multiple text styles",
@@ -1438,7 +1434,7 @@ export const componentPageData = {
   },
   "token-field": {
     usage: "token-field-basic-demo.tsx",
-    description: "A field for entering and editing multiple text tokens.",
+    description: "Turns typed entries into tokens that you can edit.",
     examples: [
       {
         title: "Disabled",
@@ -1456,7 +1452,7 @@ export const componentPageData = {
   },
   toolbar: {
     usage: "toolbar-basic-demo.tsx",
-    description: "Groups related controls in a keyboard-navigable row.",
+    description: "Groups related controls. Arrow keys move focus between them.",
     examples: [
       {
         title: "Formatting toolbar",

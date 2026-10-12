@@ -2,143 +2,176 @@ import { ArrowUpRightIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { GuideHeader } from "@/components/docs/guide-header";
+import { GuideHeader, GuidePager } from "@/components/docs/guide-header";
 
 export const metadata: Metadata = {
   title: "React Aria | vip/ui",
   description:
-    "How vip/ui uses React Aria contexts, forms, and internationalization, with links to the React Aria documentation for each topic.",
+    "How vip/ui uses React Aria contexts, forms, and internationalization. Each topic links to the React Aria guide.",
 };
 
 export default function ReactAriaPage() {
   return (
     <article className="max-w-[670px]">
-      <GuideHeader title="React Aria" />
-      <p className="mt-8 text-sm leading-7 text-muted-foreground">
-        Interactive vip/ui components are styled wrappers around React Aria
-        Components, so behavior, state, and accessibility come from React Aria.
-        The patterns below matter once you build beyond the component pages;
-        each summary links to the React Aria documentation for the full detail.
-      </p>
+      <GuideHeader
+        title="React Aria"
+        description="Interactive vip/ui components wrap React Aria Components. React Aria supplies their behavior, state, and accessibility."
+      />
 
-      <section id="contexts" className="mt-14 scroll-mt-28">
-        <h2 className="text-[23px] font-semibold tracking-[-0.045em]">
-          Contexts
-        </h2>
-        <p className="mt-4 text-sm leading-7 text-muted-foreground">
-          React Aria passes props and behavior to its children through React
-          contexts. That is how a button inside a number field receives its
-          increment and decrement actions, and how one provider configures an
-          entire group: nested children receive the value, and a local prop on a
-          component takes precedence over the value from context. Slots
-          distinguish repeated parts, such as a stepper&apos;s increment and
-          decrement buttons.
+      <Section
+        id="contexts"
+        title="Contexts"
+        href="https://react-aria.adobe.com/customization#contexts"
+        linkLabel="React Aria contexts guide"
+      >
+        <p>
+          React Aria components send props to their children through React
+          context.
         </p>
-        <p className="mt-4">
-          <ReactAriaLink href="https://react-aria.adobe.com/customization#contexts">
-            Read the React Aria contexts guide
-          </ReactAriaLink>
-        </p>
-      </section>
+        <ul className="grid list-disc gap-1.5 ps-5 marker:text-muted-foreground">
+          <li>
+            A <Code>NumberField</Code> gives its increment and decrement buttons
+            their <Code>onPress</Code> handlers.
+          </li>
+          <li>
+            Slots identify repeated parts, such as{" "}
+            <Code>slot=&quot;increment&quot;</Code> and{" "}
+            <Code>slot=&quot;decrement&quot;</Code>.
+          </li>
+          <li>Props that you set on a component override the context props.</li>
+        </ul>
+      </Section>
 
-      <section id="consuming-contexts" className="mt-14 scroll-mt-28">
-        <h2 className="text-[23px] font-semibold tracking-[-0.045em]">
-          Consuming contexts
-        </h2>
-        <p className="mt-4 text-sm leading-7 text-muted-foreground">
-          To replace part of a pattern with your own component, consume the
-          parent&apos;s context instead of re-implementing its behavior.{" "}
-          <code className="font-mono text-foreground">useContextProps</code>{" "}
-          merges local props with the context value and respects the slot prop;{" "}
-          <code className="font-mono text-foreground">useSlottedContext</code>{" "}
-          reads a value without merging. Contexts that carry state, such as{" "}
-          <code className="font-mono text-foreground">
-            DisclosureStateContext
-          </code>
-          , expose the parent&apos;s current state so a custom child can react
-          to it, which is how vip/ui animates disclosure panels.
+      <Section
+        id="consuming-contexts"
+        title="Consuming contexts"
+        href="https://react-aria.adobe.com/customization#consuming-contexts"
+        linkLabel="React Aria consuming contexts guide"
+      >
+        <p>
+          To replace part of a component with your own, use the parent context.
+          Do not write the behavior again.
         </p>
-        <p className="mt-4">
-          <ReactAriaLink href="https://react-aria.adobe.com/customization#consuming-contexts">
-            Read the React Aria consuming contexts guide
-          </ReactAriaLink>
-        </p>
-      </section>
+        <ul className="grid list-disc gap-1.5 ps-5 marker:text-muted-foreground">
+          <li>
+            <Code>useContextProps</Code> merges your props with the context
+            props. It supports the <Code>slot</Code> prop.
+          </li>
+          <li>
+            <Code>useSlottedContext</Code> reads the context value without a
+            merge.
+          </li>
+          <li>
+            State contexts give the parent state. vip/ui uses{" "}
+            <Code>DisclosureStateContext</Code> to animate disclosure panels.
+          </li>
+        </ul>
+      </Section>
 
-      <section id="forms" className="mt-14 scroll-mt-28">
-        <h2 className="text-[23px] font-semibold tracking-[-0.045em]">Forms</h2>
-        <p className="mt-4 text-sm leading-7 text-muted-foreground">
-          vip/ui&apos;s{" "}
+      <Section
+        id="forms"
+        title="Forms"
+        href="https://react-aria.adobe.com/forms"
+        linkLabel="React Aria forms guide"
+      >
+        <p>
+          The vip/ui{" "}
           <Link
             href="/components/form"
             className="text-primary underline underline-offset-4"
           >
             Form
           </Link>{" "}
-          wraps the React Aria form, so submission works through the HTML form
-          element: use <code className="font-mono text-foreground">action</code>{" "}
-          with React server functions or{" "}
-          <code className="font-mono text-foreground">onSubmit</code>, and read
-          values from{" "}
-          <code className="font-mono text-foreground">FormData</code> or
-          controlled value and onChange props. Validation supports the
-          browser&apos;s constraint rules, a{" "}
-          <code className="font-mono text-foreground">validate</code> function,
-          real-time invalid state, and server errors passed through{" "}
-          <code className="font-mono text-foreground">validationErrors</code>{" "}
-          keyed by field name, with each field rendering its message beside the
-          control.
+          wraps the React Aria <Code>Form</Code>. It renders a native{" "}
+          <Code>{"<form>"}</Code> element.
         </p>
-        <p className="mt-4">
-          <ReactAriaLink href="https://react-aria.adobe.com/forms">
-            Read the React Aria forms guide
-          </ReactAriaLink>
-        </p>
-      </section>
+        <ul className="grid list-disc gap-1.5 ps-5 marker:text-muted-foreground">
+          <li>
+            To submit, use <Code>action</Code> or <Code>onSubmit</Code>.
+          </li>
+          <li>
+            To read values, use <Code>FormData</Code> or controlled{" "}
+            <Code>value</Code> and <Code>onChange</Code> props.
+          </li>
+          <li>
+            To validate, use native constraints, such as <Code>isRequired</Code>
+            , or a <Code>validate</Code> function.
+          </li>
+          <li>
+            To show server errors, pass <Code>validationErrors</Code> to the
+            form. Use the field names as keys.
+          </li>
+        </ul>
+        <p>Each field shows its error message below the input.</p>
+      </Section>
 
-      <section id="internationalization" className="mt-14 scroll-mt-28">
-        <h2 className="text-[23px] font-semibold tracking-[-0.045em]">
-          Internationalization
-        </h2>
-        <p className="mt-4 text-sm leading-7 text-muted-foreground">
-          Wrap the application in{" "}
-          <code className="font-mono text-foreground">I18nProvider</code> to set
-          the locale for every child that reads it with{" "}
-          <code className="font-mono text-foreground">useLocale</code>, in place
-          of the browser default. Date, time, number, and calendar components
-          format values with it and use its reading direction. vip/ui does not
-          mount the provider; add it once near the app root. Validation error
-          messages are the exception: the browser localizes those, and{" "}
-          <code className="font-mono text-foreground">I18nProvider</code> does
-          not change them.
+      <Section
+        id="internationalization"
+        title="Internationalization"
+        href="https://react-aria.adobe.com/I18nProvider"
+        linkLabel="React Aria I18nProvider guide"
+      >
+        <p>
+          React Aria uses the browser locale by default. To set a different
+          locale, wrap your app in <Code>I18nProvider</Code>. vip/ui does not
+          add the provider.
         </p>
-        <p className="mt-4">
-          <ReactAriaLink href="https://react-aria.adobe.com/I18nProvider">
-            Read the React Aria I18nProvider guide
-          </ReactAriaLink>
-        </p>
-      </section>
+        <ul className="grid list-disc gap-1.5 ps-5 marker:text-muted-foreground">
+          <li>
+            Date, time, number, and calendar components use the locale to format
+            values.
+          </li>
+          <li>Components get the reading direction from the locale.</li>
+          <li>
+            <Code>I18nProvider</Code> does not change validation messages. They
+            use the browser language.
+          </li>
+        </ul>
+      </Section>
+
+      <GuidePager
+        previous={{ href: "/components/installation", label: "Installation" }}
+        next={{ href: "/components", label: "All components" }}
+      />
     </article>
   );
 }
 
-function ReactAriaLink({
+function Section({
+  id,
+  title,
   href,
+  linkLabel,
   children,
 }: {
+  id: string;
+  title: string;
   href: string;
+  linkLabel: string;
   children: ReactNode;
 }) {
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="inline-flex items-center gap-1 rounded-md text-sm font-medium text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-    >
-      {children}
-      <ArrowUpRightIcon size={16} aria-hidden="true" />
-      <span className="sr-only"> (opens in a new tab)</span>
-    </a>
+    <section id={id} className="mt-14 scroll-mt-28">
+      <h2 className="text-[23px] font-semibold tracking-[-0.045em]">{title}</h2>
+      <div className="mt-4 grid gap-4 text-sm leading-7 text-muted-foreground">
+        {children}
+        <p>
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 rounded-md font-medium text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          >
+            {linkLabel}
+            <ArrowUpRightIcon size={16} aria-hidden="true" />
+            <span className="sr-only"> (opens in a new tab)</span>
+          </a>
+        </p>
+      </div>
+    </section>
   );
+}
+
+function Code({ children }: { children: ReactNode }) {
+  return <code className="font-mono text-foreground">{children}</code>;
 }

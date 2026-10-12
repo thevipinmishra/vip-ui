@@ -31,50 +31,75 @@ export function OnThisPage() {
     const main = document.querySelector("main");
     if (!main) return;
 
-    const nodes = Array.from(
-      main.querySelectorAll<HTMLElement>("section[id]"),
-    ).filter(
-      (node) =>
-        !node.hasAttribute("data-toc-skip") &&
-        !node.closest("[inert]") &&
-        !node.closest('[data-slot="code-frame"]'),
-    );
-    const found = nodes
-      .map((node) => ({
-        id: node.id,
-        label:
-          node.dataset.tocLabel ??
-          node.querySelector("h2, h3")?.textContent?.trim() ??
-          node.getAttribute("aria-label") ??
-          node.id,
-      }))
-      .filter((section) => section.id && section.label);
+    let observer: IntersectionObserver | undefined;
 
-    setSections(found);
-    setVisibleIds([]);
-    setLineSpan(null);
-    if (found.length === 0) return;
+    const scan = () => {
+      observer?.disconnect();
+      const nodes = Array.from(
+        main.querySelectorAll<HTMLElement>("section[id]"),
+      ).filter(
+        (node) =>
+          !node.hasAttribute("data-toc-skip") &&
+          !node.closest("[inert]") &&
+          !node.closest('[data-slot="code-frame"]'),
+      );
+      const found = nodes
+        .map((node) => ({
+          id: node.id,
+          label:
+            node.dataset.tocLabel ??
+            node.querySelector("h2, h3")?.textContent?.trim() ??
+            node.getAttribute("aria-label") ??
+            node.id,
+        }))
+        .filter((section) => section.id && section.label);
 
-    setCurrentId(found[0].id);
+      setSections(found);
+      setVisibleIds([]);
+      setLineSpan(null);
+      if (found.length === 0) return;
 
-    const visible = new Set<string>();
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) visible.add(entry.target.id);
-          else visible.delete(entry.target.id);
-        }
-        const nextVisible = found
-          .filter((section) => visible.has(section.id))
-          .map((section) => section.id);
-        setVisibleIds(nextVisible);
-        if (nextVisible[0]) setCurrentId(nextVisible[0]);
-      },
-      { rootMargin: "-24px 0px -12% 0px", threshold: 0 },
-    );
+      setCurrentId(found[0].id);
 
-    for (const node of nodes) observer.observe(node);
-    return () => observer.disconnect();
+      const visible = new Set<string>();
+      observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) visible.add(entry.target.id);
+            else visible.delete(entry.target.id);
+          }
+          const nextVisible = found
+            .filter((section) => visible.has(section.id))
+            .map((section) => section.id);
+          setVisibleIds(nextVisible);
+          if (nextVisible[0]) setCurrentId(nextVisible[0]);
+        },
+        { rootMargin: "-24px 0px -12% 0px", threshold: 0 },
+      );
+
+      for (const node of nodes) observer.observe(node);
+    };
+
+    const hasSection = (node: Node) =>
+      node instanceof HTMLElement &&
+      (node.matches("section[id]") || node.querySelector("section[id]"));
+    const mutations = new MutationObserver((records) => {
+      if (
+        records.some(
+          (record) =>
+            Array.from(record.addedNodes).some(hasSection) ||
+            Array.from(record.removedNodes).some(hasSection),
+        )
+      )
+        scan();
+    });
+
+    scan();
+    mutations.observe(main, { childList: true, subtree: true });
+    return () => {
+      mutations.disconnect();
+      observer?.disconnect();
+    };
   }, [pathname]);
 
   useEffect(() => {

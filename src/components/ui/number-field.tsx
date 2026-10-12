@@ -47,7 +47,7 @@ export function NumberField({
       {...props}
       data-slot="number-field"
       className={composeRenderProps(className, (className) =>
-        cn("group grid w-full gap-2", className),
+        cn("group grid w-full min-w-0 grid-cols-1 gap-2", className),
       )}
     >
       {children ?? (

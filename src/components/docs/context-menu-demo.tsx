@@ -10,14 +10,19 @@ import {
 
 export function ContextMenuDemo() {
   return (
-    <ContextMenuTrigger>
-      <Button variant="outline">
-        <FilePdfIcon size={18} aria-hidden="true" /> brief.pdf
-      </Button>
-      <ContextMenu aria-label="File actions">
-        <ContextMenuItem>Rename</ContextMenuItem>
-        <ContextMenuItem>Copy filename</ContextMenuItem>
-      </ContextMenu>
-    </ContextMenuTrigger>
+    <div className="grid justify-items-center gap-3">
+      <ContextMenuTrigger>
+        <Button variant="outline">
+          <FilePdfIcon size={18} aria-hidden="true" /> brief.pdf
+        </Button>
+        <ContextMenu aria-label="File actions">
+          <ContextMenuItem>Rename</ContextMenuItem>
+          <ContextMenuItem>Copy filename</ContextMenuItem>
+        </ContextMenu>
+      </ContextMenuTrigger>
+      <p className="text-xs text-muted-foreground">
+        Right-click or long-press the file.
+      </p>
+    </div>
   );
 }

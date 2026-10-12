@@ -49,7 +49,7 @@ export function Switch({
       data-slot="switch"
       className={composeRenderProps(className, (className) =>
         cn(
-          "group inline-flex min-h-11 cursor-pointer items-center justify-between gap-4 text-sm text-foreground outline-none disabled:cursor-default disabled:opacity-50",
+          "group inline-flex min-h-11 min-w-0 max-w-full cursor-pointer items-center justify-between gap-4 text-sm text-foreground outline-none disabled:cursor-default disabled:opacity-50",
           className,
         ),
       )}
@@ -61,7 +61,7 @@ export function Switch({
           ) : typeof children === "string" || children == null ? (
             <>
               {(children || description) && (
-                <span className="min-w-0">
+                <span className="min-w-0 [overflow-wrap:anywhere]">
                   {children && (
                     <span className="block font-medium">{children}</span>
                   )}
@@ -93,7 +93,7 @@ export function SwitchLabel({
     <span
       {...props}
       data-slot="switch-label"
-      className={cn("block font-medium", className)}
+      className={cn("block font-medium [overflow-wrap:anywhere]", className)}
     />
   );
 }
@@ -107,7 +107,7 @@ export function SwitchDescription({
       {...props}
       data-slot="switch-description"
       className={cn(
-        "mt-1 block text-xs leading-5 text-muted-foreground",
+        "mt-1 block text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]",
         className,
       )}
     />

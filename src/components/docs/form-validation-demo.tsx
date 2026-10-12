@@ -16,9 +16,9 @@ export function FormValidationDemo() {
         label="Workspace name"
         name="workspace"
         isRequired
-        description="Use at least three characters."
+        description="Use 3 or more characters."
         validate={(value) =>
-          value.trim().length < 3 ? "Enter at least three characters." : null
+          value.trim().length < 3 ? "Enter 3 or more characters." : null
         }
       />
       <Button type="submit">Create workspace</Button>

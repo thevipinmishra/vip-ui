@@ -65,7 +65,10 @@ export function InlineEdit({
   }
 
   return (
-    <div className={cn("grid w-full gap-2", className)} data-slot="inline-edit">
+    <div
+      className={cn("grid w-full min-w-0 grid-cols-1 gap-2", className)}
+      data-slot="inline-edit"
+    >
       {isEditing ? (
         <div data-slot="inline-edit-editor">
           <div className="flex flex-wrap items-end gap-2">
@@ -94,7 +97,7 @@ export function InlineEdit({
                 }
               }}
             />
-            <div className="flex gap-2">
+            <div className="mb-1.5 flex gap-2">
               <Button
                 type="button"
                 size="sm"

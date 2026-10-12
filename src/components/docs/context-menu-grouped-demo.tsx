@@ -18,12 +18,13 @@ export function ContextMenuGroupedDemo() {
       </Button>
       <ContextMenuPopover>
         <ContextMenuContent aria-label="Notes actions">
-          <ContextMenuItem href="/components/attachment">
-            View attachment docs
-          </ContextMenuItem>
-          <ContextMenuItem>Pin notes</ContextMenuItem>
+          <ContextMenuItem>Open</ContextMenuItem>
+          <ContextMenuItem>Rename</ContextMenuItem>
           <ContextMenuSeparator />
+          <ContextMenuItem>Pin notes</ContextMenuItem>
           <ContextMenuItem isDisabled>Share (unavailable)</ContextMenuItem>
+          <ContextMenuSeparator />
+          <ContextMenuItem>Delete</ContextMenuItem>
         </ContextMenuContent>
       </ContextMenuPopover>
     </ContextMenuTrigger>

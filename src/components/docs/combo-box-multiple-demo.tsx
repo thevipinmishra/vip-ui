@@ -22,7 +22,7 @@ export function ComboBoxMultipleDemo() {
         selectionMode="multiple"
         label="Project teams"
         placeholder="Find a team"
-        description="Choose teams or remove them using the selected tags."
+        description="Select one or more teams. Remove a tag to clear it."
         options={teams}
         value={selected}
         onChange={setSelected}

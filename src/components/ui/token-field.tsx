@@ -68,7 +68,7 @@ export function TokenField<T extends TokenFieldValue = TokenFieldValue>({
       {...props}
       data-slot="token-field"
       className={composeRenderProps(className, (className) =>
-        cn("grid gap-2 text-sm text-foreground", className),
+        cn("grid min-w-0 grid-cols-1 gap-2 text-sm text-foreground", className),
       )}
     >
       {children != null && typeof children !== "function" ? (

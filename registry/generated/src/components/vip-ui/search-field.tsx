@@ -43,7 +43,7 @@ export function SearchField({
       {...props}
       data-slot="search-field"
       className={composeRenderProps(className, (className) =>
-        cn("group flex w-full flex-col gap-2", className),
+        cn("group flex w-full min-w-0 flex-col gap-2", className),
       )}
     >
       {children ??

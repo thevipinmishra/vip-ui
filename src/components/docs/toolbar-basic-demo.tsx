@@ -11,12 +11,16 @@ export function ToolbarBasicDemo() {
         aria-label="Alignment"
         selectionMode="single"
         defaultSelectedKeys={["left"]}
+        disallowEmptySelection
       >
         <ToggleButton id="left" variant="segmented">
           Left
         </ToggleButton>
         <ToggleButton id="center" variant="segmented">
           Center
+        </ToggleButton>
+        <ToggleButton id="right" variant="segmented">
+          Right
         </ToggleButton>
       </ToggleButtonGroup>
     </Toolbar>

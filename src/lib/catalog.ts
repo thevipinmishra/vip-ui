@@ -17,7 +17,7 @@ const catalog: CatalogDefinition[] = [
       {
         slug: "button-group",
         name: "Button group",
-        useFor: "Joining related actions or a split action with a menu.",
+        useFor: "A set of related actions, or a split action with a menu.",
       },
       {
         slug: "menu",
@@ -28,7 +28,7 @@ const catalog: CatalogDefinition[] = [
         slug: "context-menu",
         name: "Context menu",
         useFor:
-          "Actions beside an item, opened by right-click, long press, or keyboard.",
+          "Actions for an item, opened by right-click, long press, or keyboard.",
       },
       {
         slug: "toggle-button",
@@ -39,27 +39,27 @@ const catalog: CatalogDefinition[] = [
       {
         slug: "toggle-button-group",
         name: "Toggle button group",
-        useFor: "Selecting one or more options from a set.",
+        useFor: "A set of toggle buttons for one or more choices.",
       },
       {
         slug: "toolbar",
         name: "Toolbar",
-        useFor: "Related controls in a keyboard-navigable row.",
+        useFor: "A keyboard-navigable group of related controls.",
       },
       {
         slug: "file-trigger",
         name: "File trigger",
-        useFor: "Choosing files from an accessible button.",
+        useFor: "A button that opens the file picker.",
       },
       {
         slug: "copy-button",
         name: "Copy button",
-        useFor: "Copying a value with success or failure feedback.",
+        useFor: "A button that copies a value and shows the result.",
       },
       {
         slug: "command-palette",
         name: "Command palette",
-        useFor: "Searching and running actions.",
+        useFor: "A search dialog for commands.",
       },
     ],
   },
@@ -70,22 +70,22 @@ const catalog: CatalogDefinition[] = [
       {
         slug: "text-field",
         name: "Text field",
-        useFor: "Labeled text entry and validation.",
+        useFor: "A labeled text input with validation.",
       },
       {
         slug: "password-field",
         name: "Password field",
-        useFor: "Entering a password with a reveal control.",
+        useFor: "A password input with a show password control.",
       },
       {
         slug: "password-strength-meter",
         name: "Password strength meter",
-        useFor: "Estimating the strength of a password entered elsewhere.",
+        useFor: "A meter that rates a password by length and character mix.",
       },
       {
         slug: "inline-edit",
         name: "Inline edit",
-        useFor: "Editing text in place with keyboard and save-error handling.",
+        useFor: "Text that you edit in place, with save error handling.",
       },
       {
         slug: "input-group",
@@ -95,17 +95,17 @@ const catalog: CatalogDefinition[] = [
       {
         slug: "text-area",
         name: "Text area",
-        useFor: "Longer answers with guidance.",
+        useFor: "A multiline text input.",
       },
       {
         slug: "number-field",
         name: "Number field",
-        useFor: "Entering and adjusting numeric values.",
+        useFor: "A number input with increment and decrement buttons.",
       },
       {
         slug: "search-field",
         name: "Search field",
-        useFor: "Finding items by a typed query.",
+        useFor: "A text input for search queries, with a clear button.",
       },
       {
         slug: "select",
@@ -115,32 +115,32 @@ const catalog: CatalogDefinition[] = [
       {
         slug: "native-select",
         name: "Native select",
-        useFor: "One choice using the device's picker.",
+        useFor: "One choice from the device's native picker.",
       },
       {
         slug: "combo-box",
         name: "Combo box",
-        useFor: "Filtering and selecting one or several options.",
+        useFor: "A text input that filters a list of options.",
       },
       {
         slug: "autocomplete",
         name: "Autocomplete",
-        useFor: "Filtering a list of options as you type.",
+        useFor: "A list of options that filters as you type.",
       },
       {
         slug: "token-field",
         name: "Token field",
-        useFor: "Entering editable tags.",
+        useFor: "A text input that turns entries into editable tokens.",
       },
       {
         slug: "checkbox",
         name: "Checkbox",
-        useFor: "Independent choices in a form.",
+        useFor: "An independent choice in a form.",
       },
       {
         slug: "checkbox-group",
         name: "Checkbox group",
-        useFor: "Selecting multiple options from a group.",
+        useFor: "A group of checkboxes for one or more choices.",
       },
       {
         slug: "radio-group",
@@ -150,7 +150,7 @@ const catalog: CatalogDefinition[] = [
       {
         slug: "rating-input",
         name: "Rating input",
-        useFor: "Choosing a star rating with keyboard or pointer.",
+        useFor: "A star rating that you set with keyboard or pointer.",
       },
       {
         slug: "switch",
@@ -160,27 +160,27 @@ const catalog: CatalogDefinition[] = [
       {
         slug: "slider",
         name: "Slider",
-        useFor: "A value within a bounded range.",
+        useFor: "A value or range between a minimum and maximum.",
       },
       {
         slug: "drop-zone",
         name: "Drop zone",
-        useFor: "Adding local files by drag or picker.",
+        useFor: "An area where you drop files.",
       },
       {
         slug: "attachment",
         name: "Attachment",
-        useFor: "Reviewing files and upload states.",
+        useFor: "A file with its upload state.",
       },
       {
         slug: "form",
         name: "Form",
-        useFor: "Grouping fields with validation and submission.",
+        useFor: "A group of fields with validation and submission.",
       },
       {
         slug: "fieldset",
         name: "Fieldset",
-        useFor: "Grouping related form controls under a legend.",
+        useFor: "Related form controls under a legend.",
       },
     ],
   },
@@ -191,52 +191,52 @@ const catalog: CatalogDefinition[] = [
       {
         slug: "date-field",
         name: "Date field",
-        useFor: "Entering a known date one segment at a time.",
+        useFor: "A date input with editable segments.",
       },
       {
         slug: "time-field",
         name: "Time field",
-        useFor: "Entering a time in editable segments.",
+        useFor: "A time input with editable segments.",
       },
       {
         slug: "calendar",
         name: "Calendar",
-        useFor: "Selecting a date from a month view.",
+        useFor: "A month grid for selecting a date.",
       },
       {
         slug: "range-calendar",
         name: "Range calendar",
-        useFor: "Selecting a start and end date.",
+        useFor: "A month grid for selecting a date range.",
       },
       {
         slug: "date-picker",
         name: "Date picker",
-        useFor: "Entering a date or choosing one from a calendar.",
+        useFor: "A date input with a calendar popover.",
       },
       {
         slug: "date-range-picker",
         name: "Date range picker",
-        useFor: "Entering or selecting a date range.",
+        useFor: "A date range input with a calendar popover.",
       },
       {
         slug: "color-field",
         name: "Color field",
-        useFor: "Entering a color value as text.",
+        useFor: "A text input for a color value.",
       },
       {
         slug: "color-swatch",
         name: "Color swatch",
-        useFor: "Showing a sample of a color.",
+        useFor: "A sample of a color.",
       },
       {
         slug: "color-swatch-picker",
         name: "Color swatch picker",
-        useFor: "Choosing from a set of color swatches.",
+        useFor: "A set of color swatches to select from.",
       },
       {
         slug: "color-picker",
         name: "Color picker",
-        useFor: "Editing a color visually or by hex value.",
+        useFor: "A color area, sliders, and a hex input.",
       },
     ],
   },
@@ -262,7 +262,7 @@ const catalog: CatalogDefinition[] = [
       {
         slug: "tooltip",
         name: "Tooltip",
-        useFor: "Brief supplementary help on hover or focus.",
+        useFor: "A short hint on hover or focus.",
       },
       {
         slug: "toast",
@@ -278,7 +278,7 @@ const catalog: CatalogDefinition[] = [
       {
         slug: "link",
         name: "Link",
-        useFor: "Navigation to another page or location.",
+        useFor: "A link to another page or location.",
       },
       {
         slug: "tabs",
@@ -309,17 +309,17 @@ const catalog: CatalogDefinition[] = [
       {
         slug: "grid-list",
         name: "Grid list",
-        useFor: "A collection of interactive rows.",
+        useFor: "A list of interactive rows.",
       },
       {
         slug: "tree",
         name: "Tree",
-        useFor: "Hierarchical items that can be expanded.",
+        useFor: "Nested items that expand and collapse.",
       },
       {
         slug: "tag-group",
         name: "Tag group",
-        useFor: "A collection of tags that can be removed.",
+        useFor: "A group of tags that you can remove.",
       },
       {
         slug: "table",
@@ -329,8 +329,7 @@ const catalog: CatalogDefinition[] = [
       {
         slug: "data-table",
         name: "Data table",
-        useFor:
-          "Searching, filtering, sorting, selecting, and paging through rows.",
+        useFor: "A table with search, filters, sorting, selection, and pages.",
       },
     ],
   },
@@ -341,7 +340,7 @@ const catalog: CatalogDefinition[] = [
       {
         slug: "alert",
         name: "Alert",
-        useFor: "Information beside the task it affects.",
+        useFor: "A message beside the content it affects.",
       },
       {
         slug: "badge",
@@ -376,12 +375,12 @@ const catalog: CatalogDefinition[] = [
       {
         slug: "skeleton",
         name: "Skeleton",
-        useFor: "Reserving space while content loads.",
+        useFor: "A placeholder shape while content loads.",
       },
       {
         slug: "empty-state",
         name: "Empty state",
-        useFor: "Explaining an empty collection and its next step.",
+        useFor: "A message for an empty view, with a next step.",
       },
     ],
   },
@@ -392,37 +391,37 @@ const catalog: CatalogDefinition[] = [
       {
         slug: "card",
         name: "Card",
-        useFor: "Grouping related content and actions.",
+        useFor: "A container for related content and actions.",
       },
       {
         slug: "accordion",
         name: "Accordion",
-        useFor: "Details revealed on demand.",
+        useFor: "A set of sections that expand and collapse.",
       },
       {
         slug: "disclosure",
         name: "Disclosure",
-        useFor: "Showing or hiding a section of content.",
+        useFor: "A section that you show or hide.",
       },
       {
         slug: "separator",
         name: "Separator",
-        useFor: "Separating sections of content.",
+        useFor: "A line between sections of content.",
       },
       {
         slug: "avatar",
         name: "Avatar",
-        useFor: "Showing a person with an image or initials.",
+        useFor: "A person's image or initials.",
       },
       {
         slug: "description-list",
         name: "Description list",
-        useFor: "Pairing labels and values.",
+        useFor: "Pairs of labels and values.",
       },
       {
         slug: "stat",
         name: "Stat",
-        useFor: "Showing a labeled metric and context.",
+        useFor: "A labeled metric with context.",
       },
       {
         slug: "timeline",
@@ -432,7 +431,7 @@ const catalog: CatalogDefinition[] = [
       {
         slug: "kbd-code",
         name: "Kbd & code",
-        useFor: "Marking up shortcuts and inline code.",
+        useFor: "Keyboard shortcuts and inline code.",
       },
     ],
   },
@@ -443,12 +442,12 @@ const catalog: CatalogDefinition[] = [
       {
         slug: "message",
         name: "Message",
-        useFor: "A readable entry in a conversation.",
+        useFor: "A message in a conversation.",
       },
       {
         slug: "agent-status",
         name: "Agent status",
-        useFor: "A visible state for an agent's current step.",
+        useFor: "The state of an agent's current step.",
       },
       {
         slug: "tool-call",
@@ -479,17 +478,17 @@ const catalog: CatalogDefinition[] = [
       {
         slug: "text-reveal",
         name: "Text reveal",
-        useFor: "Revealing text by word or character.",
+        useFor: "Text that appears word by word or character by character.",
       },
       {
         slug: "text-scramble",
         name: "Text scramble",
-        useFor: "Resolving changing text from scrambled characters.",
+        useFor: "Text that resolves from scrambled characters.",
       },
       {
         slug: "presence",
         name: "Presence",
-        useFor: "Animating conditional content into and out of a page.",
+        useFor: "Content that animates in and out.",
       },
       {
         slug: "presence-list",
@@ -499,17 +498,18 @@ const catalog: CatalogDefinition[] = [
       {
         slug: "stagger-group",
         name: "Stagger group",
-        useFor: "Sequencing the entrance of grouped items.",
+        useFor: "Items that enter one after another.",
       },
       {
         slug: "layout-morph",
         name: "Layout morph",
-        useFor: "Resizing around changing content without stretching it.",
+        useFor:
+          "A container that resizes to new content without stretching it.",
       },
       {
         slug: "marquee",
         name: "Marquee",
-        useFor: "Looping a pausable strip of content.",
+        useFor: "A looping strip of content that you can pause.",
       },
     ],
   },

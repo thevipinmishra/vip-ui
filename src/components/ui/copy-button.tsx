@@ -7,6 +7,7 @@ import { composeRenderProps } from "react-aria-components";
 import { duration, easeOut } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { Button, type ButtonProps } from "./button";
+import { buttonLabel } from "./button-styles";
 
 export type CopyButtonStatus = "idle" | "copied" | "failed";
 
@@ -24,7 +25,7 @@ export function CopyButton({
   children,
   variant = "outline",
   size = "default",
-  "aria-label": ariaLabel = "Copy",
+  "aria-label": ariaLabel,
   className,
   ...props
 }: CopyButtonProps) {
@@ -60,6 +61,10 @@ export function CopyButton({
   }
 
   const content = typeof children === "function" ? children(status) : children;
+  const idleContent =
+    typeof children === "function" ? children("idle") : children;
+  const label =
+    ariaLabel ?? (typeof idleContent === "string" ? idleContent : "Copy");
   const defaultContent = (
     <>
       {status === "copied" ? (
@@ -70,11 +75,13 @@ export function CopyButton({
         <CopyIcon size={16} />
       )}
       {size !== "icon" &&
-        (status === "copied"
-          ? "Copied"
-          : status === "failed"
-            ? "Retry"
-            : "Copy")}
+        buttonLabel(
+          status === "copied"
+            ? "Copied"
+            : status === "failed"
+              ? "Retry"
+              : "Copy",
+        )}
     </>
   );
 
@@ -91,7 +98,7 @@ export function CopyButton({
         className={composeRenderProps(className, (className) =>
           cn("relative", className),
         )}
-        aria-label={ariaLabel}
+        aria-label={label}
         onPress={() => void copy()}
       >
         <AnimatePresence initial={false} mode="popLayout">
@@ -110,9 +117,9 @@ export function CopyButton({
               duration: reduceMotion ? 0 : duration.fast,
               ease: easeOut,
             }}
-            className="inline-flex items-center justify-center gap-2 whitespace-nowrap"
+            className="inline-flex min-w-0 max-w-full items-center justify-center gap-2 whitespace-nowrap"
           >
-            {children == null ? defaultContent : content}
+            {children == null ? defaultContent : buttonLabel(content)}
           </motion.span>
         </AnimatePresence>
       </Button>
