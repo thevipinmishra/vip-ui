@@ -68,7 +68,10 @@ export function EmptyStateActions({
   return (
     <div
       data-slot="empty-state-actions"
-      className={cn("mt-1 flex flex-wrap justify-center gap-3", className)}
+      className={cn(
+        "mt-1 flex max-w-full flex-wrap justify-center gap-3",
+        className,
+      )}
       {...props}
     />
   );

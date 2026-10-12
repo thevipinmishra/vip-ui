@@ -124,7 +124,7 @@ function ThemeOption({ theme }: { theme: OfficialTheme }) {
   return (
     <AriaRadio
       value={theme.slug}
-      className="inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-md border border-transparent px-3 text-sm font-medium text-muted-foreground outline-none hover:bg-card/70 hover:text-foreground selected:border-border selected:bg-card selected:text-foreground selected:shadow-[var(--shadow-card)] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring sm:min-h-9"
+      className="inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-md border border-transparent px-3 text-sm font-medium text-muted-foreground outline-none hover:bg-card/70 hover:text-foreground selected:border-border selected:bg-card selected:text-foreground selected:shadow-[var(--shadow-card)] focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring sm:min-h-9"
     >
       <span data-specimen={theme.slug} className="flex items-center gap-2">
         <span

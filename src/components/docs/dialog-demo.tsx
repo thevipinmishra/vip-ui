@@ -18,7 +18,7 @@ export function DialogDemo() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Dialog title</DialogTitle>
-          <DialogClose aria-label="Close dialog" />
+          <DialogClose />
         </DialogHeader>
         <DialogDescription>
           Review the details before you continue.

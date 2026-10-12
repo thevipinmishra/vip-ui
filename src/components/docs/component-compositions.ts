@@ -76,7 +76,7 @@ export const compositions: Record<string, Composition> = {
               },
               {
                 part: "AccordionContent",
-                purpose: "Contains the section's answer.",
+                purpose: "Holds the section content.",
               },
             ],
           },
@@ -158,12 +158,69 @@ export const compositions: Record<string, Composition> = {
                 purpose: "Groups the title and close control.",
                 children: [
                   { part: "DialogTitle", purpose: "Names the modal task." },
+                  {
+                    part: "DialogClose",
+                    purpose:
+                      "Closes the dialog. Without children, it is an X icon.",
+                  },
                 ],
               },
               { part: "DialogDescription", purpose: "Explains the task." },
-              { part: "DialogFooter", purpose: "Groups the task actions." },
+              {
+                part: "DialogFooter",
+                purpose: "Groups the task actions.",
+                children: [
+                  {
+                    part: "DialogClose",
+                    purpose: "Closes the dialog with a text button.",
+                  },
+                ],
+              },
             ],
           },
+        ],
+      },
+    ],
+  },
+  popover: {
+    parts: [
+      {
+        part: "DialogTrigger",
+        purpose: "Owns the open state. Import it from react-aria-components.",
+        children: [
+          { part: "Button", purpose: "Opens the popover." },
+          {
+            part: "Popover",
+            purpose: "Shows the panel next to the trigger.",
+            children: [
+              {
+                part: "Dialog",
+                purpose:
+                  "Holds the content and moves focus into it. Import it from react-aria-components.",
+                children: [
+                  {
+                    part: "Heading",
+                    purpose: 'Names the popover. Set slot="title".',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  tooltip: {
+    parts: [
+      {
+        part: "TooltipTrigger",
+        purpose: "Opens the tooltip on hover or keyboard focus.",
+        children: [
+          {
+            part: "Button",
+            purpose: "The trigger. It must be focusable.",
+          },
+          { part: "TooltipContent", purpose: "Shows the hint text." },
         ],
       },
     ],
@@ -220,7 +277,7 @@ export const compositions: Record<string, Composition> = {
       {
         part: "ToastViewport",
         purpose:
-          "Shows queued toasts in the bottom corner. Render it once in the root layout.",
+          "Shows up to three toasts in the bottom corner, newest at the bottom. Other toasts wait. Render it once in the root layout.",
       },
     ],
     helper: {
@@ -423,6 +480,28 @@ export const compositions: Record<string, Composition> = {
       },
     ],
   },
+  breadcrumbs: {
+    parts: [
+      {
+        part: "nav",
+        purpose:
+          "Makes a navigation landmark. Use it when the path is the main navigation of the page.",
+        children: [
+          {
+            part: "Breadcrumbs",
+            purpose: "Lists the path from the top level to the current page.",
+            children: [
+              {
+                part: "Breadcrumb",
+                purpose:
+                  "Links to one level. Repeat for each level. The last one is the current page and shows as text.",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   tabs: {
     parts: [
       {
@@ -431,7 +510,7 @@ export const compositions: Record<string, Composition> = {
         children: [
           {
             part: "TabsList",
-            purpose: "Groups the tab triggers.",
+            purpose: "Groups the tab triggers. Scrolls when they do not fit.",
             children: [
               {
                 part: "TabsTrigger",
@@ -462,7 +541,7 @@ export const compositions: Record<string, Composition> = {
               {
                 part: "SheetHandle",
                 purpose:
-                  "Drag or press to resize between snap points or dismiss the sheet. Place it last for top sheets; keyboard activation always works.",
+                  "Drag or push it to resize or close the sheet. In a top sheet, put it last.",
               },
               {
                 part: "SheetHeader",
@@ -515,16 +594,58 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "TagGroup",
-        purpose: "Owns removal behavior.",
+        purpose:
+          "Owns selection and removal. Set onRemove to show remove buttons.",
         children: [
-          { part: "TagGroupLabel", purpose: "Names the collection." },
+          { part: "TagGroupLabel", purpose: "Names the group." },
           {
             part: "TagListView",
-            purpose: "Renders the collection.",
+            purpose:
+              "Contains the tags. renderEmptyState shows a message when there are no tags.",
             children: [
               {
                 part: "Tag",
-                purpose: "Displays a removable item. Repeat for each tag.",
+                purpose: "Shows one item on one line. Repeat for each tag.",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  table: {
+    parts: [
+      {
+        part: "Table",
+        purpose:
+          "Owns selection and sorting. Put it in an element with overflow-x-auto, so that it can scroll on small screens.",
+        children: [
+          {
+            part: "TableHeader",
+            purpose: "Contains the column headers.",
+            children: [
+              {
+                part: "Column",
+                purpose:
+                  "Names one column. Set isRowHeader on the column that names each row.",
+              },
+            ],
+          },
+          {
+            part: "TableBody",
+            purpose:
+              "Contains the rows. renderEmptyState shows a message when there are no rows.",
+            children: [
+              {
+                part: "Row",
+                purpose: "Defines one row. Repeat for each item.",
+                children: [
+                  {
+                    part: "Cell",
+                    purpose:
+                      "Shows one value on one line. Add whitespace-normal to let long text wrap.",
+                  },
+                ],
               },
             ],
           },
@@ -593,6 +714,31 @@ export const compositions: Record<string, Composition> = {
       },
     ],
   },
+  timeline: {
+    parts: [
+      {
+        part: "Timeline",
+        purpose: "Orders the events. Give it an aria-label.",
+        children: [
+          {
+            part: "TimelineItem",
+            purpose: "Shows one event. Repeat for each event.",
+            children: [
+              { part: "TimelineTitle", purpose: "Names the event." },
+              {
+                part: "TimelineTime",
+                purpose: "Shows when it happened. Set dateTime.",
+              },
+              {
+                part: "TimelineDescription",
+                purpose: "Gives optional detail.",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   "kbd-code": {
     parts: [
       {
@@ -646,7 +792,8 @@ export const compositions: Record<string, Composition> = {
                   },
                   {
                     part: "PaginationEllipsis",
-                    purpose: "Marks omitted pages instead of a link.",
+                    purpose:
+                      "Marks a gap in the page numbers. Use it in place of a link.",
                   },
                 ],
               },
@@ -665,7 +812,7 @@ export const compositions: Record<string, Composition> = {
           { part: "DisclosureHeader", purpose: "Toggles the panel." },
           {
             part: "DisclosurePanel",
-            purpose: "Contains the revealed details.",
+            purpose: "Holds the content to show or hide.",
           },
         ],
       },

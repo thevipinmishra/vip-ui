@@ -6,6 +6,7 @@ export function AvatarFallbackDemo() {
       <Avatar name="Maya Chen" src="/avatars/missing.png" />
       <Avatar name="Amina Shah" />
       <Avatar name="Leonardo da Vinci" initials="LV" />
+      <Avatar name="Guest" initials="" />
     </div>
   );
 }

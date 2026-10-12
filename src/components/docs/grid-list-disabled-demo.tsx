@@ -14,8 +14,8 @@ export function GridListDisabledDemo() {
       </GridListItem>
       <GridListItem id="draft" textValue="Draft report" isDisabled>
         Draft report
-        <span className="ms-auto text-xs text-muted-foreground">
-          Unavailable
+        <span className="ms-auto shrink-0 text-xs text-muted-foreground">
+          Processing
         </span>
       </GridListItem>
     </GridList>

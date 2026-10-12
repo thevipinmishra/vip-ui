@@ -617,14 +617,15 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "readonly { label: string; description?: string }[]",
       defaultValue: "required",
       description:
-        "Steps in display order. Keep labels short; descriptions are optional.",
+        "Steps in display order. Keep labels short. If the steps do not fit, the list scrolls and keeps the current step in view.",
     },
     {
       component: "Stepper",
       prop: "currentStep",
       type: "number (zero-based)",
       defaultValue: "required",
-      description: "Index of the current step; earlier steps show as complete.",
+      description:
+        "Index of the current step. Earlier steps show as complete. Set it to steps.length to show all steps as complete.",
     },
   ],
   "animated-number": [
@@ -665,21 +666,22 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "label",
       type: "string",
       defaultValue: "required",
-      description: "Visible name for the React Aria progressbar.",
+      description: "Shows a visible label below the ring.",
     },
     {
       component: "ProgressRing",
       prop: "size",
       type: '"sm" | "md" | "lg"',
       defaultValue: '"md"',
-      description: "Diameter of the ring.",
+      description: "Sets the diameter: 40, 64, or 96 pixels.",
     },
     {
       component: "ProgressRing",
       prop: "showValue",
       type: "boolean",
       defaultValue: "true",
-      description: "Shows the value in the center of the ring.",
+      description:
+        "Shows the value in the center of the ring. Keep valueLabel short so it fits.",
     },
   ],
   "presence-list": [
@@ -826,21 +828,23 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "name",
       type: "string",
       defaultValue: "required",
-      description: "Accessible name and source of the fallback initials.",
+      description: "Accessible name. Avatar takes the initials from it.",
     },
     {
       component: "Avatar",
       prop: "src",
       type: "string",
       defaultValue: "undefined",
-      description: "Image URL; falls back to initials if missing or broken.",
+      description:
+        "Image URL. Avatar shows initials if the image is missing or does not load.",
     },
     {
       component: "Avatar",
       prop: "initials",
       type: "string",
       defaultValue: "derived from name",
-      description: "Overrides the displayed initials.",
+      description:
+        'Replaces the initials from name. Set "" to show a person icon.',
     },
     {
       component: "Avatar",
@@ -865,14 +869,14 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "variant",
       type: '"ring" | "dots" | "segments"',
       defaultValue: '"ring"',
-      description: "Selects the indicator animation.",
+      description: "Sets the animation style.",
     },
     {
       component: "Spinner",
       prop: "size",
       type: '"xs" | "sm" | "md" | "lg" | "xl"',
       defaultValue: '"md"',
-      description: "Set the indicator size.",
+      description: "Sets the size: 14, 16, 24, 40, or 56 pixels.",
     },
     {
       component: "Spinner",
@@ -880,7 +884,14 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "boolean",
       defaultValue: "false",
       description:
-        "Hide the indicator from assistive technology when adjacent text already reports progress.",
+        "Hides the spinner from screen readers. Use it when text next to the spinner names the wait.",
+    },
+    {
+      component: "Spinner",
+      prop: "aria-label",
+      type: "string",
+      defaultValue: '"Loading"',
+      description: "Names the wait for screen readers.",
     },
   ],
   "rating-input": [
@@ -914,6 +925,39 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       description: "Called when a star is selected.",
     },
   ],
+  tree: [
+    {
+      component: "TreeItem",
+      prop: "title",
+      type: "string",
+      defaultValue: "required",
+      description: "The row label. Typeahead uses it unless you set textValue.",
+    },
+    {
+      component: "TreeItem",
+      prop: "content",
+      type: "ReactNode",
+      defaultValue: "title",
+      description:
+        "Replaces the visible label. Use it to add details, such as a file size.",
+    },
+    {
+      component: "TreeItem",
+      prop: "icon",
+      type: "ReactNode",
+      defaultValue: "folder or file icon",
+      description:
+        "Replaces the default icon. A row with child items shows a folder. Other rows show a file.",
+    },
+    {
+      component: "TreeItem",
+      prop: "children",
+      type: "ReactNode",
+      defaultValue: "undefined",
+      description:
+        "Nested TreeItem elements. A row with children shows an expand button.",
+    },
+  ],
   "data-table": [
     {
       component: "DataTable",
@@ -943,7 +987,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "(row: T) => string | number",
       defaultValue: "undefined",
       description:
-        "Enables sorting for this column; return a comparable value. Column filters use this value too.",
+        "Turns on sorting for the column. Return a string or a number. Column filters use this value too.",
     },
     {
       component: "DataTableColumn",
@@ -973,7 +1017,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "(row: T) => string",
       defaultValue: "undefined",
       description:
-        "Enables search across rows; return all text that should be searchable for each row.",
+        "Shows a search field. Return all the text that search can find in a row.",
     },
     {
       component: "DataTable",
@@ -981,7 +1025,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "number / boolean",
       defaultValue: "5 / true",
       description:
-        "Rows per page and whether to show row-selection checkboxes. Select all affects the current page; filters do not clear selections.",
+        "Rows on each page, and whether rows show selection checkboxes. Select all selects only the rows on the current page.",
     },
     {
       component: "DataTable",
@@ -989,7 +1033,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "Iterable<Key>",
       defaultValue: "undefined / empty",
       description:
-        "Control selected row keys or set their initial value. Selections persist across pages and filters.",
+        "The selected row keys, controlled or initial. The selection stays when the page, search, or filters change.",
     },
     {
       component: "DataTable",
@@ -1001,11 +1045,20 @@ export const customComponentApi: Record<string, ApiProp[]> = {
   ],
   pagination: [
     {
+      component: "Pagination",
+      prop: "aria-label",
+      type: "string",
+      defaultValue: '"Pagination"',
+      description:
+        "Names the navigation landmark. Change it when a page has more than one pagination.",
+    },
+    {
       component: "PaginationLink",
       prop: "isCurrent",
       type: "boolean",
       defaultValue: "false",
-      description: "Marks the current page with aria-current=page.",
+      description:
+        'Shows the link as the current page and sets aria-current="page".',
     },
     {
       component: "PaginationLink",
@@ -1013,7 +1066,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "boolean",
       defaultValue: "false",
       description:
-        "Keeps the link in place but removes navigation when unavailable.",
+        "Keeps the link visible but stops navigation. The link leaves the Tab order.",
     },
   ],
   timeline: [
@@ -1022,7 +1075,15 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "status",
       type: '"latest" | "complete"',
       defaultValue: '"complete"',
-      description: "Marks the newest event separately from earlier events.",
+      description:
+        'Marks the newest event. Screen readers announce "Latest" before it.',
+    },
+    {
+      component: "TimelineTitle",
+      prop: "as",
+      type: '"h2" | "h3" | "h4"',
+      defaultValue: '"h3"',
+      description: "Heading level for the event title.",
     },
   ],
   accordion: [
@@ -1031,8 +1092,15 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "variant",
       type: '"card" | "divided"',
       defaultValue: '"card"',
+      description: "Shows sections as separate cards, or as rows with lines.",
+    },
+    {
+      component: "AccordionItem",
+      prop: "title",
+      type: "string",
+      defaultValue: "undefined",
       description:
-        "Show separate cards or a flat list with dividers between rows.",
+        "Renders an AccordionTrigger with this text. The children go into an AccordionContent.",
     },
   ],
   alert: [
@@ -1042,14 +1110,14 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "string",
       defaultValue: "undefined",
       description:
-        "Renders an icon, heading, and children as the description when provided. Omit to compose the parts yourself.",
+        "Shows the variant icon and a heading, with children as the description. Leave it out to build the alert from its parts.",
     },
     {
       component: "Alert",
       prop: "variant",
       type: '"info" | "success" | "warning" | "error" | "neutral"',
       defaultValue: '"info"',
-      description: "Selects the alert color and icon.",
+      description: "Sets the colors and the icon.",
     },
     {
       component: "Alert",
@@ -1057,7 +1125,15 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "ReactNode",
       defaultValue: "undefined",
       description:
-        "Content of the alert; used as the description when title is set.",
+        "The alert content. When title is set, children become the description.",
+    },
+    {
+      component: "Alert",
+      prop: "role",
+      type: '"status" | "alert"',
+      defaultValue: "—",
+      description:
+        'Screen readers do not announce an alert by default. For a message that appears after an action, set "status". For an urgent error, set "alert".',
     },
   ],
   dialog: [
@@ -1065,23 +1141,51 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       component: "DialogContent",
       prop: "overlayProps",
       type: "ModalOverlayProps",
-      defaultValue: "outside press enabled for ordinary dialogs",
+      defaultValue: "{ isDismissable: true }",
       description:
-        "Pass React Aria overlay options such as isDismissable and isKeyboardDismissDisabled. Alert dialogs always ignore outside press.",
+        'React Aria ModalOverlay props, such as isDismissable and isKeyboardDismissDisabled. With role="alertdialog", outside clicks never close the dialog.',
+    },
+    {
+      component: "DialogContent",
+      prop: "modalProps",
+      type: "ModalProps",
+      defaultValue: "—",
+      description:
+        "Props for the panel. To change the width, set className here, for example sm:max-w-lg.",
     },
     {
       component: "DialogClose",
       prop: "children",
       type: "ReactNode",
       defaultValue: "close icon",
-      description: "Replace the default icon with a labeled close action.",
+      description:
+        'Text for the button. Without children, it shows an X icon labeled "Close dialog".',
     },
     {
       component: "DialogClose",
       prop: "variant / size",
       type: "ButtonProps",
-      defaultValue: '"ghost" / "icon"',
-      description: "Button appearance; labeled children use the default size.",
+      defaultValue: '"ghost" / "icon" (without children)',
+      description:
+        "Button variant and size. With children, the size is default.",
+    },
+  ],
+  popover: [
+    {
+      component: "Popover",
+      prop: "className",
+      type: "string | ((values) => string)",
+      defaultValue: "—",
+      description:
+        "Set a width here, for example w-72. Without a width, the panel grows with its content, up to the viewport width minus 2rem.",
+    },
+    {
+      component: "Popover",
+      prop: "placement",
+      type: "Placement",
+      defaultValue: '"bottom"',
+      description:
+        "The side of the trigger. If there is not sufficient space, the panel moves to the opposite side.",
     },
   ],
   sheet: [
@@ -1091,7 +1195,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: '"bottom" | "top" | "left" | "right" | "start" | "end" | "center"',
       defaultValue: '"bottom"',
       description:
-        "Choose the entry edge. start and end mirror in right-to-left locales. Bottom sheets default to 85% of the visible viewport; set a height with className.",
+        "The edge the sheet comes from. start and end mirror in right-to-left locales. A bottom sheet is 85% of the viewport height. Set a different height with className.",
     },
     {
       component: "Sheet",
@@ -1099,7 +1203,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: '"bottom" | "top" | "left" | "right" | "start" | "end" | "vertical" | "horizontal"',
       defaultValue: "same as position",
       description:
-        "The direction a swipe or handle drag dismisses the sheet. vertical and horizontal dismiss toward either edge.",
+        "The direction of a swipe or handle drag that closes the sheet. vertical and horizontal close toward either edge.",
     },
     {
       component: "Sheet",
@@ -1107,7 +1211,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "Array<number | string>",
       defaultValue: "—",
       description:
-        "Visible amount at each stop. Numbers are pixels; strings are CSS lengths, and percentages are relative to the sheet. The sheet opens at the first stop and can always be revealed fully. Below full size, SheetBody doesn't scroll, so swiping the content resizes the sheet.",
+        "The visible size at each stop. Numbers are pixels. Strings are CSS lengths, and percentages are relative to the sheet. The sheet opens at the first stop. You can always drag it to full size. Below full size, a swipe on SheetBody resizes the sheet.",
     },
     {
       component: "Sheet",
@@ -1115,7 +1219,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "boolean",
       defaultValue: "false",
       description:
-        "Blocks swiping away, Escape, and outside clicks. Snap points still work. The backdrop dims and softly blurs the page, fading with the visible sheet as it moves; reduced motion removes the blur and slide.",
+        "Stops swipes, Escape, and outside clicks from closing the sheet. Snap points still work.",
     },
     {
       component: "Sheet",
@@ -1124,15 +1228,14 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       defaultValue:
         "0.94 (0.96 on sides) / ±0.75rem on sides / ±0.5rem on top and bottom",
       description:
-        "How a sheet recedes while a nested sheet is open. The offsets move it away from its edge. Set them in className; [--sheet-stack-scale:1] with zero offsets keeps it in place. Nested sheets get a lighter backdrop without blur.",
+        "How a sheet moves back while a nested sheet is open. Set them in className. To keep the sheet in place, set the scale to 1 and the offsets to 0.",
     },
     {
       component: "SheetTrigger",
       prop: "isOpen / defaultOpen / onOpenChange",
       type: "boolean / (isOpen: boolean) => void",
       defaultValue: "uncontrolled",
-      description:
-        "Owns the open state. Its first Button child opens the sheet.",
+      description: "Owns the open state. The Button inside it opens the sheet.",
     },
     {
       component: "SheetClose",
@@ -1149,14 +1252,22 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "variant",
       type: '"neutral" | "accent" | "success" | "warning" | "error" | "outline"',
       defaultValue: '"neutral"',
-      description: "Sets the badge color role.",
+      description: "Sets the colors.",
     },
     {
       component: "Badge",
       prop: "dot",
       type: "boolean",
       defaultValue: "false",
-      description: "Adds a BadgeDot before the content.",
+      description: "Shows a BadgeDot before the label.",
+    },
+    {
+      component: "Badge",
+      prop: "children",
+      type: "ReactNode",
+      defaultValue: "—",
+      description:
+        "The badge content. Text stays on one line and truncates if space is short.",
     },
   ],
   checkbox: [
@@ -1233,7 +1344,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "string",
       defaultValue: "—",
       description:
-        "Key-based convenience for selectedKey / defaultSelectedKey.",
+        "The value of the selected tab. Same as selectedKey and defaultSelectedKey.",
     },
     {
       component: "Tabs",
@@ -1241,7 +1352,21 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "(value: string) => void",
       defaultValue: "—",
       description:
-        "Receives the selected tab key. React Aria's onSelectionChange stays available.",
+        "Gets the value of the selected tab as a string. onSelectionChange also works.",
+    },
+    {
+      component: "TabsTrigger",
+      prop: "value",
+      type: "string",
+      defaultValue: "—",
+      description: "Connects the tab to the TabsContent with the same value.",
+    },
+    {
+      component: "TabsContent",
+      prop: "value",
+      type: "string",
+      defaultValue: "—",
+      description: "Connects the panel to the TabsTrigger with the same value.",
     },
   ],
   "date-field": [
@@ -1251,7 +1376,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "string / string",
       defaultValue: "—",
       description:
-        "Renders the field label and supporting text. Keep a label or pass aria-label.",
+        "Label above the field and help text below it. Without a label, pass aria-label.",
     },
   ],
   "time-field": [
@@ -1261,7 +1386,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "string / string",
       defaultValue: "—",
       description:
-        "Renders the field label and supporting text. Keep a label or pass aria-label.",
+        "Label above the field and help text below it. Without a label, pass aria-label.",
     },
   ],
   "date-picker": [
@@ -1271,7 +1396,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "string / string",
       defaultValue: "—",
       description:
-        "Renders the field label and supporting text around the date segments and calendar trigger.",
+        "Label above the field and help text below it. Without a label, pass aria-label.",
     },
   ],
   "date-range-picker": [
@@ -1281,7 +1406,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "string / string",
       defaultValue: "—",
       description:
-        "Renders the field label and supporting text around both date segments and the calendar trigger.",
+        "Label above the field and help text below it. Without a label, pass aria-label.",
     },
   ],
   "color-field": [
@@ -1291,7 +1416,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "string / string",
       defaultValue: "—",
       description:
-        "Renders the field label and supporting text. Keep a label or pass aria-label.",
+        "Label above the field and help text below it. Without a label, pass aria-label.",
     },
   ],
   "color-picker": [
@@ -1301,15 +1426,14 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "string",
       defaultValue: '"Choose color"',
       description:
-        "Names the trigger, area, hue slider, and hex field controls.",
+        "Text on the trigger. The popover uses it in its accessible name.",
     },
     {
       component: "ColorPicker",
       prop: "children",
       type: "ReactNode",
       defaultValue: "built-in layout",
-      description:
-        "Replace the default swatch, area, hue, and hex layout when you need a custom arrangement.",
+      description: "Replaces the default trigger and popover.",
     },
   ],
   "file-trigger": [
@@ -1328,7 +1452,8 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "label",
       type: "string",
       defaultValue: "—",
-      description: "Renders a visible label above the meter.",
+      description:
+        "Shows a visible label above the meter. Without label, pass aria-label.",
     },
   ],
   "progress-bar": [
@@ -1337,7 +1462,8 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "label",
       type: "string",
       defaultValue: "—",
-      description: "Visible label beside the bar.",
+      description:
+        "Shows a visible label above the bar. Without label, pass aria-label.",
     },
   ],
   "number-field": [
@@ -1439,7 +1565,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "number",
       defaultValue: "5000",
       description:
-        "Milliseconds before the toast closes. Values under 5000 become 5000. Set 0 to keep the toast open until the user closes it.",
+        "Milliseconds before the toast closes. Values under 5000 become 5000. Set 0 to keep the toast open until the user closes it. Hover and focus pause the timer.",
     },
     {
       component: "showToast",
@@ -1453,8 +1579,32 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       prop: "close",
       type: "(key: string) => void",
       defaultValue: "—",
+      description: "Closes the toast with the key that showToast returns.",
+    },
+  ],
+  tooltip: [
+    {
+      component: "TooltipTrigger",
+      prop: "delay",
+      type: "number",
+      defaultValue: "400",
       description:
-        "Closes the toast with the key that showToast returns. Three toasts show at a time. Older toasts wait until a newer one closes.",
+        "Milliseconds of hover before the tooltip opens. Keyboard focus opens it at once.",
+    },
+    {
+      component: "TooltipContent",
+      prop: "placement",
+      type: "Placement",
+      defaultValue: '"top"',
+      description:
+        "The side of the trigger. If there is not sufficient space, the tooltip moves to the opposite side.",
+    },
+    {
+      component: "TooltipContent",
+      prop: "offset",
+      type: "number",
+      defaultValue: "8",
+      description: "Distance from the trigger in pixels.",
     },
   ],
   "toggle-button": [

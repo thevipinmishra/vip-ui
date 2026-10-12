@@ -99,12 +99,12 @@ export async function ComponentPage({
   const reactAriaDocsHref = getComponent(componentSlug)?.reactAriaDocsHref;
   return (
     <article>
-      <div className="mb-4">
+      <nav aria-label="Breadcrumbs" className="mb-4">
         <Breadcrumbs>
           <Breadcrumb href="/components">Components</Breadcrumb>
           <Breadcrumb>{name}</Breadcrumb>
         </Breadcrumbs>
-      </div>
+      </nav>
       <h1 className="text-[clamp(2.25rem,4vw,3.5rem)] font-semibold leading-[1.08] tracking-[-0.055em] [text-wrap:balance]">
         {name}
       </h1>

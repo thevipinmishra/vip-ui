@@ -27,7 +27,7 @@ export function SourceLink({
       {...props}
       data-slot="source-link"
       className={cn(
-        "group flex min-w-0 items-start gap-3 rounded-xl border border-border bg-card p-3.5 text-start shadow-[var(--shadow-card)] outline-none transition-[border-color,background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-primary/40 hover:bg-accent/30 pressed:bg-accent/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-50",
+        "group flex min-w-0 items-start gap-3 rounded-xl border border-border bg-card p-3.5 text-start shadow-[var(--shadow-card)] outline-none transition-[border-color,background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-primary/40 hover:bg-accent/30 pressed:bg-accent/40 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-50",
         className,
       )}
     >

@@ -6,7 +6,7 @@ export function Card({ className, ...props }: ComponentPropsWithRef<"div">) {
     <div
       data-slot="card"
       className={cn(
-        "min-w-0 rounded-xl bg-card text-card-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70 forced-colors:border",
+        "min-w-0 rounded-xl bg-card text-card-foreground break-words shadow-[var(--shadow-card)] ring-1 ring-border/70 forced-colors:border",
         className,
       )}
       {...props}
@@ -22,7 +22,7 @@ export function CardHeader({
     <div
       data-slot="card-header"
       className={cn(
-        "flex flex-col gap-1 px-6 pt-6 last:pb-6 has-data-[slot=card-action]:grid has-data-[slot=card-action]:grid-cols-[minmax(0,1fr)_auto] has-data-[slot=card-action]:gap-x-4",
+        "flex flex-col gap-1 px-6 pt-6 last:pb-6 has-data-[slot=card-action]:grid has-data-[slot=card-action]:grid-cols-[minmax(0,1fr)_fit-content(50%)] has-data-[slot=card-action]:gap-x-4",
         className,
       )}
       {...props}
@@ -71,7 +71,7 @@ export function CardAction({
     <div
       data-slot="card-action"
       className={cn(
-        "col-start-2 row-span-2 row-start-1 flex items-center gap-2 self-start justify-self-end",
+        "col-start-2 row-span-2 row-start-1 flex min-w-0 max-w-full items-center gap-2 self-start justify-self-end",
         className,
       )}
       {...props}

@@ -41,7 +41,7 @@ export function ProgressBar({
                 {label && (
                   <Label
                     data-slot="progress-bar-label"
-                    className="min-w-0 font-medium text-foreground [overflow-wrap:anywhere]"
+                    className="min-w-0 flex-1 font-medium text-foreground [overflow-wrap:anywhere]"
                   >
                     {label}
                   </Label>
@@ -49,7 +49,7 @@ export function ProgressBar({
                 {!isIndeterminate && (
                   <span
                     data-slot="progress-bar-value"
-                    className="ms-auto shrink-0 font-mono tabular-nums text-muted-foreground"
+                    className="ms-auto max-w-1/2 shrink-0 text-end font-mono tabular-nums text-muted-foreground [overflow-wrap:anywhere]"
                   >
                     {valueText}
                   </span>

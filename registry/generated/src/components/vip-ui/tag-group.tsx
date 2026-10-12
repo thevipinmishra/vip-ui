@@ -18,7 +18,7 @@ export function TagGroup({ className, ...props }: AriaTagGroupProps) {
     <AriaTagGroup
       {...props}
       data-slot="tag-group"
-      className={cn("grid gap-2", className)}
+      className={cn("grid min-w-0 gap-2", className)}
     />
   );
 }
@@ -45,7 +45,10 @@ export function TagListView<T extends object>({
       {...props}
       data-slot="tag-list"
       className={composeRenderProps(className, (className) =>
-        cn("flex flex-wrap gap-2.5", className),
+        cn(
+          "flex min-w-0 flex-wrap gap-2.5 empty:text-sm empty:text-muted-foreground",
+          className,
+        ),
       )}
     />
   );
@@ -70,7 +73,7 @@ export function Tag({ className, children, ...props }: TagProps) {
         <>
           <span
             className={cn(
-              "min-w-0 py-1.5 [overflow-wrap:anywhere]",
+              "min-w-0 truncate py-1.5",
               state.allowsRemoving ? "pe-1" : "pe-2",
             )}
           >
@@ -80,8 +83,7 @@ export function Tag({ className, children, ...props }: TagProps) {
             <AriaButton
               slot="remove"
               data-slot="tag-remove"
-              aria-label={`Remove ${props.textValue ?? (typeof children === "string" ? children : "tag")}`}
-              className="grid size-11 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-card hover:text-foreground motion-safe:pressed:scale-[0.96] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
+              className="grid size-11 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-card hover:text-foreground motion-safe:pressed:scale-[0.96] focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring"
             >
               <XIcon size={14} weight="bold" aria-hidden="true" />
             </AriaButton>

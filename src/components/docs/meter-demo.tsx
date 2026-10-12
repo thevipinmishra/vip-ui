@@ -16,6 +16,7 @@ export function MeterDemo() {
       <Slider
         label="Adjust usage"
         value={value}
+        formatOptions={{ style: "unit", unit: "gigabyte" }}
         onChange={(next) => setValue(Number(next))}
       />
     </div>

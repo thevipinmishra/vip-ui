@@ -143,7 +143,7 @@ export function ToastViewport({
       aria-label="Notifications"
       className={composeRenderProps(className, (className) =>
         cn(
-          "fixed inset-x-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-60 flex flex-col-reverse gap-2 outline-none focus-visible:outline-2 focus-visible:outline-ring sm:inset-x-auto sm:end-4 sm:w-96",
+          "fixed inset-x-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-60 flex flex-col-reverse gap-2 outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring sm:inset-x-auto sm:end-4 sm:w-96",
           className,
         ),
       )}
@@ -153,11 +153,13 @@ export function ToastViewport({
         const Icon = toastIcons[variant];
         return (
           <Toast toast={toast}>
-            <Icon
-              size={18}
+            <span
               aria-hidden="true"
+              data-slot="toast-icon"
               className={toastIconStyles({ variant })}
-            />
+            >
+              <Icon size={18} />
+            </span>
             <ToastContent>
               <ToastTitle>{toast.content.title}</ToastTitle>
               {toast.content.description && (
@@ -201,7 +203,7 @@ export function Toast({ className, children, ...props }: ToastSurfaceProps) {
       }}
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex shrink-0 items-start gap-3 rounded-xl bg-popover p-4 text-popover-foreground shadow-[var(--shadow-float)] ring-1 ring-border/70 outline-none focus-visible:outline-2 focus-visible:outline-ring forced-colors:border",
+          "flex shrink-0 items-start gap-3 rounded-xl bg-popover p-4 text-popover-foreground shadow-[var(--shadow-float)] ring-1 ring-border/70 outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring forced-colors:border",
           className,
         ),
       )}
@@ -221,7 +223,10 @@ export function ToastContent({
     <AriaToastContent
       {...props}
       data-slot="toast-content"
-      className={cn("min-w-0 flex-1", className)}
+      className={cn(
+        "flex min-h-9 min-w-0 flex-1 flex-col justify-center",
+        className,
+      )}
     />
   );
 }
@@ -269,7 +274,7 @@ export function ToastClose({ className, children, ...props }: ToastCloseProps) {
       aria-label={props["aria-label"] ?? "Dismiss notification"}
       className={composeRenderProps(className, (className) =>
         cn(
-          "-m-1 grid size-11 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted hover:text-foreground pressed:bg-muted pressed:text-foreground motion-safe:pressed:scale-[0.96] focus-visible:outline-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-50 [&_svg]:pointer-events-none",
+          "-m-1 grid size-11 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted hover:text-foreground pressed:bg-muted pressed:text-foreground motion-safe:pressed:scale-[0.96] focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring disabled:cursor-default disabled:opacity-50 [&_svg]:pointer-events-none",
           className,
         ),
       )}

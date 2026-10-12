@@ -6,7 +6,7 @@ export function DescriptionList({ className, ...props }: ComponentProps<"dl">) {
     <dl
       data-slot="description-list"
       className={cn(
-        "grid items-baseline gap-x-6 gap-y-1 sm:grid-cols-[minmax(0,10rem)_minmax(0,1fr)] sm:gap-y-4",
+        "grid items-baseline gap-x-6 gap-y-1 sm:grid-cols-[min(10rem,40%)_minmax(0,1fr)] sm:gap-y-4",
         className,
       )}
       {...props}

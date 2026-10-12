@@ -26,7 +26,7 @@ export function SheetBasicDemo() {
           </SheetDescription>
         </SheetHeader>
         <SheetBody>
-          <p>Canvas notebook · $18.00</p>
+          <p className="text-sm">Canvas notebook · $18.00</p>
           <p className="mt-2 text-sm text-muted-foreground">Shipping · $4.00</p>
         </SheetBody>
         <SheetFooter>

@@ -73,7 +73,7 @@ export function PackageManagerTabs({
               <Tab
                 key={manager}
                 id={manager}
-                className="inline-flex h-8 min-w-0 cursor-pointer items-center justify-center rounded-md px-2 font-mono text-[11px] text-muted-foreground outline-none hover:text-foreground selected:bg-foreground/8 selected:font-medium selected:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                className="inline-flex h-8 min-w-0 cursor-pointer items-center justify-center rounded-md px-2 font-mono text-[11px] text-muted-foreground outline-none hover:text-foreground selected:bg-foreground/8 selected:font-medium selected:text-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring"
               >
                 {manager}
               </Tab>

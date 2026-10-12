@@ -8,6 +8,7 @@ import {
   type GroupProps,
 } from "react-aria-components";
 import { cn } from "@/lib/utils";
+import { revalidateOnInput } from "./field-styles";
 
 export function InputGroup({ className, ...props }: GroupProps) {
   return (
@@ -26,11 +27,16 @@ export function InputGroup({ className, ...props }: GroupProps) {
 
 export function InputGroupInput({
   className,
+  onInput,
   ...props
 }: React.ComponentProps<typeof AriaInput>) {
   return (
     <AriaInput
       {...props}
+      onInput={(event) => {
+        revalidateOnInput(event);
+        onInput?.(event);
+      }}
       data-slot="input-group-input"
       className={composeRenderProps(className, (className) =>
         cn(
@@ -44,11 +50,16 @@ export function InputGroupInput({
 
 export function InputGroupTextArea({
   className,
+  onInput,
   ...props
 }: React.ComponentProps<typeof AriaTextArea>) {
   return (
     <AriaTextArea
       {...props}
+      onInput={(event) => {
+        revalidateOnInput(event);
+        onInput?.(event);
+      }}
       data-slot="input-group-text-area"
       className={composeRenderProps(className, (className) =>
         cn(

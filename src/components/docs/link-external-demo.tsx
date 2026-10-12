@@ -13,7 +13,7 @@ export function LinkExternalDemo() {
     >
       React Aria Link
       <ArrowUpRightIcon size={14} aria-hidden="true" />
-      <span className="sr-only">(opens in a new tab)</span>
+      <span className="sr-only"> (opens in a new tab)</span>
     </Link>
   );
 }

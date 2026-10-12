@@ -81,19 +81,19 @@ export const componentPageData = {
       {
         title: "Alert dialog",
         description:
-          'Set role="alertdialog" for a confirmation that outside clicks cannot dismiss. Close it with a button.',
+          'Set role="alertdialog" on DialogContent for a confirmation. Outside clicks do not close it. Escape and the buttons do.',
         sourcePath: "dialog-alert-demo.tsx",
       },
       {
         title: "Scrollable content",
         description:
-          "Keep long content inside DialogContent. The dialog scrolls while the page stays inactive.",
+          "Put long content inside DialogContent. The dialog scrolls, and the page behind it does not.",
         sourcePath: "dialog-scrollable-demo.tsx",
       },
       {
         title: "Controlled open state",
         description:
-          "Control the dialog with isOpen and onOpenChange. Every close action updates the same state.",
+          "Control the dialog with isOpen and onOpenChange. Escape and outside clicks also call onOpenChange.",
         sourcePath: "dialog-controlled-demo.tsx",
       },
     ],
@@ -111,13 +111,13 @@ export const componentPageData = {
       {
         title: "Multiple open sections",
         description:
-          "Set allowsMultipleExpanded to keep several sections open at once. defaultExpandedKeys opens sections on the first render.",
+          "Set allowsMultipleExpanded to keep more than one section open. Use defaultExpandedKeys to open sections on the first render.",
         sourcePath: "accordion-multiple-demo.tsx",
       },
       {
         title: "Disabled section",
         description:
-          "Set isDisabled on an AccordionItem to keep the section visible but closed.",
+          "Set isDisabled on an AccordionItem. People cannot open or close that section.",
         sourcePath: "accordion-disabled-demo.tsx",
       },
     ],
@@ -129,13 +129,13 @@ export const componentPageData = {
       {
         title: "Variants",
         description:
-          'Set variant to "info", "success", "warning", "error", or "neutral". Each variant shows its own icon, so the status does not depend on color.',
+          'Set variant to "info", "success", "warning", "error", or "neutral". The icon shows the status, so color is not the only signal.',
         sourcePath: "alert-demo.tsx",
       },
       {
         title: "Action",
         description:
-          "Build the alert from AlertIcon, AlertTitle, and AlertDescription, and put a ButtonLink after the text. Keep the link outside the title and description so it stays a separate control. Install Button link separately.",
+          "To add an action, build the alert from its parts. Put the text and the ButtonLink in a flex-wrap row, so the action moves below the text in a narrow alert. Install Button link separately.",
         sourcePath: "alert-action-demo.tsx",
       },
     ],
@@ -188,13 +188,13 @@ export const componentPageData = {
       {
         title: "Fallback",
         description:
-          "Avatar shows initials while the image loads, and when src is missing or does not load. Avatar takes the initials from the first two words of name. Set initials to use different letters. Without a name or initials, Avatar shows a person icon.",
+          'Avatar shows initials until the image loads, and when the image does not load. The initials come from the first two words of name. Set initials to change them, or set initials="" to show a person icon.',
         sourcePath: "avatar-fallback-demo.tsx",
       },
       {
         title: "Group",
         description:
-          "Put avatars in AvatarGroup to overlap them, and give the group an aria-label. For people not shown, add an Avatar with a count as its initials.",
+          "Put avatars in AvatarGroup to overlap them, and give the group an aria-label. For people not shown, add an Avatar with a short count, such as +2, as its initials.",
         sourcePath: "avatar-demo.tsx",
       },
     ],
@@ -206,13 +206,13 @@ export const componentPageData = {
       {
         title: "Variants",
         description:
-          "Set variant to match the status: neutral, accent, success, warning, error, or outline.",
+          'Set variant to "neutral", "accent", "success", "warning", "error", or "outline".',
         sourcePath: "badge-variants-demo.tsx",
       },
       {
         title: "Dot",
         description:
-          "Set dot to show a status marker before the label. The dot uses the badge's text color, so the label still names the status.",
+          "Set dot to show a status marker before the label. Screen readers do not read the dot, so the label must name the status.",
         sourcePath: "badge-demo.tsx",
       },
     ],
@@ -261,13 +261,12 @@ export const componentPageData = {
   },
   card: {
     usage: "card-basic-demo.tsx",
-    description:
-      "Groups related content in a card with header, content, and footer sections.",
+    description: "Displays a card with a header, content, and footer.",
     examples: [
       {
         title: "Action",
         description:
-          "Put CardAction in CardHeader to show a control beside the title.",
+          "Put CardAction in CardHeader to show a control beside the title. The action uses up to half the header width.",
         sourcePath: "card-action-demo.tsx",
       },
       {
@@ -320,7 +319,7 @@ export const componentPageData = {
   },
   "color-field": {
     usage: "color-field-demo.tsx",
-    description: "A text field for entering a color value.",
+    description: "Accepts a hex color, or one color channel as a number.",
     examples: [
       {
         title: "Single channel",
@@ -344,7 +343,8 @@ export const componentPageData = {
   },
   "color-picker": {
     usage: "color-picker-demo.tsx",
-    description: "A control for choosing a color with visual and text inputs.",
+    description:
+      "Selects a color with a color area, a hue slider, and a hex field.",
     examples: [
       {
         title: "Controlled value",
@@ -361,20 +361,20 @@ export const componentPageData = {
       {
         title: "Named palette",
         description:
-          "Set color and colorName to pair each swatch with its name.",
+          'Set colorName to give each swatch an accessible name. Without it, the swatch uses a generated name, such as "vibrant red".',
         sourcePath: "color-swatch-demo.tsx",
       },
       {
         title: "Transparency",
         description:
-          "A color with an alpha value shows a checkerboard behind it.",
+          "A checkerboard shows behind a color with an alpha value below 1.",
         sourcePath: "color-swatch-transparency-demo.tsx",
       },
     ],
   },
   "color-swatch-picker": {
     usage: "color-swatch-picker-demo.tsx",
-    description: "Displays a set of swatches for choosing a color.",
+    description: "Selects a color from a set of swatches.",
     examples: [
       {
         title: "Disabled",
@@ -453,12 +453,12 @@ export const componentPageData = {
   },
   "date-field": {
     usage: "date-field-demo.tsx",
-    description: "A field for entering a date in editable segments.",
+    description: "Accepts a date, with one segment for each part.",
     examples: [
       {
         title: "Minimum and maximum",
         description:
-          "Set minValue and maxValue to limit the date. A date outside the limits is invalid.",
+          "Set minValue and maxValue to limit the date. A date outside the limits shows an error when the field loses focus.",
         sourcePath: "date-field-limits-demo.tsx",
       },
       {
@@ -477,7 +477,7 @@ export const componentPageData = {
   },
   "date-picker": {
     usage: "date-picker-demo.tsx",
-    description: "A field for entering a date or choosing one from a calendar.",
+    description: "Accepts a date that you type or select from a calendar.",
     examples: [
       {
         title: "Unavailable dates",
@@ -501,12 +501,13 @@ export const componentPageData = {
   },
   "date-range-picker": {
     usage: "date-range-picker-demo.tsx",
-    description: "A field for entering or selecting a date range.",
+    description:
+      "Accepts a date range that you type or select from a calendar.",
     examples: [
       {
         title: "Unavailable dates",
         description:
-          "Use isDateUnavailable to mark dates unavailable. Set minValue and maxValue to limit the selectable range.",
+          "Use isDateUnavailable to mark dates unavailable. Set minValue and maxValue to limit the selectable range. A range cannot include an unavailable date unless you set allowsNonContiguousRanges.",
         sourcePath: "date-range-picker-limits-demo.tsx",
       },
       {
@@ -519,7 +520,7 @@ export const componentPageData = {
   },
   "description-list": {
     usage: "description-list-demo.tsx",
-    description: "Displays pairs of terms and descriptions.",
+    description: "Displays pairs of terms and details.",
     examples: [
       {
         title: "Inline components",
@@ -541,8 +542,7 @@ export const componentPageData = {
       },
       {
         title: "Disabled",
-        description:
-          "Set isDisabled to keep the header visible while the panel stays closed.",
+        description: "Set isDisabled. People cannot open or close the panel.",
         sourcePath: "disclosure-disabled-demo.tsx",
       },
     ],
@@ -554,19 +554,19 @@ export const componentPageData = {
       {
         title: "Snap points",
         description:
-          'Set snapPoints to the visible amount at each stop; the sheet opens at the first. Here "100%" opens it fully and "40dvh" adds a shorter stop.',
+          'Set snapPoints to the visible size at each stop. The sheet opens at the first stop. Here, "100%" shows all of the sheet and "40dvh" adds a shorter stop.',
         sourcePath: "sheet-demo.tsx",
       },
       {
         title: "Edge placement",
         description:
-          "Use position to choose the edge. Swipe or drag the handle toward that edge to dismiss.",
+          "Set position to choose the edge. To close the sheet, swipe it or drag the handle toward that edge.",
         sourcePath: "sheet-placement-demo.tsx",
       },
       {
         title: "Nested sheets",
         description:
-          "Put a SheetTrigger inside a Sheet to stack another sheet on top. The parent scales back as the nested sheet opens and follows its swipe. Escape and outside clicks close the top sheet first. Control the nested SheetTrigger to close it after an action.",
+          "Put a SheetTrigger inside a Sheet to open a second sheet on top. Escape and outside clicks close the top sheet first. To close the nested sheet after an action, control its SheetTrigger.",
         sourcePath: "sheet-nested-demo.tsx",
       },
     ],
@@ -618,13 +618,13 @@ export const componentPageData = {
       {
         title: "Custom validation",
         description:
-          "Pass validate to a field. Return an error message, or null when the value is valid.",
+          "Pass validate to a field. Return an error message, or null when the value is valid. An error shows when the field loses focus or when you submit. Then the field checks the value again as you type.",
         sourcePath: "form-validation-demo.tsx",
       },
       {
         title: "Server errors",
         description:
-          'Pass server errors to validationErrors, keyed by field name. Push Save to see the error for "maya". The error clears when you change the value and leave the field.',
+          'Pass server errors to validationErrors, keyed by field name. Push Save to see the error for "maya". The error clears when you change the value.',
         sourcePath: "form-server-errors-demo.tsx",
       },
     ],
@@ -636,7 +636,7 @@ export const componentPageData = {
       {
         title: "Unavailable row",
         description:
-          "Set isDisabled to keep an unavailable row visible. Explain why it cannot be selected.",
+          "Set isDisabled on a row that users cannot select. Show the reason in the row.",
         sourcePath: "grid-list-disabled-demo.tsx",
       },
     ],
@@ -714,7 +714,7 @@ export const componentPageData = {
       {
         title: "Multiple selection",
         description:
-          'Set selectionMode="multiple" to choose more than one row. defaultSelectedKeys preselects options.',
+          'Set selectionMode="multiple" to select more than one option. Use defaultSelectedKeys to set the initial selection.',
         sourcePath: "list-box-multiple-demo.tsx",
       },
     ],
@@ -766,9 +766,9 @@ export const componentPageData = {
     description: "Displays a value within a known range.",
     examples: [
       {
-        title: "Updating a reading",
+        title: "Value label",
         description:
-          "Control the meter with the value prop. The reading updates when the value changes.",
+          "Set valueLabel to show the reading in your own units. Screen readers read this text as the value.",
         sourcePath: "meter-demo.tsx",
       },
     ],
@@ -823,12 +823,12 @@ export const componentPageData = {
   },
   pagination: {
     usage: "pagination-basic-demo.tsx",
-    description: "Displays links for navigating a paginated collection.",
+    description: "Displays links between pages of results.",
     examples: [
       {
         title: "URL-synced pages",
         description:
-          "Keep the page in the URL. Use isCurrent for the active link and isDisabled to keep an unavailable link in place.",
+          "Keep the page number in the URL, so that the Back button and shared links work. Set isDisabled on Previous at the first page and on Next at the last page.",
         sourcePath: "pagination-demo.tsx",
       },
     ],
@@ -882,12 +882,12 @@ export const componentPageData = {
   },
   popover: {
     usage: "popover-demo.tsx",
-    description: "Anchors supporting content beside a trigger.",
+    description: "Shows content in a panel next to its trigger.",
     examples: [
       {
         title: "Placement",
         description:
-          "Use the placement prop for top, bottom, left, or right. The panel flips when space is tight.",
+          "Set placement to top, bottom, left, or right. If there is not sufficient space, the panel moves to the opposite side.",
         sourcePath: "popover-placement-demo.tsx",
       },
     ],
@@ -909,9 +909,9 @@ export const componentPageData = {
     description: "Displays the progress of a task in a horizontal bar.",
     examples: [
       {
-        title: "Determinate and indeterminate",
+        title: "Known and unknown progress",
         description:
-          "Use value for determinate progress and isIndeterminate for unknown progress.",
+          "Set value when you know the progress. Set isIndeterminate when you do not. An indeterminate bar shows no value.",
         sourcePath: "progress-bar-demo.tsx",
       },
     ],
@@ -923,7 +923,7 @@ export const componentPageData = {
       {
         title: "Known and unknown progress",
         description:
-          "Use value for known progress, isIndeterminate for unknown progress, and showValue={false} to hide the value.",
+          "Set value when you know the progress. Set isIndeterminate when you do not. Set showValue={false} to hide the value in the center.",
         sourcePath: "progress-ring-demo.tsx",
       },
     ],
@@ -982,7 +982,7 @@ export const componentPageData = {
       {
         title: "Unavailable dates",
         description:
-          "Use isDateUnavailable to mark dates unavailable. Set minValue and maxValue to limit the selectable range.",
+          "Use isDateUnavailable to mark dates unavailable. Set minValue and maxValue to limit the selectable range. A range cannot include an unavailable date unless you set allowsNonContiguousRanges.",
         sourcePath: "range-calendar-limits-demo.tsx",
       },
       {
@@ -1012,8 +1012,15 @@ export const componentPageData = {
   },
   separator: {
     usage: "separator-demo.tsx",
-    description: "Visually separates sections of content.",
-    examples: [],
+    description: "Separates sections of content with a line.",
+    examples: [
+      {
+        title: "Vertical",
+        description:
+          'Set orientation="vertical" inside a flex row. The line takes the height of the row.',
+        sourcePath: "separator-vertical-demo.tsx",
+      },
+    ],
   },
   skeleton: {
     usage: "skeleton-basic-demo.tsx",
@@ -1063,8 +1070,7 @@ export const componentPageData = {
     examples: [
       {
         title: "Variants",
-        description:
-          "Set variant to ring, segments, or dots. Each card names the kind of wait the style suits.",
+        description: 'Set variant to "ring", "segments", or "dots".',
         sourcePath: "spinner-demo.tsx",
       },
       {
@@ -1076,7 +1082,7 @@ export const componentPageData = {
       {
         title: "Loading in context",
         description:
-          'Set isPending on a Button and put a size="sm" Spinner inside it. Pair a larger Spinner with a status message.',
+          'Set isPending on a Button and put a size="sm" Spinner inside it. Set decorative when text next to the spinner names the wait.',
         sourcePath: "spinner-usage-demo.tsx",
       },
     ],
@@ -1096,7 +1102,14 @@ export const componentPageData = {
   stepper: {
     usage: "stepper-basic-demo.tsx",
     description: "Shows the current and completed steps in a sequence.",
-    examples: [{ title: "Controlled step", sourcePath: "stepper-demo.tsx" }],
+    examples: [
+      {
+        title: "Controlled step",
+        description:
+          "Keep currentStep in state and change it from your own buttons.",
+        sourcePath: "stepper-demo.tsx",
+      },
+    ],
   },
   switch: {
     usage: "switch-basic-demo.tsx",
@@ -1123,10 +1136,13 @@ export const componentPageData = {
   },
   "data-table": {
     usage: "data-table-demo.tsx",
-    description: "Searches, filters, sorts, selects, and pages through rows.",
+    description:
+      "Displays rows with search, filters, sorting, selection, and pagination.",
     examples: [
       {
         title: "Column filters",
+        description:
+          "Set filter on a column to add a text or select filter. The column also needs sortValue.",
         sourcePath: "data-table-column-filters-demo.tsx",
       },
     ],
@@ -1143,20 +1159,20 @@ export const componentPageData = {
       {
         title: "Sortable columns",
         description:
-          "Control sorting with sortDescriptor and onSortChange, and set allowsSorting on each Column.",
+          "Set allowsSorting on each sortable Column. Table does not sort the rows. Sort them in onSortChange and pass sortDescriptor back.",
         sourcePath: "table-sorting-demo.tsx",
       },
       {
         title: "Filter invoices",
         description:
-          "Filter rows with a controlled SearchField and Select. renderEmptyState shows the message when nothing matches.",
+          "Filter the rows with a controlled SearchField and Select. renderEmptyState shows a message when no rows match.",
         sourcePath: "table-filter-demo.tsx",
       },
     ],
   },
   tabs: {
     usage: "tabs-basic-demo.tsx",
-    description: "Displays related content in switchable panels.",
+    description: "Displays one panel of related content at a time.",
     examples: [
       {
         title: "With icons",
@@ -1173,14 +1189,20 @@ export const componentPageData = {
       {
         title: "Vertical",
         description:
-          'Set orientation="vertical" to stack the tabs beside the panel. The Up and Down arrow keys move between tabs.',
+          'Set orientation="vertical" to show the tabs in a column next to the panel. In a narrow space, the panel moves below the tabs. The Up and Down arrow keys move between tabs.',
         sourcePath: "tabs-vertical-demo.tsx",
+      },
+      {
+        title: "Many tabs",
+        description:
+          "When the tabs do not fit, the list scrolls horizontally. The arrow keys scroll the focused tab into view.",
+        sourcePath: "tabs-overflow-demo.tsx",
       },
     ],
   },
   "tag-group": {
     usage: "tag-group-demo.tsx",
-    description: "Displays a collection of tags that can be removed.",
+    description: "Displays a group of tags that users can remove or select.",
     examples: [],
   },
   "text-area": {
@@ -1363,7 +1385,7 @@ export const componentPageData = {
   },
   "time-field": {
     usage: "time-field-demo.tsx",
-    description: "A field for entering a time in editable segments.",
+    description: "Accepts a time, with one segment for each part.",
     examples: [
       {
         title: "24-hour clock",
@@ -1374,7 +1396,7 @@ export const componentPageData = {
       {
         title: "Minimum and maximum",
         description:
-          "Set minValue and maxValue to limit the time. A time outside the limits is invalid.",
+          "Set minValue and maxValue to limit the time. A time outside the limits shows an error when the field loses focus.",
         sourcePath: "time-field-limits-demo.tsx",
       },
       {
@@ -1403,7 +1425,7 @@ export const componentPageData = {
       {
         title: "Timeout",
         description:
-          "A toast closes after 5 seconds. Pass a longer timeout in milliseconds to keep it open longer. Set timeout to 0 to keep it open until the user closes it.",
+          "A toast closes after 5 seconds. Set timeout in milliseconds to keep it open longer. Set timeout to 0 to keep it open until the user closes it.",
         sourcePath: "toast-timeout-demo.tsx",
       },
     ],
@@ -1476,20 +1498,19 @@ export const componentPageData = {
       {
         title: "Icon button tooltips",
         description:
-          "Give each icon Button an aria-label. Set placement on TooltipContent for top or bottom.",
+          "Give each icon Button an aria-label that matches the tooltip text. The tooltip opens above the trigger. Set placement to change the side.",
         sourcePath: "tooltip-actions-demo.tsx",
       },
     ],
   },
   tree: {
     usage: "tree-basic-demo.tsx",
-    description:
-      "Displays hierarchical items that can be expanded and selected.",
+    description: "Displays nested items that users can expand and select.",
     examples: [
       {
         title: "Custom row content",
         description:
-          "Use content for visible row details while the title remains the text used for keyboard typeahead.",
+          "Use content to show more details in a row. Typeahead still uses title.",
         sourcePath: "tree-demo.tsx",
       },
     ],

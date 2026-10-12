@@ -32,7 +32,7 @@ const selectTriggerStyles =
 const selectValueStyles =
   "min-w-0 flex-1 self-center truncate text-start data-[placeholder]:text-muted-foreground";
 const selectItemStyles =
-  "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted focus:bg-muted selected:bg-accent selected:text-accent-foreground focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-50";
+  "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted focus:bg-muted selected:bg-accent selected:text-accent-foreground focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring disabled:cursor-default disabled:opacity-50";
 const selectPopoverStyles =
   "w-[var(--trigger-width)] rounded-lg border-0 p-1.5 ring-1 ring-border/70";
 

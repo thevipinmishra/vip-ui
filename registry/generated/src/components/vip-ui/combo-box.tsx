@@ -2,7 +2,7 @@
 
 import { CaretDownIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
-import { type ReactNode, useContext } from "react";
+import { type ReactNode, useContext, useRef } from "react";
 import {
   Button as AriaButton,
   ComboBox as AriaComboBox,
@@ -25,6 +25,7 @@ import {
   fieldInputStyles,
   fieldLabelStyles,
   fieldTriggerStyles,
+  revalidateField,
 } from "./field-styles";
 import { SelectionMark } from "./list-box";
 import { Popover } from "./popover";
@@ -33,7 +34,7 @@ import { Tag, TagGroup, TagListView } from "./tag-group";
 const comboBoxPopoverStyles =
   "w-[var(--trigger-width)] rounded-lg border-0 p-1.5 ring-1 ring-border/70";
 const comboBoxItemStyles =
-  "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted focus:bg-muted focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-ring selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50";
+  "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted focus:bg-muted focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50";
 
 export interface ComboBoxOption {
   id: string;
@@ -86,12 +87,18 @@ function SingleComboBox({
   onValueChange,
   ...props
 }: ComboBoxProps) {
+  const fieldRef = useRef<HTMLDivElement>(null);
   return (
     <AriaComboBox
       {...props}
+      ref={fieldRef}
       data-slot="combo-box"
       selectedKey={value ?? props.selectedKey}
       defaultSelectedKey={defaultValue ?? props.defaultSelectedKey}
+      onChange={(key) => {
+        revalidateField(fieldRef.current);
+        props.onChange?.(key);
+      }}
       onSelectionChange={(key) => {
         props.onSelectionChange?.(key);
         onValueChange?.(key === null ? "" : String(key));
@@ -121,10 +128,16 @@ function MultipleComboBox({
   children,
   ...props
 }: MultiSelectComboBoxProps) {
+  const fieldRef = useRef<HTMLDivElement>(null);
   return (
     <AriaComboBox
       {...props}
+      ref={fieldRef}
       data-slot="combo-box"
+      onChange={(keys) => {
+        revalidateField(fieldRef.current);
+        props.onChange?.(keys);
+      }}
       className={composeRenderProps(className, (className) =>
         cn("group flex w-full min-w-0 flex-col gap-2", className),
       )}

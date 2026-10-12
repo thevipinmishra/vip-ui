@@ -53,7 +53,7 @@ const sheetEase = [0.32, 0.72, 0, 1] as const;
 const sheetDuration = { enter: 0.32, exit: 0.24, settle: 0.3 } as const;
 
 const sheetSurfaceStyles = tv({
-  base: "flex max-h-[var(--visual-viewport-height,100dvh)] min-w-0 max-w-full flex-col bg-card text-card-foreground shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70 data-[has-descendants]:rounded-xl",
+  base: "flex max-h-[var(--visual-viewport-height,100dvh)] min-w-0 max-w-full flex-col bg-card text-card-foreground [overflow-wrap:anywhere] shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70 data-[has-descendants]:rounded-xl",
   variants: {
     position: {
       bottom:
@@ -487,7 +487,7 @@ function SheetFrame({
       {...props}
       ref={mergeRefs(contentRef, ref)}
       data-slot="sheet-content"
-      className="flex min-h-0 flex-1 flex-col outline-none focus-visible:outline-2 focus-visible:outline-ring"
+      className="flex min-h-0 flex-1 flex-col outline-none"
     >
       <SheetFrameContext.Provider
         value={{
@@ -722,11 +722,19 @@ export function SheetHeader({
   className,
   ...props
 }: HTMLAttributes<HTMLDivElement>) {
+  const sheet = useContext(SheetFrameContext);
   return (
     <div
       {...props}
       data-slot="sheet-header"
-      className={cn("shrink-0 px-6 pt-4", className)}
+      className={cn(
+        "shrink-0 px-6 pt-4 *:data-[slot=sheet-close]:-my-2 *:data-[slot=sheet-close]:-me-3",
+        (sheet?.position === "top" ||
+          sheet?.position === "left" ||
+          sheet?.position === "right") &&
+          "pt-[max(1rem,env(safe-area-inset-top))]",
+        className,
+      )}
     />
   );
 }

@@ -52,7 +52,9 @@ export function Alert({
           <AlertIcon />
           <div className="min-w-0">
             <AlertTitle>{title}</AlertTitle>
-            <AlertDescription>{children}</AlertDescription>
+            {children != null && children !== false && (
+              <AlertDescription>{children}</AlertDescription>
+            )}
           </div>
         </>
       ) : (
@@ -72,10 +74,7 @@ export function AlertIcon({
       {...props}
       aria-hidden="true"
       data-slot="alert-icon"
-      className={cn(
-        "mt-0.5 grid size-6 shrink-0 place-items-center",
-        className,
-      )}
+      className={cn("grid size-5 shrink-0 place-items-center", className)}
     >
       {children ?? (
         <>

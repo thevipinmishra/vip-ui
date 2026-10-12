@@ -20,14 +20,14 @@ export function TimelineItem({
       data-slot="timeline-item"
       data-status={status}
       className={cn(
-        "relative min-w-0 ps-10 pb-8 before:absolute before:start-[0.6875rem] before:top-7 before:bottom-0 before:w-px before:bg-primary/25 last:pb-0 last:before:hidden forced-colors:before:bg-[CanvasText]",
+        "relative min-w-0 ps-10 pb-8 before:absolute before:start-[0.6875rem] before:top-7 before:bottom-1 before:w-px before:bg-primary/25 last:pb-0 last:before:hidden forced-colors:before:bg-[CanvasText]",
         className,
       )}
     >
       <span
         aria-hidden="true"
         className={cn(
-          "absolute start-0 top-0 grid size-6 place-items-center rounded-full ring-4 ring-card",
+          "absolute start-0 top-0 grid size-6 place-items-center rounded-full",
           status === "latest"
             ? "border-2 border-primary bg-accent text-primary"
             : "bg-primary text-primary-foreground forced-colors:border",
@@ -45,9 +45,13 @@ export function TimelineItem({
   );
 }
 
-export function TimelineTitle({ className, ...props }: ComponentProps<"h3">) {
+export function TimelineTitle({
+  as: Heading = "h3",
+  className,
+  ...props
+}: ComponentProps<"h3"> & { as?: "h2" | "h3" | "h4" }) {
   return (
-    <h3
+    <Heading
       {...props}
       data-slot="timeline-title"
       className={cn(

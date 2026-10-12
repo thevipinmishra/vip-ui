@@ -100,7 +100,7 @@ export function ChatCard() {
         aria-label="Conversation"
         // biome-ignore lint/a11y/noNoninteractiveTabindex: Keyboard users must be able to scroll the conversation.
         tabIndex={0}
-        className="max-h-[32rem] min-h-0 flex-1 overflow-y-auto outline-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
+        className="max-h-[32rem] min-h-0 flex-1 overflow-y-auto outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring"
       >
         <BlockBody className="gap-3">
           <Part slug="message">

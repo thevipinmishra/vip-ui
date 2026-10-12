@@ -43,7 +43,7 @@ export function Breadcrumb({
       style={style}
       data-slot="breadcrumb"
       className={composeRenderProps(className, (className) =>
-        cn("flex min-w-0 items-center gap-2", className),
+        cn("flex min-w-0 items-start gap-2", className),
       )}
     >
       {({ isCurrent }) => (
@@ -68,7 +68,7 @@ export function Breadcrumb({
             <CaretRightIcon
               size={14}
               aria-hidden="true"
-              className="shrink-0 text-muted-foreground rtl:rotate-180"
+              className="h-5 shrink-0 text-muted-foreground rtl:rotate-180"
             />
           )}
         </>

@@ -114,6 +114,7 @@ import { RangeCalendarLimitsDemo } from "@/components/docs/range-calendar-limits
 import { RatingInputDemo } from "@/components/docs/rating-input-demo";
 import { RatingInputReadOnlyDemo } from "@/components/docs/rating-input-read-only-demo";
 import { SeparatorDemo } from "@/components/docs/separator-demo";
+import { SeparatorVerticalDemo } from "@/components/docs/separator-vertical-demo";
 import { SkeletonBasicDemo } from "@/components/docs/skeleton-basic-demo";
 import { SkeletonDemo } from "@/components/docs/skeleton-demo";
 import { SkeletonLoadingDemo } from "@/components/docs/skeleton-loading-demo";
@@ -574,6 +575,7 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <SkeletonDemo key="preview-1" />,
     <SkeletonLoadingDemo key="preview-2" />,
   ],
+  separator: [<SeparatorVerticalDemo key="preview-1" />],
   stat: [<StatTrendDemo key="preview-1" />],
   "text-swap": [<TextSwapButtonDemo key="preview-1" />],
   "text-reveal": [

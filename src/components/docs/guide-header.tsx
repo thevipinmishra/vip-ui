@@ -13,10 +13,12 @@ export function GuideHeader({
 }) {
   return (
     <header>
-      <Breadcrumbs className="mb-4">
-        <Breadcrumb href="/components">Components</Breadcrumb>
-        <Breadcrumb>{title}</Breadcrumb>
-      </Breadcrumbs>
+      <nav aria-label="Breadcrumbs" className="mb-4">
+        <Breadcrumbs>
+          <Breadcrumb href="/components">Components</Breadcrumb>
+          <Breadcrumb>{title}</Breadcrumb>
+        </Breadcrumbs>
+      </nav>
       <h1 className="text-[clamp(2.25rem,4vw,3.5rem)] font-semibold leading-[1.08] tracking-[-0.055em] [text-wrap:balance]">
         {title}
       </h1>

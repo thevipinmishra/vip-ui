@@ -1,3 +1,5 @@
+import type { FormEvent } from "react";
+
 export const fieldLabelStyles =
   "text-sm font-medium text-foreground [overflow-wrap:anywhere]";
 export const fieldDescriptionStyles =
@@ -13,3 +15,19 @@ export const segmentedFieldStyles =
 
 export const fieldTriggerStyles =
   "grid size-11 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none transition-[color,background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted hover:text-foreground pressed:bg-muted pressed:text-foreground focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring disabled:cursor-default disabled:opacity-50";
+
+export function revalidateOnInput(
+  event: FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+) {
+  const field = event.currentTarget;
+  if (field.getAttribute("aria-invalid") === "true")
+    field.dispatchEvent(new Event("change"));
+}
+
+export function revalidateField(field: HTMLElement | null) {
+  requestAnimationFrame(() => {
+    if (!field?.hasAttribute("data-invalid")) return;
+    for (const input of field.querySelectorAll("input"))
+      input.dispatchEvent(new Event("change"));
+  });
+}

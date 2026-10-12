@@ -41,8 +41,9 @@ export function Avatar({
     name
       .trim()
       .split(/\s+/)
+      .map((part) => part.match(/[\p{L}\p{N}]/u)?.[0])
+      .filter(Boolean)
       .slice(0, 2)
-      .map((part) => Array.from(part)[0] ?? "")
       .join("")
       .toLocaleUpperCase();
 
@@ -87,7 +88,7 @@ export function AvatarGroup({ className, ...props }: ComponentProps<"div">) {
       role="group"
       data-slot="avatar-group"
       className={cn(
-        "flex items-center -space-x-2 [&_[data-slot=avatar]]:ring-2 [&_[data-slot=avatar]]:ring-background",
+        "flex flex-wrap items-center gap-y-1 -space-x-2 [&_[data-slot=avatar]]:ring-2 [&_[data-slot=avatar]]:ring-background",
         className,
       )}
       {...props}

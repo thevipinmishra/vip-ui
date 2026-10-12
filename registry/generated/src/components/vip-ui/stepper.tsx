@@ -7,7 +7,14 @@ import {
   motion,
   useReducedMotion,
 } from "motion/react";
-import { type ComponentProps, useId } from "react";
+import {
+  type ComponentProps,
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from "react";
 import { duration, easeOut, springLayout, transitionFor } from "./motion";
 import { cn } from "./utils";
 
@@ -25,18 +32,66 @@ export function Stepper({
   steps,
   currentStep,
   className,
+  ref,
   ...props
 }: StepperProps) {
   const groupId = useId();
   const reduceMotion = useReducedMotion();
   const transition = transitionFor(reduceMotion, springLayout);
+  const listRef = useRef<HTMLOListElement | null>(null);
+  const hasScrolled = useRef(false);
+  const [scrollable, setScrollable] = useState(false);
+
+  const setRef = useCallback(
+    (element: HTMLOListElement | null) => {
+      listRef.current = element;
+      if (typeof ref === "function") ref(element);
+      else if (ref) ref.current = element;
+    },
+    [ref],
+  );
+
+  useEffect(() => {
+    const list = listRef.current;
+    if (!list || steps.length === 0) return;
+    const observer = new ResizeObserver(() =>
+      setScrollable(list.scrollWidth > list.clientWidth),
+    );
+    observer.observe(list);
+    for (const child of list.children) observer.observe(child);
+    return () => observer.disconnect();
+  }, [steps]);
+
+  useEffect(() => {
+    const list = listRef.current;
+    const item = list?.children[Math.min(currentStep, steps.length - 1)];
+    if (!list || !item) return;
+    const style = getComputedStyle(list);
+    const bounds = list.getBoundingClientRect();
+    const rect = item.getBoundingClientRect();
+    const start = bounds.left + Number.parseFloat(style.paddingLeft);
+    const end = bounds.right - Number.parseFloat(style.paddingRight);
+    const offset =
+      rect.left < start
+        ? rect.left - start
+        : rect.right > end
+          ? rect.right - end
+          : 0;
+    const smooth =
+      hasScrolled.current &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    hasScrolled.current = true;
+    if (offset)
+      list.scrollBy({ left: offset, behavior: smooth ? "smooth" : "auto" });
+  }, [currentStep, steps.length]);
 
   return (
     <LayoutGroup id={groupId}>
       <ol
         {...props}
+        ref={setRef}
         data-slot="stepper"
-        tabIndex={props.tabIndex ?? (steps.length > 0 ? 0 : undefined)}
+        tabIndex={props.tabIndex ?? (scrollable ? 0 : undefined)}
         className={cn(
           "flex w-full max-w-full overflow-x-auto rounded-xl p-1.5 outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring",
           className,
@@ -53,7 +108,7 @@ export function Stepper({
                 active ? "current" : completed ? "complete" : "upcoming"
               }
               aria-current={active ? "step" : undefined}
-              className="min-w-28 flex-1"
+              className="min-w-24 flex-1"
             >
               <div className="flex items-center gap-2.5">
                 <span
@@ -114,7 +169,7 @@ export function Stepper({
               <div className="min-w-0 pe-3 pt-2.5">
                 <span
                   className={cn(
-                    "block truncate text-sm font-medium leading-5 transition-[color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]",
+                    "block text-sm font-medium leading-5 transition-[color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] [overflow-wrap:anywhere]",
                     active || completed
                       ? "text-foreground"
                       : "text-muted-foreground",

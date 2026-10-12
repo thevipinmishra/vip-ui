@@ -35,14 +35,14 @@ export function Meter({ label, className, children, ...props }: MeterProps) {
               {label && (
                 <Label
                   data-slot="meter-label"
-                  className="min-w-0 font-medium [overflow-wrap:anywhere]"
+                  className="min-w-0 flex-1 font-medium [overflow-wrap:anywhere]"
                 >
                   {label}
                 </Label>
               )}
               <span
                 data-slot="meter-value"
-                className="ms-auto min-w-0 text-end font-mono tabular-nums text-muted-foreground"
+                className="ms-auto max-w-1/2 shrink-0 text-end font-mono tabular-nums text-muted-foreground [overflow-wrap:anywhere]"
               >
                 {valueText}
               </span>

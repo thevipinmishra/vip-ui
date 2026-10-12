@@ -29,7 +29,7 @@ export function Table({ className, ...props }: TableProps) {
       data-slot="table"
       className={composeRenderProps(className, (className) =>
         cn(
-          "w-full border-separate border-spacing-0 text-start text-sm outline-none",
+          "w-full border-separate border-spacing-0 rounded-md text-start text-sm outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring",
           className,
         ),
       )}
@@ -71,7 +71,7 @@ export function Column({ className, children, ...props }: ColumnProps) {
       data-slot="table-column"
       className={composeRenderProps(className, (className) =>
         cn(
-          "border-b border-border px-4 py-3 text-start text-xs font-semibold outline-none transition-[color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] allows-sorting:cursor-pointer allows-sorting:hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring",
+          "border-b border-border px-4 py-3 text-start text-xs font-semibold whitespace-nowrap outline-none transition-[color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] allows-sorting:cursor-pointer allows-sorting:hover:text-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-[-2px] focus-visible:outline-ring",
           className,
         ),
       )}
@@ -113,7 +113,7 @@ export function Row<T extends object>({ className, ...props }: RowProps<T>) {
       data-slot="table-row"
       className={composeRenderProps(className, (className) =>
         cn(
-          "outline-none hover:bg-muted focus:bg-muted selected:bg-accent disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring forced-colors:selected:*:relative forced-colors:selected:*:before:pointer-events-none forced-colors:selected:*:before:absolute forced-colors:selected:*:before:inset-0 forced-colors:selected:*:before:border-y-2 forced-colors:selected:*:before:border-[Highlight] forced-colors:selected:*:first:before:border-s-2 forced-colors:selected:*:last:before:border-e-2",
+          "outline-none hover:bg-muted focus:bg-muted selected:bg-accent disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-[-2px] focus-visible:outline-ring forced-colors:selected:*:relative forced-colors:selected:*:before:pointer-events-none forced-colors:selected:*:before:absolute forced-colors:selected:*:before:inset-0 forced-colors:selected:*:before:border-y-2 forced-colors:selected:*:before:border-[Highlight] forced-colors:selected:*:first:before:border-s-2 forced-colors:selected:*:last:before:border-e-2",
           className,
         ),
       )}
@@ -127,7 +127,7 @@ export function Cell({ className, ...props }: CellProps) {
       data-slot="table-cell"
       className={composeRenderProps(className, (className) =>
         cn(
-          "border-b border-border px-4 py-3 text-foreground outline-none focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring",
+          "border-b border-border px-4 py-3 whitespace-nowrap text-foreground outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-[-2px] focus-visible:outline-ring",
           className,
         ),
       )}

@@ -27,7 +27,7 @@ export function Tree<T extends object>({ className, ...props }: TreeProps<T>) {
       data-slot="tree"
       className={composeRenderProps(className, (className) =>
         cn(
-          "grid max-h-96 gap-1 overflow-y-auto rounded-lg border border-border bg-card p-2 text-sm shadow-[var(--shadow-card)] outline-none empty:min-h-24 empty:place-items-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+          "grid max-h-96 min-w-0 gap-1 overflow-y-auto overscroll-contain rounded-lg border border-border bg-card p-2 text-sm shadow-[var(--shadow-card)] outline-none empty:min-h-24 empty:place-items-center empty:text-muted-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring",
           className,
         ),
       )}
@@ -57,7 +57,7 @@ export function TreeItem({
       textValue={props.textValue ?? title}
       className={composeRenderProps(className, (className) =>
         cn(
-          "group/tree-item rounded-md text-foreground outline-none hover:bg-muted focus:bg-muted pressed:bg-muted selected:bg-accent selected:text-accent-foreground selected:font-medium selected:ring-1 selected:ring-primary/15 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring disabled:opacity-50 forced-colors:border-2 forced-colors:border-[Canvas] forced-colors:selected:border-[Highlight]",
+          "group/tree-item min-w-0 rounded-md text-foreground outline-none hover:bg-muted focus:bg-muted pressed:bg-muted selected:bg-accent selected:text-accent-foreground selected:font-medium selected:ring-1 selected:ring-primary/15 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-[-2px] focus-visible:outline-ring disabled:opacity-50 forced-colors:border-2 forced-colors:border-[Canvas] forced-colors:selected:border-[Highlight]",
           className,
         ),
       )}
@@ -75,7 +75,7 @@ export function TreeItem({
               <AriaButton
                 slot="chevron"
                 data-slot="tree-item-chevron"
-                className="grid size-9 shrink-0 place-items-center rounded-md text-muted-foreground outline-none transition-[color,background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-accent hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring rtl:-scale-x-100"
+                className="grid size-9 shrink-0 place-items-center rounded-md text-muted-foreground outline-none transition-[color,background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-accent hover:text-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring rtl:-scale-x-100"
               >
                 <motion.span
                   aria-hidden="true"

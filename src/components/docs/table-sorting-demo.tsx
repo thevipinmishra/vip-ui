@@ -57,7 +57,7 @@ export function TableSortingDemo() {
           <Column id="owner" allowsSorting>
             Owner
           </Column>
-          <Column id="openTasks" allowsSorting>
+          <Column id="openTasks" allowsSorting className="text-end">
             Open tasks
           </Column>
         </TableHeader>
@@ -66,7 +66,7 @@ export function TableSortingDemo() {
             <Row id={project.id}>
               <Cell>{project.name}</Cell>
               <Cell>{project.owner}</Cell>
-              <Cell>{project.openTasks}</Cell>
+              <Cell className="text-end tabular-nums">{project.openTasks}</Cell>
             </Row>
           )}
         </TableBody>

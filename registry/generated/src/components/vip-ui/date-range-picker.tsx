@@ -2,7 +2,8 @@
 
 import { CaretDownIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
+import { mergeRefs } from "react-aria/mergeRefs";
 import {
   DateRangePicker as AriaDateRangePicker,
   composeRenderProps,
@@ -24,6 +25,7 @@ import {
   fieldErrorStyles,
   fieldLabelStyles,
   fieldTriggerStyles,
+  revalidateField,
   segmentedFieldStyles,
 } from "./field-styles";
 import { Popover } from "./popover";
@@ -34,15 +36,23 @@ export function DateRangePicker<T extends DateValue>({
   label,
   description,
   children,
+  ref,
+  onChange,
   ...props
 }: DateRangePickerProps<T> &
   React.RefAttributes<HTMLDivElement> & {
     label?: string;
     description?: string;
   }) {
+  const fieldRef = useRef<HTMLDivElement>(null);
   return (
     <AriaDateRangePicker
       {...props}
+      ref={mergeRefs(fieldRef, ref)}
+      onChange={(value) => {
+        revalidateField(fieldRef.current);
+        onChange?.(value);
+      }}
       data-slot="date-range-picker"
       className={composeRenderProps(className, (className) =>
         cn("group grid gap-2 data-[focus-visible]:outline-none", className),
@@ -66,20 +76,22 @@ export function DateRangePicker<T extends DateValue>({
             )}
           >
             <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-1 px-2.5 py-2 text-base sm:text-sm">
-              <DateInput
-                slot="start"
-                data-slot="date-range-picker-start"
-                className="flex items-center data-[focus-visible]:outline-none"
-              >
-                {(segment) => <DateSegment segment={segment} />}
-              </DateInput>
-              <span aria-hidden="true" className="text-muted-foreground">
-                –
-              </span>
+              <div className="flex min-w-0 items-end gap-x-1">
+                <DateInput
+                  slot="start"
+                  data-slot="date-range-picker-start"
+                  className="min-w-0 data-[focus-visible]:outline-none"
+                >
+                  {(segment) => <DateSegment segment={segment} />}
+                </DateInput>
+                <span aria-hidden="true" className="text-muted-foreground">
+                  –
+                </span>
+              </div>
               <DateInput
                 slot="end"
                 data-slot="date-range-picker-end"
-                className="flex items-center data-[focus-visible]:outline-none"
+                className="min-w-0 data-[focus-visible]:outline-none"
               >
                 {(segment) => <DateSegment segment={segment} />}
               </DateInput>

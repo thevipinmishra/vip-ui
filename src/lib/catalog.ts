@@ -236,7 +236,7 @@ const catalog: CatalogDefinition[] = [
       {
         slug: "color-picker",
         name: "Color picker",
-        useFor: "A color area, sliders, and a hex input.",
+        useFor: "A color area, hue slider, and hex field in a popover.",
       },
     ],
   },
@@ -345,7 +345,7 @@ const catalog: CatalogDefinition[] = [
       {
         slug: "badge",
         name: "Badge",
-        useFor: "Brief status or metadata.",
+        useFor: "A short label, status, or count.",
       },
       {
         slug: "progress-bar",

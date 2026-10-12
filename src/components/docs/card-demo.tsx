@@ -39,6 +39,9 @@ export function CardDemo() {
             value={name}
             onChange={setName}
             isRequired
+            validate={(value) =>
+              value.trim() ? null : "Enter a project name."
+            }
           />
         </CardContent>
         <CardFooter>

@@ -13,9 +13,14 @@ export function PopoverDemo() {
           <Heading slot="title" className="text-sm font-semibold">
             Project details
           </Heading>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">
-            Anchored content stays open until you click outside or press Escape.
-          </p>
+          <dl className="mt-3 grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-2 text-sm">
+            <dt className="text-muted-foreground">Owner</dt>
+            <dd>Maya Chen</dd>
+            <dt className="text-muted-foreground">Status</dt>
+            <dd>In review</dd>
+            <dt className="text-muted-foreground">Due</dt>
+            <dd>June 24</dd>
+          </dl>
         </Dialog>
       </Popover>
     </DialogTrigger>

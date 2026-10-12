@@ -1,5 +1,7 @@
 "use client";
 
+import { useRef } from "react";
+import { mergeRefs } from "react-aria/mergeRefs";
 import {
   TimeField as AriaTimeField,
   composeRenderProps,
@@ -16,6 +18,7 @@ import {
   fieldDescriptionStyles,
   fieldErrorStyles,
   fieldLabelStyles,
+  revalidateField,
   segmentedFieldStyles,
 } from "./field-styles";
 
@@ -24,15 +27,23 @@ export function TimeField<T extends TimeValue>({
   label,
   description,
   children,
+  ref,
+  onChange,
   ...props
 }: TimeFieldProps<T> &
   React.RefAttributes<HTMLDivElement> & {
     label?: string;
     description?: string;
   }) {
+  const fieldRef = useRef<HTMLDivElement>(null);
   return (
     <AriaTimeField
       {...props}
+      ref={mergeRefs(fieldRef, ref)}
+      onChange={(value) => {
+        revalidateField(fieldRef.current);
+        onChange?.(value);
+      }}
       data-slot="time-field"
       className={composeRenderProps(className, (className) =>
         cn("group grid gap-2 data-[focus-visible]:outline-none", className),
@@ -49,7 +60,7 @@ export function TimeField<T extends TimeValue>({
             data-slot="time-field-input"
             className={cn(
               segmentedFieldStyles,
-              "px-2.5 text-base data-[focus-visible]:outline-none sm:text-sm",
+              "block content-center px-2.5 py-2 text-base data-[focus-visible]:outline-none sm:text-sm",
             )}
           >
             {(segment) => <DateSegment segment={segment} />}

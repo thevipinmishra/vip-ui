@@ -67,9 +67,13 @@ export function SheetPlacementDemo() {
             </div>
             <SheetClose />
           </SheetHeader>
-          <SheetBody className="grid content-start gap-2">
+          <SheetBody className="grid content-start gap-1 px-3">
             {collections.map((item) => (
-              <SheetClose key={item} variant="ghost">
+              <SheetClose
+                key={item}
+                variant="ghost"
+                className="justify-start px-3"
+              >
                 {item}
               </SheetClose>
             ))}

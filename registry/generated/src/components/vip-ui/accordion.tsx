@@ -42,7 +42,7 @@ export function Accordion({
         data-variant={variant}
         className={composeRenderProps(className, (className) =>
           cn(
-            "grid",
+            "grid min-w-0",
             variant === "divided" ? "divide-y divide-border/70" : "gap-2",
             className,
           ),
@@ -75,6 +75,7 @@ export function AccordionItem({
         data-slot="accordion-item"
         className={composeRenderProps(className, (className) =>
           cn(
+            "min-w-0",
             variant === "card" &&
               "overflow-hidden rounded-lg bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70 forced-colors:border",
             className,
@@ -113,10 +114,10 @@ export function AccordionTrigger({
         aria-controls={ids?.panelId}
         className={composeRenderProps(className, (className) =>
           cn(
-            "flex min-h-12 w-full cursor-pointer items-center justify-between gap-4 py-3 text-start text-foreground outline-none transition-[background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring",
+            "flex min-h-12 w-full cursor-pointer items-center justify-between gap-4 py-3 text-start text-foreground transition-[background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-ring",
             variant === "card"
-              ? "px-4 hover:bg-muted/60"
-              : "px-0 decoration-muted-foreground/60 underline-offset-4 hover:underline",
+              ? "rounded-lg px-4 hover:bg-muted/60 focus-visible:-outline-offset-2 aria-expanded:rounded-b-none"
+              : "rounded-sm px-0 decoration-muted-foreground/60 underline-offset-4 hover:underline focus-visible:outline-offset-2",
             className,
           ),
         )}

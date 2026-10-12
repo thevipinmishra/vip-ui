@@ -255,7 +255,7 @@ export function EditorCard() {
                     </ToggleButton>
                     <TooltipContent>
                       {format.label}{" "}
-                      <Kbd className="ms-1 min-h-5">Ctrl {format.key}</Kbd>
+                      <Kbd className="ms-1">Ctrl {format.key}</Kbd>
                     </TooltipContent>
                   </TooltipTrigger>
                 ))}
@@ -332,7 +332,7 @@ export function ActivityCard() {
     <Block title="Activity">
       <BlockBody className="pb-5">
         <Part slug="timeline">
-          <Timeline>
+          <Timeline aria-label="Activity">
             {activity.map((item, index) => (
               <TimelineItem
                 key={item.id}

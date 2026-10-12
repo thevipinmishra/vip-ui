@@ -61,7 +61,7 @@ export function DialogScrollableDemo() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Project handoff</DialogTitle>
-          <DialogClose aria-label="Close dialog" />
+          <DialogClose />
         </DialogHeader>
         <DialogDescription>
           Review each section before sharing the project with your team.

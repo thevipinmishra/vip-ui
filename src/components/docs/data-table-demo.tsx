@@ -214,6 +214,12 @@ const statusVariants = {
   "On hold": "neutral",
 } as const;
 
+const currency = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  maximumFractionDigits: 0,
+});
+
 const columns: DataTableColumn<Project>[] = [
   {
     id: "name",
@@ -249,7 +255,7 @@ const columns: DataTableColumn<Project>[] = [
     header: "Budget",
     align: "end",
     cell: (row) => (
-      <span className="tabular-nums">${row.budget.toLocaleString()}</span>
+      <span className="tabular-nums">{currency.format(row.budget)}</span>
     ),
     sortValue: (row) => row.budget,
   },

@@ -23,47 +23,53 @@ const statusVariants = {
 type Invoice = {
   id: string;
   customer: string;
-  amount: string;
+  amount: number;
   status: keyof typeof statusVariants;
 };
 
+const currency = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  maximumFractionDigits: 0,
+});
+
 const invoices: Invoice[] = [
-  { id: "INV-1048", customer: "Acme Studio", amount: "$2,400", status: "Paid" },
+  { id: "INV-1048", customer: "Acme Studio", amount: 2400, status: "Paid" },
   {
     id: "INV-1049",
     customer: "Northstar Labs",
-    amount: "$1,180",
+    amount: 1180,
     status: "Overdue",
   },
   {
     id: "INV-1050",
     customer: "Fieldwork Co.",
-    amount: "$3,750",
+    amount: 3750,
     status: "Pending",
   },
   {
     id: "INV-1051",
     customer: "Meridian Health",
-    amount: "$890",
+    amount: 890,
     status: "Paid",
   },
   {
     id: "INV-1052",
     customer: "Paperplane",
-    amount: "$1,560",
+    amount: 1560,
     status: "Pending",
   },
   {
     id: "INV-1053",
     customer: "Atlas Works",
-    amount: "$4,200",
+    amount: 4200,
     status: "Overdue",
   },
-  { id: "INV-1054", customer: "Goodside", amount: "$640", status: "Paid" },
+  { id: "INV-1054", customer: "Goodside", amount: 640, status: "Paid" },
   {
     id: "INV-1055",
     customer: "Morrow Design",
-    amount: "$2,100",
+    amount: 2100,
     status: "Pending",
   },
 ];
@@ -112,7 +118,9 @@ export function TableFilterDemo() {
               Invoice
             </Column>
             <Column id="customer">Customer</Column>
-            <Column id="amount">Amount</Column>
+            <Column id="amount" className="text-end">
+              Amount
+            </Column>
             <Column id="status">Status</Column>
           </TableHeader>
           <TableBody
@@ -137,7 +145,9 @@ export function TableFilterDemo() {
                   <span className="font-medium">{invoice.id}</span>
                 </Cell>
                 <Cell>{invoice.customer}</Cell>
-                <Cell>{invoice.amount}</Cell>
+                <Cell className="text-end tabular-nums">
+                  {currency.format(invoice.amount)}
+                </Cell>
                 <Cell>
                   <Badge variant={statusVariants[invoice.status]} dot>
                     {invoice.status}

@@ -49,7 +49,9 @@ export function ProgressRing({
               className="size-full"
               aria-hidden="true"
               style={{ transformOrigin: "50% 50%" }}
-              animate={{ rotate: isIndeterminate && !reducedMotion ? 360 : 0 }}
+              animate={{
+                rotate: isIndeterminate ? (reducedMotion ? -50 : 360) : 0,
+              }}
               transition={
                 isIndeterminate && !reducedMotion
                   ? { duration: 1.5, ease: "linear", repeat: Infinity }
@@ -86,8 +88,12 @@ export function ProgressRing({
             {showValue && (
               <span
                 className={cn(
-                  "absolute inset-0 grid place-items-center font-semibold tabular-nums",
-                  size === "lg" ? "text-sm" : "text-xs",
+                  "absolute inset-[15%] grid place-items-center text-center font-semibold leading-tight tabular-nums [overflow-wrap:anywhere]",
+                  size === "lg"
+                    ? "text-sm"
+                    : size === "sm"
+                      ? "text-[10px]"
+                      : "text-xs",
                 )}
                 aria-hidden="true"
               >

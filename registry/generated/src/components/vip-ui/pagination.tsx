@@ -3,9 +3,10 @@
 import type { ComponentProps, HTMLAttributes } from "react";
 import { tv } from "tailwind-variants";
 import { cn } from "./utils";
+import { buttonLabel } from "./button-styles";
 
 const paginationLinkStyles = tv({
-  base: "inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center gap-1.5 rounded-lg px-3 text-sm font-medium whitespace-nowrap text-foreground tabular-nums transition-[color,background-color,box-shadow,scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-safe:not-aria-disabled:active:scale-[0.96] aria-disabled:cursor-default aria-disabled:text-muted-foreground/60 aria-disabled:hover:bg-transparent [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  base: "inline-flex min-h-11 min-w-11 max-w-full cursor-pointer items-center justify-center gap-1.5 rounded-lg px-3 text-sm font-medium whitespace-nowrap text-foreground tabular-nums transition-[color,background-color,box-shadow,scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-safe:not-aria-disabled:active:scale-[0.96] aria-disabled:cursor-default aria-disabled:text-muted-foreground/60 aria-disabled:hover:bg-transparent [&_svg]:pointer-events-none [&_svg]:shrink-0",
   variants: {
     isCurrent: {
       true: "bg-card text-primary shadow-[var(--shadow-card)] ring-1 ring-primary/25 hover:bg-card forced-colors:border",
@@ -21,7 +22,7 @@ export function Pagination({
     <nav
       aria-label="Pagination"
       data-slot="pagination"
-      className={cn("flex justify-center", className)}
+      className={cn("flex min-w-0 justify-center-safe", className)}
       {...props}
     />
   );
@@ -35,7 +36,7 @@ export function PaginationList({
     <ol
       data-slot="pagination-list"
       className={cn(
-        "flex flex-wrap items-center justify-center gap-2",
+        "flex min-w-0 flex-wrap items-center justify-center-safe gap-2",
         className,
       )}
       {...props}
@@ -50,7 +51,7 @@ export function PaginationItem({
   return (
     <li
       data-slot="pagination-item"
-      className={cn("flex", className)}
+      className={cn("flex min-w-0", className)}
       {...props}
     />
   );
@@ -68,19 +69,23 @@ export function PaginationLink({
   className,
   href,
   onClick,
+  children,
   ...props
 }: PaginationLinkProps) {
   return (
     <a
       {...props}
       href={isDisabled ? undefined : href}
+      role={isDisabled ? "link" : undefined}
       aria-current={isCurrent ? "page" : undefined}
       aria-disabled={isDisabled || undefined}
       tabIndex={isDisabled ? -1 : props.tabIndex}
       onClick={isDisabled ? (event) => event.preventDefault() : onClick}
       data-slot="pagination-link"
       className={paginationLinkStyles({ isCurrent, className })}
-    />
+    >
+      {buttonLabel(children)}
+    </a>
   );
 }
 

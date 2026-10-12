@@ -11,7 +11,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
-import type { Key } from "react-aria-components";
+import { type Key, useLocale } from "react-aria-components";
 import { cn } from "./utils";
 import { Button } from "./button";
 import { Checkbox, CheckboxIndicator } from "./checkbox";
@@ -62,6 +62,8 @@ export function DataTable<T extends object>({
   onSelectionChange,
   className,
 }: DataTableProps<T>) {
+  const { locale } = useLocale();
+  const numberFormat = useMemo(() => new Intl.NumberFormat(locale), [locale]);
   const [query, setQuery] = useState("");
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -192,7 +194,7 @@ export function DataTable<T extends object>({
                 setQuery(value);
                 setPageIndex(0);
               }}
-              className="min-w-48 flex-1 sm:max-w-xs"
+              className="min-w-0 grow basis-48 sm:max-w-xs"
             />
           )}
           {columns
@@ -205,14 +207,13 @@ export function DataTable<T extends object>({
               return filter.type === "text" ? (
                 <SearchField
                   key={column.id}
-                  label={`Filter ${column.header}`}
-                  placeholder={`Filter ${column.header.toLowerCase()}`}
+                  label={column.header}
                   value={value}
                   onChange={(next) => {
-                    tableColumn.setFilterValue(next || undefined);
+                    tableColumn.setFilterValue(next.trim() ? next : undefined);
                     setPageIndex(0);
                   }}
-                  className="min-w-44 flex-1 sm:max-w-56"
+                  className="min-w-0 grow basis-44 sm:max-w-56"
                 />
               ) : (
                 <Select
@@ -223,11 +224,8 @@ export function DataTable<T extends object>({
                     tableColumn.setFilterValue(next || undefined);
                     setPageIndex(0);
                   }}
-                  options={[
-                    { id: "", name: `All ${column.header.toLowerCase()}` },
-                    ...filter.options,
-                  ]}
-                  className="min-w-40 flex-1 sm:max-w-48"
+                  options={[{ id: "", name: "All" }, ...filter.options]}
+                  className="min-w-0 grow basis-40 sm:max-w-48"
                 />
               );
             })}
@@ -246,7 +244,7 @@ export function DataTable<T extends object>({
           )}
         </div>
       )}
-      <div className="overflow-x-auto">
+      <div className="@container overflow-x-auto">
         <Table
           aria-label={label}
           className="min-w-[640px]"
@@ -288,10 +286,7 @@ export function DataTable<T extends object>({
                 id={column.id}
                 isRowHeader={index === 0}
                 allowsSorting={Boolean(column.sortValue)}
-                className={cn(
-                  "whitespace-nowrap",
-                  column.align === "end" && "text-end",
-                )}
+                className={column.align === "end" ? "text-end" : undefined}
               >
                 {column.header}
               </Column>
@@ -300,7 +295,7 @@ export function DataTable<T extends object>({
           <TableBody
             items={pageRows}
             renderEmptyState={() => (
-              <div className="px-4 py-10 text-center">
+              <div className="sticky start-0 w-[100cqw] px-4 py-10 text-center">
                 <p className="text-sm font-medium text-foreground">
                   {hasFilters ? "No matching rows" : "No rows yet"}
                 </p>
@@ -345,34 +340,39 @@ export function DataTable<T extends object>({
         <output aria-live="polite" aria-atomic="true" className="tabular-nums">
           {filteredCount === 0
             ? "No rows"
-            : `Showing ${firstRow}–${lastRow} of ${filteredCount} ${filteredCount === 1 ? "row" : "rows"}`}
-          {hasFilters && ` (${rows.length} total)`}
-          {selectable && selectedCount > 0 && ` · ${selectedCount} selected`}
+            : `Showing ${numberFormat.format(firstRow)}–${numberFormat.format(lastRow)} of ${numberFormat.format(filteredCount)} ${filteredCount === 1 ? "row" : "rows"}`}
+          {hasFilters && ` (${numberFormat.format(rows.length)} total)`}
+          {selectable &&
+            selectedCount > 0 &&
+            ` · ${numberFormat.format(selectedCount)} selected`}
         </output>
         {pageCount > 1 && (
           <nav
             aria-label={`${label} pages`}
-            className="flex items-center gap-2"
+            className="flex flex-wrap items-center gap-x-3 gap-y-2"
           >
-            <Button
-              variant="outline"
-              size="sm"
-              isDisabled={pageIndex === 0}
-              onPress={() => setPageIndex(pageIndex - 1)}
-            >
-              Previous
-            </Button>
-            <span className="min-w-20 text-center tabular-nums">
-              Page {Math.min(pageIndex + 1, pageCount)} of {pageCount}
+            <span className="whitespace-nowrap tabular-nums">
+              Page {numberFormat.format(Math.min(pageIndex + 1, pageCount))} of{" "}
+              {numberFormat.format(pageCount)}
             </span>
-            <Button
-              variant="outline"
-              size="sm"
-              isDisabled={!table.getCanNextPage()}
-              onPress={() => setPageIndex(pageIndex + 1)}
-            >
-              Next
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                isDisabled={pageIndex === 0}
+                onPress={() => setPageIndex(pageIndex - 1)}
+              >
+                Previous
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                isDisabled={!table.getCanNextPage()}
+                onPress={() => setPageIndex(pageIndex + 1)}
+              >
+                Next
+              </Button>
+            </div>
           </nav>
         )}
       </div>

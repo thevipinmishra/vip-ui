@@ -174,6 +174,12 @@ const statusVariants = {
   Overdue: "warning",
 } as const;
 
+const currency = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  maximumFractionDigits: 0,
+});
+
 const columns: DataTableColumn<Invoice>[] = [
   {
     id: "id",
@@ -225,7 +231,7 @@ const columns: DataTableColumn<Invoice>[] = [
     header: "Amount",
     align: "end",
     cell: (row) => (
-      <span className="tabular-nums">${row.amount.toLocaleString()}</span>
+      <span className="tabular-nums">{currency.format(row.amount)}</span>
     ),
     sortValue: (row) => row.amount,
   },
