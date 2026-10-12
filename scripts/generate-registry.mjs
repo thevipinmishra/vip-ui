@@ -94,7 +94,6 @@ const descriptions = {
   popover: "Show contextual content anchored to a trigger.",
   "presence-list": "Animate additions and removals in a semantic list.",
   "press-button": "Handle press interactions for shared button controls.",
-  "preview-trigger": "Open a preview without leaving the current context.",
   "progress-bar": "Show progress for a task with a known completion point.",
   "progress-ring": "Show known or unknown progress in a circular indicator.",
   "radio-group": "Choose one option from a visible set.",

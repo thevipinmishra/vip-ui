@@ -20,7 +20,7 @@ const spinnerStyles = tv({
 });
 
 type SpinnerProps = Omit<ComponentProps<"output">, "children"> & {
-  variant?: "orbit" | "ring" | "pulse" | "dots" | "bars" | "spark" | "segments";
+  variant?: "ring" | "dots" | "segments";
   size?: NonNullable<VariantProps<typeof spinnerStyles>["size"]>;
   decorative?: boolean;
 };
@@ -28,7 +28,7 @@ type SpinnerProps = Omit<ComponentProps<"output">, "children"> & {
 const ticks = [0, 45, 90, 135, 180, 225, 270, 315];
 
 export function Spinner({
-  variant = "orbit",
+  variant = "ring",
   size = "md",
   decorative = false,
   className,
@@ -46,61 +46,6 @@ export function Spinner({
       data-variant={variant}
       className={spinnerStyles({ size, className })}
     >
-      {variant === "orbit" && (
-        <svg
-          viewBox="0 0 40 40"
-          fill="none"
-          className="size-full"
-          aria-hidden="true"
-        >
-          <circle
-            cx="20"
-            cy="20"
-            r="15"
-            stroke="currentColor"
-            strokeOpacity="0.18"
-            strokeWidth="1.5"
-          />
-          <circle
-            cx="20"
-            cy="20"
-            r="7.5"
-            stroke="currentColor"
-            strokeOpacity="0.12"
-            strokeWidth="1.5"
-          />
-          <motion.g
-            animate={{ rotate: still ? 0 : 360 }}
-            transition={transitionFor(reducedMotion, {
-              duration: 1.65,
-              ease: "linear",
-              repeat: Infinity,
-            })}
-            style={{ transformOrigin: "50% 50%" }}
-          >
-            <circle cx="20" cy="20" r="15" fill="none" />
-            <circle cx="20" cy="5" r="3" fill="currentColor" />
-          </motion.g>
-          <motion.g
-            animate={{ rotate: still ? 0 : -360 }}
-            transition={transitionFor(reducedMotion, {
-              duration: 1.2,
-              ease: "linear",
-              repeat: Infinity,
-            })}
-            style={{ transformOrigin: "50% 50%" }}
-          >
-            <circle cx="20" cy="20" r="7.5" fill="none" />
-            <circle
-              cx="20"
-              cy="12.5"
-              r="2"
-              fill="currentColor"
-              fillOpacity="0.65"
-            />
-          </motion.g>
-        </svg>
-      )}
       {variant === "ring" && (
         <svg
           viewBox="0 0 40 40"
@@ -113,83 +58,26 @@ export function Spinner({
             cy="20"
             r="15"
             stroke="currentColor"
-            strokeOpacity="0.16"
-            strokeWidth="3"
+            strokeOpacity="0.18"
+            strokeWidth="4"
           />
-          <motion.g
-            animate={{ rotate: still ? 0 : 360 }}
+          <motion.circle
+            cx="20"
+            cy="20"
+            r="15"
+            stroke="currentColor"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeDasharray="28 95"
+            style={{ transformOrigin: "50% 50%" }}
+            initial={{ rotate: -90 }}
+            animate={{ rotate: still ? -90 : 270 }}
             transition={transitionFor(reducedMotion, {
-              duration: 0.9,
+              duration: 0.8,
               ease: "linear",
               repeat: Infinity,
             })}
-            style={{ transformOrigin: "50% 50%" }}
-          >
-            <circle
-              cx="20"
-              cy="20"
-              r="15"
-              stroke="currentColor"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeDasharray="30 95"
-              transform="rotate(-90 20 20)"
-            />
-            <circle
-              cx="20"
-              cy="20"
-              r="15"
-              stroke="currentColor"
-              strokeOpacity="0.36"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeDasharray="12 113"
-              transform="rotate(-140 20 20)"
-            />
-          </motion.g>
-        </svg>
-      )}
-      {variant === "pulse" && (
-        <svg
-          viewBox="0 0 40 40"
-          fill="none"
-          className="size-full"
-          aria-hidden="true"
-        >
-          <circle
-            cx="20"
-            cy="20"
-            r="12"
-            stroke="currentColor"
-            strokeOpacity="0.14"
-            strokeWidth="1.6"
           />
-          {[0, 1].map((index) => (
-            <motion.circle
-              key={index}
-              cx="20"
-              cy="20"
-              r="12"
-              stroke="currentColor"
-              strokeWidth="1.6"
-              style={{ transformOrigin: "50% 50%" }}
-              animate={
-                still
-                  ? {
-                      scale: index === 0 ? 1 : 0.65,
-                      opacity: index === 0 ? 0.45 : 0.28,
-                    }
-                  : { scale: [0.55, 1.25], opacity: [0.65, 0] }
-              }
-              transition={transitionFor(reducedMotion, {
-                duration: 1.7,
-                delay: -index * 0.85,
-                repeat: Infinity,
-                ease: easeInOut,
-              })}
-            />
-          ))}
-          <circle cx="20" cy="20" r="3.5" fill="currentColor" />
         </svg>
       )}
       {variant === "dots" && (
@@ -219,80 +107,6 @@ export function Spinner({
             />
           ))}
         </span>
-      )}
-      {variant === "bars" && (
-        <span
-          className="flex size-full items-center justify-center gap-[7%]"
-          aria-hidden="true"
-        >
-          {[0, 1, 2, 3, 4].map((index) => (
-            <motion.span
-              key={index}
-              className="h-[62%] w-[10%] rounded-full bg-current forced-colors:bg-[CanvasText]"
-              animate={
-                still
-                  ? { scaleY: index === 2 ? 1 : 0.55, opacity: 1 }
-                  : { scaleY: [0.4, 1, 0.4], opacity: [0.5, 1, 0.5] }
-              }
-              transition={transitionFor(reducedMotion, {
-                duration: 1.1,
-                delay: -index * 0.13,
-                repeat: Infinity,
-                ease: easeInOut,
-              })}
-            />
-          ))}
-        </span>
-      )}
-      {variant === "spark" && (
-        <svg
-          viewBox="0 0 40 40"
-          fill="none"
-          className="size-full"
-          aria-hidden="true"
-        >
-          <motion.path
-            d="M20 7.5 22.7 17.3 32.5 20 22.7 22.7 20 32.5 17.3 22.7 7.5 20 17.3 17.3Z"
-            fill="currentColor"
-            style={{ transformOrigin: "50% 50%" }}
-            animate={
-              still
-                ? { opacity: 1, scale: 1 }
-                : { opacity: [0.68, 1, 0.68], scale: [0.91, 1.04, 0.91] }
-            }
-            transition={transitionFor(reducedMotion, {
-              duration: 1.9,
-              repeat: Infinity,
-              ease: easeInOut,
-            })}
-          />
-          <motion.circle
-            cx="32.5"
-            cy="7"
-            r="1.6"
-            fill="currentColor"
-            animate={still ? { opacity: 0.65 } : { opacity: [0.25, 0.9, 0.25] }}
-            transition={transitionFor(reducedMotion, {
-              duration: 1.9,
-              delay: -0.7,
-              repeat: Infinity,
-              ease: easeInOut,
-            })}
-          />
-          <motion.circle
-            cx="7.5"
-            cy="33"
-            r="1.2"
-            fill="currentColor"
-            animate={still ? { opacity: 0.65 } : { opacity: [0.2, 0.8, 0.2] }}
-            transition={transitionFor(reducedMotion, {
-              duration: 1.9,
-              delay: -1.3,
-              repeat: Infinity,
-              ease: easeInOut,
-            })}
-          />
-        </svg>
       )}
       {variant === "segments" && (
         <svg

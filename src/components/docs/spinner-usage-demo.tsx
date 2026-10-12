@@ -9,7 +9,7 @@ export function SpinnerUsageDemo() {
           Small in a button
         </p>
         <Button isPending>
-          <Spinner variant="ring" size="sm" decorative />
+          <Spinner size="sm" decorative />
           Saving
         </Button>
       </div>
@@ -18,12 +18,7 @@ export function SpinnerUsageDemo() {
           Medium with a status
         </p>
         <output className="flex items-center gap-3 text-sm font-medium">
-          <Spinner
-            variant="orbit"
-            size="md"
-            decorative
-            className="text-primary"
-          />
+          <Spinner decorative className="text-primary" />
           Loading
         </output>
       </div>

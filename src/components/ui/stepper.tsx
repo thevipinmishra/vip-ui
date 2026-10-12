@@ -38,7 +38,7 @@ export function Stepper({
         data-slot="stepper"
         tabIndex={props.tabIndex ?? (steps.length > 0 ? 0 : undefined)}
         className={cn(
-          "flex w-full max-w-full overflow-x-auto rounded-xl px-1 py-3 outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring",
+          "flex w-full max-w-full overflow-x-auto rounded-xl p-1.5 outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring",
           className,
         )}
       >
@@ -59,12 +59,12 @@ export function Stepper({
                 <span
                   aria-hidden="true"
                   className={cn(
-                    "relative isolate grid size-10 shrink-0 place-items-center rounded-full border text-sm font-semibold tabular-nums shadow-sm",
+                    "relative isolate grid size-8 shrink-0 place-items-center rounded-full border text-xs font-semibold tabular-nums transition-[color,background-color,border-color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]",
                     active
-                      ? "border-primary bg-accent text-primary"
+                      ? "border-primary bg-card text-primary"
                       : completed
                         ? "border-primary bg-primary text-primary-foreground"
-                        : "border-border bg-secondary text-muted-foreground",
+                        : "border-border bg-card text-muted-foreground",
                   )}
                 >
                   {active && (
@@ -72,7 +72,7 @@ export function Stepper({
                       layoutId="stepper-current"
                       initial={false}
                       transition={transition}
-                      className="pointer-events-none absolute -inset-1.5 rounded-full bg-primary/10 ring-1 ring-primary/35 forced-colors:ring-[Highlight]"
+                      className="pointer-events-none absolute -inset-1 -z-10 rounded-full bg-primary/15 forced-colors:border-2 forced-colors:border-[Highlight]"
                     />
                   )}
                   <AnimatePresence initial={false}>
@@ -90,7 +90,7 @@ export function Stepper({
                       }}
                     >
                       {completed ? (
-                        <CheckIcon size={15} weight="bold" />
+                        <CheckIcon size={14} weight="bold" />
                       ) : (
                         index + 1
                       )}
@@ -100,7 +100,7 @@ export function Stepper({
                 {index < steps.length - 1 && (
                   <span
                     aria-hidden="true"
-                    className="relative h-1 min-w-6 flex-1 overflow-hidden rounded-full bg-secondary ring-1 ring-border/60"
+                    className="relative h-0.5 min-w-6 flex-1 overflow-hidden rounded-full bg-border forced-colors:bg-[GrayText]"
                   >
                     <motion.span
                       className="absolute inset-0 origin-left rounded-full bg-primary forced-colors:bg-[Highlight] rtl:origin-right"
@@ -111,33 +111,20 @@ export function Stepper({
                   </span>
                 )}
               </div>
-              <div className="min-w-0 pe-3 pt-3">
-                <span className="relative inline-flex max-w-full items-center rounded-md px-2 py-1">
-                  {active && (
-                    <motion.span
-                      aria-hidden="true"
-                      layoutId="stepper-label"
-                      initial={false}
-                      transition={transition}
-                      className="absolute inset-0 rounded-md bg-primary/10 forced-colors:border forced-colors:border-[Highlight]"
-                    />
+              <div className="min-w-0 pe-3 pt-2.5">
+                <span
+                  className={cn(
+                    "block truncate text-sm font-medium leading-5 transition-[color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]",
+                    active || completed
+                      ? "text-foreground"
+                      : "text-muted-foreground",
                   )}
-                  <span
-                    className={cn(
-                      "relative truncate text-sm font-medium leading-5",
-                      active
-                        ? "text-primary"
-                        : completed
-                          ? "text-foreground"
-                          : "text-muted-foreground",
-                    )}
-                  >
-                    {completed && <span className="sr-only">Completed: </span>}
-                    {step.label}
-                  </span>
+                >
+                  {completed && <span className="sr-only">Completed: </span>}
+                  {step.label}
                 </span>
                 {step.description && (
-                  <span className="mt-1 block px-2 text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]">
+                  <span className="mt-0.5 block text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]">
                     {step.description}
                   </span>
                 )}

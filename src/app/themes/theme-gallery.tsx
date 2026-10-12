@@ -41,7 +41,6 @@ import { MeterDemo } from "@/components/docs/meter-demo";
 import { NumberFieldDemo } from "@/components/docs/number-field-demo";
 import { PopoverDemo } from "@/components/docs/popover-demo";
 import { PresenceListDemo } from "@/components/docs/presence-list-demo";
-import { PreviewTriggerDemo } from "@/components/docs/preview-trigger-demo";
 import { ProgressBarBasicDemo } from "@/components/docs/progress-bar-basic-demo";
 import { ProgressRingBasicDemo } from "@/components/docs/progress-ring-basic-demo";
 import { RadioGroupDemo } from "@/components/docs/radio-group-demo";
@@ -137,7 +136,6 @@ const groups: { title: string; examples: Example[] }[] = [
       { title: "Tooltip", Demo: TooltipDemo },
       { title: "Menu", Demo: MenuDemo },
       { title: "Command palette", Demo: CommandPaletteDemo },
-      { title: "Preview trigger", Demo: PreviewTriggerDemo },
       { title: "Toast", Demo: ToastDemo },
     ],
   },

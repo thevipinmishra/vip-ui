@@ -7,7 +7,7 @@ interface CatalogDefinition {
 const catalog: CatalogDefinition[] = [
   {
     title: "Actions",
-    description: "Triggers, commands, and selection controls.",
+    description: "Triggers, commands, and toggles.",
     items: [
       {
         slug: "button",
@@ -18,11 +18,6 @@ const catalog: CatalogDefinition[] = [
         slug: "button-group",
         name: "Button group",
         useFor: "Joining related actions or a split action with a menu.",
-      },
-      {
-        slug: "link",
-        name: "Link",
-        useFor: "Navigation to another page or location.",
       },
       {
         slug: "menu",
@@ -70,7 +65,7 @@ const catalog: CatalogDefinition[] = [
   },
   {
     title: "Forms",
-    description: "Fields, choices, and validation.",
+    description: "Fields, choices, files, and validation.",
     items: [
       {
         slug: "text-field",
@@ -168,6 +163,16 @@ const catalog: CatalogDefinition[] = [
         useFor: "A value within a bounded range.",
       },
       {
+        slug: "drop-zone",
+        name: "Drop zone",
+        useFor: "Adding local files by drag or picker.",
+      },
+      {
+        slug: "attachment",
+        name: "Attachment",
+        useFor: "Reviewing files and upload states.",
+      },
+      {
         slug: "form",
         name: "Form",
         useFor: "Grouping fields with validation and submission.",
@@ -236,146 +241,9 @@ const catalog: CatalogDefinition[] = [
     ],
   },
   {
-    title: "Display & layout",
-    description: "Containers, identities, values, and loading states.",
+    title: "Overlays",
+    description: "Panels and messages above the page.",
     items: [
-      {
-        slug: "card",
-        name: "Card",
-        useFor: "Grouping related content and actions.",
-      },
-      {
-        slug: "avatar",
-        name: "Avatar",
-        useFor: "Showing a person with an image or initials.",
-      },
-      {
-        slug: "skeleton",
-        name: "Skeleton",
-        useFor: "Reserving space while content loads.",
-      },
-      {
-        slug: "spinner",
-        name: "Spinner",
-        useFor: "An indeterminate loading indicator.",
-      },
-      {
-        slug: "empty-state",
-        name: "Empty state",
-        useFor: "Explaining an empty collection and its next step.",
-      },
-      {
-        slug: "description-list",
-        name: "Description list",
-        useFor: "Pairing labels and values.",
-      },
-      {
-        slug: "kbd-code",
-        name: "Kbd & code",
-        useFor: "Marking up shortcuts and inline code.",
-      },
-      {
-        slug: "stat",
-        name: "Stat",
-        useFor: "Showing a labeled metric and context.",
-      },
-      {
-        slug: "animated-number",
-        name: "Animated number",
-        useFor: "A number that animates when its value changes.",
-      },
-      {
-        slug: "text-swap",
-        name: "Text swap",
-        useFor: "Text that transitions when its value changes.",
-      },
-    ],
-  },
-  {
-    title: "Motion & effects",
-    description: "Text and content transitions.",
-    items: [
-      {
-        slug: "text-reveal",
-        name: "Text reveal",
-        useFor: "Revealing text by word or character.",
-      },
-      {
-        slug: "text-scramble",
-        name: "Text scramble",
-        useFor: "Resolving changing text from scrambled characters.",
-      },
-      {
-        slug: "presence",
-        name: "Presence",
-        useFor: "Animating conditional content into and out of a page.",
-      },
-      {
-        slug: "stagger-group",
-        name: "Stagger group",
-        useFor: "Sequencing the entrance of grouped items.",
-      },
-      {
-        slug: "layout-morph",
-        name: "Layout morph",
-        useFor: "Resizing around changing content without stretching it.",
-      },
-      {
-        slug: "marquee",
-        name: "Marquee",
-        useFor: "Looping a pausable strip of content.",
-      },
-    ],
-  },
-  {
-    title: "Content & feedback",
-    description: "Information, navigation, and progress.",
-    items: [
-      {
-        slug: "badge",
-        name: "Badge",
-        useFor: "Brief status or metadata.",
-      },
-      {
-        slug: "alert",
-        name: "Alert",
-        useFor: "Information beside the task it affects.",
-      },
-      {
-        slug: "message",
-        name: "Message",
-        useFor: "A readable entry in a conversation.",
-      },
-      {
-        slug: "agent-status",
-        name: "Agent status",
-        useFor: "A visible state for an agent's current step.",
-      },
-      {
-        slug: "tool-call",
-        name: "Tool call",
-        useFor: "An expandable tool request and result.",
-      },
-      {
-        slug: "source-link",
-        name: "Source link",
-        useFor: "A linked source for an answer.",
-      },
-      {
-        slug: "tabs",
-        name: "Tabs",
-        useFor: "Related panels in one view.",
-      },
-      {
-        slug: "accordion",
-        name: "Accordion",
-        useFor: "Details revealed on demand.",
-      },
-      {
-        slug: "disclosure",
-        name: "Disclosure",
-        useFor: "Showing or hiding a section of content.",
-      },
       {
         slug: "dialog",
         name: "Dialog",
@@ -401,6 +269,85 @@ const catalog: CatalogDefinition[] = [
         name: "Toast",
         useFor: "Feedback after an action.",
       },
+    ],
+  },
+  {
+    title: "Navigation",
+    description: "Links between pages and views.",
+    items: [
+      {
+        slug: "link",
+        name: "Link",
+        useFor: "Navigation to another page or location.",
+      },
+      {
+        slug: "tabs",
+        name: "Tabs",
+        useFor: "Related panels in one view.",
+      },
+      {
+        slug: "breadcrumbs",
+        name: "Breadcrumbs",
+        useFor: "A path of links to the current page.",
+      },
+      {
+        slug: "pagination",
+        name: "Pagination",
+        useFor: "Links between pages of results.",
+      },
+    ],
+  },
+  {
+    title: "Collections",
+    description: "Lists, trees, and tables of items.",
+    items: [
+      {
+        slug: "list-box",
+        name: "List box",
+        useFor: "A list of options for selection.",
+      },
+      {
+        slug: "grid-list",
+        name: "Grid list",
+        useFor: "A collection of interactive rows.",
+      },
+      {
+        slug: "tree",
+        name: "Tree",
+        useFor: "Hierarchical items that can be expanded.",
+      },
+      {
+        slug: "tag-group",
+        name: "Tag group",
+        useFor: "A collection of tags that can be removed.",
+      },
+      {
+        slug: "table",
+        name: "Table",
+        useFor: "Data in rows and columns.",
+      },
+      {
+        slug: "data-table",
+        name: "Data table",
+        useFor:
+          "Searching, filtering, sorting, selecting, and paging through rows.",
+      },
+    ],
+  },
+  {
+    title: "Feedback",
+    description: "Status, progress, and loading states.",
+    items: [
+      {
+        slug: "alert",
+        name: "Alert",
+        useFor: "Information beside the task it affects.",
+      },
+      {
+        slug: "badge",
+        name: "Badge",
+        useFor: "Brief status or metadata.",
+      },
       {
         slug: "progress-bar",
         name: "Progress bar",
@@ -422,9 +369,40 @@ const catalog: CatalogDefinition[] = [
         useFor: "The current step in a sequence.",
       },
       {
-        slug: "timeline",
-        name: "Timeline",
-        useFor: "Events in a time-ordered sequence.",
+        slug: "spinner",
+        name: "Spinner",
+        useFor: "An indeterminate loading indicator.",
+      },
+      {
+        slug: "skeleton",
+        name: "Skeleton",
+        useFor: "Reserving space while content loads.",
+      },
+      {
+        slug: "empty-state",
+        name: "Empty state",
+        useFor: "Explaining an empty collection and its next step.",
+      },
+    ],
+  },
+  {
+    title: "Display & layout",
+    description: "Containers, sections, and values.",
+    items: [
+      {
+        slug: "card",
+        name: "Card",
+        useFor: "Grouping related content and actions.",
+      },
+      {
+        slug: "accordion",
+        name: "Accordion",
+        useFor: "Details revealed on demand.",
+      },
+      {
+        slug: "disclosure",
+        name: "Disclosure",
+        useFor: "Showing or hiding a section of content.",
       },
       {
         slug: "separator",
@@ -432,24 +410,86 @@ const catalog: CatalogDefinition[] = [
         useFor: "Separating sections of content.",
       },
       {
-        slug: "breadcrumbs",
-        name: "Breadcrumbs",
-        useFor: "A path of links to the current page.",
+        slug: "avatar",
+        name: "Avatar",
+        useFor: "Showing a person with an image or initials.",
       },
       {
-        slug: "pagination",
-        name: "Pagination",
-        useFor: "Links between pages of results.",
+        slug: "description-list",
+        name: "Description list",
+        useFor: "Pairing labels and values.",
       },
       {
-        slug: "tag-group",
-        name: "Tag group",
-        useFor: "A collection of tags that can be removed.",
+        slug: "stat",
+        name: "Stat",
+        useFor: "Showing a labeled metric and context.",
       },
       {
-        slug: "list-box",
-        name: "List box",
-        useFor: "A list of options for selection.",
+        slug: "timeline",
+        name: "Timeline",
+        useFor: "Events in a time-ordered sequence.",
+      },
+      {
+        slug: "kbd-code",
+        name: "Kbd & code",
+        useFor: "Marking up shortcuts and inline code.",
+      },
+    ],
+  },
+  {
+    title: "AI",
+    description: "Messages, agent steps, and sources.",
+    items: [
+      {
+        slug: "message",
+        name: "Message",
+        useFor: "A readable entry in a conversation.",
+      },
+      {
+        slug: "agent-status",
+        name: "Agent status",
+        useFor: "A visible state for an agent's current step.",
+      },
+      {
+        slug: "tool-call",
+        name: "Tool call",
+        useFor: "An expandable tool request and result.",
+      },
+      {
+        slug: "source-link",
+        name: "Source link",
+        useFor: "A linked source for an answer.",
+      },
+    ],
+  },
+  {
+    title: "Motion & effects",
+    description: "Text and content transitions.",
+    items: [
+      {
+        slug: "text-swap",
+        name: "Text swap",
+        useFor: "Text that transitions when its value changes.",
+      },
+      {
+        slug: "animated-number",
+        name: "Animated number",
+        useFor: "A number that animates when its value changes.",
+      },
+      {
+        slug: "text-reveal",
+        name: "Text reveal",
+        useFor: "Revealing text by word or character.",
+      },
+      {
+        slug: "text-scramble",
+        name: "Text scramble",
+        useFor: "Resolving changing text from scrambled characters.",
+      },
+      {
+        slug: "presence",
+        name: "Presence",
+        useFor: "Animating conditional content into and out of a page.",
       },
       {
         slug: "presence-list",
@@ -457,40 +497,19 @@ const catalog: CatalogDefinition[] = [
         useFor: "A list with animated item additions and removals.",
       },
       {
-        slug: "grid-list",
-        name: "Grid list",
-        useFor: "A collection of interactive rows.",
+        slug: "stagger-group",
+        name: "Stagger group",
+        useFor: "Sequencing the entrance of grouped items.",
       },
       {
-        slug: "tree",
-        name: "Tree",
-        useFor: "Hierarchical items that can be expanded.",
+        slug: "layout-morph",
+        name: "Layout morph",
+        useFor: "Resizing around changing content without stretching it.",
       },
       {
-        slug: "drop-zone",
-        name: "Drop zone",
-        useFor: "Adding local files by drag or picker.",
-      },
-      {
-        slug: "attachment",
-        name: "Attachment",
-        useFor: "Reviewing files and upload states.",
-      },
-      {
-        slug: "table",
-        name: "Table",
-        useFor: "Data in rows and columns.",
-      },
-      {
-        slug: "data-table",
-        name: "Data table",
-        useFor:
-          "Searching, filtering, sorting, selecting, and paging through rows.",
-      },
-      {
-        slug: "preview-trigger",
-        name: "Preview trigger",
-        useFor: "A preview on hover, focus, or long press.",
+        slug: "marquee",
+        name: "Marquee",
+        useFor: "Looping a pausable strip of content.",
       },
     ],
   },
@@ -558,7 +577,6 @@ const reactAriaDocs: Record<string, string> = {
   "drop-zone": "https://react-aria.adobe.com/DropZone",
   table: "https://react-aria.adobe.com/Table",
   "data-table": "https://react-aria.adobe.com/Table",
-  "preview-trigger": "https://react-aria.adobe.com/PreviewTrigger",
 };
 
 export interface CatalogComponent {

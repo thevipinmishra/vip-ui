@@ -17,7 +17,7 @@ export function ButtonLoadingDemo() {
       }}
     >
       {isSaving ? (
-        <Spinner variant="ring" size="sm" decorative />
+        <Spinner size="sm" decorative />
       ) : (
         <FloppyDiskIcon size={16} aria-hidden="true" />
       )}

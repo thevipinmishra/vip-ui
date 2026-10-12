@@ -907,12 +907,6 @@ export const componentPageData = {
       },
     ],
   },
-  "preview-trigger": {
-    usage: "preview-trigger-demo.tsx",
-    description:
-      "Shows a file preview when its trigger is hovered, focused, or long-pressed.",
-    examples: [],
-  },
   "progress-bar": {
     usage: "progress-bar-basic-demo.tsx",
     description: "Displays the progress of a task in a horizontal bar.",
@@ -1073,7 +1067,7 @@ export const componentPageData = {
       {
         title: "Variants",
         description:
-          "Set variant to one of seven styles. Each card names the kind of wait the style suits.",
+          "Set variant to ring, segments, or dots. Each card names the kind of wait the style suits.",
         sourcePath: "spinner-demo.tsx",
       },
       {

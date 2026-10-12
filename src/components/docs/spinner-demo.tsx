@@ -1,19 +1,15 @@
 import { Spinner } from "@/components/ui/spinner";
 
 const patterns = [
-  { variant: "ring", use: "Quick actions" },
+  { variant: "ring", use: "Actions and pages" },
   { variant: "segments", use: "Dense interfaces" },
   { variant: "dots", use: "Inline messages" },
-  { variant: "bars", use: "Voice and streaming" },
-  { variant: "orbit", use: "Waiting screens" },
-  { variant: "pulse", use: "Background work" },
-  { variant: "spark", use: "Assistant activity" },
 ] as const;
 
 export function SpinnerDemo() {
   return (
     <div className="w-full max-w-2xl">
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+      <div className="grid gap-3 sm:grid-cols-3">
         {patterns.map(({ variant, use }) => (
           <div
             key={variant}

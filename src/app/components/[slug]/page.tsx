@@ -104,7 +104,6 @@ import { PresenceDemo } from "@/components/docs/presence-demo";
 import { PresenceInlineDemo } from "@/components/docs/presence-inline-demo";
 import { PresenceListBasicDemo } from "@/components/docs/presence-list-basic-demo";
 import { PresenceListDemo } from "@/components/docs/presence-list-demo";
-import { PreviewTriggerDemo } from "@/components/docs/preview-trigger-demo";
 import { ProgressBarBasicDemo } from "@/components/docs/progress-bar-basic-demo";
 import { ProgressBarDemo } from "@/components/docs/progress-bar-demo";
 import { ProgressRingBasicDemo } from "@/components/docs/progress-ring-basic-demo";
@@ -345,11 +344,6 @@ const entries: {
     slug: "date-range-picker",
     name: "Date range picker",
     demo: <DateRangePickerDemo />,
-  },
-  {
-    slug: "preview-trigger",
-    name: "Preview trigger",
-    demo: <PreviewTriggerDemo />,
   },
   {
     slug: "table",

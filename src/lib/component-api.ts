@@ -823,8 +823,8 @@ export const customComponentApi: Record<string, ApiProp[]> = {
     {
       component: "Spinner",
       prop: "variant",
-      type: '"orbit" | "ring" | "pulse" | "dots" | "bars" | "spark" | "segments"',
-      defaultValue: '"orbit"',
+      type: '"ring" | "dots" | "segments"',
+      defaultValue: '"ring"',
       description: "Selects the indicator animation.",
     },
     {
