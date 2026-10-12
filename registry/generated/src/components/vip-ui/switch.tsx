@@ -124,7 +124,7 @@ export function SwitchControl({
       aria-hidden="true"
       data-slot="switch-control"
       className={cn(
-        "flex h-6 w-10 shrink-0 items-center rounded-full bg-foreground/60 p-0.5 group-hover:bg-foreground/70 group-selected:bg-primary group-selected:hover:bg-primary/90 group-focus-visible:outline-2 group-focus-visible:outline-solid group-focus-visible:outline-offset-2 group-focus-visible:outline-ring forced-colors:border forced-colors:border-[ButtonText] motion-safe:transition-colors motion-safe:duration-200",
+        "flex h-6 w-10 shrink-0 items-center rounded-full bg-muted-foreground/75 p-0.5 shadow-[var(--shadow-inset)] transition-colors duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:bg-muted-foreground group-selected:bg-primary group-selected:group-hover:bg-primary/90 group-focus-visible:outline-2 group-focus-visible:outline-solid group-focus-visible:outline-offset-2 group-focus-visible:outline-ring forced-colors:border forced-colors:border-[ButtonText] forced-colors:p-px forced-colors:group-selected:border-[Highlight]",
         className,
       )}
     />
@@ -138,6 +138,8 @@ export function SwitchThumb({
   const { isSelected, isPressed, isDisabled } = useContext(SwitchStateContext);
   const { direction } = useLocale();
   const reduceMotion = useReducedMotion();
+  const width = !isDisabled && isPressed ? 24 : 20;
+  const travel = 36 - width;
   return (
     <span
       {...props}
@@ -148,11 +150,11 @@ export function SwitchThumb({
       <motion.span
         initial={false}
         animate={{
-          x: isSelected ? (direction === "rtl" ? -16 : 16) : 0,
-          scaleX: !isDisabled && isPressed ? 1.1 : 1,
+          x: isSelected ? (direction === "rtl" ? -travel : travel) : 0,
+          width,
         }}
         transition={transitionFor(reduceMotion, springSnappy)}
-        className="size-5 rounded-full bg-card group-selected:bg-primary-foreground forced-colors:bg-[ButtonText] motion-safe:transition-colors motion-safe:duration-200"
+        className="size-5 shrink-0 rounded-full bg-card shadow-[var(--shadow-card)] transition-colors duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-selected:bg-primary-foreground forced-colors:bg-[ButtonText] forced-colors:group-selected:bg-[Highlight]"
       />
     </span>
   );

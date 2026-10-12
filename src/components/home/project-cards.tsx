@@ -3,31 +3,17 @@
 import {
   CaretDownIcon,
   FileCodeIcon,
-  FolderPlusIcon,
-  GearSixIcon,
   LinkIcon,
   MagnifyingGlassIcon,
-  MoonIcon,
-  RocketLaunchIcon,
   TextBIcon,
   TextItalicIcon,
   TextUnderlineIcon,
-  UserPlusIcon,
 } from "@phosphor-icons/react";
-import { defineChart } from "@tanstack/charts";
-import { pie, polar, radialArc, radialText } from "@tanstack/charts/polar";
-import { Chart } from "@tanstack/charts/react/core";
-import { scaleLinear } from "@tanstack/charts/scales/linear";
-import { tooltip } from "@tanstack/charts/tooltip";
-import { portal } from "@tanstack/charts/tooltip/portal";
 import { useId, useState } from "react";
 import type { Key } from "react-aria-components";
-import { galleryRenderer, valueTooltip } from "@/components/charts/chart-plot";
-import { Avatar, AvatarGroup } from "@/components/ui/avatar";
 import { Breadcrumb, Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
-import { ChartCaption, ChartFrame, ChartTitle } from "@/components/ui/chart";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CheckboxGroup } from "@/components/ui/checkbox-group";
 import {
@@ -55,7 +41,6 @@ import { Tree, TreeItem } from "@/components/ui/tree";
 import { cn } from "@/lib/utils";
 import { Block, BlockBody } from "./block";
 import { Part } from "./part";
-import { Screen, ScreenHeader } from "./screen";
 
 const fileParents: Record<string, string | null> = {
   src: null,
@@ -68,6 +53,8 @@ const fileParents: Record<string, string | null> = {
   "package.json": null,
 };
 
+const files = ["button.tsx", "dialog.tsx", "layout.tsx", "page.tsx"];
+
 function pathTo(key: string | null) {
   const path: string[] = [];
   for (let node = key; node; node = fileParents[node]) path.unshift(node);
@@ -76,11 +63,12 @@ function pathTo(key: string | null) {
 
 const codeIcon = <FileCodeIcon size={16} />;
 
-function RepositoryCard() {
+export function FilesCard() {
   const [selected, setSelected] = useState<string | null>("button.tsx");
   const [expanded, setExpanded] = useState<Set<Key>>(
     () => new Set(["src", "components"]),
   );
+  const [searching, setSearching] = useState(false);
   const path = pathTo(selected);
   const crumb = useId();
 
@@ -90,7 +78,22 @@ function RepositoryCard() {
   }
 
   return (
-    <Block title="Files">
+    <Block
+      title="Files"
+      action={
+        <Part slug="command-palette" className="shrink-0">
+          <Button
+            variant="outline"
+            size="sm"
+            className="text-muted-foreground"
+            onPress={() => setSearching(true)}
+          >
+            <MagnifyingGlassIcon size={16} aria-hidden="true" />
+            Go to file
+          </Button>
+        </Part>
+      }
+    >
       <BlockBody className="gap-3 pt-3">
         <Part slug="breadcrumbs">
           <Breadcrumbs
@@ -136,6 +139,33 @@ function RepositoryCard() {
           </Tree>
         </Part>
       </BlockBody>
+      <CommandPalette
+        isOpen={searching}
+        onOpenChange={setSearching}
+        title="Files"
+        placeholder="Search files"
+        emptyMessage="No matching files."
+        shortcut={false}
+      >
+        {files.map((file) => (
+          <CommandPaletteItem
+            key={file}
+            id={file}
+            textValue={file}
+            onAction={() => open(file)}
+          >
+            <FileCodeIcon
+              size={17}
+              aria-hidden="true"
+              className="text-muted-foreground"
+            />
+            {file}
+            <span className="ms-auto text-xs text-muted-foreground">
+              {pathTo(fileParents[file]).join("/")}
+            </span>
+          </CommandPaletteItem>
+        ))}
+      </CommandPalette>
     </Block>
   );
 }
@@ -146,7 +176,7 @@ const formats = [
   { id: "underline", label: "Underline", key: "U", icon: TextUnderlineIcon },
 ];
 
-function EditorCard() {
+export function EditorCard() {
   const [styles, setStyles] = useState(() => new Set<Key>(["bold"]));
 
   return (
@@ -220,7 +250,6 @@ function EditorCard() {
                       id={format.id}
                       variant="segmented"
                       aria-label={format.label}
-                      className="px-2.5"
                     >
                       <format.icon size={16} aria-hidden="true" />
                     </ToggleButton>
@@ -235,7 +264,7 @@ function EditorCard() {
                 orientation="vertical"
                 className="mx-1 h-6 self-center"
               />
-              <Button variant="ghost" size="sm" className="px-2.5">
+              <Button variant="ghost" size="sm">
                 <LinkIcon size={16} aria-hidden="true" />
                 Link
               </Button>
@@ -264,7 +293,7 @@ const tasks = [
   { id: "notes", label: "Write the release notes" },
 ];
 
-function ChecklistCard() {
+export function ChecklistCard() {
   const [done, setDone] = useState(["docs", "tests"]);
 
   return (
@@ -292,110 +321,13 @@ function ChecklistCard() {
   );
 }
 
-const sprintDone = 18;
-const sprintTotal = 25;
-const sprint = [
-  { id: "Done", value: sprintDone },
-  { id: "Open", value: sprintTotal - sprintDone },
-];
-
-const sprintChart = defineChart({
-  marks: [
-    polar({
-      radiusRatio: 0.96,
-      scales: {
-        angle: { scale: scaleLinear().domain([0, 1]) },
-        radius: { scale: scaleLinear().domain([0, 1]) },
-      },
-      marks: [
-        radialArc(
-          pie(sprint, {
-            value: "value",
-            startAngle: -Math.PI * 0.75,
-            endAngle: Math.PI * 0.75,
-          }),
-          {
-            innerRadius: ({ radius }) => radius * 0.78,
-            cornerRadius: 999,
-            color: "id",
-            key: "id",
-          },
-        ),
-        radialText([{ id: "reading", label: "72%" }], {
-          angle: 0,
-          radius: 0,
-          text: "label",
-          key: "id",
-          fill: "var(--foreground)",
-          fontSize: 17,
-          fontWeight: 650,
-        }),
-      ],
-    }),
-  ],
-  scales: { x: null, y: null },
-  color: {
-    domain: ["Done", "Open"],
-    range: ["var(--ts-chart-4)", "var(--muted)"],
-  },
-  tooltip: {
-    use: tooltip,
-    portal,
-    content: ([point]) =>
-      valueTooltip(
-        point.datum.id,
-        "Tasks",
-        "value" in point.datum
-          ? `${point.datum.value} of ${sprintTotal}`
-          : `${sprintDone} of ${sprintTotal}`,
-        point.color,
-      ),
-  },
-});
-
-function SprintCard() {
-  return (
-    <Block title="Sprint 24">
-      <BlockBody className="flex items-center gap-4">
-        <Part
-          name="Chart"
-          slug="chart"
-          href="/charts"
-          className="w-24 shrink-0"
-        >
-          <ChartFrame className="bg-transparent p-0 sm:p-0">
-            <ChartCaption className="sr-only">
-              <ChartTitle>Sprint 24 tasks</ChartTitle>
-            </ChartCaption>
-            <Chart
-              definition={sprintChart}
-              renderer={galleryRenderer}
-              height={96}
-              initialWidth={96}
-              ariaLabel={`${sprintDone} of ${sprintTotal} tasks are done`}
-            />
-          </ChartFrame>
-        </Part>
-        <div className="grid min-w-0 gap-1">
-          <p className="text-sm font-medium">
-            {sprintDone} of {sprintTotal} tasks done
-          </p>
-          <p className="text-xs leading-5 text-muted-foreground">
-            4 days remain. The team is on schedule.
-          </p>
-        </div>
-      </BlockBody>
-    </Block>
-  );
-}
-
 const activity = [
   { id: "a", title: "Maya merged #482", time: "2 minutes ago" },
   { id: "b", title: "Sam opened #483", time: "1 hour ago" },
   { id: "c", title: "Jo released 2.3", time: "Yesterday" },
 ];
 
-function ActivityCard() {
+export function ActivityCard() {
   return (
     <Block title="Activity">
       <BlockBody className="pb-5">
@@ -415,86 +347,5 @@ function ActivityCard() {
         </Part>
       </BlockBody>
     </Block>
-  );
-}
-
-const commands = [
-  { id: "project", label: "New project", icon: FolderPlusIcon },
-  { id: "invite", label: "Invite a teammate", icon: UserPlusIcon },
-  { id: "deploy", label: "Deploy to production", icon: RocketLaunchIcon },
-  { id: "theme", label: "Change the theme", icon: MoonIcon },
-  { id: "settings", label: "Open settings", icon: GearSixIcon },
-];
-
-const people = ["Maya Chen", "Sam Rivera", "Jo Park"];
-
-export function ProjectsScreen() {
-  const [isOpen, setOpen] = useState(false);
-
-  return (
-    <Screen>
-      <ScreenHeader
-        title="acme-web"
-        detail="Main branch"
-        actions={
-          <>
-            <Part slug="avatar">
-              <AvatarGroup
-                aria-label="People in this project"
-                className="-space-x-1.5"
-              >
-                {people.map((name) => (
-                  <Avatar key={name} name={name} className="size-8 text-xs" />
-                ))}
-              </AvatarGroup>
-            </Part>
-            <Part slug="command-palette">
-              <Button
-                variant="outline"
-                size="sm"
-                className="min-w-40 justify-start text-muted-foreground"
-                onPress={() => setOpen(true)}
-              >
-                <MagnifyingGlassIcon size={16} aria-hidden="true" />
-                Search
-              </Button>
-            </Part>
-          </>
-        }
-      />
-      <div className="grid min-w-0 items-start gap-4 lg:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] xl:grid-cols-[minmax(0,15rem)_minmax(0,1fr)_minmax(0,16rem)]">
-        <RepositoryCard />
-        <div className="grid min-w-0 gap-4">
-          <EditorCard />
-          <ChecklistCard />
-        </div>
-        <div className="grid min-w-0 gap-4 sm:grid-cols-2 lg:col-span-2 xl:col-span-1 xl:grid-cols-1">
-          <SprintCard />
-          <ActivityCard />
-        </div>
-      </div>
-      <CommandPalette isOpen={isOpen} onOpenChange={setOpen} shortcut={false}>
-        {commands.map((command) => (
-          <CommandPaletteItem
-            key={command.id}
-            id={command.id}
-            textValue={command.label}
-            onAction={() =>
-              showToast({
-                title: command.label,
-                description: "This is a preview. No data changed.",
-              })
-            }
-          >
-            <command.icon
-              size={17}
-              aria-hidden="true"
-              className="text-muted-foreground"
-            />
-            {command.label}
-          </CommandPaletteItem>
-        ))}
-      </CommandPalette>
-    </Screen>
   );
 }

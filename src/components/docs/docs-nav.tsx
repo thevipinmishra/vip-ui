@@ -77,7 +77,7 @@ export function DocsNav({
         <p className="mb-2 px-3 text-xs font-semibold text-foreground">
           Getting started
         </p>
-        {gettingStarted.map(renderLink)}
+        {(mobile ? docsGuides : gettingStarted).map(renderLink)}
       </div>
       {catalogGroups.map((group) => (
         <div key={group.title} className="grid gap-1">

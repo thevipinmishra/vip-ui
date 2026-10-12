@@ -1,15 +1,27 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
+import { ArrowDownIcon } from "@phosphor-icons/react/ssr";
+import { CategoryTabs } from "@/components/docs/category-tabs";
 import { CodeFrame } from "@/components/docs/code-frame";
 import { CodeSnippet } from "@/components/docs/code-snippet";
+import {
+  PageActions,
+  PageHeader,
+  PageHeaderDescription,
+  PageHeaderHeading,
+} from "@/components/docs/page-header";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Card, CardContent } from "@/components/ui/card";
 import { chartCategories } from "./catalog";
 import { ChartDocumentation } from "./chart-documentation";
-import { ChartFilters } from "./chart-filters";
 import { ChartGalleryItem } from "./chart-plot";
 import { ChartSourceSheet } from "./chart-source-sheet";
+
+const tabs = chartCategories.map((category, index) => ({
+  href: index === 0 ? "/charts" : `/charts?chart=${category.slug}`,
+  label: category.label,
+  count: category.examples.length,
+}));
 
 export async function ChartGallery({
   initialCategory,
@@ -38,47 +50,34 @@ export async function ChartGallery({
 
   return (
     <>
-      <section
-        id="gallery"
-        aria-labelledby="charts-title"
-        data-toc-skip
-        className="scroll-mt-28 pb-16 pt-10 sm:pt-14"
-      >
-        <h1
-          id="charts-title"
-          className="text-[clamp(2.5rem,5vw,3.5rem)] font-semibold tracking-[-0.06em]"
-        >
-          Charts
-        </h1>
-        <div className="mb-7 mt-4 flex flex-wrap items-center justify-between gap-5">
-          <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
-            Choose a chart type, then open View code to copy its source files.
-            Screen readers can access exact values in a table for each chart.
-          </p>
-          <ButtonLink href="#installation" variant="outline" size="sm">
-            Install charts <ArrowRightIcon size={15} aria-hidden="true" />
+      <PageHeader className="site-container pb-10 pt-10 sm:pt-14">
+        <PageHeaderHeading>Charts</PageHeaderHeading>
+        <PageHeaderDescription>
+          Accessible charts, built with TanStack Charts. Add a chart to your
+          app. Change it to suit your data.
+        </PageHeaderDescription>
+        <PageActions>
+          <ButtonLink href="#installation">
+            Install charts
+            <ArrowDownIcon size={16} aria-hidden="true" />
           </ButtonLink>
-        </div>
-        <ChartFilters
-          categories={chartCategories.map(({ slug, label }) => ({
-            slug,
-            label,
-          }))}
-          active={{
-            slug: category.slug,
-            label: category.label,
-            content: (
-              <ChartCategoryContent
-                category={category}
-                source={installableSource}
-                sourcePath={sourcePath}
-                shared={installableShared}
-              />
-            ),
-          }}
+        </PageActions>
+      </PageHeader>
+      <CategoryTabs
+        label="Chart categories"
+        tabs={tabs}
+        active={tabs[chartCategories.indexOf(category)].href}
+      />
+      <output className="sr-only">Showing {category.label} charts</output>
+      <div className="site-container">
+        <ChartCategoryContent
+          category={category}
+          source={installableSource}
+          sourcePath={sourcePath}
+          shared={installableShared}
         />
-      </section>
-      <ChartDocumentation />
+        <ChartDocumentation />
+      </div>
     </>
   );
 }
@@ -95,7 +94,7 @@ function ChartCategoryContent({
   shared: string;
 }) {
   return (
-    <section aria-labelledby="category-title" className="pt-6">
+    <section aria-labelledby="category-title" className="pb-16 pt-10">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h2
           id="category-title"

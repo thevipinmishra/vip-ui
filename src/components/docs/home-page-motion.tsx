@@ -1,29 +1,7 @@
 "use client";
 
-import {
-  motion,
-  useInView,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-} from "motion/react";
+import { motion, useInView, useReducedMotion } from "motion/react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
-
-export function HomeScrollProgress() {
-  const reduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 32 });
-
-  if (reduceMotion) return null;
-
-  return (
-    <motion.div
-      aria-hidden="true"
-      className="pointer-events-none fixed inset-x-0 top-0 z-50 h-0.5 origin-left bg-primary motion-reduce:hidden"
-      style={{ scaleX: progress }}
-    />
-  );
-}
 
 export function HomeReveal({
   children,
@@ -72,34 +50,6 @@ export function HomeReveal({
           : { duration: 0.55, delay, ease: [0.23, 1, 0.32, 1] }
       }
       onFocusCapture={() => setFocused(true)}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-export function HomeExampleFrame({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
-  const reduceMotion = useReducedMotion();
-
-  return (
-    <motion.div
-      className={className}
-      initial={false}
-      animate={{ y: reduceMotion ? 0 : 16 }}
-      whileInView={reduceMotion ? undefined : { y: 4 }}
-      whileHover={reduceMotion ? undefined : { y: 0 }}
-      viewport={{ once: true, amount: 0.4 }}
-      transition={
-        reduceMotion
-          ? { duration: 0 }
-          : { type: "spring", stiffness: 260, damping: 30 }
-      }
     >
       {children}
     </motion.div>

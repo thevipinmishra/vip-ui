@@ -24,7 +24,6 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { Message } from "@/components/ui/message";
-import { Select } from "@/components/ui/select";
 import { SourceLink } from "@/components/ui/source-link";
 import { Spinner } from "@/components/ui/spinner";
 import { Stepper } from "@/components/ui/stepper";
@@ -37,7 +36,6 @@ import {
 } from "@/components/ui/tool-call";
 import { Block, BlockBody, BlockFooter } from "./block";
 import { Part } from "./part";
-import { Screen, ScreenHeader } from "./screen";
 
 const replies = [
   "Use Dialog for a task that needs a decision now. Use Sheet for a long form at the side of the page.",
@@ -47,7 +45,7 @@ const replies = [
 
 type Turn = { id: number; question: string; answer?: string };
 
-function ChatCard() {
+export function ChatCard() {
   const [turns, setTurns] = useState<Turn[]>([]);
   const [draft, setDraft] = useState("");
   const timer = useRef<number | undefined>(undefined);
@@ -87,134 +85,127 @@ function ChatCard() {
   );
 
   return (
-    <div className="min-w-0 lg:relative">
-      <Block
-        title="Chat"
-        className="lg:absolute lg:inset-0"
-        action={
-          <Badge variant="accent">
-            <SparkleIcon size={13} weight="fill" aria-hidden="true" />
-            Beta
-          </Badge>
-        }
+    <Block
+      title="Chat"
+      action={
+        <Badge variant="accent">
+          <SparkleIcon size={13} weight="fill" aria-hidden="true" />
+          Beta
+        </Badge>
+      }
+    >
+      <div
+        ref={log}
+        role="log"
+        aria-label="Conversation"
+        // biome-ignore lint/a11y/noNoninteractiveTabindex: Keyboard users must be able to scroll the conversation.
+        tabIndex={0}
+        className="max-h-[32rem] min-h-0 flex-1 overflow-y-auto outline-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
       >
-        <div
-          ref={log}
-          role="log"
-          aria-label="Conversation"
-          // biome-ignore lint/a11y/noNoninteractiveTabindex: Keyboard users must be able to scroll the conversation.
-          tabIndex={0}
-          className="max-h-[28rem] min-h-0 flex-1 overflow-y-auto outline-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring lg:max-h-none"
-        >
-          <BlockBody className="gap-3">
-            <Part slug="message">
-              <Message side="outgoing" sender="You">
-                Which component do I use for a settings form?
-              </Message>
-            </Part>
-            <Part slug="tool-call">
-              <ToolCall>
-                <ToolCallTrigger
-                  name="search_docs"
-                  status="complete"
-                  summary="Read 3 component pages"
-                />
-                <ToolCallPanel>
-                  <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-xs">
-                    <dt className="text-muted-foreground">Query</dt>
-                    <dd className="font-mono">settings form</dd>
-                    <dt className="text-muted-foreground">Pages</dt>
-                    <dd className="font-mono">switch, checkbox, fieldset</dd>
-                  </dl>
-                </ToolCallPanel>
-              </ToolCall>
-            </Part>
-            <Message side="incoming" sender="Assistant" avatar={assistant}>
-              Use Switch for a setting that applies at once. Use Checkbox when
-              people must push Save. Put related controls in a Fieldset.
+        <BlockBody className="gap-3">
+          <Part slug="message">
+            <Message side="outgoing" sender="You">
+              Which component do I use for a settings form?
             </Message>
-            <Part slug="source-link">
-              <div className="grid gap-2 sm:grid-cols-2">
-                <SourceLink
-                  href="/components/switch"
-                  index={1}
-                  label="Switch"
-                  source="vip/ui docs"
-                  className="p-3"
-                />
-                <SourceLink
-                  href="/components/fieldset"
-                  index={2}
-                  label="Fieldset"
-                  source="vip/ui docs"
-                  className="p-3"
-                />
-              </div>
-            </Part>
-            {turns.map((turn) => (
-              <Fragment key={turn.id}>
-                <Message side="outgoing" sender="You">
-                  {turn.question}
+          </Part>
+          <Part slug="tool-call">
+            <ToolCall>
+              <ToolCallTrigger
+                name="search_docs"
+                status="complete"
+                summary="Read 3 component pages"
+              />
+              <ToolCallPanel>
+                <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-xs">
+                  <dt className="text-muted-foreground">Query</dt>
+                  <dd className="font-mono">settings form</dd>
+                  <dt className="text-muted-foreground">Pages</dt>
+                  <dd className="font-mono">switch, checkbox, fieldset</dd>
+                </dl>
+              </ToolCallPanel>
+            </ToolCall>
+          </Part>
+          <Message side="incoming" sender="Assistant" avatar={assistant}>
+            Use Switch for a setting that applies at once. Use Checkbox when
+            people must push Save. Put related controls in a Fieldset.
+          </Message>
+          <Part slug="source-link">
+            <div className="grid gap-2 sm:grid-cols-2">
+              <SourceLink
+                href="/components/switch"
+                index={1}
+                label="Switch"
+                source="vip/ui docs"
+                className="p-3"
+              />
+              <SourceLink
+                href="/components/fieldset"
+                index={2}
+                label="Fieldset"
+                source="vip/ui docs"
+                className="p-3"
+              />
+            </div>
+          </Part>
+          {turns.map((turn) => (
+            <Fragment key={turn.id}>
+              <Message side="outgoing" sender="You">
+                {turn.question}
+              </Message>
+              {turn.answer ? (
+                <Message side="incoming" sender="Assistant" avatar={assistant}>
+                  {turn.answer}
                 </Message>
-                {turn.answer ? (
-                  <Message
-                    side="incoming"
-                    sender="Assistant"
-                    avatar={assistant}
+              ) : (
+                <Part slug="agent-status">
+                  <AgentStatus
+                    state="working"
+                    label="Reading the docs"
+                    detail="Searching 96 component pages"
+                  />
+                </Part>
+              )}
+            </Fragment>
+          ))}
+        </BlockBody>
+      </div>
+      <BlockFooter className="border-t border-border/70 pt-4">
+        <Form
+          className="w-full"
+          onSubmit={(event) => {
+            event.preventDefault();
+            send();
+          }}
+        >
+          <Part slug="input-group">
+            <TextField
+              name="prompt"
+              value={draft}
+              onChange={setDraft}
+              className="w-full"
+            >
+              <TextFieldLabel className="sr-only">
+                Ask the assistant
+              </TextFieldLabel>
+              <InputGroup>
+                <InputGroupInput placeholder="Ask about a component" />
+                <InputGroupAddon>
+                  <Button
+                    type="submit"
+                    size="icon"
+                    className="size-9"
+                    aria-label="Send"
+                    isDisabled={!draft.trim() || working}
                   >
-                    {turn.answer}
-                  </Message>
-                ) : (
-                  <Part slug="agent-status">
-                    <AgentStatus
-                      state="working"
-                      label="Reading the docs"
-                      detail="Searching 96 component pages"
-                    />
-                  </Part>
-                )}
-              </Fragment>
-            ))}
-          </BlockBody>
-        </div>
-        <BlockFooter className="border-t border-border/70 pt-4">
-          <Form
-            className="w-full"
-            onSubmit={(event) => {
-              event.preventDefault();
-              send();
-            }}
-          >
-            <Part slug="input-group">
-              <TextField
-                name="prompt"
-                value={draft}
-                onChange={setDraft}
-                className="w-full"
-              >
-                <TextFieldLabel className="sr-only">
-                  Ask the assistant
-                </TextFieldLabel>
-                <InputGroup>
-                  <InputGroupInput placeholder="Ask about a component" />
-                  <InputGroupAddon>
-                    <Button
-                      type="submit"
-                      size="icon"
-                      className="size-9"
-                      aria-label="Send"
-                      isDisabled={!draft.trim() || working}
-                    >
-                      <PaperPlaneRightIcon size={16} aria-hidden="true" />
-                    </Button>
-                  </InputGroupAddon>
-                </InputGroup>
-              </TextField>
-            </Part>
-          </Form>
-        </BlockFooter>
-      </Block>
-    </div>
+                    <PaperPlaneRightIcon size={16} aria-hidden="true" />
+                  </Button>
+                </InputGroupAddon>
+              </InputGroup>
+            </TextField>
+          </Part>
+        </Form>
+      </BlockFooter>
+    </Block>
   );
 }
 
@@ -226,7 +217,7 @@ const stageText = [
   "Live on acme.app",
 ];
 
-function DeployCard() {
+export function DeployCard() {
   const [stage, setStage] = useState(stages.length);
   const running = stage < stages.length;
 
@@ -323,7 +314,7 @@ const initialUploads: Upload[] = [
   },
 ];
 
-function UploadCard() {
+export function UploadCard() {
   const [uploads, setUploads] = useState(initialUploads);
   const body = useRef<HTMLDivElement>(null);
   const picker = useRef<HTMLButtonElement>(null);
@@ -371,7 +362,7 @@ function UploadCard() {
   }
 
   return (
-    <Block title="Files" description="PNG, JPEG, or PDF. 10 MB or less.">
+    <Block title="Uploads" description="PNG, JPEG, or PDF. 10 MB or less.">
       <BlockBody ref={body} className="gap-3">
         <Part slug="drop-zone">
           <DropZone
@@ -452,38 +443,5 @@ function UploadCard() {
         </Part>
       </BlockBody>
     </Block>
-  );
-}
-
-const models = [
-  { id: "fast", name: "Fast" },
-  { id: "balanced", name: "Balanced" },
-  { id: "deep", name: "Deep" },
-];
-
-export function AssistantScreen() {
-  return (
-    <Screen>
-      <ScreenHeader
-        title="Assistant"
-        detail="Release 2.4"
-        actions={
-          <Part slug="select" className="w-36">
-            <Select
-              aria-label="Model"
-              defaultValue="balanced"
-              options={models}
-            />
-          </Part>
-        }
-      />
-      <div className="grid min-w-0 gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)]">
-        <ChatCard />
-        <div className="grid min-w-0 content-start gap-4">
-          <DeployCard />
-          <UploadCard />
-        </div>
-      </div>
-    </Screen>
   );
 }

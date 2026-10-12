@@ -2,6 +2,13 @@ import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CatalogBrowser } from "@/components/docs/catalog-browser";
+import {
+  PageActions,
+  PageHeader,
+  PageHeaderDescription,
+  PageHeaderHeading,
+} from "@/components/docs/page-header";
+import { ButtonLink } from "@/components/ui/button-link";
 
 export const metadata: Metadata = {
   title: "Components | vip/ui",
@@ -12,17 +19,19 @@ export const metadata: Metadata = {
 export default function ComponentsPage() {
   return (
     <article>
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <h1 className="text-[clamp(2.5rem,5vw,3.5rem)] font-semibold tracking-[-0.06em]">
-          Components
-        </h1>
-        <Link
-          href="/components/installation"
-          className="inline-flex min-h-11 items-center gap-2 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring lg:hidden"
-        >
-          Installation <ArrowRightIcon size={16} aria-hidden="true" />
-        </Link>
-      </div>
+      <PageHeader>
+        <PageHeaderHeading>Components</PageHeaderHeading>
+        <PageHeaderDescription>
+          Accessible components, built with React Aria. Add a component to your
+          app. Change it to suit your product.
+        </PageHeaderDescription>
+        <PageActions>
+          <ButtonLink as={Link} href="/components/installation">
+            Set up your project
+            <ArrowRightIcon size={16} aria-hidden="true" />
+          </ButtonLink>
+        </PageActions>
+      </PageHeader>
 
       <CatalogBrowser />
     </article>

@@ -12,7 +12,7 @@ export default function ChartsLayout({ children }: LayoutProps<"/charts">) {
       </a>
       <SiteHeader />
       <main id="main" className="flex-1">
-        <div className="mx-auto w-full max-w-7xl px-5 sm:px-8">{children}</div>
+        {children}
       </main>
       <SiteFooter />
     </div>

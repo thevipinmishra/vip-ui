@@ -22,11 +22,8 @@ import { Meter } from "@/components/ui/meter";
 import { NumberField } from "@/components/ui/number-field";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { showToast } from "@/components/ui/toast";
-import { AppearanceBlock } from "./appearance-block";
 import { Block, BlockBody, BlockFooter } from "./block";
-import { NotificationsBlock, TeamBlock } from "./form-blocks";
 import { Part } from "./part";
-import { Screen, ScreenHeader } from "./screen";
 
 const seatPrice = 20;
 
@@ -36,7 +33,7 @@ const money = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 0,
 });
 
-function PlanBlock() {
+export function PlanCard() {
   const [seats, setSeats] = useState(15);
 
   return (
@@ -148,23 +145,5 @@ function PlanBlock() {
         </Part>
       </BlockFooter>
     </Block>
-  );
-}
-
-export function SettingsScreen() {
-  return (
-    <Screen>
-      <ScreenHeader title="Settings" detail="Acme Inc" />
-      <div className="grid min-w-0 items-start gap-4 md:grid-cols-2">
-        <div className="grid min-w-0 gap-4">
-          <AppearanceBlock />
-          <TeamBlock />
-        </div>
-        <div className="grid min-w-0 gap-4">
-          <NotificationsBlock />
-          <PlanBlock />
-        </div>
-      </div>
-    </Screen>
   );
 }

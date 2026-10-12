@@ -694,7 +694,6 @@ ${loaders.join("\n")}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    // The variables go on <html> so the theme's :root rule can read them.
     <html
       lang="en"
       className={\`${families.map((family) => `\${${name(family)}.variable}`).join(" ")}\`}
@@ -749,11 +748,10 @@ export function themeCss(theme: OfficialTheme) {
   const fontRoles = (["sans", "serif", "mono"] as const).filter(
     (role) => role !== "serif" || theme.fonts.serif,
   );
-  return `/* ${theme.name} for vip/ui and shadcn/ui. Paste after your existing :root and .dark rules. */
-${block(":root", {
-  ...rootVariables(theme),
-  ...modeVariables(theme, "light"),
-})}
+  return `${block(":root", {
+    ...rootVariables(theme),
+    ...modeVariables(theme, "light"),
+  })}
 
 ${block(".dark", modeVariables(theme, "dark"))}
 

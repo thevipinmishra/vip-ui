@@ -16,7 +16,7 @@ export async function generateMetadata({
   const label = blockCategories.find((item) => item.slug === category)?.label;
   return {
     title: `${label ?? "Blocks"} blocks | vip/ui`,
-    description: `Install ${label?.toLowerCase() ?? ""} blocks built with vip/ui components.`,
+    description: `${label ?? "Page"} blocks, built with vip/ui. Add a block to your app. Change it to suit your product.`,
   };
 }
 

@@ -6,11 +6,9 @@ import {
   parseDate,
   Time,
 } from "@internationalized/date";
-import { KeyIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 import { Avatar, AvatarGroup } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { CopyButton } from "@/components/ui/copy-button";
 import {
   Fieldset,
@@ -18,13 +16,9 @@ import {
   FieldsetLegend,
 } from "@/components/ui/fieldset";
 import { Form } from "@/components/ui/form";
-import { Link } from "@/components/ui/link";
-import { PasswordField } from "@/components/ui/password-field";
-import { PasswordStrengthMeter } from "@/components/ui/password-strength-meter";
 import { RangeCalendar } from "@/components/ui/range-calendar";
 import { RatingInput } from "@/components/ui/rating-input";
 import { Select } from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import {
   Tag,
@@ -33,7 +27,6 @@ import {
   TagListView,
 } from "@/components/ui/tag-group";
 import { TextArea } from "@/components/ui/text-area";
-import { TextField } from "@/components/ui/text-field";
 import { TimeField } from "@/components/ui/time-field";
 import { showToast } from "@/components/ui/toast";
 import {
@@ -45,76 +38,6 @@ import {
 } from "@/components/ui/token-field";
 import { Block, BlockBody, BlockFooter } from "./block";
 import { Part } from "./part";
-
-export function AccountBlock() {
-  const [mode, setMode] = useState<"create" | "sign-in">("create");
-  const [password, setPassword] = useState("");
-  const creating = mode === "create";
-
-  return (
-    <Block as="h3" title={creating ? "Create an account" : "Sign in"}>
-      <Form
-        className="contents"
-        onSubmit={(event) => {
-          event.preventDefault();
-          showToast(
-            creating
-              ? {
-                  title: "Account created",
-                  description:
-                    "We sent a link to your email. Open it to continue.",
-                  variant: "success",
-                }
-              : { title: "Signed in", variant: "success" },
-          );
-        }}
-      >
-        <BlockBody>
-          <Button variant="outline" className="w-full">
-            <KeyIcon size={16} aria-hidden="true" />
-            Continue with a passkey
-          </Button>
-          <div className="flex items-center gap-3 text-xs text-muted-foreground">
-            <Separator className="flex-1" />
-            or
-            <Separator className="flex-1" />
-          </div>
-          <TextField
-            label="Email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            placeholder="you@company.com"
-            isRequired
-          />
-          <div className="grid gap-3">
-            <PasswordField
-              label="Password"
-              name="password"
-              autoComplete={creating ? "new-password" : "current-password"}
-              value={password}
-              onChange={setPassword}
-              isRequired
-            />
-            {creating && <PasswordStrengthMeter password={password} />}
-          </div>
-          {creating && <Checkbox name="news">Send me product news</Checkbox>}
-        </BlockBody>
-        <BlockFooter className="flex-col items-stretch gap-3">
-          <Button type="submit" className="w-full">
-            {creating ? "Create account" : "Sign in"}
-          </Button>
-          <p className="text-center text-sm text-muted-foreground">
-            {creating ? "Have an account? " : "No account? "}
-            <Link onPress={() => setMode(creating ? "sign-in" : "create")}>
-              {creating ? "Sign in" : "Create one"}
-            </Link>
-          </p>
-        </BlockFooter>
-      </Form>
-    </Block>
-  );
-}
 
 const alerts = [
   {
@@ -189,7 +112,7 @@ const topics = ["Speed", "Design", "Docs", "Keyboard"];
 
 export function FeedbackBlock() {
   return (
-    <Block as="h3" title="Rate this release">
+    <Block title="Rate this release">
       <Form
         className="contents"
         onSubmit={(event) => {
@@ -202,21 +125,27 @@ export function FeedbackBlock() {
         }}
       >
         <BlockBody>
-          <RatingInput label="Score" name="score" defaultValue={4} />
-          <TagGroup
-            selectionMode="multiple"
-            defaultSelectedKeys={["Speed", "Docs"]}
-          >
-            <TagGroupLabel>What works well?</TagGroupLabel>
-            <TagListView items={topics.map((name) => ({ id: name, name }))}>
-              {(item) => <Tag id={item.id}>{item.name}</Tag>}
-            </TagListView>
-          </TagGroup>
-          <TextArea
-            label="Comment"
-            name="comment"
-            placeholder="Tell us what to change. This is optional."
-          />
+          <Part slug="rating-input">
+            <RatingInput label="Score" name="score" defaultValue={4} />
+          </Part>
+          <Part slug="tag-group">
+            <TagGroup
+              selectionMode="multiple"
+              defaultSelectedKeys={["Speed", "Docs"]}
+            >
+              <TagGroupLabel>What works well?</TagGroupLabel>
+              <TagListView items={topics.map((name) => ({ id: name, name }))}>
+                {(item) => <Tag id={item.id}>{item.name}</Tag>}
+              </TagListView>
+            </TagGroup>
+          </Part>
+          <Part slug="text-area">
+            <TextArea
+              label="Comment"
+              name="comment"
+              placeholder="Tell us what to change. This is optional."
+            />
+          </Part>
         </BlockBody>
         <BlockFooter className="justify-end">
           <Button type="submit">Send feedback</Button>
@@ -243,14 +172,16 @@ export function TimeOffBlock() {
   const days = countWorkDays(range.start, range.end);
 
   return (
-    <Block as="h3" title="Time off">
+    <Block title="Time off">
       <BlockBody className="justify-items-center">
-        <RangeCalendar
-          aria-label="Days away"
-          className="max-sm:[--spacing:0.22rem]"
-          value={range}
-          onChange={setRange}
-        />
+        <Part slug="range-calendar">
+          <RangeCalendar
+            aria-label="Days away"
+            className="max-sm:[--spacing:0.22rem]"
+            value={range}
+            onChange={setRange}
+          />
+        </Part>
         <Switch
           defaultChecked
           description="People who write to you get your return date."

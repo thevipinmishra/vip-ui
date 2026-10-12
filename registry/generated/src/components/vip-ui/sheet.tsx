@@ -266,7 +266,6 @@ function tweenScroll(
     frame = requestAnimationFrame(finish);
     return;
   }
-  // Chrome stops snapping wheel scrolls if the scroller comes to rest while snapping is off, so the last pixel waits for finish.
   const short = Math.sign(to - from);
   let expected = getScroll(scroller, axis);
   controls = animate(from, to, {
@@ -425,7 +424,6 @@ function SheetFrame({
     if (!content || !scroller || !overlay) return;
     const isExiting = () => overlay.hasAttribute("data-exiting");
     const scrollTo = scroller.scrollTo;
-    // React Aria animates entry and exit with native smooth scrolling, whose speed and curve can't be tuned.
     scroller.scrollTo = ((...args: [ScrollToOptions?] | [number, number]) => {
       const [options] = args;
       const target =

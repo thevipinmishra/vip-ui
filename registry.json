@@ -2897,13 +2897,22 @@
       },
       "cssVars": {
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
         }
       },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -3067,6 +3076,16 @@
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
         "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+        }
       },
       "files": [
         {

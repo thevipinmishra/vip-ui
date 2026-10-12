@@ -4,7 +4,7 @@ import { BlocksGallery } from "@/components/blocks/blocks-gallery";
 export const metadata: Metadata = {
   title: "Blocks | vip/ui",
   description:
-    "Install complete page sections built with vip/ui: dashboards, sign-in forms, settings, pricing, and team management.",
+    "Complete page sections, built with vip/ui. Add a block to your app. Change it to suit your product.",
 };
 
 export default function BlocksPage() {

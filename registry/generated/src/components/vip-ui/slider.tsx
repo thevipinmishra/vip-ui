@@ -11,6 +11,7 @@ import {
   SliderOutput,
   SliderThumb,
 } from "react-aria-components";
+import { springSnappy, transitionFor } from "./motion";
 import { cn } from "./utils";
 import { fieldLabelStyles } from "./field-styles";
 
@@ -28,12 +29,12 @@ export function Slider({ label, className, children, ...props }: SliderProps) {
       {...props}
       data-slot="slider"
       className={composeRenderProps(className, (className) =>
-        cn("group grid w-full gap-3", className),
+        cn("group grid w-full gap-1 disabled:opacity-50", className),
       )}
     >
       {children ?? (
         <>
-          <div className="flex items-center justify-between gap-4 text-sm">
+          <div className="flex items-baseline gap-3">
             {label && <SliderLabel>{label}</SliderLabel>}
             <SliderValue />
           </div>
@@ -72,7 +73,7 @@ export function SliderValue({
       data-slot="slider-value"
       className={composeRenderProps(className, (className) =>
         cn(
-          "font-mono text-xs font-medium tabular-nums text-muted-foreground",
+          "ms-auto font-mono text-sm tabular-nums text-muted-foreground",
           className,
         ),
       )}
@@ -90,7 +91,7 @@ export function SliderTrack({
       data-slot="slider-track"
       className={composeRenderProps(className, (className) =>
         cn(
-          "relative h-11 w-full cursor-pointer touch-none disabled:cursor-default disabled:opacity-50",
+          "relative mx-2.5 h-11 cursor-pointer touch-none before:absolute before:inset-y-0 before:-inset-x-2.5 disabled:cursor-default",
           className,
         ),
       )}
@@ -100,6 +101,7 @@ export function SliderTrack({
 
 export function SliderRail({
   className,
+  children,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
@@ -108,10 +110,12 @@ export function SliderRail({
       aria-hidden="true"
       data-slot="slider-rail"
       className={cn(
-        "pointer-events-none absolute inset-x-0 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-secondary forced-colors:bg-[ButtonBorder]",
+        "pointer-events-none absolute -inset-x-2.5 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-secondary px-2.5 shadow-[var(--shadow-inset)] forced-colors:bg-[ButtonBorder]",
         className,
       )}
-    />
+    >
+      <div className="relative h-full">{children}</div>
+    </div>
   );
 }
 
@@ -124,7 +128,10 @@ export function SliderRange({
       {...props}
       data-slot="slider-range"
       className={composeRenderProps(className, (className) =>
-        cn("rounded-full bg-primary forced-colors:bg-[Highlight]", className),
+        cn(
+          "-ms-2.5 box-content rounded-full bg-primary px-2.5 forced-colors:bg-[Highlight]",
+          className,
+        ),
       )}
     />
   );
@@ -142,7 +149,7 @@ export function SliderHandle({
       data-slot="slider-handle"
       className={composeRenderProps(className, (className) =>
         cn(
-          "relative top-1/2 h-7 w-5 cursor-grab rounded-md outline-none dragging:cursor-grabbing disabled:cursor-default focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-3 focus-visible:outline-ring",
+          "top-1/2 size-5 cursor-grab rounded-full outline-none dragging:cursor-grabbing disabled:cursor-default focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring",
           className,
         ),
       )}
@@ -153,26 +160,26 @@ export function SliderHandle({
           <>
             <motion.span
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 flex items-center justify-center gap-0.5 rounded-md bg-primary forced-colors:bg-[Highlight]"
+              className={cn(
+                "pointer-events-none absolute inset-0 rounded-full bg-card ring-1 transition-[box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] forced-colors:bg-[ButtonText]",
+                !isDisabled && (isDragging || isHovered)
+                  ? "ring-primary/60"
+                  : "ring-border",
+                !isDisabled && isDragging
+                  ? "shadow-[var(--shadow-float)]"
+                  : "shadow-[var(--shadow-card)]",
+              )}
               initial={false}
               animate={{
-                scaleX:
+                scale:
                   !isDisabled && isDragging
-                    ? 1.18
+                    ? 1.14
                     : !isDisabled && isHovered
-                      ? 1.07
+                      ? 1.06
                       : 1,
-                scaleY: !isDisabled && isDragging ? 0.94 : 1,
               }}
-              transition={
-                reduceMotion
-                  ? { duration: 0 }
-                  : { type: "spring", stiffness: 420, damping: 32 }
-              }
-            >
-              <span className="h-2 w-px rounded-full bg-primary-foreground/80 forced-colors:bg-[HighlightText]" />
-              <span className="h-2 w-px rounded-full bg-primary-foreground/80 forced-colors:bg-[HighlightText]" />
-            </motion.span>
+              transition={transitionFor(reduceMotion, springSnappy)}
+            />
             {content}
           </>
         ),

@@ -194,6 +194,16 @@
   }
 }
 
+@utility site-container {
+  width: 100%;
+  max-width: 90rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @variant sm {
+    padding-inline: 2rem;
+  }
+}
+
 @supports not (scrollbar-color: auto) {
   *::-webkit-scrollbar {
     width: 10px;
@@ -219,18 +229,6 @@
     scrollbar-color: auto;
     scrollbar-width: auto;
   }
-}
-
-.home-motion-grid {
-  background-image: radial-gradient(var(--border) 1px, transparent 1px);
-  background-size: 22px 22px;
-  mask-image: linear-gradient(
-    to bottom,
-    transparent,
-    black 20%,
-    black 80%,
-    transparent
-  );
 }
 
 .preview-canvas {

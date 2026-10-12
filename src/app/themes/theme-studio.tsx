@@ -14,6 +14,11 @@ import {
 } from "react-aria-components";
 import { flushSync } from "react-dom";
 import { CopyButton } from "@/components/docs/copy-button";
+import {
+  PageActions,
+  PageHeader,
+  PageHeaderDescription,
+} from "@/components/docs/page-header";
 import { buttonLinkStyles } from "@/components/ui/button-styles";
 import { Tab, TabList, TabPanel, Tabs } from "@/components/ui/tabs";
 import { ToggleButton } from "@/components/ui/toggle-button";
@@ -235,17 +240,20 @@ export function ThemeStudio({
         dangerouslySetInnerHTML={{ __html: specimenCss + revealCss }}
       />
 
-      <header className="mx-auto flex w-full max-w-7xl flex-wrap items-end justify-between gap-x-10 gap-y-6">
-        <div className="grid min-w-0 max-w-2xl gap-3">
-          <h1 className={cn("text-5xl leading-none sm:text-6xl", display)}>
-            Themes
-          </h1>
-          <p className="text-base leading-7 text-muted-foreground">
-            Six themes for vip/ui and any shadcn/ui project. Pick one and the
-            whole page restyles live, on unmodified components.
-          </p>
-        </div>
-        <div className="flex flex-wrap items-center gap-2">
+      <PageHeader className="site-container">
+        <h1
+          className={cn(
+            "text-[clamp(2.5rem,5vw,3.5rem)] leading-[1.05] [text-wrap:balance]",
+            display,
+          )}
+        >
+          Themes
+        </h1>
+        <PageHeaderDescription>
+          Six themes for vip/ui and any shadcn/ui project. Pick one and the
+          whole page restyles live, on unmodified components.
+        </PageHeaderDescription>
+        <PageActions>
           <a href="#install" className={buttonLinkStyles()}>
             Install {theme.name}
             <ArrowDownIcon size={16} aria-hidden="true" />
@@ -256,14 +264,14 @@ export function ThemeStudio({
             text="Copy CSS"
             className="h-11 px-4"
           />
-        </div>
-      </header>
+        </PageActions>
+      </PageHeader>
 
       <div
-        className="sticky top-0 z-30 -mx-5 border-y border-border/70 bg-background/85 px-5 py-3 backdrop-blur-md sm:-mx-8 sm:px-8"
+        className="sticky top-0 z-30 border-y border-border/70 bg-background/85 py-3 backdrop-blur-md"
         onPointerDownCapture={origin.onPointerDown}
       >
-        <div className="mx-auto flex max-w-7xl items-center gap-3">
+        <div className="site-container flex items-center gap-3">
           <AriaRadioGroup
             ref={pickerRef}
             aria-label="Theme"
@@ -284,7 +292,7 @@ export function ThemeStudio({
         </div>
       </div>
 
-      <Tabs defaultValue="preview" className="mx-auto w-full min-w-0 max-w-7xl">
+      <Tabs defaultValue="preview" className="site-container min-w-0">
         <TabList aria-label="Theme view">
           <Tab id="preview">Preview</Tab>
           <Tab id="components">All components</Tab>
@@ -304,20 +312,22 @@ export function ThemeStudio({
       <section
         id="install"
         aria-labelledby="install-title"
-        className="mx-auto mt-8 grid w-full max-w-7xl scroll-mt-24 gap-10 border-t border-border/70 pt-12"
+        className="site-container mt-8 scroll-mt-24"
       >
-        <div className="grid max-w-2xl gap-3">
-          <h2
-            id="install-title"
-            className={cn("text-4xl leading-tight sm:text-5xl", display)}
-          >
-            Use {theme.name} in your app
-          </h2>
-          <p className="text-base leading-7 text-muted-foreground">
-            Works with vip/ui and any shadcn/ui project on Tailwind CSS v4.
-          </p>
+        <div className="grid gap-10 border-t border-border/70 pt-12">
+          <div className="grid max-w-2xl gap-3">
+            <h2
+              id="install-title"
+              className={cn("text-4xl leading-tight sm:text-5xl", display)}
+            >
+              Use {theme.name} in your app
+            </h2>
+            <p className="text-base leading-7 text-muted-foreground">
+              Works with vip/ui and any shadcn/ui project on Tailwind CSS v4.
+            </p>
+          </div>
+          {install[theme.slug]}
         </div>
-        {install[theme.slug]}
       </section>
     </div>
   );

@@ -11,14 +11,12 @@ export function Block({
   title,
   description,
   action,
-  as = "h4",
   className,
   children,
 }: {
   title: ReactNode;
   description?: ReactNode;
   action?: ReactNode;
-  as?: "h3" | "h4";
   className?: string;
   children: ReactNode;
 }) {
@@ -26,7 +24,7 @@ export function Block({
     <Card className={cn("flex min-w-0 flex-col", className)}>
       <CardHeader className="min-h-9 flex-row items-start justify-between gap-3 px-5 pt-5">
         <div className="grid min-w-0 gap-0.5 self-center">
-          <CardTitle as={as}>{title}</CardTitle>
+          <CardTitle>{title}</CardTitle>
           {description && (
             <CardDescription className="leading-5">
               {description}

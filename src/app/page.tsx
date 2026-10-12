@@ -2,46 +2,13 @@ import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 import { SiteFooter } from "@/components/docs/site-footer";
 import { SiteHeader } from "@/components/docs/site-header";
-import { HomeBlocks, HomeShowcase } from "@/components/home/home-showcase";
+import { HomeShowcase } from "@/components/home/home-showcase";
 import { ButtonLink } from "@/components/ui/button-link";
 
-function SectionHeading({
-  id,
-  title,
-  description,
-  link,
-}: {
-  id: string;
-  title: string;
-  description?: string;
-  link?: { href: string; label: string };
-}) {
-  return (
-    <div className="mb-8 flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
-      <div className="max-w-xl">
-        <h2
-          id={id}
-          className="text-2xl font-semibold tracking-[-0.04em] sm:text-3xl"
-        >
-          {title}
-        </h2>
-        {description && (
-          <p className="mt-2 text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7">
-            {description}
-          </p>
-        )}
-      </div>
-      {link && (
-        <Link
-          href={link.href}
-          className="inline-flex min-h-10 items-center gap-2 rounded-sm text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-        >
-          {link.label} <ArrowRightIcon size={15} aria-hidden="true" />
-        </Link>
-      )}
-    </div>
-  );
-}
+const showcaseLinks = [
+  { href: "/components", label: "All components" },
+  { href: "/blocks", label: "All blocks" },
+];
 
 export default function Home() {
   return (
@@ -81,27 +48,33 @@ export default function Home() {
         <section
           id="components"
           aria-labelledby="components-heading"
-          className="mx-auto max-w-7xl scroll-mt-28 px-5 pb-20 sm:px-8 sm:pb-28"
+          className="mx-auto max-w-7xl scroll-mt-28 px-5 pb-24 sm:px-8 sm:pb-32"
         >
-          <SectionHeading
-            id="components-heading"
-            title="Built with vip/ui"
-            description="Each screen uses only components from this library."
-            link={{ href: "/components", label: "All components" }}
-          />
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
+            <div className="max-w-xl">
+              <h2
+                id="components-heading"
+                className="text-2xl font-semibold tracking-[-0.04em] sm:text-3xl"
+              >
+                Built with vip/ui
+              </h2>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7">
+                Each card uses only components from this library.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-x-6">
+              {showcaseLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="inline-flex min-h-10 items-center gap-2 rounded-sm text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                >
+                  {link.label} <ArrowRightIcon size={15} aria-hidden="true" />
+                </Link>
+              ))}
+            </div>
+          </div>
           <HomeShowcase />
-        </section>
-
-        <section
-          aria-labelledby="blocks-heading"
-          className="mx-auto max-w-7xl px-5 pb-24 sm:px-8 sm:pb-32"
-        >
-          <SectionHeading
-            id="blocks-heading"
-            title="Blocks for common tasks"
-            link={{ href: "/blocks", label: "All blocks" }}
-          />
-          <HomeBlocks />
         </section>
       </main>
 

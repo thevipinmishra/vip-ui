@@ -1,6 +1,11 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import type { Metadata } from "next";
+import {
+  PageHeader,
+  PageHeaderDescription,
+  PageHeaderHeading,
+} from "@/components/docs/page-header";
 import { SiteFooter } from "@/components/docs/site-footer";
 import { SiteHeader } from "@/components/docs/site-header";
 
@@ -21,17 +26,14 @@ export default async function LicensePage() {
         Skip to content
       </a>
       <SiteHeader />
-      <main
-        id="main"
-        className="mx-auto w-full max-w-4xl flex-1 px-5 py-16 sm:px-8 sm:py-24"
-      >
-        <h1 className="text-[clamp(2.8rem,5vw,4.5rem)] font-semibold tracking-[-0.065em]">
-          MIT license
-        </h1>
-        <p className="mt-4 text-sm leading-6 text-muted-foreground">
-          The license below applies to the vip/ui source code.
-        </p>
-        <pre className="mt-10 whitespace-pre-wrap break-words rounded-[20px] bg-card p-5 font-mono text-xs leading-6 shadow-[var(--shadow-card)] ring-1 ring-border/70 sm:p-8 sm:text-sm">
+      <main id="main" className="site-container flex-1 pb-24 pt-10 sm:pt-14">
+        <PageHeader>
+          <PageHeaderHeading>MIT license</PageHeaderHeading>
+          <PageHeaderDescription>
+            The license below applies to the vip/ui source code.
+          </PageHeaderDescription>
+        </PageHeader>
+        <pre className="mt-10 max-w-4xl whitespace-pre-wrap break-words rounded-[20px] bg-card p-5 font-mono text-xs leading-6 shadow-[var(--shadow-card)] ring-1 ring-border/70 sm:p-8 sm:text-sm">
           {license.trim()}
         </pre>
       </main>

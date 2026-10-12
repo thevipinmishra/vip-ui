@@ -12,12 +12,13 @@ import {
   TerminalWindowIcon,
 } from "@phosphor-icons/react";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import { Button } from "react-aria-components";
 import {
   CommandPalette,
   CommandPaletteItem,
 } from "@/components/ui/command-palette";
+import { Kbd, KbdGroup } from "@/components/ui/kbd-code";
 import { catalogComponents } from "@/lib/catalog";
 
 const shortcutTakenByDemo = new Set(["/components/command-palette", "/themes"]);
@@ -41,22 +42,34 @@ export function DocsSearch() {
   const router = useRouter();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [modifier, setModifier] = useState<string>();
+  const shortcut = !shortcutTakenByDemo.has(pathname);
+
+  useEffect(() => {
+    setModifier(/Mac|iPhone|iPad/.test(navigator.userAgent) ? "⌘" : "Ctrl");
+  }, []);
 
   return (
     <>
       <Button
-        variant="ghost"
         aria-label="Search components and pages"
+        aria-keyshortcuts={shortcut ? "Control+K Meta+K" : undefined}
         onPress={() => setOpen(true)}
-        className="size-10 gap-2 rounded-md p-0 text-muted-foreground hover:text-foreground lg:w-auto lg:px-3"
+        className="inline-flex size-10 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:h-9 sm:w-44 sm:justify-start sm:border sm:border-border/70 sm:bg-muted/40 sm:ps-2.5 sm:pe-1.5 lg:w-52 xl:w-64"
       >
         <MagnifyingGlassIcon size={17} aria-hidden="true" />
-        <span className="hidden lg:inline">Search</span>
+        <span className="hidden sm:inline">Search…</span>
+        {shortcut && modifier && (
+          <KbdGroup className="ml-auto hidden sm:inline-flex">
+            <Kbd>{modifier}</Kbd>
+            <Kbd>K</Kbd>
+          </KbdGroup>
+        )}
       </Button>
       <CommandPalette
         isOpen={open}
         onOpenChange={setOpen}
-        shortcut={!shortcutTakenByDemo.has(pathname)}
+        shortcut={shortcut}
         title="Search components and pages"
         placeholder="Search components and pages"
         emptyMessage="No components or pages match."
