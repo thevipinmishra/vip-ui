@@ -1,8 +1,8 @@
 import type { ComponentType } from "react";
-import { AreaVisits } from "@/components/charts/area-charts";
-import { BarOrders } from "@/components/charts/bar-charts";
-import { LineResponse } from "@/components/charts/line-charts";
-import { PieDonut } from "@/components/charts/pie-charts";
+import { ChartAreaDefault } from "@/components/charts/examples/chart-area-default";
+import { ChartBarDefault } from "@/components/charts/examples/chart-bar-default";
+import { ChartLineDefault } from "@/components/charts/examples/chart-line-default";
+import { ChartPieDonut } from "@/components/charts/examples/chart-pie-donut";
 import { AccordionDemo } from "@/components/docs/accordion-demo";
 import { AlertBasicDemo } from "@/components/docs/alert-basic-demo";
 import { AnimatedNumberBasicDemo } from "@/components/docs/animated-number-basic-demo";
@@ -181,10 +181,10 @@ const groups: { title: string; examples: Example[] }[] = [
   {
     title: "Charts",
     examples: [
-      { title: "Bar chart", Demo: BarOrders },
-      { title: "Line chart", Demo: LineResponse },
-      { title: "Area chart", Demo: AreaVisits },
-      { title: "Donut chart", Demo: PieDonut },
+      { title: "Bar chart", Demo: ChartBarDefault },
+      { title: "Line chart", Demo: ChartLineDefault },
+      { title: "Area chart", Demo: ChartAreaDefault },
+      { title: "Donut chart", Demo: ChartPieDonut },
     ],
   },
   {
@@ -224,7 +224,7 @@ export function ThemeGallery() {
                 <figcaption className="border-b border-border/70 px-4 py-2.5 text-xs font-medium text-muted-foreground">
                   {title}
                 </figcaption>
-                <div className="flex min-h-32 min-w-0 items-center justify-center overflow-x-auto p-5 [&>*]:min-w-0 [&>*]:max-w-full">
+                <div className="flex min-h-32 min-w-0 items-center justify-center overflow-x-auto p-5 [&>*]:min-w-0 [&>*]:max-w-full [&>[data-slot=chart-frame]]:w-full [&>[data-slot=chart-frame]]:bg-transparent [&>[data-slot=chart-frame]]:p-0">
                   <Demo />
                 </div>
               </figure>

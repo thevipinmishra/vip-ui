@@ -1,9 +1,11 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { ArrowDownIcon } from "@phosphor-icons/react/ssr";
+import Link from "next/link";
 import { CategoryTabs } from "@/components/docs/category-tabs";
 import { CodeFrame } from "@/components/docs/code-frame";
 import { CodeSnippet } from "@/components/docs/code-snippet";
+import { PackageManagerCommand } from "@/components/docs/package-manager-command";
 import {
   PageActions,
   PageHeader,
@@ -11,10 +13,13 @@ import {
   PageHeaderHeading,
 } from "@/components/docs/page-header";
 import { ButtonLink } from "@/components/ui/button-link";
-import { Card, CardContent } from "@/components/ui/card";
-import { chartCategories } from "./catalog";
+import { getComponent } from "@/lib/catalog";
+import {
+  type ChartCategory,
+  type ChartExample,
+  chartCategories,
+} from "./catalog";
 import { ChartDocumentation } from "./chart-documentation";
-import { ChartGalleryItem } from "./chart-plot";
 import { ChartSourceSheet } from "./chart-source-sheet";
 
 const tabs = chartCategories.map((category, index) => ({
@@ -22,6 +27,15 @@ const tabs = chartCategories.map((category, index) => ({
   label: category.label,
   count: category.examples.length,
 }));
+
+const exampleCount = chartCategories.reduce(
+  (sum, category) => sum + category.examples.length,
+  0,
+);
+
+const typePackages: Record<string, string> = {
+  "d3-shape": "@types/d3-shape",
+};
 
 export async function ChartGallery({
   initialCategory,
@@ -31,30 +45,14 @@ export async function ChartGallery({
   const category =
     chartCategories.find((item) => item.slug === initialCategory) ??
     chartCategories[0];
-  const sourcePath = `src/components/charts/${category.source}`;
-  const [shared, source] = await Promise.all([
-    readFile(
-      path.join(process.cwd(), "src/components/charts/chart-plot.tsx"),
-      "utf8",
-    ),
-    readFile(path.join(process.cwd(), sourcePath), "utf8"),
-  ]);
-  const installableShared = shared.replaceAll(
-    '"@/components/ui/',
-    '"@/components/vip-ui/',
-  );
-  const installableSource = source.replaceAll(
-    '"@/components/ui/',
-    '"@/components/vip-ui/',
-  );
 
   return (
     <>
       <PageHeader className="site-container pb-10 pt-10 sm:pt-14">
         <PageHeaderHeading>Charts</PageHeaderHeading>
         <PageHeaderDescription>
-          Accessible charts, built with TanStack Charts. Add a chart to your
-          app. Change it to suit your data.
+          {exampleCount} accessible charts, built with TanStack Charts. Copy a
+          chart into your app. Then change the data.
         </PageHeaderDescription>
         <PageActions>
           <ButtonLink href="#installation">
@@ -70,78 +68,119 @@ export async function ChartGallery({
       />
       <output className="sr-only">Showing {category.label} charts</output>
       <div className="site-container">
-        <ChartCategoryContent
-          category={category}
-          source={installableSource}
-          sourcePath={sourcePath}
-          shared={installableShared}
-        />
+        <ChartCategoryContent category={category} />
         <ChartDocumentation />
       </div>
     </>
   );
 }
 
-function ChartCategoryContent({
-  category,
-  source,
-  sourcePath,
-  shared,
-}: {
-  category: (typeof chartCategories)[number];
-  source: string;
-  sourcePath: string;
-  shared: string;
-}) {
+function ChartCategoryContent({ category }: { category: ChartCategory }) {
   return (
     <section aria-labelledby="category-title" className="pb-16 pt-10">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2
-          id="category-title"
-          className="text-xl font-semibold tracking-[-0.035em] sm:text-2xl"
-        >
-          {category.title}
-        </h2>
-        <ChartSourceSheet title={category.title}>
-          <CodeFrame
-            code={shared}
-            filename="src/components/charts/chart-plot.tsx"
-            embedded
-            scrollable
-          >
-            <CodeSnippet code={shared} />
-          </CodeFrame>
-          <CodeFrame code={source} filename={sourcePath} embedded scrollable>
-            <CodeSnippet code={source} />
-          </CodeFrame>
-        </ChartSourceSheet>
-      </div>
+      <h2
+        id="category-title"
+        className="text-xl font-semibold tracking-[-0.035em] sm:text-2xl"
+      >
+        {category.title}
+      </h2>
       <div className="mt-5 grid gap-4 lg:grid-cols-2">
-        {category.examples.map((example) => {
-          const anchor = chartExampleAnchor(category.slug, example.name);
-          return (
-            <Card
-              key={example.name}
-              id={anchor}
-              className="relative z-0 flex min-w-0 scroll-mt-28 flex-col rounded-2xl hover:z-10 focus-within:z-10"
-            >
-              <CardContent className="min-w-0 flex-1 p-0">
-                <ChartGalleryItem name={example.name} href={`#${anchor}`}>
-                  {example.preview}
-                </ChartGalleryItem>
-              </CardContent>
-            </Card>
-          );
-        })}
+        {category.examples.map((example) => (
+          <div
+            key={example.file}
+            id={example.file}
+            className="relative z-0 flex min-w-0 scroll-mt-28 flex-col rounded-2xl bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70 hover:z-10 focus-within:z-10"
+          >
+            <div className="min-w-0 flex-1 *:data-[slot=chart-frame]:bg-transparent">
+              {example.preview}
+            </div>
+            <div className="flex min-h-11 items-center justify-between gap-3 border-t border-border/70 py-1 pe-2 ps-4 sm:ps-6">
+              <a
+                href={`#${example.file}`}
+                className="truncate rounded-sm text-xs text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-solid"
+              >
+                {example.name}
+              </a>
+              <ChartExampleSource example={example} />
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );
 }
 
-function chartExampleAnchor(categorySlug: string, name: string) {
-  const exampleSlug = name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
-  return `${categorySlug}-${exampleSlug}`;
+async function ChartExampleSource({ example }: { example: ChartExample }) {
+  const source = (
+    await readFile(
+      path.join(
+        process.cwd(),
+        "src/components/charts/examples",
+        `${example.file}.tsx`,
+      ),
+      "utf8",
+    )
+  ).replaceAll('"@/components/ui/', '"@/components/vip-ui/');
+  const imports = [...source.matchAll(/from "([^"]+)"/g)].map(
+    (match) => match[1],
+  );
+  const components = imports
+    .filter(
+      (specifier) =>
+        specifier.startsWith("@/components/vip-ui/") &&
+        specifier !== "@/components/vip-ui/chart",
+    )
+    .map((specifier) => specifier.slice("@/components/vip-ui/".length));
+  const packages = imports.filter(
+    (specifier) =>
+      !specifier.startsWith("@/") &&
+      !specifier.startsWith("@tanstack/charts") &&
+      specifier !== "react",
+  );
+  const devPackages = packages.flatMap((name) =>
+    typePackages[name] ? [typePackages[name]] : [],
+  );
+
+  return (
+    <ChartSourceSheet title={example.name}>
+      {(components.length > 0 || packages.length > 0) && (
+        <div className="space-y-3 px-6 pt-1">
+          {components.length > 0 && (
+            <p className="text-[13px] leading-6 text-muted-foreground">
+              Also install{" "}
+              {components.map((slug, index) => (
+                <span key={slug}>
+                  {index > 0 && " and "}
+                  <Link
+                    href={`/components/${slug}#installation`}
+                    className="text-primary underline underline-offset-4"
+                  >
+                    {getComponent(slug)?.name ?? slug}
+                  </Link>
+                </span>
+              ))}
+              .
+            </p>
+          )}
+          {packages.length > 0 && (
+            <PackageManagerCommand action="add" args={packages.join(" ")} />
+          )}
+          {devPackages.length > 0 && (
+            <PackageManagerCommand
+              action="add-dev"
+              args={devPackages.join(" ")}
+            />
+          )}
+        </div>
+      )}
+      <CodeFrame
+        code={source}
+        filename={`${example.file}.tsx`}
+        embedded
+        scrollable
+      >
+        <CodeSnippet code={source} />
+      </CodeFrame>
+    </ChartSourceSheet>
+  );
 }

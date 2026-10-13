@@ -1,53 +1,88 @@
 import type { ReactNode } from "react";
-import { AreaRange, AreaStacked, AreaVisits, AreaWindow } from "./area-charts";
-import {
-  BarHorizontal,
-  BarMetric,
-  BarOrders,
-  BarStacked,
-  BarUpdates,
-} from "./bar-charts";
-import {
-  LineComparison,
-  LineResponse,
-  LineTarget,
-  LineThreshold,
-} from "./line-charts";
-import { PieDevices, PieDonut, PieRounded } from "./pie-charts";
-import { RadarBenchmarks, RadarCompare, RadarProfile } from "./radar-charts";
-import { RadialChannels, RadialGoals, RadialProgress } from "./radial-charts";
+import { ChartAreaDefault } from "./examples/chart-area-default";
+import { ChartAreaExpanded } from "./examples/chart-area-expanded";
+import { ChartAreaInteractive } from "./examples/chart-area-interactive";
+import { ChartAreaRange } from "./examples/chart-area-range";
+import { ChartAreaStacked } from "./examples/chart-area-stacked";
+import { ChartBarDefault } from "./examples/chart-bar-default";
+import { ChartBarHorizontal } from "./examples/chart-bar-horizontal";
+import { ChartBarInteractive } from "./examples/chart-bar-interactive";
+import { ChartBarMultiple } from "./examples/chart-bar-multiple";
+import { ChartBarNegative } from "./examples/chart-bar-negative";
+import { ChartBarStacked } from "./examples/chart-bar-stacked";
+import { ChartBeeswarm } from "./examples/chart-beeswarm";
+import { ChartBoxPlot } from "./examples/chart-box-plot";
+import { ChartCandlestick } from "./examples/chart-candlestick";
+import { ChartFunnel } from "./examples/chart-funnel";
+import { ChartHeatmapCalendar } from "./examples/chart-heatmap-calendar";
+import { ChartHeatmapMatrix } from "./examples/chart-heatmap-matrix";
+import { ChartHistogram } from "./examples/chart-histogram";
+import { ChartLineDefault } from "./examples/chart-line-default";
+import { ChartLineDots } from "./examples/chart-line-dots";
+import { ChartLineInteractive } from "./examples/chart-line-interactive";
+import { ChartLineMultiple } from "./examples/chart-line-multiple";
+import { ChartLineStep } from "./examples/chart-line-step";
+import { ChartPieDefault } from "./examples/chart-pie-default";
+import { ChartPieDonut } from "./examples/chart-pie-donut";
+import { ChartPieRounded } from "./examples/chart-pie-rounded";
+import { ChartRadarDefault } from "./examples/chart-radar-default";
+import { ChartRadarDots } from "./examples/chart-radar-dots";
+import { ChartRadarMultiple } from "./examples/chart-radar-multiple";
+import { ChartRadialProgress } from "./examples/chart-radial-progress";
+import { ChartRadialRings } from "./examples/chart-radial-rings";
+import { ChartRadialRose } from "./examples/chart-radial-rose";
+import { ChartSankey } from "./examples/chart-sankey";
+import { ChartScatterBubble } from "./examples/chart-scatter-bubble";
+import { ChartScatterDefault } from "./examples/chart-scatter-default";
+import { ChartScatterTrend } from "./examples/chart-scatter-trend";
+import { ChartSunburst } from "./examples/chart-sunburst";
+import { ChartTreemap } from "./examples/chart-treemap";
+import { ChartWaffle } from "./examples/chart-waffle";
+import { ChartWaterfall } from "./examples/chart-waterfall";
 
-type Example = { name: string; preview: ReactNode };
-type Category = {
+export interface ChartExample {
+  file: string;
+  name: string;
+  preview: ReactNode;
+}
+
+export interface ChartCategory {
   slug: string;
   label: string;
   title: string;
-  source: string;
-  examples: Example[];
-};
+  examples: ChartExample[];
+}
 
-export const chartCategories: Category[] = [
+export const chartCategories: ChartCategory[] = [
   {
     slug: "area",
     label: "Area",
     title: "Area charts",
-    source: "area-charts.tsx",
     examples: [
       {
-        name: "Visitor growth",
-        preview: <AreaVisits />,
+        file: "chart-area-default",
+        name: "Area",
+        preview: <ChartAreaDefault />,
       },
       {
-        name: "Traffic sources",
-        preview: <AreaStacked />,
+        file: "chart-area-stacked",
+        name: "Stacked area",
+        preview: <ChartAreaStacked />,
       },
       {
-        name: "Forecast range",
-        preview: <AreaRange />,
+        file: "chart-area-expanded",
+        name: "100% stacked area",
+        preview: <ChartAreaExpanded />,
       },
       {
-        name: "Visits by period",
-        preview: <AreaWindow />,
+        file: "chart-area-range",
+        name: "Range area",
+        preview: <ChartAreaRange />,
+      },
+      {
+        file: "chart-area-interactive",
+        name: "Interactive area",
+        preview: <ChartAreaInteractive />,
       },
     ],
   },
@@ -55,27 +90,32 @@ export const chartCategories: Category[] = [
     slug: "bar",
     label: "Bar",
     title: "Bar charts",
-    source: "bar-charts.tsx",
     examples: [
+      { file: "chart-bar-default", name: "Bar", preview: <ChartBarDefault /> },
       {
-        name: "Monthly orders",
-        preview: <BarOrders />,
+        file: "chart-bar-horizontal",
+        name: "Horizontal bar",
+        preview: <ChartBarHorizontal />,
       },
       {
-        name: "Projects by region",
-        preview: <BarHorizontal />,
+        file: "chart-bar-multiple",
+        name: "Grouped bar",
+        preview: <ChartBarMultiple />,
       },
       {
-        name: "Support requests",
-        preview: <BarStacked />,
+        file: "chart-bar-stacked",
+        name: "Stacked bar",
+        preview: <ChartBarStacked />,
       },
       {
-        name: "Animated orders",
-        preview: <BarUpdates />,
+        file: "chart-bar-negative",
+        name: "Negative bar",
+        preview: <ChartBarNegative />,
       },
       {
-        name: "Revenue or orders",
-        preview: <BarMetric />,
+        file: "chart-bar-interactive",
+        name: "Interactive bar",
+        preview: <ChartBarInteractive />,
       },
     ],
   },
@@ -83,23 +123,31 @@ export const chartCategories: Category[] = [
     slug: "line",
     label: "Line",
     title: "Line charts",
-    source: "line-charts.tsx",
     examples: [
       {
-        name: "Response time",
-        preview: <LineResponse />,
+        file: "chart-line-default",
+        name: "Line",
+        preview: <ChartLineDefault />,
       },
       {
-        name: "Retention by plan",
-        preview: <LineComparison />,
+        file: "chart-line-multiple",
+        name: "Multiple lines",
+        preview: <ChartLineMultiple />,
       },
       {
-        name: "Uptime target",
-        preview: <LineTarget />,
+        file: "chart-line-dots",
+        name: "Line with dots",
+        preview: <ChartLineDots />,
       },
       {
-        name: "Response goal",
-        preview: <LineThreshold />,
+        file: "chart-line-step",
+        name: "Step line",
+        preview: <ChartLineStep />,
+      },
+      {
+        file: "chart-line-interactive",
+        name: "Interactive line",
+        preview: <ChartLineInteractive />,
       },
     ],
   },
@@ -107,19 +155,17 @@ export const chartCategories: Category[] = [
     slug: "pie",
     label: "Pie",
     title: "Pie and donut charts",
-    source: "pie-charts.tsx",
     examples: [
+      { file: "chart-pie-default", name: "Pie", preview: <ChartPieDefault /> },
       {
-        name: "Device mix",
-        preview: <PieDevices />,
+        file: "chart-pie-donut",
+        name: "Donut with total",
+        preview: <ChartPieDonut />,
       },
       {
-        name: "Subscriptions",
-        preview: <PieDonut />,
-      },
-      {
-        name: "Budget allocation",
-        preview: <PieRounded />,
+        file: "chart-pie-rounded",
+        name: "Rounded donut",
+        preview: <ChartPieRounded />,
       },
     ],
   },
@@ -127,19 +173,21 @@ export const chartCategories: Category[] = [
     slug: "radar",
     label: "Radar",
     title: "Radar charts",
-    source: "radar-charts.tsx",
     examples: [
       {
-        name: "Team profile",
-        preview: <RadarProfile />,
+        file: "chart-radar-default",
+        name: "Radar",
+        preview: <ChartRadarDefault />,
       },
       {
-        name: "Score comparison",
-        preview: <RadarCompare />,
+        file: "chart-radar-multiple",
+        name: "Multiple radar",
+        preview: <ChartRadarMultiple />,
       },
       {
-        name: "Benchmark points",
-        preview: <RadarBenchmarks />,
+        file: "chart-radar-dots",
+        name: "Radar dots",
+        preview: <ChartRadarDots />,
       },
     ],
   },
@@ -147,19 +195,110 @@ export const chartCategories: Category[] = [
     slug: "radial",
     label: "Radial",
     title: "Radial charts",
-    source: "radial-charts.tsx",
     examples: [
       {
-        name: "Onboarding progress",
-        preview: <RadialProgress />,
+        file: "chart-radial-progress",
+        name: "Radial progress",
+        preview: <ChartRadialProgress />,
       },
       {
-        name: "Campaign reach",
-        preview: <RadialChannels />,
+        file: "chart-radial-rose",
+        name: "Radial bars",
+        preview: <ChartRadialRose />,
       },
       {
-        name: "Quarterly goals",
-        preview: <RadialGoals />,
+        file: "chart-radial-rings",
+        name: "Radial rings",
+        preview: <ChartRadialRings />,
+      },
+    ],
+  },
+  {
+    slug: "scatter",
+    label: "Scatter",
+    title: "Scatter charts",
+    examples: [
+      {
+        file: "chart-scatter-default",
+        name: "Scatter",
+        preview: <ChartScatterDefault />,
+      },
+      {
+        file: "chart-scatter-bubble",
+        name: "Bubble",
+        preview: <ChartScatterBubble />,
+      },
+      {
+        file: "chart-scatter-trend",
+        name: "Scatter with trend",
+        preview: <ChartScatterTrend />,
+      },
+    ],
+  },
+  {
+    slug: "distribution",
+    label: "Distribution",
+    title: "Distribution charts",
+    examples: [
+      {
+        file: "chart-histogram",
+        name: "Histogram",
+        preview: <ChartHistogram />,
+      },
+      { file: "chart-box-plot", name: "Box plot", preview: <ChartBoxPlot /> },
+      { file: "chart-beeswarm", name: "Beeswarm", preview: <ChartBeeswarm /> },
+    ],
+  },
+  {
+    slug: "heatmap",
+    label: "Heatmap",
+    title: "Heatmaps",
+    examples: [
+      {
+        file: "chart-heatmap-calendar",
+        name: "Calendar heatmap",
+        preview: <ChartHeatmapCalendar />,
+      },
+      {
+        file: "chart-heatmap-matrix",
+        name: "Heatmap matrix",
+        preview: <ChartHeatmapMatrix />,
+      },
+    ],
+  },
+  {
+    slug: "composition",
+    label: "Composition",
+    title: "Composition charts",
+    examples: [
+      { file: "chart-treemap", name: "Treemap", preview: <ChartTreemap /> },
+      { file: "chart-sunburst", name: "Sunburst", preview: <ChartSunburst /> },
+      { file: "chart-waffle", name: "Waffle", preview: <ChartWaffle /> },
+    ],
+  },
+  {
+    slug: "flow",
+    label: "Flow",
+    title: "Flow charts",
+    examples: [
+      { file: "chart-sankey", name: "Sankey", preview: <ChartSankey /> },
+      { file: "chart-funnel", name: "Funnel", preview: <ChartFunnel /> },
+    ],
+  },
+  {
+    slug: "financial",
+    label: "Financial",
+    title: "Financial charts",
+    examples: [
+      {
+        file: "chart-candlestick",
+        name: "Candlestick",
+        preview: <ChartCandlestick />,
+      },
+      {
+        file: "chart-waterfall",
+        name: "Waterfall",
+        preview: <ChartWaterfall />,
       },
     ],
   },

@@ -31,14 +31,12 @@ export function ChartSourceSheet({
           <div>
             <SheetTitle>{title}</SheetTitle>
             <SheetDescription>
-              Install the vip/ui chart frame from the documentation, then copy
-              both files into the same folder. Install any other vip/ui imports
-              in the category file, then import the example you need.
+              Install Chart. Then copy this file into your app.
             </SheetDescription>
           </div>
           <SheetClose />
         </SheetHeader>
-        <SheetBody className="grid min-w-0 grid-cols-[minmax(0,1fr)] content-start divide-y divide-border/70 px-0 py-0">
+        <SheetBody className="grid min-w-0 grid-cols-[minmax(0,1fr)] content-start gap-4 px-0 py-0 [&_.code-scroll-viewport]:max-h-[calc(100dvh-10rem)]">
           {children}
         </SheetBody>
       </Sheet>
