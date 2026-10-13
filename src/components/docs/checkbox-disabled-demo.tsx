@@ -4,8 +4,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 export function CheckboxDisabledDemo() {
   return (
-    <div className="grid gap-1">
-      <Checkbox isDisabled defaultChecked>
+    <div className="grid">
+      <Checkbox isDisabled defaultSelected>
         Security alerts
       </Checkbox>
       <Checkbox isDisabled>Beta features</Checkbox>

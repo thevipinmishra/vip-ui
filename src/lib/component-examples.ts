@@ -283,20 +283,27 @@ export const componentPageData = {
     examples: [
       {
         title: "Description",
-        description: "Set description to show help below the label.",
+        description:
+          "Set description to show help below the label. Screen readers announce it after the label.",
         sourcePath: "checkbox-description-demo.tsx",
+      },
+      {
+        title: "Required",
+        description:
+          "Set isRequired inside a Form. The error shows after the first submit and clears when the box is checked. Set errorMessage to replace the browser message.",
+        sourcePath: "checkbox-required-demo.tsx",
+      },
+      {
+        title: "Indeterminate",
+        description:
+          "Set isIndeterminate when only some child options are selected. Point aria-controls at the options it controls.",
+        sourcePath: "checkbox-demo.tsx",
       },
       {
         title: "Disabled",
         description:
           "Use isDisabled to keep the option visible and prevent changes.",
         sourcePath: "checkbox-disabled-demo.tsx",
-      },
-      {
-        title: "Indeterminate",
-        description:
-          'Set checked to "indeterminate" when only some child options are selected.',
-        sourcePath: "checkbox-demo.tsx",
       },
     ],
   },
@@ -310,10 +317,16 @@ export const componentPageData = {
         sourcePath: "checkbox-group-disabled-demo.tsx",
       },
       {
-        title: "Required choice",
+        title: "Required",
         description:
-          "Set isInvalid until at least one option is selected. CheckboxGroupError shows the message below the choices.",
+          "Set isRequired inside a Form to ask for at least one option. The error shows after the first submit.",
         sourcePath: "checkbox-group-required-demo.tsx",
+      },
+      {
+        title: "Custom layout",
+        description:
+          "Compose CheckboxGroupLabel, CheckboxGroupItems, and CheckboxGroupError to change the layout. Here the options sit in a row.",
+        sourcePath: "checkbox-group-layout-demo.tsx",
       },
     ],
   },
@@ -965,7 +978,7 @@ export const componentPageData = {
       {
         title: "Card options",
         description:
-          'Set variant="card" when each choice needs a label and description. Use RadioGroupItems to change the gap.',
+          'Set variant="card" when each choice needs a label and description. The whole card selects the option. Compose RadioGroupLabel and RadioGroupItems to change the gap.',
         sourcePath: "radio-group-card-demo.tsx",
       },
       {
@@ -975,10 +988,10 @@ export const componentPageData = {
         sourcePath: "radio-group-disabled-demo.tsx",
       },
       {
-        title: "Invalid selection",
+        title: "Required",
         description:
-          "Use isInvalid with RadioGroupError while no option is selected. The error clears when an option is selected.",
-        sourcePath: "radio-group-invalid-demo.tsx",
+          "Set isRequired inside a Form. The error shows after the first submit and clears when an option is selected.",
+        sourcePath: "radio-group-required-demo.tsx",
       },
     ],
   },
@@ -1124,7 +1137,8 @@ export const componentPageData = {
     examples: [
       {
         title: "Description",
-        description: "Set description to show help below the label.",
+        description:
+          "Set description to show help below the label. Screen readers announce it after the label.",
         sourcePath: "switch-description-demo.tsx",
       },
       {
@@ -1136,7 +1150,7 @@ export const componentPageData = {
       {
         title: "Custom layout",
         description:
-          "Compose SwitchLabel, SwitchDescription, SwitchControl, and SwitchThumb for your own layout. Control each switch with checked and onCheckedChange.",
+          "Compose SwitchField, SwitchButton, and the other parts to style each piece. Keep SwitchDescription outside SwitchButton so it is read as a description, not as part of the label.",
         sourcePath: "switch-demo.tsx",
       },
     ],

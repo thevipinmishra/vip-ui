@@ -1305,10 +1305,27 @@ export const customComponentApi: Record<string, ApiProp[]> = {
   checkbox: [
     {
       component: "Checkbox",
-      prop: "description",
-      type: "string",
+      prop: "children",
+      type: "ReactNode",
       defaultValue: "—",
-      description: "Help text below the label text.",
+      description:
+        "The label. Without it, pass aria-label so the checkbox has a name.",
+    },
+    {
+      component: "Checkbox",
+      prop: "description",
+      type: "ReactNode",
+      defaultValue: "—",
+      description:
+        "Help text below the label. Linked with aria-describedby, so it is not part of the name.",
+    },
+    {
+      component: "Checkbox",
+      prop: "errorMessage",
+      type: "string | ((validation: ValidationResult) => string)",
+      defaultValue: "browser message",
+      description:
+        "Shown below the label when isRequired, validate, or isInvalid makes the checkbox invalid.",
     },
     {
       component: "Checkbox",
@@ -1316,24 +1333,32 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: 'boolean | "indeterminate"',
       defaultValue: "—",
       description:
-        'Convenience props for isSelected and defaultSelected. Pass "indeterminate" for a mixed state.',
+        'Aliases for isSelected and defaultSelected. "indeterminate" sets isIndeterminate. A default indeterminate state clears on the first change.',
     },
     {
       component: "Checkbox",
       prop: "onCheckedChange",
       type: "(checked: boolean) => void",
       defaultValue: "—",
-      description: "Receives the next checked value. onChange also runs.",
+      description: "Alias for onChange. Both run when both are set.",
     },
   ],
   "checkbox-group": [
     {
       component: "CheckboxGroup",
       prop: "label / description",
-      type: "string",
+      type: "ReactNode",
       defaultValue: "—",
       description:
-        "Label and help text for the group. With label, the group adds CheckboxGroupItems and CheckboxGroupError. Without label, pass aria-label.",
+        "Label and help text for the group. Without label, pass aria-label or compose CheckboxGroupLabel.",
+    },
+    {
+      component: "CheckboxGroup",
+      prop: "errorMessage",
+      type: "string | ((validation: ValidationResult) => string)",
+      defaultValue: "browser message",
+      description:
+        "Shown below the options when the group is invalid. With label, description, or errorMessage, the group adds CheckboxGroupError for you.",
     },
   ],
   autocomplete: [
@@ -1349,24 +1374,41 @@ export const customComponentApi: Record<string, ApiProp[]> = {
   switch: [
     {
       component: "Switch",
-      prop: "description",
-      type: "string",
+      prop: "children",
+      type: "ReactNode",
       defaultValue: "—",
-      description: "Help text below the label text.",
+      description:
+        "The label. Without it, pass aria-label so the switch has a name.",
+    },
+    {
+      component: "Switch",
+      prop: "description",
+      type: "ReactNode",
+      defaultValue: "—",
+      description:
+        "Help text below the label. Linked with aria-describedby, so it is not part of the name.",
+    },
+    {
+      component: "Switch",
+      prop: "errorMessage",
+      type: "string | ((validation: ValidationResult) => string)",
+      defaultValue: "browser message",
+      description:
+        "Shown below the label when isRequired, validate, or isInvalid makes the switch invalid.",
     },
     {
       component: "Switch",
       prop: "checked / defaultChecked",
       type: "boolean",
       defaultValue: "—",
-      description: "Convenience props for isSelected and defaultSelected.",
+      description: "Aliases for isSelected and defaultSelected.",
     },
     {
       component: "Switch",
       prop: "onCheckedChange",
       type: "(checked: boolean) => void",
       defaultValue: "—",
-      description: "Receives the next checked value.",
+      description: "Alias for onChange. Both run when both are set.",
     },
   ],
   tabs: [
@@ -1555,31 +1597,49 @@ export const customComponentApi: Record<string, ApiProp[]> = {
     {
       component: "RadioGroup",
       prop: "label / description",
-      type: "string / string",
+      type: "ReactNode",
       defaultValue: "—",
       description:
-        "Label and help text for the group. With label, the group adds RadioGroupItems and RadioGroupError. Without label, pass aria-label.",
+        "Label and help text for the group. Without label, pass aria-label or compose RadioGroupLabel.",
+    },
+    {
+      component: "RadioGroup",
+      prop: "errorMessage",
+      type: "string | ((validation: ValidationResult) => string)",
+      defaultValue: "browser message",
+      description:
+        "Shown below the options when the group is invalid. With label, description, or errorMessage, the group adds RadioGroupError for you.",
     },
     {
       component: "RadioGroup",
       prop: "onValueChange",
       type: "(value: string) => void",
       defaultValue: "—",
-      description: "Receives the selected value. onChange also runs.",
+      description: "Alias for onChange. Both run when both are set.",
     },
     {
       component: "Radio",
-      prop: "label / description",
-      type: "string",
+      prop: "children",
+      type: "ReactNode",
       defaultValue: "—",
-      description: "Text for the default radio layout.",
+      description:
+        "The label. Without it, pass aria-label so the option has a name.",
     },
     {
       component: "Radio",
+      prop: "description",
+      type: "ReactNode",
+      defaultValue: "—",
+      description:
+        "Help text below the label. Linked with aria-describedby, so it is not part of the name.",
+    },
+    {
+      component: "Radio / RadioField",
       prop: "variant",
       type: '"default" | "card"',
       defaultValue: '"default"',
-      description: "Selects the plain or card appearance.",
+      description:
+        "Selects the plain or card appearance. A card selects the option from anywhere inside it.",
     },
   ],
   toast: [

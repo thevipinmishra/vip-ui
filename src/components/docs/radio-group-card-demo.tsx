@@ -15,15 +15,17 @@ export function RadioGroupCardDemo() {
         <Radio
           variant="card"
           value="monthly"
-          label="Monthly"
           description="Pay at the start of each month."
-        />
+        >
+          Monthly
+        </Radio>
         <Radio
           variant="card"
           value="yearly"
-          label="Yearly"
           description="One payment for the whole year."
-        />
+        >
+          Yearly
+        </Radio>
       </RadioGroupItems>
     </RadioGroup>
   );

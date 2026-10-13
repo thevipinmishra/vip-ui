@@ -14,7 +14,7 @@ import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { type Key, useLocale } from "react-aria-components";
 import { cn } from "./utils";
 import { Button } from "./button";
-import { Checkbox, CheckboxIndicator } from "./checkbox";
+import { Checkbox } from "./checkbox";
 import { SearchField } from "./search-field";
 import { Select, type SelectOption } from "./select";
 import { Cell, Column, Row, Table, TableBody, TableHeader } from "./table";
@@ -274,10 +274,8 @@ export function DataTable<T extends object>({
                 <Checkbox
                   slot="selection"
                   aria-label="Select all rows on this page"
-                  className="min-h-11 w-full items-center justify-center"
-                >
-                  <CheckboxIndicator className="mt-0" />
-                </Checkbox>
+                  className="w-full items-center"
+                />
               </Column>
             )}
             {columns.map((column, index) => (
@@ -317,10 +315,8 @@ export function DataTable<T extends object>({
                   >
                     <Checkbox
                       slot="selection"
-                      className="min-h-11 w-full items-center justify-center"
-                    >
-                      <CheckboxIndicator className="mt-0" />
-                    </Checkbox>
+                      className="w-full items-center"
+                    />
                   </Cell>
                 )}
                 {columns.map((column) => (
