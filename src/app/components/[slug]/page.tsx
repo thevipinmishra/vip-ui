@@ -23,6 +23,7 @@ import { CardBasicDemo } from "@/components/docs/card-basic-demo";
 import { CardDemo } from "@/components/docs/card-demo";
 import { CheckboxGroupDemo } from "@/components/docs/checkbox-group-demo";
 import { CheckboxGroupDisabledDemo } from "@/components/docs/checkbox-group-disabled-demo";
+import { CheckboxGroupLayoutDemo } from "@/components/docs/checkbox-group-layout-demo";
 import { CheckboxGroupRequiredDemo } from "@/components/docs/checkbox-group-required-demo";
 import { ColorFieldChannelDemo } from "@/components/docs/color-field-channel-demo";
 import { ColorFieldControlledDemo } from "@/components/docs/color-field-controlled-demo";
@@ -624,6 +625,7 @@ const examplePreviews: Record<string, ReactNode[]> = {
   "checkbox-group": [
     <CheckboxGroupDisabledDemo key="preview-1" />,
     <CheckboxGroupRequiredDemo key="preview-2" />,
+    <CheckboxGroupLayoutDemo key="preview-3" />,
   ],
   "color-swatch": [
     <ColorSwatchDemo key="preview-1" />,

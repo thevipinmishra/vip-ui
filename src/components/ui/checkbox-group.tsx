@@ -1,48 +1,50 @@
 "use client";
 
-import type { HTMLAttributes } from "react";
+import type { HTMLAttributes, ReactNode } from "react";
 import {
   CheckboxGroup as AriaCheckboxGroup,
-  type CheckboxGroupProps,
+  type CheckboxGroupProps as AriaCheckboxGroupProps,
   composeRenderProps,
   FieldError,
   Label,
   Text,
+  type ValidationResult,
 } from "react-aria-components";
 import { cn } from "@/lib/utils";
 import { fieldDescriptionStyles, fieldErrorStyles } from "./field-styles";
+
+export interface CheckboxGroupProps
+  extends Omit<AriaCheckboxGroupProps, "children"> {
+  ref?: React.Ref<HTMLDivElement>;
+  label?: ReactNode;
+  description?: ReactNode;
+  errorMessage?: string | ((validation: ValidationResult) => string);
+  children: ReactNode;
+}
 
 export function CheckboxGroup({
   className,
   label,
   description,
+  errorMessage,
   children,
   ...props
-}: Omit<CheckboxGroupProps, "children"> &
-  React.RefAttributes<HTMLDivElement> & {
-    label?: string;
-    description?: string;
-    children: React.ReactNode;
-  }) {
+}: CheckboxGroupProps) {
   return (
     <AriaCheckboxGroup
       {...props}
       data-slot="checkbox-group"
       className={composeRenderProps(className, (className) =>
-        cn("grid min-w-0 grid-cols-1 gap-1", className),
+        cn("flex min-w-0 flex-col gap-1", className),
       )}
     >
-      {label === undefined ? (
-        children
-      ) : (
-        <>
-          <CheckboxGroupLabel>{label}</CheckboxGroupLabel>
-          {description && (
-            <CheckboxGroupDescription>{description}</CheckboxGroupDescription>
-          )}
-          <CheckboxGroupItems>{children}</CheckboxGroupItems>
-          <CheckboxGroupError />
-        </>
+      {label != null && <CheckboxGroupLabel>{label}</CheckboxGroupLabel>}
+      {description != null && (
+        <CheckboxGroupDescription>{description}</CheckboxGroupDescription>
+      )}
+      {children}
+      {(label != null || description != null || errorMessage != null) && (
+        <CheckboxGroupError>{errorMessage}</CheckboxGroupError>
       )}
     </AriaCheckboxGroup>
   );
@@ -57,7 +59,7 @@ export function CheckboxGroupLabel({
       {...props}
       data-slot="checkbox-group-label"
       className={cn(
-        "text-sm font-semibold text-foreground [overflow-wrap:anywhere]",
+        "pb-1 text-sm font-semibold text-foreground [overflow-wrap:anywhere]",
         className,
       )}
     />
@@ -72,7 +74,7 @@ export function CheckboxGroupItems({
     <div
       {...props}
       data-slot="checkbox-group-items"
-      className={cn("grid grid-cols-1 gap-1 pt-1", className)}
+      className={cn("flex flex-col gap-1", className)}
     />
   );
 }
@@ -86,7 +88,11 @@ export function CheckboxGroupDescription({
       {...props}
       slot="description"
       data-slot="checkbox-group-description"
-      className={cn(fieldDescriptionStyles, className)}
+      className={cn(
+        fieldDescriptionStyles,
+        "pb-1 [[data-slot=checkbox-group-label]+&]:-mt-1",
+        className,
+      )}
     />
   );
 }
