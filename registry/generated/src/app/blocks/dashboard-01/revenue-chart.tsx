@@ -34,47 +34,49 @@ export function RevenueChart() {
   const [period, setPeriod] = useState<Period>("30");
   const rows = useMemo(() => revenue.slice(-Number(period)), [period]);
   const total = rows.reduce((sum, row) => sum + row.value, 0);
-  const definition = useMemo(
-    () =>
-      defineChart({
-        marks: [
-          decorative(
-            areaY(rows, {
-              id: "revenue-fill",
-              x: "day",
-              y: "value",
-              fill: "var(--ts-chart-1)",
-              fillOpacity: 0.16,
-            }),
-          ),
-          lineY(rows, {
-            id: "revenue-line",
+  const definition = useMemo(() => {
+    const step = Math.ceil(rows.length / 7);
+    const ticks = rows
+      .filter((_, index) => (rows.length - 1 - index) % step === 0)
+      .map((row) => row.day);
+    return defineChart({
+      marks: [
+        decorative(
+          areaY(rows, {
+            id: "revenue-fill",
             x: "day",
             y: "value",
-            stroke: "var(--ts-chart-1)",
-            strokeWidth: 2.5,
+            fill: "var(--ts-chart-1)",
+            fillOpacity: 0.16,
           }),
-        ],
-        scales: {
-          x: { scale: scalePoint },
-          y: { scale: scaleLinear().domain([0, 4.5]), grid: true },
-        },
-        tooltip: {
-          use: tooltip,
-          content: ([point]) => ({
-            title: point.datum.day,
-            rows: [
-              {
-                label: "Revenue",
-                value: `$${(point.datum.value * 1000).toLocaleString("en-US")}`,
-                color: point.color,
-              },
-            ],
-          }),
-        },
-      }),
-    [rows],
-  );
+        ),
+        lineY(rows, {
+          id: "revenue-line",
+          x: "day",
+          y: "value",
+          stroke: "var(--ts-chart-1)",
+          strokeWidth: 2.5,
+        }),
+      ],
+      scales: {
+        x: { scale: scalePoint, axis: { ticks: { values: ticks } } },
+        y: { scale: scaleLinear().domain([0, 4.5]), grid: true },
+      },
+      tooltip: {
+        use: tooltip,
+        content: ([point]) => ({
+          title: point.datum.day,
+          rows: [
+            {
+              label: "Revenue",
+              value: `$${(point.datum.value * 1000).toLocaleString("en-US")}`,
+              color: point.color,
+            },
+          ],
+        }),
+      },
+    });
+  }, [rows]);
 
   return (
     <ChartFrame className="shadow-[var(--shadow-card)] ring-1 ring-border/70">
@@ -114,23 +116,25 @@ export function RevenueChart() {
         initialWidth={640}
         ariaLabel={`Daily revenue for the ${periods[period].toLowerCase()}, in thousands of dollars`}
       />
-      <table className="sr-only">
-        <caption>Daily revenue, in thousands of dollars</caption>
-        <thead>
-          <tr>
-            <th scope="col">Day</th>
-            <th scope="col">Revenue</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row) => (
-            <tr key={row.day}>
-              <th scope="row">{row.day}</th>
-              <td>{row.value}</td>
+      <div className="sr-only">
+        <table>
+          <caption>Daily revenue, in thousands of dollars</caption>
+          <thead>
+            <tr>
+              <th scope="col">Day</th>
+              <th scope="col">Revenue</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {rows.map((row) => (
+              <tr key={row.day}>
+                <th scope="row">{row.day}</th>
+                <td>{row.value}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </ChartFrame>
   );
 }

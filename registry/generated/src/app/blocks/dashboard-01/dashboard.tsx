@@ -42,7 +42,7 @@ export function Dashboard() {
 
   return (
     <div className="min-h-svh bg-background lg:grid lg:grid-cols-[248px_minmax(0,1fr)]">
-      <aside className="hidden border-e border-border/70 bg-card px-3 py-5 lg:sticky lg:top-0 lg:block lg:h-svh">
+      <aside className="hidden border-e border-border/70 bg-card px-3 pt-3.5 pb-5 lg:sticky lg:top-0 lg:block lg:h-svh lg:overflow-y-auto">
         <AppSidebar />
       </aside>
       <div className="min-w-0">
@@ -148,7 +148,7 @@ export function Dashboard() {
                 <CardTitle as="h2">Activity</CardTitle>
               </CardHeader>
               <CardContent>
-                <ol className="grid gap-4">
+                <ol className="grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
                   {activity.map((event) => (
                     <li key={event.action} className="flex gap-3">
                       <Avatar name={event.name} className="size-8" />

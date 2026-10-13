@@ -65,7 +65,7 @@ export function ToggleButton({
               initial={false}
               aria-hidden="true"
               transition={transitionFor(reduceMotion, springLayout)}
-              className="pointer-events-none absolute inset-0 -z-10 rounded-md border border-border bg-card shadow-[var(--shadow-card)] forced-colors:border-[Highlight]"
+              className="pointer-events-none absolute inset-0 -z-10 rounded-[inherit] border border-border bg-card shadow-[var(--shadow-card)] forced-colors:border-[Highlight]"
             />
           )}
           {buttonLabel(content)}

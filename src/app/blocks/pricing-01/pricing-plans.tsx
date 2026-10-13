@@ -82,22 +82,14 @@ export function PricingPlans() {
             const [next] = keys;
             if (next === "monthly" || next === "yearly") setCycle(next);
           }}
-          className="mx-auto mt-8 rounded-full"
+          className="mx-auto mt-8"
         >
-          <ToggleButton
-            id="monthly"
-            variant="segmented"
-            className="rounded-full px-4"
-          >
+          <ToggleButton id="monthly" variant="segmented">
             Monthly
           </ToggleButton>
-          <ToggleButton
-            id="yearly"
-            variant="segmented"
-            className="rounded-full px-4"
-          >
+          <ToggleButton id="yearly" variant="segmented">
             Yearly
-            <span className="rounded-full bg-success-subtle px-2 py-0.5 text-[11px] font-semibold text-success-foreground">
+            <span className="rounded-sm bg-success-subtle px-2 py-0.5 text-[11px] font-semibold text-success-foreground">
               −20%
             </span>
           </ToggleButton>

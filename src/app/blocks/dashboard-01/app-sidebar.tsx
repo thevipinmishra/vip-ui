@@ -23,7 +23,7 @@ const navigation = [
 
 export function AppSidebar({ onNavigate }: { onNavigate?: () => void }) {
   return (
-    <div className="flex h-full flex-col gap-6">
+    <div className="flex min-h-full flex-col gap-6">
       <div className="flex items-center gap-2.5 px-2">
         <span
           aria-hidden="true"

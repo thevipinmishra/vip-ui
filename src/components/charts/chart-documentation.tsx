@@ -44,18 +44,20 @@ export function SignupsChart() {
         initialWidth={600}
         ariaLabel="Monthly workspace signups, January to March 2026"
       />
-      <table className="sr-only">
-        <caption>Monthly workspace signups, January to March 2026</caption>
-        <thead><tr><th scope="col">Month</th><th scope="col">Signups</th></tr></thead>
-        <tbody>
-          {rows.map((row) => (
-            <tr key={row.month}>
-              <th scope="row">{row.month}</th>
-              <td>{row.signups}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="sr-only">
+        <table>
+          <caption>Monthly workspace signups, January to March 2026</caption>
+          <thead><tr><th scope="col">Month</th><th scope="col">Signups</th></tr></thead>
+          <tbody>
+            {rows.map((row) => (
+              <tr key={row.month}>
+                <th scope="row">{row.month}</th>
+                <td>{row.signups}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </ChartFrame>
   );
 }`;
