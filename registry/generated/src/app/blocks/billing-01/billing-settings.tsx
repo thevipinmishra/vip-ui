@@ -14,8 +14,9 @@ import {
 } from "../../../components/vip-ui/card";
 import { Meter } from "../../../components/vip-ui/meter";
 import {
-  Radio,
+  RadioButton,
   RadioDescription,
+  RadioField,
   RadioGroup,
   RadioIndicator,
   RadioLabel,
@@ -84,10 +85,10 @@ export function BillingSettings() {
               className="gap-2"
             >
               {plans.map((item) => (
-                <Radio key={item.id} value={item.id} variant="card">
-                  <RadioIndicator />
-                  <span className="min-w-0 flex-1">
-                    <RadioLabel className="flex items-center gap-2">
+                <RadioField key={item.id} value={item.id} variant="card">
+                  <RadioButton>
+                    <RadioIndicator />
+                    <RadioLabel className="flex flex-1 flex-wrap items-center gap-2">
                       {item.name}
                       {item.id === current && (
                         <Badge variant="accent" className="min-h-5 py-0">
@@ -95,15 +96,19 @@ export function BillingSettings() {
                         </Badge>
                       )}
                     </RadioLabel>
-                    <RadioDescription>{item.description}</RadioDescription>
-                  </span>
-                  <span className="text-sm font-semibold tabular-nums">
-                    ${item.price}
-                    <span className="font-normal text-muted-foreground">
-                      /mo
+                    <span className="font-semibold tabular-nums">
+                      ${item.price}
+                      <span
+                        aria-hidden="true"
+                        className="font-normal text-muted-foreground"
+                      >
+                        /mo
+                      </span>
+                      <span className="sr-only"> per month</span>
                     </span>
-                  </span>
-                </Radio>
+                  </RadioButton>
+                  <RadioDescription>{item.description}</RadioDescription>
+                </RadioField>
               ))}
             </RadioGroup>
           </CardContent>

@@ -9,17 +9,15 @@ export function RadioGroupDescriptionDemo() {
       defaultValue="mentions"
       className="w-full max-w-sm"
     >
-      <Radio
-        value="all"
-        label="All activity"
-        description="Every comment, change, and mention."
-      />
-      <Radio
-        value="mentions"
-        label="Mentions only"
-        description="Only when someone mentions you."
-      />
-      <Radio value="none" label="None" description="No notifications." />
+      <Radio value="all" description="Every comment, change, and mention.">
+        All activity
+      </Radio>
+      <Radio value="mentions" description="Only when someone mentions you.">
+        Mentions only
+      </Radio>
+      <Radio value="none" description="No notifications.">
+        None
+      </Radio>
     </RadioGroup>
   );
 }

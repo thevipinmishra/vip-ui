@@ -4,7 +4,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 export function CheckboxDescriptionDemo() {
   return (
-    <Checkbox description="A short summary of your projects every Friday.">
+    <Checkbox
+      description="A short summary of your projects every Friday."
+      className="max-w-sm"
+    >
       Weekly digest
     </Checkbox>
   );

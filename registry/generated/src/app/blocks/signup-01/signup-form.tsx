@@ -114,7 +114,11 @@ export function SignupForm() {
             options={teamSizes}
             defaultValue="2-10"
           />
-          <Checkbox name="terms" isRequired>
+          <Checkbox
+            name="terms"
+            isRequired
+            errorMessage="Accept the terms to create an account."
+          >
             I agree to the terms of service
           </Checkbox>
           <Button type="submit" className="w-full">

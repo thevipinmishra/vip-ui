@@ -3,7 +3,12 @@
 import { StarIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 import { cn } from "./utils";
-import { Radio, RadioGroup, type RadioGroupProps } from "./radio-group";
+import {
+  RadioButton,
+  RadioField,
+  RadioGroup,
+  type RadioGroupProps,
+} from "./radio-group";
 
 export interface RatingInputProps
   extends Omit<
@@ -46,28 +51,28 @@ export function RatingInput({
         onValueChange?.(rating);
       }}
     >
-      <div
-        className="flex flex-wrap gap-x-0 gap-y-1"
-        data-slot="rating-input-options"
-      >
+      <div className="flex flex-wrap" data-slot="rating-input-options">
         {Array.from({ length: max }, (_, index) => {
           const rating = index + 1;
           return (
-            <Radio
+            <RadioField
               key={rating}
               value={String(rating)}
               aria-label={`${rating} of ${max} stars`}
-              className={cn(
-                "size-11 justify-center hover:bg-muted/70",
-                rating <= selected ? "text-primary" : "text-muted-foreground",
-              )}
             >
-              <StarIcon
-                size={34}
-                weight={rating <= selected ? "fill" : "regular"}
-                aria-hidden="true"
-              />
-            </Radio>
+              <RadioButton
+                className={cn(
+                  "size-11 items-center justify-center rounded-md hover:bg-muted/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+                  rating <= selected ? "text-primary" : "text-muted-foreground",
+                )}
+              >
+                <StarIcon
+                  size={34}
+                  weight={rating <= selected ? "fill" : "regular"}
+                  aria-hidden="true"
+                />
+              </RadioButton>
+            </RadioField>
           );
         })}
       </div>

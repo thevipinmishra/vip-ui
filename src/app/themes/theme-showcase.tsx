@@ -78,13 +78,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Slider } from "@/components/ui/slider";
-import {
-  Switch,
-  SwitchControl,
-  SwitchDescription,
-  SwitchLabel,
-  SwitchThumb,
-} from "@/components/ui/switch";
+import { Switch } from "@/components/ui/switch";
 import {
   Cell,
   Column,
@@ -711,15 +705,10 @@ function NotificationsScene({ className }: { className?: string }) {
           <Switch
             key={setting.id}
             defaultChecked={setting.on}
+            description={setting.description}
             className="-mx-2 rounded-lg px-2 py-2"
           >
-            <span>
-              <SwitchLabel>{setting.label}</SwitchLabel>
-              <SwitchDescription>{setting.description}</SwitchDescription>
-            </span>
-            <SwitchControl>
-              <SwitchThumb />
-            </SwitchControl>
+            {setting.label}
           </Switch>
         ))}
       </CardContent>
@@ -779,26 +768,29 @@ function UsageScene({ className }: { className?: string }) {
               <RadioGroup
                 aria-label="Plan"
                 defaultValue="growth"
-                className="[&_[data-slot=radio-group-items]]:gap-2"
+                className="gap-2"
               >
                 <Radio
                   variant="card"
                   value="starter"
-                  label="Starter · $12"
                   description="25 GB, 3 seats, community support."
-                />
+                >
+                  Starter · $12
+                </Radio>
                 <Radio
                   variant="card"
                   value="growth"
-                  label="Growth · $48"
                   description="100 GB, 15 seats, priority support."
-                />
+                >
+                  Growth · $48
+                </Radio>
                 <Radio
                   variant="card"
                   value="scale"
-                  label="Scale · $160"
                   description="1 TB, unlimited seats, a named contact."
-                />
+                >
+                  Scale · $160
+                </Radio>
               </RadioGroup>
             </SheetBody>
             <SheetFooter>

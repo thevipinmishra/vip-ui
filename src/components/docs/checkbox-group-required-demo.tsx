@@ -1,30 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  CheckboxGroup,
-  CheckboxGroupError,
-  CheckboxGroupItems,
-  CheckboxGroupLabel,
-} from "@/components/ui/checkbox-group";
+import { CheckboxGroup } from "@/components/ui/checkbox-group";
+import { Form } from "@/components/ui/form";
 
 export function CheckboxGroupRequiredDemo() {
-  const [channels, setChannels] = useState<string[]>([]);
-
   return (
-    <CheckboxGroup
-      value={channels}
-      onChange={setChannels}
-      isInvalid={channels.length === 0}
+    <Form
       className="w-full max-w-sm"
+      onSubmit={(event) => {
+        event.preventDefault();
+      }}
     >
-      <CheckboxGroupLabel>Notification channels</CheckboxGroupLabel>
-      <CheckboxGroupItems>
+      <CheckboxGroup
+        label="Notification channels"
+        name="channels"
+        isRequired
+        errorMessage="Select at least one channel."
+      >
         <Checkbox value="email">Email</Checkbox>
         <Checkbox value="push">Push</Checkbox>
-      </CheckboxGroupItems>
-      <CheckboxGroupError>Select at least one channel.</CheckboxGroupError>
-    </CheckboxGroup>
+      </CheckboxGroup>
+      <Button type="submit">Save</Button>
+    </Form>
   );
 }
