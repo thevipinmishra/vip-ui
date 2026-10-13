@@ -23,7 +23,6 @@ import { NumberField } from "@/components/ui/number-field";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { showToast } from "@/components/ui/toast";
 import { Block, BlockBody, BlockFooter } from "./block";
-import { Part } from "./part";
 
 const seatPrice = 20;
 
@@ -43,106 +42,94 @@ export function PlanCard() {
       action={<Badge variant="accent">Pro</Badge>}
     >
       <BlockBody className="gap-0 pt-2">
-        <Part slug="tabs">
-          <Tabs defaultValue="usage">
-            <TabsList aria-label="Plan details" className="w-full">
-              <TabsTrigger value="usage" className="flex-1">
-                Usage
-              </TabsTrigger>
-              <TabsTrigger value="billing" className="flex-1">
-                Billing
-              </TabsTrigger>
-            </TabsList>
-            <TabsContent
-              value="usage"
-              className="mt-4 grid gap-4 rounded-none bg-transparent p-0 shadow-none ring-0"
-            >
-              <Part slug="meter">
-                <Meter
-                  label="Build minutes"
-                  value={1640}
-                  maxValue={2000}
-                  valueLabel="1,640 of 2,000"
-                />
-              </Part>
-              <Meter label="Bandwidth" value={48} valueLabel="48 of 100 GB" />
-              <Part slug="alert">
-                <Alert variant="warning" title="82% of build minutes used">
-                  New builds stop at the limit.
-                </Alert>
-              </Part>
-            </TabsContent>
-            <TabsContent
-              value="billing"
-              className="mt-4 rounded-none bg-transparent p-0 shadow-none ring-0"
-            >
-              <Part slug="description-list">
-                <DescriptionList className="sm:grid-cols-[minmax(0,7rem)_minmax(0,1fr)] sm:gap-y-3">
-                  <DescriptionTerm>Plan</DescriptionTerm>
-                  <DescriptionDetail>Pro, billed monthly</DescriptionDetail>
-                  <DescriptionTerm>Seats</DescriptionTerm>
-                  <DescriptionDetail>12 of 15 in use</DescriptionDetail>
-                  <DescriptionTerm>Price</DescriptionTerm>
-                  <DescriptionDetail>
-                    ${seatPrice} for each seat
-                  </DescriptionDetail>
-                  <DescriptionTerm>Card</DescriptionTerm>
-                  <DescriptionDetail>Visa ending in 4242</DescriptionDetail>
-                </DescriptionList>
-              </Part>
-            </TabsContent>
-          </Tabs>
-        </Part>
+        <Tabs defaultValue="usage">
+          <TabsList aria-label="Plan details" className="w-full">
+            <TabsTrigger value="usage" className="flex-1">
+              Usage
+            </TabsTrigger>
+            <TabsTrigger value="billing" className="flex-1">
+              Billing
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent
+            value="usage"
+            className="mt-4 grid gap-4 rounded-none bg-transparent p-0 shadow-none ring-0"
+          >
+            <Meter
+              label="Build minutes"
+              value={1640}
+              maxValue={2000}
+              valueLabel="1,640 of 2,000"
+            />
+            <Meter label="Bandwidth" value={48} valueLabel="48 of 100 GB" />
+            <Alert variant="warning" title="82% of build minutes used">
+              New builds stop at the limit.
+            </Alert>
+          </TabsContent>
+          <TabsContent
+            value="billing"
+            className="mt-4 rounded-none bg-transparent p-0 shadow-none ring-0"
+          >
+            <DescriptionList className="sm:grid-cols-[minmax(0,7rem)_minmax(0,1fr)] sm:gap-y-3">
+              <DescriptionTerm>Plan</DescriptionTerm>
+              <DescriptionDetail>Pro, billed monthly</DescriptionDetail>
+              <DescriptionTerm>Seats</DescriptionTerm>
+              <DescriptionDetail>12 of 15 in use</DescriptionDetail>
+              <DescriptionTerm>Price</DescriptionTerm>
+              <DescriptionDetail>${seatPrice} for each seat</DescriptionDetail>
+              <DescriptionTerm>Card</DescriptionTerm>
+              <DescriptionDetail>Visa ending in 4242</DescriptionDetail>
+            </DescriptionList>
+          </TabsContent>
+        </Tabs>
       </BlockBody>
       <BlockFooter className="pt-4">
-        <Part slug="dialog" className="w-full">
-          <Dialog>
-            <DialogTrigger variant="outline" className="w-full">
-              Change seats
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Change seats</DialogTitle>
-                <DialogClose aria-label="Close" />
-              </DialogHeader>
-              <DialogDescription>
-                Each seat costs ${seatPrice} each month. We charge the
-                difference on your next invoice.
-              </DialogDescription>
-              <NumberField
-                label="Seats"
-                minValue={12}
-                maxValue={100}
-                value={seats}
-                onChange={(value) => setSeats(Number.isNaN(value) ? 12 : value)}
-                description="You use 12 seats now."
-                className="mt-5"
-              />
-              <p className="mt-4 text-sm">
-                New total:{" "}
-                <span className="font-semibold tabular-nums">
-                  {money.format(seats * seatPrice)}
-                </span>{" "}
-                <span className="text-muted-foreground">each month</span>
-              </p>
-              <DialogFooter>
-                <DialogClose variant="outline">Cancel</DialogClose>
-                <DialogClose
-                  variant="default"
-                  onPress={() =>
-                    showToast({
-                      title: "Seats updated",
-                      description: `Your plan now has ${seats} seats.`,
-                      variant: "success",
-                    })
-                  }
-                >
-                  Save
-                </DialogClose>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-        </Part>
+        <Dialog>
+          <DialogTrigger variant="outline" className="w-full">
+            Change seats
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Change seats</DialogTitle>
+              <DialogClose aria-label="Close" />
+            </DialogHeader>
+            <DialogDescription>
+              Each seat costs ${seatPrice} each month. We charge the difference
+              on your next invoice.
+            </DialogDescription>
+            <NumberField
+              label="Seats"
+              minValue={12}
+              maxValue={100}
+              value={seats}
+              onChange={(value) => setSeats(Number.isNaN(value) ? 12 : value)}
+              description="You use 12 seats now."
+              className="mt-5"
+            />
+            <p className="mt-4 text-sm">
+              New total:{" "}
+              <span className="font-semibold tabular-nums">
+                {money.format(seats * seatPrice)}
+              </span>{" "}
+              <span className="text-muted-foreground">each month</span>
+            </p>
+            <DialogFooter>
+              <DialogClose variant="outline">Cancel</DialogClose>
+              <DialogClose
+                variant="default"
+                onPress={() =>
+                  showToast({
+                    title: "Seats updated",
+                    description: `Your plan now has ${seats} seats.`,
+                    variant: "success",
+                  })
+                }
+              >
+                Save
+              </DialogClose>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </BlockFooter>
     </Block>
   );

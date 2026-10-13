@@ -40,7 +40,6 @@ import { TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Tree, TreeItem } from "@/components/ui/tree";
 import { cn } from "@/lib/utils";
 import { Block, BlockBody } from "./block";
-import { Part } from "./part";
 
 const fileParents: Record<string, string | null> = {
   src: null,
@@ -81,63 +80,57 @@ export function FilesCard() {
     <Block
       title="Files"
       action={
-        <Part slug="command-palette" className="shrink-0">
-          <Button
-            variant="outline"
-            size="sm"
-            className="text-muted-foreground"
-            onPress={() => setSearching(true)}
-          >
-            <MagnifyingGlassIcon size={16} aria-hidden="true" />
-            Go to file
-          </Button>
-        </Part>
+        <Button
+          variant="outline"
+          size="sm"
+          className="shrink-0 text-muted-foreground"
+          onPress={() => setSearching(true)}
+        >
+          <MagnifyingGlassIcon size={16} aria-hidden="true" />
+          Go to file
+        </Button>
       }
     >
       <BlockBody className="gap-3 pt-3">
-        <Part slug="breadcrumbs">
-          <Breadcrumbs
-            aria-label="File path"
-            className="min-h-6 flex-wrap gap-1.5"
-            onAction={(key) => {
-              const segment = String(key).slice(crumb.length);
-              open(segment === "root" ? null : segment);
-            }}
-          >
-            <Breadcrumb id={`${crumb}root`}>acme-web</Breadcrumb>
-            {path.map((segment) => (
-              <Breadcrumb key={segment} id={`${crumb}${segment}`}>
-                {segment}
-              </Breadcrumb>
-            ))}
-          </Breadcrumbs>
-        </Part>
-        <Part slug="tree">
-          <Tree
-            aria-label="Files"
-            selectionMode="single"
-            selectedKeys={selected ? [selected] : []}
-            onSelectionChange={(keys) => {
-              const [key] = keys;
-              setSelected(key == null ? null : String(key));
-            }}
-            expandedKeys={expanded}
-            onExpandedChange={setExpanded}
-            className="-mx-2 max-h-none border-0 bg-transparent p-0 shadow-none"
-          >
-            <TreeItem id="src" title="src">
-              <TreeItem id="app" title="app">
-                <TreeItem id="layout.tsx" title="layout.tsx" icon={codeIcon} />
-                <TreeItem id="page.tsx" title="page.tsx" icon={codeIcon} />
-              </TreeItem>
-              <TreeItem id="components" title="components">
-                <TreeItem id="button.tsx" title="button.tsx" icon={codeIcon} />
-                <TreeItem id="dialog.tsx" title="dialog.tsx" icon={codeIcon} />
-              </TreeItem>
+        <Breadcrumbs
+          aria-label="File path"
+          className="min-h-6 flex-wrap gap-1.5"
+          onAction={(key) => {
+            const segment = String(key).slice(crumb.length);
+            open(segment === "root" ? null : segment);
+          }}
+        >
+          <Breadcrumb id={`${crumb}root`}>acme-web</Breadcrumb>
+          {path.map((segment) => (
+            <Breadcrumb key={segment} id={`${crumb}${segment}`}>
+              {segment}
+            </Breadcrumb>
+          ))}
+        </Breadcrumbs>
+        <Tree
+          aria-label="Files"
+          selectionMode="single"
+          selectedKeys={selected ? [selected] : []}
+          onSelectionChange={(keys) => {
+            const [key] = keys;
+            setSelected(key == null ? null : String(key));
+          }}
+          expandedKeys={expanded}
+          onExpandedChange={setExpanded}
+          className="-mx-2 max-h-none border-0 bg-transparent p-0 shadow-none"
+        >
+          <TreeItem id="src" title="src">
+            <TreeItem id="app" title="app">
+              <TreeItem id="layout.tsx" title="layout.tsx" icon={codeIcon} />
+              <TreeItem id="page.tsx" title="page.tsx" icon={codeIcon} />
             </TreeItem>
-            <TreeItem id="package.json" title="package.json" />
-          </Tree>
-        </Part>
+            <TreeItem id="components" title="components">
+              <TreeItem id="button.tsx" title="button.tsx" icon={codeIcon} />
+              <TreeItem id="dialog.tsx" title="dialog.tsx" icon={codeIcon} />
+            </TreeItem>
+          </TreeItem>
+          <TreeItem id="package.json" title="package.json" />
+        </Tree>
       </BlockBody>
       <CommandPalette
         isOpen={searching}
@@ -184,92 +177,85 @@ export function EditorCard() {
       title="Release notes"
       description="Draft. Saved 2 minutes ago."
       action={
-        <Part slug="button-group" className="shrink-0">
-          <ButtonGroup aria-label="Publish actions">
+        <ButtonGroup aria-label="Publish actions" className="shrink-0">
+          <Button
+            variant="outline"
+            size="sm"
+            onPress={() =>
+              showToast({
+                title: "Release notes published",
+                variant: "success",
+              })
+            }
+          >
+            Publish
+          </Button>
+          <MenuTrigger>
             <Button
               variant="outline"
               size="sm"
-              onPress={() =>
-                showToast({
-                  title: "Release notes published",
-                  variant: "success",
-                })
-              }
+              className="px-2"
+              aria-label="More publish actions"
             >
-              Publish
+              <CaretDownIcon size={16} aria-hidden="true" />
             </Button>
-            <MenuTrigger>
-              <Button
-                variant="outline"
-                size="sm"
-                className="px-2"
-                aria-label="More publish actions"
-              >
-                <CaretDownIcon size={16} aria-hidden="true" />
-              </Button>
-              <MenuPopover placement="bottom end">
-                <MenuContent aria-label="More publish actions">
-                  <MenuItem>Schedule for later</MenuItem>
-                  <MenuItem>Copy as Markdown</MenuItem>
-                  <MenuSeparator />
-                  <MenuItem className="text-destructive">Delete draft</MenuItem>
-                </MenuContent>
-              </MenuPopover>
-            </MenuTrigger>
-          </ButtonGroup>
-        </Part>
+            <MenuPopover placement="bottom end">
+              <MenuContent aria-label="More publish actions">
+                <MenuItem>Schedule for later</MenuItem>
+                <MenuItem>Copy as Markdown</MenuItem>
+                <MenuSeparator />
+                <MenuItem className="text-destructive">Delete draft</MenuItem>
+              </MenuContent>
+            </MenuPopover>
+          </MenuTrigger>
+        </ButtonGroup>
       }
     >
       <BlockBody className="gap-4">
-        <Part slug="inline-edit">
-          <InlineEdit
-            label="Title"
-            defaultValue="Version 2.4"
-            onSave={(next) => {
-              if (next.trim().length < 3) {
-                throw new Error("Use 3 characters or more.");
-              }
-            }}
-          />
-        </Part>
+        <InlineEdit
+          label="Title"
+          defaultValue="Version 2.4"
+          onSave={(next) => {
+            if (next.trim().length < 3) {
+              throw new Error("Use 3 characters or more.");
+            }
+          }}
+        />
         <div className="rounded-lg border border-border">
-          <Part slug="toolbar" className="rounded-b-none">
-            <Toolbar
-              aria-label="Text format"
-              className="w-full max-w-none gap-1 rounded-none rounded-t-lg border-0 border-b border-border bg-muted/50 p-1 shadow-none"
+          <Toolbar
+            aria-label="Text format"
+            className="w-full max-w-none gap-1 rounded-none rounded-t-lg border-0 border-b border-border bg-muted/50 p-1 shadow-none"
+          >
+            <ToggleButtonGroup
+              aria-label="Text style"
+              selectionMode="multiple"
+              selectedKeys={styles}
+              onSelectionChange={setStyles}
             >
-              <ToggleButtonGroup
-                aria-label="Text style"
-                selectionMode="multiple"
-                selectedKeys={styles}
-                onSelectionChange={setStyles}
-              >
-                {formats.map((format) => (
-                  <TooltipTrigger key={format.id}>
-                    <ToggleButton
-                      id={format.id}
-                      variant="segmented"
-                      aria-label={format.label}
-                    >
-                      <format.icon size={16} aria-hidden="true" />
-                    </ToggleButton>
-                    <TooltipContent>
-                      {format.label}{" "}
-                      <Kbd className="ms-1">Ctrl {format.key}</Kbd>
-                    </TooltipContent>
-                  </TooltipTrigger>
-                ))}
-              </ToggleButtonGroup>
-              <Separator
-                orientation="vertical"
-                className="mx-1 h-6 self-center"
-              />
-              <Button variant="ghost" size="sm">
-                <LinkIcon size={16} aria-hidden="true" />
-                Link
-              </Button>
-            </Toolbar>
-          </Part>
+              {formats.map((format) => (
+                <TooltipTrigger key={format.id}>
+                  <ToggleButton
+                    id={format.id}
+                    variant="segmented"
+                    aria-label={format.label}
+                  >
+                    <format.icon size={16} aria-hidden="true" />
+                  </ToggleButton>
+                  <TooltipContent>
+                    {format.label} <Kbd className="ms-1">Ctrl {format.key}</Kbd>
+                  </TooltipContent>
+                </TooltipTrigger>
+              ))}
+            </ToggleButtonGroup>
+            <Separator
+              orientation="vertical"
+              className="mx-1 h-6 self-center"
+            />
+            <Button variant="ghost" size="sm">
+              <LinkIcon size={16} aria-hidden="true" />
+              Link
+            </Button>
+          </Toolbar>
           <p
             className={cn(
               "px-4 py-3 text-sm leading-6",
@@ -299,23 +285,19 @@ export function ChecklistCard() {
   return (
     <Block title="Release checklist">
       <BlockBody className="gap-4">
-        <Part slug="progress-bar">
-          <ProgressBar
-            label="Done"
-            value={done.length}
-            maxValue={tasks.length}
-            valueLabel={`${done.length} of ${tasks.length}`}
-          />
-        </Part>
-        <Part slug="checkbox-group">
-          <CheckboxGroup aria-label="Tasks" value={done} onChange={setDone}>
-            {tasks.map((task) => (
-              <Checkbox key={task.id} value={task.id}>
-                {task.label}
-              </Checkbox>
-            ))}
-          </CheckboxGroup>
-        </Part>
+        <ProgressBar
+          label="Done"
+          value={done.length}
+          maxValue={tasks.length}
+          valueLabel={`${done.length} of ${tasks.length}`}
+        />
+        <CheckboxGroup aria-label="Tasks" value={done} onChange={setDone}>
+          {tasks.map((task) => (
+            <Checkbox key={task.id} value={task.id}>
+              {task.label}
+            </Checkbox>
+          ))}
+        </CheckboxGroup>
       </BlockBody>
     </Block>
   );
@@ -331,20 +313,18 @@ export function ActivityCard() {
   return (
     <Block title="Activity">
       <BlockBody className="pb-5">
-        <Part slug="timeline">
-          <Timeline aria-label="Activity">
-            {activity.map((item, index) => (
-              <TimelineItem
-                key={item.id}
-                status={index === 0 ? "latest" : "complete"}
-                className="pb-5"
-              >
-                <p className="text-sm font-semibold leading-6">{item.title}</p>
-                <TimelineTime className="mt-0">{item.time}</TimelineTime>
-              </TimelineItem>
-            ))}
-          </Timeline>
-        </Part>
+        <Timeline aria-label="Activity">
+          {activity.map((item, index) => (
+            <TimelineItem
+              key={item.id}
+              status={index === 0 ? "latest" : "complete"}
+              className="pb-5"
+            >
+              <p className="text-sm font-semibold leading-6">{item.title}</p>
+              <TimelineTime className="mt-0">{item.time}</TimelineTime>
+            </TimelineItem>
+          ))}
+        </Timeline>
       </BlockBody>
     </Block>
   );

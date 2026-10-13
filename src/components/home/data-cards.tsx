@@ -44,7 +44,6 @@ import {
 import { ToggleButton } from "@/components/ui/toggle-button";
 import { ToggleButtonGroup } from "@/components/ui/toggle-button-group";
 import { Block, BlockBody, BlockFooter } from "./block";
-import { Part } from "./part";
 
 type Period = "7d" | "30d" | "12m";
 
@@ -163,51 +162,46 @@ export function RevenueCard() {
     <Block
       title="Revenue"
       action={
-        <Part slug="toggle-button-group" className="shrink-0">
-          <ToggleButtonGroup
-            aria-label="Period"
-            selectionMode="single"
-            disallowEmptySelection
-            selectedKeys={[period]}
-            onSelectionChange={(keys) => {
-              const [next] = keys;
-              if (periods.includes(next as Period)) setPeriod(next as Period);
-            }}
-          >
-            {periods.map((key) => (
-              <ToggleButton
-                key={key}
-                id={key}
-                variant="segmented"
-                aria-label={periodNames[key]}
-              >
-                {key.toUpperCase()}
-              </ToggleButton>
-            ))}
-          </ToggleButtonGroup>
-        </Part>
+        <ToggleButtonGroup
+          className="shrink-0"
+          aria-label="Period"
+          selectionMode="single"
+          disallowEmptySelection
+          selectedKeys={[period]}
+          onSelectionChange={(keys) => {
+            const [next] = keys;
+            if (periods.includes(next as Period)) setPeriod(next as Period);
+          }}
+        >
+          {periods.map((key) => (
+            <ToggleButton
+              key={key}
+              id={key}
+              variant="segmented"
+              aria-label={periodNames[key]}
+            >
+              {key.toUpperCase()}
+            </ToggleButton>
+          ))}
+        </ToggleButtonGroup>
       }
     >
       <BlockBody className="gap-1 pb-0">
         <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
-          <Part slug="animated-number">
-            <AnimatedNumber
-              value={sum}
-              formatOptions={dollars}
-              className="block text-3xl font-semibold tracking-[-0.045em]"
-            />
-          </Part>
-          <Part slug="badge">
-            <Badge variant="success">
-              <TrendUpIcon size={13} weight="bold" aria-hidden="true" />
-              {revenueChange[period]}%
-            </Badge>
-          </Part>
+          <AnimatedNumber
+            value={sum}
+            formatOptions={dollars}
+            className="block text-3xl font-semibold tracking-[-0.045em]"
+          />
+          <Badge variant="success">
+            <TrendUpIcon size={13} weight="bold" aria-hidden="true" />
+            {revenueChange[period]}%
+          </Badge>
         </div>
         <p className="text-xs text-muted-foreground">
           Last {periodNames[period]}
         </p>
-        <Part name="Chart" slug="chart" href="/charts" className="-mx-5">
+        <div className="-mx-5 min-w-0">
           <ChartPlot
             title={`Revenue by plan for the last ${periodNames[period]}, in thousands of dollars`}
             columns={["Period", "Pro", "Team"]}
@@ -225,7 +219,7 @@ export function RevenueCard() {
               ariaLabel={`Revenue from Pro and Team plans for the last ${periodNames[period]}`}
             />
           </ChartPlot>
-        </Part>
+        </div>
       </BlockBody>
     </Block>
   );
@@ -274,76 +268,73 @@ export function InvoicesCard() {
     <Block
       title="Invoices"
       action={
-        <Part slug="search-field" className="w-36 shrink-0 sm:w-44">
-          <SearchField
-            aria-label="Search invoices"
-            placeholder="Search"
-            value={query}
-            onChange={(next) => {
-              setQuery(next);
-              setPage(0);
-            }}
-          />
-        </Part>
+        <SearchField
+          className="w-36 shrink-0 sm:w-44"
+          aria-label="Search invoices"
+          placeholder="Search"
+          value={query}
+          onChange={(next) => {
+            setQuery(next);
+            setPage(0);
+          }}
+        />
       }
     >
       <BlockBody className="@container gap-3 pb-3">
-        <Part slug="table">
-          <div className="overflow-x-auto rounded-lg border border-border">
-            <Table aria-label="Invoices">
-              <TableHeader>
-                <Column isRowHeader>Customer</Column>
-                <Column className="@max-[30rem]:hidden">Invoice</Column>
-                <Column className="@max-[22rem]:hidden">Status</Column>
-                <Column className="text-end">Amount</Column>
-              </TableHeader>
-              <TableBody
-                items={rows}
-                renderEmptyState={() => (
-                  <EmptyState className="m-3 gap-2 py-6">
-                    <EmptyStateIcon className="size-9">
-                      <MagnifyingGlassIcon size={16} />
-                    </EmptyStateIcon>
-                    <EmptyStateTitle className="text-sm">
-                      No invoices found
-                    </EmptyStateTitle>
-                    <EmptyStateDescription className="text-xs">
-                      Search for a different customer.
-                    </EmptyStateDescription>
-                  </EmptyState>
-                )}
-              >
-                {(invoice) => (
-                  <Row id={invoice.id}>
-                    <Cell>
-                      <span className="block truncate font-medium">
-                        {invoice.customer}
-                      </span>
-                      <Badge
-                        variant={statusVariant[invoice.status]}
-                        dot
-                        className="mt-1 @min-[22rem]:hidden"
-                      >
-                        {invoice.status}
-                      </Badge>
-                    </Cell>
-                    <Cell className="font-mono text-xs text-muted-foreground @max-[30rem]:hidden">
-                      {invoice.id}
-                    </Cell>
-                    <Cell className="@max-[22rem]:hidden">
-                      <Badge variant={statusVariant[invoice.status]} dot>
-                        {invoice.status}
-                      </Badge>
-                    </Cell>
-                    <Cell className="text-end tabular-nums">
-                      {money.format(invoice.amount)}
-                    </Cell>
-                  </Row>
-                )}
-              </TableBody>
-            </Table>
-          </div>
-        </Part>
+        <div className="overflow-x-auto rounded-lg border border-border">
+          <Table aria-label="Invoices">
+            <TableHeader>
+              <Column isRowHeader>Customer</Column>
+              <Column className="@max-[30rem]:hidden">Invoice</Column>
+              <Column className="@max-[22rem]:hidden">Status</Column>
+              <Column className="text-end">Amount</Column>
+            </TableHeader>
+            <TableBody
+              items={rows}
+              renderEmptyState={() => (
+                <EmptyState className="m-3 gap-2 py-6">
+                  <EmptyStateIcon className="size-9">
+                    <MagnifyingGlassIcon size={16} />
+                  </EmptyStateIcon>
+                  <EmptyStateTitle className="text-sm">
+                    No invoices found
+                  </EmptyStateTitle>
+                  <EmptyStateDescription className="text-xs">
+                    Search for a different customer.
+                  </EmptyStateDescription>
+                </EmptyState>
+              )}
+            >
+              {(invoice) => (
+                <Row id={invoice.id}>
+                  <Cell>
+                    <span className="block truncate font-medium">
+                      {invoice.customer}
+                    </span>
+                    <Badge
+                      variant={statusVariant[invoice.status]}
+                      dot
+                      className="mt-1 @min-[22rem]:hidden"
+                    >
+                      {invoice.status}
+                    </Badge>
+                  </Cell>
+                  <Cell className="font-mono text-xs text-muted-foreground @max-[30rem]:hidden">
+                    {invoice.id}
+                  </Cell>
+                  <Cell className="@max-[22rem]:hidden">
+                    <Badge variant={statusVariant[invoice.status]} dot>
+                      {invoice.status}
+                    </Badge>
+                  </Cell>
+                  <Cell className="text-end tabular-nums">
+                    {money.format(invoice.amount)}
+                  </Cell>
+                </Row>
+              )}
+            </TableBody>
+          </Table>
+        </div>
       </BlockBody>
       <BlockFooter className="flex-nowrap justify-between">
         <p className="text-xs text-muted-foreground" aria-live="polite">
@@ -351,38 +342,36 @@ export function InvoicesCard() {
             ? `${first}–${first + rows.length - 1} of ${matches.length}`
             : "0 results"}
         </p>
-        <Part slug="pagination">
-          <Pagination aria-label="Invoice pages">
-            <PaginationList className="flex-nowrap gap-1">
-              <PaginationItem>
-                <PaginationLink
-                  href="#invoices"
-                  aria-label="Previous page"
-                  isDisabled={page === 0}
-                  onClick={(event) => {
-                    event.preventDefault();
-                    setPage((current) => Math.max(0, current - 1));
-                  }}
-                >
-                  <CaretLeftIcon size={17} aria-hidden="true" />
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink
-                  href="#invoices"
-                  aria-label="Next page"
-                  isDisabled={page >= pages - 1}
-                  onClick={(event) => {
-                    event.preventDefault();
-                    setPage((current) => Math.min(pages - 1, current + 1));
-                  }}
-                >
-                  <CaretRightIcon size={17} aria-hidden="true" />
-                </PaginationLink>
-              </PaginationItem>
-            </PaginationList>
-          </Pagination>
-        </Part>
+        <Pagination aria-label="Invoice pages">
+          <PaginationList className="flex-nowrap gap-1">
+            <PaginationItem>
+              <PaginationLink
+                href="#invoices"
+                aria-label="Previous page"
+                isDisabled={page === 0}
+                onClick={(event) => {
+                  event.preventDefault();
+                  setPage((current) => Math.max(0, current - 1));
+                }}
+              >
+                <CaretLeftIcon size={17} aria-hidden="true" />
+              </PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink
+                href="#invoices"
+                aria-label="Next page"
+                isDisabled={page >= pages - 1}
+                onClick={(event) => {
+                  event.preventDefault();
+                  setPage((current) => Math.min(pages - 1, current + 1));
+                }}
+              >
+                <CaretRightIcon size={17} aria-hidden="true" />
+              </PaginationLink>
+            </PaginationItem>
+          </PaginationList>
+        </Pagination>
       </BlockFooter>
     </Block>
   );

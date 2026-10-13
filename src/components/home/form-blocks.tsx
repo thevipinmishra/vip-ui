@@ -37,7 +37,6 @@ import {
   TokenFieldLabel,
 } from "@/components/ui/token-field";
 import { Block, BlockBody, BlockFooter } from "./block";
-import { Part } from "./part";
 
 const alerts = [
   {
@@ -64,45 +63,39 @@ export function NotificationsBlock() {
   return (
     <Block title="Notifications">
       <BlockBody className="gap-0 pt-2">
-        <Part slug="switch">
-          {alerts.map((alert) => (
-            <Switch
-              key={alert.id}
-              defaultChecked={alert.on}
-              description={alert.description}
-              className="w-full py-2"
-            >
-              {alert.label}
-            </Switch>
-          ))}
-        </Part>
+        {alerts.map((alert) => (
+          <Switch
+            key={alert.id}
+            defaultChecked={alert.on}
+            description={alert.description}
+            className="w-full py-2"
+          >
+            {alert.label}
+          </Switch>
+        ))}
       </BlockBody>
       <BlockFooter className="block border-t border-border/70 pt-4">
-        <Part slug="fieldset">
-          <Fieldset
-            aria-describedby="quiet-hours-help"
-            className="rounded-none bg-transparent p-0 shadow-none ring-0"
-          >
-            <FieldsetLegend className="px-0">Quiet hours</FieldsetLegend>
-            <FieldsetDescription id="quiet-hours-help" className="mb-3">
-              We keep messages until this period ends.
-            </FieldsetDescription>
-            <div className="grid grid-cols-2 gap-3">
-              <Part slug="time-field">
-                <TimeField
-                  label="Start"
-                  hourCycle={24}
-                  defaultValue={new Time(22, 0)}
-                />
-              </Part>
-              <TimeField
-                label="End"
-                hourCycle={24}
-                defaultValue={new Time(7, 0)}
-              />
-            </div>
-          </Fieldset>
-        </Part>
+        <Fieldset
+          aria-describedby="quiet-hours-help"
+          className="rounded-none bg-transparent p-0 shadow-none ring-0"
+        >
+          <FieldsetLegend className="px-0">Quiet hours</FieldsetLegend>
+          <FieldsetDescription id="quiet-hours-help" className="mb-3">
+            We keep messages until this period ends.
+          </FieldsetDescription>
+          <div className="grid grid-cols-2 gap-3">
+            <TimeField
+              label="Start"
+              hourCycle={24}
+              defaultValue={new Time(22, 0)}
+            />
+            <TimeField
+              label="End"
+              hourCycle={24}
+              defaultValue={new Time(7, 0)}
+            />
+          </div>
+        </Fieldset>
       </BlockFooter>
     </Block>
   );
@@ -125,27 +118,21 @@ export function FeedbackBlock() {
         }}
       >
         <BlockBody>
-          <Part slug="rating-input">
-            <RatingInput label="Score" name="score" defaultValue={4} />
-          </Part>
-          <Part slug="tag-group">
-            <TagGroup
-              selectionMode="multiple"
-              defaultSelectedKeys={["Speed", "Docs"]}
-            >
-              <TagGroupLabel>What works well?</TagGroupLabel>
-              <TagListView items={topics.map((name) => ({ id: name, name }))}>
-                {(item) => <Tag id={item.id}>{item.name}</Tag>}
-              </TagListView>
-            </TagGroup>
-          </Part>
-          <Part slug="text-area">
-            <TextArea
-              label="Comment"
-              name="comment"
-              placeholder="Tell us what to change. This is optional."
-            />
-          </Part>
+          <RatingInput label="Score" name="score" defaultValue={4} />
+          <TagGroup
+            selectionMode="multiple"
+            defaultSelectedKeys={["Speed", "Docs"]}
+          >
+            <TagGroupLabel>What works well?</TagGroupLabel>
+            <TagListView items={topics.map((name) => ({ id: name, name }))}>
+              {(item) => <Tag id={item.id}>{item.name}</Tag>}
+            </TagListView>
+          </TagGroup>
+          <TextArea
+            label="Comment"
+            name="comment"
+            placeholder="Tell us what to change. This is optional."
+          />
         </BlockBody>
         <BlockFooter className="justify-end">
           <Button type="submit">Send feedback</Button>
@@ -173,15 +160,13 @@ export function TimeOffBlock() {
 
   return (
     <Block title="Time off">
-      <BlockBody className="justify-items-center">
-        <Part slug="range-calendar">
-          <RangeCalendar
-            aria-label="Days away"
-            className="max-sm:[--spacing:0.22rem]"
-            value={range}
-            onChange={setRange}
-          />
-        </Part>
+      <BlockBody className="grid-cols-1 justify-items-center">
+        <RangeCalendar
+          aria-label="Days away"
+          className="max-w-none max-sm:[--spacing:0.22rem]"
+          value={range}
+          onChange={setRange}
+        />
         <Switch
           defaultChecked
           description="People who write to you get your return date."
@@ -237,23 +222,19 @@ export function TeamBlock() {
   return (
     <Block title="Invite people">
       <BlockBody>
-        <Part slug="token-field">
-          <TokenField
-            allowsNewlines
-            value={emails}
-            onChange={setEmails}
-            onSubmit={() => setEmails(emails.commit())}
-          >
-            <TokenFieldLabel>Email addresses</TokenFieldLabel>
-            <TokenFieldInput placeholder="Add an email" />
-            <TokenFieldDescription>
-              Push Enter or type a comma after each address.
-            </TokenFieldDescription>
-          </TokenField>
-        </Part>
-        <Part slug="select">
-          <Select label="Role" defaultValue="editor" options={roles} />
-        </Part>
+        <TokenField
+          allowsNewlines
+          value={emails}
+          onChange={setEmails}
+          onSubmit={() => setEmails(emails.commit())}
+        >
+          <TokenFieldLabel>Email addresses</TokenFieldLabel>
+          <TokenFieldInput placeholder="Add an email" />
+          <TokenFieldDescription>
+            Push Enter or type a comma after each address.
+          </TokenFieldDescription>
+        </TokenField>
+        <Select label="Role" defaultValue="editor" options={roles} />
         <Button
           isDisabled={count === 0}
           onPress={() => {
@@ -268,7 +249,7 @@ export function TeamBlock() {
         </Button>
       </BlockBody>
       <BlockFooter className="flex-nowrap justify-between gap-3 border-t border-border/70 pt-4">
-        <Part slug="avatar" className="flex items-center gap-3">
+        <div className="flex min-w-0 items-center gap-3">
           <AvatarGroup
             aria-label="Members"
             className="-space-x-1 [&_[data-slot=avatar]]:ring-card"
@@ -280,16 +261,15 @@ export function TeamBlock() {
           <span className="truncate text-sm text-muted-foreground">
             12 members
           </span>
-        </Part>
-        <Part slug="copy-button" className="shrink-0">
-          <CopyButton
-            value="https://acme.app/join/7fq2"
-            size="sm"
-            aria-label="Copy the invite link"
-          >
-            {(status) => (status === "copied" ? "Copied" : "Copy link")}
-          </CopyButton>
-        </Part>
+        </div>
+        <CopyButton
+          className="shrink-0"
+          value="https://acme.app/join/7fq2"
+          size="sm"
+          aria-label="Copy the invite link"
+        >
+          {(status) => (status === "copied" ? "Copied" : "Copy link")}
+        </CopyButton>
       </BlockFooter>
     </Block>
   );

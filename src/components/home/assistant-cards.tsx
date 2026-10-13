@@ -35,7 +35,6 @@ import {
   ToolCallTrigger,
 } from "@/components/ui/tool-call";
 import { Block, BlockBody, BlockFooter } from "./block";
-import { Part } from "./part";
 
 const replies = [
   "Use Dialog for a task that needs a decision now. Use Sheet for a long form at the side of the page.",
@@ -103,50 +102,44 @@ export function ChatCard() {
         className="max-h-[32rem] min-h-0 flex-1 overflow-y-auto outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring"
       >
         <BlockBody className="gap-3">
-          <Part slug="message">
-            <Message side="outgoing" sender="You">
-              Which component do I use for a settings form?
-            </Message>
-          </Part>
-          <Part slug="tool-call">
-            <ToolCall>
-              <ToolCallTrigger
-                name="search_docs"
-                status="complete"
-                summary="Read 3 component pages"
-              />
-              <ToolCallPanel>
-                <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-xs">
-                  <dt className="text-muted-foreground">Query</dt>
-                  <dd className="font-mono">settings form</dd>
-                  <dt className="text-muted-foreground">Pages</dt>
-                  <dd className="font-mono">switch, checkbox, fieldset</dd>
-                </dl>
-              </ToolCallPanel>
-            </ToolCall>
-          </Part>
+          <Message side="outgoing" sender="You">
+            Which component do I use for a settings form?
+          </Message>
+          <ToolCall>
+            <ToolCallTrigger
+              name="search_docs"
+              status="complete"
+              summary="Read 3 component pages"
+            />
+            <ToolCallPanel>
+              <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-xs">
+                <dt className="text-muted-foreground">Query</dt>
+                <dd className="font-mono">settings form</dd>
+                <dt className="text-muted-foreground">Pages</dt>
+                <dd className="font-mono">switch, checkbox, fieldset</dd>
+              </dl>
+            </ToolCallPanel>
+          </ToolCall>
           <Message side="incoming" sender="Assistant" avatar={assistant}>
             Use Switch for a setting that applies at once. Use Checkbox when
             people must push Save. Put related controls in a Fieldset.
           </Message>
-          <Part slug="source-link">
-            <div className="grid gap-2 sm:grid-cols-2">
-              <SourceLink
-                href="/components/switch"
-                index={1}
-                label="Switch"
-                source="vip/ui docs"
-                className="p-3"
-              />
-              <SourceLink
-                href="/components/fieldset"
-                index={2}
-                label="Fieldset"
-                source="vip/ui docs"
-                className="p-3"
-              />
-            </div>
-          </Part>
+          <div className="grid gap-2 sm:grid-cols-2">
+            <SourceLink
+              href="/components/switch"
+              index={1}
+              label="Switch"
+              source="vip/ui docs"
+              className="p-3"
+            />
+            <SourceLink
+              href="/components/fieldset"
+              index={2}
+              label="Fieldset"
+              source="vip/ui docs"
+              className="p-3"
+            />
+          </div>
           {turns.map((turn) => (
             <Fragment key={turn.id}>
               <Message side="outgoing" sender="You">
@@ -157,13 +150,11 @@ export function ChatCard() {
                   {turn.answer}
                 </Message>
               ) : (
-                <Part slug="agent-status">
-                  <AgentStatus
-                    state="working"
-                    label="Reading the docs"
-                    detail="Searching the component pages"
-                  />
-                </Part>
+                <AgentStatus
+                  state="working"
+                  label="Reading the docs"
+                  detail="Searching the component pages"
+                />
               )}
             </Fragment>
           ))}
@@ -177,32 +168,30 @@ export function ChatCard() {
             send();
           }}
         >
-          <Part slug="input-group">
-            <TextField
-              name="prompt"
-              value={draft}
-              onChange={setDraft}
-              className="w-full"
-            >
-              <TextFieldLabel className="sr-only">
-                Ask the assistant
-              </TextFieldLabel>
-              <InputGroup>
-                <InputGroupInput placeholder="Ask about a component" />
-                <InputGroupAddon>
-                  <Button
-                    type="submit"
-                    size="icon"
-                    className="size-9"
-                    aria-label="Send"
-                    isDisabled={!draft.trim() || working}
-                  >
-                    <PaperPlaneRightIcon size={16} aria-hidden="true" />
-                  </Button>
-                </InputGroupAddon>
-              </InputGroup>
-            </TextField>
-          </Part>
+          <TextField
+            name="prompt"
+            value={draft}
+            onChange={setDraft}
+            className="w-full"
+          >
+            <TextFieldLabel className="sr-only">
+              Ask the assistant
+            </TextFieldLabel>
+            <InputGroup>
+              <InputGroupInput placeholder="Ask about a component" />
+              <InputGroupAddon>
+                <Button
+                  type="submit"
+                  size="icon"
+                  className="size-9"
+                  aria-label="Send"
+                  isDisabled={!draft.trim() || working}
+                >
+                  <PaperPlaneRightIcon size={16} aria-hidden="true" />
+                </Button>
+              </InputGroupAddon>
+            </InputGroup>
+          </TextField>
         </Form>
       </BlockFooter>
     </Block>
@@ -237,14 +226,12 @@ export function DeployCard() {
       }
     >
       <BlockBody className="gap-3">
-        <Part slug="stepper">
-          <Stepper
-            steps={stages}
-            currentStep={stage}
-            aria-label="Deploy progress"
-            className="py-1 [&_[data-slot=stepper-step]]:min-w-0"
-          />
-        </Part>
+        <Stepper
+          steps={stages}
+          currentStep={stage}
+          aria-label="Deploy progress"
+          className="py-1 [&_[data-slot=stepper-step]]:min-w-0"
+        />
         <div className="flex min-h-11 items-center gap-2.5 rounded-lg bg-muted/60 px-3 text-sm">
           {running ? (
             <Spinner size="sm" decorative className="text-primary" />
@@ -364,83 +351,79 @@ export function UploadCard() {
   return (
     <Block title="Uploads" description="PNG, JPEG, or PDF. 10 MB or less.">
       <BlockBody ref={body} className="gap-3">
-        <Part slug="drop-zone">
-          <DropZone
-            className="min-h-24 flex-row gap-3 p-4"
-            getDropOperation={(types) =>
-              acceptedTypes.some((type) => types.has(type)) ? "copy" : "cancel"
-            }
-            onDrop={async ({ items }) => {
-              add(
-                await Promise.all(
-                  items
-                    .filter(
-                      (item: DropItem): item is FileDropItem =>
-                        item.kind === "file",
-                    )
-                    .map((item) => item.getFile()),
-                ),
-              );
+        <DropZone
+          className="min-h-24 flex-row gap-3 p-4"
+          getDropOperation={(types) =>
+            acceptedTypes.some((type) => types.has(type)) ? "copy" : "cancel"
+          }
+          onDrop={async ({ items }) => {
+            add(
+              await Promise.all(
+                items
+                  .filter(
+                    (item: DropItem): item is FileDropItem =>
+                      item.kind === "file",
+                  )
+                  .map((item) => item.getFile()),
+              ),
+            );
+          }}
+        >
+          <span
+            aria-hidden="true"
+            className="grid size-9 shrink-0 place-items-center rounded-lg bg-accent text-accent-foreground"
+          >
+            <CloudArrowUpIcon size={17} />
+          </span>
+          <DropZoneLabel>Drop files here</DropZoneLabel>
+          <FileTrigger
+            acceptedFileTypes={acceptedTypes}
+            allowsMultiple
+            onSelect={(files) => {
+              if (files) add(Array.from(files));
             }}
           >
-            <span
-              aria-hidden="true"
-              className="grid size-9 shrink-0 place-items-center rounded-lg bg-accent text-accent-foreground"
-            >
-              <CloudArrowUpIcon size={17} />
-            </span>
-            <DropZoneLabel>Drop files here</DropZoneLabel>
-            <FileTrigger
-              acceptedFileTypes={acceptedTypes}
-              allowsMultiple
-              onSelect={(files) => {
-                if (files) add(Array.from(files));
+            <Button ref={picker} variant="outline" size="sm">
+              Browse
+            </Button>
+          </FileTrigger>
+        </DropZone>
+        <AttachmentList aria-label="Uploads">
+          {uploads.map((upload) => (
+            <Attachment
+              key={upload.id}
+              name={upload.name}
+              size={upload.size}
+              status={upload.status}
+              progress={upload.progress}
+              errorMessage={upload.error}
+              onRetry={
+                upload.canRetry
+                  ? () =>
+                      setUploads((current) =>
+                        current.map((item) =>
+                          item.id === upload.id
+                            ? {
+                                ...item,
+                                status: "uploading",
+                                progress: 0,
+                                error: undefined,
+                                canRetry: false,
+                              }
+                            : item,
+                        ),
+                      )
+                  : undefined
+              }
+              onRemove={() => {
+                picker.current?.focus();
+                setUploads((current) =>
+                  current.filter((item) => item.id !== upload.id),
+                );
               }}
-            >
-              <Button ref={picker} variant="outline" size="sm">
-                Browse
-              </Button>
-            </FileTrigger>
-          </DropZone>
-        </Part>
-        <Part slug="attachment">
-          <AttachmentList aria-label="Uploads">
-            {uploads.map((upload) => (
-              <Attachment
-                key={upload.id}
-                name={upload.name}
-                size={upload.size}
-                status={upload.status}
-                progress={upload.progress}
-                errorMessage={upload.error}
-                onRetry={
-                  upload.canRetry
-                    ? () =>
-                        setUploads((current) =>
-                          current.map((item) =>
-                            item.id === upload.id
-                              ? {
-                                  ...item,
-                                  status: "uploading",
-                                  progress: 0,
-                                  error: undefined,
-                                  canRetry: false,
-                                }
-                              : item,
-                          ),
-                        )
-                    : undefined
-                }
-                onRemove={() => {
-                  picker.current?.focus();
-                  setUploads((current) =>
-                    current.filter((item) => item.id !== upload.id),
-                  );
-                }}
-              />
-            ))}
-          </AttachmentList>
-        </Part>
+            />
+          ))}
+        </AttachmentList>
       </BlockBody>
     </Block>
   );

@@ -5,11 +5,6 @@ import { SiteHeader } from "@/components/docs/site-header";
 import { HomeShowcase } from "@/components/home/home-showcase";
 import { ButtonLink } from "@/components/ui/button-link";
 
-const showcaseLinks = [
-  { href: "/components", label: "All components" },
-  { href: "/blocks", label: "All blocks" },
-];
-
 export default function Home() {
   return (
     <div className="min-h-screen overflow-x-clip bg-background text-foreground">
@@ -47,33 +42,8 @@ export default function Home() {
 
         <section
           id="components"
-          aria-labelledby="components-heading"
           className="mx-auto max-w-7xl scroll-mt-28 px-5 pb-24 sm:px-8 sm:pb-32"
         >
-          <div className="mb-8 flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
-            <div className="max-w-xl">
-              <h2
-                id="components-heading"
-                className="text-2xl font-semibold tracking-[-0.04em] sm:text-3xl"
-              >
-                Built with vip/ui
-              </h2>
-              <p className="mt-2 text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7">
-                Each card uses only components from this library.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-x-6">
-              {showcaseLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="inline-flex min-h-10 items-center gap-2 rounded-sm text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-                >
-                  {link.label} <ArrowRightIcon size={15} aria-hidden="true" />
-                </Link>
-              ))}
-            </div>
-          </div>
           <HomeShowcase />
         </section>
       </main>
