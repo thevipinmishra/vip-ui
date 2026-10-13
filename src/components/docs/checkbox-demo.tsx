@@ -1,34 +1,45 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { CheckboxGroup } from "@/components/ui/checkbox-group";
+
+const topics = [
+  { id: "product", label: "Product updates" },
+  { id: "digest", label: "Weekly digest" },
+  { id: "events", label: "Events" },
+];
 
 export function CheckboxDemo() {
-  const [updates, setUpdates] = useState(true);
-  const [digest, setDigest] = useState(false);
-  const selected = Number(updates) + Number(digest);
-  const email =
-    selected === 2 ? true : selected === 0 ? false : "indeterminate";
+  const topicsId = useId();
+  const [selected, setSelected] = useState(["product"]);
+  const allSelected = selected.length === topics.length;
 
   return (
-    <div className="grid gap-1">
+    <div className="grid w-full max-w-sm">
       <Checkbox
-        checked={email}
-        onCheckedChange={(checked) => {
-          setUpdates(checked);
-          setDigest(checked);
-        }}
+        aria-controls={topicsId}
+        isSelected={allSelected}
+        isIndeterminate={selected.length > 0 && !allSelected}
+        onChange={(isSelected) =>
+          setSelected(isSelected ? topics.map((topic) => topic.id) : [])
+        }
       >
-        Email notifications
+        All email
       </Checkbox>
-      <div className="grid gap-1 ps-8">
-        <Checkbox checked={updates} onCheckedChange={setUpdates}>
-          Product updates
-        </Checkbox>
-        <Checkbox checked={digest} onCheckedChange={setDigest}>
-          Weekly digest
-        </Checkbox>
-      </div>
+      <CheckboxGroup
+        id={topicsId}
+        aria-label="Email topics"
+        value={selected}
+        onChange={setSelected}
+        className="ps-8"
+      >
+        {topics.map((topic) => (
+          <Checkbox key={topic.id} value={topic.id}>
+            {topic.label}
+          </Checkbox>
+        ))}
+      </CheckboxGroup>
     </div>
   );
 }

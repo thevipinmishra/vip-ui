@@ -623,9 +623,11 @@
       },
       "cssVars": {
         "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
           "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
         },
         "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
           "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
         }
       },
@@ -639,6 +641,11 @@
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/checkbox.tsx",
@@ -1162,14 +1169,14 @@
           "target": "@components/vip-ui/button.tsx"
         },
         {
-          "path": "registry/generated/src/components/vip-ui/checkbox.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/checkbox.tsx"
-        },
-        {
           "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/checkbox.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/checkbox.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/search-field.tsx",
@@ -3090,6 +3097,11 @@
           "target": "@components/vip-ui/utils.ts"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/switch.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/switch.tsx"
@@ -4101,6 +4113,11 @@
           "target": "@components/vip-ui/card.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/checkbox.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/checkbox.tsx"
@@ -4114,11 +4131,6 @@
           "path": "registry/generated/src/components/vip-ui/link.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/link.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/field-styles.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/input-group.tsx",
@@ -4303,6 +4315,11 @@
           "target": "@components/vip-ui/card.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/checkbox.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/checkbox.tsx"
@@ -4316,11 +4333,6 @@
           "path": "registry/generated/src/components/vip-ui/link.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/link.tsx"
-        },
-        {
-          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/field-styles.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/input-group.tsx",
@@ -4546,14 +4558,14 @@
           "target": "@components/vip-ui/card.tsx"
         },
         {
-          "path": "registry/generated/src/components/vip-ui/checkbox.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/checkbox.tsx"
-        },
-        {
           "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/checkbox.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/checkbox.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/radio-group.tsx",

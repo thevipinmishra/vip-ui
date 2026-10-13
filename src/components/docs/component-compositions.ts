@@ -423,11 +423,43 @@ export const compositions: Record<string, Composition> = {
       },
     ],
   },
+  checkbox: {
+    parts: [
+      {
+        part: "CheckboxField",
+        purpose: "Owns the checked state and validation.",
+        children: [
+          {
+            part: "CheckboxButton",
+            purpose:
+              "The clickable label. Its text becomes the accessible name.",
+            children: [
+              { part: "CheckboxIndicator", purpose: "Draws the box." },
+              { part: "CheckboxLabel", purpose: "Names the option." },
+            ],
+          },
+          {
+            part: "CheckboxDescription",
+            purpose: "Adds help below the label. Read as the description.",
+          },
+          {
+            part: "CheckboxError",
+            purpose: "Shows the validation message.",
+          },
+        ],
+      },
+    ],
+    helper: {
+      part: "Checkbox",
+      purpose:
+        "Renders all of these parts from children, description, and errorMessage. Use the parts only for a custom layout.",
+    },
+  },
   "checkbox-group": {
     parts: [
       {
         part: "CheckboxGroup",
-        purpose: "Owns the selected values.",
+        purpose: "Owns the selected values. Lays out its children in a column.",
         children: [
           { part: "CheckboxGroupLabel", purpose: "Names the group." },
           {
@@ -436,7 +468,7 @@ export const compositions: Record<string, Composition> = {
           },
           {
             part: "CheckboxGroupItems",
-            purpose: "Contains the choices.",
+            purpose: "Optional. Wraps the choices to change their layout.",
             children: [
               {
                 part: "Checkbox",
@@ -456,7 +488,8 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "RadioGroup",
-        purpose: "Owns the single selected value.",
+        purpose:
+          "Owns the single selected value. Lays out its children by orientation.",
         children: [
           { part: "RadioGroupLabel", purpose: "Names the group." },
           {
@@ -465,11 +498,27 @@ export const compositions: Record<string, Composition> = {
           },
           {
             part: "RadioGroupItems",
-            purpose: "Contains the choices and follows the orientation.",
+            purpose: "Optional. Wraps the choices to change their gap.",
             children: [
               {
-                part: "Radio",
+                part: "RadioField",
                 purpose: "Defines one choice. Repeat for each option.",
+                children: [
+                  {
+                    part: "RadioButton",
+                    purpose:
+                      "The clickable label. Its text becomes the accessible name.",
+                    children: [
+                      { part: "RadioIndicator", purpose: "Draws the circle." },
+                      { part: "RadioLabel", purpose: "Names the option." },
+                    ],
+                  },
+                  {
+                    part: "RadioDescription",
+                    purpose:
+                      "Adds help below the label. Read as the description.",
+                  },
+                ],
               },
             ],
           },
@@ -480,6 +529,11 @@ export const compositions: Record<string, Composition> = {
         ],
       },
     ],
+    helper: {
+      part: "Radio",
+      purpose:
+        "Renders RadioField and its parts from children and description. Use the parts only for a custom layout.",
+    },
   },
   breadcrumbs: {
     parts: [
@@ -881,21 +935,40 @@ export const compositions: Record<string, Composition> = {
   switch: {
     parts: [
       {
-        part: "Switch",
-        purpose: "Owns the on and off state.",
+        part: "SwitchField",
+        purpose: "Owns the on and off state and validation.",
         children: [
-          { part: "SwitchLabel", purpose: "Names the setting." },
-          { part: "SwitchDescription", purpose: "Adds help below the label." },
           {
-            part: "SwitchControl",
-            purpose: "Draws the track.",
+            part: "SwitchButton",
+            purpose:
+              "The clickable label. Its text becomes the accessible name.",
             children: [
-              { part: "SwitchThumb", purpose: "Moves when the state changes." },
+              { part: "SwitchLabel", purpose: "Names the setting." },
+              {
+                part: "SwitchControl",
+                purpose: "Draws the track.",
+                children: [
+                  {
+                    part: "SwitchThumb",
+                    purpose: "Moves when the state changes.",
+                  },
+                ],
+              },
             ],
           },
+          {
+            part: "SwitchDescription",
+            purpose: "Adds help below the label. Read as the description.",
+          },
+          { part: "SwitchError", purpose: "Shows the validation message." },
         ],
       },
     ],
+    helper: {
+      part: "Switch",
+      purpose:
+        "Renders all of these parts from children, description, and errorMessage. Use the parts only for a custom layout.",
+    },
   },
   autocomplete: {
     parts: [
