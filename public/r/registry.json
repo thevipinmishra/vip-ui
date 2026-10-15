@@ -2354,7 +2354,6 @@
       "title": "Popover",
       "description": "Show contextual content anchored to a trigger.",
       "dependencies": [
-        "motion@^13.5.1",
         "react-aria-components@^1.22.1",
         "tailwind-variants@^3.3.1"
       ],
@@ -2371,11 +2370,6 @@
         }
       },
       "files": [
-        {
-          "path": "registry/generated/src/components/vip-ui/motion.ts",
-          "type": "registry:file",
-          "target": "@components/vip-ui/motion.ts"
-        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
