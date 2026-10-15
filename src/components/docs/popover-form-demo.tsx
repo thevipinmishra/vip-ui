@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -12,6 +13,7 @@ import {
 import { TextArea } from "@/components/ui/text-area";
 
 export function PopoverFormDemo() {
+  const [feedback, setFeedback] = useState("");
   return (
     <PopoverTrigger>
       <Button variant="outline">Feedback</Button>
@@ -21,6 +23,7 @@ export function PopoverFormDemo() {
             <form
               onSubmit={(event) => {
                 event.preventDefault();
+                setFeedback("");
                 close();
               }}
             >
@@ -33,7 +36,8 @@ export function PopoverFormDemo() {
                 name="feedback"
                 placeholder="I wish this page…"
                 rows={3}
-                isRequired
+                value={feedback}
+                onChange={setFeedback}
                 autoFocus
                 className="mt-4"
               />
@@ -41,7 +45,7 @@ export function PopoverFormDemo() {
                 <Button slot="close" variant="ghost" size="sm">
                   Cancel
                 </Button>
-                <Button type="submit" size="sm">
+                <Button type="submit" size="sm" isDisabled={!feedback.trim()}>
                   Send
                 </Button>
               </PopoverFooter>

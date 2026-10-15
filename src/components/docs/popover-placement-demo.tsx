@@ -40,7 +40,7 @@ export function PopoverPlacementDemo() {
           <Button variant="outline" className={item.cell}>
             {item.label}
           </Button>
-          <Popover placement={item.placement} className="w-56 p-4">
+          <Popover placement={item.placement} className="w-44 p-4 sm:w-56">
             <PopoverArrow />
             <PopoverDialog>
               <PopoverTitle>{item.label}</PopoverTitle>
