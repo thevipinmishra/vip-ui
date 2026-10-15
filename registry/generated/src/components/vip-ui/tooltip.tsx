@@ -1,6 +1,5 @@
 "use client";
 
-import { type HTMLMotionProps, motion, useReducedMotion } from "motion/react";
 import {
   Tooltip as AriaTooltip,
   type TooltipProps as AriaTooltipProps,
@@ -8,7 +7,6 @@ import {
   composeRenderProps,
   type TooltipTriggerComponentProps,
 } from "react-aria-components";
-import { easeOut, edgeOffset } from "./motion";
 import { cn } from "./utils";
 
 type TooltipProps = AriaTooltipProps;
@@ -21,42 +19,20 @@ export function TooltipTrigger({
 }
 
 export function Tooltip({ className, offset = 8, ...props }: TooltipProps) {
-  const reduceMotion = useReducedMotion();
-
   return (
     <AriaTooltip
       {...props}
       data-slot="tooltip-content"
       offset={offset}
-      render={
-        props.render ??
-        ((domProps, { placement, isExiting }) => (
-          <motion.div
-            {...(domProps as HTMLMotionProps<"div">)}
-            initial={
-              reduceMotion
-                ? false
-                : { opacity: 0, ...edgeOffset(placement, 3), scale: 0.98 }
-            }
-            animate={
-              isExiting
-                ? {
-                    opacity: 0,
-                    ...(reduceMotion ? {} : edgeOffset(placement, 3)),
-                    scale: reduceMotion ? 1 : 0.99,
-                  }
-                : { opacity: 1, x: 0, y: 0, scale: 1 }
-            }
-            transition={{
-              duration: reduceMotion ? 0 : isExiting ? 0.12 : 0.18,
-              ease: easeOut,
-            }}
-          />
-        ))
-      }
       className={composeRenderProps(className, (className) =>
         cn(
           "max-w-[min(14rem,calc(100vw-1.5rem))] overflow-auto overscroll-contain rounded-md bg-foreground px-3 py-2 text-xs leading-5 text-background [overflow-wrap:anywhere] shadow-[var(--shadow-float)] outline-none forced-colors:border",
+          // React Aria sets data-entering and data-exiting once the placement is
+          // known, then waits for these transitions before it unmounts the tooltip.
+          "origin-(--trigger-anchor-point) transition-[opacity,scale,translate] duration-180 ease-[cubic-bezier(0.23,1,0.32,1)]",
+          "placement-top:[--tooltip-shift:0_3px] placement-bottom:[--tooltip-shift:0_-3px] placement-left:[--tooltip-shift:3px_0] placement-right:[--tooltip-shift:-3px_0]",
+          "entering:opacity-0 motion-safe:entering:scale-98 motion-safe:entering:[translate:var(--tooltip-shift)]",
+          "exiting:opacity-0 exiting:duration-120 motion-safe:exiting:scale-99 motion-safe:exiting:[translate:var(--tooltip-shift)]",
           className,
         ),
       )}
