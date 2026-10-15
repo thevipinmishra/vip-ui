@@ -186,8 +186,8 @@ export const compositions: Record<string, Composition> = {
   popover: {
     parts: [
       {
-        part: "DialogTrigger",
-        purpose: "Owns the open state. Import it from react-aria-components.",
+        part: "PopoverTrigger",
+        purpose: "Owns the open state.",
         children: [
           { part: "Button", purpose: "Opens the popover." },
           {
@@ -195,13 +195,30 @@ export const compositions: Record<string, Composition> = {
             purpose: "Shows the panel next to the trigger.",
             children: [
               {
-                part: "Dialog",
-                purpose:
-                  "Holds the content and moves focus into it. Import it from react-aria-components.",
+                part: "PopoverArrow",
+                purpose: "Optional. Points at the trigger.",
+              },
+              {
+                part: "PopoverDialog",
+                purpose: "Holds the content and moves focus into it.",
                 children: [
                   {
-                    part: "Heading",
-                    purpose: 'Names the popover. Set slot="title".',
+                    part: "PopoverTitle",
+                    purpose: "Names the popover.",
+                  },
+                  {
+                    part: "PopoverDescription",
+                    purpose: "Optional. Describes the popover.",
+                  },
+                  {
+                    part: "PopoverFooter",
+                    purpose: "Optional. Holds the actions.",
+                    children: [
+                      {
+                        part: "Button",
+                        purpose: 'Set slot="close" to close the popover.',
+                      },
+                    ],
                   },
                 ],
               },

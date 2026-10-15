@@ -1209,7 +1209,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "string | ((values) => string)",
       defaultValue: "—",
       description:
-        "Set a width here, for example w-72. Without a width, the panel grows with its content, up to the viewport width minus 2rem.",
+        "Set a width here, for example w-72. Without a width, the panel grows with its content, up to the viewport width minus 2rem. Use w-(--trigger-width) to match the trigger.",
     },
     {
       component: "Popover",
@@ -1217,7 +1217,55 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "Placement",
       defaultValue: '"bottom"',
       description:
-        "The side of the trigger. If there is not sufficient space, the panel moves to the opposite side.",
+        "The side of the trigger, optionally followed by an alignment, for example bottom start. start and end follow the reading direction. If there is not sufficient space, the panel moves to the opposite side.",
+    },
+    {
+      component: "Popover",
+      prop: "offset / crossOffset",
+      type: "number",
+      defaultValue: "8 / 0",
+      description:
+        "The distance from the trigger, and the shift along the trigger's edge, in pixels.",
+    },
+    {
+      component: "Popover",
+      prop: "maxHeight",
+      type: "number",
+      defaultValue: "—",
+      description:
+        "Caps the panel height. The panel always fits the viewport and scrolls when its content is taller. A panel with PopoverArrow does not scroll.",
+    },
+    {
+      component: "Popover",
+      prop: "triggerRef",
+      type: "RefObject<Element | null>",
+      defaultValue: "—",
+      description:
+        "Anchors the panel to a different element than the trigger. Required with isOpen when you use Popover without PopoverTrigger.",
+    },
+    {
+      component: "Popover",
+      prop: "data-placement / data-trigger",
+      type: "attributes",
+      defaultValue: "—",
+      description:
+        "Set on the panel. data-placement is the side it opened on. data-trigger names the component that opened it, for example DialogTrigger or PreviewTrigger. The panel scales from --trigger-anchor-point.",
+    },
+    {
+      component: "PopoverTrigger",
+      prop: "isOpen / onOpenChange",
+      type: "boolean / (isOpen: boolean) => void",
+      defaultValue: "—",
+      description:
+        "Controls the open state. Without them, the trigger manages it. The first child opens the popover.",
+    },
+    {
+      component: "PopoverDialog",
+      prop: "children",
+      type: "ReactNode | ({ close }) => ReactNode",
+      defaultValue: "—",
+      description:
+        'Moves focus into the panel and keeps it there. Name it with PopoverTitle or aria-label. Use the function form to close after an action. A Button with slot="close" inside it closes the popover.',
     },
   ],
   sheet: [
