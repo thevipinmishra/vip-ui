@@ -912,7 +912,7 @@ export const componentPageData = {
       {
         title: "Form",
         description:
-          'PopoverDialog passes close to a function child. Call it after the form submits. A Button with slot="close" closes the popover without submitting. Focus moves to the field with autoFocus and returns to the trigger on close. Install Text area separately.',
+          'PopoverDialog passes close to a function child. Call it after the form submits. A Button with slot="close" closes the popover without submitting. Send stays disabled until the field has text. Focus moves to the field with autoFocus and returns to the trigger on close. Install Text area separately.',
         sourcePath: "popover-form-demo.tsx",
       },
       {
