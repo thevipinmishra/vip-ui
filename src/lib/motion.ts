@@ -30,16 +30,3 @@ export function transitionFor(
 ): Transition {
   return reduceMotion ? { duration: 0 } : transition;
 }
-
-export function edgeOffset(placement: string | null, distance: number) {
-  switch (placement) {
-    case "top":
-      return { x: 0, y: distance };
-    case "left":
-      return { x: distance, y: 0 };
-    case "right":
-      return { x: -distance, y: 0 };
-    default:
-      return { x: 0, y: -distance };
-  }
-}

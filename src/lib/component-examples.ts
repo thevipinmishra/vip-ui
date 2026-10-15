@@ -904,10 +904,22 @@ export const componentPageData = {
     description: "Shows content in a panel next to its trigger.",
     examples: [
       {
-        title: "Placement",
+        title: "Placement and arrow",
         description:
-          "Set placement to top, bottom, left, or right. If there is not sufficient space, the panel moves to the opposite side.",
+          "Set placement to top, bottom, left, or right. If there is not sufficient space, the panel moves to the opposite side. Add PopoverArrow to point at the trigger. It follows the side the panel opens on.",
         sourcePath: "popover-placement-demo.tsx",
+      },
+      {
+        title: "Form",
+        description:
+          'PopoverDialog passes close to a function child. Call it after the form submits. A Button with slot="close" closes the popover without submitting. Send stays disabled until the field has text. Focus moves to the field with autoFocus and returns to the trigger on close. Install Text area separately.',
+        sourcePath: "popover-form-demo.tsx",
+      },
+      {
+        title: "Hover preview",
+        description:
+          "Wrap a link and a Popover in PreviewTrigger from react-aria-components. The preview opens after a delay on hover or keyboard focus, and on long press with touch. Tab moves into the preview. Put content directly in the Popover and label it with aria-labelledby. A PopoverDialog would move focus on hover. Install Avatar and Link separately.",
+        sourcePath: "popover-preview-demo.tsx",
       },
     ],
   },
