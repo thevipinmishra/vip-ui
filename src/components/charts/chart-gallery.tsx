@@ -97,7 +97,7 @@ function ChartCategoryContent({ category }: { category: ChartCategory }) {
             <div className="flex min-h-11 items-center justify-between gap-3 border-t border-border/70 py-1 pe-2 ps-4 sm:ps-5">
               <a
                 href={`#${example.file}`}
-                className="truncate rounded-sm text-xs text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-solid"
+                className="truncate rounded-sm text-xs text-muted-foreground transition-[color,background-color,box-shadow] duration-150 ease-out-quint hover:text-foreground focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-transparent"
               >
                 {example.name}
               </a>

@@ -45,7 +45,7 @@ export function AppSidebar({ onNavigate }: { onNavigate?: () => void }) {
                 onClick={onNavigate}
                 aria-current={item.current ? "page" : undefined}
                 className={cn(
-                  "flex min-h-10 items-center gap-3 rounded-md px-2.5 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+                  "flex min-h-10 items-center gap-3 rounded-md px-2.5 text-sm font-medium transition-[color,background-color] duration-150 ease-out-quint focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-transparent",
                   item.current
                     ? "bg-accent text-accent-foreground"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground",

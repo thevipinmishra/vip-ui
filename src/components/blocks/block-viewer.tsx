@@ -137,7 +137,7 @@ export function BlockViewer({
           >
             <a
               href={`#${name}`}
-              className="rounded-sm font-medium text-foreground hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              className="rounded-sm font-medium text-foreground transition-[color,background-color,box-shadow] duration-150 ease-out-quint hover:underline hover:underline-offset-4 focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-transparent"
             >
               {name}
             </a>
@@ -173,7 +173,7 @@ export function BlockViewer({
             </ToggleButtonGroup>
             <Button
               variant="minimal"
-              size="icon"
+              iconOnly
               aria-label="Reload preview"
               onPress={() => frameRef.current?.reload()}
               className="size-10"
@@ -185,7 +185,7 @@ export function BlockViewer({
               target="_blank"
               rel="noopener"
               variant="minimal"
-              size="icon"
+              iconOnly
               aria-label={`Open ${name} in a new tab`}
               className="size-10"
             >
@@ -203,7 +203,7 @@ export function BlockViewer({
               className={cn(
                 "relative bg-background ring-1 ring-border/70",
                 !dragging &&
-                  "motion-safe:transition-[width] motion-safe:duration-300 motion-safe:ease-[cubic-bezier(0.23,1,0.32,1)]",
+                  "motion-safe:transition-[width] motion-safe:duration-300 motion-safe:ease-out-quint",
                 width !== null && "shadow-[var(--shadow-float)]",
               )}
               style={{ width: width === null ? "100%" : frameWidth }}
@@ -232,7 +232,7 @@ export function BlockViewer({
                 onKeyDown={resizeWithKeys}
                 className="group absolute inset-y-0 -end-4 z-10 hidden w-4 cursor-ew-resize touch-none items-center justify-center outline-none lg:flex"
               >
-                <span className="h-10 w-1.5 rounded-full bg-border shadow-[var(--shadow-card)] group-hover:bg-muted-foreground group-focus-visible:bg-ring group-focus-visible:ring-4 group-focus-visible:ring-ring/30" />
+                <span className="h-10 w-1.5 rounded-full bg-border shadow-[var(--shadow-card)] outline-offset-4 outline-transparent transition-[background-color,outline-color,outline-offset] duration-150 ease-out-quint group-hover:bg-muted-foreground group-focus-visible:bg-primary group-focus-visible:outline-2 group-focus-visible:outline-offset-2 group-focus-visible:outline-ring motion-reduce:outline-offset-2" />
               </div>
             </div>
           </div>
@@ -333,7 +333,7 @@ export function BlockViewer({
               <li key={component.slug}>
                 <Link
                   href={`/components/${component.slug}`}
-                  className="inline-flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                  className="inline-flex rounded-full outline-offset-4 outline-transparent transition-[outline-color,outline-offset] duration-150 ease-out-quint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2"
                 >
                   <Badge
                     variant="outline"
