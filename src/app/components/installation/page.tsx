@@ -1,18 +1,27 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import type { Metadata } from "next";
-import Link from "next/link";
-import type { ReactNode } from "react";
 import { CodeBlock } from "@/components/docs/code-block";
-import { GuideHeader, GuidePager } from "@/components/docs/guide-header";
+import {
+  Code,
+  ExternalLink,
+  GuidePage,
+  GuideSection,
+  guideMetadata,
+  List,
+  TextLink,
+} from "@/components/docs/guide";
+import { InstallStep } from "@/components/docs/install-step";
 import { PackageManagerCommand } from "@/components/docs/package-manager-command";
-import { registryUrl } from "@/lib/registry-docs";
+import {
+  displayPath,
+  fileName,
+  readSharedFile,
+  registryUrl,
+  type SharedFileSlug,
+  sharedFiles,
+} from "@/lib/registry-docs";
 
-export const metadata: Metadata = {
-  title: "Installation | vip/ui",
-  description:
-    "Set up a React project for vip/ui. Then add components with the shadcn CLI or copy the files.",
-};
+export const metadata = guideMetadata("/components/installation");
 
 const componentsJson = `{
   "tsx": true,
@@ -31,20 +40,22 @@ export default async function InstallationPage() {
     "utf8",
   );
   const buttonUrl = registryUrl("button");
+  const shared = await Promise.all(
+    (Object.keys(sharedFiles) as SharedFileSlug[]).map(async (slug) => ({
+      slug,
+      description: sharedFiles[slug],
+      file: await readSharedFile(slug),
+    })),
+  );
 
   return (
-    <article className="max-w-[670px]">
-      <GuideHeader
-        title="Installation"
-        description="Set up your project. Then add components with the shadcn CLI, or copy the files."
-      />
-
-      <Section id="requirements" title="Requirements">
-        <ul className="grid list-disc gap-1.5 ps-5 marker:text-muted-foreground">
+    <GuidePage href="/components/installation">
+      <GuideSection id="requirements" title="Requirements">
+        <List>
           <li>React 19 and TypeScript</li>
           <li>Tailwind CSS v4</li>
-          <li>shadcn with CSS variables</li>
-        </ul>
+          <li>A shadcn theme with CSS variables</li>
+        </List>
         <p>
           vip/ui does not support Tailwind CSS v3, JavaScript-only projects, or
           the shadcn <Code>--no-css-variables</Code> mode.
@@ -55,19 +66,15 @@ export default async function InstallationPage() {
           <TextLink href="/blocks">Blocks</TextLink> install as Next.js App
           Router routes, so they need Next.js.
         </p>
-      </Section>
+      </GuideSection>
 
-      <Section id="setup" title="Prepare your project">
-        <p>
-          If your project already uses shadcn, go to{" "}
-          <TextLink href="#add-component">Add a component</TextLink>.
-        </p>
+      <GuideSection id="setup" title="Set up your project">
         <p>
           If your project does not have a <Code>components.json</Code> file, run
           the shadcn <Code>init</Code> command. For framework steps, see the{" "}
-          <TextLink href="https://ui.shadcn.com/docs/installation">
+          <ExternalLink href="https://ui.shadcn.com/docs/installation">
             shadcn installation guide
-          </TextLink>
+          </ExternalLink>
           .
         </p>
         <PackageManagerCommand action="run" args="shadcn@latest init" />
@@ -80,9 +87,9 @@ export default async function InstallationPage() {
           filename="components.json"
           language="json"
         />
-      </Section>
+      </GuideSection>
 
-      <Section id="add-component" title="Add a component">
+      <GuideSection id="add-component" title="Add a component">
         <p>
           Copy the command from a component page, such as{" "}
           <TextLink href="/components/button#installation">Button</TextLink>.
@@ -100,7 +107,7 @@ export default async function InstallationPage() {
           </p>
         )}
         <p>The CLI does these steps:</p>
-        <ul className="grid list-disc gap-1.5 ps-5 marker:text-muted-foreground">
+        <List>
           <li>
             Adds the component files to a <Code>vip-ui/</Code> folder in your
             components alias.
@@ -114,10 +121,49 @@ export default async function InstallationPage() {
             Does not change the files in your shadcn <Code>components/ui/</Code>{" "}
             folder.
           </li>
-        </ul>
-      </Section>
+        </List>
+      </GuideSection>
 
-      <Section id="usage" title="Usage">
+      <GuideSection id="manual" title="Install manually">
+        <p>Use these steps if you do not use the CLI.</p>
+        <ol className="mt-2 grid gap-8">
+          <InstallStep number={1} title="Install the Tailwind plugin">
+            <p>
+              The plugin adds Tailwind variants for React Aria states, such as{" "}
+              <Code>selected:</Code> and <Code>pressed:</Code>.
+            </p>
+            <PackageManagerCommand
+              action="add-dev"
+              args="tailwindcss-react-aria-components"
+            />
+          </InstallStep>
+          <InstallStep number={2} title="Add the theme styles">
+            <p>
+              Add this CSS to your global CSS file one time. It loads the plugin
+              and adds status colors, shadows, and easing curves. All other
+              colors and the radius come from your shadcn theme.
+            </p>
+            <CodeBlock code={setupCss} filename="globals.css" language="css" />
+          </InstallStep>
+          <InstallStep number={3} title="Install the packages">
+            <p>
+              Open the Manual tab on the component page. Install the packages
+              that it shows.
+            </p>
+          </InstallStep>
+          <InstallStep number={4} title="Copy the files">
+            <p>
+              Copy the component file into a <Code>vip-ui/</Code> folder in your
+              components folder. Then add the required files that the Manual tab
+              shows. Do not change relative imports, such as{" "}
+              <Code>./utils</Code>. Examine existing files before you replace
+              them.
+            </p>
+          </InstallStep>
+        </ol>
+      </GuideSection>
+
+      <GuideSection id="usage" title="Import a component">
         <p>
           Import the component from the <Code>vip-ui/</Code> folder.
         </p>
@@ -127,145 +173,27 @@ export default async function InstallationPage() {
           alias is different, change the import paths. A demo can use other
           vip/ui components. Add those components too.
         </p>
-      </Section>
+      </GuideSection>
 
-      <Section id="manual" title="Manual installation">
-        <p>Use these steps if you do not use the CLI.</p>
-        <ol className="mt-2 grid gap-8">
-          <Step number={1} title="Install the Tailwind plugin">
-            <p>
-              The plugin adds Tailwind variants for React Aria states, such as{" "}
-              <Code>selected:</Code> and <Code>pressed:</Code>.
-            </p>
-            <PackageManagerCommand
-              action="add-dev"
-              args="tailwindcss-react-aria-components"
-            />
-          </Step>
-          <Step number={2} title="Add the theme styles">
-            <p>
-              Add this CSS to your global CSS file one time. It adds status
-              colors and shadows. All other colors and the radius come from your
-              shadcn theme.
-            </p>
-            <CodeBlock code={setupCss} filename="globals.css" language="css" />
-          </Step>
-          <Step number={3} title="Install the packages">
-            <p>
-              Open the Manual tab on the component page. Install the packages
-              that it shows.
-            </p>
-          </Step>
-          <Step number={4} title="Copy the files">
-            <p>
-              Copy each file into a <Code>vip-ui/</Code> folder in your
-              components folder. Do not change relative imports, such as{" "}
-              <Code>./utils</Code>. Examine existing files before you replace
-              them.
-            </p>
-          </Step>
-        </ol>
-      </Section>
-
-      <Section id="styles" title="Customize styles">
-        <ul className="grid list-disc gap-1.5 ps-5 marker:text-muted-foreground">
-          <li>
-            To change colors and the radius, edit shadcn tokens, such as{" "}
-            <Code>--primary</Code>, in <Code>:root</Code> and <Code>.dark</Code>
-            . See the{" "}
-            <TextLink href="https://ui.shadcn.com/docs/theming">
-              shadcn theming guide
-            </TextLink>
-            .
-          </li>
-          <li>
-            To use a ready-made palette, copy its CSS from{" "}
-            <TextLink href="/themes">Themes</TextLink>.
-          </li>
-          <li>
-            To change a component, edit its file. Some components, such as
-            Button and Badge, keep their variants in a Tailwind Variants recipe.
-          </li>
-        </ul>
-      </Section>
-
-      <Section id="portals" title="Portals and dark mode">
+      <GuideSection id="shared-files" title="Shared files">
         <p>
-          Menus, popovers, selects, dialogs, sheets, tooltips, and toasts render
-          in a portal on <Code>document.body</Code>. They get theme tokens from
-          the document root, not from the trigger.
+          Many components use these files. The CLI adds them for you. For a
+          manual installation, add each file one time.
         </p>
-        <p>
-          Put the tokens on <Code>:root</Code> and <Code>.dark</Code>. Put the{" "}
-          <Code>dark</Code> class on the <Code>html</Code> element.
-        </p>
-        <p>
-          If you set tokens on a different element, use{" "}
-          <Code>UNSAFE_PortalProvider</Code> from <Code>react-aria</Code>. Set
-          its <Code>getContainer</Code> to return that element. Overlays then
-          render inside it.
-        </p>
-      </Section>
-
-      <GuidePager
-        next={{ href: "/components/react-aria", label: "React Aria" }}
-      />
-    </article>
-  );
-}
-
-function Section({
-  id,
-  title,
-  children,
-}: {
-  id: string;
-  title: string;
-  children: ReactNode;
-}) {
-  return (
-    <section id={id} className="mt-14 scroll-mt-28">
-      <h2 className="text-[23px] font-semibold tracking-[-0.045em]">{title}</h2>
-      <div className="mt-4 grid gap-4 text-sm leading-7 text-muted-foreground">
-        {children}
-      </div>
-    </section>
-  );
-}
-
-function Step({
-  number,
-  title,
-  children,
-}: {
-  number: number;
-  title: string;
-  children: ReactNode;
-}) {
-  return (
-    <li className="grid gap-3">
-      <h3 className="flex items-center gap-3 text-[15px] font-semibold text-foreground">
-        <span
-          aria-hidden="true"
-          className="grid size-7 shrink-0 place-items-center rounded-full bg-muted font-mono text-xs"
-        >
-          {number}
-        </span>
-        {title}
-      </h3>
-      {children}
-    </li>
-  );
-}
-
-function Code({ children }: { children: ReactNode }) {
-  return <code className="font-mono text-foreground">{children}</code>;
-}
-
-function TextLink({ href, children }: { href: string; children: ReactNode }) {
-  return (
-    <Link href={href} className="text-primary underline underline-offset-4">
-      {children}
-    </Link>
+        {shared.map(({ slug, description, file }) => (
+          <div
+            key={slug}
+            id={`file-${slug}`}
+            className="grid scroll-mt-28 gap-3"
+          >
+            <h3 className="font-mono text-[15px] font-semibold text-foreground">
+              {fileName(file)}
+            </h3>
+            <p>{description}</p>
+            <CodeBlock code={file.content} filename={displayPath(file)} />
+          </div>
+        ))}
+      </GuideSection>
+    </GuidePage>
   );
 }

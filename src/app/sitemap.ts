@@ -1,13 +1,13 @@
 import type { MetadataRoute } from "next";
 import { blockCategories } from "@/lib/blocks";
 import { catalogComponents } from "@/lib/catalog";
+import { docsGuides } from "@/lib/navigation";
 import { siteUrl } from "@/lib/site-url";
 
 const staticRoutes = [
   { path: "", priority: 1 },
   { path: "/components", priority: 0.9 },
-  { path: "/components/installation", priority: 0.9 },
-  { path: "/components/react-aria", priority: 0.8 },
+  ...docsGuides.map((guide) => ({ path: guide.href, priority: 0.8 })),
   { path: "/themes", priority: 0.8 },
   { path: "/charts", priority: 0.8 },
   { path: "/blocks", priority: 0.8 },

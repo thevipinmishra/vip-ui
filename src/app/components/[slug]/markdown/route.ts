@@ -7,7 +7,11 @@ import {
   getComponentPageData,
 } from "@/lib/component-examples";
 import { buildComponentMarkdown } from "@/lib/component-markdown";
-import { readRegistryItem, registryUrl } from "@/lib/registry-docs";
+import {
+  manualInstallPlan,
+  readRegistryItem,
+  registryUrl,
+} from "@/lib/registry-docs";
 import { siteUrl } from "@/lib/site-url";
 
 export const dynamic = "force-static";
@@ -70,7 +74,7 @@ export async function GET(
     description:
       pageData?.description ?? registryItem.description ?? component.useFor,
     site: siteUrl(),
-    registryItem,
+    manual: manualInstallPlan(registryItem, slug),
     cliUrl: registryUrl(slug),
     usage,
     api: customComponentApi[slug],
