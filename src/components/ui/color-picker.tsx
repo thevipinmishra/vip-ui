@@ -21,7 +21,7 @@ import { fieldLabelStyles } from "./field-styles";
 import { Popover } from "./popover";
 
 const colorThumbStyles =
-  "size-6 rounded-full border-2 border-white shadow-[var(--shadow-card)] ring-1 ring-black/50 outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring";
+  "size-6 rounded-full border-2 border-white shadow-[var(--shadow-card)] ring-1 ring-black/50 outline-none outline-offset-4 outline-transparent transition-[outline-color,outline-offset] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2";
 
 export interface ColorPickerProps
   extends Omit<AriaColorPickerProps, "children"> {

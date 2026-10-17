@@ -152,7 +152,7 @@ export function SliderHandle({
       data-slot="slider-handle"
       className={composeRenderProps(className, (className) =>
         cn(
-          "top-1/2 size-5 cursor-grab rounded-full outline-none dragging:cursor-grabbing disabled:cursor-default focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring",
+          "top-1/2 size-5 cursor-grab rounded-full outline-none outline-offset-4 outline-transparent transition-[outline-color,outline-offset] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] dragging:cursor-grabbing disabled:cursor-default focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2",
           className,
         ),
       )}

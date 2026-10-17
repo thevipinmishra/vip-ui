@@ -124,7 +124,7 @@ export function SwitchControl({
       aria-hidden="true"
       data-slot="switch-control"
       className={cn(
-        "flex h-6 w-10 shrink-0 items-center rounded-full bg-muted-foreground/75 p-0.5 shadow-[var(--shadow-inset)] transition-colors duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:bg-muted-foreground group-selected:bg-primary group-selected:group-hover:bg-primary/90 group-focus-visible:outline-2 group-focus-visible:outline-solid group-focus-visible:outline-offset-2 group-focus-visible:outline-ring forced-colors:border forced-colors:border-[ButtonText] forced-colors:p-px forced-colors:group-selected:border-[Highlight]",
+        "flex h-6 w-10 shrink-0 items-center rounded-full bg-muted-foreground/75 p-0.5 shadow-[var(--shadow-inset)] outline-offset-4 outline-transparent transition-[background-color,outline-color,outline-offset] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:outline-offset-2 group-hover:bg-muted-foreground group-selected:bg-primary group-selected:group-hover:bg-primary/90 group-focus-visible:outline-2 group-focus-visible:outline-solid group-focus-visible:outline-offset-2 group-focus-visible:outline-ring forced-colors:border forced-colors:border-[ButtonText] forced-colors:p-px forced-colors:group-selected:border-[Highlight]",
         className,
       )}
     />

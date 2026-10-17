@@ -119,7 +119,7 @@ export function TokenFieldInput<T extends TokenFieldValue = TokenFieldValue>({
         className,
         (className, { isHovered, isDisabled, isReadOnly }) =>
           cn(
-            "min-h-12 cursor-text rounded-lg border border-input bg-card px-3.5 py-2.5 text-base leading-7 text-foreground shadow-[var(--shadow-card)] outline-none [overflow-wrap:anywhere] transition-[color,background-color,border-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] [&:empty]:before:pointer-events-none [&:empty]:before:text-muted-foreground/80 [&:empty]:before:content-[attr(data-placeholder)] data-[focused]:border-ring data-[focused]:ring-3 data-[focused]:ring-ring/50 data-[readonly]:bg-muted/40 data-[disabled]:cursor-not-allowed data-[disabled]:bg-muted data-[disabled]:opacity-60 sm:text-sm",
+            "min-h-12 cursor-text rounded-lg border border-input bg-card px-3.5 py-2.5 text-base leading-7 text-foreground shadow-[var(--shadow-card)] outline-none [overflow-wrap:anywhere] transition-[color,background-color,border-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] [&:empty]:before:pointer-events-none [&:empty]:before:text-muted-foreground/80 [&:empty]:before:content-[attr(data-placeholder)] data-[focused]:border-ring data-[focused]:ring-1 data-[focused]:ring-ring data-[readonly]:bg-muted/40 data-[disabled]:cursor-not-allowed data-[disabled]:bg-muted data-[disabled]:opacity-60 sm:text-sm",
             isHovered && !isDisabled && !isReadOnly && "border-primary/45",
             className,
           ),

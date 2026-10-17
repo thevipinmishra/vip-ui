@@ -60,7 +60,7 @@ export function DisclosureHeader({
         aria-controls={ids?.panelId}
         className={composeRenderProps(className, (className) =>
           cn(
-            "flex min-h-11 w-full cursor-pointer items-center justify-between gap-3 rounded-lg px-4 py-2.5 text-start transition-[background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+            "flex min-h-11 w-full cursor-pointer items-center justify-between gap-3 rounded-lg px-4 py-2.5 text-start outline-offset-4 outline-transparent transition-[background-color,outline-color,outline-offset] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2",
             className,
           ),
         )}

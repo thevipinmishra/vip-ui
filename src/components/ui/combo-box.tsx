@@ -33,7 +33,7 @@ import { Tag, TagGroup, TagListView } from "./tag-group";
 const comboBoxPopoverStyles =
   "w-[var(--trigger-width)] rounded-lg border-0 p-1.5 ring-1 ring-border/70";
 const comboBoxItemStyles =
-  "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted focus:bg-muted focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50";
+  "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted focus:bg-muted focus-visible:-outline-offset-1 focus-visible:outline-1 focus-visible:outline-solid focus-visible:outline-ring forced-colors:focus-visible:-outline-offset-2 forced-colors:focus-visible:outline-2 selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50";
 
 export interface ComboBoxOption {
   id: string;

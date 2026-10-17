@@ -63,7 +63,7 @@ export function Checkbox({
       data-slot="checkbox"
       className={composeRenderProps(className, (className) =>
         cn(
-          "group inline-flex min-h-11 min-w-0 max-w-full cursor-pointer items-start gap-3 rounded-md text-sm text-foreground disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+          "group inline-flex min-h-11 min-w-0 max-w-full cursor-pointer items-start gap-3 rounded-md text-sm text-foreground outline-offset-4 outline-transparent transition-[outline-color,outline-offset] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2",
           (typeof children === "string" || children == null) && "items-center",
           className,
         ),

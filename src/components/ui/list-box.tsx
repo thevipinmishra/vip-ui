@@ -44,7 +44,7 @@ export function ListBoxItem({
       }
       className={composeRenderProps(className, (className) =>
         cn(
-          "group/item flex min-h-11 min-w-0 cursor-pointer items-center justify-between gap-3 rounded-md px-3 py-2 text-sm text-foreground outline-none [overflow-wrap:anywhere] hover:bg-muted focus:bg-muted selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-[-2px] focus-visible:outline-ring",
+          "group/item flex min-h-11 min-w-0 cursor-pointer items-center justify-between gap-3 rounded-md px-3 py-2 text-sm text-foreground outline-none [overflow-wrap:anywhere] hover:bg-muted focus:bg-muted selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50 focus-visible:outline-1 focus-visible:outline-solid focus-visible:-outline-offset-1 focus-visible:outline-ring forced-colors:focus-visible:outline-2 forced-colors:focus-visible:-outline-offset-2",
           className,
         ),
       )}

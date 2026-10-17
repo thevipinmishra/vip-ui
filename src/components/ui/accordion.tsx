@@ -114,10 +114,10 @@ export function AccordionTrigger({
         aria-controls={ids?.panelId}
         className={composeRenderProps(className, (className) =>
           cn(
-            "flex min-h-12 w-full cursor-pointer items-center justify-between gap-4 py-3 text-start text-foreground transition-[background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-ring",
+            "flex min-h-12 w-full cursor-pointer items-center justify-between gap-4 py-3 text-start text-foreground transition-[background-color,outline-color,outline-offset] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-ring",
             variant === "card"
               ? "rounded-lg px-4 hover:bg-muted/60 focus-visible:-outline-offset-2 aria-expanded:rounded-b-none"
-              : "rounded-sm px-0 decoration-muted-foreground/60 underline-offset-4 hover:underline focus-visible:outline-offset-2",
+              : "rounded-sm px-0 decoration-muted-foreground/60 underline-offset-4 outline-offset-4 outline-transparent hover:underline focus-visible:outline-offset-2 motion-reduce:outline-offset-2",
             className,
           ),
         )}

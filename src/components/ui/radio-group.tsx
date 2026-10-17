@@ -23,11 +23,11 @@ import { cn } from "@/lib/utils";
 import { fieldDescriptionStyles, fieldErrorStyles } from "./field-styles";
 
 const radioStyles = tv({
-  base: "group flex min-h-11 min-w-0 cursor-pointer items-center gap-3 rounded-md text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring read-only:cursor-default disabled:cursor-default disabled:opacity-50",
+  base: "group flex min-h-11 min-w-0 cursor-pointer items-center gap-3 rounded-md text-foreground outline-offset-4 outline-transparent transition-[outline-color,outline-offset] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 read-only:cursor-default disabled:cursor-default disabled:opacity-50",
   variants: {
     variant: {
       default: "",
-      card: "min-h-12 rounded-lg bg-card px-3.5 py-2.5 shadow-[var(--shadow-card)] ring-1 ring-border transition-[background-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted selected:bg-accent selected:ring-primary/40",
+      card: "min-h-12 rounded-lg bg-card px-3.5 py-2.5 shadow-[var(--shadow-card)] ring-1 ring-border transition-[background-color,box-shadow,outline-color,outline-offset] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted selected:bg-accent selected:ring-primary/40",
     },
   },
   defaultVariants: { variant: "default" },

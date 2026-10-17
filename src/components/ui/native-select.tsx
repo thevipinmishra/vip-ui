@@ -65,7 +65,7 @@ export function NativeSelect({
             undefined
           }
           className={cn(
-            "peer min-h-12 w-full min-w-0 cursor-pointer appearance-none truncate rounded-lg border border-input bg-card ps-3.5 pe-10 text-base text-foreground shadow-[var(--shadow-card)] outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-primary/45 focus:border-ring focus:ring-3 focus:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 aria-invalid:hover:border-destructive aria-invalid:focus:border-destructive aria-invalid:focus:ring-destructive/30 disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 disabled:hover:border-input sm:text-sm",
+            "peer min-h-12 w-full min-w-0 cursor-pointer appearance-none truncate rounded-lg border border-input bg-card ps-3.5 pe-10 text-base text-foreground shadow-[var(--shadow-card)] outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-primary/45 focus:border-ring focus:ring-1 focus:ring-ring aria-invalid:border-destructive aria-invalid:hover:border-destructive aria-invalid:focus:border-destructive aria-invalid:focus:ring-destructive disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 disabled:hover:border-input sm:text-sm",
             className,
           )}
         >

@@ -16,7 +16,7 @@ export function InputGroup({ className, ...props }: GroupProps) {
       data-slot="input-group"
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex min-h-12 w-full min-w-0 items-center gap-x-2 rounded-lg border border-input bg-card ps-3.5 pe-3.5 text-foreground shadow-[var(--shadow-card)] hover:border-primary/45 data-[focus-within]:border-ring data-[focus-within]:ring-3 data-[focus-within]:ring-ring/50 data-[invalid]:border-destructive data-[invalid]:ring-3 data-[invalid]:ring-destructive/20 data-[invalid]:hover:border-destructive data-[invalid]:data-[focus-within]:ring-destructive/30 data-[disabled]:bg-muted data-[disabled]:opacity-60 data-[disabled]:shadow-none data-[disabled]:hover:border-input has-[>[data-align=block-end]]:flex-wrap",
+          "flex min-h-12 w-full min-w-0 items-center gap-x-2 rounded-lg border border-input bg-card ps-3.5 pe-3.5 text-foreground shadow-[var(--shadow-card)] hover:border-primary/45 data-[focus-within]:border-ring data-[focus-within]:ring-1 data-[focus-within]:ring-ring data-[invalid]:border-destructive data-[invalid]:hover:border-destructive data-[invalid]:data-[focus-within]:border-destructive data-[invalid]:data-[focus-within]:ring-destructive data-[disabled]:bg-muted data-[disabled]:opacity-60 data-[disabled]:shadow-none data-[disabled]:hover:border-input has-[>[data-align=block-end]]:flex-wrap",
           className,
         ),
       )}

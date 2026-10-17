@@ -28,11 +28,11 @@ import { Popover } from "./popover";
 import { PressButton } from "./press-button";
 
 const selectTriggerStyles =
-  "relative flex min-h-12 w-full min-w-0 cursor-pointer items-center rounded-lg border border-input bg-card ps-3.5 pe-10 text-start text-base leading-6 text-foreground shadow-[var(--shadow-card)] outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-primary/45 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 group-invalid:border-destructive group-invalid:ring-3 group-invalid:ring-destructive/20 group-invalid:hover:border-destructive group-invalid:focus-visible:border-destructive group-invalid:focus-visible:ring-destructive/30 disabled:cursor-default disabled:bg-muted disabled:opacity-60 sm:text-sm sm:leading-5";
+  "relative flex min-h-12 w-full min-w-0 cursor-pointer items-center rounded-lg border border-input bg-card ps-3.5 pe-10 text-start text-base leading-6 text-foreground shadow-[var(--shadow-card)] outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-primary/45 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring group-invalid:border-destructive group-invalid:hover:border-destructive group-invalid:focus-visible:border-destructive group-invalid:focus-visible:ring-destructive disabled:cursor-default disabled:bg-muted disabled:opacity-60 sm:text-sm sm:leading-5";
 const selectValueStyles =
   "min-w-0 flex-1 self-center truncate text-start data-[placeholder]:text-muted-foreground";
 const selectItemStyles =
-  "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted focus:bg-muted selected:bg-accent selected:text-accent-foreground focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring disabled:cursor-default disabled:opacity-50";
+  "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted focus:bg-muted selected:bg-accent selected:text-accent-foreground focus-visible:-outline-offset-1 focus-visible:outline-1 focus-visible:outline-solid focus-visible:outline-ring forced-colors:focus-visible:-outline-offset-2 forced-colors:focus-visible:outline-2 disabled:cursor-default disabled:opacity-50";
 const selectPopoverStyles =
   "w-[var(--trigger-width)] rounded-lg border-0 p-1.5 ring-1 ring-border/70";
 

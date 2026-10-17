@@ -19,7 +19,8 @@ export default function Home() {
       <main id="main">
         <section className="mx-auto max-w-7xl px-5 pb-14 pt-16 text-center sm:px-8 sm:pb-20 sm:pt-24">
           <h1 className="mx-auto max-w-4xl text-[clamp(3.25rem,7vw,6rem)] font-semibold leading-[1.02] tracking-[-0.075em] [text-wrap:balance]">
-            Accessible components <span className="text-primary">you own.</span>
+            Accessible components{" "}
+            <span className="text-muted-foreground">you own.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
             Copy accessible components into your shadcn project. They use React
