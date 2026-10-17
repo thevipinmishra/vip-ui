@@ -51,14 +51,14 @@ export function DocsNav({
         onNavigate={onNavigate && ((event) => onNavigate(event, link.href))}
         aria-current={isActive ? "page" : undefined}
         className={cn(
-          "relative isolate inline-flex min-h-10 items-center rounded-lg px-3 text-[13px] font-medium whitespace-nowrap hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring",
+          "group/nav-link relative isolate inline-flex min-h-10 items-center rounded-lg px-3 text-[13px] font-medium whitespace-nowrap transition-[color,background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted hover:text-foreground focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-transparent",
           isActive ? "text-accent-foreground" : "text-muted-foreground",
         )}
       >
         {isActive && (
           <motion.span
             layoutId={mobile ? "mobile-nav-selection" : "desktop-nav-selection"}
-            className="pointer-events-none absolute inset-0 -z-10 rounded-lg bg-accent"
+            className="pointer-events-none absolute inset-0 -z-10 rounded-lg bg-accent transition-[background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] group-focus-visible/nav-link:bg-primary"
             transition={
               reduceMotion
                 ? { duration: 0 }

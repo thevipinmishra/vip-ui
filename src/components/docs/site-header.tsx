@@ -21,7 +21,7 @@ export function SiteHeader() {
           href="/"
           aria-label="vip/ui home"
           aria-current={pathname === "/" ? "page" : undefined}
-          className="mr-4 inline-flex min-h-10 shrink-0 items-center rounded-md hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          className="mr-4 inline-flex min-h-10 shrink-0 items-center rounded-md outline-offset-4 outline-transparent transition-[opacity,outline-color,outline-offset] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2"
         >
           <SiteLogo />
         </Link>
@@ -41,7 +41,7 @@ export function SiteHeader() {
                   : undefined
               }
               className={cn(
-                "inline-flex h-9 items-center rounded-md px-3 text-sm font-medium hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+                "inline-flex h-9 items-center rounded-md px-3 text-sm font-medium transition-[color,background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted hover:text-foreground focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-transparent",
                 active === link.href
                   ? "text-foreground"
                   : "text-muted-foreground",
@@ -63,7 +63,7 @@ export function SiteHeader() {
             rel="noopener noreferrer"
             aria-label="GitHub (opens in a new tab)"
             title="GitHub"
-            className="hidden size-10 shrink-0 place-items-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:grid"
+            className="hidden size-10 shrink-0 place-items-center rounded-md text-muted-foreground outline-offset-4 outline-transparent transition-[color,background-color,outline-color,outline-offset] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 sm:grid"
           >
             <GitHubMark className="size-[17px]" />
           </a>
