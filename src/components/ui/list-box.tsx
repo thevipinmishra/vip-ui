@@ -1,7 +1,5 @@
 "use client";
 
-import { CheckIcon } from "@phosphor-icons/react";
-import { motion, useReducedMotion } from "motion/react";
 import {
   ListBox as AriaListBox,
   ListBoxItem as AriaListBoxItem,
@@ -9,7 +7,6 @@ import {
   type ListBoxItemProps,
   type ListBoxProps,
 } from "react-aria-components";
-import { duration, easeOut } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 export function ListBox<T extends object>({
@@ -44,38 +41,39 @@ export function ListBoxItem({
       }
       className={composeRenderProps(className, (className) =>
         cn(
-          "group/item flex min-h-11 min-w-0 cursor-pointer items-center justify-between gap-3 rounded-md px-3 py-2 text-sm text-foreground outline-none [overflow-wrap:anywhere] hover:bg-muted focus:bg-muted selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50 focus-visible:outline-1 focus-visible:outline-solid focus-visible:-outline-offset-1 focus-visible:outline-ring forced-colors:focus-visible:outline-2 forced-colors:focus-visible:-outline-offset-2",
+          "group/item flex min-h-11 min-w-0 cursor-pointer items-center justify-between gap-3 rounded-md px-3 py-2 text-sm text-foreground outline-none [overflow-wrap:anywhere] transition-colors duration-150 ease-out-quint hover:bg-muted hover:duration-0 focus:bg-muted focus:duration-0 selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50 focus-visible:outline-1 focus-visible:outline-solid focus-visible:-outline-offset-1 focus-visible:outline-ring forced-colors:focus-visible:outline-2 forced-colors:focus-visible:-outline-offset-2",
           className,
         ),
       )}
     >
-      {composeRenderProps(children, (content, { isSelected }) => (
+      {composeRenderProps(children, (content) => (
         <>
           {content}
-          <SelectionMark isSelected={isSelected} />
+          <SelectionMark />
         </>
       ))}
     </AriaListBoxItem>
   );
 }
 
-export function SelectionMark({
-  isSelected,
-  className,
-}: {
-  isSelected: boolean;
-  className?: string;
-}) {
-  const reduceMotion = useReducedMotion();
+export function SelectionMark({ className }: { className?: string }) {
   return (
-    <motion.span
+    <svg
       aria-hidden="true"
-      className={cn("ms-auto shrink-0", className)}
-      initial={false}
-      animate={{ opacity: isSelected ? 1 : 0, scale: isSelected ? 1 : 0.85 }}
-      transition={{ duration: reduceMotion ? 0 : duration.fast, ease: easeOut }}
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.6}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      data-slot="selection-mark"
+      className={cn("ms-auto size-4 shrink-0", className)}
     >
-      <CheckIcon size={16} weight="bold" />
-    </motion.span>
+      <path
+        d="M2.75 8 6.25 11.5 13.25 4.5"
+        pathLength={1}
+        className="[stroke-dasharray:1_2] [stroke-dashoffset:1.01] transition-[stroke-dashoffset] duration-200 ease-out-quint group-selected/item:[stroke-dashoffset:0] motion-reduce:transition-none"
+      />
+    </svg>
   );
 }

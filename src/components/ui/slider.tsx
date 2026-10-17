@@ -1,6 +1,5 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
 import {
   Slider as AriaSlider,
   type SliderProps as AriaSliderProps,
@@ -11,7 +10,6 @@ import {
   SliderOutput,
   SliderThumb,
 } from "react-aria-components";
-import { springSnappy, transitionFor } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { fieldLabelStyles } from "./field-styles";
 
@@ -145,48 +143,26 @@ export function SliderHandle({
   children,
   ...props
 }: React.ComponentProps<typeof SliderThumb>) {
-  const reduceMotion = useReducedMotion();
   return (
     <SliderThumb
       {...props}
       data-slot="slider-handle"
       className={composeRenderProps(className, (className) =>
         cn(
-          "top-1/2 size-5 cursor-grab rounded-full outline-none outline-offset-4 outline-transparent transition-[outline-color,outline-offset] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] dragging:cursor-grabbing disabled:cursor-default focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2",
+          "group/thumb top-1/2 size-5 cursor-grab rounded-full outline-none outline-offset-4 outline-transparent transition-[outline-color,outline-offset] duration-150 ease-out-quint dragging:cursor-grabbing disabled:cursor-default focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2",
           className,
         ),
       )}
     >
-      {composeRenderProps(
-        children,
-        (content, { isDragging, isHovered, isDisabled }) => (
-          <>
-            <motion.span
-              aria-hidden="true"
-              className={cn(
-                "pointer-events-none absolute inset-0 rounded-full bg-card ring-1 transition-[box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] forced-colors:bg-[ButtonText]",
-                !isDisabled && (isDragging || isHovered)
-                  ? "ring-primary/60"
-                  : "ring-border",
-                !isDisabled && isDragging
-                  ? "shadow-[var(--shadow-float)]"
-                  : "shadow-[var(--shadow-card)]",
-              )}
-              initial={false}
-              animate={{
-                scale:
-                  !isDisabled && isDragging
-                    ? 1.14
-                    : !isDisabled && isHovered
-                      ? 1.06
-                      : 1,
-              }}
-              transition={transitionFor(reduceMotion, springSnappy)}
-            />
-            {content}
-          </>
-        ),
-      )}
+      {composeRenderProps(children, (content) => (
+        <>
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 rounded-full bg-card shadow-[var(--shadow-card)] ring-1 ring-border transition-[scale,box-shadow] duration-350 ease-spring group-hover/thumb:scale-106 group-hover/thumb:ring-primary/60 group-dragging/thumb:scale-114 group-dragging/thumb:shadow-[var(--shadow-float)] group-dragging/thumb:ring-primary/60 motion-reduce:transition-[box-shadow] forced-colors:bg-[ButtonText]"
+          />
+          {content}
+        </>
+      ))}
     </SliderThumb>
   );
 }

@@ -1,8 +1,6 @@
 "use client";
 
-import { CheckIcon, MinusIcon } from "@phosphor-icons/react";
-import { motion, useReducedMotion } from "motion/react";
-import { createContext, type ReactNode, useContext, useState } from "react";
+import { type ReactNode, useState } from "react";
 import {
   CheckboxButton as AriaCheckboxButton,
   type CheckboxButtonProps as AriaCheckboxButtonProps,
@@ -13,16 +11,8 @@ import {
   Text,
   type ValidationResult,
 } from "react-aria-components";
-import { duration, easeOut } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { fieldDescriptionStyles, fieldErrorStyles } from "./field-styles";
-
-const CheckboxStateContext = createContext({
-  isSelected: false,
-  isIndeterminate: false,
-  isHovered: false,
-  isPressed: false,
-});
 
 export interface CheckboxProps
   extends Omit<AriaCheckboxFieldProps, "children"> {
@@ -102,7 +92,6 @@ export function CheckboxField({
 
 export function CheckboxButton({
   className,
-  children,
   ...props
 }: AriaCheckboxButtonProps & React.RefAttributes<HTMLLabelElement>) {
   return (
@@ -117,13 +106,7 @@ export function CheckboxButton({
           className,
         ),
       )}
-    >
-      {composeRenderProps(children, (children, state) => (
-        <CheckboxStateContext.Provider value={state}>
-          {children}
-        </CheckboxStateContext.Provider>
-      ))}
-    </AriaCheckboxButton>
+    />
   );
 }
 
@@ -131,39 +114,49 @@ export function CheckboxIndicator({
   className,
   ...props
 }: React.HTMLAttributes<HTMLSpanElement>) {
-  const { isSelected, isIndeterminate, isHovered, isPressed } =
-    useContext(CheckboxStateContext);
-  const reduceMotion = useReducedMotion();
-  const isChecked = isSelected || isIndeterminate;
   return (
     <span
       {...props}
       aria-hidden="true"
       data-slot="checkbox-indicator"
       className={cn(
-        "grid size-5 shrink-0 place-items-center rounded-sm border border-muted-foreground/75 bg-card shadow-[var(--shadow-inset)] outline-offset-4 outline-transparent transition-[background-color,border-color,outline-color,outline-offset] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover/checkbox:border-primary group-selected/checkbox:border-primary group-selected/checkbox:bg-primary group-indeterminate/checkbox:border-primary group-indeterminate/checkbox:bg-primary group-invalid/checkbox:border-destructive group-invalid/checkbox:group-hover/checkbox:border-destructive group-invalid/checkbox:group-selected/checkbox:bg-destructive group-focus-visible/checkbox:outline-2 group-focus-visible/checkbox:outline-offset-2 group-focus-visible/checkbox:outline-ring motion-reduce:outline-offset-2 forced-colors:border-[ButtonText] forced-colors:group-selected/checkbox:border-[Highlight] forced-colors:group-selected/checkbox:bg-[Highlight] forced-colors:group-indeterminate/checkbox:border-[Highlight] forced-colors:group-indeterminate/checkbox:bg-[Highlight] forced-colors:group-disabled/checkbox:border-[GrayText] forced-colors:group-disabled/checkbox:bg-[Canvas]",
+        "grid size-5 shrink-0 place-items-center rounded-sm border border-muted-foreground/75 bg-card shadow-[var(--shadow-inset)] outline-offset-4 outline-transparent transition-[background-color,border-color,outline-color,outline-offset,scale] duration-150 ease-out-quint group-hover/checkbox:border-primary motion-safe:group-pressed/checkbox:scale-90 group-selected/checkbox:border-primary group-selected/checkbox:bg-primary group-indeterminate/checkbox:border-primary group-indeterminate/checkbox:bg-primary group-invalid/checkbox:border-destructive group-invalid/checkbox:group-hover/checkbox:border-destructive group-invalid/checkbox:group-selected/checkbox:bg-destructive group-focus-visible/checkbox:outline-2 group-focus-visible/checkbox:outline-offset-2 group-focus-visible/checkbox:outline-ring motion-reduce:outline-offset-2 forced-colors:border-[ButtonText] forced-colors:group-selected/checkbox:border-[Highlight] forced-colors:group-selected/checkbox:bg-[Highlight] forced-colors:group-indeterminate/checkbox:border-[Highlight] forced-colors:group-indeterminate/checkbox:bg-[Highlight] forced-colors:group-disabled/checkbox:border-[GrayText] forced-colors:group-disabled/checkbox:bg-[Canvas]",
         className,
       )}
     >
-      <motion.span
-        initial={false}
-        animate={{
-          scale: isChecked ? (isPressed ? 0.9 : isHovered ? 1.06 : 1) : 0.86,
-          opacity: isChecked ? 1 : 0,
-        }}
-        transition={{
-          duration: reduceMotion ? 0 : duration.fast,
-          ease: easeOut,
-        }}
-        className="text-primary-foreground forced-colors:text-[HighlightText] forced-colors:group-disabled/checkbox:text-[GrayText]"
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 16 16"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={1.6}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="size-3.5 text-primary-foreground forced-colors:text-[HighlightText] forced-colors:group-disabled/checkbox:text-[GrayText]"
       >
-        {isIndeterminate ? (
-          <MinusIcon size={13} weight="bold" />
-        ) : (
-          <CheckIcon size={13} weight="bold" />
-        )}
-      </motion.span>
+        <path
+          d="M2.75 8 6.25 11.5 13.25 4.5"
+          pathLength={1}
+          className={checkboxStrokeStyles(
+            "group-selected/checkbox:not-group-indeterminate/checkbox:[stroke-dashoffset:0]",
+          )}
+        />
+        <path
+          d="M3 8h10"
+          pathLength={1}
+          className={checkboxStrokeStyles(
+            "group-indeterminate/checkbox:[stroke-dashoffset:0]",
+          )}
+        />
+      </svg>
     </span>
+  );
+}
+
+function checkboxStrokeStyles(checked: string) {
+  return cn(
+    "[stroke-dasharray:1_2] [stroke-dashoffset:1.01] transition-[stroke-dashoffset] duration-200 ease-out-quint motion-reduce:transition-none",
+    checked,
   );
 }
 
