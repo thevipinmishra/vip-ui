@@ -7,6 +7,7 @@ import { NativeSelectDemo } from "@/components/docs/native-select-demo";
 import { NativeSelectDisabledDemo } from "@/components/docs/native-select-disabled-demo";
 import { NativeSelectGroupsDemo } from "@/components/docs/native-select-groups-demo";
 import { NativeSelectInvalidDemo } from "@/components/docs/native-select-invalid-demo";
+import { NativeSelectSizesDemo } from "@/components/docs/native-select-sizes-demo";
 import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
@@ -27,6 +28,7 @@ export default function NativeSelectPage() {
         <NativeSelectGroupsDemo key="groups" />,
         <NativeSelectDisabledDemo key="disabled" />,
         <NativeSelectInvalidDemo key="invalid-selection" />,
+        <NativeSelectSizesDemo key="sizes" />,
       ])}
       sourcePath="src/components/ui/native-select.tsx"
     />

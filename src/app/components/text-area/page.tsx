@@ -8,6 +8,7 @@ import { TextAreaDescriptionDemo } from "@/components/docs/text-area-description
 import { TextAreaDisabledDemo } from "@/components/docs/text-area-disabled-demo";
 import { TextAreaInvalidDemo } from "@/components/docs/text-area-invalid-demo";
 import { TextAreaReadOnlyDemo } from "@/components/docs/text-area-read-only-demo";
+import { TextAreaSizesDemo } from "@/components/docs/text-area-sizes-demo";
 import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
@@ -29,6 +30,7 @@ export default function TextAreaPage() {
         <TextAreaDisabledDemo key="disabled" />,
         <TextAreaReadOnlyDemo key="read-only" />,
         <TextAreaInvalidDemo key="invalid" />,
+        <TextAreaSizesDemo key="sizes" />,
       ])}
       sourcePath="src/components/ui/text-area.tsx"
     />

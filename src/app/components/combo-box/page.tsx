@@ -3,6 +3,7 @@ import { ComboBoxBasicDemo } from "@/components/docs/combo-box-basic-demo";
 import { ComboBoxDemo } from "@/components/docs/combo-box-demo";
 import { ComboBoxDisabledDemo } from "@/components/docs/combo-box-disabled-demo";
 import { ComboBoxMultipleDemo } from "@/components/docs/combo-box-multiple-demo";
+import { ComboBoxSizesDemo } from "@/components/docs/combo-box-sizes-demo";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -27,6 +28,7 @@ export default function ComboBoxPage() {
         <ComboBoxDemo key="described-options" />,
         <ComboBoxDisabledDemo key="disabled" />,
         <ComboBoxMultipleDemo key="multiple-selection" />,
+        <ComboBoxSizesDemo key="sizes" />,
       ])}
       sourcePath="src/components/ui/combo-box.tsx"
     />

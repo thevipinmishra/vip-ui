@@ -15,6 +15,7 @@ import { BreadcrumbsDemo } from "@/components/docs/breadcrumbs-demo";
 import { ButtonGroupBasicDemo } from "@/components/docs/button-group-basic-demo";
 import { ButtonGroupDemo } from "@/components/docs/button-group-demo";
 import { ButtonGroupOrientationsDemo } from "@/components/docs/button-group-orientations-demo";
+import { ButtonGroupSizesDemo } from "@/components/docs/button-group-sizes-demo";
 import { CalendarControlledDemo } from "@/components/docs/calendar-controlled-demo";
 import { CalendarDemo } from "@/components/docs/calendar-demo";
 import { CalendarUnavailableDemo } from "@/components/docs/calendar-unavailable-demo";
@@ -29,6 +30,7 @@ import { ColorFieldChannelDemo } from "@/components/docs/color-field-channel-dem
 import { ColorFieldControlledDemo } from "@/components/docs/color-field-controlled-demo";
 import { ColorFieldDemo } from "@/components/docs/color-field-demo";
 import { ColorFieldDisabledDemo } from "@/components/docs/color-field-disabled-demo";
+import { ColorFieldSizesDemo } from "@/components/docs/color-field-sizes-demo";
 import { ColorPickerControlledDemo } from "@/components/docs/color-picker-controlled-demo";
 import { ColorPickerDemo } from "@/components/docs/color-picker-demo";
 import { ColorSwatchBasicDemo } from "@/components/docs/color-swatch-basic-demo";
@@ -48,14 +50,17 @@ import { DataTableDemo } from "@/components/docs/data-table-demo";
 import { DateFieldDemo } from "@/components/docs/date-field-demo";
 import { DateFieldDisabledDemo } from "@/components/docs/date-field-disabled-demo";
 import { DateFieldLimitsDemo } from "@/components/docs/date-field-limits-demo";
+import { DateFieldSizesDemo } from "@/components/docs/date-field-sizes-demo";
 import { DateFieldTimeDemo } from "@/components/docs/date-field-time-demo";
 import { DatePickerControlledDemo } from "@/components/docs/date-picker-controlled-demo";
 import { DatePickerDemo } from "@/components/docs/date-picker-demo";
 import { DatePickerDisabledDemo } from "@/components/docs/date-picker-disabled-demo";
+import { DatePickerSizesDemo } from "@/components/docs/date-picker-sizes-demo";
 import { DatePickerUnavailableDemo } from "@/components/docs/date-picker-unavailable-demo";
 import { DateRangePickerDemo } from "@/components/docs/date-range-picker-demo";
 import { DateRangePickerDisabledDemo } from "@/components/docs/date-range-picker-disabled-demo";
 import { DateRangePickerLimitsDemo } from "@/components/docs/date-range-picker-limits-demo";
+import { DateRangePickerSizesDemo } from "@/components/docs/date-range-picker-sizes-demo";
 import { DescriptionListComponentsDemo } from "@/components/docs/description-list-components-demo";
 import { DescriptionListDemo } from "@/components/docs/description-list-demo";
 import { DisclosureDemo } from "@/components/docs/disclosure-demo";
@@ -95,8 +100,10 @@ import { NumberFieldCurrencyDemo } from "@/components/docs/number-field-currency
 import { NumberFieldDemo } from "@/components/docs/number-field-demo";
 import { NumberFieldDisabledDemo } from "@/components/docs/number-field-disabled-demo";
 import { NumberFieldLimitsDemo } from "@/components/docs/number-field-limits-demo";
+import { NumberFieldSizesDemo } from "@/components/docs/number-field-sizes-demo";
 import { PaginationBasicDemo } from "@/components/docs/pagination-basic-demo";
 import { PaginationDemo } from "@/components/docs/pagination-demo";
+import { PaginationSizesDemo } from "@/components/docs/pagination-sizes-demo";
 import { PasswordStrengthMeterDemo } from "@/components/docs/password-strength-meter-demo";
 import { PasswordStrengthMeterFieldDemo } from "@/components/docs/password-strength-meter-field-demo";
 import { PopoverDemo } from "@/components/docs/popover-demo";
@@ -139,6 +146,7 @@ import { TableDemo } from "@/components/docs/table-demo";
 import { TableFilterDemo } from "@/components/docs/table-filter-demo";
 import { TableSortingDemo } from "@/components/docs/table-sorting-demo";
 import { TagGroupDemo } from "@/components/docs/tag-group-demo";
+import { TagGroupSizesDemo } from "@/components/docs/tag-group-sizes-demo";
 import { TextRevealBasicDemo } from "@/components/docs/text-reveal-basic-demo";
 import { TextRevealCharactersDemo } from "@/components/docs/text-reveal-characters-demo";
 import { TextRevealDemo } from "@/components/docs/text-reveal-demo";
@@ -151,18 +159,23 @@ import { TimeField24HourDemo } from "@/components/docs/time-field-24-hour-demo";
 import { TimeFieldDemo } from "@/components/docs/time-field-demo";
 import { TimeFieldDisabledDemo } from "@/components/docs/time-field-disabled-demo";
 import { TimeFieldLimitsDemo } from "@/components/docs/time-field-limits-demo";
+import { TimeFieldSizesDemo } from "@/components/docs/time-field-sizes-demo";
 import { TimelineDemo } from "@/components/docs/timeline-demo";
 import { ToggleButtonDemo } from "@/components/docs/toggle-button-demo";
 import { ToggleButtonGroupDemo } from "@/components/docs/toggle-button-group-demo";
 import { ToggleButtonGroupEditorDemo } from "@/components/docs/toggle-button-group-editor-demo";
+import { ToggleButtonGroupSizesDemo } from "@/components/docs/toggle-button-group-sizes-demo";
 import { ToggleButtonIndependentDemo } from "@/components/docs/toggle-button-independent-demo";
+import { ToggleButtonSizesDemo } from "@/components/docs/toggle-button-sizes-demo";
 import { TokenFieldBasicDemo } from "@/components/docs/token-field-basic-demo";
 import { TokenFieldDemo } from "@/components/docs/token-field-demo";
 import { TokenFieldDisabledDemo } from "@/components/docs/token-field-disabled-demo";
+import { TokenFieldSizesDemo } from "@/components/docs/token-field-sizes-demo";
 import { ToolCallDemo } from "@/components/docs/tool-call-demo";
 import { ToolCallStatesDemo } from "@/components/docs/tool-call-states-demo";
 import { ToolbarBasicDemo } from "@/components/docs/toolbar-basic-demo";
 import { ToolbarDemo } from "@/components/docs/toolbar-demo";
+import { ToolbarSizesDemo } from "@/components/docs/toolbar-sizes-demo";
 import { ToolbarVerticalDemo } from "@/components/docs/toolbar-vertical-demo";
 import { TreeBasicDemo } from "@/components/docs/tree-basic-demo";
 import { TreeDemo } from "@/components/docs/tree-demo";
@@ -604,6 +617,7 @@ const examplePreviews: Record<string, ReactNode[]> = {
   "button-group": [
     <ButtonGroupOrientationsDemo key="preview-1" />,
     <ButtonGroupDemo key="preview-2" />,
+    <ButtonGroupSizesDemo key="preview-3" />,
   ],
   calendar: [
     <CalendarUnavailableDemo key="preview-1" />,
@@ -613,6 +627,7 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <ColorFieldChannelDemo key="preview-1" />,
     <ColorFieldDisabledDemo key="preview-2" />,
     <ColorFieldControlledDemo key="preview-3" />,
+    <ColorFieldSizesDemo key="preview-4" />,
   ],
   "color-picker": [<ColorPickerControlledDemo key="preview-1" />],
   "color-swatch-picker": [
@@ -623,6 +638,7 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <DateFieldLimitsDemo key="preview-1" />,
     <DateFieldTimeDemo key="preview-2" />,
     <DateFieldDisabledDemo key="preview-3" />,
+    <DateFieldSizesDemo key="preview-4" />,
   ],
   "checkbox-group": [
     <CheckboxGroupDisabledDemo key="preview-1" />,
@@ -638,6 +654,7 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <DatePickerUnavailableDemo key="preview-1" />,
     <DatePickerDisabledDemo key="preview-2" />,
     <DatePickerControlledDemo key="preview-3" />,
+    <DatePickerSizesDemo key="preview-4" />,
   ],
   "data-table": [<DataTableColumnFiltersDemo key="preview-1" />],
   "password-strength-meter": [
@@ -646,6 +663,7 @@ const examplePreviews: Record<string, ReactNode[]> = {
   "date-range-picker": [
     <DateRangePickerLimitsDemo key="preview-1" />,
     <DateRangePickerDisabledDemo key="preview-2" />,
+    <DateRangePickerSizesDemo key="preview-3" />,
   ],
   disclosure: [
     <DisclosureExpandedDemo key="preview-1" />,
@@ -666,13 +684,18 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <NumberFieldLimitsDemo key="preview-1" />,
     <NumberFieldCurrencyDemo key="preview-2" />,
     <NumberFieldDisabledDemo key="preview-3" />,
+    <NumberFieldSizesDemo key="preview-4" />,
   ],
   "inline-edit": [
     <InlineEditDisabledDemo key="preview-1" />,
     <InlineEditDemo key="preview-2" />,
   ],
   "rating-input": [<RatingInputReadOnlyDemo key="preview-1" />],
-  pagination: [<PaginationDemo key="preview-1" />],
+  pagination: [
+    <PaginationDemo key="preview-1" />,
+    <PaginationSizesDemo key="preview-2" />,
+  ],
+  "tag-group": [<TagGroupSizesDemo key="preview-1" />],
   popover: [
     <PopoverPlacementDemo key="preview-1" />,
     <PopoverFormDemo key="preview-2" />,
@@ -696,20 +719,29 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <TableSortingDemo key="preview-2" />,
     <TableFilterDemo key="preview-3" />,
   ],
-  "toggle-button": [<ToggleButtonIndependentDemo key="preview-1" />],
-  "toggle-button-group": [<ToggleButtonGroupEditorDemo key="preview-1" />],
+  "toggle-button": [
+    <ToggleButtonIndependentDemo key="preview-1" />,
+    <ToggleButtonSizesDemo key="preview-2" />,
+  ],
+  "toggle-button-group": [
+    <ToggleButtonGroupEditorDemo key="preview-1" />,
+    <ToggleButtonGroupSizesDemo key="preview-2" />,
+  ],
   "token-field": [
     <TokenFieldDisabledDemo key="preview-1" />,
     <TokenFieldDemo key="preview-2" />,
+    <TokenFieldSizesDemo key="preview-3" />,
   ],
   toolbar: [
     <ToolbarDemo key="preview-1" />,
     <ToolbarVerticalDemo key="preview-2" />,
+    <ToolbarSizesDemo key="preview-3" />,
   ],
   "time-field": [
     <TimeField24HourDemo key="preview-1" />,
     <TimeFieldLimitsDemo key="preview-2" />,
     <TimeFieldDisabledDemo key="preview-3" />,
+    <TimeFieldSizesDemo key="preview-4" />,
   ],
   tree: [<TreeDemo key="preview-1" />],
 };

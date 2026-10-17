@@ -8,6 +8,7 @@ import { TextFieldDescriptionDemo } from "@/components/docs/text-field-descripti
 import { TextFieldDisabledDemo } from "@/components/docs/text-field-disabled-demo";
 import { TextFieldInvalidDemo } from "@/components/docs/text-field-invalid-demo";
 import { TextFieldReadOnlyDemo } from "@/components/docs/text-field-read-only-demo";
+import { TextFieldSizesDemo } from "@/components/docs/text-field-sizes-demo";
 import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
@@ -29,6 +30,7 @@ export default function TextFieldPage() {
         <TextFieldDisabledDemo key="disabled" />,
         <TextFieldReadOnlyDemo key="read-only" />,
         <TextFieldInvalidDemo key="invalid" />,
+        <TextFieldSizesDemo key="sizes" />,
       ])}
       sourcePath="src/components/ui/text-field.tsx"
     />
