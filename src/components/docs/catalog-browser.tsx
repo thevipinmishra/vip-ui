@@ -135,7 +135,7 @@ export function CatalogBrowser() {
                     <li key={component.slug} className="flex">
                       <Link
                         href={`/components/${component.slug}`}
-                        className="group/card flex w-full flex-col rounded-xl bg-card px-4 py-3.5 text-card-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70 transition-[box-shadow,scale] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:shadow-[var(--shadow-float)] hover:ring-foreground/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-safe:active:scale-[0.985] forced-colors:border"
+                        className="group/card flex w-full flex-col rounded-xl bg-card px-4 py-3.5 text-card-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70 outline-offset-4 outline-transparent transition-[box-shadow,scale,outline-color,outline-offset] duration-200 ease-out-quint hover:shadow-[var(--shadow-float)] hover:ring-foreground/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-safe:active:scale-[0.985] motion-reduce:outline-offset-2 forced-colors:border"
                       >
                         <span className="flex items-center gap-2">
                           <span className="min-w-0 text-[15px] font-medium tracking-[-0.02em]">
@@ -144,7 +144,7 @@ export function CatalogBrowser() {
                           <ArrowRightIcon
                             size={14}
                             aria-hidden="true"
-                            className="ms-auto shrink-0 text-muted-foreground opacity-0 transition-[opacity,translate] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover/card:opacity-100 group-focus-visible/card:opacity-100 motion-safe:-translate-x-1 motion-safe:group-hover/card:translate-x-0 motion-safe:group-focus-visible/card:translate-x-0 rtl:-scale-x-100"
+                            className="ms-auto shrink-0 text-muted-foreground opacity-0 transition-[opacity,translate] duration-200 ease-out-quint group-hover/card:opacity-100 group-focus-visible/card:opacity-100 motion-safe:-translate-x-1 motion-safe:group-hover/card:translate-x-0 motion-safe:group-focus-visible/card:translate-x-0 rtl:-scale-x-100"
                           />
                         </span>
                         <span className="mt-1 text-[13px] leading-5 text-muted-foreground">

@@ -29,7 +29,7 @@ export function CategoryTabs({
               scroll={false}
               aria-current={tab.href === active ? "page" : undefined}
               className={cn(
-                "inline-flex min-h-12 items-center gap-2 border-b-2 px-3 text-sm font-medium focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring",
+                "inline-flex min-h-12 items-center gap-2 rounded-t-md border-b-2 px-3 text-sm font-medium transition-[color,background-color,border-color] duration-150 ease-out-quint focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-transparent",
                 tab.href === active
                   ? "border-primary text-foreground"
                   : "border-transparent text-muted-foreground hover:border-border hover:text-foreground",
