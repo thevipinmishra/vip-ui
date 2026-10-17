@@ -6,6 +6,7 @@ import {
 import { SearchFieldBasicDemo } from "@/components/docs/search-field-basic-demo";
 import { SearchFieldDemo } from "@/components/docs/search-field-demo";
 import { SearchFieldDisabledDemo } from "@/components/docs/search-field-disabled-demo";
+import { SearchFieldSizesDemo } from "@/components/docs/search-field-sizes-demo";
 import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
@@ -25,6 +26,7 @@ export default function SearchFieldPage() {
       examples={withExamplePreviews(page.examples, [
         <SearchFieldDisabledDemo key="disabled" />,
         <SearchFieldDemo key="filtered-results" />,
+        <SearchFieldSizesDemo key="sizes" />,
       ])}
       sourcePath="src/components/ui/search-field.tsx"
     />

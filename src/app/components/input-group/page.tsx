@@ -9,6 +9,7 @@ import { InputGroupDisabledDemo } from "@/components/docs/input-group-disabled-d
 import { InputGroupIconDemo } from "@/components/docs/input-group-icon-demo";
 import { InputGroupInvalidDemo } from "@/components/docs/input-group-invalid-demo";
 import { InputGroupNotesDemo } from "@/components/docs/input-group-notes-demo";
+import { InputGroupSizesDemo } from "@/components/docs/input-group-sizes-demo";
 import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
@@ -31,6 +32,7 @@ export default function InputGroupPage() {
         <InputGroupNotesDemo key="text-area" />,
         <InputGroupDisabledDemo key="disabled" />,
         <InputGroupInvalidDemo key="invalid" />,
+        <InputGroupSizesDemo key="sizes" />,
       ])}
       sourcePath="src/components/ui/input-group.tsx"
     />

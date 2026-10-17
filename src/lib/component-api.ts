@@ -194,6 +194,14 @@ export const customComponentApi: Record<string, ApiProp[]> = {
   "combo-box": [
     {
       component: "ComboBox",
+      prop: "size",
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      defaultValue: '"lg"',
+      description:
+        "Sets the size of the input and of the trigger. The list keeps one row height.",
+    },
+    {
+      component: "ComboBox",
       prop: "options",
       type: "ComboBoxOption[]",
       defaultValue: "—",
@@ -312,6 +320,14 @@ export const customComponentApi: Record<string, ApiProp[]> = {
   "native-select": [
     {
       component: "NativeSelect",
+      prop: "size",
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      defaultValue: '"lg"',
+      description:
+        "Sets the size of the select box. The HTML size attribute is not available.",
+    },
+    {
+      component: "NativeSelect",
       prop: "label",
       type: "string",
       defaultValue: "required",
@@ -347,6 +363,14 @@ export const customComponentApi: Record<string, ApiProp[]> = {
     },
   ],
   select: [
+    {
+      component: "Select",
+      prop: "size",
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      defaultValue: '"lg"',
+      description:
+        "Sets the size of the trigger. The list keeps one row height.",
+    },
     {
       component: "Select",
       prop: "options",
@@ -569,6 +593,13 @@ export const customComponentApi: Record<string, ApiProp[]> = {
   "password-field": [
     {
       component: "PasswordField",
+      prop: "size",
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      defaultValue: '"lg"',
+      description: "Sets the size of the field and of the reveal button.",
+    },
+    {
+      component: "PasswordField",
       prop: "label",
       type: "string",
       defaultValue: "required",
@@ -620,6 +651,13 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       defaultValue: '"outline"',
       description: "Uses the Button variants.",
     },
+    {
+      component: "CopyButton",
+      prop: "size / iconOnly",
+      type: '"xs" | "sm" | "md" | "lg" | "xl" / boolean',
+      defaultValue: '"md" / false',
+      description: "Uses the Button sizes. Set iconOnly to show only the icon.",
+    },
   ],
   "button-group": [
     {
@@ -628,6 +666,14 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: '"horizontal" | "vertical"',
       defaultValue: '"horizontal"',
       description: "Joins buttons in a row or column.",
+    },
+    {
+      component: "ButtonGroup",
+      prop: "size",
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      defaultValue: "—",
+      description:
+        "Sets the size of each button in the group. A size on a button overrides it.",
     },
   ],
   "text-swap": [
@@ -742,6 +788,14 @@ export const customComponentApi: Record<string, ApiProp[]> = {
   ],
   "input-group": [
     {
+      component: "InputGroup",
+      prop: "size",
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      defaultValue: '"lg"',
+      description:
+        "Sets the size of the group. Without a size, the group uses the size of its parent field.",
+    },
+    {
       component: "InputGroupAddon",
       prop: "align",
       type: '"inline" | "block-end"',
@@ -823,10 +877,18 @@ export const customComponentApi: Record<string, ApiProp[]> = {
     {
       component: "Button",
       prop: "size",
-      type: '"default" | "sm" | "lg" | "icon"',
-      defaultValue: '"default"',
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      defaultValue: '"md"',
       description:
-        "Heights are 36px for sm, 44px for default, and 48px for lg. icon is a 44px square. Give icon buttons an aria-label.",
+        "Heights are 28, 36, 44, 48, and 56 pixels. Text, padding, and icons scale with the size. In a sized Toolbar, ButtonGroup, or ToggleButtonGroup, the button uses the size of the group. On touch screens, the touch area is at least 44 pixels high. An ancestor with overflow: hidden clips it.",
+    },
+    {
+      component: "Button",
+      prop: "iconOnly",
+      type: "boolean",
+      defaultValue: "false",
+      description:
+        "Makes the button a square for one icon. Give the button an aria-label.",
     },
     {
       component: "Button",
@@ -881,9 +943,10 @@ export const customComponentApi: Record<string, ApiProp[]> = {
     {
       component: "Avatar",
       prop: "size",
-      type: '"sm" | "md" | "lg"',
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
       defaultValue: '"md"',
-      description: "Diameter of the avatar. The initials scale with it.",
+      description:
+        "Diameter of the avatar: 24, 32, 40, 48, or 64 pixels. The initials scale with it.",
     },
   ],
   "empty-state": [
@@ -1078,6 +1141,14 @@ export const customComponentApi: Record<string, ApiProp[]> = {
   pagination: [
     {
       component: "Pagination",
+      prop: "size",
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      defaultValue: '"md"',
+      description:
+        "Uses the Button heights for each link and the ellipsis. Set it on Pagination or on one PaginationLink.",
+    },
+    {
+      component: "Pagination",
       prop: "aria-label",
       type: "string",
       defaultValue: '"Pagination"',
@@ -1195,11 +1266,11 @@ export const customComponentApi: Record<string, ApiProp[]> = {
     },
     {
       component: "DialogClose",
-      prop: "variant / size",
+      prop: "variant / iconOnly",
       type: "ButtonProps",
-      defaultValue: '"ghost" / "icon" (without children)',
+      defaultValue: '"ghost" / true without children',
       description:
-        "Button variant and size. With children, the size is default.",
+        "Button variant and shape. All Button props, such as size, are available.",
     },
   ],
   popover: [
@@ -1319,11 +1390,11 @@ export const customComponentApi: Record<string, ApiProp[]> = {
     },
     {
       component: "SheetClose",
-      prop: "variant / size",
+      prop: "variant / iconOnly",
       type: "ButtonProps",
-      defaultValue: '"ghost" / "icon" (without children)',
+      defaultValue: '"ghost" / true without children',
       description:
-        "Uses the shared Button variants. Choose default for a primary action, outline for a secondary action, or ghost for dismissal.",
+        "Uses the shared Button variants and sizes. Choose default for a primary action, outline for a secondary action, or ghost for dismissal.",
     },
   ],
   badge: [
@@ -1461,6 +1532,14 @@ export const customComponentApi: Record<string, ApiProp[]> = {
   ],
   tabs: [
     {
+      component: "TabsList",
+      prop: "size",
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      defaultValue: "adaptive",
+      description:
+        "Uses the Button heights for each tab. Without a size, tabs are 44 pixels high on small screens and 36 pixels from 640 pixels.",
+    },
+    {
       component: "Tabs",
       prop: "value / defaultValue",
       type: "string",
@@ -1494,6 +1573,13 @@ export const customComponentApi: Record<string, ApiProp[]> = {
   "date-field": [
     {
       component: "DateField",
+      prop: "size",
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      defaultValue: '"lg"',
+      description: "Sets the size of the field.",
+    },
+    {
+      component: "DateField",
       prop: "label / description",
       type: "string / string",
       defaultValue: "—",
@@ -1502,6 +1588,13 @@ export const customComponentApi: Record<string, ApiProp[]> = {
     },
   ],
   "time-field": [
+    {
+      component: "TimeField",
+      prop: "size",
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      defaultValue: '"lg"',
+      description: "Sets the size of the field.",
+    },
     {
       component: "TimeField",
       prop: "label / description",
@@ -1514,6 +1607,13 @@ export const customComponentApi: Record<string, ApiProp[]> = {
   "date-picker": [
     {
       component: "DatePicker",
+      prop: "size",
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      defaultValue: '"lg"',
+      description: "Sets the size of the field and of the calendar button.",
+    },
+    {
+      component: "DatePicker",
       prop: "label / description",
       type: "string / string",
       defaultValue: "—",
@@ -1524,6 +1624,13 @@ export const customComponentApi: Record<string, ApiProp[]> = {
   "date-range-picker": [
     {
       component: "DateRangePicker",
+      prop: "size",
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      defaultValue: '"lg"',
+      description: "Sets the size of the field and of the calendar button.",
+    },
+    {
+      component: "DateRangePicker",
       prop: "label / description",
       type: "string / string",
       defaultValue: "—",
@@ -1532,6 +1639,13 @@ export const customComponentApi: Record<string, ApiProp[]> = {
     },
   ],
   "color-field": [
+    {
+      component: "ColorField",
+      prop: "size",
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      defaultValue: '"lg"',
+      description: "Sets the size of the field.",
+    },
     {
       component: "ColorField",
       prop: "label / description",
@@ -1591,6 +1705,13 @@ export const customComponentApi: Record<string, ApiProp[]> = {
   "number-field": [
     {
       component: "NumberField",
+      prop: "size",
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      defaultValue: '"lg"',
+      description: "Sets the size of the field and of the step buttons.",
+    },
+    {
+      component: "NumberField",
       prop: "label / description",
       type: "string / string",
       defaultValue: "—",
@@ -1598,6 +1719,14 @@ export const customComponentApi: Record<string, ApiProp[]> = {
     },
   ],
   "search-field": [
+    {
+      component: "SearchField",
+      prop: "size",
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      defaultValue: '"lg"',
+      description:
+        "Sets the size of the field, the search icon, and the clear button.",
+    },
     {
       component: "SearchField",
       prop: "label / description / placeholder",
@@ -1619,6 +1748,14 @@ export const customComponentApi: Record<string, ApiProp[]> = {
   "text-field": [
     {
       component: "TextField",
+      prop: "size",
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      defaultValue: '"lg"',
+      description:
+        "Sets the height, padding, radius, text, and icon size of the field. The parts inside the field use it.",
+    },
+    {
+      component: "TextField",
       prop: "label / description / placeholder",
       type: "string / string / string",
       defaultValue: "—",
@@ -1626,6 +1763,14 @@ export const customComponentApi: Record<string, ApiProp[]> = {
     },
   ],
   "text-area": [
+    {
+      component: "TextArea",
+      prop: "size",
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      defaultValue: '"lg"',
+      description:
+        "Sets the padding, radius, and text size. The height does not change.",
+    },
     {
       component: "TextArea",
       prop: "label / description / placeholder",
@@ -1756,8 +1901,51 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       description:
         "Sets the surface. Use segmented inside a ToggleButtonGroup. All variants show the selected state.",
     },
+    {
+      component: "ToggleButton",
+      prop: "size",
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      defaultValue: '"md"',
+      description:
+        "Uses the Button heights. Without a size, a segmented toggle is 44 pixels high on small screens and 36 pixels from 640 pixels.",
+    },
+    {
+      component: "ToggleButton",
+      prop: "iconOnly",
+      type: "boolean",
+      defaultValue: "false",
+      description:
+        "Makes the toggle a square for one icon. Give the toggle an aria-label.",
+    },
+  ],
+  "toggle-button-group": [
+    {
+      component: "ToggleButtonGroup",
+      prop: "size",
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      defaultValue: "—",
+      description:
+        "Sets the size of each toggle in the group. A size on a toggle overrides it.",
+    },
+  ],
+  toolbar: [
+    {
+      component: "Toolbar",
+      prop: "size",
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      defaultValue: "—",
+      description:
+        "Sets the size of each button, toggle, and toggle group in the toolbar. Popovers and dialogs that open from the toolbar keep the default size.",
+    },
   ],
   "token-field": [
+    {
+      component: "TokenField",
+      prop: "size",
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      defaultValue: '"lg"',
+      description: "Sets the size of the input box. Tokens keep one size.",
+    },
     {
       component: "TokenField",
       prop: "label / description / placeholder",
@@ -1765,6 +1953,16 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       defaultValue: "—",
       description:
         "Label, help text, and placeholder for the default layout. Without label, pass aria-label.",
+    },
+  ],
+  "tag-group": [
+    {
+      component: "TagGroup",
+      prop: "size",
+      type: '"xs" | "sm" | "md"',
+      defaultValue: '"md"',
+      description:
+        "Sets the size of each tag and its remove button. A size on a tag overrides it.",
     },
   ],
 };

@@ -7,6 +7,7 @@ import { SelectDemo } from "@/components/docs/select-demo";
 import { SelectDescriptionsDemo } from "@/components/docs/select-descriptions-demo";
 import { SelectDisabledDemo } from "@/components/docs/select-disabled-demo";
 import { SelectInvalidDemo } from "@/components/docs/select-invalid-demo";
+import { SelectSizesDemo } from "@/components/docs/select-sizes-demo";
 import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
@@ -27,6 +28,7 @@ export default function SelectPage() {
         <SelectDescriptionsDemo key="described-options" />,
         <SelectDisabledDemo key="disabled" />,
         <SelectInvalidDemo key="invalid-selection" />,
+        <SelectSizesDemo key="sizes" />,
       ])}
       sourcePath="src/components/ui/select.tsx"
     />

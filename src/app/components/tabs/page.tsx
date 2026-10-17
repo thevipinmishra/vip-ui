@@ -7,6 +7,7 @@ import { TabsBasicDemo } from "@/components/docs/tabs-basic-demo";
 import { TabsDemo } from "@/components/docs/tabs-demo";
 import { TabsDisabledDemo } from "@/components/docs/tabs-disabled-demo";
 import { TabsOverflowDemo } from "@/components/docs/tabs-overflow-demo";
+import { TabsSizesDemo } from "@/components/docs/tabs-sizes-demo";
 import { TabsVerticalDemo } from "@/components/docs/tabs-vertical-demo";
 import { componentPageData } from "@/lib/component-examples";
 
@@ -28,6 +29,7 @@ export default function TabsPage() {
         <TabsDisabledDemo key="disabled-tab" />,
         <TabsVerticalDemo key="vertical" />,
         <TabsOverflowDemo key="many-tabs" />,
+        <TabsSizesDemo key="sizes" />,
       ])}
       sourcePath="src/components/ui/tabs.tsx"
     />

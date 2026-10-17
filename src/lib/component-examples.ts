@@ -22,6 +22,8 @@ export const componentPageData = {
       },
       {
         title: "Sizes",
+        description:
+          "Use xs in table rows, sm in toolbars, and md for most actions. Use lg next to a field and xl for a main call to action. The default is md. Icons scale with the size.",
         sourcePath: "button-sizes-demo.tsx",
       },
       {
@@ -33,7 +35,7 @@ export const componentPageData = {
       {
         title: "Icon buttons",
         description:
-          'Set size="icon" and give each button an aria-label. The label replaces the missing visible text.',
+          "Set iconOnly and give each button an aria-label. The label replaces the missing visible text. An icon-only button is a square at each size.",
         sourcePath: "button-icon-demo.tsx",
       },
       {
@@ -71,6 +73,12 @@ export const componentPageData = {
         description:
           "Use isInvalid while the controlled value is empty. The error clears when an option is selected.",
         sourcePath: "select-invalid-demo.tsx",
+      },
+      {
+        title: "Sizes",
+        description:
+          "Set size on the select. The trigger changes. The list keeps one row height, so options stay easy to touch.",
+        sourcePath: "select-sizes-demo.tsx",
       },
     ],
   },
@@ -182,7 +190,7 @@ export const componentPageData = {
       {
         title: "Sizes",
         description:
-          'Set size to "sm", "md", or "lg". The initials scale with the avatar.',
+          "Use xs in lines of text and lists, md in most places, and xl in profile headers. The initials scale with the avatar.",
         sourcePath: "avatar-sizes-demo.tsx",
       },
       {
@@ -238,6 +246,11 @@ export const componentPageData = {
         description:
           "Put a MenuTrigger in the group for more actions. Give the icon button an aria-label. Install Menu separately.",
         sourcePath: "button-group-demo.tsx",
+      },
+      {
+        title: "Sizes",
+        description: "Set size on the group. Each button in the group uses it.",
+        sourcePath: "button-group-sizes-demo.tsx",
       },
     ],
   },
@@ -352,6 +365,11 @@ export const componentPageData = {
           "Control the color with value and onChange. A ColorSwatch shows the current value. Install Color swatch separately.",
         sourcePath: "color-field-controlled-demo.tsx",
       },
+      {
+        title: "Sizes",
+        description: "Set size on the field. The default is lg.",
+        sourcePath: "color-field-sizes-demo.tsx",
+      },
     ],
   },
   "color-picker": {
@@ -425,6 +443,12 @@ export const componentPageData = {
           'Set selectionMode="multiple". Control the selected array with value and onChange.',
         sourcePath: "combo-box-multiple-demo.tsx",
       },
+      {
+        title: "Sizes",
+        description:
+          "Set size on the combo box. The input and the trigger change. The list keeps one row height, so options stay easy to touch.",
+        sourcePath: "combo-box-sizes-demo.tsx",
+      },
     ],
   },
   "command-palette": {
@@ -459,7 +483,7 @@ export const componentPageData = {
       {
         title: "Custom label and icon button",
         description:
-          'Pass a function as children to show a label for each status. Set size="icon" for an icon-only button, and give it an aria-label.',
+          "Pass a function as children to show a label for each status. Set iconOnly for an icon-only button, and give it an aria-label.",
         sourcePath: "copy-button-share-demo.tsx",
       },
     ],
@@ -486,6 +510,11 @@ export const componentPageData = {
           "Use isDisabled to keep the current value visible and prevent changes.",
         sourcePath: "date-field-disabled-demo.tsx",
       },
+      {
+        title: "Sizes",
+        description: "Set size on the field. The default is lg.",
+        sourcePath: "date-field-sizes-demo.tsx",
+      },
     ],
   },
   "date-picker": {
@@ -510,6 +539,12 @@ export const componentPageData = {
           "Control the selected date with the value and onChange props.",
         sourcePath: "date-picker-controlled-demo.tsx",
       },
+      {
+        title: "Sizes",
+        description:
+          "Set size on the date picker. The field and the calendar button change. The calendar keeps one size.",
+        sourcePath: "date-picker-sizes-demo.tsx",
+      },
     ],
   },
   "date-range-picker": {
@@ -528,6 +563,12 @@ export const componentPageData = {
         description:
           "Use isDisabled to keep the current value visible and prevent changes.",
         sourcePath: "date-range-picker-disabled-demo.tsx",
+      },
+      {
+        title: "Sizes",
+        description:
+          "Set size on the date range picker. The field and the calendar button change. The calendar keeps one size.",
+        sourcePath: "date-range-picker-sizes-demo.tsx",
       },
     ],
   },
@@ -688,6 +729,12 @@ export const componentPageData = {
           "Set isInvalid on the TextField and add TextFieldError. InputGroup inherits the state.",
         sourcePath: "input-group-invalid-demo.tsx",
       },
+      {
+        title: "Sizes",
+        description:
+          "Set size on the TextField. The group and its icon use that size. The default is lg.",
+        sourcePath: "input-group-sizes-demo.tsx",
+      },
     ],
   },
   "kbd-code": {
@@ -814,6 +861,12 @@ export const componentPageData = {
           "Set error to show a message below the field and mark it invalid. The example checks the value when you submit. Install Form separately.",
         sourcePath: "native-select-invalid-demo.tsx",
       },
+      {
+        title: "Sizes",
+        description:
+          "Set size on the select. The default is lg. The browser draws the option list, so the list does not change.",
+        sourcePath: "native-select-sizes-demo.tsx",
+      },
     ],
   },
   "number-field": {
@@ -838,6 +891,12 @@ export const componentPageData = {
           "Use isDisabled to keep the current value visible and prevent changes.",
         sourcePath: "number-field-disabled-demo.tsx",
       },
+      {
+        title: "Sizes",
+        description:
+          "Set size on the field. The step buttons change with the field. The default is lg.",
+        sourcePath: "number-field-sizes-demo.tsx",
+      },
     ],
   },
   pagination: {
@@ -849,6 +908,12 @@ export const componentPageData = {
         description:
           "Keep the page number in the URL, so that the Back button and shared links work. Set isDisabled on Previous at the first page and on Next at the last page.",
         sourcePath: "pagination-demo.tsx",
+      },
+      {
+        title: "Sizes",
+        description:
+          "Set size on Pagination. Use sm or xs below a dense table. Each link and the ellipsis use the size.",
+        sourcePath: "pagination-sizes-demo.tsx",
       },
     ],
   },
@@ -1039,6 +1104,12 @@ export const componentPageData = {
         description:
           "Control the query with value and onChange. SearchFieldClear resets the query and the list.",
         sourcePath: "search-field-demo.tsx",
+      },
+      {
+        title: "Sizes",
+        description:
+          "Use xl for a main search. Use sm in a filter bar, and give each control in the bar the same size.",
+        sourcePath: "search-field-sizes-demo.tsx",
       },
     ],
   },
@@ -1231,12 +1302,25 @@ export const componentPageData = {
           "When the tabs do not fit, the list scrolls horizontally. The arrow keys scroll the focused tab into view.",
         sourcePath: "tabs-overflow-demo.tsx",
       },
+      {
+        title: "Sizes",
+        description:
+          "Set size on TabsList. Each tab uses it. Without a size, tabs are 44 pixels high on small screens and 36 pixels from 640 pixels.",
+        sourcePath: "tabs-sizes-demo.tsx",
+      },
     ],
   },
   "tag-group": {
     usage: "tag-group-demo.tsx",
     description: "Displays a group of tags that users can remove or select.",
-    examples: [],
+    examples: [
+      {
+        title: "Sizes",
+        description:
+          "Set size on TagGroup to xs, sm, or md. The remove button scales with the tag.",
+        sourcePath: "tag-group-sizes-demo.tsx",
+      },
+    ],
   },
   "text-area": {
     usage: "text-area-basic-demo.tsx",
@@ -1264,6 +1348,12 @@ export const componentPageData = {
         description:
           "Use isInvalid with TextAreaError to show an error. The error clears when the value is valid.",
         sourcePath: "text-area-invalid-demo.tsx",
+      },
+      {
+        title: "Sizes",
+        description:
+          "Set size to change the padding, radius, and text size. The height does not change.",
+        sourcePath: "text-area-sizes-demo.tsx",
       },
     ],
   },
@@ -1293,6 +1383,12 @@ export const componentPageData = {
         description:
           "Use isInvalid with TextFieldError to show an error. The error clears when the value is valid.",
         sourcePath: "text-field-invalid-demo.tsx",
+      },
+      {
+        title: "Sizes",
+        description:
+          "Set size on the field. The default is lg. To put a button next to the field, give the button the same size.",
+        sourcePath: "text-field-sizes-demo.tsx",
       },
     ],
   },
@@ -1451,6 +1547,11 @@ export const componentPageData = {
           "Use isDisabled to keep the current value visible and prevent changes.",
         sourcePath: "time-field-disabled-demo.tsx",
       },
+      {
+        title: "Sizes",
+        description: "Set size on the field. The default is lg.",
+        sourcePath: "time-field-sizes-demo.tsx",
+      },
     ],
   },
   timeline: {
@@ -1486,6 +1587,12 @@ export const componentPageData = {
           "Control each toggle with isSelected and onChange. Give every button a visible label.",
         sourcePath: "toggle-button-independent-demo.tsx",
       },
+      {
+        title: "Sizes",
+        description:
+          "Set size to change the height. The default is md. Set iconOnly for a square toggle, and give it an aria-label.",
+        sourcePath: "toggle-button-sizes-demo.tsx",
+      },
     ],
   },
   "toggle-button-group": {
@@ -1497,6 +1604,12 @@ export const componentPageData = {
         description:
           'Set selectionMode="multiple" to select more than one option, and control selectedKeys with onSelectionChange.',
         sourcePath: "toggle-button-group-editor-demo.tsx",
+      },
+      {
+        title: "Sizes",
+        description:
+          "Set size on the group. Each toggle in the group uses it. Without a size, segmented toggles are 44 pixels high on small screens and 36 pixels from 640 pixels.",
+        sourcePath: "toggle-button-group-sizes-demo.tsx",
       },
     ],
   },
@@ -1516,6 +1629,12 @@ export const componentPageData = {
           "Pass a TagFieldValue as the value and commit the draft with onSubmit. Uncommitted text is not a token.",
         sourcePath: "token-field-demo.tsx",
       },
+      {
+        title: "Sizes",
+        description:
+          "Set size on the field. The default is lg. Tokens keep one size.",
+        sourcePath: "token-field-sizes-demo.tsx",
+      },
     ],
   },
   toolbar: {
@@ -1533,6 +1652,12 @@ export const componentPageData = {
         description:
           'Set orientation="vertical". The up and down arrow keys move focus.',
         sourcePath: "toolbar-vertical-demo.tsx",
+      },
+      {
+        title: "Sizes",
+        description:
+          "Set size on the toolbar. Its buttons and toggles use that size. Popovers that open from the toolbar keep the default size.",
+        sourcePath: "toolbar-sizes-demo.tsx",
       },
     ],
   },
