@@ -1,14 +1,12 @@
 "use client";
 
 import { CaretDownIcon } from "@phosphor-icons/react";
-import { motion, useReducedMotion } from "motion/react";
-import { type ReactNode, useContext } from "react";
+import type { ReactNode } from "react";
 import {
   Button as AriaButton,
   ComboBox as AriaComboBox,
   type ComboBoxProps as AriaComboBoxProps,
   ComboBoxValue as AriaComboBoxValue,
-  ComboBoxStateContext,
   composeRenderProps,
   FieldError,
   Input,
@@ -17,23 +15,25 @@ import {
   ListBoxItem,
   Text,
 } from "react-aria-components";
-import { duration, easeOut } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import {
+  fieldChevronStyles,
   fieldDescriptionStyles,
   fieldErrorStyles,
   fieldInputStyles,
   fieldLabelStyles,
+  fieldSizeStyles,
   fieldTriggerStyles,
 } from "./field-styles";
 import { SelectionMark } from "./list-box";
 import { Popover } from "./popover";
+import type { Size } from "./size";
 import { Tag, TagGroup, TagListView } from "./tag-group";
 
 const comboBoxPopoverStyles =
   "w-[var(--trigger-width)] rounded-lg border-0 p-1.5 ring-1 ring-border/70";
 const comboBoxItemStyles =
-  "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted focus:bg-muted focus-visible:-outline-offset-1 focus-visible:outline-1 focus-visible:outline-solid focus-visible:outline-ring forced-colors:focus-visible:-outline-offset-2 forced-colors:focus-visible:outline-2 selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50";
+  "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none transition-colors duration-150 ease-out-quint hover:bg-muted hover:duration-0 focus:bg-muted focus:duration-0 focus-visible:-outline-offset-1 focus-visible:outline-1 focus-visible:outline-solid focus-visible:outline-ring forced-colors:focus-visible:-outline-offset-2 forced-colors:focus-visible:outline-2 selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50";
 
 export interface ComboBoxOption {
   id: string;
@@ -49,6 +49,7 @@ type ComboBoxBaseProps<M extends "single" | "multiple"> = Omit<
   description?: string;
   options?: ComboBoxOption[];
   placeholder?: string;
+  size?: Size;
   className?: AriaComboBoxProps<ComboBoxOption, M>["className"];
   children?: AriaComboBoxProps<ComboBoxOption, M>["children"];
 };
@@ -79,6 +80,7 @@ function SingleComboBox({
   description,
   options,
   placeholder = "Search options",
+  size,
   className,
   children,
   value,
@@ -90,6 +92,7 @@ function SingleComboBox({
     <AriaComboBox
       {...props}
       data-slot="combo-box"
+      data-size={size}
       selectedKey={value ?? props.selectedKey}
       defaultSelectedKey={defaultValue ?? props.defaultSelectedKey}
       onSelectionChange={(key) => {
@@ -97,7 +100,11 @@ function SingleComboBox({
         onValueChange?.(key === null ? "" : String(key));
       }}
       className={composeRenderProps(className, (className) =>
-        cn("group flex w-full min-w-0 flex-col gap-2", className),
+        cn(
+          "group flex w-full min-w-0 flex-col gap-2",
+          size && fieldSizeStyles[size],
+          className,
+        ),
       )}
     >
       {children ?? (
@@ -117,6 +124,7 @@ function MultipleComboBox({
   description,
   options,
   placeholder = "Search options",
+  size,
   className,
   children,
   ...props
@@ -125,8 +133,13 @@ function MultipleComboBox({
     <AriaComboBox
       {...props}
       data-slot="combo-box"
+      data-size={size}
       className={composeRenderProps(className, (className) =>
-        cn("group flex w-full min-w-0 flex-col gap-2", className),
+        cn(
+          "group flex w-full min-w-0 flex-col gap-2",
+          size && fieldSizeStyles[size],
+          className,
+        ),
       )}
     >
       {children ?? (
@@ -189,19 +202,15 @@ function ComboBoxDefaults({
               textValue={option.name}
               className={comboBoxItemStyles}
             >
-              {({ isSelected }) => (
-                <>
-                  <span className="min-w-0">
-                    <span className="block font-medium">{option.name}</span>
-                    {option.description && (
-                      <span className="mt-0.5 block text-xs text-muted-foreground group-selected/item:text-accent-foreground">
-                        {option.description}
-                      </span>
-                    )}
+              <span className="min-w-0">
+                <span className="block font-medium">{option.name}</span>
+                {option.description && (
+                  <span className="mt-0.5 block text-xs text-muted-foreground group-selected/item:text-accent-foreground">
+                    {option.description}
                   </span>
-                  <SelectionMark isSelected={isSelected} />
-                </>
-              )}
+                )}
+              </span>
+              <SelectionMark />
             </ListBoxItem>
           )}
         </ListBox>
@@ -276,7 +285,11 @@ export function ComboBoxInput({
       {...props}
       data-slot="combo-box-input"
       className={composeRenderProps(className, (className) =>
-        cn(fieldInputStyles, "ps-3.5 pe-12", className),
+        cn(
+          fieldInputStyles,
+          "ps-[var(--field-px,0.875rem)] pe-[var(--field-h,3rem)]",
+          className,
+        ),
       )}
     />
   );
@@ -302,17 +315,10 @@ export function ComboBoxTrigger({
 }
 
 function ComboBoxChevron() {
-  const isOpen = useContext(ComboBoxStateContext)?.isOpen;
-  const reduceMotion = useReducedMotion();
   return (
-    <motion.span
-      aria-hidden="true"
-      initial={false}
-      animate={{ rotate: isOpen ? 180 : 0 }}
-      transition={{ duration: reduceMotion ? 0 : duration.base, ease: easeOut }}
-    >
-      <CaretDownIcon size={16} />
-    </motion.span>
+    <span aria-hidden="true" className={fieldChevronStyles}>
+      <CaretDownIcon />
+    </span>
   );
 }
 
@@ -362,10 +368,10 @@ export function ComboBoxItem({
         cn(comboBoxItemStyles, className),
       )}
     >
-      {composeRenderProps(children, (content, { isSelected }) => (
+      {composeRenderProps(children, (content) => (
         <>
           {content}
-          <SelectionMark isSelected={isSelected} />
+          <SelectionMark />
         </>
       ))}
     </ListBoxItem>

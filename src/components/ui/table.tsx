@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  ArrowDownIcon,
-  ArrowsDownUpIcon,
-  ArrowUpIcon,
-} from "@phosphor-icons/react";
+import { ArrowsDownUpIcon, ArrowUpIcon } from "@phosphor-icons/react";
 import {
   Cell as AriaCell,
   Column as AriaColumn,
@@ -71,7 +67,7 @@ export function Column({ className, children, ...props }: ColumnProps) {
       data-slot="table-column"
       className={composeRenderProps(className, (className) =>
         cn(
-          "border-b border-border px-4 py-2.5 text-start text-xs font-semibold whitespace-nowrap outline-none transition-[color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] allows-sorting:cursor-pointer allows-sorting:hover:text-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-[-2px] focus-visible:outline-ring",
+          "group/column border-b border-border px-4 py-2.5 text-start text-xs font-semibold whitespace-nowrap outline-none transition-[color] duration-150 ease-out-quint allows-sorting:cursor-pointer allows-sorting:hover:text-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-[-2px] focus-visible:outline-ring",
           className,
         ),
       )}
@@ -90,10 +86,12 @@ export function Column({ className, children, ...props }: ColumnProps) {
                   sortDirection ? "text-foreground" : "text-muted-foreground",
                 )}
               >
-                {sortDirection === "ascending" ? (
-                  <ArrowUpIcon size={14} weight="bold" />
-                ) : sortDirection === "descending" ? (
-                  <ArrowDownIcon size={14} weight="bold" />
+                {sortDirection ? (
+                  <ArrowUpIcon
+                    size={14}
+                    weight="bold"
+                    className="transition-transform duration-250 ease-out-quint group-sort-descending/column:rotate-180 motion-reduce:transition-none"
+                  />
                 ) : (
                   <ArrowsDownUpIcon size={14} />
                 )}
@@ -113,7 +111,7 @@ export function Row<T extends object>({ className, ...props }: RowProps<T>) {
       data-slot="table-row"
       className={composeRenderProps(className, (className) =>
         cn(
-          "outline-none hover:bg-muted focus:bg-muted selected:bg-accent disabled:cursor-default disabled:opacity-50 focus-visible:outline-1 focus-visible:outline-solid focus-visible:-outline-offset-1 focus-visible:outline-ring forced-colors:focus-visible:outline-2 forced-colors:focus-visible:-outline-offset-2 forced-colors:selected:*:relative forced-colors:selected:*:before:pointer-events-none forced-colors:selected:*:before:absolute forced-colors:selected:*:before:inset-0 forced-colors:selected:*:before:border-y-2 forced-colors:selected:*:before:border-[Highlight] forced-colors:selected:*:first:before:border-s-2 forced-colors:selected:*:last:before:border-e-2",
+          "outline-none transition-colors duration-150 ease-out-quint hover:bg-muted hover:duration-0 focus:bg-muted focus:duration-0 selected:bg-accent disabled:cursor-default disabled:opacity-50 focus-visible:outline-1 focus-visible:outline-solid focus-visible:-outline-offset-1 focus-visible:outline-ring forced-colors:focus-visible:outline-2 forced-colors:focus-visible:-outline-offset-2 forced-colors:selected:*:relative forced-colors:selected:*:before:pointer-events-none forced-colors:selected:*:before:absolute forced-colors:selected:*:before:inset-0 forced-colors:selected:*:before:border-y-2 forced-colors:selected:*:before:border-[Highlight] forced-colors:selected:*:first:before:border-s-2 forced-colors:selected:*:last:before:border-e-2",
           className,
         ),
       )}

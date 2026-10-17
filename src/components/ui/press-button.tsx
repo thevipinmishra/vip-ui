@@ -1,26 +1,23 @@
 "use client";
 
-import { type HTMLMotionProps, motion, useReducedMotion } from "motion/react";
-import { Button, type ButtonProps } from "react-aria-components";
+import {
+  Button,
+  type ButtonProps,
+  composeRenderProps,
+} from "react-aria-components";
+import { cn } from "@/lib/utils";
 
-export function PressButton({ isDisabled, ...props }: ButtonProps) {
-  const reduceMotion = useReducedMotion();
-
+export function PressButton({ className, ...props }: ButtonProps) {
   return (
     <Button
       data-slot="press-button"
       {...props}
-      isDisabled={isDisabled}
-      render={
-        props.render ??
-        ((domProps) => (
-          <motion.button
-            {...(domProps as HTMLMotionProps<"button">)}
-            whileTap={reduceMotion || isDisabled ? undefined : { scale: 0.96 }}
-            transition={{ type: "spring", stiffness: 500, damping: 36 }}
-          />
-        ))
-      }
+      className={composeRenderProps(className, (className) =>
+        cn(
+          "transition-[scale] duration-150 ease-out-quint motion-safe:pressed:scale-[0.96]",
+          className,
+        ),
+      )}
     />
   );
 }
