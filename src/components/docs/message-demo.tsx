@@ -56,7 +56,7 @@ export function MessageDemo() {
                     : `Copy message from ${entry.sender}`
                 }
                 variant="ghost"
-                size="icon"
+                iconOnly
               />
             )
           }

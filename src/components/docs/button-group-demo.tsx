@@ -15,8 +15,8 @@ export function ButtonGroupDemo() {
     <ButtonGroup aria-label="Draft actions">
       <Button variant="ghost">Save draft</Button>
       <MenuTrigger>
-        <Button variant="ghost" size="icon" aria-label="More draft actions">
-          <DotsThreeIcon size={18} aria-hidden="true" />
+        <Button variant="ghost" iconOnly aria-label="More draft actions">
+          <DotsThreeIcon aria-hidden="true" />
         </Button>
         <MenuPopover>
           <MenuContent>

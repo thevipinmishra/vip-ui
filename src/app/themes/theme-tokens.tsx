@@ -88,7 +88,7 @@ function TokenValue({ name, value }: { name: string; value: string }) {
       <CopyButton
         value={value}
         variant="ghost"
-        size="icon"
+        iconOnly
         aria-label={`Copy --${name}`}
         className="size-8 shrink-0"
       />

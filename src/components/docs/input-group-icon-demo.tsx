@@ -14,7 +14,7 @@ export function InputGroupIconDemo() {
       <TextFieldLabel>Email address</TextFieldLabel>
       <InputGroup>
         <InputGroupAddon>
-          <EnvelopeSimpleIcon size={17} aria-hidden="true" />
+          <EnvelopeSimpleIcon aria-hidden="true" />
         </InputGroupAddon>
         <InputGroupInput placeholder="maya@example.com" />
       </InputGroup>

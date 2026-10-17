@@ -20,7 +20,7 @@ export function PopoverDemo() {
   return (
     <PopoverTrigger>
       <Button variant="outline">
-        <CalendarBlankIcon size={17} aria-hidden="true" />
+        <CalendarBlankIcon aria-hidden="true" />
         Design review
       </Button>
       <Popover placement="bottom start" className="w-80">

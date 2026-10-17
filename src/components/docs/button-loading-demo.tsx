@@ -19,7 +19,7 @@ export function ButtonLoadingDemo() {
       {isSaving ? (
         <Spinner size="sm" decorative />
       ) : (
-        <FloppyDiskIcon size={16} aria-hidden="true" />
+        <FloppyDiskIcon aria-hidden="true" />
       )}
       Save changes
     </Button>

@@ -50,7 +50,7 @@ export function PasswordField({
           <Button
             type="button"
             variant="ghost"
-            size="icon"
+            iconOnly
             className={fieldTriggerStyles}
             isDisabled={isDisabled}
             aria-label={visible ? "Hide password" : "Show password"}
@@ -74,7 +74,7 @@ export function PasswordField({
                 animate={{ opacity: visible ? 0 : 1, scale: visible ? 0.9 : 1 }}
                 transition={iconTransition}
               >
-                <EyeIcon size={18} />
+                <EyeIcon />
               </motion.span>
               <motion.span
                 className="col-start-1 row-start-1"
@@ -82,7 +82,7 @@ export function PasswordField({
                 animate={{ opacity: visible ? 1 : 0, scale: visible ? 1 : 0.9 }}
                 transition={iconTransition}
               >
-                <EyeSlashIcon size={18} />
+                <EyeSlashIcon />
               </motion.span>
             </span>
           </Button>

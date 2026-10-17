@@ -8,15 +8,15 @@ export function TabsDemo() {
     <Tabs defaultValue="overview" className="w-full max-w-lg">
       <TabsList aria-label="Project workspace">
         <TabsTrigger value="overview">
-          <StackIcon size={15} aria-hidden="true" />
+          <StackIcon aria-hidden="true" />
           Overview
         </TabsTrigger>
         <TabsTrigger value="activity">
-          <PulseIcon size={15} aria-hidden="true" />
+          <PulseIcon aria-hidden="true" />
           Activity
         </TabsTrigger>
         <TabsTrigger value="team">
-          <UsersIcon size={15} aria-hidden="true" />
+          <UsersIcon aria-hidden="true" />
           Team
         </TabsTrigger>
       </TabsList>

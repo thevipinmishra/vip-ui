@@ -15,7 +15,10 @@ import {
   fieldErrorStyles,
   fieldInputStyles,
   fieldLabelStyles,
+  fieldPaddingX,
+  fieldSizeStyles,
 } from "./field-styles";
+import type { Size } from "./size";
 
 export interface TextAreaProps
   extends Omit<AriaTextFieldProps, "className" | "children"> {
@@ -23,6 +26,7 @@ export interface TextAreaProps
   description?: string;
   placeholder?: string;
   rows?: number;
+  size?: Size;
   ref?: React.Ref<HTMLDivElement>;
   className?: AriaTextFieldProps["className"];
   children?: AriaTextFieldProps["children"];
@@ -33,6 +37,7 @@ export function TextArea({
   description,
   placeholder,
   rows = 4,
+  size,
   className,
   children,
   ...props
@@ -41,8 +46,13 @@ export function TextArea({
     <AriaTextField
       {...props}
       data-slot="text-area"
+      data-size={size}
       className={composeRenderProps(className, (className) =>
-        cn("flex w-full min-w-0 flex-col gap-2", className),
+        cn(
+          "flex w-full min-w-0 flex-col gap-2",
+          size && fieldSizeStyles[size],
+          className,
+        ),
       )}
     >
       {children ?? (
@@ -83,7 +93,8 @@ export function TextAreaInput({
       className={composeRenderProps(className, (className) =>
         cn(
           fieldInputStyles,
-          "min-h-28 resize-y px-3.5 py-3 leading-6",
+          fieldPaddingX,
+          "min-h-28 resize-y py-3 leading-6",
           className,
         ),
       )}

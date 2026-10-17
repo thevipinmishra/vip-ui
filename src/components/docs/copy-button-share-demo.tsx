@@ -35,7 +35,7 @@ export function CopyButtonShareDemo() {
           value={workspaceId}
           aria-label="Copy workspace ID"
           variant="secondary"
-          size="icon"
+          iconOnly
         />
       </div>
     </div>

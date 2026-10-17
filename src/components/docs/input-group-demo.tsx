@@ -30,7 +30,7 @@ export function InputGroupDemo() {
         <TextFieldLabel>Find a project</TextFieldLabel>
         <InputGroup>
           <InputGroupAddon>
-            <MagnifyingGlassIcon size={17} aria-hidden="true" />
+            <MagnifyingGlassIcon aria-hidden="true" />
           </InputGroupAddon>
           <InputGroupInput placeholder="Project name" />
           <InputGroupAddon>

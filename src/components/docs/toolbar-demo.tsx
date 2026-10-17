@@ -17,7 +17,7 @@ export function ToolbarDemo() {
 
   return (
     <div className="grid w-full max-w-sm justify-items-start gap-3">
-      <Toolbar aria-label="Text formatting">
+      <Toolbar size="sm" aria-label="Text formatting">
         <ToggleButtonGroup
           aria-label="Text style"
           selectionMode="multiple"
@@ -26,24 +26,34 @@ export function ToolbarDemo() {
             setStyles(new Set([...keys].map(String)))
           }
         >
-          <ToggleButton id="bold" variant="segmented" aria-label="Bold">
-            <TextBIcon size={16} aria-hidden="true" />
+          <ToggleButton
+            id="bold"
+            variant="segmented"
+            iconOnly
+            aria-label="Bold"
+          >
+            <TextBIcon aria-hidden="true" />
           </ToggleButton>
-          <ToggleButton id="italic" variant="segmented" aria-label="Italic">
-            <TextItalicIcon size={16} aria-hidden="true" />
+          <ToggleButton
+            id="italic"
+            variant="segmented"
+            iconOnly
+            aria-label="Italic"
+          >
+            <TextItalicIcon aria-hidden="true" />
           </ToggleButton>
           <ToggleButton
             id="underline"
             variant="segmented"
+            iconOnly
             aria-label="Underline"
           >
-            <TextUnderlineIcon size={16} aria-hidden="true" />
+            <TextUnderlineIcon aria-hidden="true" />
           </ToggleButton>
         </ToggleButtonGroup>
         <Separator orientation="vertical" className="h-6 self-center" />
         <Button
           variant="ghost"
-          size="sm"
           isDisabled={styles.size === 0}
           onPress={() => setStyles(new Set())}
         >

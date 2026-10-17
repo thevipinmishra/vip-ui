@@ -15,16 +15,20 @@ import { cn } from "@/lib/utils";
 import {
   fieldDescriptionStyles,
   fieldErrorStyles,
+  fieldIcon,
   fieldInputStyles,
   fieldLabelStyles,
+  fieldSizeStyles,
   fieldTriggerStyles,
 } from "./field-styles";
+import type { Size } from "./size";
 
 export interface SearchFieldProps
   extends Omit<AriaSearchFieldProps, "children" | "className"> {
   label?: string;
   description?: string;
   placeholder?: string;
+  size?: Size;
   ref?: React.Ref<HTMLDivElement>;
   className?: AriaSearchFieldProps["className"];
   children?: AriaSearchFieldProps["children"];
@@ -34,6 +38,7 @@ export function SearchField({
   label,
   description,
   placeholder,
+  size,
   className,
   children,
   ...props
@@ -42,19 +47,23 @@ export function SearchField({
     <AriaSearchField
       {...props}
       data-slot="search-field"
+      data-size={size}
       className={composeRenderProps(className, (className) =>
-        cn("group flex w-full min-w-0 flex-col gap-2", className),
+        cn(
+          "group flex w-full min-w-0 flex-col gap-2",
+          size && fieldSizeStyles[size],
+          className,
+        ),
       )}
     >
       {children ??
         (({ isEmpty }) => (
           <>
             {label && <SearchFieldLabel>{label}</SearchFieldLabel>}
-            <div className="relative flex items-center">
+            <div className={cn("relative flex items-center", fieldIcon)}>
               <MagnifyingGlassIcon
-                size={17}
                 aria-hidden="true"
-                className="pointer-events-none absolute start-3.5 text-muted-foreground group-disabled:opacity-60"
+                className="pointer-events-none absolute start-[var(--field-px,0.875rem)] text-muted-foreground group-disabled:opacity-60"
               />
               <SearchFieldInput placeholder={placeholder} />
               {!isEmpty && <SearchFieldClear />}
@@ -93,7 +102,7 @@ export function SearchFieldInput({
       className={composeRenderProps(className, (className) =>
         cn(
           fieldInputStyles,
-          "ps-10 pe-12 [&::-webkit-search-cancel-button]:hidden",
+          "ps-[calc(var(--field-px,0.875rem)+var(--field-icon,1rem)+0.625rem)] pe-[var(--field-h,3rem)] [&::-webkit-search-cancel-button]:hidden",
           className,
         ),
       )}
@@ -119,7 +128,7 @@ export function SearchFieldClear({
         ),
       )}
     >
-      {children ?? <XIcon size={16} aria-hidden="true" />}
+      {children ?? <XIcon aria-hidden="true" />}
     </AriaButton>
   );
 }

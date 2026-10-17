@@ -9,7 +9,6 @@ export function ToggleButtonDemo() {
       {({ isSelected }) => (
         <>
           <PushPinIcon
-            size={16}
             weight={isSelected ? "fill" : "regular"}
             aria-hidden="true"
           />

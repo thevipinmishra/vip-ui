@@ -1,15 +1,34 @@
+import type { Size } from "./size";
+
+export const fieldSizeStyles = {
+  xs: "[--field-h:1.75rem] [--field-px:0.5rem] [--field-radius:var(--radius-sm)] [--field-text:0.75rem] [--field-icon:0.875rem]",
+  sm: "[--field-h:2.25rem] [--field-px:0.75rem] [--field-radius:var(--radius-md)] [--field-text:0.875rem] [--field-icon:1rem]",
+  md: "[--field-h:2.75rem] [--field-px:0.875rem] [--field-radius:var(--radius-lg)] [--field-text:0.875rem] [--field-icon:1rem]",
+  lg: "[--field-h:3rem] [--field-px:0.875rem] [--field-radius:var(--radius-lg)] [--field-text:0.875rem] [--field-icon:1rem]",
+  xl: "[--field-h:3.5rem] [--field-px:1rem] [--field-radius:var(--radius-xl)] [--field-text:1rem] [--field-icon:1.25rem]",
+} satisfies Record<Size, string>;
+
+export const fieldHeight = "min-h-[var(--field-h,3rem)]";
+export const fieldInnerHeight = "min-h-[calc(var(--field-h,3rem)-0.25rem)]";
+export const fieldPaddingX = "px-[var(--field-px,0.875rem)]";
+export const fieldRadius = "rounded-[var(--field-radius,var(--radius-lg))]";
+export const fieldText =
+  "text-base sm:text-[length:var(--field-text,0.875rem)] sm:[line-height:var(--tw-leading,1.25rem)]";
+export const fieldIcon =
+  "[&_svg:not([class*='size-'])]:size-[var(--field-icon,1rem)]";
+
 export const fieldLabelStyles =
   "text-sm font-medium text-foreground [overflow-wrap:anywhere]";
 export const fieldDescriptionStyles =
   "text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]";
 export const fieldErrorStyles =
-  "text-xs leading-5 text-destructive [overflow-wrap:anywhere]";
+  "text-xs leading-5 text-destructive [overflow-wrap:anywhere] transition-[opacity,translate] duration-200 ease-out-quint starting:opacity-0 motion-safe:starting:-translate-y-1";
 
-export const fieldInputStyles =
-  "min-h-12 w-full cursor-text rounded-lg border border-input bg-card text-base text-foreground shadow-[var(--shadow-card)] outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] placeholder:text-muted-foreground/80 hover:border-primary/45 focus:border-ring focus:ring-1 focus:ring-ring invalid:border-destructive invalid:hover:border-destructive invalid:focus:border-destructive invalid:focus:ring-destructive [&[readonly]]:bg-muted/40 [&[readonly]]:hover:border-input disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 disabled:hover:border-input sm:text-sm";
+export const fieldInputStyles = `${fieldHeight} ${fieldRadius} ${fieldText} w-full cursor-text border border-input bg-card text-foreground shadow-[var(--shadow-card)] outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-out-quint placeholder:text-muted-foreground/80 hover:border-primary/45 focus:border-ring focus:ring-1 focus:ring-ring invalid:border-destructive invalid:hover:border-destructive invalid:focus:border-destructive invalid:focus:ring-destructive [&[readonly]]:bg-muted/40 [&[readonly]]:hover:border-input disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 disabled:hover:border-input`;
 
-export const segmentedFieldStyles =
-  "flex min-h-12 min-w-0 items-center rounded-lg border border-input bg-card shadow-[var(--shadow-card)] transition-[color,background-color,border-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-primary/45 focus-within:border-ring focus-within:hover:border-ring focus-within:ring-1 focus-within:ring-ring group-invalid:border-destructive group-invalid:hover:border-destructive group-invalid:focus-within:border-destructive group-invalid:focus-within:hover:border-destructive group-invalid:focus-within:ring-destructive group-data-[readonly]:bg-muted/40 group-data-[readonly]:hover:border-input group-disabled:bg-muted group-disabled:opacity-60 group-disabled:hover:border-input";
+export const segmentedFieldStyles = `${fieldHeight} ${fieldRadius} flex min-w-0 items-center border border-input bg-card shadow-[var(--shadow-card)] transition-[color,background-color,border-color,box-shadow] duration-150 ease-out-quint hover:border-primary/45 focus-within:border-ring focus-within:hover:border-ring focus-within:ring-1 focus-within:ring-ring group-invalid:border-destructive group-invalid:hover:border-destructive group-invalid:focus-within:border-destructive group-invalid:focus-within:hover:border-destructive group-invalid:focus-within:ring-destructive group-data-[readonly]:bg-muted/40 group-data-[readonly]:hover:border-input group-disabled:bg-muted group-disabled:opacity-60 group-disabled:hover:border-input`;
 
-export const fieldTriggerStyles =
-  "grid size-11 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none transition-[color,background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted hover:text-foreground pressed:bg-muted pressed:text-foreground focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring disabled:cursor-default disabled:opacity-50";
+export const fieldTriggerStyles = `${fieldIcon} group/trigger grid size-[calc(var(--field-h,3rem)-0.25rem)] shrink-0 cursor-pointer place-items-center rounded-[calc(var(--field-radius,var(--radius-lg))-0.125rem)] text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-out-quint hover:bg-muted hover:text-foreground pressed:bg-muted pressed:text-foreground focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring disabled:cursor-default disabled:opacity-50`;
+
+export const fieldChevronStyles =
+  "grid place-items-center transition-transform duration-250 ease-out-quint group-aria-expanded/trigger:rotate-180 motion-reduce:transition-none";
