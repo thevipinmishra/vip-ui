@@ -23,6 +23,7 @@ import { CardBasicDemo } from "@/components/docs/card-basic-demo";
 import { CardDemo } from "@/components/docs/card-demo";
 import { CheckboxGroupDemo } from "@/components/docs/checkbox-group-demo";
 import { CheckboxGroupDisabledDemo } from "@/components/docs/checkbox-group-disabled-demo";
+import { CheckboxGroupLayoutDemo } from "@/components/docs/checkbox-group-layout-demo";
 import { CheckboxGroupRequiredDemo } from "@/components/docs/checkbox-group-required-demo";
 import { ColorFieldChannelDemo } from "@/components/docs/color-field-channel-demo";
 import { ColorFieldControlledDemo } from "@/components/docs/color-field-controlled-demo";
@@ -99,7 +100,9 @@ import { PaginationDemo } from "@/components/docs/pagination-demo";
 import { PasswordStrengthMeterDemo } from "@/components/docs/password-strength-meter-demo";
 import { PasswordStrengthMeterFieldDemo } from "@/components/docs/password-strength-meter-field-demo";
 import { PopoverDemo } from "@/components/docs/popover-demo";
+import { PopoverFormDemo } from "@/components/docs/popover-form-demo";
 import { PopoverPlacementDemo } from "@/components/docs/popover-placement-demo";
+import { PopoverPreviewDemo } from "@/components/docs/popover-preview-demo";
 import { PresenceDemo } from "@/components/docs/presence-demo";
 import { PresenceInlineDemo } from "@/components/docs/presence-inline-demo";
 import { PresenceListBasicDemo } from "@/components/docs/presence-list-basic-demo";
@@ -624,6 +627,7 @@ const examplePreviews: Record<string, ReactNode[]> = {
   "checkbox-group": [
     <CheckboxGroupDisabledDemo key="preview-1" />,
     <CheckboxGroupRequiredDemo key="preview-2" />,
+    <CheckboxGroupLayoutDemo key="preview-3" />,
   ],
   "color-swatch": [
     <ColorSwatchDemo key="preview-1" />,
@@ -669,7 +673,11 @@ const examplePreviews: Record<string, ReactNode[]> = {
   ],
   "rating-input": [<RatingInputReadOnlyDemo key="preview-1" />],
   pagination: [<PaginationDemo key="preview-1" />],
-  popover: [<PopoverPlacementDemo key="preview-1" />],
+  popover: [
+    <PopoverPlacementDemo key="preview-1" />,
+    <PopoverFormDemo key="preview-2" />,
+    <PopoverPreviewDemo key="preview-3" />,
+  ],
   "presence-list": [<PresenceListDemo key="preview-1" />],
   "progress-bar": [<ProgressBarDemo key="preview-1" />],
   "progress-ring": [<ProgressRingDemo key="preview-1" />],

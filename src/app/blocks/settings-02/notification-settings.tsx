@@ -117,7 +117,7 @@ export function NotificationSettings() {
                         isDisabled={paused}
                         checked={matrix[event.id].includes(channel)}
                         onCheckedChange={(on) => toggle(event.id, channel, on)}
-                        className="justify-center"
+                        className="w-full items-center"
                       />
                     </td>
                   ))}
@@ -132,17 +132,19 @@ export function NotificationSettings() {
           isDisabled={paused}
           onChange={() => setSaved(false)}
         >
-          <Radio value="instant" label="Right away" />
+          <Radio value="instant">Right away</Radio>
           <Radio
             value="hourly"
-            label="Once an hour"
             description="One email with all events from the last hour."
-          />
+          >
+            Once an hour
+          </Radio>
           <Radio
             value="daily"
-            label="Once a day"
             description="One email at 9:00 in your time zone."
-          />
+          >
+            Once a day
+          </Radio>
         </RadioGroup>
       </CardContent>
       <CardFooter className="justify-end border-t border-border/70 pt-5">

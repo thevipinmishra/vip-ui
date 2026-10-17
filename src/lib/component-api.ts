@@ -1209,7 +1209,7 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "string | ((values) => string)",
       defaultValue: "—",
       description:
-        "Set a width here, for example w-72. Without a width, the panel grows with its content, up to the viewport width minus 2rem.",
+        "Set a width here, for example w-72. Without a width, the panel grows with its content, up to the viewport width minus 2rem. Use w-(--trigger-width) to match the trigger.",
     },
     {
       component: "Popover",
@@ -1217,7 +1217,55 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: "Placement",
       defaultValue: '"bottom"',
       description:
-        "The side of the trigger. If there is not sufficient space, the panel moves to the opposite side.",
+        "The side of the trigger, optionally followed by an alignment, for example bottom start. start and end follow the reading direction. If there is not sufficient space, the panel moves to the opposite side.",
+    },
+    {
+      component: "Popover",
+      prop: "offset / crossOffset",
+      type: "number",
+      defaultValue: "8 / 0",
+      description:
+        "The distance from the trigger, and the shift along the trigger's edge, in pixels.",
+    },
+    {
+      component: "Popover",
+      prop: "maxHeight",
+      type: "number",
+      defaultValue: "—",
+      description:
+        "Caps the panel height. The panel always fits the viewport and scrolls when its content is taller. A panel with PopoverArrow does not scroll.",
+    },
+    {
+      component: "Popover",
+      prop: "triggerRef",
+      type: "RefObject<Element | null>",
+      defaultValue: "—",
+      description:
+        "Anchors the panel to a different element than the trigger. Required with isOpen when you use Popover without PopoverTrigger.",
+    },
+    {
+      component: "Popover",
+      prop: "data-placement / data-trigger",
+      type: "attributes",
+      defaultValue: "—",
+      description:
+        "Set on the panel. data-placement is the side it opened on. data-trigger names the component that opened it, for example DialogTrigger or PreviewTrigger. The panel scales from --trigger-anchor-point.",
+    },
+    {
+      component: "PopoverTrigger",
+      prop: "isOpen / onOpenChange",
+      type: "boolean / (isOpen: boolean) => void",
+      defaultValue: "—",
+      description:
+        "Controls the open state. Without them, the trigger manages it. The first child opens the popover.",
+    },
+    {
+      component: "PopoverDialog",
+      prop: "children",
+      type: "ReactNode | ({ close }) => ReactNode",
+      defaultValue: "—",
+      description:
+        'Moves focus into the panel and keeps it there. Name it with PopoverTitle or aria-label. Use the function form to close after an action. A Button with slot="close" inside it closes the popover.',
     },
   ],
   sheet: [
@@ -1305,10 +1353,27 @@ export const customComponentApi: Record<string, ApiProp[]> = {
   checkbox: [
     {
       component: "Checkbox",
-      prop: "description",
-      type: "string",
+      prop: "children",
+      type: "ReactNode",
       defaultValue: "—",
-      description: "Help text below the label text.",
+      description:
+        "The label. Without it, pass aria-label so the checkbox has a name.",
+    },
+    {
+      component: "Checkbox",
+      prop: "description",
+      type: "ReactNode",
+      defaultValue: "—",
+      description:
+        "Help text below the label. Linked with aria-describedby, so it is not part of the name.",
+    },
+    {
+      component: "Checkbox",
+      prop: "errorMessage",
+      type: "string | ((validation: ValidationResult) => string)",
+      defaultValue: "browser message",
+      description:
+        "Shown below the label when isRequired, validate, or isInvalid makes the checkbox invalid.",
     },
     {
       component: "Checkbox",
@@ -1316,24 +1381,32 @@ export const customComponentApi: Record<string, ApiProp[]> = {
       type: 'boolean | "indeterminate"',
       defaultValue: "—",
       description:
-        'Convenience props for isSelected and defaultSelected. Pass "indeterminate" for a mixed state.',
+        'Aliases for isSelected and defaultSelected. "indeterminate" sets isIndeterminate. A default indeterminate state clears on the first change.',
     },
     {
       component: "Checkbox",
       prop: "onCheckedChange",
       type: "(checked: boolean) => void",
       defaultValue: "—",
-      description: "Receives the next checked value. onChange also runs.",
+      description: "Alias for onChange. Both run when both are set.",
     },
   ],
   "checkbox-group": [
     {
       component: "CheckboxGroup",
       prop: "label / description",
-      type: "string",
+      type: "ReactNode",
       defaultValue: "—",
       description:
-        "Label and help text for the group. With label, the group adds CheckboxGroupItems and CheckboxGroupError. Without label, pass aria-label.",
+        "Label and help text for the group. Without label, pass aria-label or compose CheckboxGroupLabel.",
+    },
+    {
+      component: "CheckboxGroup",
+      prop: "errorMessage",
+      type: "string | ((validation: ValidationResult) => string)",
+      defaultValue: "browser message",
+      description:
+        "Shown below the options when the group is invalid. With label, description, or errorMessage, the group adds CheckboxGroupError for you.",
     },
   ],
   autocomplete: [
@@ -1349,24 +1422,41 @@ export const customComponentApi: Record<string, ApiProp[]> = {
   switch: [
     {
       component: "Switch",
-      prop: "description",
-      type: "string",
+      prop: "children",
+      type: "ReactNode",
       defaultValue: "—",
-      description: "Help text below the label text.",
+      description:
+        "The label. Without it, pass aria-label so the switch has a name.",
+    },
+    {
+      component: "Switch",
+      prop: "description",
+      type: "ReactNode",
+      defaultValue: "—",
+      description:
+        "Help text below the label. Linked with aria-describedby, so it is not part of the name.",
+    },
+    {
+      component: "Switch",
+      prop: "errorMessage",
+      type: "string | ((validation: ValidationResult) => string)",
+      defaultValue: "browser message",
+      description:
+        "Shown below the label when isRequired, validate, or isInvalid makes the switch invalid.",
     },
     {
       component: "Switch",
       prop: "checked / defaultChecked",
       type: "boolean",
       defaultValue: "—",
-      description: "Convenience props for isSelected and defaultSelected.",
+      description: "Aliases for isSelected and defaultSelected.",
     },
     {
       component: "Switch",
       prop: "onCheckedChange",
       type: "(checked: boolean) => void",
       defaultValue: "—",
-      description: "Receives the next checked value.",
+      description: "Alias for onChange. Both run when both are set.",
     },
   ],
   tabs: [
@@ -1555,31 +1645,49 @@ export const customComponentApi: Record<string, ApiProp[]> = {
     {
       component: "RadioGroup",
       prop: "label / description",
-      type: "string / string",
+      type: "ReactNode",
       defaultValue: "—",
       description:
-        "Label and help text for the group. With label, the group adds RadioGroupItems and RadioGroupError. Without label, pass aria-label.",
+        "Label and help text for the group. Without label, pass aria-label or compose RadioGroupLabel.",
+    },
+    {
+      component: "RadioGroup",
+      prop: "errorMessage",
+      type: "string | ((validation: ValidationResult) => string)",
+      defaultValue: "browser message",
+      description:
+        "Shown below the options when the group is invalid. With label, description, or errorMessage, the group adds RadioGroupError for you.",
     },
     {
       component: "RadioGroup",
       prop: "onValueChange",
       type: "(value: string) => void",
       defaultValue: "—",
-      description: "Receives the selected value. onChange also runs.",
+      description: "Alias for onChange. Both run when both are set.",
     },
     {
       component: "Radio",
-      prop: "label / description",
-      type: "string",
+      prop: "children",
+      type: "ReactNode",
       defaultValue: "—",
-      description: "Text for the default radio layout.",
+      description:
+        "The label. Without it, pass aria-label so the option has a name.",
     },
     {
       component: "Radio",
+      prop: "description",
+      type: "ReactNode",
+      defaultValue: "—",
+      description:
+        "Help text below the label. Linked with aria-describedby, so it is not part of the name.",
+    },
+    {
+      component: "Radio / RadioField",
       prop: "variant",
       type: '"default" | "card"',
       defaultValue: '"default"',
-      description: "Selects the plain or card appearance.",
+      description:
+        "Selects the plain or card appearance. A card selects the option from anywhere inside it.",
     },
   ],
   toast: [
