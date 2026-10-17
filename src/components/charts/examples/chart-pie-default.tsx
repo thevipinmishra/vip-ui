@@ -18,6 +18,7 @@ const rows = [
   { browser: "Safari", visitors: 11920 },
   { browser: "Edge", visitors: 3610 },
   { browser: "Firefox", visitors: 1880 },
+  { browser: "Samsung Internet", visitors: 1240 },
   { browser: "Other", visitors: 1117 },
 ];
 
@@ -80,7 +81,7 @@ export function ChartPieDefault() {
         definition={definition}
         height={220}
         initialWidth={520}
-        ariaLabel="Share of visitors by browser for the last 30 days: Chrome, Safari, Edge, Firefox and other"
+        ariaLabel="Share of visitors by browser for the last 30 days: Chrome, Safari, Edge, Firefox, Samsung Internet and other"
       />
       <ChartLegend items={series} />
       <ChartTable
