@@ -28,14 +28,14 @@ export function StepperDemo() {
           isDisabled={currentStep === 0}
           onPress={() => setCurrentStep((step) => step - 1)}
         >
-          <CaretLeftIcon size={16} aria-hidden="true" /> Back
+          <CaretLeftIcon aria-hidden="true" /> Back
         </Button>
         <Button
           size="sm"
           isDisabled={currentStep === steps.length - 1}
           onPress={() => setCurrentStep((step) => step + 1)}
         >
-          Next <CaretRightIcon size={16} aria-hidden="true" />
+          Next <CaretRightIcon aria-hidden="true" />
         </Button>
       </div>
     </div>

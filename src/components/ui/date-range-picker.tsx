@@ -1,51 +1,58 @@
 "use client";
 
 import { CaretDownIcon } from "@phosphor-icons/react";
-import { motion, useReducedMotion } from "motion/react";
-import { useContext } from "react";
 import {
   DateRangePicker as AriaDateRangePicker,
   composeRenderProps,
   DateInput,
   type DateRangePickerProps,
-  DateRangePickerStateContext,
   type DateValue,
   FieldError,
   Group,
   Label,
   Text,
 } from "react-aria-components";
-import { duration, easeOut } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { Button } from "./button";
 import { DateSegment } from "./date-segment";
 import {
+  fieldChevronStyles,
   fieldDescriptionStyles,
   fieldErrorStyles,
   fieldLabelStyles,
+  fieldSizeStyles,
+  fieldText,
   fieldTriggerStyles,
   segmentedFieldStyles,
 } from "./field-styles";
 import { Popover } from "./popover";
 import { RangeCalendar } from "./range-calendar";
+import type { Size } from "./size";
 
 export function DateRangePicker<T extends DateValue>({
   className,
   label,
   description,
+  size,
   children,
   ...props
 }: DateRangePickerProps<T> &
   React.RefAttributes<HTMLDivElement> & {
     label?: string;
     description?: string;
+    size?: Size;
   }) {
   return (
     <AriaDateRangePicker
       {...props}
       data-slot="date-range-picker"
+      data-size={size}
       className={composeRenderProps(className, (className) =>
-        cn("group grid gap-2 data-[focus-visible]:outline-none", className),
+        cn(
+          "group grid gap-2 data-[focus-visible]:outline-none",
+          size && fieldSizeStyles[size],
+          className,
+        ),
       )}
     >
       {children ?? (
@@ -65,7 +72,12 @@ export function DateRangePicker<T extends DateValue>({
               "data-[focus-visible]:outline-none",
             )}
           >
-            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-1 px-2.5 py-2 text-base sm:text-sm">
+            <div
+              className={cn(
+                fieldText,
+                "flex min-w-0 flex-1 flex-wrap items-center gap-x-1 px-[calc(var(--field-px,0.875rem)-0.25rem)] py-[clamp(0px,calc((var(--field-h,3rem)-2rem)/2),0.5rem)]",
+              )}
+            >
               <div className="flex min-w-0 items-end gap-x-1">
                 <DateInput
                   slot="start"
@@ -90,7 +102,7 @@ export function DateRangePicker<T extends DateValue>({
               aria-label="Choose date range"
               data-slot="date-range-picker-trigger"
               variant="ghost"
-              size="icon"
+              iconOnly
               className={cn(fieldTriggerStyles, "me-1")}
             >
               <DateRangePickerChevron />
@@ -119,16 +131,9 @@ export function DateRangePicker<T extends DateValue>({
 }
 
 function DateRangePickerChevron() {
-  const isOpen = useContext(DateRangePickerStateContext)?.isOpen;
-  const reduceMotion = useReducedMotion();
   return (
-    <motion.span
-      aria-hidden="true"
-      initial={false}
-      animate={{ rotate: isOpen ? 180 : 0 }}
-      transition={{ duration: reduceMotion ? 0 : duration.base, ease: easeOut }}
-    >
-      <CaretDownIcon size={16} />
-    </motion.span>
+    <span aria-hidden="true" className={fieldChevronStyles}>
+      <CaretDownIcon />
+    </span>
   );
 }

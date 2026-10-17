@@ -7,12 +7,12 @@ export function ButtonWithIconDemo() {
   return (
     <div className="flex flex-wrap items-center justify-center gap-3">
       <Button variant="outline">
-        <GitBranchIcon size={16} aria-hidden="true" />
+        <GitBranchIcon aria-hidden="true" />
         New branch
       </Button>
       <Button>
         Continue
-        <ArrowRightIcon size={16} aria-hidden="true" />
+        <ArrowRightIcon aria-hidden="true" />
       </Button>
     </div>
   );

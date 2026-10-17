@@ -169,7 +169,7 @@ export function TeamMembers() {
               <MenuTrigger>
                 <Button
                   variant="ghost"
-                  size="icon"
+                  iconOnly
                   aria-label={`Actions for ${member.name ?? member.email}`}
                   isDisabled={member.role === "owner"}
                   className="size-10"

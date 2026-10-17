@@ -63,7 +63,7 @@ export function PaginationDemo() {
               aria-label="Previous page"
               onClick={(event) => goToPage(event, page - 1)}
             >
-              <CaretLeftIcon size={17} aria-hidden="true" />
+              <CaretLeftIcon aria-hidden="true" />
               <span className="hidden sm:inline">Previous</span>
             </PaginationLink>
           </PaginationItem>
@@ -87,7 +87,7 @@ export function PaginationDemo() {
               onClick={(event) => goToPage(event, page + 1)}
             >
               <span className="hidden sm:inline">Next</span>
-              <CaretRightIcon size={17} aria-hidden="true" />
+              <CaretRightIcon aria-hidden="true" />
             </PaginationLink>
           </PaginationItem>
         </PaginationList>

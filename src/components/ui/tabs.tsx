@@ -20,6 +20,15 @@ import {
 import { springLayout, transitionFor } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { buttonLabel } from "./button-styles";
+import { type Size, SizeProvider, useSize } from "./size";
+
+const tabSizeStyles = {
+  xs: "min-h-7 gap-1.5 rounded-md px-2.5 text-xs [&_svg:not([class*='size-'])]:size-3.5",
+  sm: "min-h-9 px-3",
+  md: "min-h-11 px-4",
+  lg: "min-h-12 px-5",
+  xl: "min-h-14 gap-2.5 rounded-xl px-6 text-base [&_svg:not([class*='size-'])]:size-5",
+} satisfies Record<Size, string>;
 
 export interface TabsProps extends AriaTabsProps {
   defaultValue?: string;
@@ -109,42 +118,58 @@ function useScrollFade(forwardedRef?: Ref<HTMLDivElement>) {
 export function TabList({
   className,
   ref,
+  size: sizeProp,
   ...props
-}: React.ComponentProps<typeof AriaTabList>) {
+}: React.ComponentProps<typeof AriaTabList> & { size?: Size }) {
   const [fade, listRef] = useScrollFade(ref);
+  const size = useSize(sizeProp);
 
   return (
-    <AriaTabList
-      {...props}
-      ref={listRef}
-      data-slot="tabs-list"
-      data-fade={fade}
-      render={
-        props.render ??
-        ((domProps) => (
-          <motion.div {...(domProps as HTMLMotionProps<"div">)} layoutScroll />
-        ))
-      }
-      className={composeRenderProps(className, (className) =>
-        cn(
-          "group/tab-list inline-flex min-w-0 max-w-full scroll-px-1 items-center gap-1 overflow-x-auto overflow-y-hidden rounded-xl bg-muted p-1 shadow-[var(--shadow-inset)] inset-ring inset-ring-border/70 [scrollbar-width:none] forced-colors:border data-[fade=both]:mask-x-from-[calc(100%-1.5rem)] data-[fade=left]:mask-l-from-[calc(100%-1.5rem)] data-[fade=right]:mask-r-from-[calc(100%-1.5rem)] data-[orientation=vertical]:shrink-0 data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-stretch data-[orientation=vertical]:overflow-x-hidden data-[orientation=vertical]:overflow-y-auto [&::-webkit-scrollbar]:hidden",
-          className,
-        ),
-      )}
-    />
+    <SizeProvider size={size}>
+      <AriaTabList
+        {...props}
+        ref={listRef}
+        data-slot="tabs-list"
+        data-size={size}
+        data-fade={fade}
+        render={
+          props.render ??
+          ((domProps) => (
+            <motion.div
+              {...(domProps as HTMLMotionProps<"div">)}
+              layoutScroll
+            />
+          ))
+        }
+        className={composeRenderProps(className, (className) =>
+          cn(
+            "group/tab-list inline-flex min-w-0 max-w-full scroll-px-1 items-center gap-1 overflow-x-auto overflow-y-hidden rounded-xl bg-muted p-1 shadow-[var(--shadow-inset)] inset-ring inset-ring-border/70 [scrollbar-width:none] forced-colors:border data-[fade=both]:mask-x-from-[calc(100%-1.5rem)] data-[fade=left]:mask-l-from-[calc(100%-1.5rem)] data-[fade=right]:mask-r-from-[calc(100%-1.5rem)] data-[orientation=vertical]:shrink-0 data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-stretch data-[orientation=vertical]:overflow-x-hidden data-[orientation=vertical]:overflow-y-auto data-[size=xl]:rounded-2xl data-[size=xs]:gap-0.5 data-[size=xs]:rounded-lg data-[size=xs]:p-0.5 [&::-webkit-scrollbar]:hidden",
+            className,
+          ),
+        )}
+      />
+    </SizeProvider>
   );
 }
 
-export function Tab({ className, children, ...props }: AriaTabProps) {
+export function Tab({
+  className,
+  children,
+  size: sizeProp,
+  ...props
+}: AriaTabProps & { size?: Size }) {
   const reduceMotion = useReducedMotion();
+  const size = useSize(sizeProp);
 
   return (
     <AriaTab
       {...props}
       data-slot="tabs-trigger"
+      data-size={size}
       className={composeRenderProps(className, (className) =>
         cn(
-          "relative isolate inline-flex min-h-11 min-w-0 max-w-full shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 text-sm font-medium leading-5 text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-card/70 hover:text-foreground motion-safe:pressed:scale-[0.96] selected:text-foreground selected:hover:bg-transparent focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-50 group-data-[orientation=vertical]/tab-list:justify-start sm:min-h-9 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+          "relative isolate inline-flex min-h-11 min-w-0 max-w-full shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 text-sm font-medium leading-5 text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-out-quint hover:bg-card/70 hover:text-foreground motion-safe:pressed:scale-[0.96] selected:text-foreground selected:hover:bg-transparent focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-50 group-data-[orientation=vertical]/tab-list:justify-start [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+          size ? tabSizeStyles[size] : "sm:min-h-9",
           className,
         ),
       )}
@@ -157,7 +182,7 @@ export function Tab({ className, children, ...props }: AriaTabProps) {
               initial={false}
               aria-hidden="true"
               transition={transitionFor(reduceMotion, springLayout)}
-              className="pointer-events-none absolute inset-0 -z-10 rounded-lg bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70 forced-colors:border forced-colors:border-[Highlight]"
+              className="pointer-events-none absolute inset-0 -z-10 rounded-[inherit] bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70 forced-colors:border forced-colors:border-[Highlight]"
             />
           )}
           {buttonLabel(content)}
@@ -186,7 +211,11 @@ export const TabsList = TabList;
 export function TabsTrigger({
   value,
   ...props
-}: Omit<AriaTabProps, "id"> & { id?: AriaTabProps["id"]; value?: string }) {
+}: Omit<AriaTabProps, "id"> & {
+  id?: AriaTabProps["id"];
+  value?: string;
+  size?: Size;
+}) {
   return <Tab {...props} id={value ?? props.id} />;
 }
 

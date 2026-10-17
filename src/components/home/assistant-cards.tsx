@@ -180,7 +180,7 @@ export function ChatCard() {
               <InputGroupAddon>
                 <Button
                   type="submit"
-                  size="icon"
+                  iconOnly
                   className="size-9"
                   aria-label="Send"
                   isDisabled={!draft.trim() || working}

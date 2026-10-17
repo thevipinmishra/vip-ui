@@ -74,31 +74,31 @@ export function PresenceListDemo() {
             <Button
               ref={control(`up-${row.id}`)}
               variant="ghost"
-              size="icon"
+              iconOnly
               aria-label={`Move ${row.label} up`}
               isDisabled={rows[0]?.id === row.id}
               onPress={() => move(row.id, -1)}
             >
-              <CaretUpIcon size={16} aria-hidden="true" />
+              <CaretUpIcon aria-hidden="true" />
             </Button>
             <Button
               ref={control(`down-${row.id}`)}
               variant="ghost"
-              size="icon"
+              iconOnly
               aria-label={`Move ${row.label} down`}
               isDisabled={rows[rows.length - 1]?.id === row.id}
               onPress={() => move(row.id, 1)}
             >
-              <CaretDownIcon size={16} aria-hidden="true" />
+              <CaretDownIcon aria-hidden="true" />
             </Button>
             <Button
               ref={control(`remove-${row.id}`)}
               variant="ghost"
-              size="icon"
+              iconOnly
               aria-label={`Remove ${row.label}`}
               onPress={() => remove(row.id)}
             >
-              <TrashIcon size={16} aria-hidden="true" />
+              <TrashIcon aria-hidden="true" />
             </Button>
           </span>
         )}
@@ -110,7 +110,7 @@ export function PresenceListDemo() {
           size="sm"
           onPress={add}
         >
-          <PlusIcon size={16} aria-hidden="true" /> Add item
+          <PlusIcon aria-hidden="true" /> Add item
         </Button>
       </div>
     </div>

@@ -37,9 +37,9 @@ export function PresenceListBasicDemo() {
           onPress={() => setItems((current) => (current.length ? [] : tasks))}
         >
           {items.length ? (
-            <CheckIcon size={16} aria-hidden="true" />
+            <CheckIcon aria-hidden="true" />
           ) : (
-            <ArrowCounterClockwiseIcon size={16} aria-hidden="true" />
+            <ArrowCounterClockwiseIcon aria-hidden="true" />
           )}
           {items.length ? "Complete tasks" : "Restore tasks"}
         </Button>

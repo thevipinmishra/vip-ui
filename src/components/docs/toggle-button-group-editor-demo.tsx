@@ -21,14 +21,24 @@ export function ToggleButtonGroupEditorDemo() {
         selectedKeys={selected}
         onSelectionChange={setSelected}
       >
-        <ToggleButton id="bold" variant="segmented" aria-label="Bold">
-          <TextBIcon size={17} aria-hidden="true" />
+        <ToggleButton id="bold" variant="segmented" iconOnly aria-label="Bold">
+          <TextBIcon aria-hidden="true" />
         </ToggleButton>
-        <ToggleButton id="italic" variant="segmented" aria-label="Italic">
-          <TextItalicIcon size={17} aria-hidden="true" />
+        <ToggleButton
+          id="italic"
+          variant="segmented"
+          iconOnly
+          aria-label="Italic"
+        >
+          <TextItalicIcon aria-hidden="true" />
         </ToggleButton>
-        <ToggleButton id="underline" variant="segmented" aria-label="Underline">
-          <TextUnderlineIcon size={17} aria-hidden="true" />
+        <ToggleButton
+          id="underline"
+          variant="segmented"
+          iconOnly
+          aria-label="Underline"
+        >
+          <TextUnderlineIcon aria-hidden="true" />
         </ToggleButton>
       </ToggleButtonGroup>
       <div className="rounded-lg border border-border p-3 text-sm">

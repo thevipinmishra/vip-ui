@@ -565,7 +565,7 @@ function AssistantScene({ className }: { className?: string }) {
               <InputGroupAddon>
                 <Button
                   type="submit"
-                  size="icon"
+                  iconOnly
                   className="size-9"
                   aria-label="Send"
                   isDisabled={!draft.trim() || working}
@@ -1003,7 +1003,7 @@ function InvoicesScene({ className }: { className?: string }) {
                     <MenuTrigger>
                       <Button
                         variant="minimal"
-                        size="icon"
+                        iconOnly
                         className="size-8"
                         aria-label={`Actions for ${invoice.id}`}
                       >

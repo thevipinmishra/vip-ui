@@ -16,6 +16,7 @@ import {
   type TextProps,
 } from "react-aria-components";
 import { cn } from "@/lib/utils";
+import { SizeProvider } from "./size";
 
 export interface PopoverProps extends AriaPopoverProps {
   "data-slot"?: string;
@@ -27,6 +28,7 @@ export function PopoverTrigger(props: DialogTriggerProps) {
 
 export function Popover({
   className,
+  children,
   "data-slot": dataSlot = "popover",
   ...props
 }: PopoverProps) {
@@ -41,14 +43,18 @@ export function Popover({
           "has-[[data-slot=popover-arrow]]:overflow-visible",
           // React Aria sets data-entering and data-exiting once the placement is
           // known, then waits for these transitions before it unmounts the panel.
-          "origin-(--trigger-anchor-point) transition-[opacity,scale,translate] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]",
+          "origin-(--trigger-anchor-point) transition-[opacity,scale,translate] duration-200 ease-out-quint",
           "placement-top:[--popover-shift:0_0.25rem] placement-bottom:[--popover-shift:0_-0.25rem] placement-left:[--popover-shift:0.25rem_0] placement-right:[--popover-shift:-0.25rem_0]",
           "entering:opacity-0 motion-safe:entering:scale-96 motion-safe:entering:[translate:var(--popover-shift)]",
           "exiting:opacity-0 exiting:duration-150 motion-safe:exiting:scale-98 motion-safe:exiting:[translate:var(--popover-shift)]",
           className,
         ),
       )}
-    />
+    >
+      {composeRenderProps(children, (children) => (
+        <SizeProvider size={undefined}>{children}</SizeProvider>
+      ))}
+    </AriaPopover>
   );
 }
 

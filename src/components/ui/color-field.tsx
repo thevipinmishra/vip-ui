@@ -15,25 +15,31 @@ import {
   fieldErrorStyles,
   fieldInputStyles,
   fieldLabelStyles,
+  fieldPaddingX,
+  fieldSizeStyles,
 } from "./field-styles";
+import type { Size } from "./size";
 
 export function ColorField({
   className,
   label,
   description,
+  size,
   children,
   ...props
 }: ColorFieldProps &
   React.RefAttributes<HTMLDivElement> & {
     label?: string;
     description?: string;
+    size?: Size;
   }) {
   return (
     <AriaColorField
       {...props}
       data-slot="color-field"
+      data-size={size}
       className={composeRenderProps(className, (className) =>
-        cn("grid gap-2", className),
+        cn("grid gap-2", size && fieldSizeStyles[size], className),
       )}
     >
       {children ?? (
@@ -45,7 +51,7 @@ export function ColorField({
           )}
           <Input
             data-slot="color-field-input"
-            className={cn(fieldInputStyles, "px-3.5")}
+            className={cn(fieldInputStyles, fieldPaddingX)}
           />
           {description && (
             <Text

@@ -4,6 +4,7 @@ import { MinusIcon, PlusIcon } from "@phosphor-icons/react";
 import {
   NumberField as AriaNumberField,
   type NumberFieldProps as AriaNumberFieldProps,
+  Button,
   composeRenderProps,
   FieldError,
   Group,
@@ -15,21 +16,25 @@ import { cn } from "@/lib/utils";
 import {
   fieldDescriptionStyles,
   fieldErrorStyles,
+  fieldInnerHeight,
   fieldLabelStyles,
+  fieldSizeStyles,
+  fieldText,
   fieldTriggerStyles,
   segmentedFieldStyles,
 } from "./field-styles";
-import { PressButton } from "./press-button";
+import type { Size } from "./size";
 
 const stepperButtonStyles = cn(
   fieldTriggerStyles,
-  "bg-muted/70 text-foreground hover:bg-accent hover:text-accent-foreground pressed:bg-accent pressed:text-accent-foreground disabled:opacity-40",
+  "bg-muted/70 text-foreground hover:bg-accent hover:text-accent-foreground pressed:bg-accent pressed:text-accent-foreground motion-safe:pressed:scale-[0.96] disabled:opacity-40",
 );
 
 export interface NumberFieldProps
   extends Omit<AriaNumberFieldProps, "className" | "children"> {
   label?: string;
   description?: string;
+  size?: Size;
   ref?: React.Ref<HTMLDivElement>;
   className?: AriaNumberFieldProps["className"];
   children?: AriaNumberFieldProps["children"];
@@ -38,6 +43,7 @@ export interface NumberFieldProps
 export function NumberField({
   label,
   description,
+  size,
   className,
   children,
   ...props
@@ -46,8 +52,13 @@ export function NumberField({
     <AriaNumberField
       {...props}
       data-slot="number-field"
+      data-size={size}
       className={composeRenderProps(className, (className) =>
-        cn("group grid w-full min-w-0 grid-cols-1 gap-2", className),
+        cn(
+          "group grid w-full min-w-0 grid-cols-1 gap-2",
+          size && fieldSizeStyles[size],
+          className,
+        ),
       )}
     >
       {children ?? (
@@ -61,26 +72,30 @@ export function NumberField({
             data-slot="number-field-group"
             className={cn(segmentedFieldStyles, "gap-1 px-1")}
           >
-            <PressButton
+            <Button
               slot="decrement"
               data-slot="number-field-decrement"
               aria-label="Decrease"
               className={stepperButtonStyles}
             >
-              <MinusIcon size={16} aria-hidden="true" />
-            </PressButton>
+              <MinusIcon aria-hidden="true" />
+            </Button>
             <Input
               data-slot="number-field-input"
-              className="min-h-11 min-w-0 flex-1 cursor-text bg-transparent px-2 text-center text-base font-medium tabular-nums outline-none placeholder:text-muted-foreground/80 disabled:cursor-not-allowed sm:text-sm"
+              className={cn(
+                fieldInnerHeight,
+                fieldText,
+                "min-w-0 flex-1 cursor-text bg-transparent px-2 text-center font-medium tabular-nums outline-none placeholder:text-muted-foreground/80 disabled:cursor-not-allowed",
+              )}
             />
-            <PressButton
+            <Button
               slot="increment"
               data-slot="number-field-increment"
               aria-label="Increase"
               className={stepperButtonStyles}
             >
-              <PlusIcon size={16} aria-hidden="true" />
-            </PressButton>
+              <PlusIcon aria-hidden="true" />
+            </Button>
           </Group>
           {description && (
             <Text

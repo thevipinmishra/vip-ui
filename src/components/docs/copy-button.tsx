@@ -24,7 +24,8 @@ export function CopyButton({
       value={code}
       aria-label={label}
       variant={variant}
-      size={iconOnly ? "icon" : "sm"}
+      size="sm"
+      iconOnly={iconOnly}
       className={className}
     >
       {iconOnly || text === "Copy"

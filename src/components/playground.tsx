@@ -100,7 +100,7 @@ export function Playground() {
             </div>
             <Button
               variant="ghost"
-              size="icon"
+              iconOnly
               onPress={() => setIsDark((value) => !value)}
               aria-label={`Switch preview to ${isDark ? "light" : "dark"} theme`}
             >

@@ -24,7 +24,7 @@ export function CopyButton({
   value,
   children,
   variant = "outline",
-  size = "default",
+  iconOnly = false,
   "aria-label": ariaLabel,
   className,
   ...props
@@ -68,13 +68,13 @@ export function CopyButton({
   const defaultContent = (
     <>
       {status === "copied" ? (
-        <CheckIcon size={16} />
+        <CheckIcon />
       ) : status === "failed" ? (
-        <WarningIcon size={16} />
+        <WarningIcon />
       ) : (
-        <CopyIcon size={16} />
+        <CopyIcon />
       )}
-      {size !== "icon" &&
+      {!iconOnly &&
         buttonLabel(
           status === "copied"
             ? "Copied"
@@ -93,7 +93,7 @@ export function CopyButton({
         data-slot="copy-button"
         data-status={status}
         variant={variant}
-        size={size}
+        iconOnly={iconOnly}
         layout
         className={composeRenderProps(className, (className) =>
           cn("relative", className),
@@ -117,7 +117,7 @@ export function CopyButton({
               duration: reduceMotion ? 0 : duration.fast,
               ease: easeOut,
             }}
-            className="inline-flex min-w-0 max-w-full items-center justify-center gap-2 whitespace-nowrap"
+            className="inline-flex min-w-0 max-w-full items-center justify-center gap-[inherit] whitespace-nowrap"
           >
             {children == null ? defaultContent : buttonLabel(content)}
           </motion.span>

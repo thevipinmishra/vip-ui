@@ -1,51 +1,58 @@
 "use client";
 
 import { CaretDownIcon } from "@phosphor-icons/react";
-import { motion, useReducedMotion } from "motion/react";
-import { useContext } from "react";
 import {
   DatePicker as AriaDatePicker,
   composeRenderProps,
   DateInput,
   type DatePickerProps,
-  DatePickerStateContext,
   type DateValue,
   FieldError,
   Group,
   Label,
   Text,
 } from "react-aria-components";
-import { duration, easeOut } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { Button } from "./button";
 import { Calendar } from "./calendar";
 import { DateSegment } from "./date-segment";
 import {
+  fieldChevronStyles,
   fieldDescriptionStyles,
   fieldErrorStyles,
   fieldLabelStyles,
+  fieldSizeStyles,
+  fieldText,
   fieldTriggerStyles,
   segmentedFieldStyles,
 } from "./field-styles";
 import { Popover } from "./popover";
+import type { Size } from "./size";
 
 export function DatePicker<T extends DateValue>({
   className,
   label,
   description,
+  size,
   children,
   ...props
 }: DatePickerProps<T> &
   React.RefAttributes<HTMLDivElement> & {
     label?: string;
     description?: string;
+    size?: Size;
   }) {
   return (
     <AriaDatePicker
       {...props}
       data-slot="date-picker"
+      data-size={size}
       className={composeRenderProps(className, (className) =>
-        cn("group grid gap-2 data-[focus-visible]:outline-none", className),
+        cn(
+          "group grid gap-2 data-[focus-visible]:outline-none",
+          size && fieldSizeStyles[size],
+          className,
+        ),
       )}
     >
       {children ?? (
@@ -64,7 +71,10 @@ export function DatePicker<T extends DateValue>({
           >
             <DateInput
               data-slot="date-picker-input"
-              className="min-w-0 flex-1 px-2.5 py-2 text-base data-[focus-visible]:outline-none sm:text-sm"
+              className={cn(
+                fieldText,
+                "min-w-0 flex-1 px-[calc(var(--field-px,0.875rem)-0.25rem)] py-[clamp(0px,calc((var(--field-h,3rem)-2rem)/2),0.5rem)] data-[focus-visible]:outline-none",
+              )}
             >
               {(segment) => <DateSegment segment={segment} />}
             </DateInput>
@@ -72,7 +82,7 @@ export function DatePicker<T extends DateValue>({
               aria-label="Choose date"
               data-slot="date-picker-trigger"
               variant="ghost"
-              size="icon"
+              iconOnly
               className={cn(fieldTriggerStyles, "me-1")}
             >
               <DatePickerChevron />
@@ -101,16 +111,9 @@ export function DatePicker<T extends DateValue>({
 }
 
 function DatePickerChevron() {
-  const isOpen = useContext(DatePickerStateContext)?.isOpen;
-  const reduceMotion = useReducedMotion();
   return (
-    <motion.span
-      aria-hidden="true"
-      initial={false}
-      animate={{ rotate: isOpen ? 180 : 0 }}
-      transition={{ duration: reduceMotion ? 0 : duration.base, ease: easeOut }}
-    >
-      <CaretDownIcon size={16} />
-    </motion.span>
+    <span aria-hidden="true" className={fieldChevronStyles}>
+      <CaretDownIcon />
+    </span>
   );
 }

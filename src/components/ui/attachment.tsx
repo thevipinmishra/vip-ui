@@ -196,11 +196,11 @@ export function Attachment({
         <Button
           type="button"
           variant="ghost"
-          size="icon"
+          iconOnly
           aria-label={`Remove ${name}`}
           onPress={onRemove}
         >
-          <XIcon size={17} aria-hidden="true" />
+          <XIcon aria-hidden="true" />
         </Button>
       )}
     </motion.li>

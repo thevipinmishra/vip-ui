@@ -12,14 +12,43 @@ import {
   type TagProps,
 } from "react-aria-components";
 import { cn } from "@/lib/utils";
+import { type Size, SizeProvider, useSize } from "./size";
 
-export function TagGroup({ className, ...props }: AriaTagGroupProps) {
+type TagSize = Extract<Size, "xs" | "sm" | "md">;
+
+const tagSizeStyles = {
+  xs: {
+    tag: "min-h-7 rounded-md ps-2 text-xs",
+    label: "py-0.5",
+    remove: "size-6 rounded-sm [&_svg]:size-3",
+  },
+  sm: {
+    tag: "min-h-9 ps-2.5",
+    label: "py-1",
+    remove: "size-8 [&_svg]:size-3",
+  },
+  md: {
+    tag: "min-h-11 ps-3",
+    label: "py-1.5",
+    remove: "size-11 [&_svg]:size-3.5",
+  },
+} satisfies Record<TagSize, Record<"tag" | "label" | "remove", string>>;
+
+export function TagGroup({
+  className,
+  size: sizeProp,
+  ...props
+}: AriaTagGroupProps & { size?: TagSize }) {
+  const size = useSize(sizeProp);
   return (
-    <AriaTagGroup
-      {...props}
-      data-slot="tag-group"
-      className={cn("grid min-w-0 gap-2", className)}
-    />
+    <SizeProvider size={size}>
+      <AriaTagGroup
+        {...props}
+        data-slot="tag-group"
+        data-size={size}
+        className={cn("group/tag-group grid min-w-0 gap-2", className)}
+      />
+    </SizeProvider>
   );
 }
 
@@ -46,7 +75,7 @@ export function TagListView<T extends object>({
       data-slot="tag-list"
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex min-w-0 flex-wrap gap-2 empty:text-sm empty:text-muted-foreground",
+          "flex min-w-0 flex-wrap gap-2 group-data-[size=xs]/tag-group:gap-1.5 empty:text-sm empty:text-muted-foreground",
           className,
         ),
       )}
@@ -54,17 +83,28 @@ export function TagListView<T extends object>({
   );
 }
 
-export function Tag({ className, children, ...props }: TagProps) {
+export function Tag({
+  className,
+  children,
+  size: sizeProp,
+  ...props
+}: TagProps & { size?: TagSize }) {
+  const inherited = useSize(sizeProp);
+  const size: TagSize =
+    inherited === "xs" || inherited === "sm" ? inherited : "md";
+  const styles = tagSizeStyles[size];
   return (
     <AriaTag
       {...props}
       data-slot="tag"
+      data-size={size}
       textValue={
         props.textValue ?? (typeof children === "string" ? children : undefined)
       }
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex min-h-11 max-w-full cursor-default items-center gap-1 rounded-lg bg-card ps-3 pe-1 text-sm font-medium shadow-[var(--shadow-card)] ring-1 ring-border/80 data-[selection-mode]:not-data-disabled:cursor-pointer outline-offset-4 outline-transparent transition-[color,background-color,box-shadow,scale,outline-color,outline-offset] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted motion-safe:pressed:scale-[0.96] selected:bg-accent selected:text-accent-foreground selected:ring-primary/35 disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 forced-colors:border",
+          "flex max-w-full cursor-default items-center gap-1 rounded-lg bg-card pe-1 text-sm font-medium shadow-[var(--shadow-card)] ring-1 ring-border/80 data-[selection-mode]:not-data-disabled:cursor-pointer outline-offset-4 outline-transparent transition-[color,background-color,box-shadow,scale,outline-color,outline-offset] duration-150 ease-out-quint hover:bg-muted motion-safe:pressed:scale-[0.96] selected:bg-accent selected:text-accent-foreground selected:ring-primary/35 disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 forced-colors:border",
+          styles.tag,
           className,
         ),
       )}
@@ -73,7 +113,8 @@ export function Tag({ className, children, ...props }: TagProps) {
         <>
           <span
             className={cn(
-              "min-w-0 truncate py-1.5",
+              "min-w-0 truncate",
+              styles.label,
               state.allowsRemoving ? "pe-1" : "pe-2",
             )}
           >
@@ -83,9 +124,12 @@ export function Tag({ className, children, ...props }: TagProps) {
             <AriaButton
               slot="remove"
               data-slot="tag-remove"
-              className="grid size-11 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-card hover:text-foreground motion-safe:pressed:scale-[0.96] focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring"
+              className={cn(
+                "grid shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-out-quint hover:bg-card hover:text-foreground motion-safe:pressed:scale-[0.96] focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring",
+                styles.remove,
+              )}
             >
-              <XIcon size={14} weight="bold" aria-hidden="true" />
+              <XIcon weight="bold" aria-hidden="true" />
             </AriaButton>
           )}
         </>
