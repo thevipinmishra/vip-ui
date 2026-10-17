@@ -1,4 +1,5 @@
 import { catalogGroups } from "@/lib/catalog";
+import { docsGuides } from "@/lib/navigation";
 import { siteUrl } from "@/lib/site-url";
 
 export const dynamic = "force-static";
@@ -12,8 +13,10 @@ export function GET() {
     "",
     "## Guides",
     "",
-    `- [Installation](${site}/components/installation): project setup, theme styles, CLI install, and the manual path.`,
-    `- [React Aria](${site}/components/react-aria): contexts, forms, and internationalization, with links to the React Aria documentation.`,
+    ...docsGuides.map(
+      (guide) =>
+        `- [${guide.label}](${site}${guide.href}): ${guide.description}`,
+    ),
     `- [Components](${site}/components): the full catalog, grouped by purpose.`,
     `- [Themes](${site}/themes): live OKLCH theme tokens with copyable CSS.`,
     `- [Charts](${site}/charts): chart examples built on TanStack Charts.`,

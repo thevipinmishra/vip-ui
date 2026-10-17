@@ -1,24 +1,19 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  ArrowUpRightIcon,
-} from "@phosphor-icons/react/ssr";
-import Link from "next/link";
 import type { ReactNode } from "react";
-import { Breadcrumb, Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { getComponent, getNeighbors } from "@/lib/catalog";
 import { customComponentApi, groupApiProps } from "@/lib/component-api";
 import {
   type ComponentExampleMetadata,
   exampleAnchor,
 } from "@/lib/component-examples";
-import { readRegistryItem, registryUrl } from "@/lib/registry-docs";
-import { CodeBlock } from "./code-block";
+import { allComponents } from "@/lib/navigation";
+import { registryUrl } from "@/lib/registry-docs";
 import { ComponentComposition } from "./component-composition";
 import { compositions } from "./component-compositions";
+import { DocsHeader, DocsPager, ExternalLink, TextLink } from "./guide";
 import { InstallTabs } from "./install-tabs";
+import { ManualInstall } from "./manual-install";
 import { PackageManagerCommand } from "./package-manager-command";
 import { PreviewPanel } from "./preview-panel";
 
@@ -63,10 +58,6 @@ export async function ComponentPage({
 }: ComponentPageProps) {
   const componentSlug = path.basename(sourcePath, ".tsx");
   const { previous, next } = getNeighbors(componentSlug);
-  const item = await readRegistryItem(componentSlug);
-  const primaryFile = item.files.find((file) => file.path === sourcePath);
-  if (!primaryFile)
-    throw new Error(`Missing registry source for ${componentSlug}`);
   const previewSource = (
     await readFile(
       path.join(
@@ -91,26 +82,17 @@ export async function ComponentPage({
       ).replaceAll("@/components/ui/", "@/components/vip-ui/"),
     ),
   );
-  const packages = item.dependencies;
-  const devPackages = item.devDependencies ?? [];
   const cliUrl = registryUrl(componentSlug);
   const customApi = customComponentApi[componentSlug];
   const apiGroups = customApi ? groupApiProps(customApi) : [];
   const reactAriaDocsHref = getComponent(componentSlug)?.reactAriaDocsHref;
   return (
     <article>
-      <nav aria-label="Breadcrumbs" className="mb-4">
-        <Breadcrumbs>
-          <Breadcrumb href="/components">Components</Breadcrumb>
-          <Breadcrumb>{name}</Breadcrumb>
-        </Breadcrumbs>
-      </nav>
-      <h1 className="text-[clamp(2.25rem,4vw,3.5rem)] font-semibold leading-[1.08] tracking-[-0.055em] [text-wrap:balance]">
-        {name}
-      </h1>
-      <p className="mt-2 max-w-[670px] text-sm leading-7 text-muted-foreground">
-        {description}
-      </p>
+      <DocsHeader
+        title={name}
+        description={description}
+        parent={{ href: "/components", label: "Components" }}
+      />
       <section
         id="preview"
         data-toc-label="Preview"
@@ -132,16 +114,12 @@ export async function ComponentPage({
           cli={
             <div className="space-y-4">
               <p className="text-[13px] leading-6 text-muted-foreground">
-                Requires TypeScript, Tailwind v4, and shadcn CSS-variable
-                theming. The CLI also adds the theme variables and Tailwind
-                plugin this component uses. See{" "}
-                <Link
-                  href="/components/installation#setup"
-                  className="text-primary underline underline-offset-4"
-                >
-                  installation
-                </Link>{" "}
-                for project setup.
+                The CLI adds the files, packages, theme variables, and Tailwind
+                plugin that this component uses. Before you run it,{" "}
+                <TextLink href="/components/installation#setup">
+                  set up your project
+                </TextLink>
+                .
               </p>
               {cliUrl ? (
                 <PackageManagerCommand
@@ -150,44 +128,13 @@ export async function ComponentPage({
                 />
               ) : (
                 <p className="text-[13px] leading-6 text-muted-foreground">
-                  The CLI command will be available when the registry has a
-                  public URL. Use Manual until then.
+                  The CLI command shows when the registry has a public URL.
+                  Until then, use the Manual tab.
                 </p>
               )}
             </div>
           }
-          custom={
-            <div className="space-y-5">
-              <p className="text-[13px] leading-6 text-muted-foreground">
-                Complete the{" "}
-                <Link
-                  href="/components/installation#setup"
-                  className="text-primary underline underline-offset-4"
-                >
-                  one-time setup
-                </Link>{" "}
-                first. Install the dependencies below, then copy every file
-                under your components directory as shown by the{" "}
-                <code className="font-mono text-foreground">@components/</code>{" "}
-                placeholder. Check existing files before replacing them and
-                adjust imports if your aliases differ.
-              </p>
-              {packages.length > 0 && (
-                <PackageManagerCommand action="add" args={packages.join(" ")} />
-              )}
-              {devPackages.length > 0 && (
-                <PackageManagerCommand
-                  action="add-dev"
-                  args={devPackages.join(" ")}
-                />
-              )}
-              {item.files.map((file) => (
-                <div key={file.target}>
-                  <CodeBlock code={file.content} filename={file.target} />
-                </div>
-              ))}
-            </div>
-          }
+          custom={<ManualInstall slug={componentSlug} name={name} />}
         />
       </section>
 
@@ -226,16 +173,9 @@ export async function ComponentPage({
               API reference
             </h2>
             {reactAriaDocsHref && (
-              <a
-                href={reactAriaDocsHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 rounded-md text-sm font-medium text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-              >
+              <ExternalLink href={reactAriaDocsHref} className="text-sm">
                 React Aria props
-                <ArrowUpRightIcon size={16} aria-hidden="true" />
-                <span className="sr-only"> (opens in a new tab)</span>
-              </a>
+              </ExternalLink>
             )}
           </div>
           {apiGroups.length > 0 && (
@@ -292,61 +232,18 @@ export async function ComponentPage({
         </section>
       )}
 
-      <nav
-        aria-label="Component pagination"
-        className="mt-16 grid gap-3 sm:grid-cols-2"
-      >
-        {previous ? (
-          <Link
-            href={`/components/${previous.slug}`}
-            className="group flex min-h-20 flex-col justify-center rounded-xl bg-card px-5 py-3 shadow-[var(--shadow-card)] ring-1 ring-border/70 hover:bg-muted"
-          >
-            <span className="text-[11px] text-muted-foreground">
-              Previous component
-            </span>
-            <span className="mt-1 inline-flex items-center gap-2 text-sm font-semibold">
-              <ArrowLeftIcon size={16} aria-hidden="true" />
-              {previous.name}
-            </span>
-          </Link>
-        ) : (
-          <Link
-            href="/components"
-            className="group flex min-h-20 flex-col justify-center rounded-xl bg-card px-5 py-3 shadow-[var(--shadow-card)] ring-1 ring-border/70 hover:bg-muted"
-          >
-            <span className="text-[11px] text-muted-foreground">Back to</span>
-            <span className="mt-1 inline-flex items-center gap-2 text-sm font-semibold">
-              <ArrowLeftIcon size={16} aria-hidden="true" />
-              All components
-            </span>
-          </Link>
-        )}
-        {next ? (
-          <Link
-            href={`/components/${next.slug}`}
-            className="group flex min-h-20 flex-col items-end justify-center rounded-xl bg-card px-5 py-3 text-right shadow-[var(--shadow-card)] ring-1 ring-border/70 hover:bg-muted"
-          >
-            <span className="text-[11px] text-muted-foreground">
-              Next component
-            </span>
-            <span className="mt-1 inline-flex items-center gap-2 text-sm font-semibold">
-              {next.name}
-              <ArrowRightIcon size={16} aria-hidden="true" />
-            </span>
-          </Link>
-        ) : (
-          <Link
-            href="/components"
-            className="group flex min-h-20 flex-col items-end justify-center rounded-xl bg-accent px-5 py-3 text-right text-accent-foreground shadow-[var(--shadow-card)] hover:bg-accent/70"
-          >
-            <span className="text-[11px]">Explore more</span>
-            <span className="mt-1 inline-flex items-center gap-2 text-sm font-semibold">
-              All components
-              <ArrowUpRightIcon size={16} aria-hidden="true" />
-            </span>
-          </Link>
-        )}
-      </nav>
+      <DocsPager
+        previous={
+          previous
+            ? { href: `/components/${previous.slug}`, label: previous.name }
+            : allComponents
+        }
+        next={
+          next
+            ? { href: `/components/${next.slug}`, label: next.name }
+            : allComponents
+        }
+      />
     </article>
   );
 }

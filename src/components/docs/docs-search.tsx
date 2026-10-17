@@ -5,7 +5,9 @@ import {
   ChartBarIcon,
   CubeIcon,
   HouseIcon,
+  type Icon,
   MagnifyingGlassIcon,
+  PaintBrushIcon,
   PaletteIcon,
   ScalesIcon,
   SquaresFourIcon,
@@ -21,17 +23,23 @@ import {
 } from "@/components/ui/command-palette";
 import { Kbd, KbdGroup } from "@/components/ui/kbd-code";
 import { catalogComponents } from "@/lib/catalog";
+import { docsGuides, type Guide } from "@/lib/navigation";
 
 const shortcutTakenByDemo = new Set(["/components/command-palette", "/themes"]);
 
+const guideIcons: Record<Guide["href"], Icon> = {
+  "/components/installation": TerminalWindowIcon,
+  "/components/styling": PaintBrushIcon,
+  "/components/react-aria": AtomIcon,
+};
+
 const pages = [
   { href: "/", label: "Home", icon: HouseIcon },
-  {
-    href: "/components/installation",
-    label: "Installation",
-    icon: TerminalWindowIcon,
-  },
-  { href: "/components/react-aria", label: "React Aria", icon: AtomIcon },
+  ...docsGuides.map(({ href, label }) => ({
+    href,
+    label,
+    icon: guideIcons[href],
+  })),
   { href: "/components", label: "Components", icon: CubeIcon },
   { href: "/blocks", label: "Blocks", icon: SquaresFourIcon },
   { href: "/charts", label: "Charts", icon: ChartBarIcon },
@@ -56,7 +64,7 @@ export function DocsSearch() {
         aria-label="Search components and pages"
         aria-keyshortcuts={shortcut ? "Control+K Meta+K" : undefined}
         onPress={() => setOpen(true)}
-        className="inline-flex size-10 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm text-muted-foreground outline-offset-4 outline-transparent transition-[color,background-color,outline-color,outline-offset] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 sm:h-9 sm:w-44 sm:justify-start sm:border sm:border-border/70 sm:bg-muted/40 sm:ps-2.5 sm:pe-1.5 lg:w-52 xl:w-64"
+        className="inline-flex size-10 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm text-muted-foreground outline-offset-4 outline-transparent transition-[color,background-color,outline-color,outline-offset] duration-150 ease-out-quint hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 sm:h-9 sm:w-44 sm:justify-start sm:border sm:border-border/70 sm:bg-muted/40 sm:ps-2.5 sm:pe-1.5 lg:w-52 xl:w-64"
       >
         <MagnifyingGlassIcon size={17} aria-hidden="true" />
         <span className="hidden sm:inline">Search…</span>

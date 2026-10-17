@@ -3,9 +3,10 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { CodeBlock } from "@/components/docs/code-block";
 import { InstallTabs } from "@/components/docs/install-tabs";
+import { ManualInstall } from "@/components/docs/manual-install";
 import { PackageManagerCommand } from "@/components/docs/package-manager-command";
 import { type ApiProp, groupApiProps } from "@/lib/component-api";
-import { readRegistryItem, registryUrl } from "@/lib/registry-docs";
+import { registryUrl } from "@/lib/registry-docs";
 import { cn } from "@/lib/utils";
 
 const usage = `import { Chart } from "@tanstack/charts/react";
@@ -34,6 +35,7 @@ const theming = `:root {
   --chart-3: oklch(0.63 0.13 75);
   --chart-4: oklch(0.56 0.14 320);
   --chart-5: oklch(0.48 0.13 32);
+  --chart-6: oklch(0.43 0.12 280);
 }
 
 .dark {
@@ -42,6 +44,7 @@ const theming = `:root {
   --chart-3: oklch(0.66 0.13 85);
   --chart-4: oklch(0.53 0.15 320);
   --chart-5: oklch(0.56 0.15 27);
+  --chart-6: oklch(0.66 0.12 280);
 }`;
 
 const override = `<ChartFrame style={{ "--ts-chart-1": "var(--chart-3)" } as CSSProperties}>`;
@@ -107,9 +110,7 @@ const parts = [
 const linkClass = "text-primary underline underline-offset-4";
 
 export async function ChartDocumentation() {
-  const item = await readRegistryItem("chart");
   const cliUrl = registryUrl("chart");
-  const packages = item.dependencies.filter((pkg) => pkg !== "cn");
   const apiGroups = groupApiProps(api);
 
   return (
@@ -150,33 +151,7 @@ export async function ChartDocumentation() {
                 )}
               </div>
             }
-            custom={
-              <div className="space-y-4">
-                <Note>
-                  Complete the{" "}
-                  <Link
-                    href="/components/installation#setup"
-                    className={linkClass}
-                  >
-                    one-time setup
-                  </Link>
-                  . Install the packages. Then copy the files.
-                </Note>
-                {packages.length > 0 && (
-                  <PackageManagerCommand
-                    action="add"
-                    args={packages.join(" ")}
-                  />
-                )}
-                {item.files.map((file) => (
-                  <CodeBlock
-                    key={file.target}
-                    code={file.content}
-                    filename={file.target}
-                  />
-                ))}
-              </div>
-            }
+            custom={<ManualInstall slug="chart" name="Chart" />}
           />
         </section>
 
@@ -222,7 +197,8 @@ export async function ChartDocumentation() {
           <SectionHeading id="chart-theming">Theming</SectionHeading>
           <Note className="mb-4">
             Charts use the shadcn colors <code>--chart-1</code> to{" "}
-            <code>--chart-5</code>. Set them for light and dark mode.
+            <code>--chart-5</code> and <code>--chart-6</code>. Set them for
+            light and dark mode.
           </Note>
           <CodeBlock code={theming} filename="globals.css" language="css" />
           <Note className="mb-4 mt-6">
@@ -267,7 +243,7 @@ export async function ChartDocumentation() {
               href="https://tanstack.com/charts/latest/docs/reference/chart-definitions"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 rounded-md text-sm font-medium text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid"
+              className="inline-flex items-center gap-1 rounded-md text-sm font-medium text-primary underline decoration-primary/40 underline-offset-4 transition-[color,background-color,box-shadow] duration-150 ease-out-quint hover:decoration-primary focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:decoration-primary-foreground/40 focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-transparent"
             >
               TanStack Charts API
               <ArrowUpRightIcon size={16} aria-hidden="true" />

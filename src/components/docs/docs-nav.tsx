@@ -8,11 +8,6 @@ import { catalogGroups } from "@/lib/catalog";
 import { docsGuides } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 
-const gettingStarted = [
-  ...docsGuides,
-  { href: "/components", label: "All components" },
-];
-
 function revealInScrollParent(element: HTMLElement) {
   let scroller = element.parentElement;
   while (scroller && !/auto|scroll/.test(getComputedStyle(scroller).overflowY))
@@ -51,14 +46,14 @@ export function DocsNav({
         onNavigate={onNavigate && ((event) => onNavigate(event, link.href))}
         aria-current={isActive ? "page" : undefined}
         className={cn(
-          "group/nav-link relative isolate inline-flex min-h-10 items-center rounded-lg px-3 text-[13px] font-medium whitespace-nowrap transition-[color,background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted hover:text-foreground focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-transparent",
+          "group/nav-link relative isolate inline-flex min-h-10 items-center rounded-lg px-3 text-[13px] font-medium whitespace-nowrap transition-[color,background-color] duration-150 ease-out-quint hover:bg-muted hover:text-foreground focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-transparent",
           isActive ? "text-accent-foreground" : "text-muted-foreground",
         )}
       >
         {isActive && (
           <motion.span
             layoutId={mobile ? "mobile-nav-selection" : "desktop-nav-selection"}
-            className="pointer-events-none absolute inset-0 -z-10 rounded-lg bg-accent transition-[background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] group-focus-visible/nav-link:bg-primary"
+            className="pointer-events-none absolute inset-0 -z-10 rounded-lg bg-accent transition-[background-color] duration-150 ease-out-quint group-focus-visible/nav-link:bg-primary"
             transition={
               reduceMotion
                 ? { duration: 0 }
@@ -75,9 +70,9 @@ export function DocsNav({
     <nav aria-label="Documentation navigation" className="grid gap-6">
       <div className="grid gap-1">
         <p className="mb-2 px-3 text-xs font-semibold text-foreground">
-          Getting started
+          Get started
         </p>
-        {(mobile ? docsGuides : gettingStarted).map(renderLink)}
+        {docsGuides.map(renderLink)}
       </div>
       {catalogGroups.map((group) => (
         <div key={group.title} className="grid gap-1">

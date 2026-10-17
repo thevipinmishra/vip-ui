@@ -1,12 +1,12 @@
 import { type ApiProp, groupApiProps } from "./component-api";
-import type { RegistryItem } from "./registry-docs";
+import { displayPath, fileName, type ManualInstallPlan } from "./registry-docs";
 
 export interface ComponentMarkdownInput {
   slug: string;
   name: string;
   description: string;
   site: string;
-  registryItem: RegistryItem;
+  manual: ManualInstallPlan;
   cliUrl?: string | null;
   usage?: { code: string; filename: string };
   api?: ApiProp[];
@@ -25,7 +25,7 @@ export function buildComponentMarkdown({
   name,
   description,
   site,
-  registryItem,
+  manual,
   cliUrl,
   usage,
   api,
@@ -61,27 +61,42 @@ export function buildComponentMarkdown({
   );
 
   if (cliUrl) {
-    lines.push("```bash", `pnpm dlx shadcn@latest add ${cliUrl}`, "```");
-  } else {
-    lines.push(
-      `Copy the files manually from the [installation guide](${site}/components/installation).`,
-    );
+    lines.push("```bash", `pnpm dlx shadcn@latest add ${cliUrl}`, "```", "");
   }
 
-  if (!cliUrl) {
-    lines.push("", "Copy these files:", "");
-    for (const file of registryItem.files) {
-      lines.push(`- \`${file.target}\``);
-    }
-    if (registryItem.dependencies.length > 0) {
+  lines.push(
+    "### Manual",
+    "",
+    `Complete the [one-time setup](${site}/components/installation#manual) first.`,
+  );
+  if (manual.packages.length > 0) {
+    lines.push(
+      "",
+      "Install the packages:",
+      "",
+      "```bash",
+      `pnpm add ${manual.packages.join(" ")}`,
+      "```",
+    );
+  }
+  if (manual.requires.length > 0) {
+    lines.push("", "Add the required files:", "");
+    for (const file of manual.requires) {
       lines.push(
-        "",
-        `Dependencies: ${registryItem.dependencies
-          .map((dependency) => `\`${dependency}\``)
-          .join(", ")}.`,
+        file.kind === "component"
+          ? `- [${file.name}](${site}/components/${file.slug}.md): \`${displayPath(file.file)}\``
+          : `- [\`${fileName(file.file)}\`](${site}/components/installation#file-${file.slug}): ${file.description}`,
       );
     }
   }
+  lines.push(
+    "",
+    `Add \`${displayPath(manual.component)}\`:`,
+    "",
+    "```tsx",
+    manual.component.content.trim(),
+    "```",
+  );
 
   if (examples && examples.length > 0) {
     examples.forEach((example) => {
