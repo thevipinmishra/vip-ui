@@ -3,6 +3,7 @@
 import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import { type ComponentProps, useState } from "react";
+import { composeRenderProps } from "react-aria-components";
 import { easeInOut } from "./motion";
 import { cn } from "./utils";
 import { CollapsiblePanel } from "./collapsible-panel";
@@ -126,7 +127,9 @@ export function ToolCallPanel({
     <CollapsiblePanel
       data-slot="tool-call-panel"
       {...props}
-      className={cn("text-sm leading-6 text-foreground", className)}
+      className={composeRenderProps(className, (className) =>
+        cn("text-sm leading-6 text-foreground", className),
+      )}
     >
       <div className="min-w-0 border-t border-border/70 px-3 pt-2.5 pb-3 [overflow-wrap:anywhere]">
         {children}

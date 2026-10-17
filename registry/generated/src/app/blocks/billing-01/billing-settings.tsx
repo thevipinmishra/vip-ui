@@ -184,7 +184,7 @@ export function BillingSettings() {
                 </span>
                 <Button
                   variant="ghost"
-                  size="icon"
+                  iconOnly
                   aria-label={`Download ${invoice.id}`}
                   className="size-9"
                 >

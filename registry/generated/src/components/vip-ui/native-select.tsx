@@ -6,11 +6,18 @@ import { cn } from "./utils";
 import {
   fieldDescriptionStyles,
   fieldErrorStyles,
+  fieldHeight,
   fieldLabelStyles,
+  fieldRadius,
+  fieldSizeStyles,
+  fieldText,
 } from "./field-styles";
+import type { Size } from "./size";
 
-export interface NativeSelectProps extends ComponentProps<"select"> {
+export interface NativeSelectProps
+  extends Omit<ComponentProps<"select">, "size"> {
   label: string;
+  size?: Size;
   description?: string;
   error?: string;
   placeholder?: string;
@@ -24,6 +31,7 @@ export function NativeSelect({
   error,
   placeholder,
   isInvalid,
+  size,
   containerClassName,
   className,
   children,
@@ -40,8 +48,10 @@ export function NativeSelect({
   return (
     <div
       data-slot="native-select"
+      data-size={size}
       className={cn(
         "grid w-full min-w-0 grid-cols-1 gap-2",
+        size && fieldSizeStyles[size],
         containerClassName,
       )}
     >
@@ -65,7 +75,10 @@ export function NativeSelect({
             undefined
           }
           className={cn(
-            "peer min-h-12 w-full min-w-0 cursor-pointer appearance-none truncate rounded-lg border border-input bg-card ps-3.5 pe-10 text-base text-foreground shadow-[var(--shadow-card)] outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-primary/45 focus:border-ring focus:ring-1 focus:ring-ring aria-invalid:border-destructive aria-invalid:hover:border-destructive aria-invalid:focus:border-destructive aria-invalid:focus:ring-destructive disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 disabled:hover:border-input sm:text-sm",
+            fieldHeight,
+            fieldRadius,
+            fieldText,
+            "peer w-full min-w-0 cursor-pointer appearance-none truncate border border-input bg-card ps-[var(--field-px,0.875rem)] pe-[calc(var(--field-px,0.875rem)+var(--field-icon,1rem)+0.625rem)] text-foreground shadow-[var(--shadow-card)] outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-out-quint hover:border-primary/45 focus:border-ring focus:ring-1 focus:ring-ring aria-invalid:border-destructive aria-invalid:hover:border-destructive aria-invalid:focus:border-destructive aria-invalid:focus:ring-destructive disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 disabled:hover:border-input",
             className,
           )}
         >
@@ -73,10 +86,9 @@ export function NativeSelect({
           {children}
         </select>
         <CaretDownIcon
-          size={17}
           data-slot="native-select-chevron"
           aria-hidden="true"
-          className="pointer-events-none absolute top-1/2 end-3.5 -translate-y-1/2 text-muted-foreground peer-disabled:opacity-60"
+          className="pointer-events-none absolute top-1/2 end-[var(--field-px,0.875rem)] size-[var(--field-icon,1rem)] -translate-y-1/2 text-muted-foreground peer-disabled:opacity-60"
         />
       </div>
       {description && (

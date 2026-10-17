@@ -58,7 +58,7 @@ export function PasswordStrengthMeter({
                 data-slot="password-strength-meter-segment"
                 data-filled={score >= step || undefined}
                 className={cn(
-                  "h-1.5 rounded-full bg-secondary shadow-[var(--shadow-inset)] transition-[background-color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] forced-colors:border",
+                  "h-1.5 rounded-full bg-secondary shadow-[var(--shadow-inset)] transition-[background-color] duration-200 ease-out-quint forced-colors:border",
                   score >= step &&
                     cn(
                       fills[score],

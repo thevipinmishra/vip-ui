@@ -1,14 +1,7 @@
 "use client";
 
 import { XIcon } from "@phosphor-icons/react";
-import { type HTMLMotionProps, motion, useReducedMotion } from "motion/react";
-import {
-  createContext,
-  type ReactNode,
-  useContext,
-  useState,
-  useSyncExternalStore,
-} from "react";
+import { createContext, type ReactNode, useContext } from "react";
 import {
   Dialog as AriaDialog,
   type DialogProps as AriaDialogProps,
@@ -23,78 +16,14 @@ import {
   Text,
   type TextProps,
 } from "react-aria-components";
-import { easeOut } from "./motion";
 import { cn } from "./utils";
 import { Button, type ButtonProps } from "./button";
-
-type DialogAnimation = "unmounted" | "hidden" | "visible";
-
-const mobileQuery = "(max-width: 639px)";
-
-function subscribeToMobile(onChange: () => void) {
-  const media = window.matchMedia(mobileQuery);
-  media.addEventListener("change", onChange);
-  return () => media.removeEventListener("change", onChange);
-}
-
-function isMobileViewport() {
-  return window.matchMedia(mobileQuery).matches;
-}
+import { SizeProvider } from "./size";
 
 const CloseContext = createContext<(() => void) | null>(null);
-const DialogAnimationContext = createContext<{
-  animation: DialogAnimation;
-  complete: (state: string) => void;
-} | null>(null);
 
-function useDialogAnimation(isOpen?: boolean, defaultOpen?: boolean) {
-  const [animation, setAnimation] = useState<DialogAnimation>(
-    defaultOpen || isOpen ? "visible" : "unmounted",
-  );
-  const [previousIsOpen, setPreviousIsOpen] = useState(isOpen);
-
-  if (isOpen !== previousIsOpen) {
-    setPreviousIsOpen(isOpen);
-    if (isOpen !== undefined) setAnimation(isOpen ? "visible" : "hidden");
-  }
-
-  return {
-    animation,
-    setAnimation,
-    complete: (state: string) => {
-      if (state === "hidden") {
-        setAnimation((current) =>
-          current === "hidden" ? "unmounted" : current,
-        );
-      }
-    },
-  };
-}
-
-export function Dialog({
-  defaultOpen,
-  isOpen,
-  onOpenChange,
-  ...props
-}: DialogTriggerProps) {
-  const { animation, setAnimation, complete } = useDialogAnimation(
-    isOpen,
-    defaultOpen,
-  );
-
-  return (
-    <DialogAnimationContext.Provider value={{ animation, complete }}>
-      <AriaDialogTrigger
-        {...props}
-        defaultOpen={defaultOpen}
-        isOpen={isOpen}
-        onOpenChange={(open) => {
-          if (isOpen === undefined) setAnimation(open ? "visible" : "hidden");
-          onOpenChange?.(open);
-        }}
-      />
-    </DialogAnimationContext.Provider>
-  );
+export function Dialog(props: DialogTriggerProps) {
+  return <AriaDialogTrigger {...props} />;
 }
 
 export function DialogTrigger({ className, ...props }: ButtonProps) {
@@ -104,7 +33,7 @@ export function DialogTrigger({ className, ...props }: ButtonProps) {
 export interface DialogContentProps extends Omit<AriaDialogProps, "children"> {
   ref?: React.Ref<HTMLElement>;
   children: ReactNode;
-  overlayProps?: Omit<ModalOverlayProps, "children" | "render" | "isExiting">;
+  overlayProps?: Omit<ModalOverlayProps, "children" | "render">;
   modalProps?: Omit<React.ComponentProps<typeof Modal>, "children" | "render">;
   modalSlot?: string;
 }
@@ -117,15 +46,6 @@ export function DialogContent({
   modalSlot = "dialog-modal",
   ...props
 }: DialogContentProps) {
-  const reduceMotion = useReducedMotion();
-  const isMobile = useSyncExternalStore(
-    subscribeToMobile,
-    isMobileViewport,
-    () => false,
-  );
-  const ownAnimation = useDialogAnimation(overlayProps?.isOpen);
-  const { animation, complete } =
-    useContext(DialogAnimationContext) ?? ownAnimation;
   return (
     <ModalOverlay
       {...overlayProps}
@@ -134,68 +54,26 @@ export function DialogContent({
           ? false
           : (overlayProps?.isDismissable ?? true)
       }
-      isExiting={animation === "hidden"}
       data-slot="dialog-overlay"
       className={composeRenderProps(overlayProps?.className, (className) =>
         cn(
-          "fixed inset-x-0 top-0 z-50 grid h-[var(--visual-viewport-height,100dvh)] items-end overflow-y-auto sm:place-items-center sm:p-4",
+          "fixed inset-x-0 top-0 z-50 grid h-[var(--visual-viewport-height,100dvh)] items-end overflow-y-auto bg-foreground/40 backdrop-blur-sm transition-[background-color,backdrop-filter] duration-240 ease-out-quint dark:bg-foreground/20 sm:place-items-center sm:p-4",
+          "entering:bg-transparent entering:backdrop-blur-none exiting:bg-transparent exiting:backdrop-blur-none exiting:duration-160",
           className,
         ),
       )}
     >
-      <motion.div
-        aria-hidden="true"
-        data-slot="dialog-backdrop"
-        className="pointer-events-none fixed inset-0 bg-foreground/40 backdrop-blur-sm dark:bg-foreground/20"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: animation === "hidden" ? 0 : 1 }}
-        transition={{
-          duration: reduceMotion ? 0.12 : animation === "hidden" ? 0.16 : 0.24,
-          ease: easeOut,
-        }}
-      />
       <Modal
         {...modalProps}
-        render={(domProps) => (
-          <motion.div
-            {...(domProps as HTMLMotionProps<"div">)}
-            initial={
-              reduceMotion
-                ? { opacity: 0 }
-                : isMobile
-                  ? { opacity: 0, y: "100%" }
-                  : { opacity: 0, y: 12, scale: 0.96 }
-            }
-            animate={
-              animation === "hidden"
-                ? reduceMotion
-                  ? { opacity: 0 }
-                  : isMobile
-                    ? { opacity: 0, y: "100%", scale: 1 }
-                    : { opacity: 0, y: 6, scale: 0.985 }
-                : { opacity: 1, y: isMobile ? "0%" : 0, scale: 1 }
-            }
-            transition={{
-              duration: reduceMotion
-                ? 0.12
-                : isMobile
-                  ? animation === "hidden"
-                    ? 0.24
-                    : 0.32
-                  : animation === "hidden"
-                    ? 0.18
-                    : 0.26,
-              ease: easeOut,
-            }}
-            onAnimationComplete={() => {
-              if (animation === "hidden") complete("hidden");
-            }}
-          />
-        )}
         data-slot={modalSlot}
-        className={cn(
-          "relative max-h-[calc(var(--visual-viewport-height,100dvh)-1rem)] w-full min-w-0 max-w-full overflow-y-auto overscroll-contain rounded-t-2xl bg-card p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] text-card-foreground [overflow-wrap:anywhere] shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70 forced-colors:border sm:max-h-[calc(var(--visual-viewport-height,100dvh)-2rem)] sm:max-w-md sm:rounded-xl sm:p-6",
-          modalProps?.className,
+        className={composeRenderProps(modalProps?.className, (className) =>
+          cn(
+            "relative max-h-[calc(var(--visual-viewport-height,100dvh)-1rem)] w-full min-w-0 max-w-full overflow-y-auto overscroll-contain rounded-t-2xl bg-card p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] text-card-foreground [overflow-wrap:anywhere] shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70 forced-colors:border sm:max-h-[calc(var(--visual-viewport-height,100dvh)-2rem)] sm:max-w-md sm:rounded-xl sm:p-6",
+            "transition-[opacity,translate,scale] duration-260 ease-out-quint max-sm:duration-320",
+            "entering:opacity-0 motion-safe:max-sm:entering:translate-y-full motion-safe:sm:entering:translate-y-3 motion-safe:sm:entering:scale-96",
+            "exiting:opacity-0 exiting:duration-180 max-sm:exiting:duration-240 motion-safe:max-sm:exiting:translate-y-full motion-safe:sm:exiting:translate-y-1.5 motion-safe:sm:exiting:scale-[0.985]",
+            className,
+          ),
         )}
       >
         <AriaDialog
@@ -205,7 +83,7 @@ export function DialogContent({
         >
           {({ close }) => (
             <CloseContext.Provider value={close}>
-              {children}
+              <SizeProvider size={undefined}>{children}</SizeProvider>
             </CloseContext.Provider>
           )}
         </AriaDialog>
@@ -283,7 +161,7 @@ export function DialogClose({
       {...props}
       data-slot="dialog-close"
       variant={props.variant ?? "ghost"}
-      size={props.size ?? (children ? "default" : "icon")}
+      iconOnly={props.iconOnly ?? !children}
       aria-label={
         props["aria-label"] ?? (children ? undefined : "Close dialog")
       }
@@ -293,7 +171,7 @@ export function DialogClose({
       }}
       className={className}
     >
-      {children ?? <XIcon size={17} aria-hidden="true" />}
+      {children ?? <XIcon aria-hidden="true" />}
     </Button>
   );
 }

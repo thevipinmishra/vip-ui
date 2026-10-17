@@ -135,7 +135,6 @@ export function InlineEdit({
               ref={triggerRef}
               type="button"
               variant="ghost"
-              size="default"
               isDisabled={isDisabled}
               className="-ms-3 min-w-0 max-w-full px-3"
               aria-label={`Edit ${label}: ${current || "Not set"}`}

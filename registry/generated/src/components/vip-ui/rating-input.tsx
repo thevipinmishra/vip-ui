@@ -63,7 +63,7 @@ export function RatingInput({
             >
               <RadioButton
                 className={cn(
-                  "size-8 items-center justify-center rounded-md outline-offset-4 outline-transparent transition-[outline-color,outline-offset] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2",
+                  "size-8 items-center justify-center rounded-md outline-offset-4 outline-transparent transition-[outline-color,outline-offset] duration-150 ease-out-quint hover:bg-muted/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2",
                   rating <= selected ? "text-primary" : "text-muted-foreground",
                 )}
               >

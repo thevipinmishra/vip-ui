@@ -15,13 +15,17 @@ import {
   fieldErrorStyles,
   fieldInputStyles,
   fieldLabelStyles,
+  fieldPaddingX,
+  fieldSizeStyles,
 } from "./field-styles";
+import type { Size } from "./size";
 
 export interface TextFieldProps
   extends Omit<AriaTextFieldProps, "className" | "children"> {
   label?: string;
   description?: string;
   placeholder?: string;
+  size?: Size;
   ref?: React.Ref<HTMLDivElement>;
   className?: AriaTextFieldProps["className"];
   children?: AriaTextFieldProps["children"];
@@ -31,6 +35,7 @@ export function TextField({
   label,
   description,
   placeholder,
+  size,
   className,
   children,
   ...props
@@ -39,8 +44,13 @@ export function TextField({
     <AriaTextField
       {...props}
       data-slot="text-field"
+      data-size={size}
       className={composeRenderProps(className, (className) =>
-        cn("flex w-full min-w-0 flex-col gap-2", className),
+        cn(
+          "flex w-full min-w-0 flex-col gap-2",
+          size && fieldSizeStyles[size],
+          className,
+        ),
       )}
     >
       {children ?? (
@@ -79,7 +89,7 @@ export function TextFieldInput({
       {...props}
       data-slot="text-field-input"
       className={composeRenderProps(className, (className) =>
-        cn(fieldInputStyles, "px-3.5", className),
+        cn(fieldInputStyles, fieldPaddingX, className),
       )}
     />
   );

@@ -1,10 +1,9 @@
 "use client";
 
 import { CaretDownIcon } from "@phosphor-icons/react";
-import { motion, useReducedMotion } from "motion/react";
-import { type ReactNode, useContext } from "react";
+import type { ReactNode } from "react";
 import {
-  type Button as AriaButton,
+  Button as AriaButton,
   Select as AriaSelect,
   type SelectProps as AriaSelectProps,
   SelectValue as AriaSelectValue,
@@ -13,26 +12,29 @@ import {
   Label,
   ListBox,
   ListBoxItem,
-  SelectStateContext,
   Text,
 } from "react-aria-components";
-import { duration, easeOut } from "./motion";
 import { cn } from "./utils";
 import {
+  fieldChevronStyles,
   fieldDescriptionStyles,
   fieldErrorStyles,
+  fieldHeight,
+  fieldIcon,
   fieldLabelStyles,
+  fieldRadius,
+  fieldSizeStyles,
+  fieldText,
 } from "./field-styles";
 import { SelectionMark } from "./list-box";
 import { Popover } from "./popover";
-import { PressButton } from "./press-button";
+import type { Size } from "./size";
 
-const selectTriggerStyles =
-  "relative flex min-h-12 w-full min-w-0 cursor-pointer items-center rounded-lg border border-input bg-card ps-3.5 pe-10 text-start text-base leading-6 text-foreground shadow-[var(--shadow-card)] outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-primary/45 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring group-invalid:border-destructive group-invalid:hover:border-destructive group-invalid:focus-visible:border-destructive group-invalid:focus-visible:ring-destructive disabled:cursor-default disabled:bg-muted disabled:opacity-60 sm:text-sm sm:leading-5";
+const selectTriggerStyles = `${fieldHeight} ${fieldRadius} ${fieldText} group/trigger relative flex w-full min-w-0 cursor-pointer items-center border border-input bg-card ps-[var(--field-px,0.875rem)] pe-[calc(var(--field-px,0.875rem)+var(--field-icon,1rem)+0.625rem)] text-start leading-6 text-foreground shadow-[var(--shadow-card)] outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-out-quint hover:border-primary/45 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring group-invalid:border-destructive group-invalid:hover:border-destructive group-invalid:focus-visible:border-destructive group-invalid:focus-visible:ring-destructive disabled:cursor-default disabled:bg-muted disabled:opacity-60 sm:leading-5`;
 const selectValueStyles =
   "min-w-0 flex-1 self-center truncate text-start data-[placeholder]:text-muted-foreground";
 const selectItemStyles =
-  "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none hover:bg-muted focus:bg-muted selected:bg-accent selected:text-accent-foreground focus-visible:-outline-offset-1 focus-visible:outline-1 focus-visible:outline-solid focus-visible:outline-ring forced-colors:focus-visible:-outline-offset-2 forced-colors:focus-visible:outline-2 disabled:cursor-default disabled:opacity-50";
+  "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none transition-colors duration-150 ease-out-quint hover:bg-muted hover:duration-0 focus:bg-muted focus:duration-0 selected:bg-accent selected:text-accent-foreground focus-visible:-outline-offset-1 focus-visible:outline-1 focus-visible:outline-solid focus-visible:outline-ring forced-colors:focus-visible:-outline-offset-2 forced-colors:focus-visible:outline-2 disabled:cursor-default disabled:opacity-50";
 const selectPopoverStyles =
   "w-[var(--trigger-width)] rounded-lg border-0 p-1.5 ring-1 ring-border/70";
 
@@ -46,6 +48,7 @@ export interface SelectProps
   label?: string;
   description?: string;
   options?: SelectOption[];
+  size?: Size;
   ref?: React.Ref<HTMLDivElement>;
   className?: AriaSelectProps<SelectOption>["className"];
   children?: AriaSelectProps<SelectOption>["children"];
@@ -58,6 +61,7 @@ export function Select({
   label,
   description,
   options,
+  size,
   className,
   children,
   value,
@@ -66,11 +70,11 @@ export function Select({
   placeholder = "Select an option",
   ...props
 }: SelectProps) {
-  const reduceMotion = useReducedMotion();
   return (
     <AriaSelect
       {...props}
       data-slot="select"
+      data-size={size}
       selectedKey={value ?? props.selectedKey}
       defaultSelectedKey={defaultValue ?? props.defaultSelectedKey}
       onSelectionChange={(key) => {
@@ -79,85 +83,81 @@ export function Select({
       }}
       placeholder={placeholder}
       className={composeRenderProps(className, (className) =>
-        cn("group flex w-full min-w-0 flex-col gap-2", className),
+        cn(
+          "group flex w-full min-w-0 flex-col gap-2",
+          size && fieldSizeStyles[size],
+          className,
+        ),
       )}
     >
-      {children ??
-        (({ isOpen }) => (
-          <>
-            {label && (
-              <Label data-slot="select-label" className={fieldLabelStyles}>
-                {label}
-              </Label>
-            )}
-            <PressButton
-              data-slot="select-trigger"
-              className={selectTriggerStyles}
+      {children ?? (
+        <>
+          {label && (
+            <Label data-slot="select-label" className={fieldLabelStyles}>
+              {label}
+            </Label>
+          )}
+          <AriaButton
+            data-slot="select-trigger"
+            className={selectTriggerStyles}
+          >
+            <AriaSelectValue
+              data-slot="select-value"
+              className={selectValueStyles}
             >
-              <AriaSelectValue
-                data-slot="select-value"
-                className={selectValueStyles}
-              >
-                {({ selectedText, isPlaceholder, state }) =>
-                  isPlaceholder
-                    ? placeholder
-                    : (options?.find(
-                        (option) => option.id === state.selectedKey,
-                      )?.name ?? selectedText)
-                }
-              </AriaSelectValue>
-              <SelectChevron open={isOpen} reduceMotion={reduceMotion} />
-            </PressButton>
-            {description && (
-              <Text
-                slot="description"
-                data-slot="select-description"
-                className={fieldDescriptionStyles}
-              >
-                {description}
-              </Text>
-            )}
-            <SelectError />
-            <Popover
-              data-slot="select-content"
-              placement="bottom start"
-              offset={7}
-              maxHeight={268}
-              className={selectPopoverStyles}
+              {({ selectedText, isPlaceholder, state }) =>
+                isPlaceholder
+                  ? placeholder
+                  : (options?.find((option) => option.id === state.selectedKey)
+                      ?.name ?? selectedText)
+              }
+            </AriaSelectValue>
+            <SelectChevron />
+          </AriaButton>
+          {description && (
+            <Text
+              slot="description"
+              data-slot="select-description"
+              className={fieldDescriptionStyles}
             >
-              <ListBox
-                data-slot="select-list-box"
-                items={options ?? []}
-                className="grid gap-1 outline-none"
-              >
-                {(option) => (
-                  <ListBoxItem
-                    data-slot="select-item"
-                    id={option.id}
-                    textValue={option.name}
-                    className={selectItemStyles}
-                  >
-                    {({ isSelected }) => (
-                      <>
-                        <span className="min-w-0">
-                          <span className="block font-medium">
-                            {option.name}
-                          </span>
-                          {option.description && (
-                            <span className="mt-0.5 block text-xs text-muted-foreground group-selected/item:text-accent-foreground">
-                              {option.description}
-                            </span>
-                          )}
-                        </span>
-                        <SelectionMark isSelected={isSelected} />
-                      </>
+              {description}
+            </Text>
+          )}
+          <SelectError />
+          <Popover
+            data-slot="select-content"
+            placement="bottom start"
+            offset={7}
+            maxHeight={268}
+            className={selectPopoverStyles}
+          >
+            <ListBox
+              data-slot="select-list-box"
+              items={options ?? []}
+              className="grid gap-1 outline-none"
+            >
+              {(option) => (
+                <ListBoxItem
+                  data-slot="select-item"
+                  id={option.id}
+                  textValue={option.name}
+                  className={selectItemStyles}
+                >
+                  <span className="min-w-0">
+                    <span className="block font-medium">{option.name}</span>
+                    {option.description && (
+                      <span className="mt-0.5 block text-xs text-muted-foreground group-selected/item:text-accent-foreground">
+                        {option.description}
+                      </span>
                     )}
-                  </ListBoxItem>
-                )}
-              </ListBox>
-            </Popover>
-          </>
-        ))}
+                  </span>
+                  <SelectionMark />
+                </ListBoxItem>
+              )}
+            </ListBox>
+          </Popover>
+        </>
+      )}
     </AriaSelect>
   );
 }
@@ -181,7 +181,7 @@ export function SelectTrigger({
   ...props
 }: React.ComponentProps<typeof AriaButton>) {
   return (
-    <PressButton
+    <AriaButton
       {...props}
       data-slot="select-trigger"
       className={composeRenderProps(className, (className) =>
@@ -194,35 +194,23 @@ export function SelectTrigger({
           <SelectChevron />
         </>
       )}
-    </PressButton>
+    </AriaButton>
   );
 }
 
-function SelectChevron({
-  open,
-  reduceMotion,
-}: {
-  open?: boolean;
-  reduceMotion?: boolean | null;
-}) {
-  const contextOpen = useContext(SelectStateContext)?.isOpen;
-  const prefersReducedMotion = useReducedMotion();
-  const isOpen = open ?? contextOpen;
-  const reduce = reduceMotion ?? prefersReducedMotion;
+function SelectChevron() {
   return (
     <span
       aria-hidden="true"
       data-slot="select-chevron"
-      className="pointer-events-none absolute inset-y-0 end-3.5 grid place-items-center text-muted-foreground"
+      className={cn(
+        fieldIcon,
+        "pointer-events-none absolute inset-y-0 end-[var(--field-px,0.875rem)] grid place-items-center text-muted-foreground",
+      )}
     >
-      <motion.span
-        className="grid size-4 place-items-center"
-        initial={false}
-        animate={{ rotate: isOpen ? 180 : 0 }}
-        transition={{ duration: reduce ? 0 : duration.base, ease: easeOut }}
-      >
-        <CaretDownIcon size={16} />
-      </motion.span>
+      <span className={fieldChevronStyles}>
+        <CaretDownIcon />
+      </span>
     </span>
   );
 }
@@ -288,10 +276,10 @@ export function SelectItem({
         cn(selectItemStyles, className),
       )}
     >
-      {composeRenderProps(children, (content, { isSelected }) => (
+      {composeRenderProps(children, (content) => (
         <>
           {content}
-          <SelectionMark isSelected={isSelected} />
+          <SelectionMark />
         </>
       ))}
     </ListBoxItem>

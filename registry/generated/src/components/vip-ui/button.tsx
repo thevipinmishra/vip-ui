@@ -7,12 +7,8 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { springLayout } from "./motion";
-import {
-  type ButtonSize,
-  type ButtonVariant,
-  buttonLabel,
-  buttonStyles,
-} from "./button-styles";
+import { type ButtonVariant, buttonLabel, buttonStyles } from "./button-styles";
+import { type Size, useSize } from "./size";
 
 export interface ButtonProps
   extends Omit<
@@ -26,7 +22,8 @@ export interface ButtonProps
   > {
   ref?: React.Ref<HTMLButtonElement>;
   variant?: ButtonVariant;
-  size?: ButtonSize;
+  size?: Size;
+  iconOnly?: boolean;
   static?: boolean;
   layout?: MotionProps["layout"];
 }
@@ -39,23 +36,27 @@ export function Button({
   className,
   children,
   variant = "default",
-  size = "default",
+  size: sizeProp,
+  iconOnly = false,
   static: isStatic = false,
   layout,
   ...props
 }: ButtonProps) {
   const reduceMotion = useReducedMotion();
+  const size = useSize(sizeProp) ?? "md";
   return (
     <MotionButton
       data-slot="button"
       data-variant={variant}
       data-size={size}
+      data-icon-only={iconOnly || undefined}
       layout={reduceMotion ? false : layout}
       transition={springLayout}
       className={composeRenderProps(className, (className) =>
         buttonStyles({
           variant,
           size,
+          iconOnly,
           className: [!isStatic && pressStyles, className],
         }),
       )}

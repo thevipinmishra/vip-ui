@@ -49,7 +49,7 @@ export function Dashboard() {
         <header className="sticky top-0 z-20 flex h-16 items-center gap-3 border-b border-border/70 bg-card/90 px-4 backdrop-blur sm:px-6">
           <div className="lg:hidden">
             <SheetTrigger isOpen={navOpen} onOpenChange={setNavOpen}>
-              <Button variant="ghost" size="icon" aria-label="Open navigation">
+              <Button variant="ghost" iconOnly aria-label="Open navigation">
                 <ListIcon size={20} aria-hidden="true" />
               </Button>
               <Sheet position="left" className="w-72">
@@ -69,13 +69,13 @@ export function Dashboard() {
             className="hidden max-w-xs sm:flex"
           />
           <div className="ms-auto flex items-center gap-1">
-            <Button variant="ghost" size="icon" aria-label="Notifications">
+            <Button variant="ghost" iconOnly aria-label="Notifications">
               <BellIcon size={19} aria-hidden="true" />
             </Button>
             <MenuTrigger>
               <Button
                 variant="ghost"
-                size="icon"
+                iconOnly
                 aria-label="Account menu"
                 className="rounded-full"
               >
