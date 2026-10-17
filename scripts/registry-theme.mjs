@@ -27,14 +27,24 @@ export const themeVars = {
   },
 };
 
+export const themeTokens = {
+  "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)",
+  "ease-spring":
+    "linear(0, 0.1251, 0.3554, 0.5737, 0.7411, 0.8551, 0.9259, 0.9666, 0.988, 0.9981, 1.002, 1)",
+};
+
 export const reactAriaPlugin = "tailwindcss-react-aria-components";
 
 export function referencedVars(content) {
   const used = Object.keys(themeVars.light).filter((name) =>
     new RegExp(`(?:--|[a-z]-)${name}(?![\\w-])`).test(content),
   );
-  if (!used.length) return undefined;
+  const tokens = Object.keys(themeTokens).filter((name) =>
+    new RegExp(`(?<![\\w-])(?:--)?${name}(?![\\w-])`).test(content),
+  );
+  if (!used.length && !tokens.length) return undefined;
   return {
+    theme: Object.fromEntries(tokens.map((name) => [name, themeTokens[name]])),
     light: Object.fromEntries(
       used.map((name) => [name, themeVars.light[name]]),
     ),
@@ -58,6 +68,9 @@ ${block(".dark", themeVars.dark)}
 
 @theme inline {
 ${colors.map((name) => `  --color-${name}: var(--${name});`).join("\n")}
+${Object.entries(themeTokens)
+  .map(([name, value]) => `  --${name}: ${value};`)
+  .join("\n")}
 }
 `;
 }

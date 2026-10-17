@@ -114,7 +114,7 @@ export function Stepper({
                 <span
                   aria-hidden="true"
                   className={cn(
-                    "relative isolate grid size-8 shrink-0 place-items-center rounded-full border text-xs font-semibold tabular-nums transition-[color,background-color,border-color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]",
+                    "relative isolate grid size-8 shrink-0 place-items-center rounded-full border text-xs font-semibold tabular-nums transition-[color,background-color,border-color] duration-200 ease-out-quint",
                     active
                       ? "border-primary bg-card text-primary"
                       : completed
@@ -169,7 +169,7 @@ export function Stepper({
               <div className="min-w-0 pe-3 pt-2.5">
                 <span
                   className={cn(
-                    "block text-sm font-medium leading-5 transition-[color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] [overflow-wrap:anywhere]",
+                    "block text-sm font-medium leading-5 transition-[color] duration-200 ease-out-quint [overflow-wrap:anywhere]",
                     active || completed
                       ? "text-foreground"
                       : "text-muted-foreground",

@@ -4,8 +4,6 @@ export const easeOut = [0.23, 1, 0.32, 1] as const;
 
 export const easeInOut = [0.77, 0, 0.175, 1] as const;
 
-export const easeOutClass = "ease-[cubic-bezier(0.23,1,0.32,1)]";
-
 export const duration = {
   fast: 0.14,
   base: 0.2,

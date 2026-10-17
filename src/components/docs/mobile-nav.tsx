@@ -59,7 +59,7 @@ export function MobileNav() {
       <SheetTrigger isOpen={open} onOpenChange={setOpen}>
         <Button
           aria-label="Open menu"
-          className="grid size-10 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground outline-offset-4 outline-transparent transition-[color,background-color,outline-color,outline-offset] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2"
+          className="grid size-10 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground outline-offset-4 outline-transparent transition-[color,background-color,outline-color,outline-offset] duration-150 ease-out-quint hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2"
         >
           <ListIcon size={20} aria-hidden="true" />
         </Button>
@@ -88,7 +88,7 @@ export function MobileNav() {
                             : undefined
                         }
                         className={cn(
-                          "flex min-h-16 flex-col items-center justify-center gap-1.5 rounded-lg border px-2 text-[13px] font-medium outline-offset-4 outline-transparent transition-[color,background-color,border-color,outline-color,outline-offset] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2",
+                          "flex min-h-16 flex-col items-center justify-center gap-1.5 rounded-lg border px-2 text-[13px] font-medium outline-offset-4 outline-transparent transition-[color,background-color,border-color,outline-color,outline-offset] duration-150 ease-out-quint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2",
                           isActive
                             ? "border-transparent bg-accent text-accent-foreground"
                             : "border-border/70 text-muted-foreground hover:bg-muted hover:text-foreground",
