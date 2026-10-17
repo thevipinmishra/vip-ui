@@ -59,7 +59,7 @@ export function Breadcrumb({
             <Link
               {...linkProps}
               data-slot="breadcrumb-link"
-              className="min-w-0 rounded-sm text-muted-foreground underline-offset-4 [overflow-wrap:anywhere] transition-[color,background-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:text-foreground hover:underline focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-transparent disabled:cursor-default disabled:opacity-60"
+              className="min-w-0 rounded-sm text-muted-foreground underline-offset-4 [overflow-wrap:anywhere] transition-[color,background-color,box-shadow] duration-150 ease-out-quint hover:text-foreground hover:underline focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-transparent disabled:cursor-default disabled:opacity-60"
             >
               {children}
             </Link>

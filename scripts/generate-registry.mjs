@@ -103,6 +103,7 @@ const descriptions = {
   select: "Choose one option from a list in a popover.",
   separator: "Divide related groups of content.",
   sheet: "Show a swipeable panel of content from the edge of the screen.",
+  size: "Share one size scale across buttons, toggles, and their groups.",
   skeleton: "Reserve space while content is loading.",
   slider: "Adjust a value by dragging or with the keyboard.",
   spinner: "Indicate that a task is running without a known end time.",
@@ -159,10 +160,11 @@ export function dependencyName(dependency) {
 
 function styleSetup(contents, dependencies) {
   const setup = {};
-  const cssVars = { light: {}, dark: {} };
+  const cssVars = { theme: {}, light: {}, dark: {} };
   for (const content of contents) {
     const vars = referencedVars(content);
     if (!vars) continue;
+    Object.assign(cssVars.theme, vars.theme);
     Object.assign(cssVars.light, vars.light);
     Object.assign(cssVars.dark, vars.dark);
   }
@@ -170,7 +172,12 @@ function styleSetup(contents, dependencies) {
     setup.devDependencies = [versioned(reactAriaPlugin)];
     setup.css = { [`@plugin ${reactAriaPlugin}`]: {} };
   }
-  if (Object.keys(cssVars.light).length) setup.cssVars = cssVars;
+  if (!Object.keys(cssVars.theme).length) delete cssVars.theme;
+  if (!Object.keys(cssVars.light).length) {
+    delete cssVars.light;
+    delete cssVars.dark;
+  }
+  if (Object.keys(cssVars).length) setup.cssVars = cssVars;
   return setup;
 }
 
