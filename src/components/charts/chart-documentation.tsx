@@ -29,19 +29,19 @@ import {
 </ChartFrame>`;
 
 const theming = `:root {
-  --chart-1: oklch(0.57 0.18 255);
-  --chart-2: oklch(0.55 0.12 177);
-  --chart-3: oklch(0.64 0.16 65);
-  --chart-4: oklch(0.59 0.17 313);
-  --chart-5: oklch(0.55 0.14 25);
+  --chart-1: oklch(0.24 0.012 168);
+  --chart-2: oklch(0.62 0.11 180);
+  --chart-3: oklch(0.63 0.13 75);
+  --chart-4: oklch(0.56 0.14 320);
+  --chart-5: oklch(0.48 0.13 32);
 }
 
 .dark {
-  --chart-1: oklch(0.74 0.14 255);
-  --chart-2: oklch(0.75 0.12 177);
-  --chart-3: oklch(0.78 0.14 75);
-  --chart-4: oklch(0.77 0.15 313);
-  --chart-5: oklch(0.73 0.14 25);
+  --chart-1: oklch(0.77 0.01 172);
+  --chart-2: oklch(0.63 0.11 180);
+  --chart-3: oklch(0.66 0.13 85);
+  --chart-4: oklch(0.53 0.15 320);
+  --chart-5: oklch(0.56 0.15 27);
 }`;
 
 const override = `<ChartFrame style={{ "--ts-chart-1": "var(--chart-3)" } as CSSProperties}>`;
