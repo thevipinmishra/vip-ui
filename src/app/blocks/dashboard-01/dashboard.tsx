@@ -128,10 +128,7 @@ export function Dashboard() {
                   <StatLabel>{metric.label}</StatLabel>
                   <StatValue>{metric.value}</StatValue>
                   <StatDetail className="flex items-center gap-2">
-                    <Badge
-                      variant="success"
-                      className="min-h-6 gap-1 px-2 py-0.5"
-                    >
+                    <Badge variant="success" className="gap-1 px-2">
                       <TrendIcon size={13} weight="bold" aria-hidden="true" />
                       {metric.change}
                     </Badge>

@@ -6,7 +6,7 @@ export function Stat({ className, ...props }: ComponentProps<"div">) {
     <div
       data-slot="stat"
       className={cn(
-        "min-w-0 rounded-xl bg-card p-5 text-card-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70 forced-colors:border",
+        "min-w-0 rounded-xl bg-card p-4 text-card-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70 forced-colors:border",
         className,
       )}
       {...props}
@@ -32,7 +32,7 @@ export function StatValue({ className, ...props }: ComponentProps<"p">) {
     <p
       data-slot="stat-value"
       className={cn(
-        "mt-2 text-3xl font-semibold tracking-[-0.045em] tabular-nums [overflow-wrap:anywhere]",
+        "mt-1 text-3xl font-semibold tracking-[-0.045em] tabular-nums [overflow-wrap:anywhere]",
         className,
       )}
       {...props}
@@ -45,7 +45,7 @@ export function StatDetail({ className, ...props }: ComponentProps<"p">) {
     <p
       data-slot="stat-detail"
       className={cn(
-        "mt-2 text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]",
+        "mt-1.5 text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]",
         className,
       )}
       {...props}

@@ -40,7 +40,7 @@ export function ToolCallStatesDemo() {
   const { summary, output } = statuses[status];
 
   return (
-    <div className="grid w-full max-w-lg gap-4">
+    <div className="grid w-full max-w-lg gap-3">
       <ToolCall defaultExpanded>
         <ToolCallTrigger name="read_page" status={status} summary={summary} />
         <ToolCallPanel>{output}</ToolCallPanel>

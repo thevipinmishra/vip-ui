@@ -14,10 +14,10 @@ export function PresenceListBasicDemo() {
   const [items, setItems] = useState(tasks);
 
   return (
-    <div className="grid w-full max-w-sm gap-4">
+    <div className="grid w-full max-w-sm gap-2">
       <PresenceList items={items} getKey={(item) => item.id} aria-label="Tasks">
         {(item) => (
-          <span className="flex items-center gap-4 rounded-xl border border-border bg-card px-4 py-3 text-sm shadow-[var(--shadow-card)]">
+          <span className="flex items-center gap-3 rounded-xl border border-border bg-card px-3 py-2.5 text-sm shadow-[var(--shadow-card)]">
             <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-accent font-mono text-xs font-semibold text-accent-foreground">
               {String(tasks.indexOf(item) + 1).padStart(2, "0")}
             </span>

@@ -17,10 +17,10 @@ export function LayoutMorphDemo() {
   const [index, setIndex] = useState(0);
 
   return (
-    <div className="grid w-full max-w-sm gap-4">
+    <div className="grid w-full max-w-sm gap-3">
       <LayoutMorph
         contentKey={index}
-        className="rounded-xl border border-border bg-card px-6 py-5 shadow-[var(--shadow-card)]"
+        className="rounded-xl border border-border bg-card px-5 py-4 shadow-[var(--shadow-card)]"
       >
         <p className="text-xl font-semibold tracking-tight">
           {captions[index].title}

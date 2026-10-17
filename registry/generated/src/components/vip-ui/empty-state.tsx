@@ -6,7 +6,7 @@ export function EmptyState({ className, ...props }: ComponentProps<"div">) {
     <div
       data-slot="empty-state"
       className={cn(
-        "flex min-w-0 flex-col items-center gap-3 rounded-xl border border-dashed border-border px-6 py-12 text-center",
+        "flex min-w-0 flex-col items-center gap-3 rounded-xl border border-dashed border-border px-5 py-8 text-center",
         className,
       )}
       {...props}

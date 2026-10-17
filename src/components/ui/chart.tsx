@@ -33,7 +33,7 @@ export function ChartFrame({
     <figure
       data-slot="chart-frame"
       className={cn(
-        "flex min-w-0 flex-wrap items-start gap-x-4 rounded-xl bg-card p-4 text-card-foreground sm:p-6 *:min-w-0 *:basis-full *:data-[slot=chart-action]:ml-auto *:data-[slot=chart-action]:basis-auto *:data-[slot=chart-caption]:grow *:data-[slot=chart-caption]:basis-48",
+        "flex min-w-0 flex-wrap items-start gap-x-4 rounded-xl bg-card p-4 text-card-foreground sm:p-5 *:min-w-0 *:basis-full *:data-[slot=chart-action]:ml-auto *:data-[slot=chart-action]:basis-auto *:data-[slot=chart-caption]:grow *:data-[slot=chart-caption]:basis-48",
         "[&_.ts-chart:is(:focus):not(:focus-visible)]:outline-none [&_.ts-chart:focus-visible]:outline-2 [&_.ts-chart:focus-visible]:outline-ring [&_.ts-chart:focus-visible]:outline-offset-2 [&_.ts-chart-tooltip]:w-max [&_.ts-chart-tooltip]:min-w-36 [&_.ts-chart-tooltip]:[overflow-wrap:normal]!",
         String.raw`[&_.ts-chart-tooltip\_\_title]:text-xs [&_.ts-chart-tooltip\_\_title]:text-muted-foreground [&_.ts-chart-tooltip\_\_rows]:grid [&_.ts-chart-tooltip\_\_rows]:gap-0.5 [&_.ts-chart-tooltip\_\_row]:-mx-1.5 [&_.ts-chart-tooltip\_\_row]:gap-x-3! [&_.ts-chart-tooltip\_\_row]:px-1.5 [&_.ts-chart-tooltip\_\_row]:py-0.5 [&_.ts-chart-tooltip\_\_row>span:nth-child(2)]:text-muted-foreground [&_.ts-chart-tooltip\_\_row>span:last-child]:font-semibold`,
         className,
@@ -51,7 +51,7 @@ export function ChartCaption({
   return (
     <figcaption
       data-slot="chart-caption"
-      className={cn("mb-4 grid gap-1", className)}
+      className={cn("mb-3 grid gap-1", className)}
       {...props}
     />
   );
@@ -91,7 +91,7 @@ export function ChartAction({
     <div
       data-slot="chart-action"
       className={cn(
-        "mb-4 flex max-w-full flex-wrap items-center gap-2",
+        "mb-3 flex max-w-full flex-wrap items-center gap-2",
         className,
       )}
       {...props}
@@ -115,7 +115,7 @@ export function ChartLegend({
     <ul
       data-slot="chart-legend"
       className={cn(
-        "mt-4 flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-muted-foreground",
+        "mt-3 flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-muted-foreground",
         className,
       )}
       {...props}

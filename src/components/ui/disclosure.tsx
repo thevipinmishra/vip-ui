@@ -94,7 +94,7 @@ export function DisclosurePanel({
       {...props}
       className={cn("text-sm leading-6 text-muted-foreground", className)}
     >
-      <div className="px-4 pb-4 [overflow-wrap:anywhere]">{children}</div>
+      <div className="px-4 pb-3 [overflow-wrap:anywhere]">{children}</div>
     </CollapsiblePanel>
   );
 }

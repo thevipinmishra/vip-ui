@@ -96,7 +96,7 @@ export function CommandPalette({
           autoFocus="first"
           className="min-h-0 max-h-80 flex-1 gap-1 overflow-y-auto overscroll-contain p-2 [&:has([data-focused])_[data-hovered]:not([data-focused])]:bg-transparent"
           renderEmptyState={() => (
-            <p className="px-3 py-8 text-center text-sm text-muted-foreground">
+            <p className="px-3 py-6 text-center text-sm text-muted-foreground">
               {emptyMessage}
             </p>
           )}

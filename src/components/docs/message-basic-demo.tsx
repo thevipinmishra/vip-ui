@@ -3,10 +3,10 @@ import { Message } from "@/components/ui/message";
 
 export function MessageBasicDemo() {
   return (
-    <div className="grid w-full max-w-lg gap-4">
+    <div className="grid w-full max-w-lg gap-3">
       <Message
         sender="Maya"
-        avatar={<Avatar name="Maya" />}
+        avatar={<Avatar name="Maya" size="sm" />}
         timestamp="10:24 AM"
         dateTime="2026-10-03T10:24:00"
       >

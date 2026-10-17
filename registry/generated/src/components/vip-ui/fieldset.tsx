@@ -10,7 +10,7 @@ export function Fieldset({
       {...props}
       data-slot="fieldset"
       className={cn(
-        "min-w-0 rounded-xl bg-card p-5 shadow-[var(--shadow-card)] ring-1 ring-border/70 disabled:opacity-60",
+        "min-w-0 rounded-xl bg-card p-4 shadow-[var(--shadow-card)] ring-1 ring-border/70 disabled:opacity-60",
         className,
       )}
     />

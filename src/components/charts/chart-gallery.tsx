@@ -94,7 +94,7 @@ function ChartCategoryContent({ category }: { category: ChartCategory }) {
             <div className="min-w-0 flex-1 *:data-[slot=chart-frame]:bg-transparent">
               {example.preview}
             </div>
-            <div className="flex min-h-11 items-center justify-between gap-3 border-t border-border/70 py-1 pe-2 ps-4 sm:ps-6">
+            <div className="flex min-h-11 items-center justify-between gap-3 border-t border-border/70 py-1 pe-2 ps-4 sm:ps-5">
               <a
                 href={`#${example.file}`}
                 className="truncate rounded-sm text-xs text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-solid"
@@ -144,7 +144,7 @@ async function ChartExampleSource({ example }: { example: ChartExample }) {
   return (
     <ChartSourceSheet title={example.name}>
       {(components.length > 0 || packages.length > 0) && (
-        <div className="space-y-3 px-6 pt-1">
+        <div className="space-y-3 px-5 pt-1">
           {components.length > 0 && (
             <p className="text-[13px] leading-6 text-muted-foreground">
               Also install{" "}

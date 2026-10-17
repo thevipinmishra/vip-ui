@@ -16,7 +16,7 @@ export function MarqueeDemo() {
       {disciplines.map((discipline, index) => (
         <span
           key={discipline}
-          className="inline-flex items-center gap-4 whitespace-nowrap rounded-xl border border-border bg-card px-5 py-4 text-sm font-medium shadow-[var(--shadow-card)]"
+          className="inline-flex items-center gap-3 whitespace-nowrap rounded-xl border border-border bg-card px-4 py-3 text-sm font-medium shadow-[var(--shadow-card)]"
         >
           <span aria-hidden="true" className="font-mono text-xs text-primary">
             0{index + 1}

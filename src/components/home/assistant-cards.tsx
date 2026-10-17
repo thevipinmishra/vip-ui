@@ -130,14 +130,12 @@ export function ChatCard() {
               index={1}
               label="Switch"
               source="vip/ui docs"
-              className="p-3"
             />
             <SourceLink
               href="/components/fieldset"
               index={2}
               label="Fieldset"
               source="vip/ui docs"
-              className="p-3"
             />
           </div>
           {turns.map((turn) => (

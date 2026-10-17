@@ -51,7 +51,7 @@ export function Tabs({
         data-slot="tabs"
         className={composeRenderProps(className, (className) =>
           cn(
-            "w-full min-w-0 data-[orientation=vertical]:flex data-[orientation=vertical]:flex-wrap data-[orientation=vertical]:items-start data-[orientation=vertical]:gap-5 data-[orientation=vertical]:*:data-[slot=tabs-content]:mt-0 data-[orientation=vertical]:*:data-[slot=tabs-content]:grow data-[orientation=vertical]:*:data-[slot=tabs-content]:basis-48",
+            "w-full min-w-0 data-[orientation=vertical]:flex data-[orientation=vertical]:flex-wrap data-[orientation=vertical]:items-start data-[orientation=vertical]:gap-4 data-[orientation=vertical]:*:data-[slot=tabs-content]:mt-0 data-[orientation=vertical]:*:data-[slot=tabs-content]:grow data-[orientation=vertical]:*:data-[slot=tabs-content]:basis-48",
             className,
           ),
         )}
@@ -127,7 +127,7 @@ export function TabList({
       }
       className={composeRenderProps(className, (className) =>
         cn(
-          "group/tab-list inline-flex min-w-0 max-w-full scroll-px-1.5 items-center gap-1.5 overflow-x-auto overflow-y-hidden rounded-xl bg-muted p-1.5 shadow-[var(--shadow-inset)] inset-ring inset-ring-border/70 [scrollbar-width:none] forced-colors:border data-[fade=both]:mask-x-from-[calc(100%-1.5rem)] data-[fade=left]:mask-l-from-[calc(100%-1.5rem)] data-[fade=right]:mask-r-from-[calc(100%-1.5rem)] data-[orientation=vertical]:shrink-0 data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-stretch data-[orientation=vertical]:overflow-x-hidden data-[orientation=vertical]:overflow-y-auto [&::-webkit-scrollbar]:hidden",
+          "group/tab-list inline-flex min-w-0 max-w-full scroll-px-1 items-center gap-1 overflow-x-auto overflow-y-hidden rounded-xl bg-muted p-1 shadow-[var(--shadow-inset)] inset-ring inset-ring-border/70 [scrollbar-width:none] forced-colors:border data-[fade=both]:mask-x-from-[calc(100%-1.5rem)] data-[fade=left]:mask-l-from-[calc(100%-1.5rem)] data-[fade=right]:mask-r-from-[calc(100%-1.5rem)] data-[orientation=vertical]:shrink-0 data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-stretch data-[orientation=vertical]:overflow-x-hidden data-[orientation=vertical]:overflow-y-auto [&::-webkit-scrollbar]:hidden",
           className,
         ),
       )}
@@ -174,7 +174,7 @@ export function TabPanel({ className, ...props }: AriaTabPanelProps) {
       data-slot="tabs-content"
       className={composeRenderProps(className, (className) =>
         cn(
-          "mt-5 min-w-0 rounded-xl bg-card p-5 text-sm leading-6 text-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70 outline-none [overflow-wrap:anywhere] focus-visible:shadow-[inset_3px_0_0_var(--ring),var(--shadow-card)] rtl:focus-visible:shadow-[inset_-3px_0_0_var(--ring),var(--shadow-card)] forced-colors:border forced-colors:focus-visible:outline-2 forced-colors:focus-visible:outline-solid forced-colors:focus-visible:-outline-offset-2 forced-colors:focus-visible:outline-[Highlight]",
+          "mt-3 min-w-0 rounded-xl bg-card p-4 text-sm leading-6 text-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70 outline-none [overflow-wrap:anywhere] focus-visible:shadow-[inset_3px_0_0_var(--ring),var(--shadow-card)] rtl:focus-visible:shadow-[inset_-3px_0_0_var(--ring),var(--shadow-card)] forced-colors:border forced-colors:focus-visible:outline-2 forced-colors:focus-visible:outline-solid forced-colors:focus-visible:-outline-offset-2 forced-colors:focus-visible:outline-[Highlight]",
           className,
         ),
       )}

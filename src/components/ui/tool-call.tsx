@@ -61,7 +61,7 @@ export function ToolCallTrigger({
         {...props}
         data-slot="tool-call-trigger"
         className={cn(
-          "min-h-14 items-start rounded-xl px-4 py-3 hover:bg-muted/70 aria-expanded:rounded-b-none focus-visible:-outline-offset-2 [&>span:first-child]:min-w-0 [&>span:first-child]:flex-1 [&>span:last-child]:mt-2",
+          "min-h-12 items-start rounded-xl px-3 py-2.5 hover:bg-muted/70 aria-expanded:rounded-b-none focus-visible:-outline-offset-2 [&>span:first-child]:min-w-0 [&>span:first-child]:flex-1 [&>span:last-child]:mt-2",
           className,
         )}
       >
@@ -128,7 +128,7 @@ export function ToolCallPanel({
       {...props}
       className={cn("text-sm leading-6 text-foreground", className)}
     >
-      <div className="min-w-0 border-t border-border/70 px-4 pt-3 pb-4 [overflow-wrap:anywhere]">
+      <div className="min-w-0 border-t border-border/70 px-3 pt-2.5 pb-3 [overflow-wrap:anywhere]">
         {children}
       </div>
     </CollapsiblePanel>

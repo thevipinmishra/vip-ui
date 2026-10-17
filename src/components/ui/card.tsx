@@ -22,7 +22,7 @@ export function CardHeader({
     <div
       data-slot="card-header"
       className={cn(
-        "flex flex-col gap-1 px-6 pt-6 last:pb-6 has-data-[slot=card-action]:grid has-data-[slot=card-action]:grid-cols-[minmax(0,1fr)_fit-content(50%)] has-data-[slot=card-action]:gap-x-4",
+        "flex flex-col gap-1 px-5 pt-5 last:pb-5 has-data-[slot=card-action]:grid has-data-[slot=card-action]:grid-cols-[minmax(0,1fr)_fit-content(50%)] has-data-[slot=card-action]:gap-x-4",
         className,
       )}
       {...props}
@@ -86,7 +86,7 @@ export function CardContent({
   return (
     <div
       data-slot="card-content"
-      className={cn("px-6 py-5", className)}
+      className={cn("px-5 py-4", className)}
       {...props}
     />
   );
@@ -100,7 +100,7 @@ export function CardFooter({
     <div
       data-slot="card-footer"
       className={cn(
-        "flex flex-wrap items-center gap-3 px-6 pb-6 first:pt-6 [[data-slot=card-header]+&]:pt-5",
+        "flex flex-wrap items-center gap-3 px-5 pb-5 first:pt-5 [[data-slot=card-header]+&]:pt-4",
         className,
       )}
       {...props}

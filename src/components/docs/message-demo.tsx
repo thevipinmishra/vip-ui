@@ -34,7 +34,7 @@ const entries: Entry[] = [
 
 export function MessageDemo() {
   return (
-    <div className="grid w-full max-w-lg gap-4">
+    <div className="grid w-full max-w-lg gap-3">
       {entries.map((entry) => (
         <Message
           key={entry.id}
@@ -42,7 +42,7 @@ export function MessageDemo() {
           side={entry.side}
           avatar={
             entry.side === "incoming" ? (
-              <Avatar name={entry.sender} />
+              <Avatar name={entry.sender} size="sm" />
             ) : undefined
           }
           status={entry.side === "outgoing" ? "Sent" : undefined}

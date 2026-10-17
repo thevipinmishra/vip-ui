@@ -129,7 +129,7 @@ export function Attachment({
         layout: springLayout,
       })}
       className={cn(
-        "flex min-w-0 items-center gap-3 rounded-lg border border-border bg-card p-2.5 text-sm shadow-[var(--shadow-card)]",
+        "flex min-w-0 items-center gap-3 rounded-lg border border-border bg-card p-2 text-sm shadow-[var(--shadow-card)]",
         status === "error" && "border-destructive/60",
         className,
       )}

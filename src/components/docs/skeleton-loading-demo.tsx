@@ -16,7 +16,7 @@ export function SkeletonLoadingDemo() {
 
   return (
     <div className="grid w-full max-w-xs justify-items-start gap-4">
-      <div className="w-full rounded-xl bg-card p-5 shadow-[var(--shadow-card)] ring-1 ring-border/70">
+      <div className="w-full rounded-xl bg-card p-4 shadow-[var(--shadow-card)] ring-1 ring-border/70">
         {isLoading ? (
           <output className="flex items-center gap-3">
             <span className="sr-only">Loading profile</span>

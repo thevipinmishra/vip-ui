@@ -30,7 +30,7 @@ export function Message({
       data-side={side}
       aria-label={props["aria-label"] ?? `Message from ${sender}`}
       className={cn(
-        "flex min-w-0 items-start gap-2.5",
+        "flex min-w-0 items-start gap-2",
         side === "outgoing" && "justify-end",
         side === "system" && "justify-center",
         className,
@@ -40,7 +40,7 @@ export function Message({
       <div
         className={cn(
           "min-w-0 max-w-[88%] sm:max-w-[75%]",
-          side === "incoming" && avatar && "max-w-[calc(100%_-_3.25rem)]",
+          side === "incoming" && avatar && "max-w-[calc(100%_-_3rem)]",
           side === "system" && "max-w-full text-center",
         )}
       >
@@ -48,7 +48,7 @@ export function Message({
           <p
             data-slot="message-sender"
             className={cn(
-              "mb-1 px-1 text-xs font-medium text-muted-foreground [overflow-wrap:anywhere]",
+              "mb-0.5 px-1 text-xs font-medium text-muted-foreground [overflow-wrap:anywhere]",
               side === "outgoing" && "text-end",
             )}
           >
@@ -58,7 +58,7 @@ export function Message({
         <div
           data-slot="message-content"
           className={cn(
-            "min-w-0 whitespace-pre-wrap [overflow-wrap:anywhere] rounded-2xl px-4 py-3 text-sm leading-6",
+            "min-w-0 whitespace-pre-wrap [overflow-wrap:anywhere] rounded-2xl px-3.5 py-2 text-sm leading-6",
             side === "outgoing" &&
               "rounded-se-md bg-accent text-accent-foreground",
             side === "incoming" &&
@@ -71,7 +71,7 @@ export function Message({
         {(timestamp || status || actions) && (
           <div
             className={cn(
-              "mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 px-1 text-xs text-muted-foreground",
+              "mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 px-1 text-xs text-muted-foreground",
               side === "outgoing" && "justify-end",
               side === "system" && "justify-center",
             )}
@@ -86,7 +86,10 @@ export function Message({
               ))}
             {status && <span data-slot="message-status">{status}</span>}
             {actions && (
-              <div data-slot="message-actions" className="flex flex-wrap gap-1">
+              <div
+                data-slot="message-actions"
+                className="-my-2.5 flex flex-wrap gap-1"
+              >
                 {actions}
               </div>
             )}

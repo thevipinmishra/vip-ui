@@ -155,7 +155,7 @@ export function AccordionContent({
       <div
         className={cn(
           "[overflow-wrap:anywhere]",
-          variant === "card" ? "border-t border-border/70 px-4 py-3" : "pb-4",
+          variant === "card" ? "border-t border-border/70 px-4 py-3" : "pb-3",
         )}
       >
         {children}

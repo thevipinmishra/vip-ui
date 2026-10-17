@@ -11,7 +11,7 @@ export function Form({
     <AriaForm
       {...props}
       data-slot="form"
-      className={cn("grid gap-5", className)}
+      className={cn("grid gap-4", className)}
     />
   );
 }

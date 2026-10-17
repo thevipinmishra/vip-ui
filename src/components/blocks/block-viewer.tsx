@@ -337,7 +337,7 @@ export function BlockViewer({
                 >
                   <Badge
                     variant="outline"
-                    className="min-h-6 px-2.5 text-[11px] shadow-none hover:bg-muted"
+                    className="text-[11px] shadow-none hover:bg-muted"
                   >
                     {component.name}
                   </Badge>

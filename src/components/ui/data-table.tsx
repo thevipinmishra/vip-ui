@@ -185,7 +185,7 @@ export function DataTable<T extends object>({
       </div>
       {(getSearchText ||
         columns.some((column) => column.filter && column.sortValue)) && (
-        <div className="flex flex-wrap items-end gap-3 border-b border-border px-4 py-4 sm:px-5">
+        <div className="flex flex-wrap items-end gap-3 border-b border-border px-4 py-3 sm:px-5">
           {getSearchText && (
             <SearchField
               label={`Search ${label}`}
@@ -295,7 +295,7 @@ export function DataTable<T extends object>({
           <TableBody
             items={pageRows}
             renderEmptyState={() => (
-              <div className="sticky start-0 w-[100cqw] px-4 py-10 text-center">
+              <div className="sticky start-0 w-[100cqw] px-4 py-8 text-center">
                 <p className="text-sm font-medium text-foreground">
                   {hasFilters ? "No matching rows" : "No rows yet"}
                 </p>

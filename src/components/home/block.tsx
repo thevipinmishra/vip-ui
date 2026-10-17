@@ -22,7 +22,7 @@ export function Block({
 }) {
   return (
     <Card className={cn("flex min-w-0 flex-col", className)}>
-      <CardHeader className="min-h-9 flex-row items-start justify-between gap-3 px-5 pt-5">
+      <CardHeader className="min-h-9 flex-row items-start justify-between gap-3">
         <div className="grid min-w-0 gap-0.5 self-center">
           <CardTitle as="h2">{title}</CardTitle>
           {description && (

@@ -6,7 +6,7 @@ export function DescriptionList({ className, ...props }: ComponentProps<"dl">) {
     <dl
       data-slot="description-list"
       className={cn(
-        "grid items-baseline gap-x-6 gap-y-1 sm:grid-cols-[min(10rem,40%)_minmax(0,1fr)] sm:gap-y-4",
+        "grid items-baseline gap-x-4 gap-y-1 sm:grid-cols-[min(10rem,40%)_minmax(0,1fr)] sm:gap-y-3",
         className,
       )}
       {...props}
@@ -19,7 +19,7 @@ export function DescriptionTerm({ className, ...props }: ComponentProps<"dt">) {
     <dt
       data-slot="description-term"
       className={cn(
-        "min-w-0 text-sm text-muted-foreground [overflow-wrap:anywhere] not-first:max-sm:mt-3 sm:col-start-1",
+        "min-w-0 text-sm text-muted-foreground [overflow-wrap:anywhere] not-first:max-sm:mt-2 sm:col-start-1",
         className,
       )}
       {...props}

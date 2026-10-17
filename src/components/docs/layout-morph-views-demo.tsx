@@ -26,7 +26,7 @@ export function LayoutMorphViewsDemo() {
   const { price, features } = plans[plan];
 
   return (
-    <div className="grid w-full max-w-xs gap-4">
+    <div className="grid w-full max-w-xs gap-3">
       <ToggleButtonGroup
         aria-label="Billing period"
         selectionMode="single"
@@ -46,7 +46,7 @@ export function LayoutMorphViewsDemo() {
       </ToggleButtonGroup>
       <LayoutMorph
         contentKey={plan}
-        className="rounded-xl border border-border bg-card px-5 py-4 shadow-[var(--shadow-card)]"
+        className="rounded-xl border border-border bg-card px-4 py-3 shadow-[var(--shadow-card)]"
       >
         <p className="text-lg font-semibold tracking-tight">{price}</p>
         <ul className="mt-3 grid gap-1.5 text-sm text-muted-foreground">

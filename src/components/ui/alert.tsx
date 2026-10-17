@@ -9,7 +9,7 @@ import { tv, type VariantProps } from "tailwind-variants";
 import { cn } from "@/lib/utils";
 
 const alertStyles = tv({
-  base: "group/alert flex min-w-0 gap-3 rounded-xl p-4 shadow-[var(--shadow-card)] ring-1 forced-colors:border sm:p-5",
+  base: "group/alert flex min-w-0 gap-2.5 rounded-xl px-4 py-3 shadow-[var(--shadow-card)] ring-1 forced-colors:border",
   variants: {
     variant: {
       info: "bg-accent text-accent-foreground ring-primary/15",
@@ -125,7 +125,7 @@ export function AlertDescription({
       {...props}
       data-slot="alert-description"
       className={cn(
-        "mt-1 text-sm leading-6 [overflow-wrap:anywhere]",
+        "mt-0.5 text-sm leading-6 [overflow-wrap:anywhere]",
         className,
       )}
     />

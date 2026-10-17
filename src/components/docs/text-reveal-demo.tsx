@@ -9,7 +9,7 @@ export function TextRevealDemo() {
 
   return (
     <div className="grid w-full max-w-md gap-4">
-      <div className="rounded-2xl border border-border bg-card p-7 shadow-[var(--shadow-card)]">
+      <div className="rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)]">
         <p className="text-xs font-medium tracking-[0.16em] text-muted-foreground uppercase">
           <TextReveal
             key={`kicker-${replay}`}

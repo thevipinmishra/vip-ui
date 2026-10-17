@@ -7,7 +7,7 @@ import { Slider } from "@/components/ui/slider";
 export function MeterDemo() {
   const [value, setValue] = useState(65);
   return (
-    <div className="grid w-full max-w-sm gap-6">
+    <div className="grid w-full max-w-sm gap-5">
       <Meter
         label="Storage used"
         value={value}

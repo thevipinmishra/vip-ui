@@ -8,8 +8,8 @@ export function ProgressRingDemo() {
   const [value, setValue] = useState(40);
 
   return (
-    <div className="grid justify-items-center gap-5">
-      <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10">
+    <div className="grid justify-items-center gap-4">
+      <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
         <ProgressRing label="Uploading" value={value} size="lg" />
         <ProgressRing
           label="Connecting"

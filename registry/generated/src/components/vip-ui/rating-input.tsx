@@ -47,7 +47,7 @@ export function RatingInput({
       }}
     >
       <div
-        className="flex flex-wrap gap-x-0 gap-y-1"
+        className="-ms-1 flex flex-wrap gap-x-0 gap-y-1"
         data-slot="rating-input-options"
       >
         {Array.from({ length: max }, (_, index) => {
@@ -58,12 +58,12 @@ export function RatingInput({
               value={String(rating)}
               aria-label={`${rating} of ${max} stars`}
               className={cn(
-                "size-11 justify-center hover:bg-muted/70",
+                "size-8 min-h-8 justify-center hover:bg-muted/70",
                 rating <= selected ? "text-primary" : "text-muted-foreground",
               )}
             >
               <StarIcon
-                size={34}
+                size={24}
                 weight={rating <= selected ? "fill" : "regular"}
                 aria-hidden="true"
               />

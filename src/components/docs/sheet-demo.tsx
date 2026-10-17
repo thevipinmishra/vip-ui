@@ -29,7 +29,7 @@ export function SheetDemo() {
           <SheetClose />
         </SheetHeader>
         <SheetBody>
-          <dl className="grid grid-cols-[1fr_auto] gap-y-4 rounded-lg bg-muted p-4 text-sm">
+          <dl className="grid grid-cols-[1fr_auto] gap-y-3 rounded-lg bg-muted p-4 text-sm">
             <dt>Canvas notebook</dt>
             <dd>$18.00</dd>
             <dt>Shipping</dt>

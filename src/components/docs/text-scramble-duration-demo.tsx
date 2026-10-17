@@ -10,7 +10,7 @@ export function TextScrambleDurationDemo() {
   const [alternate, setAlternate] = useState(false);
 
   return (
-    <div className="grid w-full max-w-md justify-items-start gap-5">
+    <div className="grid w-full max-w-md justify-items-start gap-4">
       <dl className="grid gap-3">
         {durations.map((duration) => (
           <div key={duration} className="grid gap-1">

@@ -40,7 +40,7 @@ export function AgentStatus({
       aria-live="polite"
       aria-atomic="true"
       className={cn(
-        "flex min-w-0 items-start gap-3 rounded-xl border border-border bg-card px-4 py-3 text-sm shadow-[var(--shadow-card)]",
+        "flex min-w-0 items-start gap-3 rounded-xl border border-border bg-card px-3 py-2.5 text-sm shadow-[var(--shadow-card)]",
         className,
       )}
     >

@@ -8,7 +8,7 @@ export function TextScrambleBasicDemo() {
   const [alternate, setAlternate] = useState(false);
 
   return (
-    <div className="grid w-full max-w-md justify-items-start gap-5">
+    <div className="grid w-full max-w-md justify-items-start gap-4">
       <p className="text-3xl font-semibold tracking-tight">
         <TextScramble
           value={alternate ? "FIELD NOTES" : "STUDIO NOTES"}

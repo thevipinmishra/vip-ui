@@ -58,7 +58,7 @@
       "path": "src/components/ui/form.tsx",
       "type": "registry:file",
       "target": "@components/vip-ui/form.tsx",
-      "content": "\"use client\";\n\nimport { Form as AriaForm, type FormProps } from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport function Form({\n  className,\n  ...props\n}: FormProps & React.RefAttributes<HTMLFormElement>) {\n  return (\n    <AriaForm\n      {...props}\n      data-slot=\"form\"\n      className={cn(\"grid gap-5\", className)}\n    />\n  );\n}\n"
+      "content": "\"use client\";\n\nimport { Form as AriaForm, type FormProps } from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport function Form({\n  className,\n  ...props\n}: FormProps & React.RefAttributes<HTMLFormElement>) {\n  return (\n    <AriaForm\n      {...props}\n      data-slot=\"form\"\n      className={cn(\"grid gap-4\", className)}\n    />\n  );\n}\n"
     },
     {
       "path": "src/components/ui/link.tsx",

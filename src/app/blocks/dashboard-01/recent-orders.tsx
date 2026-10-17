@@ -70,25 +70,25 @@ export function RecentOrders() {
       <div className="overflow-x-auto">
         <Table aria-label="Recent orders" className="min-w-[560px]">
           <TableHeader>
-            <Column isRowHeader className="ps-6">
+            <Column isRowHeader className="ps-5">
               Customer
             </Column>
             <Column>Order</Column>
             <Column>Status</Column>
             <Column>Date</Column>
-            <Column className="pe-6 text-end">Amount</Column>
+            <Column className="pe-5 text-end">Amount</Column>
           </TableHeader>
           <TableBody
             items={visible}
             renderEmptyState={() => (
-              <p className="px-6 py-10 text-center text-sm text-muted-foreground">
+              <p className="px-5 py-8 text-center text-sm text-muted-foreground">
                 No orders have this status.
               </p>
             )}
           >
             {(order) => (
               <Row id={order.id}>
-                <Cell className="ps-6">
+                <Cell className="ps-5">
                   <span className="block font-medium">{order.customer}</span>
                   <span className="block text-xs text-muted-foreground">
                     {order.email}
@@ -103,7 +103,7 @@ export function RecentOrders() {
                   </Badge>
                 </Cell>
                 <Cell className="text-muted-foreground">{order.date}</Cell>
-                <Cell className="pe-6 text-end font-medium tabular-nums">
+                <Cell className="pe-5 text-end font-medium tabular-nums">
                   {formatMoney(order.amount)}
                 </Cell>
               </Row>

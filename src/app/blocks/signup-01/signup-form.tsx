@@ -47,7 +47,7 @@ export function SignupForm() {
             Your account is ready. We sent a confirmation to your email.
           </CardDescription>
         </CardHeader>
-        <CardFooter className="justify-center pt-5">
+        <CardFooter className="justify-center">
           <Button
             variant="outline"
             onPress={() => {

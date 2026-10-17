@@ -194,7 +194,7 @@ export function DialogContent({
         )}
         data-slot={modalSlot}
         className={cn(
-          "relative max-h-[calc(var(--visual-viewport-height,100dvh)-1rem)] w-full min-w-0 max-w-full overflow-y-auto overscroll-contain rounded-t-2xl bg-card p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] text-card-foreground [overflow-wrap:anywhere] shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70 forced-colors:border sm:max-h-[calc(var(--visual-viewport-height,100dvh)-2rem)] sm:max-w-md sm:rounded-xl sm:p-7",
+          "relative max-h-[calc(var(--visual-viewport-height,100dvh)-1rem)] w-full min-w-0 max-w-full overflow-y-auto overscroll-contain rounded-t-2xl bg-card p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] text-card-foreground [overflow-wrap:anywhere] shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70 forced-colors:border sm:max-h-[calc(var(--visual-viewport-height,100dvh)-2rem)] sm:max-w-md sm:rounded-xl sm:p-6",
           modalProps?.className,
         )}
       >
@@ -266,7 +266,7 @@ export function DialogFooter({
     <div
       {...props}
       data-slot="dialog-footer"
-      className={cn("mt-6 flex flex-wrap justify-end gap-2", className)}
+      className={cn("mt-5 flex flex-wrap justify-end gap-2", className)}
     />
   );
 }

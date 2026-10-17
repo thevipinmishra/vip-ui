@@ -33,7 +33,7 @@ const placements = [
 
 export function PopoverPlacementDemo() {
   return (
-    <div className="flex flex-wrap items-center justify-center gap-2 py-8">
+    <div className="flex flex-wrap items-center justify-center gap-2 py-4">
       {placements.map((item) => (
         <DialogTrigger key={item.placement}>
           <Button variant="outline">{item.label}</Button>

@@ -144,9 +144,9 @@ export function StatsCards() {
           const TrendIcon = current.change > 0 ? TrendUpIcon : TrendDownIcon;
           return (
             <Stat key={metric.label} className="grid gap-0 overflow-hidden p-0">
-              <div className="px-5 pt-5">
+              <div className="px-4 pt-4">
                 <StatLabel>{metric.label}</StatLabel>
-                <p className="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                <p className="mt-1 flex flex-wrap items-baseline gap-x-2 gap-y-1">
                   <AnimatedNumber
                     value={current.value}
                     formatOptions={metric.format}
@@ -154,7 +154,7 @@ export function StatsCards() {
                   />
                   <Badge
                     variant={good ? "success" : "error"}
-                    className="min-h-6 gap-1 px-2 py-0.5"
+                    className="gap-1 px-2"
                   >
                     <TrendIcon size={13} weight="bold" aria-hidden="true" />
                     {current.change > 0 ? "+" : "−"}

@@ -46,7 +46,7 @@ export function TagListView<T extends object>({
       data-slot="tag-list"
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex min-w-0 flex-wrap gap-2.5 empty:text-sm empty:text-muted-foreground",
+          "flex min-w-0 flex-wrap gap-2 empty:text-sm empty:text-muted-foreground",
           className,
         ),
       )}

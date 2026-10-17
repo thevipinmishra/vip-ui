@@ -14,7 +14,7 @@ export function ToggleButtonGroupEditorDemo() {
   const [selected, setSelected] = useState(new Set<Key>(["bold"]));
 
   return (
-    <div className="grid w-full max-w-md gap-5">
+    <div className="grid w-full max-w-md gap-4">
       <ToggleButtonGroup
         aria-label="Text styles"
         selectionMode="multiple"
@@ -31,7 +31,7 @@ export function ToggleButtonGroupEditorDemo() {
           <TextUnderlineIcon size={17} aria-hidden="true" />
         </ToggleButton>
       </ToggleButtonGroup>
-      <div className="rounded-lg border border-border p-4 text-sm">
+      <div className="rounded-lg border border-border p-3 text-sm">
         <p className="text-xs text-muted-foreground">Selection preview</p>
         <p
           className={`mt-2 ${selected.has("bold") ? "font-bold" : ""} ${selected.has("italic") ? "italic" : ""} ${selected.has("underline") ? "underline" : ""}`}

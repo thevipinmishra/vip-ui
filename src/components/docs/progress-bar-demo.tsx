@@ -8,7 +8,7 @@ export function ProgressBarDemo() {
   const [value, setValue] = useState(40);
 
   return (
-    <div className="grid w-full max-w-md gap-5">
+    <div className="grid w-full max-w-md gap-4">
       <ProgressBar label="Uploading assets" value={value} />
       <ProgressBar label="Preparing previews" isIndeterminate />
       <div>

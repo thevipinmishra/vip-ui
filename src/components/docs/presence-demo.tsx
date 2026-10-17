@@ -8,7 +8,7 @@ export function PresenceDemo() {
   const [show, setShow] = useState(false);
 
   return (
-    <div className="grid min-h-44 w-full max-w-sm content-start justify-items-start gap-4">
+    <div className="grid min-h-28 w-full max-w-sm content-start justify-items-start gap-3">
       <Button
         size="sm"
         variant="secondary"
@@ -21,7 +21,7 @@ export function PresenceDemo() {
       <Presence
         show={show}
         id="presence-note"
-        className="w-full rounded-xl border border-border bg-card p-5 shadow-[var(--shadow-card)]"
+        className="w-full rounded-xl border border-border bg-card p-4 shadow-[var(--shadow-card)]"
       >
         <p className="text-lg font-medium tracking-tight">
           Keep the good ideas close.

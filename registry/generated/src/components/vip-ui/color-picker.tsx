@@ -45,11 +45,11 @@ export function ColorPicker({
           <Popover
             data-slot="color-picker-popover"
             placement="bottom start"
-            className="w-64 p-4"
+            className="w-64 p-3"
           >
             <AriaDialog
               aria-label={`${label} controls`}
-              className="grid gap-4 outline-none"
+              className="grid gap-3 outline-none"
             >
               <ColorArea
                 data-slot="color-picker-area"

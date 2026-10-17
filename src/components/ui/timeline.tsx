@@ -20,7 +20,7 @@ export function TimelineItem({
       data-slot="timeline-item"
       data-status={status}
       className={cn(
-        "relative min-w-0 ps-10 pb-8 before:absolute before:start-[0.6875rem] before:top-7 before:bottom-1 before:w-px before:bg-primary/25 last:pb-0 last:before:hidden forced-colors:before:bg-[CanvasText]",
+        "relative min-w-0 ps-9 pb-6 before:absolute before:start-[0.6875rem] before:top-7 before:bottom-1 before:w-px before:bg-primary/25 last:pb-0 last:before:hidden forced-colors:before:bg-[CanvasText]",
         className,
       )}
     >
@@ -84,7 +84,7 @@ export function TimelineDescription({
       {...props}
       data-slot="timeline-description"
       className={cn(
-        "mt-2 text-sm leading-6 text-muted-foreground [overflow-wrap:anywhere]",
+        "mt-1 text-sm leading-6 text-muted-foreground [overflow-wrap:anywhere]",
         className,
       )}
     />

@@ -73,7 +73,7 @@ export function TeamMembers() {
           Invite people and set what each person can do.
         </CardDescription>
       </CardHeader>
-      <CardContent className="grid gap-6">
+      <CardContent className="grid gap-5">
         <div className="grid gap-2">
           <Form
             ref={formRef}
@@ -121,11 +121,11 @@ export function TeamMembers() {
             {notice}
           </output>
         </div>
-        <ul className="-mx-6 divide-y divide-border/70 border-t border-border/70">
+        <ul className="-mx-5 divide-y divide-border/70 border-t border-border/70">
           {members.map((member) => (
             <li
               key={member.id}
-              className="flex flex-wrap items-center gap-x-4 gap-y-3 px-6 py-4"
+              className="flex flex-wrap items-center gap-x-4 gap-y-3 px-5 py-3"
             >
               {member.invited ? (
                 <span

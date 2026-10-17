@@ -728,7 +728,7 @@ export function SheetHeader({
       {...props}
       data-slot="sheet-header"
       className={cn(
-        "shrink-0 px-6 pt-4 *:data-[slot=sheet-close]:-my-2 *:data-[slot=sheet-close]:-me-3",
+        "shrink-0 px-5 pt-4 *:data-[slot=sheet-close]:-my-2 *:data-[slot=sheet-close]:-me-3",
         (sheet?.position === "top" ||
           sheet?.position === "left" ||
           sheet?.position === "right") &&
@@ -777,7 +777,7 @@ export function SheetBody({
       {...props}
       data-slot="sheet-body"
       className={cn(
-        "min-h-0 flex-1 overflow-y-auto overscroll-contain px-6 py-5",
+        "min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-4",
         sheet?.hasSnapPoints && !sheet.isExpanded && "overflow-y-hidden",
         className,
       )}
@@ -794,7 +794,7 @@ export function SheetFooter({
       {...props}
       data-slot="sheet-footer"
       className={cn(
-        "flex shrink-0 flex-wrap justify-end gap-2 border-t border-border px-6 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]",
+        "flex shrink-0 flex-wrap justify-end gap-2 border-t border-border px-5 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]",
         className,
       )}
     />

@@ -64,7 +64,7 @@ function Section({
           {description}
         </p>
       </div>
-      <Card className="grid gap-5 p-5 sm:p-6">{children}</Card>
+      <Card className="grid gap-5 p-5">{children}</Card>
     </section>
   );
 }

@@ -126,7 +126,7 @@ export function BillingSettings() {
               <CardTitle as="h2">Usage</CardTitle>
               <CardDescription>This billing period</CardDescription>
             </CardHeader>
-            <CardContent className="grid gap-5">
+            <CardContent className="grid gap-4">
               {usage.map((item) => (
                 <Meter
                   key={item.label}

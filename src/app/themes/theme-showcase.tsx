@@ -288,7 +288,7 @@ function RevenueScene({ className }: { className?: string }) {
           <div
             key={stat.label}
             className={cn(
-              "grid gap-1 px-6 py-4",
+              "grid gap-1 px-5 py-4",
               index > 0 && "border-l border-border/70",
             )}
           >
@@ -355,7 +355,7 @@ function TeamScene({ className }: { className?: string }) {
           Invite people and set what they can do.
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 py-4">
+      <CardContent className="flex-1">
         <ul className="grid gap-1">
           {members.map((member) => (
             <li
@@ -509,7 +509,7 @@ function AssistantScene({ className }: { className?: string }) {
           Beta
         </Badge>
       </CardHeader>
-      <CardContent className="grid flex-1 content-end gap-4">
+      <CardContent className="grid flex-1 content-end gap-3">
         <Message side="system" sender="Assistant">
           Today · Connected to Billing, Support, and Analytics
         </Message>
@@ -530,7 +530,7 @@ function AssistantScene({ className }: { className?: string }) {
             sender={message.side === "incoming" ? "Assistant" : "You"}
             avatar={
               message.side === "incoming" ? (
-                <Avatar name="Assistant" initials="AI" />
+                <Avatar name="Assistant" initials="AI" size="sm" />
               ) : undefined
             }
           >
@@ -605,7 +605,7 @@ function ScheduleScene({ className }: { className?: string }) {
         <CardTitle>Book a walkthrough</CardTitle>
         <CardDescription>30 minutes with our solutions team.</CardDescription>
       </CardHeader>
-      <CardContent className="grid flex-1 content-center justify-items-center gap-5 px-2 sm:px-6">
+      <CardContent className="grid flex-1 content-center justify-items-center gap-5 px-2 sm:px-5">
         <div className="flex w-full items-center gap-3 rounded-lg bg-muted/60 px-3 py-2.5">
           <Avatar name="Sam Rivera" className="size-9" />
           <div className="min-w-0 flex-1">
@@ -973,7 +973,7 @@ function InvoicesScene({ className }: { className?: string }) {
           </Button>
         </div>
       </CardHeader>
-      <CardContent className="flex-1 pb-6">
+      <CardContent className="flex-1 pb-5">
         <div className="relative overflow-x-auto rounded-lg border border-border">
           <Table aria-label="Invoices" className="min-w-[36rem]">
             <TableHeader>

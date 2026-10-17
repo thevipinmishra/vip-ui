@@ -86,7 +86,7 @@ export function TableFilterDemo() {
   );
 
   return (
-    <div className="w-full max-w-3xl space-y-4">
+    <div className="w-full max-w-3xl space-y-3">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
         <SearchField
           label="Search invoices"
@@ -126,7 +126,7 @@ export function TableFilterDemo() {
           <TableBody
             items={results}
             renderEmptyState={() => (
-              <div className="flex flex-col items-center gap-2 px-4 py-10 text-center">
+              <div className="flex flex-col items-center gap-2 px-4 py-8 text-center">
                 <MagnifyingGlassIcon
                   size={20}
                   aria-hidden="true"

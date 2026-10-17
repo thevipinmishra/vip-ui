@@ -66,7 +66,7 @@ export function DialogScrollableDemo() {
         <DialogDescription>
           Review each section before sharing the project with your team.
         </DialogDescription>
-        <div className="mt-6 grid gap-6">
+        <div className="mt-5 grid gap-5">
           {sections.map((section) => (
             <section key={section.title}>
               <h3 className="text-sm font-semibold">{section.title}</h3>

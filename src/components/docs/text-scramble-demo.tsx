@@ -9,7 +9,7 @@ export function TextScrambleDemo() {
 
   return (
     <div className="grid w-full max-w-md gap-4">
-      <div className="min-w-0 rounded-2xl bg-foreground p-6 text-background">
+      <div className="min-w-0 rounded-2xl bg-foreground p-5 text-background">
         <p className="text-3xl leading-tight font-bold tracking-[-0.06em] [overflow-wrap:anywhere] sm:text-4xl">
           <TextScramble
             value={alternate ? "FIELD NOTES" : "STUDIO NOTES"}

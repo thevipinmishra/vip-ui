@@ -15,7 +15,7 @@ export function StepperDemo() {
   const [currentStep, setCurrentStep] = useState(0);
 
   return (
-    <div className="grid w-full max-w-xl gap-5">
+    <div className="grid w-full max-w-xl gap-4">
       <Stepper
         steps={steps}
         currentStep={currentStep}

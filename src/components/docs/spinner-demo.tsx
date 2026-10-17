@@ -13,7 +13,7 @@ export function SpinnerDemo() {
         {patterns.map(({ variant, use }) => (
           <div
             key={variant}
-            className="flex min-h-44 flex-col rounded-xl bg-card p-5 shadow-[var(--shadow-card)] ring-1 ring-border/70"
+            className="flex min-h-44 flex-col rounded-xl bg-card p-4 shadow-[var(--shadow-card)] ring-1 ring-border/70"
           >
             <div
               data-slot="spinner-stage"

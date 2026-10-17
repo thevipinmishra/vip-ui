@@ -27,7 +27,7 @@ const radioStyles = tv({
   variants: {
     variant: {
       default: "",
-      card: "min-h-14 rounded-lg bg-card px-4 py-3 shadow-[var(--shadow-card)] ring-1 ring-border transition-[background-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted selected:bg-accent selected:ring-primary/40",
+      card: "min-h-12 rounded-lg bg-card px-3.5 py-2.5 shadow-[var(--shadow-card)] ring-1 ring-border transition-[background-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted selected:bg-accent selected:ring-primary/40",
     },
   },
   defaultVariants: { variant: "default" },

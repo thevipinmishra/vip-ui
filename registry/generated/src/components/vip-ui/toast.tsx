@@ -203,7 +203,7 @@ export function Toast({ className, children, ...props }: ToastSurfaceProps) {
       }}
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex shrink-0 items-start gap-3 rounded-xl bg-popover p-4 text-popover-foreground shadow-[var(--shadow-float)] ring-1 ring-border/70 outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring forced-colors:border",
+          "flex shrink-0 items-start gap-3 rounded-xl bg-popover p-3 text-popover-foreground shadow-[var(--shadow-float)] ring-1 ring-border/70 outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring forced-colors:border",
           className,
         ),
       )}

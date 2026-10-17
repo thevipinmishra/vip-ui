@@ -100,14 +100,14 @@ export function PricingPlans() {
           <li
             key={plan.name}
             className={cn(
-              "relative flex flex-col rounded-2xl bg-card p-6 shadow-[var(--shadow-card)] ring-1 ring-border/70 sm:p-8",
-              plan.popular && "ring-2 ring-primary lg:-my-3 lg:py-11",
+              "relative flex flex-col rounded-2xl bg-card p-5 shadow-[var(--shadow-card)] ring-1 ring-border/70 sm:p-6",
+              plan.popular && "ring-2 ring-primary lg:-my-3 lg:py-9",
             )}
           >
             {plan.popular && (
               <Badge
                 variant="accent"
-                className="absolute -top-3.5 start-1/2 -translate-x-1/2 rtl:translate-x-1/2"
+                className="absolute -top-3 start-1/2 -translate-x-1/2 rtl:translate-x-1/2"
               >
                 Most popular
               </Badge>
@@ -118,7 +118,7 @@ export function PricingPlans() {
             <p className="mt-1 text-sm leading-6 text-muted-foreground">
               {plan.description}
             </p>
-            <p className="mt-6 flex items-baseline gap-1">
+            <p className="mt-5 flex items-baseline gap-1">
               <AnimatedNumber
                 value={plan[cycle]}
                 formatOptions={priceFormat}
@@ -135,11 +135,11 @@ export function PricingPlans() {
             </p>
             <Button
               variant={plan.popular ? "default" : "outline"}
-              className="mt-6 w-full"
+              className="mt-5 w-full"
             >
               {plan.action}
             </Button>
-            <ul className="mt-8 grid gap-3 border-t border-border/70 pt-6 text-sm">
+            <ul className="mt-6 grid gap-3 border-t border-border/70 pt-5 text-sm">
               {plan.features.map((feature) => (
                 <li key={feature} className="flex items-center gap-3">
                   <CheckIcon

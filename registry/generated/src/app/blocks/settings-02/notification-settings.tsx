@@ -59,7 +59,7 @@ export function NotificationSettings() {
           Choose where we tell you about each event.
         </CardDescription>
       </CardHeader>
-      <CardContent className="grid gap-6">
+      <CardContent className="grid gap-5">
         <Switch
           checked={paused}
           onCheckedChange={(value) => {
@@ -71,7 +71,7 @@ export function NotificationSettings() {
         >
           Pause all notifications
         </Switch>
-        <div className="-mx-6 overflow-x-auto px-6">
+        <div className="-mx-5 overflow-x-auto px-5">
           <table className="w-full min-w-[420px] border-separate border-spacing-0 text-sm">
             <caption className="sr-only">
               Notification channels for each event

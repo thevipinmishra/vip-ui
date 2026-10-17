@@ -18,19 +18,19 @@
       "name": "stats-01",
       "description": "Metric cards that change with the selected period.",
       "category": "dashboard",
-      "height": 420
+      "height": 410
     },
     {
       "name": "login-01",
       "description": "A sign-in form in a card.",
       "category": "authentication",
-      "height": 720
+      "height": 690
     },
     {
       "name": "login-02",
       "description": "A two-column sign-in page with an email link and a brand panel.",
       "category": "authentication",
-      "height": 720,
+      "height": 700,
       "featured": true
     },
     {
@@ -55,7 +55,7 @@
       "name": "billing-01",
       "description": "A plan picker with usage meters and a payment method.",
       "category": "settings",
-      "height": 880
+      "height": 850
     },
     {
       "name": "pricing-01",
@@ -68,7 +68,7 @@
       "name": "team-01",
       "description": "A team list with invites, roles, and member actions.",
       "category": "application",
-      "height": 720
+      "height": 680
     },
     {
       "name": "upload-01",

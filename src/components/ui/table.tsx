@@ -71,7 +71,7 @@ export function Column({ className, children, ...props }: ColumnProps) {
       data-slot="table-column"
       className={composeRenderProps(className, (className) =>
         cn(
-          "border-b border-border px-4 py-3 text-start text-xs font-semibold whitespace-nowrap outline-none transition-[color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] allows-sorting:cursor-pointer allows-sorting:hover:text-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-[-2px] focus-visible:outline-ring",
+          "border-b border-border px-4 py-2.5 text-start text-xs font-semibold whitespace-nowrap outline-none transition-[color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] allows-sorting:cursor-pointer allows-sorting:hover:text-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-[-2px] focus-visible:outline-ring",
           className,
         ),
       )}
@@ -127,7 +127,7 @@ export function Cell({ className, ...props }: CellProps) {
       data-slot="table-cell"
       className={composeRenderProps(className, (className) =>
         cn(
-          "border-b border-border px-4 py-3 whitespace-nowrap text-foreground outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-[-2px] focus-visible:outline-ring",
+          "border-b border-border px-4 py-2.5 whitespace-nowrap text-foreground outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-[-2px] focus-visible:outline-ring",
           className,
         ),
       )}

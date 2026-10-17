@@ -8,7 +8,7 @@ const colors = [
 
 export function ColorSwatchTransparencyDemo() {
   return (
-    <div className="flex flex-wrap gap-5">
+    <div className="flex flex-wrap gap-4">
       {colors.map(({ name, value }) => (
         <div
           key={name}

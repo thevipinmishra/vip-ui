@@ -23,7 +23,7 @@ export function DialogControlledDemo() {
           <DialogDescription>
             Review the details before you continue.
           </DialogDescription>
-          <div className="mt-6 flex justify-end">
+          <div className="mt-5 flex justify-end">
             <Button onPress={() => setIsOpen(false)}>
               Close from app state
             </Button>
