@@ -1,48 +1,57 @@
 "use client";
 
-import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
 import {
-  Switch,
+  SwitchButton,
   SwitchControl,
   SwitchDescription,
+  SwitchField,
   SwitchLabel,
   SwitchThumb,
 } from "@/components/ui/switch";
 
-export function SwitchDemo() {
-  const [publicProfile, setPublicProfile] = useState(true);
-  const [activity, setActivity] = useState(false);
+const settings = [
+  {
+    id: "profile",
+    label: "Public profile",
+    description: "Others can find your profile.",
+    isNew: false,
+    on: true,
+  },
+  {
+    id: "activity",
+    label: "Show activity",
+    description: "Show recent work on your profile.",
+    isNew: true,
+    on: false,
+  },
+];
 
+export function SwitchDemo() {
   return (
-    <div className="grid w-full max-w-sm gap-3">
-      <Switch
-        checked={publicProfile}
-        onCheckedChange={setPublicProfile}
-        className="w-full rounded-xl border border-border bg-card px-4 py-2 shadow-[var(--shadow-card)]"
-      >
-        <span className="min-w-0">
-          <SwitchLabel>Public profile</SwitchLabel>
-          <SwitchDescription>Others can find your profile.</SwitchDescription>
-        </span>
-        <SwitchControl>
-          <SwitchThumb />
-        </SwitchControl>
-      </Switch>
-      <Switch
-        checked={activity}
-        onCheckedChange={setActivity}
-        className="w-full rounded-xl border border-border bg-card px-4 py-2 shadow-[var(--shadow-card)]"
-      >
-        <span className="min-w-0">
-          <SwitchLabel>Show activity</SwitchLabel>
-          <SwitchDescription>
-            Show recent work on your profile.
-          </SwitchDescription>
-        </span>
-        <SwitchControl>
-          <SwitchThumb />
-        </SwitchControl>
-      </Switch>
+    <div className="w-full max-w-sm divide-y divide-border rounded-xl border border-border bg-card px-4 shadow-[var(--shadow-card)]">
+      {settings.map((setting) => (
+        <SwitchField
+          key={setting.id}
+          defaultSelected={setting.on}
+          className="w-full py-3"
+        >
+          <SwitchButton>
+            <SwitchLabel className="flex flex-wrap items-center gap-2">
+              {setting.label}
+              {setting.isNew && (
+                <Badge variant="accent" className="min-h-5 py-0">
+                  New
+                </Badge>
+              )}
+            </SwitchLabel>
+            <SwitchControl>
+              <SwitchThumb />
+            </SwitchControl>
+          </SwitchButton>
+          <SwitchDescription>{setting.description}</SwitchDescription>
+        </SwitchField>
+      ))}
     </div>
   );
 }

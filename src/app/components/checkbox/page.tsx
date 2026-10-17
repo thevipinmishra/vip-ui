@@ -3,6 +3,7 @@ import { CheckboxBasicDemo } from "@/components/docs/checkbox-basic-demo";
 import { CheckboxDemo } from "@/components/docs/checkbox-demo";
 import { CheckboxDescriptionDemo } from "@/components/docs/checkbox-description-demo";
 import { CheckboxDisabledDemo } from "@/components/docs/checkbox-disabled-demo";
+import { CheckboxRequiredDemo } from "@/components/docs/checkbox-required-demo";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -25,8 +26,9 @@ export default function CheckboxPage() {
       previewSourcePath={page.usage}
       examples={withExamplePreviews(page.examples, [
         <CheckboxDescriptionDemo key="description" />,
-        <CheckboxDisabledDemo key="disabled" />,
+        <CheckboxRequiredDemo key="required" />,
         <CheckboxDemo key="indeterminate" />,
+        <CheckboxDisabledDemo key="disabled" />,
       ])}
       sourcePath="src/components/ui/checkbox.tsx"
     />

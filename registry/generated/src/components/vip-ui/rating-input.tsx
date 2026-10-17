@@ -3,7 +3,12 @@
 import { StarIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 import { cn } from "./utils";
-import { Radio, RadioGroup, type RadioGroupProps } from "./radio-group";
+import {
+  RadioButton,
+  RadioField,
+  RadioGroup,
+  type RadioGroupProps,
+} from "./radio-group";
 
 export interface RatingInputProps
   extends Omit<
@@ -46,28 +51,29 @@ export function RatingInput({
         onValueChange?.(rating);
       }}
     >
-      <div
-        className="-ms-1 flex flex-wrap gap-x-0 gap-y-1"
-        data-slot="rating-input-options"
-      >
+      <div className="-ms-1 flex flex-wrap" data-slot="rating-input-options">
         {Array.from({ length: max }, (_, index) => {
           const rating = index + 1;
           return (
-            <Radio
+            <RadioField
               key={rating}
               value={String(rating)}
               aria-label={`${rating} of ${max} stars`}
-              className={cn(
-                "size-8 min-h-8 justify-center hover:bg-muted/70",
-                rating <= selected ? "text-primary" : "text-muted-foreground",
-              )}
+              className="min-h-8 py-0"
             >
-              <StarIcon
-                size={24}
-                weight={rating <= selected ? "fill" : "regular"}
-                aria-hidden="true"
-              />
-            </Radio>
+              <RadioButton
+                className={cn(
+                  "size-8 items-center justify-center rounded-md outline-offset-4 outline-transparent transition-[outline-color,outline-offset] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2",
+                  rating <= selected ? "text-primary" : "text-muted-foreground",
+                )}
+              >
+                <StarIcon
+                  size={24}
+                  weight={rating <= selected ? "fill" : "regular"}
+                  aria-hidden="true"
+                />
+              </RadioButton>
+            </RadioField>
           );
         })}
       </div>

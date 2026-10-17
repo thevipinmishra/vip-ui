@@ -10,9 +10,9 @@ export function RadioGroupHorizontalDemo() {
       defaultValue="medium"
       className="w-full max-w-sm"
     >
-      <Radio value="small" label="Small" />
-      <Radio value="medium" label="Medium" />
-      <Radio value="large" label="Large" />
+      <Radio value="small">Small</Radio>
+      <Radio value="medium">Medium</Radio>
+      <Radio value="large">Large</Radio>
     </RadioGroup>
   );
 }

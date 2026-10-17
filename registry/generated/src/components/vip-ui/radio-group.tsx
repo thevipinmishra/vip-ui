@@ -8,30 +8,39 @@ import {
   useContext,
 } from "react";
 import {
-  Radio as AriaRadio,
+  RadioButton as AriaRadioButton,
+  type RadioButtonProps as AriaRadioButtonProps,
+  RadioField as AriaRadioField,
+  type RadioFieldProps as AriaRadioFieldProps,
   RadioGroup as AriaRadioGroup,
   type RadioGroupProps as AriaRadioGroupProps,
-  type RadioProps as AriaRadioProps,
   composeRenderProps,
   FieldError,
   Label,
   Text,
+  type ValidationResult,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { duration, easeOut } from "./motion";
 import { cn } from "./utils";
 import { fieldDescriptionStyles, fieldErrorStyles } from "./field-styles";
 
-const radioStyles = tv({
-  base: "group flex min-h-11 min-w-0 cursor-pointer items-center gap-3 rounded-md text-foreground outline-offset-4 outline-transparent transition-[outline-color,outline-offset] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 read-only:cursor-default disabled:cursor-default disabled:opacity-50",
+const radioFieldStyles = tv({
+  base: "relative flex min-h-11 min-w-0 flex-col justify-center gap-1 py-1 text-sm text-foreground disabled:opacity-50",
   variants: {
     variant: {
       default: "",
-      card: "min-h-12 rounded-lg bg-card px-3.5 py-2.5 shadow-[var(--shadow-card)] ring-1 ring-border transition-[background-color,box-shadow,outline-color,outline-offset] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-muted selected:bg-accent selected:ring-primary/40",
+      card: "min-h-12 rounded-lg bg-card px-3.5 py-2.5 shadow-[var(--shadow-card)] ring-1 ring-border outline-offset-4 outline-transparent transition-[background-color,box-shadow,outline-color,outline-offset] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] has-[[data-hovered]]:bg-muted has-[[data-focus-visible]]:outline-2 has-[[data-focus-visible]]:outline-offset-2 has-[[data-focus-visible]]:outline-ring motion-reduce:outline-offset-2 selected:bg-accent selected:ring-primary/40 invalid:ring-destructive/60 forced-colors:border forced-colors:selected:border-[Highlight]",
     },
   },
   defaultVariants: { variant: "default" },
 });
+
+type RadioVariant = NonNullable<
+  VariantProps<typeof radioFieldStyles>["variant"]
+>;
+
+const RadioVariantContext = createContext<RadioVariant>("default");
 
 const RadioStateContext = createContext({
   isSelected: false,
@@ -39,12 +48,11 @@ const RadioStateContext = createContext({
   isPressed: false,
 });
 
-export interface RadioGroupProps
-  extends Omit<AriaRadioGroupProps, "children" | "className"> {
-  label?: string;
-  description?: string;
+export interface RadioGroupProps extends Omit<AriaRadioGroupProps, "children"> {
   ref?: React.Ref<HTMLDivElement>;
-  className?: AriaRadioGroupProps["className"];
+  label?: ReactNode;
+  description?: ReactNode;
+  errorMessage?: string | ((validation: ValidationResult) => string);
   children: ReactNode;
   onValueChange?: (value: string) => void;
 }
@@ -52,6 +60,7 @@ export interface RadioGroupProps
 export function RadioGroup({
   label,
   description,
+  errorMessage,
   className,
   children,
   onValueChange,
@@ -66,70 +75,21 @@ export function RadioGroup({
         onValueChange?.(value);
       }}
       className={composeRenderProps(className, (className) =>
-        cn("group/radio-group grid min-w-0 grid-cols-1 gap-1", className),
+        cn(
+          "group/radio-group flex min-w-0 flex-col gap-1 data-[orientation=horizontal]:flex-row data-[orientation=horizontal]:flex-wrap data-[orientation=horizontal]:gap-x-6",
+          className,
+        ),
       )}
     >
-      {label && <RadioGroupLabel>{label}</RadioGroupLabel>}
-      {description && (
+      {label != null && <RadioGroupLabel>{label}</RadioGroupLabel>}
+      {description != null && (
         <RadioGroupDescription>{description}</RadioGroupDescription>
       )}
-      {label ? (
-        <>
-          <RadioGroupItems>{children}</RadioGroupItems>
-          <RadioGroupError />
-        </>
-      ) : (
-        children
+      {children}
+      {(label != null || description != null || errorMessage != null) && (
+        <RadioGroupError>{errorMessage}</RadioGroupError>
       )}
     </AriaRadioGroup>
-  );
-}
-
-export interface RadioProps
-  extends Omit<AriaRadioProps, "children" | "className"> {
-  label?: string;
-  description?: string;
-  variant?: NonNullable<VariantProps<typeof radioStyles>["variant"]>;
-  ref?: React.Ref<HTMLLabelElement>;
-  className?: AriaRadioProps["className"];
-  children?: AriaRadioProps["children"];
-}
-
-export function Radio({
-  label,
-  description,
-  variant = "default",
-  className,
-  children,
-  ...props
-}: RadioProps) {
-  return (
-    <AriaRadio
-      {...props}
-      data-slot="radio"
-      data-variant={variant}
-      className={composeRenderProps(className, (className) =>
-        radioStyles({ variant, className }),
-      )}
-    >
-      {(state) => (
-        <RadioStateContext.Provider value={state}>
-          {typeof children === "function"
-            ? children(state)
-            : (children ?? (
-                <span className="flex min-w-0 items-start gap-3">
-                  <RadioIndicator />
-                  <span className="min-w-0">
-                    {label && <RadioLabel>{label}</RadioLabel>}
-                    {description && (
-                      <RadioDescription>{description}</RadioDescription>
-                    )}
-                  </span>
-                </span>
-              ))}
-        </RadioStateContext.Provider>
-      )}
-    </AriaRadio>
   );
 }
 
@@ -142,7 +102,7 @@ export function RadioGroupLabel({
       {...props}
       data-slot="radio-group-label"
       className={cn(
-        "text-sm font-semibold text-foreground [overflow-wrap:anywhere]",
+        "w-full pb-1 text-sm font-semibold text-foreground [overflow-wrap:anywhere]",
         className,
       )}
     />
@@ -158,7 +118,11 @@ export function RadioGroupDescription({
       {...props}
       slot="description"
       data-slot="radio-group-description"
-      className={cn(fieldDescriptionStyles, className)}
+      className={cn(
+        fieldDescriptionStyles,
+        "w-full pb-1 [[data-slot=radio-group-label]+&]:-mt-1",
+        className,
+      )}
     />
   );
 }
@@ -172,7 +136,7 @@ export function RadioGroupItems({
       {...props}
       data-slot="radio-group-items"
       className={cn(
-        "grid grid-cols-1 gap-1 pt-2 group-data-[orientation=horizontal]/radio-group:flex group-data-[orientation=horizontal]/radio-group:flex-wrap group-data-[orientation=horizontal]/radio-group:gap-x-6",
+        "flex w-full flex-col gap-1 group-data-[orientation=horizontal]/radio-group:flex-row group-data-[orientation=horizontal]/radio-group:flex-wrap group-data-[orientation=horizontal]/radio-group:gap-x-6",
         className,
       )}
     />
@@ -187,8 +151,79 @@ export function RadioGroupError({
     <FieldError
       {...props}
       data-slot="radio-group-error"
-      className={cn(fieldErrorStyles, className)}
+      className={cn(fieldErrorStyles, "w-full", className)}
     />
+  );
+}
+
+export interface RadioProps extends Omit<RadioFieldProps, "children"> {
+  /** The label. Omit it and pass aria-label when the option has no visible label. */
+  children?: ReactNode;
+  description?: ReactNode;
+}
+
+export function Radio({ children, description, ...props }: RadioProps) {
+  return (
+    <RadioField {...props}>
+      <RadioButton>
+        <RadioIndicator />
+        {children != null && <RadioLabel>{children}</RadioLabel>}
+      </RadioButton>
+      {description != null && (
+        <RadioDescription>{description}</RadioDescription>
+      )}
+    </RadioField>
+  );
+}
+
+export interface RadioFieldProps extends AriaRadioFieldProps {
+  ref?: React.Ref<HTMLDivElement>;
+  variant?: RadioVariant;
+}
+
+export function RadioField({
+  variant = "default",
+  className,
+  ...props
+}: RadioFieldProps) {
+  return (
+    <RadioVariantContext.Provider value={variant}>
+      <AriaRadioField
+        {...props}
+        data-slot="radio"
+        data-variant={variant}
+        className={composeRenderProps(className, (className) =>
+          radioFieldStyles({ variant, className }),
+        )}
+      />
+    </RadioVariantContext.Provider>
+  );
+}
+
+export function RadioButton({
+  className,
+  children,
+  ...props
+}: AriaRadioButtonProps & React.RefAttributes<HTMLLabelElement>) {
+  return (
+    <AriaRadioButton
+      {...props}
+      data-slot="radio-button"
+      className={composeRenderProps(className, (className) =>
+        cn(
+          // The ::after layer stretches the hit area over the whole field,
+          // so the description and card padding select the option too.
+          "group/radio flex min-w-0 cursor-pointer items-start gap-3 after:absolute after:inset-0 disabled:cursor-default read-only:cursor-default",
+          className,
+        ),
+      )}
+    >
+      {composeRenderProps(children, (children, state) => (
+        <RadioStateContext.Provider value={state}>
+          {children}
+        </RadioStateContext.Provider>
+      ))}
+    </AriaRadioButton>
   );
 }
 
@@ -196,6 +231,7 @@ export function RadioIndicator({
   className,
   ...props
 }: React.HTMLAttributes<HTMLSpanElement>) {
+  const variant = useContext(RadioVariantContext);
   const { isSelected, isHovered, isPressed } = useContext(RadioStateContext);
   const reduceMotion = useReducedMotion();
   return (
@@ -204,7 +240,10 @@ export function RadioIndicator({
       aria-hidden="true"
       data-slot="radio-indicator"
       className={cn(
-        "grid size-5 shrink-0 place-items-center rounded-full border border-input bg-card shadow-[var(--shadow-inset)] transition-[border-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:border-primary/60 group-invalid:border-destructive group-invalid:group-hover:border-destructive group-selected:border-primary",
+        "grid size-5 shrink-0 place-items-center rounded-full border border-muted-foreground/75 bg-card shadow-[var(--shadow-inset)] transition-[border-color,outline-color,outline-offset] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover/radio:border-primary group-selected/radio:border-primary group-invalid/radio:border-destructive group-invalid/radio:group-hover/radio:border-destructive forced-colors:border-[ButtonText] forced-colors:group-selected/radio:border-[Highlight] forced-colors:group-disabled/radio:border-[GrayText]",
+        // Card radios show the focus ring around the whole card instead.
+        variant === "default" &&
+          "outline-offset-4 outline-transparent group-focus-visible/radio:outline-2 group-focus-visible/radio:outline-offset-2 group-focus-visible/radio:outline-ring motion-reduce:outline-offset-2",
         className,
       )}
     >
@@ -218,7 +257,7 @@ export function RadioIndicator({
           duration: reduceMotion ? 0 : duration.fast,
           ease: easeOut,
         }}
-        className="size-2 rounded-full bg-primary"
+        className="size-2 rounded-full bg-primary forced-colors:bg-[Highlight] forced-colors:group-disabled/radio:bg-[GrayText]"
       />
     </span>
   );
@@ -232,10 +271,7 @@ export function RadioLabel({
     <span
       {...props}
       data-slot="radio-label"
-      className={cn(
-        "block text-sm font-medium [overflow-wrap:anywhere]",
-        className,
-      )}
+      className={cn("min-w-0 font-medium [overflow-wrap:anywhere]", className)}
     />
   );
 }
@@ -243,15 +279,13 @@ export function RadioLabel({
 export function RadioDescription({
   className,
   ...props
-}: React.HTMLAttributes<HTMLSpanElement>) {
+}: React.ComponentProps<typeof Text>) {
   return (
-    <span
+    <Text
       {...props}
+      slot="description"
       data-slot="radio-description"
-      className={cn(
-        "mt-1 block text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]",
-        className,
-      )}
+      className={cn(fieldDescriptionStyles, "ps-8", className)}
     />
   );
 }

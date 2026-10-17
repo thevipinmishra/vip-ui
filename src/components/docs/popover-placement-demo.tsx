@@ -1,53 +1,55 @@
 "use client";
 
-import { Dialog, DialogTrigger, Heading } from "react-aria-components";
 import { Button } from "@/components/ui/button";
-import { Popover } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverArrow,
+  PopoverDescription,
+  PopoverDialog,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const placements = [
+  { placement: "top", label: "Top", side: "above", cell: "col-start-2" },
   {
-    label: "Top",
-    placement: "top",
-    title: "Top placement",
-    body: "The panel opens above the trigger.",
-  },
-  {
-    label: "Bottom",
-    placement: "bottom",
-    title: "Bottom placement",
-    body: "The panel opens below the trigger.",
-  },
-  {
-    label: "Left",
     placement: "left",
-    title: "Left placement",
-    body: "The panel opens to the left of the trigger.",
+    label: "Left",
+    side: "to the left of",
+    cell: "col-start-1 row-start-2",
   },
   {
-    label: "Right",
     placement: "right",
-    title: "Right placement",
-    body: "The panel opens to the right of the trigger.",
+    label: "Right",
+    side: "to the right of",
+    cell: "col-start-3 row-start-2",
+  },
+  {
+    placement: "bottom",
+    label: "Bottom",
+    side: "below",
+    cell: "col-start-2 row-start-3",
   },
 ] as const;
 
 export function PopoverPlacementDemo() {
   return (
-    <div className="flex flex-wrap items-center justify-center gap-2 py-4">
+    <div className="grid grid-cols-[repeat(3,6rem)] justify-center gap-2 py-4">
       {placements.map((item) => (
-        <DialogTrigger key={item.placement}>
-          <Button variant="outline">{item.label}</Button>
-          <Popover placement={item.placement} className="w-64">
-            <Dialog className="outline-none">
-              <Heading slot="title" className="text-sm font-semibold">
-                {item.title}
-              </Heading>
-              <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                {item.body}
-              </p>
-            </Dialog>
+        <PopoverTrigger key={item.placement}>
+          <Button variant="outline" className={item.cell}>
+            {item.label}
+          </Button>
+          <Popover placement={item.placement} className="w-44 sm:w-56">
+            <PopoverArrow />
+            <PopoverDialog>
+              <PopoverTitle>{item.label}</PopoverTitle>
+              <PopoverDescription>
+                Opens {item.side} the trigger when there is room.
+              </PopoverDescription>
+            </PopoverDialog>
           </Popover>
-        </DialogTrigger>
+        </PopoverTrigger>
       ))}
     </div>
   );
