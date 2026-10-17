@@ -6,7 +6,6 @@ import {
   FolderIcon,
   FolderOpenIcon,
 } from "@phosphor-icons/react";
-import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 import {
   Button as AriaButton,
@@ -17,7 +16,6 @@ import {
   type TreeItemProps,
   type TreeProps,
 } from "react-aria-components";
-import { duration, easeOut } from "./motion";
 import { cn } from "./utils";
 
 export function Tree<T extends object>({ className, ...props }: TreeProps<T>) {
@@ -49,7 +47,6 @@ export function TreeItem({
   icon?: ReactNode;
   children?: ReactNode;
 }) {
-  const reducedMotion = useReducedMotion();
   return (
     <AriaTreeItem
       {...props}
@@ -57,7 +54,7 @@ export function TreeItem({
       textValue={props.textValue ?? title}
       className={composeRenderProps(className, (className) =>
         cn(
-          "group/tree-item min-w-0 rounded-md text-foreground outline-none hover:bg-muted focus:bg-muted pressed:bg-muted selected:bg-accent selected:text-accent-foreground selected:font-medium selected:ring-1 selected:ring-primary/15 focus-visible:outline-1 focus-visible:outline-solid focus-visible:-outline-offset-1 focus-visible:outline-ring forced-colors:focus-visible:outline-2 forced-colors:focus-visible:-outline-offset-2 disabled:opacity-50 forced-colors:border-2 forced-colors:border-[Canvas] forced-colors:selected:border-[Highlight]",
+          "group/tree-item min-w-0 rounded-md text-foreground outline-none transition-colors duration-150 ease-out-quint hover:bg-muted hover:duration-0 focus:bg-muted focus:duration-0 pressed:bg-muted selected:bg-accent selected:text-accent-foreground selected:font-medium selected:ring-1 selected:ring-primary/15 focus-visible:outline-1 focus-visible:outline-solid focus-visible:-outline-offset-1 focus-visible:outline-ring forced-colors:focus-visible:outline-2 forced-colors:focus-visible:-outline-offset-2 disabled:opacity-50 forced-colors:border-2 forced-colors:border-[Canvas] forced-colors:selected:border-[Highlight]",
           className,
         ),
       )}
@@ -75,20 +72,14 @@ export function TreeItem({
               <AriaButton
                 slot="chevron"
                 data-slot="tree-item-chevron"
-                className="grid size-9 shrink-0 place-items-center rounded-md text-muted-foreground outline-none transition-[color,background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-accent hover:text-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring rtl:-scale-x-100"
+                className="grid size-9 shrink-0 place-items-center rounded-md text-muted-foreground outline-none transition-[color,background-color] duration-150 ease-out-quint hover:bg-accent hover:text-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring rtl:-scale-x-100"
               >
-                <motion.span
+                <span
                   aria-hidden="true"
-                  className="grid place-items-center"
-                  initial={false}
-                  animate={{ rotate: isExpanded ? 90 : 0 }}
-                  transition={{
-                    duration: reducedMotion ? 0 : duration.base,
-                    ease: easeOut,
-                  }}
+                  className="grid place-items-center transition-transform duration-250 ease-out-quint group-expanded/tree-item:rotate-90 motion-reduce:transition-none"
                 >
                   <CaretRightIcon size={16} />
-                </motion.span>
+                </span>
               </AriaButton>
             ) : (
               <span aria-hidden="true" className="size-9 shrink-0" />

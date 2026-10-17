@@ -1,6 +1,5 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
 import {
   createContext,
   type HTMLAttributes,
@@ -21,7 +20,6 @@ import {
   type ValidationResult,
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
-import { duration, easeOut } from "./motion";
 import { cn } from "./utils";
 import { fieldDescriptionStyles, fieldErrorStyles } from "./field-styles";
 
@@ -30,7 +28,7 @@ const radioFieldStyles = tv({
   variants: {
     variant: {
       default: "",
-      card: "min-h-12 rounded-lg bg-card px-3.5 py-2.5 shadow-[var(--shadow-card)] ring-1 ring-border outline-offset-4 outline-transparent transition-[background-color,box-shadow,outline-color,outline-offset] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] has-[[data-hovered]]:bg-muted has-[[data-focus-visible]]:outline-2 has-[[data-focus-visible]]:outline-offset-2 has-[[data-focus-visible]]:outline-ring motion-reduce:outline-offset-2 selected:bg-accent selected:ring-primary/40 invalid:ring-destructive/60 forced-colors:border forced-colors:selected:border-[Highlight]",
+      card: "min-h-12 rounded-lg bg-card px-3.5 py-2.5 shadow-[var(--shadow-card)] ring-1 ring-border outline-offset-4 outline-transparent transition-[background-color,box-shadow,outline-color,outline-offset] duration-150 ease-out-quint has-[[data-hovered]]:bg-muted has-[[data-focus-visible]]:outline-2 has-[[data-focus-visible]]:outline-offset-2 has-[[data-focus-visible]]:outline-ring motion-reduce:outline-offset-2 selected:bg-accent selected:ring-primary/40 invalid:ring-destructive/60 forced-colors:border forced-colors:selected:border-[Highlight]",
     },
   },
   defaultVariants: { variant: "default" },
@@ -41,12 +39,6 @@ type RadioVariant = NonNullable<
 >;
 
 const RadioVariantContext = createContext<RadioVariant>("default");
-
-const RadioStateContext = createContext({
-  isSelected: false,
-  isHovered: false,
-  isPressed: false,
-});
 
 export interface RadioGroupProps extends Omit<AriaRadioGroupProps, "children"> {
   ref?: React.Ref<HTMLDivElement>;
@@ -202,7 +194,6 @@ export function RadioField({
 
 export function RadioButton({
   className,
-  children,
   ...props
 }: AriaRadioButtonProps & React.RefAttributes<HTMLLabelElement>) {
   return (
@@ -217,13 +208,7 @@ export function RadioButton({
           className,
         ),
       )}
-    >
-      {composeRenderProps(children, (children, state) => (
-        <RadioStateContext.Provider value={state}>
-          {children}
-        </RadioStateContext.Provider>
-      ))}
-    </AriaRadioButton>
+    />
   );
 }
 
@@ -232,33 +217,20 @@ export function RadioIndicator({
   ...props
 }: React.HTMLAttributes<HTMLSpanElement>) {
   const variant = useContext(RadioVariantContext);
-  const { isSelected, isHovered, isPressed } = useContext(RadioStateContext);
-  const reduceMotion = useReducedMotion();
   return (
     <span
       {...props}
       aria-hidden="true"
       data-slot="radio-indicator"
       className={cn(
-        "grid size-5 shrink-0 place-items-center rounded-full border border-muted-foreground/75 bg-card shadow-[var(--shadow-inset)] transition-[border-color,outline-color,outline-offset] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover/radio:border-primary group-selected/radio:border-primary group-invalid/radio:border-destructive group-invalid/radio:group-hover/radio:border-destructive forced-colors:border-[ButtonText] forced-colors:group-selected/radio:border-[Highlight] forced-colors:group-disabled/radio:border-[GrayText]",
+        "grid size-5 shrink-0 place-items-center rounded-full border border-muted-foreground/75 bg-card shadow-[var(--shadow-inset)] transition-[border-color,outline-color,outline-offset,scale] duration-150 ease-out-quint group-hover/radio:border-primary motion-safe:group-pressed/radio:scale-90 group-selected/radio:border-primary group-invalid/radio:border-destructive group-invalid/radio:group-hover/radio:border-destructive forced-colors:border-[ButtonText] forced-colors:group-selected/radio:border-[Highlight] forced-colors:group-disabled/radio:border-[GrayText]",
         // Card radios show the focus ring around the whole card instead.
         variant === "default" &&
           "outline-offset-4 outline-transparent group-focus-visible/radio:outline-2 group-focus-visible/radio:outline-offset-2 group-focus-visible/radio:outline-ring motion-reduce:outline-offset-2",
         className,
       )}
     >
-      <motion.span
-        initial={false}
-        animate={{
-          scale: isSelected ? (isPressed ? 0.85 : isHovered ? 1.12 : 1) : 0.86,
-          opacity: isSelected ? 1 : 0,
-        }}
-        transition={{
-          duration: reduceMotion ? 0 : duration.fast,
-          ease: easeOut,
-        }}
-        className="size-2 rounded-full bg-primary forced-colors:bg-[Highlight] forced-colors:group-disabled/radio:bg-[GrayText]"
-      />
+      <span className="size-2 scale-0 rounded-full bg-primary transition-[scale] duration-350 ease-spring group-selected/radio:scale-100 motion-reduce:transition-none forced-colors:bg-[Highlight] forced-colors:group-disabled/radio:bg-[GrayText]" />
     </span>
   );
 }

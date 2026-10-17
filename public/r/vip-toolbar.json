@@ -4,7 +4,11 @@
   "type": "registry:ui",
   "title": "Toolbar",
   "description": "Group related actions with arrow-key navigation.",
-  "dependencies": ["react-aria-components@^1.22.1", "tailwind-variants@^3.3.1"],
+  "dependencies": [
+    "motion@^13.5.1",
+    "react-aria-components@^1.22.1",
+    "tailwind-variants@^3.3.1"
+  ],
   "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
   "css": {
     "@plugin tailwindcss-react-aria-components": {}
@@ -25,10 +29,22 @@
       "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
     },
     {
+      "path": "src/components/ui/size.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/size.tsx",
+      "content": "\"use client\";\n\nimport { createContext, type ReactNode, useContext } from \"react\";\n\nexport type Size = \"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\";\n\nconst SizeContext = createContext<Size | undefined>(undefined);\n\nexport function useSize(size?: Size) {\n  const inherited = useContext(SizeContext);\n  return size ?? inherited;\n}\n\nexport function SizeProvider({\n  size,\n  children,\n}: {\n  size: Size | undefined;\n  children: ReactNode;\n}) {\n  return <SizeContext value={size}>{children}</SizeContext>;\n}\n"
+    },
+    {
+      "path": "src/components/ui/toggle-button-group.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/toggle-button-group.tsx",
+      "content": "\"use client\";\n\nimport { LayoutGroup } from \"motion/react\";\nimport { useId } from \"react\";\nimport {\n  ToggleButtonGroup as AriaToggleButtonGroup,\n  composeRenderProps,\n  type ToggleButtonGroupProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\nimport { type Size, SizeProvider, useSize } from \"./size\";\n\nexport const groupFrameStyles = {\n  xs: \"gap-0.5 rounded-md p-0.5\",\n  sm: \"\",\n  md: \"\",\n  lg: \"\",\n  xl: \"rounded-xl\",\n} satisfies Record<Size, string>;\n\nexport function ToggleButtonGroup({\n  className,\n  size: sizeProp,\n  ...props\n}: ToggleButtonGroupProps & { size?: Size }) {\n  const groupId = useId();\n  const size = useSize(sizeProp);\n  return (\n    <SizeProvider size={size}>\n      <LayoutGroup id={groupId}>\n        <AriaToggleButtonGroup\n          {...props}\n          data-slot=\"toggle-button-group\"\n          data-size={size}\n          className={composeRenderProps(className, (className) =>\n            cn(\n              \"inline-flex w-fit max-w-full flex-wrap gap-1 rounded-lg border border-border bg-secondary p-1 data-[orientation=vertical]:flex-col data-[orientation=vertical]:[--touch-target:calc(100%+0.25rem)]\",\n              size && groupFrameStyles[size],\n              className,\n            ),\n          )}\n        />\n      </LayoutGroup>\n    </SizeProvider>\n  );\n}\n"
+    },
+    {
       "path": "src/components/ui/toolbar.tsx",
       "type": "registry:file",
       "target": "@components/vip-ui/toolbar.tsx",
-      "content": "\"use client\";\n\nimport {\n  Toolbar as AriaToolbar,\n  composeRenderProps,\n  SeparatorContext,\n  ToggleButtonGroupContext,\n  type ToolbarProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport function Toolbar({ className, ...props }: ToolbarProps) {\n  const orientation = props.orientation ?? \"horizontal\";\n  return (\n    <ToggleButtonGroupContext.Provider value={{ orientation }}>\n      <SeparatorContext.Provider\n        value={{\n          orientation: orientation === \"horizontal\" ? \"vertical\" : \"horizontal\",\n        }}\n      >\n        <AriaToolbar\n          {...props}\n          data-slot=\"toolbar\"\n          className={composeRenderProps(className, (className) =>\n            cn(\n              \"flex w-fit max-w-full flex-wrap items-center gap-1 rounded-lg border border-border bg-card p-1 shadow-[var(--shadow-card)] data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-stretch [&_[data-slot=toggle-button-group]]:border-0 [&_[data-slot=toggle-button-group]]:bg-transparent [&_[data-slot=toggle-button-group]]:p-0\",\n              \"[&_[data-variant=segmented][data-hovered]:not([data-selected])]:bg-muted [&_[data-variant=segmented][data-pressed]:not([data-selected])]:bg-muted\",\n              className,\n            ),\n          )}\n        />\n      </SeparatorContext.Provider>\n    </ToggleButtonGroupContext.Provider>\n  );\n}\n"
+      "content": "\"use client\";\n\nimport {\n  Toolbar as AriaToolbar,\n  composeRenderProps,\n  SeparatorContext,\n  ToggleButtonGroupContext,\n  type ToolbarProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\nimport { type Size, SizeProvider, useSize } from \"./size\";\nimport { groupFrameStyles } from \"./toggle-button-group\";\n\nexport function Toolbar({\n  className,\n  size: sizeProp,\n  ...props\n}: ToolbarProps & { size?: Size }) {\n  const orientation = props.orientation ?? \"horizontal\";\n  const size = useSize(sizeProp);\n  return (\n    <SizeProvider size={size}>\n      <ToggleButtonGroupContext.Provider value={{ orientation }}>\n        <SeparatorContext.Provider\n          value={{\n            orientation:\n              orientation === \"horizontal\" ? \"vertical\" : \"horizontal\",\n          }}\n        >\n          <AriaToolbar\n            {...props}\n            data-slot=\"toolbar\"\n            data-size={size}\n            className={composeRenderProps(className, (className) =>\n              cn(\n                \"flex w-fit max-w-full flex-wrap items-center gap-1 rounded-lg border border-border bg-card p-1 shadow-[var(--shadow-card)] data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-stretch data-[orientation=vertical]:[--touch-target:calc(100%+0.25rem)] [&_[data-slot=toggle-button-group]]:border-0 [&_[data-slot=toggle-button-group]]:bg-transparent [&_[data-slot=toggle-button-group]]:p-0\",\n                \"[&_[data-variant=segmented][data-hovered]:not([data-selected])]:bg-muted [&_[data-variant=segmented][data-pressed]:not([data-selected])]:bg-muted\",\n                size && groupFrameStyles[size],\n                className,\n              ),\n            )}\n          />\n        </SeparatorContext.Provider>\n      </ToggleButtonGroupContext.Provider>\n    </SizeProvider>\n  );\n}\n"
     }
   ]
 }

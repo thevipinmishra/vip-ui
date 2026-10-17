@@ -1,0 +1,16 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-size",
+  "type": "registry:ui",
+  "title": "Size",
+  "description": "Share one size scale across buttons, toggles, and their groups.",
+  "dependencies": [],
+  "files": [
+    {
+      "path": "src/components/ui/size.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/size.tsx",
+      "content": "\"use client\";\n\nimport { createContext, type ReactNode, useContext } from \"react\";\n\nexport type Size = \"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\";\n\nconst SizeContext = createContext<Size | undefined>(undefined);\n\nexport function useSize(size?: Size) {\n  const inherited = useContext(SizeContext);\n  return size ?? inherited;\n}\n\nexport function SizeProvider({\n  size,\n  children,\n}: {\n  size: Size | undefined;\n  children: ReactNode;\n}) {\n  return <SizeContext value={size}>{children}</SizeContext>;\n}\n"
+    }
+  ]
+}

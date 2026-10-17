@@ -30,8 +30,11 @@ export function buttonLabel(children: ReactNode): ReactNode {
   return parts;
 }
 
+export const touchTarget =
+  "relative pointer-coarse:after:absolute pointer-coarse:after:inset-x-0 pointer-coarse:after:top-1/2 pointer-coarse:after:h-[max(100%,var(--touch-target,2.75rem))] pointer-coarse:after:-translate-y-1/2";
+
 export const buttonStyles = tv({
-  base: "inline-flex min-w-0 max-w-full shrink-0 cursor-default items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium tracking-[-0.01em] outline-offset-4 outline-transparent transition-[color,background-color,border-color,box-shadow,scale,outline-color,outline-offset] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] disabled:cursor-default disabled:opacity-50 disabled:shadow-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  base: "inline-flex min-w-0 max-w-full shrink-0 cursor-default items-center justify-center whitespace-nowrap rounded-md font-medium tracking-[-0.01em] outline-offset-4 outline-transparent transition-[color,background-color,border-color,box-shadow,scale,outline-color,outline-offset] duration-150 ease-out-quint disabled:cursor-default disabled:opacity-50 disabled:shadow-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 [&_svg]:pointer-events-none [&_svg]:shrink-0",
   variants: {
     variant: {
       default:
@@ -48,13 +51,36 @@ export const buttonStyles = tv({
         "bg-destructive text-background shadow-[var(--shadow-card)] hover:bg-destructive/90 pressed:bg-destructive/90",
     },
     size: {
-      default: "h-11 px-5 text-sm",
-      sm: "h-9 px-3.5 text-sm",
-      lg: "h-12 px-6 text-sm",
-      icon: "size-11 cursor-pointer p-0",
+      xs: `h-7 gap-1.5 rounded-sm px-2.5 text-xs [&_svg:not([class*='size-'])]:size-3.5 ${touchTarget}`,
+      sm: `h-9 gap-2 px-3.5 text-sm [&_svg:not([class*='size-'])]:size-4 ${touchTarget}`,
+      md: "h-11 gap-2 px-5 text-sm [&_svg:not([class*='size-'])]:size-4",
+      lg: "h-12 gap-2 px-6 text-sm [&_svg:not([class*='size-'])]:size-4",
+      xl: "h-14 gap-2.5 rounded-lg px-7 text-base [&_svg:not([class*='size-'])]:size-5",
+    },
+    iconOnly: {
+      true: "cursor-pointer px-0",
     },
   },
-  defaultVariants: { variant: "default", size: "default" },
+  compoundVariants: [
+    { size: "xs", iconOnly: true, class: "w-7" },
+    { size: "sm", iconOnly: true, class: "w-9" },
+    {
+      size: "md",
+      iconOnly: true,
+      class: "w-11 [&_svg:not([class*='size-'])]:size-4.5",
+    },
+    {
+      size: "lg",
+      iconOnly: true,
+      class: "w-12 [&_svg:not([class*='size-'])]:size-5",
+    },
+    {
+      size: "xl",
+      iconOnly: true,
+      class: "w-14 [&_svg:not([class*='size-'])]:size-6",
+    },
+  ],
+  defaultVariants: { variant: "default", size: "md" },
 });
 
 export const buttonLinkStyles = tv({
@@ -65,4 +91,3 @@ export const buttonLinkStyles = tv({
 export type ButtonVariant = NonNullable<
   VariantProps<typeof buttonStyles>["variant"]
 >;
-export type ButtonSize = NonNullable<VariantProps<typeof buttonStyles>["size"]>;

@@ -15,7 +15,16 @@ import {
 } from "react-aria-components";
 import type { TokenFieldSegment } from "react-aria-components/TokenField";
 import { cn } from "./utils";
-import { fieldDescriptionStyles, fieldLabelStyles } from "./field-styles";
+import {
+  fieldDescriptionStyles,
+  fieldHeight,
+  fieldLabelStyles,
+  fieldPaddingX,
+  fieldRadius,
+  fieldSizeStyles,
+  fieldText,
+} from "./field-styles";
+import type { Size } from "./size";
 
 export { TokenFieldValue };
 
@@ -52,6 +61,7 @@ export interface TokenFieldProps<T extends TokenFieldValue = TokenFieldValue>
   label?: string;
   description?: string;
   placeholder?: string;
+  size?: Size;
   children?: ReactNode | TokenInputProps<T>["children"];
 }
 
@@ -59,6 +69,7 @@ export function TokenField<T extends TokenFieldValue = TokenFieldValue>({
   label,
   description,
   placeholder,
+  size,
   children,
   className,
   ...props
@@ -67,8 +78,13 @@ export function TokenField<T extends TokenFieldValue = TokenFieldValue>({
     <AriaTokenField
       {...props}
       data-slot="token-field"
+      data-size={size}
       className={composeRenderProps(className, (className) =>
-        cn("grid min-w-0 grid-cols-1 gap-2 text-sm text-foreground", className),
+        cn(
+          "grid min-w-0 grid-cols-1 gap-2 text-sm text-foreground",
+          size && fieldSizeStyles[size],
+          className,
+        ),
       )}
     >
       {children != null && typeof children !== "function" ? (
@@ -119,7 +135,11 @@ export function TokenFieldInput<T extends TokenFieldValue = TokenFieldValue>({
         className,
         (className, { isHovered, isDisabled, isReadOnly }) =>
           cn(
-            "min-h-12 cursor-text rounded-lg border border-input bg-card px-3.5 py-2.5 text-base leading-7 text-foreground shadow-[var(--shadow-card)] outline-none [overflow-wrap:anywhere] transition-[color,background-color,border-color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] [&:empty]:before:pointer-events-none [&:empty]:before:text-muted-foreground/80 [&:empty]:before:content-[attr(data-placeholder)] data-[focused]:border-ring data-[focused]:ring-1 data-[focused]:ring-ring data-[readonly]:bg-muted/40 data-[disabled]:cursor-not-allowed data-[disabled]:bg-muted data-[disabled]:opacity-60 sm:text-sm",
+            fieldHeight,
+            fieldRadius,
+            fieldPaddingX,
+            fieldText,
+            "cursor-text border border-input bg-card py-[max(0px,calc((var(--field-h,3rem)-1.75rem-2px)/2))] leading-[min(1.75rem,calc(var(--field-h,3rem)-2px))] text-foreground shadow-[var(--shadow-card)] outline-none [overflow-wrap:anywhere] transition-[color,background-color,border-color,box-shadow] duration-150 ease-out-quint [&:empty]:before:pointer-events-none [&:empty]:before:text-muted-foreground/80 [&:empty]:before:content-[attr(data-placeholder)] data-[focused]:border-ring data-[focused]:ring-1 data-[focused]:ring-ring data-[readonly]:bg-muted/40 data-[disabled]:cursor-not-allowed data-[disabled]:bg-muted data-[disabled]:opacity-60",
             isHovered && !isDisabled && !isReadOnly && "border-primary/45",
             className,
           ),
@@ -151,7 +171,7 @@ export function Token({ className, ...props }: TokenProps) {
       data-slot="token"
       className={composeRenderProps(className, (className) =>
         cn(
-          "mx-0.5 inline-block max-w-full rounded-md bg-accent px-2 py-0.5 text-xs font-medium text-accent-foreground transition-[color,background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] data-[selected]:bg-primary data-[selected]:text-primary-foreground",
+          "mx-0.5 inline-block max-w-full rounded-md bg-accent px-2 py-0.5 text-xs font-medium text-accent-foreground transition-[color,background-color] duration-150 ease-out-quint data-[selected]:bg-primary data-[selected]:text-primary-foreground",
           className,
         ),
       )}

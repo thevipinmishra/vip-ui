@@ -38,6 +38,7 @@ import { tv } from "tailwind-variants";
 import { duration, easeOut } from "./motion";
 import { cn } from "./utils";
 import { Button, type ButtonProps as StyledButtonProps } from "./button";
+import { SizeProvider } from "./size";
 
 type Axis = "x" | "y";
 type Position = SheetRenderProps["position"];
@@ -366,7 +367,7 @@ export function Sheet({
               hasSnapPoints={!!snapPoints?.length}
               preventDismissal={preventDismissal}
             >
-              {children}
+              <SizeProvider size={undefined}>{children}</SizeProvider>
             </SheetFrame>
           )}
         </AriaSheet>
@@ -804,7 +805,7 @@ export function SheetFooter({
 export function SheetClose({
   children,
   variant = "ghost",
-  size,
+  iconOnly,
   ...props
 }: StyledButtonProps) {
   return (
@@ -813,10 +814,10 @@ export function SheetClose({
       slot="close"
       data-slot="sheet-close"
       variant={variant}
-      size={size ?? (children ? "default" : "icon")}
+      iconOnly={iconOnly ?? !children}
       aria-label={props["aria-label"] ?? (children ? undefined : "Close sheet")}
     >
-      {children ?? <XIcon size={17} aria-hidden="true" />}
+      {children ?? <XIcon aria-hidden="true" />}
     </Button>
   );
 }

@@ -107,19 +107,17 @@ export function MenuItem<T extends object>({
       data-slot="menu-item"
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex min-h-11 cursor-pointer items-center gap-2.5 rounded-md px-3 py-2 text-sm text-foreground outline-none hover:bg-muted focus:bg-muted open:bg-muted focus-visible:-outline-offset-1 focus-visible:outline-1 focus-visible:outline-solid focus-visible:outline-ring forced-colors:focus-visible:-outline-offset-2 forced-colors:focus-visible:outline-2 selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&>[data-slot=kbd]]:ms-auto",
+          "group/item flex min-h-11 cursor-pointer items-center gap-2.5 rounded-md px-3 py-2 text-sm text-foreground outline-none transition-colors duration-150 ease-out-quint hover:bg-muted hover:duration-0 focus:bg-muted focus:duration-0 open:bg-muted focus-visible:-outline-offset-1 focus-visible:outline-1 focus-visible:outline-solid focus-visible:outline-ring forced-colors:focus-visible:-outline-offset-2 forced-colors:focus-visible:outline-2 selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&>[data-slot=kbd]]:ms-auto",
           className,
         ),
       )}
     >
       {composeRenderProps(
         children,
-        (content, { isSelected, selectionMode, hasSubmenu }) => (
+        (content, { selectionMode, hasSubmenu }) => (
           <>
             {content}
-            {selectionMode !== "none" && !hasSubmenu && (
-              <SelectionMark isSelected={isSelected} />
-            )}
+            {selectionMode !== "none" && !hasSubmenu && <SelectionMark />}
             {hasSubmenu && (
               <CaretRightIcon
                 size={16}

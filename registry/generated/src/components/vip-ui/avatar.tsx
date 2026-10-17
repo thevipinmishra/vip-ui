@@ -9,9 +9,11 @@ const avatarStyles = tv({
   base: "inline-grid shrink-0 place-items-center overflow-hidden rounded-full bg-accent font-semibold leading-none text-accent-foreground ring-1 ring-border/70 select-none *:col-start-1 *:row-start-1 forced-colors:border",
   variants: {
     size: {
+      xs: "size-6 text-[0.5625rem]",
       sm: "size-8 text-[0.6875rem]",
       md: "size-10 text-xs",
       lg: "size-12 text-sm",
+      xl: "size-16 text-lg",
     },
   },
   defaultVariants: { size: "md" },

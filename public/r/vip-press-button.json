@@ -4,17 +4,28 @@
   "type": "registry:ui",
   "title": "Press Button",
   "description": "Handle press interactions for shared button controls.",
-  "dependencies": ["motion@^13.5.1", "react-aria-components@^1.22.1"],
+  "dependencies": ["react-aria-components@^1.22.1", "tailwind-variants@^3.3.1"],
   "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
   "css": {
     "@plugin tailwindcss-react-aria-components": {}
   },
+  "cssVars": {
+    "theme": {
+      "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+    }
+  },
   "files": [
+    {
+      "path": "src/lib/utils.ts",
+      "type": "registry:file",
+      "target": "@components/vip-ui/utils.ts",
+      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
+    },
     {
       "path": "src/components/ui/press-button.tsx",
       "type": "registry:file",
       "target": "@components/vip-ui/press-button.tsx",
-      "content": "\"use client\";\n\nimport { type HTMLMotionProps, motion, useReducedMotion } from \"motion/react\";\nimport { Button, type ButtonProps } from \"react-aria-components\";\n\nexport function PressButton({ isDisabled, ...props }: ButtonProps) {\n  const reduceMotion = useReducedMotion();\n\n  return (\n    <Button\n      data-slot=\"press-button\"\n      {...props}\n      isDisabled={isDisabled}\n      render={\n        props.render ??\n        ((domProps) => (\n          <motion.button\n            {...(domProps as HTMLMotionProps<\"button\">)}\n            whileTap={reduceMotion || isDisabled ? undefined : { scale: 0.96 }}\n            transition={{ type: \"spring\", stiffness: 500, damping: 36 }}\n          />\n        ))\n      }\n    />\n  );\n}\n"
+      "content": "\"use client\";\n\nimport {\n  Button,\n  type ButtonProps,\n  composeRenderProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport function PressButton({ className, ...props }: ButtonProps) {\n  return (\n    <Button\n      data-slot=\"press-button\"\n      {...props}\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"transition-[scale] duration-150 ease-out-quint motion-safe:pressed:scale-[0.96]\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n"
     }
   ]
 }
