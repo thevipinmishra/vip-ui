@@ -1,7 +1,8 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import { type ReactNode, useId, useRef, useState } from "react";
+import { type ReactNode, useId, useState } from "react";
+import { usePress } from "react-aria";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { CodeScrollArea } from "./code-scroll-area";
@@ -30,28 +31,11 @@ export function CodeFrame({
 }) {
   const [expanded, setExpanded] = useState(false);
   const panelId = useId();
-  const headerButtonRef = useRef<HTMLButtonElement>(null);
-  const overlayButtonRef = useRef<HTMLButtonElement>(null);
   const reduceMotion = useReducedMotion();
-  const lineCount = code.trim().split("\n").length;
-  const canExpand = previewCode && lineCount > 6;
-  const expandButton = (
-    <Button
-      ref={headerButtonRef}
-      variant="ghost"
-      size="default"
-      onPress={() => {
-        setExpanded(!expanded);
-        if (expanded && window.matchMedia("(max-width: 639px)").matches) {
-          requestAnimationFrame(() => overlayButtonRef.current?.focus());
-        }
-      }}
-      aria-expanded={expanded}
-      aria-controls={panelId}
-    >
-      {expanded ? "Show less" : "View code"}
-    </Button>
-  );
+  const canExpand = previewCode && code.trim().split("\n").length > 8;
+  const collapsed = canExpand && !expanded;
+  const toggle = () => setExpanded(!expanded);
+  const { pressProps } = usePress({ onPress: toggle });
 
   return (
     <div
@@ -64,12 +48,7 @@ export function CodeFrame({
     >
       <div className="flex min-h-12 flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-border/70 px-3 py-2 sm:px-4">
         {header ?? (
-          <div
-            className={cn(
-              "flex min-w-0 flex-1 items-center gap-2.5",
-              canExpand && expanded && "max-sm:basis-full",
-            )}
-          >
+          <div className="flex min-w-0 flex-1 items-center gap-2.5">
             {filename && (
               <span
                 className="min-w-0 truncate font-mono text-[11px] text-code-foreground"
@@ -82,9 +61,19 @@ export function CodeFrame({
         )}
         <div className="flex shrink-0 items-center gap-1.5">
           {canExpand && (
-            <div className={!expanded ? "max-sm:hidden" : undefined}>
-              {expandButton}
-            </div>
+            <>
+              <Button
+                variant="minimal"
+                size="xs"
+                className="h-8 rounded-md px-2.5 text-xs hover:bg-accent pressed:bg-accent"
+                onPress={toggle}
+                aria-expanded={expanded}
+                aria-controls={panelId}
+              >
+                {expanded ? "Show less" : "Show more"}
+              </Button>
+              <div aria-hidden="true" className="h-4 w-px bg-border" />
+            </>
           )}
           <CopyButton
             key={code}
@@ -92,7 +81,7 @@ export function CodeFrame({
             label={copyText}
             iconOnly
             variant="minimal"
-            className="size-8 data-[status=copied]:text-foreground data-[status=failed]:text-destructive"
+            className="size-8 hover:bg-accent pressed:bg-accent data-[status=copied]:text-foreground data-[status=failed]:text-destructive"
           />
         </div>
       </div>
@@ -107,32 +96,27 @@ export function CodeFrame({
       >
         <div
           id={panelId}
-          aria-hidden={canExpand && !expanded ? true : undefined}
-          inert={canExpand && !expanded}
+          aria-hidden={collapsed || undefined}
+          inert={collapsed}
         >
           <CodeScrollArea
             label={codeLabel ?? `Code for ${filename}`}
-            showScrollbar={!canExpand || expanded}
+            showScrollbar={!collapsed}
             scrollable={scrollable}
           >
             {children}
           </CodeScrollArea>
         </div>
-        {canExpand && !expanded && (
-          <div className="absolute inset-x-0 bottom-0 z-10 flex justify-center bg-gradient-to-b from-transparent to-code pb-3 pt-12">
-            <Button
-              ref={overlayButtonRef}
-              variant="ghost"
-              size="default"
-              onPress={() => {
-                setExpanded(true);
-                requestAnimationFrame(() => headerButtonRef.current?.focus());
-              }}
-              aria-expanded={false}
-              aria-controls={panelId}
-            >
-              View code
-            </Button>
+        {canExpand && (
+          <div
+            {...pressProps}
+            aria-hidden="true"
+            className={cn(
+              "absolute inset-x-0 bottom-0 z-10 flex h-20 cursor-pointer items-end justify-center bg-linear-to-b from-code/0 to-code to-70% pb-3 font-medium text-muted-foreground text-xs transition-[opacity,color] duration-200 ease-out-quint hover:text-foreground",
+              expanded && "pointer-events-none opacity-0",
+            )}
+          >
+            Show more
           </div>
         )}
       </motion.div>
