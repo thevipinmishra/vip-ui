@@ -50,7 +50,11 @@ export function ProgressRing({
               aria-hidden="true"
               style={{ transformOrigin: "50% 50%" }}
               animate={{
-                rotate: isIndeterminate ? (reducedMotion ? -50 : 360) : 0,
+                transform: isIndeterminate
+                  ? reducedMotion
+                    ? "rotate(-50deg)"
+                    : ["rotate(0deg)", "rotate(360deg)"]
+                  : "rotate(0deg)",
               }}
               transition={
                 isIndeterminate && !reducedMotion

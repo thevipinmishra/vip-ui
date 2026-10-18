@@ -47,11 +47,21 @@ export function Spinner({
       className={spinnerStyles({ size, className })}
     >
       {variant === "ring" && (
-        <svg
+        <motion.svg
           viewBox="0 0 40 40"
           fill="none"
           className="size-full"
           aria-hidden="true"
+          animate={{
+            transform: still
+              ? "rotate(0deg)"
+              : ["rotate(0deg)", "rotate(360deg)"],
+          }}
+          transition={transitionFor(reducedMotion, {
+            duration: 0.8,
+            ease: "linear",
+            repeat: Infinity,
+          })}
         >
           <circle
             cx="20"
@@ -61,7 +71,7 @@ export function Spinner({
             strokeOpacity="0.18"
             strokeWidth="4"
           />
-          <motion.circle
+          <circle
             cx="20"
             cy="20"
             r="15"
@@ -69,16 +79,9 @@ export function Spinner({
             strokeWidth="4"
             strokeLinecap="round"
             strokeDasharray="28 95"
-            style={{ transformOrigin: "50% 50%" }}
-            initial={{ rotate: -90 }}
-            animate={{ rotate: still ? -90 : 270 }}
-            transition={transitionFor(reducedMotion, {
-              duration: 0.8,
-              ease: "linear",
-              repeat: Infinity,
-            })}
+            transform="rotate(-90 20 20)"
           />
-        </svg>
+        </motion.svg>
       )}
       {variant === "dots" && (
         <span
@@ -91,11 +94,14 @@ export function Spinner({
               className="size-[20%] rounded-full bg-current forced-colors:bg-[CanvasText]"
               animate={
                 still
-                  ? { opacity: 1, scale: 1 }
+                  ? { opacity: 1, transform: "translateY(0%) scale(1)" }
                   : {
                       opacity: [0.38, 1, 0.38],
-                      scale: [0.78, 1, 0.78],
-                      y: [0, "-20%", 0],
+                      transform: [
+                        "translateY(0%) scale(0.78)",
+                        "translateY(-20%) scale(1)",
+                        "translateY(0%) scale(0.78)",
+                      ],
                     }
               }
               transition={transitionFor(reducedMotion, {

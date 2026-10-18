@@ -61,8 +61,15 @@ export function AgentStatus({
                 initial={false}
                 animate={
                   reduceMotion
-                    ? { opacity: 1, y: 0 }
-                    : { opacity: [0.35, 1, 0.35], y: [0, -2, 0] }
+                    ? { opacity: 1, transform: "translateY(0px)" }
+                    : {
+                        opacity: [0.35, 1, 0.35],
+                        transform: [
+                          "translateY(0px)",
+                          "translateY(-2px)",
+                          "translateY(0px)",
+                        ],
+                      }
                 }
                 transition={
                   reduceMotion
