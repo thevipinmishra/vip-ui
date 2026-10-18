@@ -2,13 +2,14 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import type { ReactNode } from "react";
 import { getComponent, getNeighbors } from "@/lib/catalog";
-import { customComponentApi, groupApiProps } from "@/lib/component-api";
+import { componentApi } from "@/lib/component-api";
 import {
   type ComponentExampleMetadata,
   exampleAnchor,
 } from "@/lib/component-examples";
 import { allComponents } from "@/lib/navigation";
 import { registryUrl } from "@/lib/registry-docs";
+import { ApiReference } from "./api-reference";
 import { ComponentComposition } from "./component-composition";
 import { compositions } from "./component-compositions";
 import { DocsHeader, DocsPager, ExternalLink, TextLink } from "./guide";
@@ -83,9 +84,8 @@ export async function ComponentPage({
     ),
   );
   const cliUrl = registryUrl(componentSlug);
-  const customApi = customComponentApi[componentSlug];
-  const apiGroups = customApi ? groupApiProps(customApi) : [];
-  const reactAriaDocsHref = getComponent(componentSlug)?.reactAriaDocsHref;
+  const apiParts = componentApi[componentSlug] ?? [];
+  const reactAria = getComponent(componentSlug)?.reactAria;
   return (
     <article>
       <DocsHeader
@@ -166,68 +166,22 @@ export async function ComponentPage({
         </section>
       ))}
 
-      {(apiGroups.length > 0 || reactAriaDocsHref) && (
+      {(apiParts.length > 0 || reactAria) && (
         <section id="api" className="mt-14 scroll-mt-24">
-          <div className="mb-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-            <h2 className="text-[23px] font-semibold tracking-[-0.045em]">
-              API reference
-            </h2>
-            {reactAriaDocsHref && (
-              <ExternalLink href={reactAriaDocsHref} className="text-sm">
-                React Aria props
+          <SectionHeading title="API reference" />
+          {reactAria && (
+            <p className="mb-5 max-w-[670px] text-sm leading-7 text-muted-foreground">
+              {apiParts.length > 0
+                ? "vip/ui adds or changes the props below. For all other props, see "
+                : `${name} takes the props of `}
+              <ExternalLink href={reactAria.href}>
+                React Aria {reactAria.name}
               </ExternalLink>
-            )}
-          </div>
-          {apiGroups.length > 0 && (
-            <div className="space-y-8">
-              {apiGroups.map(({ component, props }) => (
-                <div key={component}>
-                  {(apiGroups.length > 1 ||
-                    component.toLowerCase() !==
-                      componentSlug.replaceAll("-", "")) && (
-                    <h3 className="mb-3 text-sm font-semibold text-foreground">
-                      {component}
-                    </h3>
-                  )}
-                  <dl className="divide-y divide-border/70 rounded-xl border border-border/70 bg-card/50 px-4 sm:px-5">
-                    {props.map((item) => (
-                      <div
-                        key={item.prop}
-                        className="grid gap-x-6 gap-y-1.5 py-4 sm:grid-cols-[minmax(0,12rem)_minmax(0,1fr)]"
-                      >
-                        <dt className="min-w-0 font-mono text-[13px] font-medium text-foreground [overflow-wrap:anywhere]">
-                          {item.prop}
-                        </dt>
-                        <dd className="min-w-0">
-                          <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 text-xs text-muted-foreground">
-                            <code className="font-mono [overflow-wrap:anywhere]">
-                              {item.type}
-                            </code>
-                            {item.defaultValue !== "—" && (
-                              <span>
-                                {item.defaultValue === "required" ? (
-                                  "Required"
-                                ) : (
-                                  <>
-                                    Default{" "}
-                                    <code className="font-mono text-foreground [overflow-wrap:anywhere]">
-                                      {item.defaultValue}
-                                    </code>
-                                  </>
-                                )}
-                              </span>
-                            )}
-                          </div>
-                          <p className="mt-1.5 text-[13px] leading-5 text-muted-foreground">
-                            {item.description}
-                          </p>
-                        </dd>
-                      </div>
-                    ))}
-                  </dl>
-                </div>
-              ))}
-            </div>
+              .
+            </p>
+          )}
+          {apiParts.length > 0 && (
+            <ApiReference parts={apiParts} slug={componentSlug} />
           )}
         </section>
       )}

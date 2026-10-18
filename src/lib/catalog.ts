@@ -579,12 +579,16 @@ const reactAriaDocs: Record<string, string> = {
   "data-table": "https://react-aria.adobe.com/Table",
 };
 
+function reactAriaLink(href: string | undefined) {
+  return href ? { name: new URL(href).pathname.slice(1), href } : undefined;
+}
+
 export interface CatalogComponent {
   slug: string;
   name: string;
   group: string;
   useFor: string;
-  reactAriaDocsHref?: string;
+  reactAria?: { name: string; href: string };
 }
 
 export interface CatalogGroup {
@@ -599,7 +603,7 @@ export const catalogGroups: CatalogGroup[] = catalog.map((group) => ({
   components: group.items.map((item) => ({
     ...item,
     group: group.title,
-    reactAriaDocsHref: reactAriaDocs[item.slug],
+    reactAria: reactAriaLink(reactAriaDocs[item.slug]),
   })),
 }));
 

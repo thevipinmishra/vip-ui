@@ -1,11 +1,18 @@
 import { ArrowUpRightIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { ApiReference } from "@/components/docs/api-reference";
 import { CodeBlock } from "@/components/docs/code-block";
 import { InstallTabs } from "@/components/docs/install-tabs";
 import { ManualInstall } from "@/components/docs/manual-install";
 import { PackageManagerCommand } from "@/components/docs/package-manager-command";
-import { type ApiProp, groupApiProps } from "@/lib/component-api";
+import type {
+  ChartAction,
+  ChartFrame,
+  ChartLegend,
+  ChartTable,
+} from "@/components/ui/chart";
+import { apiPart } from "@/lib/component-api";
 import { registryUrl } from "@/lib/registry-docs";
 import { cn } from "@/lib/utils";
 
@@ -49,52 +56,65 @@ const theming = `:root {
 
 const override = `<ChartFrame style={{ "--ts-chart-1": "var(--chart-3)" } as CSSProperties}>`;
 
-const api: ApiProp[] = [
-  {
-    component: "ChartFrame",
-    prop: "style",
-    type: "CSSProperties",
-    defaultValue: "—",
-    description:
-      "Set --ts-chart-1 to --ts-chart-6 to change the colors of one chart.",
-  },
-  {
-    component: "ChartAction",
-    prop: "children",
-    type: "ReactNode",
-    defaultValue: "—",
-    description:
-      "Controls for the chart. They show beside the caption, or below it on narrow screens.",
-  },
-  {
-    component: "ChartLegend",
-    prop: "items",
-    type: "{ label: string; color: string }[]",
-    defaultValue: "required",
-    description: "One swatch and label for each series.",
-  },
-  {
-    component: "ChartTable",
-    prop: "caption",
-    type: "string",
-    defaultValue: "required",
-    description: "Names the table for screen readers.",
-  },
-  {
-    component: "ChartTable",
-    prop: "columns",
-    type: "string[]",
-    defaultValue: "required",
-    description: "Column headings. The first column labels each row.",
-  },
-  {
-    component: "ChartTable",
-    prop: "rows",
-    type: "(string | number)[][]",
-    defaultValue: "required",
-    description:
-      "The exact values. The table is visible to screen readers only.",
-  },
+const api = [
+  apiPart<typeof ChartFrame>({
+    name: "ChartFrame",
+    props: [
+      {
+        name: "--ts-chart-1",
+        type: "color",
+        default: "var(--chart-1)",
+        description:
+          "The color of the first series. --ts-chart-2 to --ts-chart-6 set the other series. Set them in style to change the colors of one chart.",
+      },
+    ],
+  }),
+  apiPart<typeof ChartAction>({
+    name: "ChartAction",
+    props: [
+      {
+        name: "children",
+        type: "ReactNode",
+        description:
+          "Controls for the chart. They show beside the caption, or below it on narrow screens.",
+      },
+    ],
+  }),
+  apiPart<typeof ChartLegend>({
+    name: "ChartLegend",
+    props: [
+      {
+        name: "items",
+        type: "{ label: string; color: string }[]",
+        required: true,
+        description: "One swatch and label for each series.",
+      },
+    ],
+  }),
+  apiPart<typeof ChartTable>({
+    name: "ChartTable",
+    props: [
+      {
+        name: "caption",
+        type: "string",
+        required: true,
+        description: "Names the table for screen readers.",
+      },
+      {
+        name: "columns",
+        type: "string[]",
+        required: true,
+        description: "Column headings. The first column labels each row.",
+      },
+      {
+        name: "rows",
+        type: "(string | number)[][]",
+        required: true,
+        description:
+          "The exact values. The table is visible to screen readers only.",
+      },
+    ],
+  }),
 ];
 
 const parts = [
@@ -111,7 +131,6 @@ const linkClass = "text-primary underline underline-offset-4";
 
 export async function ChartDocumentation() {
   const cliUrl = registryUrl("chart");
-  const apiGroups = groupApiProps(api);
 
   return (
     <section
@@ -254,40 +273,7 @@ export async function ChartDocumentation() {
             All parts also accept <code>className</code> and native HTML
             attributes.
           </Note>
-          <div className="space-y-8">
-            {apiGroups.map(({ component, props }) => (
-              <div key={component}>
-                <h3 className="mb-3 text-sm font-semibold text-foreground">
-                  {component}
-                </h3>
-                <dl className="divide-y divide-border/70 rounded-xl border border-border/70 bg-card/50 px-4 sm:px-5">
-                  {props.map((prop) => (
-                    <div
-                      key={prop.prop}
-                      className="grid gap-x-6 gap-y-1.5 py-4 sm:grid-cols-[minmax(0,12rem)_minmax(0,1fr)]"
-                    >
-                      <dt className="min-w-0 font-mono text-[13px] font-medium text-foreground [overflow-wrap:anywhere]">
-                        {prop.prop}
-                      </dt>
-                      <dd className="min-w-0">
-                        <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 text-xs text-muted-foreground">
-                          <code className="font-mono [overflow-wrap:anywhere]">
-                            {prop.type}
-                          </code>
-                          {prop.defaultValue === "required" && (
-                            <span>Required</span>
-                          )}
-                        </div>
-                        <p className="mt-1.5 text-[13px] leading-5 text-muted-foreground">
-                          {prop.description}
-                        </p>
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-            ))}
-          </div>
+          <ApiReference parts={api} slug="chart" />
         </section>
       </div>
     </section>

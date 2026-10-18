@@ -1,7 +1,7 @@
 import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import { catalogComponents, getComponent } from "@/lib/catalog";
-import { customComponentApi } from "@/lib/component-api";
+import { componentApi } from "@/lib/component-api";
 import {
   type ComponentPageData,
   getComponentPageData,
@@ -77,9 +77,9 @@ export async function GET(
     manual: manualInstallPlan(registryItem, slug),
     cliUrl: registryUrl(slug),
     usage,
-    api: customComponentApi[slug],
+    api: componentApi[slug],
     examples: pageData ? await buildExamples(pageData) : undefined,
-    reactAriaDocsHref: component.reactAriaDocsHref,
+    reactAria: component.reactAria,
   });
 
   return new Response(markdown, {
