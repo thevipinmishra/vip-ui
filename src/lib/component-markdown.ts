@@ -1,4 +1,4 @@
-import { type ApiProp, groupApiProps } from "./component-api";
+import { type ApiPart, showsPartHeadings } from "./component-api";
 import { displayPath, fileName, type ManualInstallPlan } from "./registry-docs";
 
 export interface ComponentMarkdownInput {
@@ -9,7 +9,7 @@ export interface ComponentMarkdownInput {
   manual: ManualInstallPlan;
   cliUrl?: string | null;
   usage?: { code: string; filename: string };
-  api?: ApiProp[];
+  api?: readonly ApiPart[];
   examples?: {
     title: string;
     description?: string;
@@ -17,7 +17,7 @@ export interface ComponentMarkdownInput {
     filename?: string;
     prerequisite?: string;
   }[];
-  reactAriaDocsHref?: string;
+  reactAria?: { name: string; href: string };
 }
 
 export function buildComponentMarkdown({
@@ -30,7 +30,7 @@ export function buildComponentMarkdown({
   usage,
   api,
   examples,
-  reactAriaDocsHref,
+  reactAria,
 }: ComponentMarkdownInput): string {
   const pageUrl = `${site}/components/${slug}`;
   const lines: string[] = [`# ${name}`, "", description.trim()];
@@ -116,31 +116,28 @@ export function buildComponentMarkdown({
     });
   }
 
-  if ((api && api.length > 0) || reactAriaDocsHref) {
+  if (api?.length || reactAria) {
     lines.push("", "## API reference");
-    if (reactAriaDocsHref) {
-      lines.push("", `[React Aria props](${reactAriaDocsHref})`);
+    if (reactAria) {
+      const link = `[React Aria ${reactAria.name}](${reactAria.href})`;
+      lines.push(
+        "",
+        api?.length
+          ? `vip/ui adds or changes the props below. For all other props, see ${link}.`
+          : `${name} takes the props of ${link}.`,
+      );
     }
     if (api?.length) {
-      const groups = groupApiProps(api);
-      for (const { component, props } of groups) {
-        if (
-          groups.length > 1 ||
-          component.toLowerCase() !== slug.replaceAll("-", "")
-        ) {
-          lines.push("", `### ${component}`);
-        } else {
-          lines.push("");
-        }
-        for (const row of props) {
-          const defaultText =
-            row.defaultValue === "—"
-              ? ""
-              : row.defaultValue === "required"
-                ? "; required"
-                : `; default: \`${row.defaultValue}\``;
+      const headings = showsPartHeadings(api, slug);
+      for (const part of api) {
+        lines.push("");
+        if (headings) lines.push(`### ${part.name}`, "");
+        if (part.description) lines.push(part.description, "");
+        for (const prop of part.props) {
+          const value = prop.default ? ` = ${prop.default}` : "";
+          const required = prop.required ? " (required)" : "";
           lines.push(
-            `- \`${row.prop}\` (\`${row.type}\`${defaultText}): ${row.description}`,
+            `- \`${prop.name}: ${prop.type}${value}\`${required}: ${prop.description}`,
           );
         }
       }

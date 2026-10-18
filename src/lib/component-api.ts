@@ -1,1968 +1,2405 @@
-export interface ApiProp {
-  component: string;
-  prop: string;
+import type { Accordion, AccordionItem } from "@/components/ui/accordion";
+import type { AgentStatus } from "@/components/ui/agent-status";
+import type { Alert } from "@/components/ui/alert";
+import type { AnimatedNumber } from "@/components/ui/animated-number";
+import type { Attachment, AttachmentList } from "@/components/ui/attachment";
+import type { Autocomplete } from "@/components/ui/autocomplete";
+import type { Avatar } from "@/components/ui/avatar";
+import type { Badge } from "@/components/ui/badge";
+import type { Button } from "@/components/ui/button";
+import type { ButtonGroup } from "@/components/ui/button-group";
+import type { CardTitle } from "@/components/ui/card";
+import type { Checkbox } from "@/components/ui/checkbox";
+import type { CheckboxGroup } from "@/components/ui/checkbox-group";
+import type { ColorField } from "@/components/ui/color-field";
+import type { ColorPicker } from "@/components/ui/color-picker";
+import type { ComboBoxProps, ComboBoxTags } from "@/components/ui/combo-box";
+import type {
+  CommandPalette,
+  CommandPaletteItem,
+  CommandPaletteSection,
+} from "@/components/ui/command-palette";
+import type { CopyButton } from "@/components/ui/copy-button";
+import type { DataTable, DataTableColumn } from "@/components/ui/data-table";
+import type { DateField } from "@/components/ui/date-field";
+import type { DatePicker } from "@/components/ui/date-picker";
+import type { DateRangePicker } from "@/components/ui/date-range-picker";
+import type { DialogClose, DialogContent } from "@/components/ui/dialog";
+import type { EmptyStateTitle } from "@/components/ui/empty-state";
+import type { FileTrigger } from "@/components/ui/file-trigger";
+import type { InlineEdit } from "@/components/ui/inline-edit";
+import type { InputGroup, InputGroupAddon } from "@/components/ui/input-group";
+import type { LayoutMorph } from "@/components/ui/layout-morph";
+import type { Marquee } from "@/components/ui/marquee";
+import type { Message } from "@/components/ui/message";
+import type { Meter } from "@/components/ui/meter";
+import type { NativeSelect } from "@/components/ui/native-select";
+import type { NumberField } from "@/components/ui/number-field";
+import type { Pagination, PaginationLink } from "@/components/ui/pagination";
+import type { PasswordField } from "@/components/ui/password-field";
+import type { PasswordStrengthMeter } from "@/components/ui/password-strength-meter";
+import type { Popover, PopoverDialog } from "@/components/ui/popover";
+import type { Presence } from "@/components/ui/presence";
+import type { PresenceList } from "@/components/ui/presence-list";
+import type { ProgressBar } from "@/components/ui/progress-bar";
+import type { ProgressRing } from "@/components/ui/progress-ring";
+import type { Radio, RadioGroup } from "@/components/ui/radio-group";
+import type { RatingInput } from "@/components/ui/rating-input";
+import type { SearchField } from "@/components/ui/search-field";
+import type { Select } from "@/components/ui/select";
+import type { Sheet, SheetClose } from "@/components/ui/sheet";
+import type { Slider } from "@/components/ui/slider";
+import type { SourceLink } from "@/components/ui/source-link";
+import type { Spinner } from "@/components/ui/spinner";
+import type { StaggerGroup, StaggerItem } from "@/components/ui/stagger-group";
+import type { Stepper } from "@/components/ui/stepper";
+import type { Switch } from "@/components/ui/switch";
+import type {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
+import type { TagGroup } from "@/components/ui/tag-group";
+import type { TextArea } from "@/components/ui/text-area";
+import type { TextField } from "@/components/ui/text-field";
+import type { TextReveal } from "@/components/ui/text-reveal";
+import type { TextScramble } from "@/components/ui/text-scramble";
+import type { TextSwap } from "@/components/ui/text-swap";
+import type { TimeField } from "@/components/ui/time-field";
+import type { TimelineItem, TimelineTitle } from "@/components/ui/timeline";
+import type { showToast, ToastMessage } from "@/components/ui/toast";
+import type { ToggleButton } from "@/components/ui/toggle-button";
+import type { ToggleButtonGroup } from "@/components/ui/toggle-button-group";
+import type { TokenField } from "@/components/ui/token-field";
+import type { ToolCallTrigger } from "@/components/ui/tool-call";
+import type { Toolbar } from "@/components/ui/toolbar";
+import type { TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import type { TreeItem } from "@/components/ui/tree";
+
+interface ApiEntry {
   type: string;
-  defaultValue: string;
   description: string;
 }
 
-export function groupApiProps(api: readonly ApiProp[]) {
-  const groups = new Map<string, ApiProp[]>();
-  for (const prop of api) {
-    const group = groups.get(prop.component);
-    if (group) group.push(prop);
-    else groups.set(prop.component, [prop]);
-  }
-  return Array.from(groups, ([component, props]) => ({ component, props }));
+export interface ApiProp extends ApiEntry {
+  name: string;
+  required?: true;
+  default?: string;
 }
 
-export const customComponentApi: Record<string, ApiProp[]> = {
+export interface ApiPart {
+  name: string;
+  description?: string;
+  props: readonly ApiProp[];
+}
+
+type PropsOf<T> = T extends (props: infer P) => unknown ? P : T;
+type Keys<P> = Extract<keyof P, string>;
+type RequiredKeys<P> = {
+  [K in Keys<P>]-?: object extends Pick<P, K> ? never : K;
+}[Keys<P>];
+
+type TypedProp<P> =
+  | (ApiEntry & { name: RequiredKeys<P>; required: true })
+  | (ApiEntry & {
+      name:
+        | Exclude<Keys<P>, RequiredKeys<P>>
+        | `--${string}`
+        | `data-${string}`;
+      required?: never;
+      default?: string;
+    });
+
+export function apiPart<T>(part: {
+  name: string;
+  description?: string;
+  props: readonly TypedProp<PropsOf<T>>[];
+}): ApiPart {
+  return part;
+}
+
+export function showsPartHeadings(parts: readonly ApiPart[], slug: string) {
+  return (
+    parts.length > 1 ||
+    parts[0]?.name.toLowerCase() !== slug.replaceAll("-", "")
+  );
+}
+
+export const componentApi: Record<string, readonly ApiPart[]> = {
   "text-reveal": [
-    {
-      component: "TextReveal",
-      prop: "text",
-      type: "string",
-      defaultValue: "required",
-      description:
-        "The text to show. Screen readers read it once, as plain text.",
-    },
-    {
-      component: "TextReveal",
-      prop: "split",
-      type: '"words" | "characters"',
-      defaultValue: '"words"',
-      description:
-        "Reveal by word or by character. Use words for scripts that join letters, such as Arabic.",
-    },
-    {
-      component: "TextReveal",
-      prop: "trigger",
-      type: '"mount" | "in-view"',
-      defaultValue: '"in-view"',
-      description:
-        "Start on mount, or the first time the text comes into view.",
-    },
-    {
-      component: "TextReveal",
-      prop: "stagger",
-      type: "number",
-      defaultValue: "0.045",
-      description:
-        "Delay in seconds between units. Long text uses a shorter delay, so the last unit starts within 0.6 seconds of the first.",
-    },
-    {
-      component: "TextReveal",
-      prop: "delay",
-      type: "number",
-      defaultValue: "0",
-      description: "Delay in seconds before the first unit starts.",
-    },
+    apiPart<typeof TextReveal>({
+      name: "TextReveal",
+      props: [
+        {
+          name: "text",
+          type: "string",
+          required: true,
+          description:
+            "The text to show. Screen readers read it once, as plain text.",
+        },
+        {
+          name: "split",
+          type: '"words" | "characters"',
+          default: '"words"',
+          description:
+            "Reveal by word or by character. Use words for scripts that join letters, such as Arabic.",
+        },
+        {
+          name: "trigger",
+          type: '"mount" | "in-view"',
+          default: '"in-view"',
+          description:
+            "Start on mount, or the first time the text comes into view.",
+        },
+        {
+          name: "stagger",
+          type: "number",
+          default: "0.045",
+          description:
+            "Delay in seconds between units. Long text uses a shorter delay, so the last unit starts within 0.6 seconds of the first.",
+        },
+        {
+          name: "delay",
+          type: "number",
+          default: "0",
+          description: "Delay in seconds before the first unit starts.",
+        },
+      ],
+    }),
   ],
   "text-scramble": [
-    {
-      component: "TextScramble",
-      prop: "value",
-      type: "string",
-      defaultValue: "required",
-      description:
-        "The text to show. A change starts a scramble. The first value shows without a scramble. Screen readers get the final text at once.",
-    },
-    {
-      component: "TextScramble",
-      prop: "duration",
-      type: "number",
-      defaultValue: "0.7",
-      description:
-        "Time in seconds to resolve the text. Set 0 to change the text without a scramble.",
-    },
-    {
-      component: "TextScramble",
-      prop: "glyphs",
-      type: "string",
-      defaultValue: "A-Z and 0-9",
-      description:
-        "Characters that show during the scramble. The default monospace font keeps the width the same.",
-    },
+    apiPart<typeof TextScramble>({
+      name: "TextScramble",
+      props: [
+        {
+          name: "value",
+          type: "string",
+          required: true,
+          description:
+            "The text to show. A change starts a scramble. The first value shows without a scramble. Screen readers get the final text at once.",
+        },
+        {
+          name: "duration",
+          type: "number",
+          default: "0.7",
+          description:
+            "Time in seconds to resolve the text. Set 0 to change the text without a scramble.",
+        },
+        {
+          name: "glyphs",
+          type: "string",
+          description:
+            "Characters that show during the scramble. Without it, the scramble uses the letters A to Z and the digits 0 to 9. The default monospace font keeps the width the same.",
+        },
+      ],
+    }),
   ],
   presence: [
-    {
-      component: "Presence",
-      prop: "show",
-      type: "boolean",
-      defaultValue: "required",
-      description:
-        "Shows or hides the content. The content is inert during its exit. Move focus before you hide focused content.",
-    },
-    {
-      component: "Presence",
-      prop: "as",
-      type: '"div" | "span"',
-      defaultValue: '"div"',
-      description: "Outer element. A span is inline-block, so it can move.",
-    },
-    {
-      component: "Presence",
-      prop: "distance",
-      type: "number",
-      defaultValue: "8",
-      description: "Travel in pixels for the entrance and the exit.",
-    },
-    {
-      component: "Presence",
-      prop: "duration",
-      type: "number",
-      defaultValue: "0.2",
-      description: "Entrance time in seconds. The exit takes 70% of this time.",
-    },
+    apiPart<typeof Presence>({
+      name: "Presence",
+      props: [
+        {
+          name: "show",
+          type: "boolean",
+          required: true,
+          description:
+            "Shows or hides the content. The content is inert during its exit. Move focus before you hide focused content.",
+        },
+        {
+          name: "as",
+          type: '"div" | "span"',
+          default: '"div"',
+          description: "Outer element. A span is inline-block, so it can move.",
+        },
+        {
+          name: "distance",
+          type: "number",
+          default: "8",
+          description: "Travel in pixels for the entrance and the exit.",
+        },
+        {
+          name: "duration",
+          type: "number",
+          default: "0.2",
+          description:
+            "Entrance time in seconds. The exit takes 70% of this time.",
+        },
+      ],
+    }),
   ],
   "stagger-group": [
-    {
-      component: "StaggerGroup",
-      prop: "as",
-      type: '"div" | "ul" | "ol"',
-      defaultValue: '"div"',
-      description:
-        "Use ul or ol with li StaggerItem children for a semantic list.",
-    },
-    {
-      component: "StaggerGroup",
-      prop: "trigger",
-      type: '"mount" | "in-view"',
-      defaultValue: '"in-view"',
-      description:
-        "Start the sequence on mount, or the first time the group comes into view.",
-    },
-    {
-      component: "StaggerGroup",
-      prop: "stagger",
-      type: "number",
-      defaultValue: "0.08",
-      description:
-        "Delay in seconds between StaggerItem children. A long group uses a shorter delay, so the last item starts within 0.6 seconds.",
-    },
-    {
-      component: "StaggerItem",
-      prop: "as",
-      type: '"div" | "li"',
-      defaultValue: '"div"',
-      description: "Element that receives the group animation.",
-    },
+    apiPart<typeof StaggerGroup>({
+      name: "StaggerGroup",
+      props: [
+        {
+          name: "as",
+          type: '"div" | "ul" | "ol"',
+          default: '"div"',
+          description:
+            "Use ul or ol with li StaggerItem children for a semantic list.",
+        },
+        {
+          name: "trigger",
+          type: '"mount" | "in-view"',
+          default: '"in-view"',
+          description:
+            "Start the sequence on mount, or the first time the group comes into view.",
+        },
+        {
+          name: "stagger",
+          type: "number",
+          default: "0.08",
+          description:
+            "Delay in seconds between StaggerItem children. A long group uses a shorter delay, so the last item starts within 0.6 seconds.",
+        },
+      ],
+    }),
+    apiPart<typeof StaggerItem>({
+      name: "StaggerItem",
+      props: [
+        {
+          name: "as",
+          type: '"div" | "li"',
+          default: '"div"',
+          description: "Element that receives the group animation.",
+        },
+      ],
+    }),
   ],
   "layout-morph": [
-    {
-      component: "LayoutMorph",
-      prop: "contentKey",
-      type: "string | number",
-      defaultValue: "required",
-      description:
-        "Change it with the content to crossfade the content and animate the height. Other size changes, such as a window resize, do not animate.",
-    },
+    apiPart<typeof LayoutMorph>({
+      name: "LayoutMorph",
+      props: [
+        {
+          name: "contentKey",
+          type: "string | number",
+          required: true,
+          description:
+            "Change it with the content to crossfade the content and animate the height. Other size changes, such as a window resize, do not animate.",
+        },
+      ],
+    }),
   ],
   marquee: [
-    {
-      component: "Marquee",
-      prop: "speed",
-      type: "number",
-      defaultValue: "50",
-      description:
-        "Movement in pixels per second. Hover, focus, and the built-in button pause it. Set 0 to stop it and wrap the items. Reduced motion does the same.",
-    },
-    {
-      component: "Marquee",
-      prop: "reverse",
-      type: "boolean",
-      defaultValue: "false",
-      description:
-        "Move the content toward the end edge instead of the start edge.",
-    },
-    {
-      component: "Marquee",
-      prop: "--marquee-gap",
-      type: "CSS length",
-      defaultValue: "1.5rem",
-      description: "Space between items. Set it in className.",
-    },
-    {
-      component: "Marquee",
-      prop: "children",
-      type: "ReactNode",
-      defaultValue: "required",
-      description:
-        "Items to loop. Do not put IDs in them, because the copies repeat them. The copies are inert and hidden from assistive technology. A focused item moves into view.",
-    },
+    apiPart<typeof Marquee>({
+      name: "Marquee",
+      props: [
+        {
+          name: "speed",
+          type: "number",
+          default: "50",
+          description:
+            "Movement in pixels per second. Hover, focus, and the built-in button pause it. Set 0 to stop it and wrap the items. Reduced motion does the same.",
+        },
+        {
+          name: "reverse",
+          type: "boolean",
+          default: "false",
+          description:
+            "Move the content toward the end edge instead of the start edge.",
+        },
+        {
+          name: "children",
+          type: "ReactNode",
+          description:
+            "Items to loop. Do not put IDs in them, because the copies repeat them. The copies are inert and hidden from assistive technology. A focused item moves into view.",
+        },
+        {
+          name: "--marquee-gap",
+          type: "CSS length",
+          default: "1.5rem",
+          description: "Space between items. Set it in className.",
+        },
+      ],
+    }),
   ],
   "combo-box": [
-    {
-      component: "ComboBox",
-      prop: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      defaultValue: '"lg"',
-      description:
-        "Sets the size of the input and of the trigger. The list keeps one row height.",
-    },
-    {
-      component: "ComboBox",
-      prop: "options",
-      type: "ComboBoxOption[]",
-      defaultValue: "—",
-      description: "Options for the default list layout.",
-    },
-    {
-      component: "ComboBox",
-      prop: "label / description",
-      type: "string",
-      defaultValue: "—",
-      description: "Label and help text in the default layout.",
-    },
-    {
-      component: "ComboBox",
-      prop: "placeholder",
-      type: "string",
-      defaultValue: '"Search options"',
-      description: "Input placeholder in the default layout.",
-    },
-    {
-      component: "ComboBox",
-      prop: "value / defaultValue",
-      type: "string",
-      defaultValue: "—",
-      description: "Selected option id in single-selection mode.",
-    },
-    {
-      component: "ComboBox",
-      prop: "onValueChange",
-      type: "(value: string) => void",
-      defaultValue: "—",
-      description:
-        "Receives the selected id in single-selection mode, or an empty string when the selection is cleared.",
-    },
-    {
-      component: "ComboBoxTags",
-      prop: "label",
-      type: "string",
-      defaultValue: '"Selected options"',
-      description: "Accessible name for the selected tags.",
-    },
-    {
-      component: "ComboBoxTags",
-      prop: "emptyText",
-      type: "string",
-      defaultValue: '"No options selected."',
-      description: "Text shown when no tags are selected.",
-    },
+    apiPart<ComboBoxProps>({
+      name: "ComboBox",
+      props: [
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"lg"',
+          description:
+            "Sets the size of the input and of the trigger. The list keeps one row height.",
+        },
+        {
+          name: "options",
+          type: "ComboBoxOption[]",
+          description: "Options for the default list layout.",
+        },
+        {
+          name: "label",
+          type: "string",
+          description: "Label above the input in the default layout.",
+        },
+        {
+          name: "description",
+          type: "string",
+          description: "Help text below the input in the default layout.",
+        },
+        {
+          name: "placeholder",
+          type: "string",
+          default: '"Search options"',
+          description: "Input placeholder in the default layout.",
+        },
+        {
+          name: "selectionMode",
+          type: '"single" | "multiple"',
+          default: '"single"',
+          description:
+            'Set "multiple" to let the user select more than one option. The default layout then shows the selected options as tags. value, defaultValue, and onValueChange work only in single-selection mode. In multiple-selection mode, value and defaultValue take an array of option ids, and onChange receives the new array.',
+        },
+        {
+          name: "value",
+          type: "string",
+          description:
+            "The selected option id, controlled. Use it only in single-selection mode.",
+        },
+        {
+          name: "defaultValue",
+          type: "string",
+          description:
+            "The option id that is selected at first, uncontrolled. Use it only in single-selection mode.",
+        },
+        {
+          name: "onValueChange",
+          type: "(value: string) => void",
+          description:
+            "Receives the selected id in single-selection mode, or an empty string when the selection is cleared.",
+        },
+      ],
+    }),
+    apiPart<typeof ComboBoxTags>({
+      name: "ComboBoxTags",
+      props: [
+        {
+          name: "label",
+          type: "string",
+          default: '"Selected options"',
+          description: "Accessible name for the selected tags.",
+        },
+        {
+          name: "emptyText",
+          type: "string",
+          default: '"No options selected."',
+          description: "Text shown when no tags are selected.",
+        },
+      ],
+    }),
   ],
   attachment: [
-    {
-      component: "AttachmentList",
-      prop: "children",
-      type: "ReactNode",
-      defaultValue: "required",
-      description: "Attachment items. Give each one a unique key.",
-    },
-    {
-      component: "Attachment",
-      prop: "name",
-      type: "string",
-      defaultValue: "required",
-      description: "Filename shown in the row.",
-    },
-    {
-      component: "Attachment",
-      prop: "size",
-      type: "number",
-      defaultValue: "—",
-      description: "File size in bytes.",
-    },
-    {
-      component: "Attachment",
-      prop: "previewUrl",
-      type: "string",
-      defaultValue: "—",
-      description: "Image preview URL. Without it, the row shows a file icon.",
-    },
-    {
-      component: "Attachment",
-      prop: "status",
-      type: '"ready" | "uploading" | "uploaded" | "error"',
-      defaultValue: '"ready"',
-      description: "Upload state. Your app sets it.",
-    },
-    {
-      component: "Attachment",
-      prop: "progress",
-      type: "number",
-      defaultValue: "—",
-      description:
-        "Upload percentage from 0 to 100. Without it, the progress bar is indeterminate.",
-    },
-    {
-      component: "Attachment",
-      prop: "errorMessage",
-      type: "string",
-      defaultValue: '"Could not upload"',
-      description: "Message shown when status is error.",
-    },
-    {
-      component: "Attachment",
-      prop: "onRemove",
-      type: "() => void",
-      defaultValue: "—",
-      description: "Shows a remove button and handles its press.",
-    },
-    {
-      component: "Attachment",
-      prop: "onRetry",
-      type: "() => void",
-      defaultValue: "—",
-      description: "Shows a retry button when status is error.",
-    },
+    apiPart<typeof AttachmentList>({
+      name: "AttachmentList",
+      props: [
+        {
+          name: "children",
+          type: "ReactNode",
+          required: true,
+          description: "Attachment items. Give each one a unique key.",
+        },
+      ],
+    }),
+    apiPart<typeof Attachment>({
+      name: "Attachment",
+      props: [
+        {
+          name: "name",
+          type: "string",
+          required: true,
+          description: "Filename shown in the row.",
+        },
+        { name: "size", type: "number", description: "File size in bytes." },
+        {
+          name: "previewUrl",
+          type: "string",
+          description:
+            "Image preview URL. Without it, the row shows a file icon.",
+        },
+        {
+          name: "status",
+          type: '"ready" | "uploading" | "uploaded" | "error"',
+          default: '"ready"',
+          description: "Upload state. Your app sets it.",
+        },
+        {
+          name: "progress",
+          type: "number",
+          description:
+            "Upload percentage from 0 to 100. Without it, the progress bar is indeterminate.",
+        },
+        {
+          name: "errorMessage",
+          type: "string",
+          default: '"Could not upload"',
+          description: "Message shown when status is error.",
+        },
+        {
+          name: "onRemove",
+          type: "() => void",
+          description: "Shows a remove button and handles its press.",
+        },
+        {
+          name: "onRetry",
+          type: "() => void",
+          description: "Shows a retry button when status is error.",
+        },
+      ],
+    }),
   ],
   "native-select": [
-    {
-      component: "NativeSelect",
-      prop: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      defaultValue: '"lg"',
-      description:
-        "Sets the size of the select box. The HTML size attribute is not available.",
-    },
-    {
-      component: "NativeSelect",
-      prop: "label",
-      type: "string",
-      defaultValue: "required",
-      description: "Visible label for the select.",
-    },
-    {
-      component: "NativeSelect",
-      prop: "description / error",
-      type: "string",
-      defaultValue: "—",
-      description: "Help and validation text linked to the select.",
-    },
-    {
-      component: "NativeSelect",
-      prop: "isInvalid",
-      type: "boolean",
-      defaultValue: "false",
-      description: "Marks the select invalid. A value for error does the same.",
-    },
-    {
-      component: "NativeSelect",
-      prop: "placeholder",
-      type: "string",
-      defaultValue: "—",
-      description: "Adds an empty option.",
-    },
-    {
-      component: "NativeSelect",
-      prop: "containerClassName",
-      type: "string",
-      defaultValue: "—",
-      description: "Classes for the outer field layout.",
-    },
+    apiPart<typeof NativeSelect>({
+      name: "NativeSelect",
+      props: [
+        {
+          name: "label",
+          type: "string",
+          required: true,
+          description: "Visible label for the select.",
+        },
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"lg"',
+          description:
+            "Sets the size of the select box. The HTML size attribute is not available.",
+        },
+        {
+          name: "description",
+          type: "string",
+          description:
+            "Help text below the select. Linked with aria-describedby.",
+        },
+        {
+          name: "error",
+          type: "string",
+          description:
+            "Validation text below the select. Linked with aria-describedby. A value also marks the select invalid.",
+        },
+        {
+          name: "isInvalid",
+          type: "boolean",
+          default: "false",
+          description:
+            "Marks the select invalid. A value for error does the same.",
+        },
+        {
+          name: "placeholder",
+          type: "string",
+          description: "Adds an empty option.",
+        },
+        {
+          name: "containerClassName",
+          type: "string",
+          description: "Classes for the outer field layout.",
+        },
+      ],
+    }),
   ],
   select: [
-    {
-      component: "Select",
-      prop: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      defaultValue: '"lg"',
-      description:
-        "Sets the size of the trigger. The list keeps one row height.",
-    },
-    {
-      component: "Select",
-      prop: "options",
-      type: "SelectOption[]",
-      defaultValue: "—",
-      description:
-        "Options for the default layout. Each option has an id, a name, and an optional description.",
-    },
-    {
-      component: "Select",
-      prop: "label / description",
-      type: "string",
-      defaultValue: "—",
-      description:
-        "Label and help text for the default layout. When you compose the parts, add SelectLabel or pass aria-label.",
-    },
-    {
-      component: "Select",
-      prop: "value / defaultValue",
-      type: "string",
-      defaultValue: "—",
-      description:
-        "The selected option id, not its name. Sets selectedKey and defaultSelectedKey.",
-    },
-    {
-      component: "Select",
-      prop: "onValueChange",
-      type: "(value: string) => void",
-      defaultValue: "—",
-      description:
-        "Receives the selected option id, or an empty string when the selection is cleared. onSelectionChange also runs.",
-    },
-    {
-      component: "Select",
-      prop: "placeholder",
-      type: "string",
-      defaultValue: '"Select an option"',
-      description: "Text in the trigger when no option is selected.",
-    },
+    apiPart<typeof Select>({
+      name: "Select",
+      props: [
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"lg"',
+          description:
+            "Sets the size of the trigger. The list keeps one row height.",
+        },
+        {
+          name: "options",
+          type: "SelectOption[]",
+          description:
+            "Options for the default layout. Each option has an id, a name, and an optional description.",
+        },
+        {
+          name: "label",
+          type: "string",
+          description:
+            "Label above the trigger in the default layout. When you compose the parts, add SelectLabel or pass aria-label.",
+        },
+        {
+          name: "description",
+          type: "string",
+          description: "Help text below the trigger in the default layout.",
+        },
+        {
+          name: "value",
+          type: "string",
+          description:
+            "The selected option id, not its name. Sets selectedKey.",
+        },
+        {
+          name: "defaultValue",
+          type: "string",
+          description:
+            "The option id that is selected at first, not its name. Sets defaultSelectedKey.",
+        },
+        {
+          name: "onValueChange",
+          type: "(value: string) => void",
+          description:
+            "Receives the selected option id, or an empty string when the selection is cleared. onSelectionChange also runs.",
+        },
+        {
+          name: "placeholder",
+          type: "string",
+          default: '"Select an option"',
+          description: "Text in the trigger when no option is selected.",
+        },
+      ],
+    }),
   ],
   "agent-status": [
-    {
-      component: "AgentStatus",
-      prop: "state",
-      type: '"thinking" | "working" | "complete" | "error"',
-      defaultValue: "required",
-      description:
-        "Sets the icon and the state text. Thinking and working animate unless reduced motion is on.",
-    },
-    {
-      component: "AgentStatus",
-      prop: "label",
-      type: "string",
-      defaultValue: "required",
-      description: "The current step. Screen readers announce changes.",
-    },
-    {
-      component: "AgentStatus",
-      prop: "detail",
-      type: "string",
-      defaultValue: "—",
-      description: "Text below the label.",
-    },
+    apiPart<typeof AgentStatus>({
+      name: "AgentStatus",
+      props: [
+        {
+          name: "state",
+          type: '"thinking" | "working" | "complete" | "error"',
+          required: true,
+          description:
+            "Sets the icon and the state text. Thinking and working animate unless reduced motion is on.",
+        },
+        {
+          name: "label",
+          type: "string",
+          required: true,
+          description: "The current step. Screen readers announce changes.",
+        },
+        {
+          name: "detail",
+          type: "string",
+          description: "Text below the label.",
+        },
+      ],
+    }),
   ],
   message: [
-    {
-      component: "Message",
-      prop: "sender",
-      type: "string",
-      defaultValue: "required",
-      description:
-        'The sender name. The default accessible name is "Message from {sender}".',
-    },
-    {
-      component: "Message",
-      prop: "side",
-      type: '"incoming" | "outgoing" | "system"',
-      defaultValue: '"incoming"',
-      description: "Sets the alignment and the style.",
-    },
-    {
-      component: "Message",
-      prop: "avatar",
-      type: "ReactNode",
-      defaultValue: "—",
-      description: "Shows beside an incoming message.",
-    },
-    {
-      component: "Message",
-      prop: "timestamp",
-      type: "string",
-      defaultValue: "—",
-      description: "The visible time.",
-    },
-    {
-      component: "Message",
-      prop: "dateTime",
-      type: "string",
-      defaultValue: "—",
-      description:
-        "The machine-readable time. Set it to render the timestamp in a time element.",
-    },
-    {
-      component: "Message",
-      prop: "status",
-      type: "string",
-      defaultValue: "—",
-      description: 'The delivery status, for example "Sent".',
-    },
-    {
-      component: "Message",
-      prop: "actions",
-      type: "ReactNode",
-      defaultValue: "—",
-      description: "Buttons below the message.",
-    },
+    apiPart<typeof Message>({
+      name: "Message",
+      props: [
+        {
+          name: "sender",
+          type: "string",
+          required: true,
+          description:
+            'The sender name. The default accessible name is "Message from {sender}".',
+        },
+        {
+          name: "side",
+          type: '"incoming" | "outgoing" | "system"',
+          default: '"incoming"',
+          description: "Sets the alignment and the style.",
+        },
+        {
+          name: "avatar",
+          type: "ReactNode",
+          description: "Shows beside an incoming message.",
+        },
+        { name: "timestamp", type: "string", description: "The visible time." },
+        {
+          name: "dateTime",
+          type: "string",
+          description:
+            "The machine-readable time. Set it to render the timestamp in a time element.",
+        },
+        {
+          name: "status",
+          type: "string",
+          description: 'The delivery status, for example "Sent".',
+        },
+        {
+          name: "actions",
+          type: "ReactNode",
+          description: "Buttons below the message.",
+        },
+      ],
+    }),
   ],
   "source-link": [
-    {
-      component: "SourceLink",
-      prop: "href",
-      type: "string",
-      defaultValue: "required",
-      description: "The URL of the source.",
-    },
-    {
-      component: "SourceLink",
-      prop: "label",
-      type: "string",
-      defaultValue: "required",
-      description: "The title of the page.",
-    },
-    {
-      component: "SourceLink",
-      prop: "source",
-      type: "string",
-      defaultValue: "required",
-      description: "The name of the site or document.",
-    },
-    {
-      component: "SourceLink",
-      prop: "index",
-      type: "number",
-      defaultValue: "—",
-      description: "The citation number. Shows before the label.",
-    },
-    {
-      component: "SourceLink",
-      prop: "description",
-      type: "string",
-      defaultValue: "—",
-      description: "Text below the source.",
-    },
+    apiPart<typeof SourceLink>({
+      name: "SourceLink",
+      props: [
+        {
+          name: "href",
+          type: "string",
+          required: true,
+          description: "The URL of the source.",
+        },
+        {
+          name: "label",
+          type: "string",
+          required: true,
+          description: "The title of the page.",
+        },
+        {
+          name: "source",
+          type: "string",
+          required: true,
+          description: "The name of the site or document.",
+        },
+        {
+          name: "index",
+          type: "number",
+          description: "The citation number. Shows before the label.",
+        },
+        {
+          name: "description",
+          type: "string",
+          description: "Text below the source.",
+        },
+      ],
+    }),
   ],
   "tool-call": [
-    {
-      component: "ToolCallTrigger",
-      prop: "name",
-      type: "string",
-      defaultValue: "required",
-      description: "The tool name.",
-    },
-    {
-      component: "ToolCallTrigger",
-      prop: "status",
-      type: '"running" | "complete" | "error"',
-      defaultValue: "required",
-      description:
-        "Sets the icon and the status text. Running animates unless reduced motion is on. Screen readers announce changes.",
-    },
-    {
-      component: "ToolCallTrigger",
-      prop: "summary",
-      type: "string",
-      defaultValue: "—",
-      description: "Short text below the name.",
-    },
+    apiPart<typeof ToolCallTrigger>({
+      name: "ToolCallTrigger",
+      props: [
+        {
+          name: "name",
+          type: "string",
+          required: true,
+          description: "The tool name.",
+        },
+        {
+          name: "status",
+          type: '"running" | "complete" | "error"',
+          required: true,
+          description:
+            "Sets the icon and the status text. Running animates unless reduced motion is on. Screen readers announce changes.",
+        },
+        {
+          name: "summary",
+          type: "string",
+          description: "Short text below the name.",
+        },
+      ],
+    }),
   ],
   "inline-edit": [
-    {
-      component: "InlineEdit",
-      prop: "label",
-      type: "string",
-      defaultValue: "required",
-      description: "Visible label in display and edit modes.",
-    },
-    {
-      component: "InlineEdit",
-      prop: "value / defaultValue",
-      type: "string",
-      defaultValue: '— / ""',
-      description: "The saved value, controlled or uncontrolled.",
-    },
-    {
-      component: "InlineEdit",
-      prop: "onSave",
-      type: "(value: string) => void | Promise<void>",
-      defaultValue: "undefined",
-      description:
-        "Called when you save a changed value. If it throws, the editor stays open and shows the error message. When controlled, update value here.",
-    },
-    {
-      component: "InlineEdit",
-      prop: "isDisabled",
-      type: "boolean",
-      defaultValue: "false",
-      description: "Prevents opening the editor.",
-    },
+    apiPart<typeof InlineEdit>({
+      name: "InlineEdit",
+      props: [
+        {
+          name: "label",
+          type: "string",
+          required: true,
+          description: "Visible label in display and edit modes.",
+        },
+        {
+          name: "value",
+          type: "string",
+          description: "The saved value, controlled.",
+        },
+        {
+          name: "defaultValue",
+          type: "string",
+          default: '""',
+          description: "The saved value at first, uncontrolled.",
+        },
+        {
+          name: "onSave",
+          type: "(value: string) => void | Promise<void>",
+          description:
+            "Called when you save a changed value. If it throws, the editor stays open and shows the error message. When controlled, update value here.",
+        },
+        {
+          name: "isDisabled",
+          type: "boolean",
+          default: "false",
+          description: "Prevents opening the editor.",
+        },
+      ],
+    }),
   ],
   "password-strength-meter": [
-    {
-      component: "PasswordStrengthMeter",
-      prop: "password",
-      type: "string",
-      defaultValue: "required",
-      description:
-        "The password to rate. The score uses only length and the mix of letters and other characters. It does not measure how easy the password is to guess.",
-    },
+    apiPart<typeof PasswordStrengthMeter>({
+      name: "PasswordStrengthMeter",
+      props: [
+        {
+          name: "password",
+          type: "string",
+          required: true,
+          description:
+            "The password to rate. The score uses only length and the mix of letters and other characters. It does not measure how easy the password is to guess.",
+        },
+      ],
+    }),
   ],
   "password-field": [
-    {
-      component: "PasswordField",
-      prop: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      defaultValue: '"lg"',
-      description: "Sets the size of the field and of the reveal button.",
-    },
-    {
-      component: "PasswordField",
-      prop: "label",
-      type: "string",
-      defaultValue: "required",
-      description: "Visible label for the field.",
-    },
-    {
-      component: "PasswordField",
-      prop: "description / placeholder",
-      type: "string",
-      defaultValue: "—",
-      description: "Help text and input placeholder.",
-    },
-    {
-      component: "PasswordField",
-      prop: "autoComplete",
-      type: "string",
-      defaultValue: '"current-password"',
-      description: "Use new-password when creating a credential.",
-    },
+    apiPart<typeof PasswordField>({
+      name: "PasswordField",
+      props: [
+        {
+          name: "label",
+          type: "string",
+          required: true,
+          description: "Visible label for the field.",
+        },
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"lg"',
+          description: "Sets the size of the field and of the reveal button.",
+        },
+        {
+          name: "description",
+          type: "string",
+          description: "Help text below the field.",
+        },
+        {
+          name: "placeholder",
+          type: "string",
+          description: "Input placeholder.",
+        },
+        {
+          name: "autoComplete",
+          type: "string",
+          default: '"current-password"',
+          description: "Use new-password when creating a credential.",
+        },
+      ],
+    }),
   ],
   "copy-button": [
-    {
-      component: "CopyButton",
-      prop: "value",
-      type: "string",
-      defaultValue: "required",
-      description: "The exact text written to the clipboard.",
-    },
-    {
-      component: "CopyButton",
-      prop: "children",
-      type: "ReactNode | (status: CopyButtonStatus) => ReactNode",
-      defaultValue: "icon and status text",
-      description:
-        'The button content. Pass a function to show content for each status. CopyButtonStatus is "idle", "copied", or "failed".',
-    },
-    {
-      component: "CopyButton",
-      prop: "aria-label",
-      type: "string",
-      defaultValue: 'idle text or "Copy"',
-      description:
-        "The accessible name. It does not change after a copy. A live region announces the result.",
-    },
-    {
-      component: "CopyButton",
-      prop: "variant",
-      type: "ButtonVariant",
-      defaultValue: '"outline"',
-      description: "Uses the Button variants.",
-    },
-    {
-      component: "CopyButton",
-      prop: "size / iconOnly",
-      type: '"xs" | "sm" | "md" | "lg" | "xl" / boolean',
-      defaultValue: '"md" / false',
-      description: "Uses the Button sizes. Set iconOnly to show only the icon.",
-    },
+    apiPart<typeof CopyButton>({
+      name: "CopyButton",
+      props: [
+        {
+          name: "value",
+          type: "string",
+          required: true,
+          description: "The exact text written to the clipboard.",
+        },
+        {
+          name: "children",
+          type: "ReactNode | (status: CopyButtonStatus) => ReactNode",
+          description:
+            'The button content. Without it, the button shows an icon and status text. Pass a function to show content for each status. CopyButtonStatus is "idle", "copied", or "failed".',
+        },
+        {
+          name: "aria-label",
+          type: "string",
+          description:
+            'The accessible name. Without it, the name comes from text children in the idle status. Other children give the name "Copy". It does not change after a copy. A live region announces the result.',
+        },
+        {
+          name: "variant",
+          type: "ButtonVariant",
+          default: '"outline"',
+          description: "Uses the Button variants.",
+        },
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"md"',
+          description: "Uses the Button sizes.",
+        },
+        {
+          name: "iconOnly",
+          type: "boolean",
+          default: "false",
+          description: "Shows only the icon.",
+        },
+      ],
+    }),
   ],
   "button-group": [
-    {
-      component: "ButtonGroup",
-      prop: "orientation",
-      type: '"horizontal" | "vertical"',
-      defaultValue: '"horizontal"',
-      description: "Joins buttons in a row or column.",
-    },
-    {
-      component: "ButtonGroup",
-      prop: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      defaultValue: "—",
-      description:
-        "Sets the size of each button in the group. A size on a button overrides it.",
-    },
+    apiPart<typeof ButtonGroup>({
+      name: "ButtonGroup",
+      props: [
+        {
+          name: "orientation",
+          type: '"horizontal" | "vertical"',
+          default: '"horizontal"',
+          description: "Joins buttons in a row or column.",
+        },
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          description:
+            "Sets the size of each button in the group. A size on a button overrides it.",
+        },
+      ],
+    }),
   ],
   "text-swap": [
-    {
-      component: "TextSwap",
-      prop: "value",
-      type: "string",
-      defaultValue: "required",
-      description:
-        "The text to show. A change animates. The first value shows without animation. Where text cannot wrap, such as in a button, a long value truncates.",
-    },
+    apiPart<typeof TextSwap>({
+      name: "TextSwap",
+      props: [
+        {
+          name: "value",
+          type: "string",
+          required: true,
+          description:
+            "The text to show. A change animates. The first value shows without animation. Where text cannot wrap, such as in a button, a long value truncates.",
+        },
+      ],
+    }),
   ],
   stepper: [
-    {
-      component: "Stepper",
-      prop: "steps",
-      type: "readonly { label: string; description?: string }[]",
-      defaultValue: "required",
-      description:
-        "Steps in display order. Keep labels short. If the steps do not fit, the list scrolls and keeps the current step in view.",
-    },
-    {
-      component: "Stepper",
-      prop: "currentStep",
-      type: "number (zero-based)",
-      defaultValue: "required",
-      description:
-        "Index of the current step. Earlier steps show as complete. Set it to steps.length to show all steps as complete.",
-    },
+    apiPart<typeof Stepper>({
+      name: "Stepper",
+      props: [
+        {
+          name: "steps",
+          type: "readonly { label: string; description?: string }[]",
+          required: true,
+          description:
+            "Steps in display order. Keep labels short. If the steps do not fit, the list scrolls and keeps the current step in view.",
+        },
+        {
+          name: "currentStep",
+          type: "number (zero-based)",
+          required: true,
+          description:
+            "Index of the current step. Earlier steps show as complete. Set it to steps.length to show all steps as complete.",
+        },
+      ],
+    }),
   ],
   "animated-number": [
-    {
-      component: "AnimatedNumber",
-      prop: "value",
-      type: "number",
-      defaultValue: "required",
-      description:
-        "The number to show. A change animates. Screen readers get the new value at once. A number wider than its container wraps.",
-    },
-    {
-      component: "AnimatedNumber",
-      prop: "variant",
-      type: '"count" | "slide"',
-      defaultValue: '"count"',
-      description:
-        "count counts to the new value. slide moves only the digits that change.",
-    },
-    {
-      component: "AnimatedNumber",
-      prop: "locale",
-      type: "string",
-      defaultValue: '"en-US"',
-      description: "Locale for the number format.",
-    },
-    {
-      component: "AnimatedNumber",
-      prop: "formatOptions",
-      type: "Intl.NumberFormatOptions",
-      defaultValue: "{ maximumFractionDigits: 0 }",
-      description:
-        "Options for Intl.NumberFormat, such as a currency or a unit.",
-    },
+    apiPart<typeof AnimatedNumber>({
+      name: "AnimatedNumber",
+      props: [
+        {
+          name: "value",
+          type: "number",
+          required: true,
+          description:
+            "The number to show. A change animates. Screen readers get the new value at once. A number wider than its container wraps.",
+        },
+        {
+          name: "variant",
+          type: '"count" | "slide"',
+          default: '"count"',
+          description:
+            "count counts to the new value. slide moves only the digits that change.",
+        },
+        {
+          name: "locale",
+          type: "string",
+          default: '"en-US"',
+          description: "Locale for the number format.",
+        },
+        {
+          name: "formatOptions",
+          type: "Intl.NumberFormatOptions",
+          default: "{ maximumFractionDigits: 0 }",
+          description:
+            "Options for Intl.NumberFormat, such as a currency or a unit.",
+        },
+      ],
+    }),
   ],
   "progress-ring": [
-    {
-      component: "ProgressRing",
-      prop: "label",
-      type: "string",
-      defaultValue: "required",
-      description: "Shows a visible label below the ring.",
-    },
-    {
-      component: "ProgressRing",
-      prop: "size",
-      type: '"sm" | "md" | "lg"',
-      defaultValue: '"md"',
-      description: "Sets the diameter: 40, 64, or 96 pixels.",
-    },
-    {
-      component: "ProgressRing",
-      prop: "showValue",
-      type: "boolean",
-      defaultValue: "true",
-      description:
-        "Shows the value in the center of the ring. Keep valueLabel short so it fits.",
-    },
+    apiPart<typeof ProgressRing>({
+      name: "ProgressRing",
+      props: [
+        {
+          name: "label",
+          type: "string",
+          required: true,
+          description: "Shows a visible label below the ring.",
+        },
+        {
+          name: "size",
+          type: '"sm" | "md" | "lg"',
+          default: '"md"',
+          description: "Sets the diameter: 40, 64, or 96 pixels.",
+        },
+        {
+          name: "showValue",
+          type: "boolean",
+          default: "true",
+          description:
+            "Shows the value in the center of the ring. Keep valueLabel short so it fits.",
+        },
+      ],
+    }),
   ],
   "presence-list": [
-    {
-      component: "PresenceList",
-      prop: "items",
-      type: "readonly T[]",
-      defaultValue: "required",
-      description: "Items to show in the list.",
-    },
-    {
-      component: "PresenceList",
-      prop: "getKey",
-      type: "(item: T) => string | number",
-      defaultValue: "required",
-      description:
-        "Returns a unique key for an item. Keep the key the same while the item is in the list.",
-    },
-    {
-      component: "PresenceList",
-      prop: "children",
-      type: "(item: T) => ReactNode",
-      defaultValue: "required",
-      description:
-        "Renders the content of each list item. Move focus before you remove a focused item.",
-    },
+    apiPart<typeof PresenceList>({
+      name: "PresenceList",
+      props: [
+        {
+          name: "items",
+          type: "readonly T[]",
+          required: true,
+          description: "Items to show in the list.",
+        },
+        {
+          name: "getKey",
+          type: "(item: T) => string | number",
+          required: true,
+          description:
+            "Returns a unique key for an item. Keep the key the same while the item is in the list.",
+        },
+        {
+          name: "children",
+          type: "(item: T) => ReactNode",
+          required: true,
+          description:
+            "Renders the content of each list item. Move focus before you remove a focused item.",
+        },
+      ],
+    }),
   ],
   "input-group": [
-    {
-      component: "InputGroup",
-      prop: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      defaultValue: '"lg"',
-      description:
-        "Sets the size of the group. Without a size, the group uses the size of its parent field.",
-    },
-    {
-      component: "InputGroupAddon",
-      prop: "align",
-      type: '"inline" | "block-end"',
-      defaultValue: '"inline"',
-      description:
-        "Place text, an icon, or a button beside the input, or in a full-width row below a textarea.",
-    },
+    apiPart<typeof InputGroup>({
+      name: "InputGroup",
+      props: [
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"lg"',
+          description:
+            "Sets the size of the group. Without a size, the group uses the size of its parent field.",
+        },
+      ],
+    }),
+    apiPart<typeof InputGroupAddon>({
+      name: "InputGroupAddon",
+      props: [
+        {
+          name: "align",
+          type: '"inline" | "block-end"',
+          default: '"inline"',
+          description:
+            "Place text, an icon, or a button beside the input, or in a full-width row below a textarea.",
+        },
+      ],
+    }),
   ],
   "command-palette": [
-    {
-      component: "CommandPalette",
-      prop: "isOpen",
-      type: "boolean",
-      defaultValue: "required",
-      description: "Controls the dialog's visibility.",
-    },
-    {
-      component: "CommandPalette",
-      prop: "onOpenChange",
-      type: "(open: boolean) => void",
-      defaultValue: "required",
-      description: "Receives requests to open or close the dialog.",
-    },
-    {
-      component: "CommandPalette",
-      prop: "shortcut",
-      type: "boolean",
-      defaultValue: "true",
-      description:
-        "Ctrl+K or Command+K opens and closes the palette. Disable it when another palette owns that shortcut.",
-    },
-    {
-      component: "CommandPalette",
-      prop: "title",
-      type: "string",
-      defaultValue: '"Commands"',
-      description: "Accessible dialog name.",
-    },
-    {
-      component: "CommandPalette",
-      prop: "placeholder",
-      type: "string",
-      defaultValue: '"Search commands"',
-      description: "Search input placeholder and label.",
-    },
-    {
-      component: "CommandPalette",
-      prop: "emptyMessage",
-      type: "string",
-      defaultValue: '"No matching commands."',
-      description: "Text shown when search has no results.",
-    },
-    {
-      component: "CommandPaletteSection",
-      prop: "title",
-      type: "string",
-      defaultValue: "required",
-      description:
-        "Heading for a group of items. A section with no matching items is hidden.",
-    },
-    {
-      component: "CommandPaletteItem",
-      prop: "textValue",
-      type: "string",
-      defaultValue: "text children",
-      description:
-        "Text that search matches. Set it when the item has an icon or other elements.",
-    },
+    apiPart<typeof CommandPalette>({
+      name: "CommandPalette",
+      props: [
+        {
+          name: "isOpen",
+          type: "boolean",
+          required: true,
+          description: "Controls the dialog's visibility.",
+        },
+        {
+          name: "onOpenChange",
+          type: "(open: boolean) => void",
+          required: true,
+          description: "Receives requests to open or close the dialog.",
+        },
+        {
+          name: "shortcut",
+          type: "boolean",
+          default: "true",
+          description:
+            "Ctrl+K or Command+K opens and closes the palette. Disable it when another palette owns that shortcut.",
+        },
+        {
+          name: "title",
+          type: "string",
+          default: '"Commands"',
+          description: "Accessible dialog name.",
+        },
+        {
+          name: "placeholder",
+          type: "string",
+          default: '"Search commands"',
+          description: "Search input placeholder and label.",
+        },
+        {
+          name: "emptyMessage",
+          type: "string",
+          default: '"No matching commands."',
+          description: "Text shown when search has no results.",
+        },
+      ],
+    }),
+    apiPart<typeof CommandPaletteSection>({
+      name: "CommandPaletteSection",
+      props: [
+        {
+          name: "title",
+          type: "string",
+          required: true,
+          description:
+            "Heading for a group of items. A section with no matching items is hidden.",
+        },
+      ],
+    }),
+    apiPart<typeof CommandPaletteItem>({
+      name: "CommandPaletteItem",
+      props: [
+        {
+          name: "textValue",
+          type: "string",
+          description:
+            "Text that search matches. Without it, search uses the text children. Set it when the item has an icon or other elements.",
+        },
+      ],
+    }),
   ],
   button: [
-    {
-      component: "Button",
-      prop: "variant",
-      type: '"default" | "secondary" | "outline" | "ghost" | "minimal" | "destructive"',
-      defaultValue: '"default"',
-      description:
-        "Choose the action's visual priority. Minimal is for a quiet icon action.",
-    },
-    {
-      component: "Button",
-      prop: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      defaultValue: '"md"',
-      description:
-        "Heights are 28, 36, 44, 48, and 56 pixels. Text, padding, and icons scale with the size. In a sized Toolbar, ButtonGroup, or ToggleButtonGroup, the button uses the size of the group. On touch screens, the touch area is at least 44 pixels high. An ancestor with overflow: hidden clips it.",
-    },
-    {
-      component: "Button",
-      prop: "iconOnly",
-      type: "boolean",
-      defaultValue: "false",
-      description:
-        "Makes the button a square for one icon. Give the button an aria-label.",
-    },
-    {
-      component: "Button",
-      prop: "static",
-      type: "boolean",
-      defaultValue: "false",
-      description:
-        "Disable press scaling while keeping the button interactive.",
-    },
-    {
-      component: "Button",
-      prop: "layout",
-      type: 'MotionProps["layout"]',
-      defaultValue: "—",
-      description:
-        "Animate position or size changes when the button moves in the layout. Ignored when reduced motion is requested.",
-    },
+    apiPart<typeof Button>({
+      name: "Button",
+      props: [
+        {
+          name: "variant",
+          type: '"default" | "secondary" | "outline" | "ghost" | "minimal" | "destructive"',
+          default: '"default"',
+          description:
+            "Choose the action's visual priority. Minimal is for a quiet icon action.",
+        },
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"md"',
+          description:
+            "Heights are 28, 36, 44, 48, and 56 pixels. Text, padding, and icons scale with the size. In a sized Toolbar, ButtonGroup, or ToggleButtonGroup, the button uses the size of the group. On touch screens, the touch area is at least 44 pixels high. An ancestor with overflow: hidden clips it.",
+        },
+        {
+          name: "iconOnly",
+          type: "boolean",
+          default: "false",
+          description:
+            "Makes the button a square for one icon. Give the button an aria-label.",
+        },
+        {
+          name: "static",
+          type: "boolean",
+          default: "false",
+          description:
+            "Disable press scaling while keeping the button interactive.",
+        },
+        {
+          name: "layout",
+          type: 'MotionProps["layout"]',
+          description:
+            "Animate position or size changes when the button moves in the layout. Ignored when reduced motion is requested.",
+        },
+      ],
+    }),
   ],
   card: [
-    {
-      component: "CardTitle",
-      prop: "as",
-      type: '"h1" | "h2" | "h3" | "h4"',
-      defaultValue: '"h3"',
-      description: "Heading level for the card title.",
-    },
+    apiPart<typeof CardTitle>({
+      name: "CardTitle",
+      props: [
+        {
+          name: "as",
+          type: '"h1" | "h2" | "h3" | "h4"',
+          default: '"h3"',
+          description: "Heading level for the card title.",
+        },
+      ],
+    }),
   ],
   avatar: [
-    {
-      component: "Avatar",
-      prop: "name",
-      type: "string",
-      defaultValue: "required",
-      description: "Accessible name. Avatar takes the initials from it.",
-    },
-    {
-      component: "Avatar",
-      prop: "src",
-      type: "string",
-      defaultValue: "undefined",
-      description:
-        "Image URL. Avatar shows initials if the image is missing or does not load.",
-    },
-    {
-      component: "Avatar",
-      prop: "initials",
-      type: "string",
-      defaultValue: "derived from name",
-      description:
-        'Replaces the initials from name. Set "" to show a person icon.',
-    },
-    {
-      component: "Avatar",
-      prop: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      defaultValue: '"md"',
-      description:
-        "Diameter of the avatar: 24, 32, 40, 48, or 64 pixels. The initials scale with it.",
-    },
+    apiPart<typeof Avatar>({
+      name: "Avatar",
+      props: [
+        {
+          name: "name",
+          type: "string",
+          required: true,
+          description: "Accessible name. Avatar takes the initials from it.",
+        },
+        {
+          name: "src",
+          type: "string",
+          description:
+            "Image URL. Avatar shows initials if the image is missing or does not load.",
+        },
+        {
+          name: "initials",
+          type: "string",
+          description:
+            'Replaces the initials that Avatar takes from name. Set "" to show a person icon.',
+        },
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"md"',
+          description:
+            "Diameter of the avatar: 24, 32, 40, 48, or 64 pixels. The initials scale with it.",
+        },
+      ],
+    }),
   ],
   "empty-state": [
-    {
-      component: "EmptyStateTitle",
-      prop: "as",
-      type: '"h2" | "h3" | "h4"',
-      defaultValue: '"h3"',
-      description: "Heading level for the empty state title.",
-    },
+    apiPart<typeof EmptyStateTitle>({
+      name: "EmptyStateTitle",
+      props: [
+        {
+          name: "as",
+          type: '"h2" | "h3" | "h4"',
+          default: '"h3"',
+          description: "Heading level for the empty state title.",
+        },
+      ],
+    }),
   ],
   spinner: [
-    {
-      component: "Spinner",
-      prop: "variant",
-      type: '"ring" | "dots" | "segments"',
-      defaultValue: '"ring"',
-      description: "Sets the animation style.",
-    },
-    {
-      component: "Spinner",
-      prop: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      defaultValue: '"md"',
-      description: "Sets the size: 14, 16, 24, 40, or 56 pixels.",
-    },
-    {
-      component: "Spinner",
-      prop: "decorative",
-      type: "boolean",
-      defaultValue: "false",
-      description:
-        "Hides the spinner from screen readers. Use it when text next to the spinner names the wait.",
-    },
-    {
-      component: "Spinner",
-      prop: "aria-label",
-      type: "string",
-      defaultValue: '"Loading"',
-      description: "Names the wait for screen readers.",
-    },
+    apiPart<typeof Spinner>({
+      name: "Spinner",
+      props: [
+        {
+          name: "variant",
+          type: '"ring" | "dots" | "segments"',
+          default: '"ring"',
+          description: "Sets the animation style.",
+        },
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"md"',
+          description: "Sets the size: 14, 16, 24, 40, or 56 pixels.",
+        },
+        {
+          name: "decorative",
+          type: "boolean",
+          default: "false",
+          description:
+            "Hides the spinner from screen readers. Use it when text next to the spinner names the wait.",
+        },
+        {
+          name: "aria-label",
+          type: "string",
+          default: '"Loading"',
+          description: "Names the wait for screen readers.",
+        },
+      ],
+    }),
   ],
   "rating-input": [
-    {
-      component: "RatingInput",
-      prop: "label",
-      type: "string",
-      defaultValue: "required",
-      description: "Visible label for the rating group.",
-    },
-    {
-      component: "RatingInput",
-      prop: "max",
-      type: "number",
-      defaultValue: "5",
-      description: "Number of stars. Use a positive whole number.",
-    },
-    {
-      component: "RatingInput",
-      prop: "value / defaultValue",
-      type: "number",
-      defaultValue: "undefined / 0",
-      description:
-        "Selected rating; 0 means no rating. Use a number between 1 and max for a selection.",
-    },
-    {
-      component: "RatingInput",
-      prop: "onValueChange",
-      type: "(value: number) => void",
-      defaultValue: "undefined",
-      description: "Called when a star is selected.",
-    },
+    apiPart<typeof RatingInput>({
+      name: "RatingInput",
+      props: [
+        {
+          name: "label",
+          type: "string",
+          required: true,
+          description: "Visible label for the rating group.",
+        },
+        {
+          name: "max",
+          type: "number",
+          default: "5",
+          description: "Number of stars. Use a positive whole number.",
+        },
+        {
+          name: "value",
+          type: "number",
+          description:
+            "The selected rating, controlled. 0 means no rating. Use a number from 1 to max for a selection.",
+        },
+        {
+          name: "defaultValue",
+          type: "number",
+          default: "0",
+          description:
+            "The selected rating at first, uncontrolled. 0 means no rating.",
+        },
+        {
+          name: "onValueChange",
+          type: "(value: number) => void",
+          description: "Called when a star is selected.",
+        },
+      ],
+    }),
   ],
   tree: [
-    {
-      component: "TreeItem",
-      prop: "title",
-      type: "string",
-      defaultValue: "required",
-      description: "The row label. Typeahead uses it unless you set textValue.",
-    },
-    {
-      component: "TreeItem",
-      prop: "content",
-      type: "ReactNode",
-      defaultValue: "title",
-      description:
-        "Replaces the visible label. Use it to add details, such as a file size.",
-    },
-    {
-      component: "TreeItem",
-      prop: "icon",
-      type: "ReactNode",
-      defaultValue: "folder or file icon",
-      description:
-        "Replaces the default icon. A row with child items shows a folder. Other rows show a file.",
-    },
-    {
-      component: "TreeItem",
-      prop: "children",
-      type: "ReactNode",
-      defaultValue: "undefined",
-      description:
-        "Nested TreeItem elements. A row with children shows an expand button.",
-    },
+    apiPart<typeof TreeItem>({
+      name: "TreeItem",
+      props: [
+        {
+          name: "title",
+          type: "string",
+          required: true,
+          description:
+            "The row label. Typeahead uses it unless you set textValue.",
+        },
+        {
+          name: "content",
+          type: "ReactNode",
+          description:
+            "Replaces the visible label. Without it, the row shows title. Use it to add details, such as a file size.",
+        },
+        {
+          name: "icon",
+          type: "ReactNode",
+          description:
+            "Replaces the default icon. A row with child items shows a folder. Other rows show a file.",
+        },
+        {
+          name: "children",
+          type: "ReactNode",
+          description:
+            "Nested TreeItem elements. A row with children shows an expand button.",
+        },
+        {
+          name: "textValue",
+          type: "string",
+          description:
+            "Text for typeahead when it must be different from title.",
+        },
+      ],
+    }),
   ],
   "data-table": [
-    {
-      component: "DataTable",
-      prop: "label",
-      type: "string",
-      defaultValue: "required",
-      description: "Names the table and its search and pagination controls.",
-    },
-    {
-      component: "DataTable",
-      prop: "rows / columns",
-      type: "readonly T[] / readonly DataTableColumn<T>[]",
-      defaultValue: "required",
-      description:
-        "Client-side rows and column definitions. The first column labels each row.",
-    },
-    {
-      component: "DataTableColumn",
-      prop: "id / header / cell",
-      type: "string / string / (row: T) => ReactNode",
-      defaultValue: "required",
-      description: "Stable column key, visible header, and cell renderer.",
-    },
-    {
-      component: "DataTableColumn",
-      prop: "sortValue",
-      type: "(row: T) => string | number",
-      defaultValue: "undefined",
-      description:
-        "Turns on sorting for the column. Return a string or a number. Column filters use this value too.",
-    },
-    {
-      component: "DataTableColumn",
-      prop: "align",
-      type: '"start" | "end"',
-      defaultValue: '"start"',
-      description: "Aligns the header and cells; use end for numbers.",
-    },
-    {
-      component: "DataTableColumn",
-      prop: "filter",
-      type: "{ type: 'text' } | { type: 'select'; options: SelectOption[] }",
-      defaultValue: "undefined",
-      description:
-        "Adds a text or single-choice filter for a column with sortValue. Filters combine with search before sorting and pagination.",
-    },
-    {
-      component: "DataTable",
-      prop: "getRowId",
-      type: "(row: T) => Key",
-      defaultValue: "required",
-      description: "Returns a unique, stable key for each row.",
-    },
-    {
-      component: "DataTable",
-      prop: "getSearchText",
-      type: "(row: T) => string",
-      defaultValue: "undefined",
-      description:
-        "Shows a search field. Return all the text that search can find in a row.",
-    },
-    {
-      component: "DataTable",
-      prop: "pageSize / selectable",
-      type: "number / boolean",
-      defaultValue: "5 / true",
-      description:
-        "Rows on each page, and whether rows show selection checkboxes. Select all selects only the rows on the current page.",
-    },
-    {
-      component: "DataTable",
-      prop: "selectedKeys / defaultSelectedKeys",
-      type: "Iterable<Key>",
-      defaultValue: "undefined / empty",
-      description:
-        "The selected row keys, controlled or initial. The selection stays when the page, search, or filters change.",
-    },
-    {
-      component: "DataTable",
-      prop: "onSelectionChange",
-      type: "(keys: Set<Key>) => void",
-      defaultValue: "undefined",
-      description: "Receives selected row keys, including keys on other pages.",
-    },
+    apiPart<typeof DataTable>({
+      name: "DataTable",
+      props: [
+        {
+          name: "label",
+          type: "string",
+          required: true,
+          description:
+            "Names the table and its search and pagination controls.",
+        },
+        {
+          name: "rows",
+          type: "readonly T[]",
+          required: true,
+          description:
+            "All the rows. The table searches, filters, sorts, and pages them in the browser.",
+        },
+        {
+          name: "columns",
+          type: "readonly DataTableColumn<T>[]",
+          required: true,
+          description: "Column definitions. The first column labels each row.",
+        },
+        {
+          name: "getRowId",
+          type: "(row: T) => Key",
+          required: true,
+          description: "Returns a unique, stable key for each row.",
+        },
+        {
+          name: "getSearchText",
+          type: "(row: T) => string",
+          description:
+            "Shows a search field. Return all the text that search can find in a row.",
+        },
+        {
+          name: "pageSize",
+          type: "number",
+          default: "5",
+          description: "Rows on each page.",
+        },
+        {
+          name: "selectable",
+          type: "boolean",
+          default: "true",
+          description:
+            "Shows a selection checkbox in each row. Select all selects only the rows on the current page.",
+        },
+        {
+          name: "selectedKeys",
+          type: "Iterable<Key>",
+          description:
+            "The selected row keys, controlled. The selection stays when the page, search, or filters change.",
+        },
+        {
+          name: "defaultSelectedKeys",
+          type: "Iterable<Key>",
+          description:
+            "The row keys that are selected at first, uncontrolled. Without it, no rows are selected.",
+        },
+        {
+          name: "onSelectionChange",
+          type: "(keys: Set<Key>) => void",
+          description:
+            "Receives selected row keys, including keys on other pages.",
+        },
+      ],
+    }),
+    apiPart<DataTableColumn<unknown>>({
+      name: "DataTableColumn",
+      props: [
+        {
+          name: "id",
+          type: "string",
+          required: true,
+          description: "A stable key for the column.",
+        },
+        {
+          name: "header",
+          type: "string",
+          required: true,
+          description:
+            "The visible column header. A column filter uses it as its label.",
+        },
+        {
+          name: "cell",
+          type: "(row: T) => ReactNode",
+          required: true,
+          description: "Renders the cell for a row.",
+        },
+        {
+          name: "sortValue",
+          type: "(row: T) => string | number",
+          description:
+            "Turns on sorting for the column. Return a string or a number. Column filters use this value too.",
+        },
+        {
+          name: "align",
+          type: '"start" | "end"',
+          default: '"start"',
+          description: "Aligns the header and cells. Use end for numbers.",
+        },
+        {
+          name: "filter",
+          type: '{ type: "text" } | { type: "select"; options: readonly SelectOption[] }',
+          description:
+            "Adds a text or single-choice filter for a column with sortValue. Filters combine with search before sorting and pagination.",
+        },
+      ],
+    }),
   ],
   pagination: [
-    {
-      component: "Pagination",
-      prop: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      defaultValue: '"md"',
-      description:
-        "Uses the Button heights for each link and the ellipsis. Set it on Pagination or on one PaginationLink.",
-    },
-    {
-      component: "Pagination",
-      prop: "aria-label",
-      type: "string",
-      defaultValue: '"Pagination"',
-      description:
-        "Names the navigation landmark. Change it when a page has more than one pagination.",
-    },
-    {
-      component: "PaginationLink",
-      prop: "isCurrent",
-      type: "boolean",
-      defaultValue: "false",
-      description:
-        'Shows the link as the current page and sets aria-current="page".',
-    },
-    {
-      component: "PaginationLink",
-      prop: "isDisabled",
-      type: "boolean",
-      defaultValue: "false",
-      description:
-        "Keeps the link visible but stops navigation. The link leaves the Tab order.",
-    },
+    apiPart<typeof Pagination>({
+      name: "Pagination",
+      props: [
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"md"',
+          description:
+            "Uses the Button heights for each link and the ellipsis. Set it on Pagination or on one PaginationLink.",
+        },
+        {
+          name: "aria-label",
+          type: "string",
+          default: '"Pagination"',
+          description:
+            "Names the navigation landmark. Change it when a page has more than one pagination.",
+        },
+      ],
+    }),
+    apiPart<typeof PaginationLink>({
+      name: "PaginationLink",
+      props: [
+        {
+          name: "href",
+          type: "string",
+          required: true,
+          description: "The URL of the page.",
+        },
+        {
+          name: "isCurrent",
+          type: "boolean",
+          default: "false",
+          description:
+            'Shows the link as the current page and sets aria-current="page".',
+        },
+        {
+          name: "isDisabled",
+          type: "boolean",
+          default: "false",
+          description:
+            "Keeps the link visible but stops navigation. The link leaves the Tab order.",
+        },
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          description:
+            "Sets the size of this link. Without it, the link uses the size of the Pagination, or md.",
+        },
+      ],
+    }),
   ],
   timeline: [
-    {
-      component: "TimelineItem",
-      prop: "status",
-      type: '"latest" | "complete"',
-      defaultValue: '"complete"',
-      description:
-        'Marks the newest event. Screen readers announce "Latest" before it.',
-    },
-    {
-      component: "TimelineTitle",
-      prop: "as",
-      type: '"h2" | "h3" | "h4"',
-      defaultValue: '"h3"',
-      description: "Heading level for the event title.",
-    },
+    apiPart<typeof TimelineItem>({
+      name: "TimelineItem",
+      props: [
+        {
+          name: "status",
+          type: '"latest" | "complete"',
+          default: '"complete"',
+          description:
+            'Marks the newest event. Screen readers announce "Latest" before it.',
+        },
+      ],
+    }),
+    apiPart<typeof TimelineTitle>({
+      name: "TimelineTitle",
+      props: [
+        {
+          name: "as",
+          type: '"h2" | "h3" | "h4"',
+          default: '"h3"',
+          description: "Heading level for the event title.",
+        },
+      ],
+    }),
   ],
   accordion: [
-    {
-      component: "Accordion",
-      prop: "variant",
-      type: '"card" | "divided"',
-      defaultValue: '"card"',
-      description: "Shows sections as separate cards, or as rows with lines.",
-    },
-    {
-      component: "AccordionItem",
-      prop: "title",
-      type: "string",
-      defaultValue: "undefined",
-      description:
-        "Renders an AccordionTrigger with this text. The children go into an AccordionContent.",
-    },
+    apiPart<typeof Accordion>({
+      name: "Accordion",
+      props: [
+        {
+          name: "variant",
+          type: '"card" | "divided"',
+          default: '"card"',
+          description:
+            "Shows sections as separate cards, or as rows with lines.",
+        },
+      ],
+    }),
+    apiPart<typeof AccordionItem>({
+      name: "AccordionItem",
+      props: [
+        {
+          name: "title",
+          type: "string",
+          description:
+            "Renders an AccordionTrigger with this text. The children go into an AccordionContent.",
+        },
+      ],
+    }),
   ],
   alert: [
-    {
-      component: "Alert",
-      prop: "title",
-      type: "string",
-      defaultValue: "undefined",
-      description:
-        "Shows the variant icon and a heading, with children as the description. Leave it out to build the alert from its parts.",
-    },
-    {
-      component: "Alert",
-      prop: "variant",
-      type: '"info" | "success" | "warning" | "error" | "neutral"',
-      defaultValue: '"info"',
-      description: "Sets the colors and the icon.",
-    },
-    {
-      component: "Alert",
-      prop: "children",
-      type: "ReactNode",
-      defaultValue: "undefined",
-      description:
-        "The alert content. When title is set, children become the description.",
-    },
-    {
-      component: "Alert",
-      prop: "role",
-      type: '"status" | "alert"',
-      defaultValue: "—",
-      description:
-        'Screen readers do not announce an alert by default. For a message that appears after an action, set "status". For an urgent error, set "alert".',
-    },
+    apiPart<typeof Alert>({
+      name: "Alert",
+      props: [
+        {
+          name: "title",
+          type: "string",
+          description:
+            "Shows the variant icon and a heading, with children as the description. Leave it out to build the alert from its parts.",
+        },
+        {
+          name: "variant",
+          type: '"info" | "success" | "warning" | "error" | "neutral"',
+          default: '"info"',
+          description: "Sets the colors and the icon.",
+        },
+        {
+          name: "children",
+          type: "ReactNode",
+          description:
+            "The alert content. When title is set, children become the description.",
+        },
+        {
+          name: "role",
+          type: '"status" | "alert"',
+          description:
+            'Screen readers do not announce an alert by default. For a message that appears after an action, set "status". For an urgent error, set "alert".',
+        },
+      ],
+    }),
   ],
   dialog: [
-    {
-      component: "DialogContent",
-      prop: "overlayProps",
-      type: "ModalOverlayProps",
-      defaultValue: "{ isDismissable: true }",
-      description:
-        'React Aria ModalOverlay props, such as isDismissable and isKeyboardDismissDisabled. With role="alertdialog", outside clicks never close the dialog.',
-    },
-    {
-      component: "DialogContent",
-      prop: "modalProps",
-      type: "ModalProps",
-      defaultValue: "—",
-      description:
-        "Props for the panel. To change the width, set className here, for example sm:max-w-lg.",
-    },
-    {
-      component: "DialogClose",
-      prop: "children",
-      type: "ReactNode",
-      defaultValue: "close icon",
-      description:
-        'Text for the button. Without children, it shows an X icon labeled "Close dialog".',
-    },
-    {
-      component: "DialogClose",
-      prop: "variant / iconOnly",
-      type: "ButtonProps",
-      defaultValue: '"ghost" / true without children',
-      description:
-        "Button variant and shape. All Button props, such as size, are available.",
-    },
+    apiPart<typeof DialogContent>({
+      name: "DialogContent",
+      props: [
+        {
+          name: "overlayProps",
+          type: "ModalOverlayProps",
+          default: "{ isDismissable: true }",
+          description:
+            'React Aria ModalOverlay props, such as isDismissable and isKeyboardDismissDisabled. With role="alertdialog", outside clicks never close the dialog.',
+        },
+        {
+          name: "modalProps",
+          type: "ModalProps",
+          description:
+            "Props for the panel. To change the width, set className here, for example sm:max-w-lg.",
+        },
+      ],
+    }),
+    apiPart<typeof DialogClose>({
+      name: "DialogClose",
+      description: "Takes all Button props.",
+      props: [
+        {
+          name: "children",
+          type: "ReactNode",
+          description:
+            'Text for the button. Without children, it shows an X icon labeled "Close dialog".',
+        },
+        {
+          name: "variant",
+          type: '"default" | "secondary" | "outline" | "ghost" | "minimal" | "destructive"',
+          default: '"ghost"',
+          description: "The Button variant.",
+        },
+        {
+          name: "iconOnly",
+          type: "boolean",
+          description:
+            "Makes the button a square for one icon. The default is true without children and false with children.",
+        },
+      ],
+    }),
   ],
   popover: [
-    {
-      component: "Popover",
-      prop: "className",
-      type: "string | ((values) => string)",
-      defaultValue: "—",
-      description:
-        "Set a width here, for example w-72. Without a width, the panel grows with its content, up to the viewport width minus 2rem. Use w-(--trigger-width) to match the trigger.",
-    },
-    {
-      component: "Popover",
-      prop: "placement",
-      type: "Placement",
-      defaultValue: '"bottom"',
-      description:
-        "The side of the trigger, optionally followed by an alignment, for example bottom start. start and end follow the reading direction. If there is not sufficient space, the panel moves to the opposite side.",
-    },
-    {
-      component: "Popover",
-      prop: "offset / crossOffset",
-      type: "number",
-      defaultValue: "8 / 0",
-      description:
-        "The distance from the trigger, and the shift along the trigger's edge, in pixels.",
-    },
-    {
-      component: "Popover",
-      prop: "maxHeight",
-      type: "number",
-      defaultValue: "—",
-      description:
-        "Caps the panel height. The panel always fits the viewport and scrolls when its content is taller. A panel with PopoverArrow does not scroll.",
-    },
-    {
-      component: "Popover",
-      prop: "triggerRef",
-      type: "RefObject<Element | null>",
-      defaultValue: "—",
-      description:
-        "Anchors the panel to a different element than the trigger. Required with isOpen when you use Popover without PopoverTrigger.",
-    },
-    {
-      component: "Popover",
-      prop: "data-placement / data-trigger",
-      type: "attributes",
-      defaultValue: "—",
-      description:
-        "Set on the panel. data-placement is the side it opened on. data-trigger names the component that opened it, for example DialogTrigger or PreviewTrigger. The panel scales from --trigger-anchor-point.",
-    },
-    {
-      component: "PopoverTrigger",
-      prop: "isOpen / onOpenChange",
-      type: "boolean / (isOpen: boolean) => void",
-      defaultValue: "—",
-      description:
-        "Controls the open state. Without them, the trigger manages it. The first child opens the popover.",
-    },
-    {
-      component: "PopoverDialog",
-      prop: "children",
-      type: "ReactNode | ({ close }) => ReactNode",
-      defaultValue: "—",
-      description:
-        'Moves focus into the panel and keeps it there. Name it with PopoverTitle or aria-label. Use the function form to close after an action. A Button with slot="close" inside it closes the popover.',
-    },
+    apiPart<typeof Popover>({
+      name: "Popover",
+      props: [
+        {
+          name: "className",
+          type: "string | ((values) => string)",
+          description:
+            "Set a width here, for example w-72. Without a width, the panel grows with its content, up to the viewport width minus 2rem. Use w-(--trigger-width) to match the trigger.",
+        },
+        {
+          name: "maxHeight",
+          type: "number",
+          description:
+            "Caps the panel height. The panel always fits the viewport and scrolls when its content is taller. A panel with PopoverArrow does not scroll.",
+        },
+        {
+          name: "data-placement",
+          type: '"top" | "bottom" | "left" | "right"',
+          description:
+            "Set on the panel. The side of the trigger that the panel opened on. The panel scales from --trigger-anchor-point.",
+        },
+        {
+          name: "data-trigger",
+          type: "string",
+          description:
+            "Set on the panel. The name of the component that opened it, for example DialogTrigger or PreviewTrigger.",
+        },
+      ],
+    }),
+    apiPart<typeof PopoverDialog>({
+      name: "PopoverDialog",
+      props: [
+        {
+          name: "children",
+          type: "ReactNode | ({ close }) => ReactNode",
+          description:
+            'Moves focus into the panel and keeps it there. Name it with PopoverTitle or aria-label. Use the function form to close after an action. A Button with slot="close" inside it closes the popover.',
+        },
+      ],
+    }),
   ],
   sheet: [
-    {
-      component: "Sheet",
-      prop: "position",
-      type: '"bottom" | "top" | "left" | "right" | "start" | "end" | "center"',
-      defaultValue: '"bottom"',
-      description:
-        "The edge the sheet comes from. start and end mirror in right-to-left locales. A bottom sheet is 85% of the viewport height. Set a different height with className.",
-    },
-    {
-      component: "Sheet",
-      prop: "swipeDirection",
-      type: '"bottom" | "top" | "left" | "right" | "start" | "end" | "vertical" | "horizontal"',
-      defaultValue: "same as position",
-      description:
-        "The direction of a swipe or handle drag that closes the sheet. vertical and horizontal close toward either edge.",
-    },
-    {
-      component: "Sheet",
-      prop: "snapPoints",
-      type: "Array<number | string>",
-      defaultValue: "—",
-      description:
-        "The visible size at each stop. Numbers are pixels. Strings are CSS lengths, and percentages are relative to the sheet. The sheet opens at the first stop. You can always drag it to full size. Below full size, a swipe on SheetBody resizes the sheet.",
-    },
-    {
-      component: "Sheet",
-      prop: "preventDismissal",
-      type: "boolean",
-      defaultValue: "false",
-      description:
-        "Stops swipes, Escape, and outside clicks from closing the sheet. Snap points still work.",
-    },
-    {
-      component: "Sheet",
-      prop: "--sheet-stack-scale / --sheet-stack-x / --sheet-stack-y",
-      type: "CSS custom properties",
-      defaultValue:
-        "0.94 (0.96 on sides) / ±0.75rem on sides / ±0.5rem on top and bottom",
-      description:
-        "How a sheet moves back while a nested sheet is open. Set them in className. To keep the sheet in place, set the scale to 1 and the offsets to 0.",
-    },
-    {
-      component: "SheetTrigger",
-      prop: "isOpen / defaultOpen / onOpenChange",
-      type: "boolean / (isOpen: boolean) => void",
-      defaultValue: "uncontrolled",
-      description: "Owns the open state. The Button inside it opens the sheet.",
-    },
-    {
-      component: "SheetClose",
-      prop: "variant / iconOnly",
-      type: "ButtonProps",
-      defaultValue: '"ghost" / true without children',
-      description:
-        "Uses the shared Button variants and sizes. Choose default for a primary action, outline for a secondary action, or ghost for dismissal.",
-    },
+    apiPart<typeof Sheet>({
+      name: "Sheet",
+      props: [
+        {
+          name: "position",
+          type: '"bottom" | "top" | "left" | "right" | "start" | "end" | "center"',
+          default: '"bottom"',
+          description:
+            "The edge the sheet comes from. start and end mirror in right-to-left locales. A bottom sheet is 85% of the viewport height. Set a different height with className.",
+        },
+        {
+          name: "swipeDirection",
+          type: '"bottom" | "top" | "left" | "right" | "start" | "end" | "vertical" | "horizontal"',
+          description:
+            "The direction of a swipe or handle drag that closes the sheet. vertical and horizontal close toward either edge. Without it, the direction is the same as position. A center sheet uses vertical.",
+        },
+        {
+          name: "snapPoints",
+          type: "Array<number | string>",
+          description:
+            "The visible size at each stop. Numbers are pixels. Strings are CSS lengths, and percentages are relative to the sheet. The sheet opens at the first stop. You can always drag it to full size. Below full size, a swipe on SheetBody resizes the sheet.",
+        },
+        {
+          name: "preventDismissal",
+          type: "boolean",
+          default: "false",
+          description:
+            "Stops swipes, Escape, and outside clicks from closing the sheet. Snap points still work.",
+        },
+        {
+          name: "isOpen",
+          type: "boolean",
+          description:
+            "Whether the sheet is open, controlled. Without isOpen and defaultOpen, a SheetTrigger can own the state instead. Then the Button inside the SheetTrigger opens the sheet.",
+        },
+        {
+          name: "defaultOpen",
+          type: "boolean",
+          description: "Whether the sheet is open at first, uncontrolled.",
+        },
+        {
+          name: "onOpenChange",
+          type: "(isOpen: boolean) => void",
+          description:
+            "Receives the new open state. When a SheetTrigger owns the state, set onOpenChange on the SheetTrigger.",
+        },
+        {
+          name: "--sheet-stack-scale",
+          type: "number",
+          description:
+            "How much the sheet shrinks while a nested sheet is open. The default is 0.94, or 0.96 for a side sheet. Set it in className. Set 1 to keep the size.",
+        },
+        {
+          name: "--sheet-stack-x",
+          type: "CSS length",
+          description:
+            "How far the sheet moves horizontally while a nested sheet is open. The default moves a side sheet 0.75rem away from its edge. Other sheets do not move horizontally. Set it in className. Set 0 to keep the position.",
+        },
+        {
+          name: "--sheet-stack-y",
+          type: "CSS length",
+          description:
+            "How far the sheet moves vertically while a nested sheet is open. The default moves a top or bottom sheet 0.5rem away from its edge. Other sheets do not move vertically. Set it in className. Set 0 to keep the position.",
+        },
+      ],
+    }),
+    apiPart<typeof SheetClose>({
+      name: "SheetClose",
+      description: "Takes all Button props.",
+      props: [
+        {
+          name: "children",
+          type: "ReactNode",
+          description:
+            'Text for the button. Without children, it shows an X icon labeled "Close sheet".',
+        },
+        {
+          name: "variant",
+          type: '"default" | "secondary" | "outline" | "ghost" | "minimal" | "destructive"',
+          default: '"ghost"',
+          description:
+            "Choose default for a primary action, outline for a secondary action, or ghost for dismissal.",
+        },
+        {
+          name: "iconOnly",
+          type: "boolean",
+          description:
+            "Makes the button a square for one icon. The default is true without children and false with children.",
+        },
+      ],
+    }),
   ],
   badge: [
-    {
-      component: "Badge",
-      prop: "variant",
-      type: '"neutral" | "accent" | "success" | "warning" | "error" | "outline"',
-      defaultValue: '"neutral"',
-      description: "Sets the colors.",
-    },
-    {
-      component: "Badge",
-      prop: "dot",
-      type: "boolean",
-      defaultValue: "false",
-      description: "Shows a BadgeDot before the label.",
-    },
-    {
-      component: "Badge",
-      prop: "children",
-      type: "ReactNode",
-      defaultValue: "—",
-      description:
-        "The badge content. Text stays on one line and truncates if space is short.",
-    },
+    apiPart<typeof Badge>({
+      name: "Badge",
+      props: [
+        {
+          name: "variant",
+          type: '"neutral" | "accent" | "success" | "warning" | "error" | "outline"',
+          default: '"neutral"',
+          description: "Sets the colors.",
+        },
+        {
+          name: "dot",
+          type: "boolean",
+          default: "false",
+          description: "Shows a BadgeDot before the label.",
+        },
+        {
+          name: "children",
+          type: "ReactNode",
+          description:
+            "The badge content. Text stays on one line and truncates if space is short.",
+        },
+      ],
+    }),
   ],
   checkbox: [
-    {
-      component: "Checkbox",
-      prop: "children",
-      type: "ReactNode",
-      defaultValue: "—",
-      description:
-        "The label. Without it, pass aria-label so the checkbox has a name.",
-    },
-    {
-      component: "Checkbox",
-      prop: "description",
-      type: "ReactNode",
-      defaultValue: "—",
-      description:
-        "Help text below the label. Linked with aria-describedby, so it is not part of the name.",
-    },
-    {
-      component: "Checkbox",
-      prop: "errorMessage",
-      type: "string | ((validation: ValidationResult) => string)",
-      defaultValue: "browser message",
-      description:
-        "Shown below the label when isRequired, validate, or isInvalid makes the checkbox invalid.",
-    },
-    {
-      component: "Checkbox",
-      prop: "checked / defaultChecked",
-      type: 'boolean | "indeterminate"',
-      defaultValue: "—",
-      description:
-        'Aliases for isSelected and defaultSelected. "indeterminate" sets isIndeterminate. A default indeterminate state clears on the first change.',
-    },
-    {
-      component: "Checkbox",
-      prop: "onCheckedChange",
-      type: "(checked: boolean) => void",
-      defaultValue: "—",
-      description: "Alias for onChange. Both run when both are set.",
-    },
+    apiPart<typeof Checkbox>({
+      name: "Checkbox",
+      props: [
+        {
+          name: "children",
+          type: "ReactNode",
+          description:
+            "The label. Without it, pass aria-label so the checkbox has a name.",
+        },
+        {
+          name: "description",
+          type: "ReactNode",
+          description:
+            "Help text below the label. Linked with aria-describedby, so it is not part of the name.",
+        },
+        {
+          name: "errorMessage",
+          type: "string | ((validation: ValidationResult) => string)",
+          description:
+            "Shown below the label when isRequired, validate, or isInvalid makes the checkbox invalid. Without it, the browser validation message shows.",
+        },
+        {
+          name: "checked",
+          type: 'boolean | "indeterminate"',
+          description:
+            'Alias for isSelected. "indeterminate" sets isIndeterminate.',
+        },
+        {
+          name: "defaultChecked",
+          type: 'boolean | "indeterminate"',
+          description:
+            'Alias for defaultSelected. "indeterminate" shows the indeterminate state until the first change.',
+        },
+        {
+          name: "onCheckedChange",
+          type: "(checked: boolean) => void",
+          description: "Alias for onChange. Both run when both are set.",
+        },
+      ],
+    }),
   ],
   "checkbox-group": [
-    {
-      component: "CheckboxGroup",
-      prop: "label / description",
-      type: "ReactNode",
-      defaultValue: "—",
-      description:
-        "Label and help text for the group. Without label, pass aria-label or compose CheckboxGroupLabel.",
-    },
-    {
-      component: "CheckboxGroup",
-      prop: "errorMessage",
-      type: "string | ((validation: ValidationResult) => string)",
-      defaultValue: "browser message",
-      description:
-        "Shown below the options when the group is invalid. With label, description, or errorMessage, the group adds CheckboxGroupError for you.",
-    },
+    apiPart<typeof CheckboxGroup>({
+      name: "CheckboxGroup",
+      props: [
+        {
+          name: "label",
+          type: "ReactNode",
+          description:
+            "The label of the group. Without it, pass aria-label or compose CheckboxGroupLabel.",
+        },
+        {
+          name: "description",
+          type: "ReactNode",
+          description: "Help text for the group, below the label.",
+        },
+        {
+          name: "errorMessage",
+          type: "string | ((validation: ValidationResult) => string)",
+          description:
+            "Shown below the options when the group is invalid. Without it, the browser validation message shows. With label, description, or errorMessage, the group adds CheckboxGroupError for you.",
+        },
+      ],
+    }),
   ],
   autocomplete: [
-    {
-      component: "Autocomplete",
-      prop: "filter",
-      type: "(textValue: string, inputValue: string) => boolean",
-      defaultValue: "contains",
-      description:
-        "Decides which items match the input. The default ignores case and accents.",
-    },
+    apiPart<typeof Autocomplete>({
+      name: "Autocomplete",
+      props: [
+        {
+          name: "filter",
+          type: "(textValue: string, inputValue: string) => boolean",
+          description:
+            "Decides which items match the input. Without it, an item matches when its text contains the input. The default ignores case and accents.",
+        },
+      ],
+    }),
   ],
   switch: [
-    {
-      component: "Switch",
-      prop: "children",
-      type: "ReactNode",
-      defaultValue: "—",
-      description:
-        "The label. Without it, pass aria-label so the switch has a name.",
-    },
-    {
-      component: "Switch",
-      prop: "description",
-      type: "ReactNode",
-      defaultValue: "—",
-      description:
-        "Help text below the label. Linked with aria-describedby, so it is not part of the name.",
-    },
-    {
-      component: "Switch",
-      prop: "errorMessage",
-      type: "string | ((validation: ValidationResult) => string)",
-      defaultValue: "browser message",
-      description:
-        "Shown below the label when isRequired, validate, or isInvalid makes the switch invalid.",
-    },
-    {
-      component: "Switch",
-      prop: "checked / defaultChecked",
-      type: "boolean",
-      defaultValue: "—",
-      description: "Aliases for isSelected and defaultSelected.",
-    },
-    {
-      component: "Switch",
-      prop: "onCheckedChange",
-      type: "(checked: boolean) => void",
-      defaultValue: "—",
-      description: "Alias for onChange. Both run when both are set.",
-    },
+    apiPart<typeof Switch>({
+      name: "Switch",
+      props: [
+        {
+          name: "children",
+          type: "ReactNode",
+          description:
+            "The label. Without it, pass aria-label so the switch has a name.",
+        },
+        {
+          name: "description",
+          type: "ReactNode",
+          description:
+            "Help text below the label. Linked with aria-describedby, so it is not part of the name.",
+        },
+        {
+          name: "errorMessage",
+          type: "string | ((validation: ValidationResult) => string)",
+          description:
+            "Shown below the label when isRequired, validate, or isInvalid makes the switch invalid. Without it, the browser validation message shows.",
+        },
+        {
+          name: "checked",
+          type: "boolean",
+          description: "Alias for isSelected.",
+        },
+        {
+          name: "defaultChecked",
+          type: "boolean",
+          description: "Alias for defaultSelected.",
+        },
+        {
+          name: "onCheckedChange",
+          type: "(checked: boolean) => void",
+          description: "Alias for onChange. Both run when both are set.",
+        },
+      ],
+    }),
   ],
   tabs: [
-    {
-      component: "TabsList",
-      prop: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      defaultValue: "adaptive",
-      description:
-        "Uses the Button heights for each tab. Without a size, tabs are 44 pixels high on small screens and 36 pixels from 640 pixels.",
-    },
-    {
-      component: "Tabs",
-      prop: "value / defaultValue",
-      type: "string",
-      defaultValue: "—",
-      description:
-        "The value of the selected tab. Same as selectedKey and defaultSelectedKey.",
-    },
-    {
-      component: "Tabs",
-      prop: "onValueChange",
-      type: "(value: string) => void",
-      defaultValue: "—",
-      description:
-        "Gets the value of the selected tab as a string. onSelectionChange also works.",
-    },
-    {
-      component: "TabsTrigger",
-      prop: "value",
-      type: "string",
-      defaultValue: "—",
-      description: "Connects the tab to the TabsContent with the same value.",
-    },
-    {
-      component: "TabsContent",
-      prop: "value",
-      type: "string",
-      defaultValue: "—",
-      description: "Connects the panel to the TabsTrigger with the same value.",
-    },
+    apiPart<typeof TabsList>({
+      name: "TabsList",
+      props: [
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          description:
+            "Uses the Button heights for each tab. Without a size, tabs are 44 pixels high on small screens and 36 pixels from 640 pixels.",
+        },
+      ],
+    }),
+    apiPart<typeof Tabs>({
+      name: "Tabs",
+      props: [
+        {
+          name: "value",
+          type: "string",
+          description:
+            "The value of the selected tab, controlled. Same as selectedKey.",
+        },
+        {
+          name: "defaultValue",
+          type: "string",
+          description:
+            "The value of the tab that is selected at first, uncontrolled. Same as defaultSelectedKey.",
+        },
+        {
+          name: "onValueChange",
+          type: "(value: string) => void",
+          description:
+            "Gets the value of the selected tab as a string. onSelectionChange also works.",
+        },
+      ],
+    }),
+    apiPart<typeof TabsTrigger>({
+      name: "TabsTrigger",
+      props: [
+        {
+          name: "value",
+          type: "string",
+          description:
+            "Connects the tab to the TabsContent with the same value.",
+        },
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          description:
+            "Sets the size of this tab. It overrides the size of the TabsList.",
+        },
+      ],
+    }),
+    apiPart<typeof TabsContent>({
+      name: "TabsContent",
+      props: [
+        {
+          name: "value",
+          type: "string",
+          description:
+            "Connects the panel to the TabsTrigger with the same value.",
+        },
+      ],
+    }),
   ],
   "date-field": [
-    {
-      component: "DateField",
-      prop: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      defaultValue: '"lg"',
-      description: "Sets the size of the field.",
-    },
-    {
-      component: "DateField",
-      prop: "label / description",
-      type: "string / string",
-      defaultValue: "—",
-      description:
-        "Label above the field and help text below it. Without a label, pass aria-label.",
-    },
+    apiPart<typeof DateField>({
+      name: "DateField",
+      props: [
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"lg"',
+          description: "Sets the size of the field.",
+        },
+        {
+          name: "label",
+          type: "string",
+          description:
+            "Label above the field. Without a label, pass aria-label.",
+        },
+        {
+          name: "description",
+          type: "string",
+          description: "Help text below the field.",
+        },
+      ],
+    }),
   ],
   "time-field": [
-    {
-      component: "TimeField",
-      prop: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      defaultValue: '"lg"',
-      description: "Sets the size of the field.",
-    },
-    {
-      component: "TimeField",
-      prop: "label / description",
-      type: "string / string",
-      defaultValue: "—",
-      description:
-        "Label above the field and help text below it. Without a label, pass aria-label.",
-    },
+    apiPart<typeof TimeField>({
+      name: "TimeField",
+      props: [
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"lg"',
+          description: "Sets the size of the field.",
+        },
+        {
+          name: "label",
+          type: "string",
+          description:
+            "Label above the field. Without a label, pass aria-label.",
+        },
+        {
+          name: "description",
+          type: "string",
+          description: "Help text below the field.",
+        },
+      ],
+    }),
   ],
   "date-picker": [
-    {
-      component: "DatePicker",
-      prop: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      defaultValue: '"lg"',
-      description: "Sets the size of the field and of the calendar button.",
-    },
-    {
-      component: "DatePicker",
-      prop: "label / description",
-      type: "string / string",
-      defaultValue: "—",
-      description:
-        "Label above the field and help text below it. Without a label, pass aria-label.",
-    },
+    apiPart<typeof DatePicker>({
+      name: "DatePicker",
+      props: [
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"lg"',
+          description: "Sets the size of the field and of the calendar button.",
+        },
+        {
+          name: "label",
+          type: "string",
+          description:
+            "Label above the field. Without a label, pass aria-label.",
+        },
+        {
+          name: "description",
+          type: "string",
+          description: "Help text below the field.",
+        },
+      ],
+    }),
   ],
   "date-range-picker": [
-    {
-      component: "DateRangePicker",
-      prop: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      defaultValue: '"lg"',
-      description: "Sets the size of the field and of the calendar button.",
-    },
-    {
-      component: "DateRangePicker",
-      prop: "label / description",
-      type: "string / string",
-      defaultValue: "—",
-      description:
-        "Label above the field and help text below it. Without a label, pass aria-label.",
-    },
+    apiPart<typeof DateRangePicker>({
+      name: "DateRangePicker",
+      props: [
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"lg"',
+          description: "Sets the size of the field and of the calendar button.",
+        },
+        {
+          name: "label",
+          type: "string",
+          description:
+            "Label above the field. Without a label, pass aria-label.",
+        },
+        {
+          name: "description",
+          type: "string",
+          description: "Help text below the field.",
+        },
+      ],
+    }),
   ],
   "color-field": [
-    {
-      component: "ColorField",
-      prop: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      defaultValue: '"lg"',
-      description: "Sets the size of the field.",
-    },
-    {
-      component: "ColorField",
-      prop: "label / description",
-      type: "string / string",
-      defaultValue: "—",
-      description:
-        "Label above the field and help text below it. Without a label, pass aria-label.",
-    },
+    apiPart<typeof ColorField>({
+      name: "ColorField",
+      props: [
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"lg"',
+          description: "Sets the size of the field.",
+        },
+        {
+          name: "label",
+          type: "string",
+          description:
+            "Label above the field. Without a label, pass aria-label.",
+        },
+        {
+          name: "description",
+          type: "string",
+          description: "Help text below the field.",
+        },
+      ],
+    }),
   ],
   "color-picker": [
-    {
-      component: "ColorPicker",
-      prop: "label",
-      type: "string",
-      defaultValue: '"Choose color"',
-      description:
-        "Text on the trigger. The popover uses it in its accessible name.",
-    },
-    {
-      component: "ColorPicker",
-      prop: "children",
-      type: "ReactNode",
-      defaultValue: "built-in layout",
-      description: "Replaces the default trigger and popover.",
-    },
+    apiPart<typeof ColorPicker>({
+      name: "ColorPicker",
+      props: [
+        {
+          name: "label",
+          type: "string",
+          default: '"Choose color"',
+          description:
+            "Text on the trigger. The popover uses it in its accessible name.",
+        },
+        {
+          name: "children",
+          type: "ReactNode",
+          description:
+            "Replaces the default trigger and popover. Without it, ColorPicker shows its built-in layout.",
+        },
+      ],
+    }),
   ],
   "file-trigger": [
-    {
-      component: "FileTrigger",
-      prop: "label",
-      type: "string",
-      defaultValue: '"Choose files"',
-      description:
-        "Text for the default outline button. To use a different trigger, pass it as children.",
-    },
+    apiPart<typeof FileTrigger>({
+      name: "FileTrigger",
+      props: [
+        {
+          name: "label",
+          type: "string",
+          default: '"Choose files"',
+          description:
+            "Text for the default outline button. To use a different trigger, pass it as children.",
+        },
+      ],
+    }),
   ],
   meter: [
-    {
-      component: "Meter",
-      prop: "label",
-      type: "string",
-      defaultValue: "—",
-      description:
-        "Shows a visible label above the meter. Without label, pass aria-label.",
-    },
+    apiPart<typeof Meter>({
+      name: "Meter",
+      props: [
+        {
+          name: "label",
+          type: "string",
+          description:
+            "Shows a visible label above the meter. Without label, pass aria-label.",
+        },
+      ],
+    }),
   ],
   "progress-bar": [
-    {
-      component: "ProgressBar",
-      prop: "label",
-      type: "string",
-      defaultValue: "—",
-      description:
-        "Shows a visible label above the bar. Without label, pass aria-label.",
-    },
+    apiPart<typeof ProgressBar>({
+      name: "ProgressBar",
+      props: [
+        {
+          name: "label",
+          type: "string",
+          description:
+            "Shows a visible label above the bar. Without label, pass aria-label.",
+        },
+      ],
+    }),
   ],
   "number-field": [
-    {
-      component: "NumberField",
-      prop: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      defaultValue: '"lg"',
-      description: "Sets the size of the field and of the step buttons.",
-    },
-    {
-      component: "NumberField",
-      prop: "label / description",
-      type: "string / string",
-      defaultValue: "—",
-      description: "Label above the field and help text below it.",
-    },
+    apiPart<typeof NumberField>({
+      name: "NumberField",
+      props: [
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"lg"',
+          description: "Sets the size of the field and of the step buttons.",
+        },
+        {
+          name: "label",
+          type: "string",
+          description: "Label above the field.",
+        },
+        {
+          name: "description",
+          type: "string",
+          description: "Help text below the field.",
+        },
+      ],
+    }),
   ],
   "search-field": [
-    {
-      component: "SearchField",
-      prop: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      defaultValue: '"lg"',
-      description:
-        "Sets the size of the field, the search icon, and the clear button.",
-    },
-    {
-      component: "SearchField",
-      prop: "label / description / placeholder",
-      type: "string / string / string",
-      defaultValue: "—",
-      description:
-        "Label, help text, and placeholder for the default layout. The clear button shows when the field has a value.",
-    },
+    apiPart<typeof SearchField>({
+      name: "SearchField",
+      props: [
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"lg"',
+          description:
+            "Sets the size of the field, the search icon, and the clear button. The clear button shows only when the field has a value.",
+        },
+        {
+          name: "label",
+          type: "string",
+          description: "Label above the field in the default layout.",
+        },
+        {
+          name: "description",
+          type: "string",
+          description: "Help text below the field in the default layout.",
+        },
+        {
+          name: "placeholder",
+          type: "string",
+          description: "Input placeholder in the default layout.",
+        },
+      ],
+    }),
   ],
   slider: [
-    {
-      component: "Slider",
-      prop: "label",
-      type: "string",
-      defaultValue: "—",
-      description: "Label above the track, next to the value.",
-    },
+    apiPart<typeof Slider>({
+      name: "Slider",
+      props: [
+        {
+          name: "label",
+          type: "string",
+          description: "Label above the track, next to the value.",
+        },
+      ],
+    }),
   ],
   "text-field": [
-    {
-      component: "TextField",
-      prop: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      defaultValue: '"lg"',
-      description:
-        "Sets the height, padding, radius, text, and icon size of the field. The parts inside the field use it.",
-    },
-    {
-      component: "TextField",
-      prop: "label / description / placeholder",
-      type: "string / string / string",
-      defaultValue: "—",
-      description: "Label, help text, and placeholder for the default layout.",
-    },
+    apiPart<typeof TextField>({
+      name: "TextField",
+      props: [
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"lg"',
+          description:
+            "Sets the height, padding, radius, text, and icon size of the field. The parts inside the field use it.",
+        },
+        {
+          name: "label",
+          type: "string",
+          description: "Label above the field in the default layout.",
+        },
+        {
+          name: "description",
+          type: "string",
+          description: "Help text below the field in the default layout.",
+        },
+        {
+          name: "placeholder",
+          type: "string",
+          description: "Input placeholder in the default layout.",
+        },
+      ],
+    }),
   ],
   "text-area": [
-    {
-      component: "TextArea",
-      prop: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      defaultValue: '"lg"',
-      description:
-        "Sets the padding, radius, and text size. The height does not change.",
-    },
-    {
-      component: "TextArea",
-      prop: "label / description / placeholder",
-      type: "string / string / string",
-      defaultValue: "—",
-      description: "Label, help text, and placeholder for the default layout.",
-    },
-    {
-      component: "TextArea",
-      prop: "rows",
-      type: "number",
-      defaultValue: "4",
-      description: "Number of visible text lines.",
-    },
+    apiPart<typeof TextArea>({
+      name: "TextArea",
+      props: [
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"lg"',
+          description:
+            "Sets the padding, radius, and text size. The height does not change.",
+        },
+        {
+          name: "label",
+          type: "string",
+          description: "Label above the field in the default layout.",
+        },
+        {
+          name: "description",
+          type: "string",
+          description: "Help text below the field in the default layout.",
+        },
+        {
+          name: "placeholder",
+          type: "string",
+          description: "Input placeholder in the default layout.",
+        },
+        {
+          name: "rows",
+          type: "number",
+          default: "4",
+          description: "Number of visible text lines.",
+        },
+      ],
+    }),
   ],
   "radio-group": [
-    {
-      component: "RadioGroup",
-      prop: "label / description",
-      type: "ReactNode",
-      defaultValue: "—",
-      description:
-        "Label and help text for the group. Without label, pass aria-label or compose RadioGroupLabel.",
-    },
-    {
-      component: "RadioGroup",
-      prop: "errorMessage",
-      type: "string | ((validation: ValidationResult) => string)",
-      defaultValue: "browser message",
-      description:
-        "Shown below the options when the group is invalid. With label, description, or errorMessage, the group adds RadioGroupError for you.",
-    },
-    {
-      component: "RadioGroup",
-      prop: "onValueChange",
-      type: "(value: string) => void",
-      defaultValue: "—",
-      description: "Alias for onChange. Both run when both are set.",
-    },
-    {
-      component: "Radio",
-      prop: "children",
-      type: "ReactNode",
-      defaultValue: "—",
-      description:
-        "The label. Without it, pass aria-label so the option has a name.",
-    },
-    {
-      component: "Radio",
-      prop: "description",
-      type: "ReactNode",
-      defaultValue: "—",
-      description:
-        "Help text below the label. Linked with aria-describedby, so it is not part of the name.",
-    },
-    {
-      component: "Radio / RadioField",
-      prop: "variant",
-      type: '"default" | "card"',
-      defaultValue: '"default"',
-      description:
-        "Selects the plain or card appearance. A card selects the option from anywhere inside it.",
-    },
+    apiPart<typeof RadioGroup>({
+      name: "RadioGroup",
+      props: [
+        {
+          name: "label",
+          type: "ReactNode",
+          description:
+            "The label of the group. Without it, pass aria-label or compose RadioGroupLabel.",
+        },
+        {
+          name: "description",
+          type: "ReactNode",
+          description: "Help text for the group, below the label.",
+        },
+        {
+          name: "errorMessage",
+          type: "string | ((validation: ValidationResult) => string)",
+          description:
+            "Shown below the options when the group is invalid. Without it, the browser validation message shows. With label, description, or errorMessage, the group adds RadioGroupError for you.",
+        },
+        {
+          name: "onValueChange",
+          type: "(value: string) => void",
+          description: "Alias for onChange. Both run when both are set.",
+        },
+      ],
+    }),
+    apiPart<typeof Radio>({
+      name: "Radio",
+      props: [
+        {
+          name: "children",
+          type: "ReactNode",
+          description:
+            "The label. Without it, pass aria-label so the option has a name.",
+        },
+        {
+          name: "description",
+          type: "ReactNode",
+          description:
+            "Help text below the label. Linked with aria-describedby, so it is not part of the name.",
+        },
+        {
+          name: "variant",
+          type: '"default" | "card"',
+          default: '"default"',
+          description:
+            "Selects the plain or card appearance. A card selects the option from anywhere inside it. RadioField takes the same prop.",
+        },
+      ],
+    }),
   ],
   toast: [
-    {
-      component: "showToast",
-      prop: "message",
-      type: "ToastMessage",
-      defaultValue: "required",
+    apiPart<ToastMessage>({
+      name: "showToast message",
       description:
-        'Title, optional description, and variant: "info", "success", "warning", or "error".',
-    },
-    {
-      component: "showToast",
-      prop: "options.timeout",
-      type: "number",
-      defaultValue: "5000",
-      description:
-        "Milliseconds before the toast closes. Values under 5000 become 5000. Set 0 to keep the toast open until the user closes it. Hover and focus pause the timer.",
-    },
-    {
-      component: "showToast",
-      prop: "options.onClose",
-      type: "() => void",
-      defaultValue: "—",
-      description: "Runs after the toast closes.",
-    },
-    {
-      component: "toastQueue",
-      prop: "close",
-      type: "(key: string) => void",
-      defaultValue: "—",
-      description: "Closes the toast with the key that showToast returns.",
-    },
+        "showToast(message, options) shows a toast and returns its key. To close that toast, call toastQueue.close(key).",
+      props: [
+        {
+          name: "title",
+          type: "string",
+          required: true,
+          description: "The main text of the toast.",
+        },
+        {
+          name: "description",
+          type: "string",
+          description: "Text below the title.",
+        },
+        {
+          name: "variant",
+          type: '"info" | "success" | "warning" | "error"',
+          default: '"info"',
+          description: "Sets the icon and its colors.",
+        },
+      ],
+    }),
+    apiPart<NonNullable<Parameters<typeof showToast>[1]>>({
+      name: "showToast options",
+      props: [
+        {
+          name: "timeout",
+          type: "number",
+          default: "5000",
+          description:
+            "Milliseconds before the toast closes. Values under 5000 become 5000. Set 0 to keep the toast open until the user closes it. Hover and focus pause the timer.",
+        },
+      ],
+    }),
   ],
   tooltip: [
-    {
-      component: "TooltipTrigger",
-      prop: "delay",
-      type: "number",
-      defaultValue: "400",
-      description:
-        "Milliseconds of hover before the tooltip opens. Keyboard focus opens it at once.",
-    },
-    {
-      component: "TooltipContent",
-      prop: "placement",
-      type: "Placement",
-      defaultValue: '"top"',
-      description:
-        "The side of the trigger. If there is not sufficient space, the tooltip moves to the opposite side.",
-    },
-    {
-      component: "TooltipContent",
-      prop: "offset",
-      type: "number",
-      defaultValue: "8",
-      description: "Distance from the trigger in pixels.",
-    },
+    apiPart<typeof TooltipTrigger>({
+      name: "TooltipTrigger",
+      props: [
+        {
+          name: "delay",
+          type: "number",
+          default: "400",
+          description:
+            "Milliseconds of hover before the tooltip opens. Keyboard focus opens it at once.",
+        },
+      ],
+    }),
+    apiPart<typeof TooltipContent>({
+      name: "TooltipContent",
+      props: [
+        {
+          name: "offset",
+          type: "number",
+          default: "8",
+          description: "Distance from the trigger in pixels.",
+        },
+      ],
+    }),
   ],
   "toggle-button": [
-    {
-      component: "ToggleButton",
-      prop: "variant",
-      type: '"default" | "segmented" | "ghost"',
-      defaultValue: '"default"',
-      description:
-        "Sets the surface. Use segmented inside a ToggleButtonGroup. All variants show the selected state.",
-    },
-    {
-      component: "ToggleButton",
-      prop: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      defaultValue: '"md"',
-      description:
-        "Uses the Button heights. Without a size, a segmented toggle is 44 pixels high on small screens and 36 pixels from 640 pixels.",
-    },
-    {
-      component: "ToggleButton",
-      prop: "iconOnly",
-      type: "boolean",
-      defaultValue: "false",
-      description:
-        "Makes the toggle a square for one icon. Give the toggle an aria-label.",
-    },
+    apiPart<typeof ToggleButton>({
+      name: "ToggleButton",
+      props: [
+        {
+          name: "variant",
+          type: '"default" | "segmented" | "ghost"',
+          default: '"default"',
+          description:
+            "Sets the surface. Use segmented inside a ToggleButtonGroup. All variants show the selected state.",
+        },
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"md"',
+          description:
+            "Uses the Button heights. Without a size, a segmented toggle is 44 pixels high on small screens and 36 pixels from 640 pixels.",
+        },
+        {
+          name: "iconOnly",
+          type: "boolean",
+          default: "false",
+          description:
+            "Makes the toggle a square for one icon. Give the toggle an aria-label.",
+        },
+      ],
+    }),
   ],
   "toggle-button-group": [
-    {
-      component: "ToggleButtonGroup",
-      prop: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      defaultValue: "—",
-      description:
-        "Sets the size of each toggle in the group. A size on a toggle overrides it.",
-    },
+    apiPart<typeof ToggleButtonGroup>({
+      name: "ToggleButtonGroup",
+      props: [
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          description:
+            "Sets the size of each toggle in the group. A size on a toggle overrides it.",
+        },
+      ],
+    }),
   ],
   toolbar: [
-    {
-      component: "Toolbar",
-      prop: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      defaultValue: "—",
-      description:
-        "Sets the size of each button, toggle, and toggle group in the toolbar. Popovers and dialogs that open from the toolbar keep the default size.",
-    },
+    apiPart<typeof Toolbar>({
+      name: "Toolbar",
+      props: [
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          description:
+            "Sets the size of each button, toggle, and toggle group in the toolbar. Popovers and dialogs that open from the toolbar keep the default size.",
+        },
+      ],
+    }),
   ],
   "token-field": [
-    {
-      component: "TokenField",
-      prop: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      defaultValue: '"lg"',
-      description: "Sets the size of the input box. Tokens keep one size.",
-    },
-    {
-      component: "TokenField",
-      prop: "label / description / placeholder",
-      type: "string / string / string",
-      defaultValue: "—",
-      description:
-        "Label, help text, and placeholder for the default layout. Without label, pass aria-label.",
-    },
+    apiPart<typeof TokenField>({
+      name: "TokenField",
+      props: [
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"lg"',
+          description: "Sets the size of the input box. Tokens keep one size.",
+        },
+        {
+          name: "label",
+          type: "string",
+          description:
+            "Label above the field in the default layout. Without it, pass aria-label.",
+        },
+        {
+          name: "description",
+          type: "string",
+          description: "Help text below the field in the default layout.",
+        },
+        {
+          name: "placeholder",
+          type: "string",
+          description: "Input placeholder in the default layout.",
+        },
+      ],
+    }),
   ],
   "tag-group": [
-    {
-      component: "TagGroup",
-      prop: "size",
-      type: '"xs" | "sm" | "md"',
-      defaultValue: '"md"',
-      description:
-        "Sets the size of each tag and its remove button. A size on a tag overrides it.",
-    },
+    apiPart<typeof TagGroup>({
+      name: "TagGroup",
+      props: [
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md"',
+          default: '"md"',
+          description:
+            "Sets the size of each tag and its remove button. A size on a tag overrides it.",
+        },
+      ],
+    }),
   ],
 };
