@@ -66,7 +66,11 @@ export function ProgressBar({
                   data-slot="progress-bar-fill"
                   className="h-full w-1/3 rounded-full bg-primary forced-colors:bg-[Highlight]"
                   initial={false}
-                  animate={{ x: reduceMotion ? "100%" : ["-100%", "300%"] }}
+                  animate={{
+                    transform: reduceMotion
+                      ? "translateX(100%)"
+                      : ["translateX(-100%)", "translateX(300%)"],
+                  }}
                   transition={
                     reduceMotion
                       ? { duration: 0 }
