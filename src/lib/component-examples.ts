@@ -801,6 +801,12 @@ export const componentPageData = {
           'Set selectionMode to "single" or "multiple". Control the value with selectedKeys and onSelectionChange.',
         sourcePath: "menu-selection-demo.tsx",
       },
+      {
+        title: "Placement and arrow",
+        description:
+          "Use MenuPopover and MenuContent instead of Menu to set placement. Add PopoverArrow inside MenuPopover to point at the trigger.",
+        sourcePath: "menu-placement-demo.tsx",
+      },
     ],
   },
   "agent-status": {
@@ -971,7 +977,7 @@ export const componentPageData = {
       {
         title: "Placement and arrow",
         description:
-          "Set placement to top, bottom, left, or right. If there is not sufficient space, the panel moves to the opposite side. Add PopoverArrow to point at the trigger. It follows the side the panel opens on.",
+          'Set placement to top, bottom, left, or right. If there is not sufficient space, the panel moves to the opposite side. Add start or end to align an edge of the panel with the trigger, for example "bottom start". Add PopoverArrow to point at the trigger. It follows the side the panel opens on.',
         sourcePath: "popover-placement-demo.tsx",
       },
       {
