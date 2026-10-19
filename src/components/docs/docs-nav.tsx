@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { ItemHighlight } from "@/components/ui/item-highlight";
 import { catalogGroups } from "@/lib/catalog";
 import { springLayout } from "@/lib/motion";
 import { docsGuides } from "@/lib/navigation";
@@ -53,7 +54,7 @@ export function DocsNav({
         }}
         aria-current={pathname === link.href ? "page" : undefined}
         className={cn(
-          "group/nav-link relative isolate inline-flex min-h-10 items-center rounded-lg px-3 text-[13px] font-medium whitespace-nowrap transition-[color,background-color] duration-150 ease-out-quint hover:bg-muted hover:text-foreground focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-transparent",
+          "group/nav-link relative isolate inline-flex min-h-10 items-center rounded-lg px-3 text-[13px] font-medium whitespace-nowrap transition-[color,background-color] duration-150 ease-out-quint hover:text-foreground focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-transparent",
           isActive ? "text-accent-foreground" : "text-muted-foreground",
         )}
       >
@@ -70,7 +71,11 @@ export function DocsNav({
   };
 
   return (
-    <nav aria-label="Documentation navigation" className="grid gap-6">
+    <nav
+      aria-label="Documentation navigation"
+      className="relative isolate grid gap-6"
+    >
+      <ItemHighlight placement="under" items="a" />
       <div className="grid gap-1">
         <p className="mb-2 px-3 text-xs font-semibold text-foreground">
           Get started

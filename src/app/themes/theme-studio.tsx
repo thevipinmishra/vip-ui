@@ -20,6 +20,7 @@ import {
   PageHeaderDescription,
 } from "@/components/docs/page-header";
 import { buttonLinkStyles } from "@/components/ui/button-styles";
+import { withItemHighlight } from "@/components/ui/item-highlight";
 import { Tab, TabList, TabPanel, Tabs } from "@/components/ui/tabs";
 import { ToggleButton } from "@/components/ui/toggle-button";
 import { ToggleButtonGroup } from "@/components/ui/toggle-button-group";
@@ -124,7 +125,7 @@ function ThemeOption({ theme }: { theme: OfficialTheme }) {
   return (
     <AriaRadio
       value={theme.slug}
-      className="inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-md border border-transparent px-3 text-sm font-medium text-muted-foreground outline-offset-4 outline-transparent transition-[outline-color,outline-offset] duration-150 ease-out-quint hover:bg-card/70 hover:text-foreground selected:border-border selected:bg-card selected:text-foreground selected:shadow-[var(--shadow-card)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 sm:min-h-9"
+      className="inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-md border border-transparent px-3 text-sm font-medium text-muted-foreground outline-offset-4 outline-transparent transition-[outline-color,outline-offset] duration-150 ease-out-quint hover:text-foreground selected:border-border selected:bg-card selected:text-foreground selected:shadow-[var(--shadow-card)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 sm:min-h-9"
     >
       <span data-specimen={theme.slug} className="flex items-center gap-2">
         <span
@@ -278,6 +279,11 @@ export function ThemeStudio({
             orientation="horizontal"
             value={slug}
             onChange={selectTheme}
+            render={withItemHighlight(undefined, {
+              placement: "under",
+              items: "label",
+              className: "bg-card/70",
+            })}
             className="flex min-w-0 gap-1 overflow-x-auto rounded-lg border border-border bg-secondary p-1 [scrollbar-width:none]"
           >
             {officialThemes.map((option) => (

@@ -4,10 +4,11 @@ import type { ComponentProps, HTMLAttributes } from "react";
 import { tv } from "tailwind-variants";
 import { cn } from "@/lib/utils";
 import { buttonLabel, touchTarget } from "./button-styles";
+import { ItemHighlight } from "./item-highlight";
 import { type Size, SizeProvider, useSize } from "./size";
 
 const paginationLinkStyles = tv({
-  base: "inline-flex max-w-full cursor-pointer items-center justify-center gap-1.5 rounded-lg text-sm font-medium whitespace-nowrap text-foreground tabular-nums outline-offset-4 outline-transparent transition-[color,background-color,box-shadow,scale,outline-color,outline-offset] duration-150 ease-out-quint hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 motion-safe:not-aria-disabled:active:scale-[0.96] aria-disabled:cursor-default aria-disabled:text-muted-foreground/60 aria-disabled:hover:bg-transparent [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  base: "inline-flex max-w-full cursor-pointer items-center justify-center gap-1.5 rounded-lg text-sm font-medium whitespace-nowrap text-foreground tabular-nums outline-offset-4 outline-transparent transition-[color,background-color,box-shadow,scale,outline-color,outline-offset] duration-150 ease-out-quint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 motion-safe:not-aria-disabled:active:scale-[0.96] aria-disabled:cursor-default aria-disabled:text-muted-foreground/60 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   variants: {
     size: {
       xs: `min-h-7 min-w-7 gap-1 rounded-md px-2 text-xs [&_svg:not([class*='size-'])]:size-3.5 ${touchTarget}`,
@@ -17,7 +18,7 @@ const paginationLinkStyles = tv({
       xl: "min-h-14 min-w-14 rounded-xl px-4 text-base [&_svg:not([class*='size-'])]:size-5",
     },
     isCurrent: {
-      true: "bg-card text-primary shadow-[var(--shadow-card)] ring-1 ring-primary/25 hover:bg-card forced-colors:border",
+      true: "bg-card text-primary shadow-[var(--shadow-card)] ring-1 ring-primary/25 forced-colors:border",
     },
   },
   defaultVariants: { size: "md" },
@@ -33,6 +34,7 @@ const ellipsisSizeStyles = {
 
 export function Pagination({
   className,
+  children,
   size: sizeProp,
   ...props
 }: HTMLAttributes<HTMLElement> & { size?: Size }) {
@@ -44,11 +46,14 @@ export function Pagination({
         data-slot="pagination"
         data-size={size}
         className={cn(
-          "group/pagination flex min-w-0 justify-center-safe",
+          "group/pagination relative isolate flex min-w-0 justify-center-safe",
           className,
         )}
         {...props}
-      />
+      >
+        <ItemHighlight placement="under" items="[data-slot=pagination-link]" />
+        {children}
+      </nav>
     </SizeProvider>
   );
 }

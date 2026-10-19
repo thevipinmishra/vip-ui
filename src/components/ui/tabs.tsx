@@ -20,6 +20,7 @@ import {
 import { springLayout, transitionFor } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { buttonLabel } from "./button-styles";
+import { withItemHighlight } from "./item-highlight";
 import { type Size, SizeProvider, useSize } from "./size";
 
 const tabSizeStyles = {
@@ -132,15 +133,16 @@ export function TabList({
         data-slot="tabs-list"
         data-size={size}
         data-fade={fade}
-        render={
+        render={withItemHighlight(
           props.render ??
-          ((domProps) => (
-            <motion.div
-              {...(domProps as HTMLMotionProps<"div">)}
-              layoutScroll
-            />
-          ))
-        }
+            ((domProps) => (
+              <motion.div
+                {...(domProps as HTMLMotionProps<"div">)}
+                layoutScroll
+              />
+            )),
+          { placement: "under", items: "[role=tab]", className: "bg-card/70" },
+        )}
         className={composeRenderProps(className, (className) =>
           cn(
             "group/tab-list inline-flex min-w-0 max-w-full scroll-px-1 items-center gap-1 overflow-x-auto overflow-y-hidden rounded-xl bg-muted p-1 shadow-[var(--shadow-inset)] inset-ring inset-ring-border/70 [scrollbar-width:none] forced-colors:border data-[fade=both]:mask-x-from-[calc(100%-1.5rem)] data-[fade=left]:mask-l-from-[calc(100%-1.5rem)] data-[fade=right]:mask-r-from-[calc(100%-1.5rem)] data-[orientation=vertical]:shrink-0 data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-stretch data-[orientation=vertical]:overflow-x-hidden data-[orientation=vertical]:overflow-y-auto data-[size=xl]:rounded-2xl data-[size=xs]:gap-0.5 data-[size=xs]:rounded-lg data-[size=xs]:p-0.5 [&::-webkit-scrollbar]:hidden",
@@ -168,7 +170,7 @@ export function Tab({
       data-size={size}
       className={composeRenderProps(className, (className) =>
         cn(
-          "relative isolate inline-flex min-h-11 min-w-0 max-w-full shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 text-sm font-medium leading-5 text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-out-quint hover:bg-card/70 hover:text-foreground motion-safe:pressed:scale-[0.96] selected:text-foreground selected:hover:bg-transparent focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-50 group-data-[orientation=vertical]/tab-list:justify-start [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+          "relative isolate inline-flex min-h-11 min-w-0 max-w-full shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 text-sm font-medium leading-5 text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-out-quint hover:text-foreground motion-safe:pressed:scale-[0.96] selected:text-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-50 group-data-[orientation=vertical]/tab-list:justify-start [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
           size ? tabSizeStyles[size] : "sm:min-h-9",
           className,
         ),

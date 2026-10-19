@@ -26,6 +26,7 @@ import {
   fieldSizeStyles,
   fieldText,
 } from "./field-styles";
+import { itemHighlightRing, withItemHighlight } from "./item-highlight";
 import { SelectionMark } from "./list-box";
 import { Popover } from "./popover";
 import type { Size } from "./size";
@@ -33,8 +34,7 @@ import type { Size } from "./size";
 const selectTriggerStyles = `${fieldHeight} ${fieldRadius} ${fieldText} group/trigger relative flex w-full min-w-0 cursor-pointer items-center border border-input bg-card ps-[var(--field-px,0.875rem)] pe-[calc(var(--field-px,0.875rem)+var(--field-icon,1rem)+0.625rem)] text-start leading-6 text-foreground shadow-[var(--shadow-card)] outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-out-quint hover:border-primary/45 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring group-invalid:border-destructive group-invalid:hover:border-destructive group-invalid:focus-visible:border-destructive group-invalid:focus-visible:ring-destructive disabled:cursor-default disabled:bg-muted disabled:opacity-60 sm:leading-5`;
 const selectValueStyles =
   "min-w-0 flex-1 self-center truncate text-start data-[placeholder]:text-muted-foreground";
-const selectItemStyles =
-  "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none transition-colors duration-150 ease-out-quint hover:bg-muted hover:duration-0 focus:bg-muted focus:duration-0 selected:bg-accent selected:text-accent-foreground focus-visible:-outline-offset-1 focus-visible:outline-1 focus-visible:outline-solid focus-visible:outline-ring forced-colors:focus-visible:-outline-offset-2 forced-colors:focus-visible:outline-2 disabled:cursor-default disabled:opacity-50";
+const selectItemStyles = `group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none transition-colors duration-150 ease-out-quint selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50 ${itemHighlightRing}`;
 const selectPopoverStyles =
   "w-[var(--trigger-width)] rounded-lg border-0 p-1.5 ring-1 ring-border/70";
 
@@ -133,6 +133,7 @@ export function Select({
           >
             <ListBox
               data-slot="select-list-box"
+              render={withItemHighlight(undefined, { ring: true })}
               items={options ?? []}
               className="grid gap-1 outline-none"
             >
@@ -250,7 +251,11 @@ export function SelectContent({
         cn(selectPopoverStyles, className),
       )}
     >
-      <ListBox data-slot="select-list-box" className="grid gap-1 outline-none">
+      <ListBox
+        data-slot="select-list-box"
+        render={withItemHighlight(undefined, { ring: true })}
+        className="grid gap-1 outline-none"
+      >
         {children}
       </ListBox>
     </Popover>
