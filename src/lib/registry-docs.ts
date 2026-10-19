@@ -1,4 +1,4 @@
-import { access, readFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { getComponent } from "./catalog";
 
@@ -25,6 +25,7 @@ export const sharedFiles = {
   "field-styles": "Sets the styles of input fields.",
   "date-segment": "Shows the editable segments of date and time fields.",
   "collapsible-panel": "Animates disclosure panels.",
+  "item-highlight": "Moves one highlight to the hovered or focused item.",
 } as const satisfies Record<string, string>;
 
 export type SharedFileSlug = keyof typeof sharedFiles;
@@ -120,20 +121,24 @@ export function manualInstallPlan(
 export async function readSharedFile(
   slug: SharedFileSlug,
 ): Promise<RegistryFile> {
-  const directory = "registry/generated/src/components/vip-ui";
-  for (const name of [`${slug}.tsx`, `${slug}.ts`]) {
-    const filePath = path.posix.join(directory, name);
-    const absolute = path.join(process.cwd(), filePath);
+  for (const extension of ["tsx", "ts"] as const) {
+    const name = `${slug}.${extension}`;
     try {
-      await access(absolute);
-    } catch {
-      continue;
+      return {
+        path: `registry/generated/src/components/vip-ui/${name}`,
+        target: `@components/vip-ui/${name}`,
+        content: await readFile(
+          path.join(
+            process.cwd(),
+            "registry/generated/src/components/vip-ui",
+            name,
+          ),
+          "utf8",
+        ),
+      };
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
     }
-    return {
-      path: filePath,
-      target: `@components/vip-ui/${name}`,
-      content: await readFile(absolute, "utf8"),
-    };
   }
   throw new Error(`Missing shared file ${slug}`);
 }
