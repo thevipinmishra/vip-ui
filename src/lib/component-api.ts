@@ -1552,7 +1552,14 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           name: "maxHeight",
           type: "number",
           description:
-            "Caps the panel height. The panel always fits the viewport and scrolls when its content is taller. A panel with PopoverArrow does not scroll.",
+            "Caps the panel height. The panel always fits the viewport and scrolls when its content is taller. With PopoverArrow, the content scrolls inside the panel padding.",
+        },
+        {
+          name: "arrowBoundaryOffset",
+          type: "number",
+          default: "16",
+          description:
+            "The minimum distance from the arrow to the panel edge. It keeps the arrow off the rounded corner.",
         },
         {
           name: "data-placement",

@@ -30,17 +30,18 @@ export function Popover({
   className,
   children,
   "data-slot": dataSlot = "popover",
+  arrowBoundaryOffset = 16,
   ...props
 }: PopoverProps) {
   return (
     <AriaPopover
       {...props}
       data-slot={dataSlot}
+      arrowBoundaryOffset={arrowBoundaryOffset}
       className={composeRenderProps(className, (className) =>
         cn(
-          "max-w-[calc(100vw-2rem)] overflow-auto overscroll-contain rounded-xl border border-border bg-popover p-4 text-popover-foreground [overflow-wrap:anywhere] shadow-[var(--shadow-float)] outline-none",
-          // An arrow sits outside the panel, so the panel stops clipping.
-          "has-[[data-slot=popover-arrow]]:overflow-visible",
+          "group/popover max-w-[calc(100vw-2rem)] overflow-auto overscroll-contain rounded-xl border border-border bg-popover p-4 text-popover-foreground [overflow-wrap:anywhere] shadow-[var(--shadow-float)] outline-none",
+          "has-[[data-slot=popover-arrow]]:flex has-[[data-slot=popover-arrow]]:flex-col has-[[data-slot=popover-arrow]]:overflow-visible",
           // React Aria sets data-entering and data-exiting once the placement is
           // known, then waits for these transitions before it unmounts the panel.
           "origin-(--trigger-anchor-point) transition-[opacity,scale,translate] duration-200 ease-out-quint",
@@ -52,7 +53,14 @@ export function Popover({
       )}
     >
       {composeRenderProps(children, (children) => (
-        <SizeProvider size={undefined}>{children}</SizeProvider>
+        <SizeProvider size={undefined}>
+          <div
+            data-slot="popover-viewport"
+            className="contents group-has-[[data-slot=popover-arrow]]/popover:block group-has-[[data-slot=popover-arrow]]/popover:min-h-0 group-has-[[data-slot=popover-arrow]]/popover:overflow-auto group-has-[[data-slot=popover-arrow]]/popover:overscroll-contain"
+          >
+            {children}
+          </div>
+        </SizeProvider>
       ))}
     </AriaPopover>
   );
