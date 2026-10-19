@@ -43,6 +43,7 @@
   --muted-foreground: var(--sage-11);
   --accent: var(--sage-4);
   --accent-foreground: var(--sage-12);
+  --highlight: color-mix(in oklab, var(--foreground) 6%, transparent);
   --destructive: oklch(0.535 0.19 26);
   --destructive-foreground: var(--sage-1);
   --border: var(--sage-6);
@@ -96,6 +97,7 @@
   --muted-foreground: var(--sage-11);
   --accent: var(--sage-5);
   --accent-foreground: var(--sage-12);
+  --highlight: color-mix(in oklab, var(--foreground) 6%, transparent);
   --destructive: oklch(0.67 0.16 26);
   --destructive-foreground: var(--sage-1);
   --border: var(--sage-6);
@@ -147,6 +149,7 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-highlight: var(--highlight);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);

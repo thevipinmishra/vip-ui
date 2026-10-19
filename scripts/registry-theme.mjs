@@ -6,6 +6,7 @@ export const themeVars = {
     warning: "oklch(0.54 0.13 75)",
     "warning-subtle": "oklch(0.965 0.045 85)",
     "warning-foreground": "oklch(0.36 0.09 75)",
+    highlight: "color-mix(in oklab, var(--foreground) 6%, transparent)",
     "shadow-card":
       "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
     "shadow-float":
@@ -19,6 +20,7 @@ export const themeVars = {
     warning: "oklch(0.78 0.11 75)",
     "warning-subtle": "oklch(0.27 0.045 75)",
     "warning-foreground": "oklch(0.89 0.07 75)",
+    highlight: "color-mix(in oklab, var(--foreground) 6%, transparent)",
     "shadow-card":
       "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
     "shadow-float":

@@ -75,6 +75,7 @@ const descriptions = {
   "grid-list": "Select and act on rows with keyboard navigation.",
   "input-group": "Combine an input with a prefix, suffix, or action.",
   "inline-edit": "Edit text in place and handle save errors.",
+  "item-highlight": "Move one highlight to the hovered or focused item.",
   "kbd-code": "Display keyboard shortcuts and inline code.",
   link: "Navigate with an accessible text link.",
   "list-box": "Select an option from a visible list.",
