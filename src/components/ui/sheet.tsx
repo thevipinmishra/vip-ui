@@ -269,19 +269,25 @@ function tweenScroll(
   }
   const short = Math.sign(to - from);
   let expected = getScroll(scroller, axis);
-  controls = animate(from, to, {
-    duration,
-    ease: sheetEase,
-    onUpdate: (value) => {
-      if (
-        !scroller.isConnected ||
-        Math.abs(getScroll(scroller, axis) - expected) > 2
-      )
-        return stop();
-      setScroll(scroller, axis, Math.abs(to - value) < 1 ? to - short : value);
-      expected = getScroll(scroller, axis);
-    },
-    onComplete: finish,
+  frame = requestAnimationFrame(() => {
+    controls = animate(from, to, {
+      duration,
+      ease: sheetEase,
+      onUpdate: (value) => {
+        if (
+          !scroller.isConnected ||
+          Math.abs(getScroll(scroller, axis) - expected) > 2
+        )
+          return stop();
+        setScroll(
+          scroller,
+          axis,
+          Math.abs(to - value) < 1 ? to - short : value,
+        );
+        expected = getScroll(scroller, axis);
+      },
+      onComplete: finish,
+    });
   });
 }
 
