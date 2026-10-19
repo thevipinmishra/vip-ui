@@ -172,10 +172,12 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
           "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
           "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
         }
@@ -348,10 +350,12 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)"
         }
       },
       "files": [
@@ -398,9 +402,11 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
         }
       },
@@ -433,9 +439,11 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
         }
       },
@@ -466,9 +474,11 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
         }
       },
@@ -515,9 +525,11 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
         }
       },
@@ -546,6 +558,11 @@
           "path": "registry/generated/src/components/vip-ui/button.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/calendar.tsx",
@@ -805,10 +822,12 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
         }
@@ -935,6 +954,7 @@
       "description": "Filter and select one or several options.",
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
         "react-aria-components@^1.22.1",
         "tailwind-variants@^3.3.1"
       ],
@@ -948,14 +968,21 @@
         },
         "light": {
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
         },
         "dark": {
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
         }
       },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -970,6 +997,11 @@
           "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/list-box.tsx",
@@ -1013,10 +1045,12 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
         }
@@ -1063,6 +1097,11 @@
           "target": "@components/vip-ui/kbd-code.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/list-box.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/list-box.tsx"
@@ -1101,6 +1140,7 @@
       "description": "Open actions beside an item with pointer, touch, or keyboard.",
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
         "react-aria-components@^1.22.1",
         "tailwind-variants@^3.3.1"
       ],
@@ -1113,19 +1153,31 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
         }
       },
       "files": [
         {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/list-box.tsx",
@@ -1174,9 +1226,11 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
         }
       },
@@ -1234,11 +1288,13 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
           "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
           "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
@@ -1284,6 +1340,11 @@
           "path": "registry/generated/src/components/vip-ui/search-field.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/search-field.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/list-box.tsx",
@@ -1384,10 +1445,12 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
         }
@@ -1417,6 +1480,11 @@
           "path": "registry/generated/src/components/vip-ui/button.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/calendar.tsx",
@@ -1465,10 +1533,12 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
         }
@@ -1513,6 +1583,11 @@
           "path": "registry/generated/src/components/vip-ui/popover.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/popover.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/calendar.tsx",
@@ -1601,10 +1676,12 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
         }
@@ -1805,9 +1882,11 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
         }
       },
@@ -1871,6 +1950,7 @@
       "title": "Grid List",
       "description": "Select and act on rows with keyboard navigation.",
       "dependencies": [
+        "motion@^13.5.1",
         "react-aria-components@^1.22.1",
         "tailwind-variants@^3.3.1"
       ],
@@ -1883,17 +1963,29 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
         }
       },
       "files": [
         {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/grid-list.tsx",
@@ -1922,9 +2014,11 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
         }
       },
@@ -2019,6 +2113,38 @@
       ]
     },
     {
+      "name": "vip-item-highlight",
+      "type": "registry:ui",
+      "title": "Item Highlight",
+      "description": "Move one highlight to the hovered or focused item.",
+      "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
+      "cssVars": {
+        "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)"
+        },
+        "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
+        }
+      ]
+    },
+    {
       "name": "vip-kbd-code",
       "type": "registry:ui",
       "title": "Kbd Code",
@@ -2098,6 +2224,7 @@
       "title": "List Box",
       "description": "Select an option from a visible list.",
       "dependencies": [
+        "motion@^13.5.1",
         "react-aria-components@^1.22.1",
         "tailwind-variants@^3.3.1"
       ],
@@ -2110,17 +2237,29 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
         }
       },
       "files": [
         {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/list-box.tsx",
@@ -2148,9 +2287,11 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
         }
       },
@@ -2194,6 +2335,7 @@
       "description": "Choose an action from a popover menu.",
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
         "react-aria-components@^1.22.1",
         "tailwind-variants@^3.3.1"
       ],
@@ -2206,19 +2348,31 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
         }
       },
       "files": [
         {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/list-box.tsx",
@@ -2405,19 +2559,26 @@
       "type": "registry:ui",
       "title": "Pagination",
       "description": "Navigate between pages of results.",
-      "dependencies": ["tailwind-variants@^3.3.1"],
+      "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
       "cssVars": {
         "theme": {
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
         }
       },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -2427,6 +2588,11 @@
           "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/size.tsx",
@@ -2460,9 +2626,11 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
         }
       },
@@ -2829,9 +2997,11 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
         }
       },
@@ -2860,6 +3030,11 @@
           "path": "registry/generated/src/components/vip-ui/button.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/calendar.tsx",
@@ -2984,6 +3159,7 @@
       "description": "Choose one option from a list in a popover.",
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
         "react-aria-components@^1.22.1",
         "tailwind-variants@^3.3.1"
       ],
@@ -2997,14 +3173,21 @@
         },
         "light": {
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
         },
         "dark": {
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
         }
       },
       "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
@@ -3019,6 +3202,11 @@
           "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/list-box.tsx",
@@ -3079,10 +3267,12 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
         }
@@ -3403,6 +3593,7 @@
       "description": "Present rows and columns with sortable headers.",
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
         "react-aria-components@^1.22.1",
         "tailwind-variants@^3.3.1"
       ],
@@ -3413,13 +3604,29 @@
       "cssVars": {
         "theme": {
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        },
+        "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)"
+        },
+        "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)"
         }
       },
       "files": [
         {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/table.tsx",
@@ -3447,10 +3654,12 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
           "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
           "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
         }
@@ -3470,6 +3679,11 @@
           "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/size.tsx",
@@ -3832,9 +4046,11 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
         }
       },
@@ -3848,6 +4064,11 @@
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/size.tsx",
@@ -3890,9 +4111,11 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
         }
       },
@@ -4043,17 +4266,29 @@
       },
       "cssVars": {
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
         }
       },
       "files": [
         {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/size.tsx",
@@ -4116,6 +4351,7 @@
       "description": "Browse and select items in a nested collection.",
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
         "react-aria-components@^1.22.1",
         "tailwind-variants@^3.3.1"
       ],
@@ -4128,17 +4364,29 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
         }
       },
       "files": [
         {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/tree.tsx",
@@ -4177,6 +4425,7 @@
           "warning-subtle": "oklch(0.965 0.045 85)",
           "warning-foreground": "oklch(0.36 0.09 75)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
         },
@@ -4188,6 +4437,7 @@
           "warning-subtle": "oklch(0.27 0.045 75)",
           "warning-foreground": "oklch(0.89 0.07 75)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
         }
@@ -4207,6 +4457,11 @@
           "path": "registry/generated/src/components/vip-ui/motion.ts",
           "type": "registry:file",
           "target": "@components/vip-ui/motion.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/progress-bar.tsx",
@@ -4352,7 +4607,8 @@
           "warning": "oklch(0.54 0.13 75)",
           "warning-subtle": "oklch(0.965 0.045 85)",
           "warning-foreground": "oklch(0.36 0.09 75)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)"
         },
         "dark": {
           "success": "oklch(0.74 0.13 155)",
@@ -4361,7 +4617,8 @@
           "warning": "oklch(0.78 0.11 75)",
           "warning-subtle": "oklch(0.27 0.045 75)",
           "warning-foreground": "oklch(0.89 0.07 75)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)"
         }
       },
       "files": [
@@ -4411,6 +4668,11 @@
           "target": "@components/vip-ui/toggle-button.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/toggle-button-group.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/toggle-button-group.tsx"
@@ -4450,6 +4712,7 @@
           "warning-subtle": "oklch(0.965 0.045 85)",
           "warning-foreground": "oklch(0.36 0.09 75)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
         },
         "dark": {
@@ -4460,6 +4723,7 @@
           "warning-subtle": "oklch(0.27 0.045 75)",
           "warning-foreground": "oklch(0.89 0.07 75)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
         }
       },
@@ -4572,9 +4836,11 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
         }
       },
@@ -4667,6 +4933,7 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
           "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)",
           "success": "oklch(0.43 0.12 155)",
@@ -4674,6 +4941,7 @@
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
           "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)",
           "success": "oklch(0.74 0.13 155)",
@@ -4763,6 +5031,11 @@
           "target": "@components/vip-ui/password-strength-meter.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/list-box.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/list-box.tsx"
@@ -4805,10 +5078,12 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
         }
@@ -4875,6 +5150,11 @@
           "target": "@components/vip-ui/input-group.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/list-box.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/list-box.tsx"
@@ -4927,10 +5207,12 @@
           "ease-spring": "linear(0, 0.1251, 0.3554, 0.5737, 0.7411, 0.8551, 0.9259, 0.9666, 0.988, 0.9981, 1.002, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
           "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
           "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
         }
@@ -5027,6 +5309,7 @@
           "warning-subtle": "oklch(0.965 0.045 85)",
           "warning-foreground": "oklch(0.36 0.09 75)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
         },
         "dark": {
@@ -5037,6 +5320,7 @@
           "warning-subtle": "oklch(0.27 0.045 75)",
           "warning-foreground": "oklch(0.89 0.07 75)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
         }
       },
@@ -5130,7 +5414,8 @@
           "warning": "oklch(0.54 0.13 75)",
           "warning-subtle": "oklch(0.965 0.045 85)",
           "warning-foreground": "oklch(0.36 0.09 75)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)"
         },
         "dark": {
           "success": "oklch(0.74 0.13 155)",
@@ -5139,7 +5424,8 @@
           "warning": "oklch(0.78 0.11 75)",
           "warning-subtle": "oklch(0.27 0.045 75)",
           "warning-foreground": "oklch(0.89 0.07 75)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)"
         }
       },
       "files": [
@@ -5189,6 +5475,11 @@
           "target": "@components/vip-ui/toggle-button.tsx"
         },
         {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
+        },
+        {
           "path": "registry/generated/src/components/vip-ui/toggle-button-group.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/toggle-button-group.tsx"
@@ -5228,6 +5519,7 @@
           "warning-subtle": "oklch(0.965 0.045 85)",
           "warning-foreground": "oklch(0.36 0.09 75)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
         },
         "dark": {
@@ -5238,6 +5530,7 @@
           "warning-subtle": "oklch(0.27 0.045 75)",
           "warning-foreground": "oklch(0.89 0.07 75)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
         }
       },
@@ -5291,6 +5584,11 @@
           "path": "registry/generated/src/components/vip-ui/form.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/form.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/item-highlight.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/item-highlight.tsx"
         },
         {
           "path": "registry/generated/src/components/vip-ui/list-box.tsx",
@@ -5350,10 +5648,12 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
           "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
         },
         "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
           "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
         }

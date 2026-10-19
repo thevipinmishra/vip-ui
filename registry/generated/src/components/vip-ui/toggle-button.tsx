@@ -21,9 +21,9 @@ const toggleButtonStyles = tv({
       default:
         "border border-border bg-card text-foreground shadow-[var(--shadow-card)] hover:bg-muted pressed:bg-muted selected:border-primary/40 selected:bg-accent selected:text-accent-foreground",
       segmented:
-        "border border-transparent bg-transparent px-3 text-muted-foreground shadow-none hover:bg-card/70 hover:text-foreground pressed:bg-card/70 selected:border-border selected:bg-card selected:text-foreground selected:shadow-[var(--shadow-card)]",
+        "border border-transparent bg-transparent px-3 text-muted-foreground shadow-none hover:bg-card/70 in-data-[item-highlight=under]:not-selected:hover:bg-transparent hover:text-foreground pressed:bg-card/70 selected:border-border selected:bg-card selected:text-foreground selected:shadow-[var(--shadow-card)]",
       ghost:
-        "border border-transparent bg-transparent text-foreground hover:bg-muted pressed:bg-muted selected:bg-accent selected:text-accent-foreground",
+        "border border-transparent bg-transparent text-foreground hover:bg-muted in-data-[item-highlight=under]:not-selected:hover:bg-transparent pressed:bg-muted selected:bg-accent selected:text-accent-foreground",
     },
     size: {
       xs: `min-h-7 gap-1.5 rounded-sm px-2 text-xs [&_svg:not([class*='size-'])]:size-3.5 ${touchTarget}`,
