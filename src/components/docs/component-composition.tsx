@@ -1,46 +1,43 @@
+import type { CSSProperties } from "react";
+import { cn } from "@/lib/utils";
 import type { Composition, CompositionPart } from "./component-compositions";
+
+const flag =
+  "ms-2 inline-block rounded-sm bg-muted px-1.5 font-sans text-[11px] font-medium leading-5 text-muted-foreground";
 
 function CompositionBranch({
   parts,
-  nested = false,
+  depth,
 }: {
   parts: CompositionPart[];
-  nested?: boolean;
+  depth: number;
 }) {
   return (
     <ul
-      className={
-        nested
-          ? "ms-3 grid gap-1 border-s border-border/80 ps-4 sm:ms-5"
-          : "grid gap-1"
-      }
+      className={cn(
+        "relative col-span-full grid grid-cols-subgrid",
+        depth > 0 &&
+          "before:pointer-events-none before:absolute before:inset-y-1 before:start-[calc((var(--depth)-1)*1.25rem+0.5rem)] before:w-px before:bg-border",
+      )}
+      style={{ "--depth": depth } as CSSProperties}
     >
-      {parts.map(({ part, purpose, children }) => (
-        <li
-          key={part}
-          className={
-            nested
-              ? "relative before:absolute before:-start-5 before:top-[19px] before:size-2 before:rounded-full before:bg-border before:ring-2 before:ring-card"
-              : undefined
-          }
-        >
-          <div
-            className={
-              nested
-                ? "grid min-w-0 gap-0.5 rounded-lg px-2 py-2 sm:grid-cols-[minmax(0,180px)_minmax(0,1fr)] sm:gap-4"
-                : "grid min-w-0 gap-0.5 rounded-lg bg-muted/60 px-3 py-3 sm:grid-cols-[minmax(0,180px)_minmax(0,1fr)] sm:gap-4"
-            }
-          >
-            <code
-              className={`min-w-0 break-words font-mono text-xs font-semibold leading-5 ${nested ? "text-foreground" : "text-primary"}`}
-            >
-              {part}
-            </code>
-            <span className="min-w-0 text-[13px] leading-5 text-muted-foreground">
-              {purpose}
-            </span>
+      {parts.map(({ part, note, optional, repeats, children }) => (
+        <li key={part} className="col-span-full grid grid-cols-subgrid">
+          <div className="col-span-full grid grid-cols-subgrid items-baseline gap-y-0.5 py-1 ps-[calc(var(--depth)*1.25rem)]">
+            <div className="min-w-0 ps-2">
+              <code className="break-words font-mono text-[13px] font-medium leading-6 text-foreground">
+                {part}
+              </code>
+              {optional && <span className={flag}>Optional</span>}
+              {repeats && <span className={flag}>Repeats</span>}
+            </div>
+            {note && (
+              <p className="min-w-0 ps-2 text-[13px] leading-6 text-muted-foreground sm:ps-0">
+                {note}
+              </p>
+            )}
           </div>
-          {children && <CompositionBranch parts={children} nested />}
+          {children && <CompositionBranch parts={children} depth={depth + 1} />}
         </li>
       ))}
     </ul>
@@ -49,17 +46,16 @@ function CompositionBranch({
 
 export function ComponentComposition({ parts, helper }: Composition) {
   return (
-    <div className="max-w-[700px] rounded-xl bg-card p-4 shadow-[var(--shadow-card)] ring-1 ring-border/70 sm:p-5">
-      <p className="mb-4 text-[13px] leading-6 text-muted-foreground">
-        Indentation shows JSX nesting. Parts on the same level are siblings.
-      </p>
-      <CompositionBranch parts={parts} />
+    <div className="rounded-xl border border-border/70 bg-card/50 px-2 py-2 sm:px-3">
+      <div className="grid grid-cols-1 sm:grid-cols-[max-content_minmax(0,1fr)] sm:gap-x-8">
+        <CompositionBranch parts={parts} depth={0} />
+      </div>
       {helper && (
-        <p className="mt-5 border-t border-border/70 pt-4 text-[13px] leading-6 text-muted-foreground">
-          <code className="font-mono font-semibold text-foreground">
+        <p className="mx-2 mt-2 border-t border-border/70 pt-3 pb-1.5 text-[13px] leading-6 text-muted-foreground">
+          <code className="font-mono font-medium text-foreground">
             {helper.part}
           </code>{" "}
-          {helper.purpose}
+          {helper.note}
         </p>
       )}
     </div>

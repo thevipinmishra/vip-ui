@@ -1,12 +1,14 @@
 export interface CompositionPart {
   part: string;
-  purpose: string;
+  note?: string;
+  optional?: true;
+  repeats?: true;
   children?: CompositionPart[];
 }
 
 export interface Composition {
   parts: CompositionPart[];
-  helper?: CompositionPart;
+  helper?: { part: string; note: string };
 }
 
 export const compositions: Record<string, Composition> = {
@@ -14,19 +16,8 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "ToolCall",
-        purpose:
-          "Holds the expanded state. Accepts isExpanded, defaultExpanded, and onExpandedChange.",
-        children: [
-          {
-            part: "ToolCallTrigger",
-            purpose:
-              "Shows the tool name and status. Opens and closes the panel.",
-          },
-          {
-            part: "ToolCallPanel",
-            purpose: "Contains the input and the output.",
-          },
-        ],
+        note: "Owns the expanded state. Accepts isExpanded, defaultExpanded, and onExpandedChange.",
+        children: [{ part: "ToolCallTrigger" }, { part: "ToolCallPanel" }],
       },
     ],
   },
@@ -34,14 +25,7 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "StaggerGroup",
-        purpose:
-          "Starts the sequence on mount or in view and sets the delay between items.",
-        children: [
-          {
-            part: "StaggerItem",
-            purpose: "Fades in and moves up in its turn.",
-          },
-        ],
+        children: [{ part: "StaggerItem" }],
       },
     ],
   },
@@ -49,15 +33,8 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "AttachmentList",
-        purpose:
-          "Groups keyed file rows and handles their entrance and exit motion.",
-        children: [
-          {
-            part: "Attachment",
-            purpose:
-              "Displays one file and the app-supplied status or actions.",
-          },
-        ],
+        note: "Animates rows in and out.",
+        children: [{ part: "Attachment", repeats: true }],
       },
     ],
   },
@@ -65,20 +42,14 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "Accordion",
-        purpose: "Owns the expansion state and layout.",
+        note: "Owns the expanded state.",
         children: [
           {
             part: "AccordionItem",
-            purpose: "Identifies each section. Repeat for each section.",
+            repeats: true,
             children: [
-              {
-                part: "AccordionTrigger",
-                purpose: "Opens or closes its section.",
-              },
-              {
-                part: "AccordionContent",
-                purpose: "Holds the section content.",
-              },
+              { part: "AccordionTrigger" },
+              { part: "AccordionContent" },
             ],
           },
         ],
@@ -89,14 +60,10 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "Alert",
-        purpose: "Sets the message variant.",
         children: [
-          { part: "AlertIcon", purpose: "Shows the variant icon." },
-          { part: "AlertTitle", purpose: "Names the message." },
-          {
-            part: "AlertDescription",
-            purpose: "Gives the detail or next step.",
-          },
+          { part: "AlertIcon" },
+          { part: "AlertTitle" },
+          { part: "AlertDescription" },
         ],
       },
     ],
@@ -105,14 +72,7 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "ButtonGroup",
-        purpose: "Joins the edges of two or more related buttons.",
-        children: [
-          {
-            part: "Button",
-            purpose:
-              "Performs an action. Each button remains separately focusable.",
-          },
-        ],
+        children: [{ part: "Button", repeats: true }],
       },
     ],
   },
@@ -120,24 +80,15 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "Select",
-        purpose: "Owns the value and field state.",
+        note: "Owns the value and field state.",
         children: [
-          { part: "SelectLabel", purpose: "Names the field." },
-          { part: "SelectTrigger", purpose: "Opens the options." },
-          {
-            part: "SelectDescription",
-            purpose: "Adds help below the trigger.",
-          },
-          { part: "SelectError", purpose: "Explains an invalid selection." },
+          { part: "SelectLabel" },
+          { part: "SelectTrigger" },
+          { part: "SelectDescription" },
+          { part: "SelectError" },
           {
             part: "SelectContent",
-            purpose: "Contains the options.",
-            children: [
-              {
-                part: "SelectItem",
-                purpose: "Defines one option. Repeat for each choice.",
-              },
-            ],
+            children: [{ part: "SelectItem", repeats: true }],
           },
         ],
       },
@@ -147,36 +98,24 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "Dialog",
-        purpose: "Owns the open state.",
+        note: "Owns the open state.",
         children: [
-          { part: "DialogTrigger", purpose: "Opens the dialog." },
+          { part: "DialogTrigger" },
           {
             part: "DialogContent",
-            purpose: "Contains the modal task.",
             children: [
               {
                 part: "DialogHeader",
-                purpose: "Groups the title and close control.",
                 children: [
-                  { part: "DialogTitle", purpose: "Names the modal task." },
+                  { part: "DialogTitle" },
                   {
                     part: "DialogClose",
-                    purpose:
-                      "Closes the dialog. Without children, it is an X icon.",
+                    note: "Can also go in DialogFooter as a text button.",
                   },
                 ],
               },
-              { part: "DialogDescription", purpose: "Explains the task." },
-              {
-                part: "DialogFooter",
-                purpose: "Groups the task actions.",
-                children: [
-                  {
-                    part: "DialogClose",
-                    purpose: "Closes the dialog with a text button.",
-                  },
-                ],
-              },
+              { part: "DialogDescription" },
+              { part: "DialogFooter" },
             ],
           },
         ],
@@ -187,36 +126,25 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "PopoverTrigger",
-        purpose: "Owns the open state.",
+        note: "Owns the open state.",
         children: [
-          { part: "Button", purpose: "Opens the popover." },
+          { part: "Button" },
           {
             part: "Popover",
-            purpose: "Shows the panel next to the trigger.",
             children: [
-              {
-                part: "PopoverArrow",
-                purpose: "Optional. Points at the trigger.",
-              },
+              { part: "PopoverArrow", optional: true },
               {
                 part: "PopoverDialog",
-                purpose: "Holds the content and moves focus into it.",
                 children: [
-                  {
-                    part: "PopoverTitle",
-                    purpose: "Names the popover.",
-                  },
-                  {
-                    part: "PopoverDescription",
-                    purpose: "Optional. Describes the popover.",
-                  },
+                  { part: "PopoverTitle" },
+                  { part: "PopoverDescription", optional: true },
                   {
                     part: "PopoverFooter",
-                    purpose: "Optional. Holds the actions.",
+                    optional: true,
                     children: [
                       {
                         part: "Button",
-                        purpose: 'Set slot="close" to close the popover.',
+                        note: 'Set slot="close" to close the popover.',
                       },
                     ],
                   },
@@ -232,13 +160,12 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "TooltipTrigger",
-        purpose: "Opens the tooltip on hover or keyboard focus.",
         children: [
+          { part: "Button", note: "It must be focusable." },
           {
-            part: "Button",
-            purpose: "The trigger. It must be focusable.",
+            part: "TooltipContent",
+            children: [{ part: "TooltipArrow", optional: true }],
           },
-          { part: "TooltipContent", purpose: "Shows the hint text." },
         ],
       },
     ],
@@ -247,23 +174,12 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "ContextMenuTrigger",
-        purpose:
-          "Opens the menu on right-click or long press. On the keyboard, press Shift+F10, or Control+Enter on macOS.",
+        note: "On the keyboard, press Shift+F10. On macOS, press Control+Enter.",
         children: [
-          {
-            part: "Button",
-            purpose:
-              "The item. It must be focusable to open from the keyboard.",
-          },
+          { part: "Button", note: "It must be focusable." },
           {
             part: "ContextMenu",
-            purpose: "Positions the menu and manages keyboard focus.",
-            children: [
-              {
-                part: "ContextMenuItem",
-                purpose: "Runs an action. Repeat for each available action.",
-              },
-            ],
+            children: [{ part: "ContextMenuItem", repeats: true }],
           },
         ],
       },
@@ -273,18 +189,10 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "CommandPalette",
-        purpose:
-          "Opens the modal search, filters the items, and closes after an action.",
         children: [
           {
             part: "CommandPaletteSection",
-            purpose: "Groups related items under a heading.",
-            children: [
-              {
-                part: "CommandPaletteItem",
-                purpose: "Runs an action. Repeat for each command.",
-              },
-            ],
+            children: [{ part: "CommandPaletteItem", repeats: true }],
           },
         ],
       },
@@ -294,37 +202,28 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "ToastViewport",
-        purpose:
-          "Shows up to three toasts in the bottom corner, newest at the bottom. Other toasts wait. Render it once in the root layout.",
+        note: "Render it once in the root layout. Shows up to three toasts at a time.",
       },
     ],
     helper: {
       part: "showToast",
-      purpose:
-        "Adds a toast to the queue and returns its key. Call it from an event handler; it is not a JSX child.",
+      note: "Queues a toast and returns its key. Call it from an event handler.",
     },
   },
   menu: {
     parts: [
       {
         part: "MenuTrigger",
-        purpose: "Connects the button to the menu.",
         children: [
-          { part: "Button", purpose: "Opens the menu." },
+          { part: "Button" },
           {
             part: "MenuPopover",
-            purpose: "Positions the menu.",
             children: [
+              { part: "PopoverArrow", optional: true },
               {
                 part: "MenuContent",
-                purpose: "Owns focus and selection.",
-                children: [
-                  {
-                    part: "MenuItem",
-                    purpose:
-                      "Runs an action or selects an option. Repeat for each action.",
-                  },
-                ],
+                note: "Owns focus and selection.",
+                children: [{ part: "MenuItem", repeats: true }],
               },
             ],
           },
@@ -336,16 +235,13 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "SearchField",
-        purpose: "Owns the query and submission state.",
+        note: "Owns the query and submission state.",
         children: [
-          { part: "SearchFieldLabel", purpose: "Names the search." },
-          { part: "SearchFieldInput", purpose: "Accepts the query." },
-          { part: "SearchFieldClear", purpose: "Resets the query." },
-          {
-            part: "SearchFieldDescription",
-            purpose: "Adds help below the input.",
-          },
-          { part: "SearchFieldError", purpose: "Explains an invalid query." },
+          { part: "SearchFieldLabel" },
+          { part: "SearchFieldInput" },
+          { part: "SearchFieldClear" },
+          { part: "SearchFieldDescription" },
+          { part: "SearchFieldError" },
         ],
       },
     ],
@@ -354,12 +250,12 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "TextField",
-        purpose: "Owns the value and validation state.",
+        note: "Owns the value and validation state.",
         children: [
-          { part: "TextFieldLabel", purpose: "Names the input." },
-          { part: "TextFieldInput", purpose: "Accepts the value." },
-          { part: "TextFieldDescription", purpose: "Adds input guidance." },
-          { part: "TextFieldError", purpose: "Explains an invalid value." },
+          { part: "TextFieldLabel" },
+          { part: "TextFieldInput" },
+          { part: "TextFieldDescription" },
+          { part: "TextFieldError" },
         ],
       },
     ],
@@ -368,12 +264,12 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "TextArea",
-        purpose: "Owns the value and validation state.",
+        note: "Owns the value and validation state.",
         children: [
-          { part: "TextAreaLabel", purpose: "Names the input." },
-          { part: "TextAreaInput", purpose: "Accepts multiline text." },
-          { part: "TextAreaDescription", purpose: "Adds input guidance." },
-          { part: "TextAreaError", purpose: "Explains an invalid value." },
+          { part: "TextAreaLabel" },
+          { part: "TextAreaInput" },
+          { part: "TextAreaDescription" },
+          { part: "TextAreaError" },
         ],
       },
     ],
@@ -382,25 +278,14 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "TextField or TextArea",
-        purpose:
-          "Owns the label and validation state. Choose one and install it separately.",
+        note: "Owns the label and validation state. Install it separately.",
         children: [
           {
             part: "InputGroup",
-            purpose: "Shares a border between the input and addons.",
             children: [
-              {
-                part: "InputGroupInput",
-                purpose: "Accepts a single-line value in TextField.",
-              },
-              {
-                part: "InputGroupTextArea",
-                purpose: "Accepts multiline text in TextArea instead.",
-              },
-              {
-                part: "InputGroupAddon",
-                purpose: "Places text or an action beside the input.",
-              },
+              { part: "InputGroupInput", note: "Use it in TextField." },
+              { part: "InputGroupTextArea", note: "Use it in TextArea." },
+              { part: "InputGroupAddon" },
             ],
           },
         ],
@@ -411,30 +296,20 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "ComboBox",
-        purpose: "Owns the search and selected value.",
+        note: "Owns the search and selected value.",
         children: [
-          { part: "ComboBoxLabel", purpose: "Names the field." },
-          { part: "ComboBoxInput", purpose: "Filters the choices." },
-          { part: "ComboBoxTrigger", purpose: "Opens the choices." },
+          { part: "ComboBoxLabel" },
+          { part: "ComboBoxInput" },
+          { part: "ComboBoxTrigger" },
           {
             part: "ComboBoxTags",
-            purpose:
-              "Shows removable selections in multiple mode. The default layout includes it.",
+            note: "Use it in multiple selection mode. The default layout includes it.",
           },
-          {
-            part: "ComboBoxDescription",
-            purpose: "Adds help below the input.",
-          },
-          { part: "ComboBoxError", purpose: "Explains an invalid value." },
+          { part: "ComboBoxDescription" },
+          { part: "ComboBoxError" },
           {
             part: "ComboBoxContent",
-            purpose: "Contains the options.",
-            children: [
-              {
-                part: "ComboBoxItem",
-                purpose: "Defines one option. Repeat for each choice.",
-              },
-            ],
+            children: [{ part: "ComboBoxItem", repeats: true }],
           },
         ],
       },
@@ -444,59 +319,41 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "CheckboxField",
-        purpose: "Owns the checked state and validation.",
+        note: "Owns the checked state and validation.",
         children: [
           {
             part: "CheckboxButton",
-            purpose:
-              "The clickable label. Its text becomes the accessible name.",
+            note: "Its text becomes the accessible name.",
             children: [
-              { part: "CheckboxIndicator", purpose: "Draws the box." },
-              { part: "CheckboxLabel", purpose: "Names the option." },
+              { part: "CheckboxIndicator" },
+              { part: "CheckboxLabel" },
             ],
           },
-          {
-            part: "CheckboxDescription",
-            purpose: "Adds help below the label. Read as the description.",
-          },
-          {
-            part: "CheckboxError",
-            purpose: "Shows the validation message.",
-          },
+          { part: "CheckboxDescription" },
+          { part: "CheckboxError" },
         ],
       },
     ],
     helper: {
       part: "Checkbox",
-      purpose:
-        "Renders all of these parts from children, description, and errorMessage. Use the parts only for a custom layout.",
+      note: "Renders all of these parts from children, description, and errorMessage. Use the parts only for a custom layout.",
     },
   },
   "checkbox-group": {
     parts: [
       {
         part: "CheckboxGroup",
-        purpose: "Owns the selected values. Lays out its children in a column.",
+        note: "Owns the selected values. Lays out its children in a column.",
         children: [
-          { part: "CheckboxGroupLabel", purpose: "Names the group." },
-          {
-            part: "CheckboxGroupDescription",
-            purpose: "Adds help below the label.",
-          },
+          { part: "CheckboxGroupLabel" },
+          { part: "CheckboxGroupDescription" },
           {
             part: "CheckboxGroupItems",
-            purpose: "Optional. Wraps the choices to change their layout.",
-            children: [
-              {
-                part: "Checkbox",
-                purpose: "Defines one choice. Repeat for each option.",
-              },
-            ],
+            optional: true,
+            note: "Changes the layout of the choices.",
+            children: [{ part: "Checkbox", repeats: true }],
           },
-          {
-            part: "CheckboxGroupError",
-            purpose: "Explains invalid selection.",
-          },
+          { part: "CheckboxGroupError" },
         ],
       },
     ],
@@ -505,68 +362,55 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "RadioGroup",
-        purpose:
-          "Owns the single selected value. Lays out its children by orientation.",
+        note: "Owns the selected value. Lays out its children by orientation.",
         children: [
-          { part: "RadioGroupLabel", purpose: "Names the group." },
-          {
-            part: "RadioGroupDescription",
-            purpose: "Adds help below the label.",
-          },
+          { part: "RadioGroupLabel" },
+          { part: "RadioGroupDescription" },
           {
             part: "RadioGroupItems",
-            purpose: "Optional. Wraps the choices to change their gap.",
+            optional: true,
+            note: "Changes the gap between choices.",
             children: [
               {
                 part: "RadioField",
-                purpose: "Defines one choice. Repeat for each option.",
+                repeats: true,
                 children: [
                   {
                     part: "RadioButton",
-                    purpose:
-                      "The clickable label. Its text becomes the accessible name.",
+                    note: "Its text becomes the accessible name.",
                     children: [
-                      { part: "RadioIndicator", purpose: "Draws the circle." },
-                      { part: "RadioLabel", purpose: "Names the option." },
+                      { part: "RadioIndicator" },
+                      { part: "RadioLabel" },
                     ],
                   },
-                  {
-                    part: "RadioDescription",
-                    purpose:
-                      "Adds help below the label. Read as the description.",
-                  },
+                  { part: "RadioDescription" },
                 ],
               },
             ],
           },
-          {
-            part: "RadioGroupError",
-            purpose: "Explains invalid selection.",
-          },
+          { part: "RadioGroupError" },
         ],
       },
     ],
     helper: {
       part: "Radio",
-      purpose:
-        "Renders RadioField and its parts from children and description. Use the parts only for a custom layout.",
+      note: "Renders RadioField and its parts from children and description. Use the parts only for a custom layout.",
     },
   },
   breadcrumbs: {
     parts: [
       {
         part: "nav",
-        purpose:
-          "Makes a navigation landmark. Use it when the path is the main navigation of the page.",
+        optional: true,
+        note: "Use it when the path is the main navigation of the page.",
         children: [
           {
             part: "Breadcrumbs",
-            purpose: "Lists the path from the top level to the current page.",
             children: [
               {
                 part: "Breadcrumb",
-                purpose:
-                  "Links to one level. Repeat for each level. The last one is the current page and shows as text.",
+                repeats: true,
+                note: "The last one is the current page. It shows as text.",
               },
             ],
           },
@@ -578,23 +422,14 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "Tabs",
-        purpose: "Owns the selected panel.",
+        note: "Owns the selected panel.",
         children: [
           {
             part: "TabsList",
-            purpose: "Groups the tab triggers. Scrolls when they do not fit.",
-            children: [
-              {
-                part: "TabsTrigger",
-                purpose: "Selects a panel by value. Repeat for each tab.",
-              },
-            ],
+            note: "Scrolls when the tabs do not fit.",
+            children: [{ part: "TabsTrigger", repeats: true }],
           },
-          {
-            part: "TabsContent",
-            purpose:
-              "Shows the content with the matching value. Repeat for each tab.",
-          },
+          { part: "TabsContent", repeats: true },
         ],
       },
     ],
@@ -603,39 +438,28 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "SheetTrigger",
-        purpose: "Owns the open state.",
+        note: "Owns the open state.",
         children: [
-          { part: "Button", purpose: "Opens the sheet." },
+          { part: "Button" },
           {
             part: "Sheet",
-            purpose: "Contains the sheet's task.",
             children: [
-              {
-                part: "SheetHandle",
-                purpose:
-                  "Drag or push it to resize or close the sheet. In a top sheet, put it last.",
-              },
+              { part: "SheetHandle", note: "In a top sheet, put it last." },
               {
                 part: "SheetHeader",
-                purpose: "Groups the sheet's heading and close control.",
                 children: [
-                  { part: "SheetTitle", purpose: "Names the sheet." },
-                  { part: "SheetDescription", purpose: "Explains the task." },
+                  { part: "SheetTitle" },
+                  { part: "SheetDescription" },
                 ],
               },
               {
                 part: "SheetBody",
-                purpose:
-                  "Holds scrollable content. At a partial snap point it lets swipes resize the sheet instead.",
+                note: "Scrolls when the content does not fit.",
               },
               {
                 part: "SheetFooter",
-                purpose: "Groups the task actions.",
                 children: [
-                  {
-                    part: "SheetClose",
-                    purpose: "Dismisses the sheet. Can also go in the header.",
-                  },
+                  { part: "SheetClose", note: "Can also go in SheetHeader." },
                 ],
               },
             ],
@@ -648,36 +472,34 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "TokenField",
-        purpose: "Owns the value and editing state.",
+        note: "Owns the value and editing state.",
         children: [
-          { part: "TokenFieldLabel", purpose: "Names the field." },
-          { part: "TokenFieldInput", purpose: "Edits text and tokens." },
-          { part: "TokenFieldDescription", purpose: "Adds input guidance." },
+          { part: "TokenFieldLabel" },
+          { part: "TokenFieldInput" },
+          { part: "TokenFieldDescription" },
         ],
       },
     ],
     helper: {
       part: "TagFieldValue",
-      purpose:
-        "Splits text into tags at each comma or line break. Pass an instance to the value prop. It is not a JSX child.",
+      note: "Splits text into tags at each comma or line break. Pass an instance to the value prop.",
     },
   },
   "tag-group": {
     parts: [
       {
         part: "TagGroup",
-        purpose:
-          "Owns selection and removal. Set onRemove to show remove buttons.",
+        note: "Owns selection and removal. Set onRemove to show remove buttons.",
         children: [
-          { part: "TagGroupLabel", purpose: "Names the group." },
+          { part: "TagGroupLabel" },
           {
             part: "TagListView",
-            purpose:
-              "Contains the tags. renderEmptyState shows a message when there are no tags.",
+            note: "Set renderEmptyState to show a message when there are no tags.",
             children: [
               {
                 part: "Tag",
-                purpose: "Shows one item on one line. Repeat for each tag.",
+                repeats: true,
+                note: "Its text stays on one line.",
               },
             ],
           },
@@ -689,33 +511,29 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "Table",
-        purpose:
-          "Owns selection and sorting. Put it in an element with overflow-x-auto, so that it can scroll on small screens.",
+        note: "Owns selection and sorting. Put it in an element with overflow-x-auto to let it scroll on small screens.",
         children: [
           {
             part: "TableHeader",
-            purpose: "Contains the column headers.",
             children: [
               {
                 part: "Column",
-                purpose:
-                  "Names one column. Set isRowHeader on the column that names each row.",
+                repeats: true,
+                note: "Set isRowHeader on the column that names each row.",
               },
             ],
           },
           {
             part: "TableBody",
-            purpose:
-              "Contains the rows. renderEmptyState shows a message when there are no rows.",
             children: [
               {
                 part: "Row",
-                purpose: "Defines one row. Repeat for each item.",
+                repeats: true,
                 children: [
                   {
                     part: "Cell",
-                    purpose:
-                      "Shows one value on one line. Add whitespace-normal to let long text wrap.",
+                    repeats: true,
+                    note: "Its text stays on one line. Add whitespace-normal to let it wrap.",
                   },
                 ],
               },
@@ -729,28 +547,17 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "Card",
-        purpose: "Groups related content and actions.",
         children: [
           {
             part: "CardHeader",
-            purpose: "Holds the title, description, and action.",
             children: [
-              {
-                part: "CardTitle",
-                purpose: "Names the card. Set as for the heading level.",
-              },
-              {
-                part: "CardDescription",
-                purpose: "Gives short supporting text.",
-              },
-              {
-                part: "CardAction",
-                purpose: "Puts an optional control beside the title.",
-              },
+              { part: "CardTitle" },
+              { part: "CardDescription" },
+              { part: "CardAction", optional: true },
             ],
           },
-          { part: "CardContent", purpose: "Holds the main content." },
-          { part: "CardFooter", purpose: "Holds actions or a summary." },
+          { part: "CardContent" },
+          { part: "CardFooter" },
         ],
       },
     ],
@@ -759,13 +566,10 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "DescriptionList",
-        purpose: "Puts terms and details in two columns on wider screens.",
+        note: "Puts terms and details in two columns on wider screens.",
         children: [
-          { part: "DescriptionTerm", purpose: "Names a value." },
-          {
-            part: "DescriptionDetail",
-            purpose: "Gives the value. Repeat it for more than one value.",
-          },
+          { part: "DescriptionTerm" },
+          { part: "DescriptionDetail", repeats: true },
         ],
       },
     ],
@@ -774,14 +578,10 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "Stat",
-        purpose: "Groups one metric on a card surface.",
         children: [
-          { part: "StatLabel", purpose: "Names the metric." },
-          { part: "StatValue", purpose: "Shows the value." },
-          {
-            part: "StatDetail",
-            purpose: "Gives optional context, such as a change.",
-          },
+          { part: "StatLabel" },
+          { part: "StatValue" },
+          { part: "StatDetail", optional: true },
         ],
       },
     ],
@@ -790,21 +590,15 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "Timeline",
-        purpose: "Orders the events. Give it an aria-label.",
+        note: "Give it an aria-label.",
         children: [
           {
             part: "TimelineItem",
-            purpose: "Shows one event. Repeat for each event.",
+            repeats: true,
             children: [
-              { part: "TimelineTitle", purpose: "Names the event." },
-              {
-                part: "TimelineTime",
-                purpose: "Shows when it happened. Set dateTime.",
-              },
-              {
-                part: "TimelineDescription",
-                purpose: "Gives optional detail.",
-              },
+              { part: "TimelineTitle" },
+              { part: "TimelineTime", note: "Set dateTime." },
+              { part: "TimelineDescription", optional: true },
             ],
           },
         ],
@@ -815,31 +609,21 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "KbdGroup",
-        purpose: "Joins the keys of one shortcut.",
-        children: [{ part: "Kbd", purpose: "Shows one key." }],
+        note: "Joins the keys of one shortcut.",
+        children: [{ part: "Kbd", repeats: true }],
       },
-      { part: "InlineCode", purpose: "Shows code inside a sentence." },
+      { part: "InlineCode" },
     ],
   },
   "empty-state": {
     parts: [
       {
         part: "EmptyState",
-        purpose: "Groups the empty message.",
         children: [
-          {
-            part: "EmptyStateIcon",
-            purpose: "Adds an optional decorative icon.",
-          },
-          { part: "EmptyStateTitle", purpose: "Names what is missing." },
-          {
-            part: "EmptyStateDescription",
-            purpose: "Explains what to do next.",
-          },
-          {
-            part: "EmptyStateActions",
-            purpose: "Holds actions when they are useful.",
-          },
+          { part: "EmptyStateIcon", optional: true },
+          { part: "EmptyStateTitle" },
+          { part: "EmptyStateDescription" },
+          { part: "EmptyStateActions", optional: true },
         ],
       },
     ],
@@ -848,24 +632,18 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "Pagination",
-        purpose: "Names the navigation landmark.",
         children: [
           {
             part: "PaginationList",
-            purpose: "Orders the page links.",
             children: [
               {
                 part: "PaginationItem",
-                purpose: "Wraps each entry. Repeat for each page or gap.",
+                repeats: true,
                 children: [
-                  {
-                    part: "PaginationLink",
-                    purpose: "Navigates to a page URL.",
-                  },
+                  { part: "PaginationLink" },
                   {
                     part: "PaginationEllipsis",
-                    purpose:
-                      "Marks a gap in the page numbers. Use it in place of a link.",
+                    note: "Use it in place of a link.",
                   },
                 ],
               },
@@ -879,14 +657,8 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "Disclosure",
-        purpose: "Owns the expanded state.",
-        children: [
-          { part: "DisclosureHeader", purpose: "Toggles the panel." },
-          {
-            part: "DisclosurePanel",
-            purpose: "Holds the content to show or hide.",
-          },
-        ],
+        note: "Owns the expanded state.",
+        children: [{ part: "DisclosureHeader" }, { part: "DisclosurePanel" }],
       },
     ],
   },
@@ -894,13 +666,8 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "ColorSwatchPicker",
-        purpose: "Owns the selected color.",
-        children: [
-          {
-            part: "ColorSwatchPickerItem",
-            purpose: "Defines a labeled swatch. Repeat for each color.",
-          },
-        ],
+        note: "Owns the selected color.",
+        children: [{ part: "ColorSwatchPickerItem", repeats: true }],
       },
     ],
   },
@@ -908,13 +675,12 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "DropZone",
-        purpose: "Receives files and validates the drop operation.",
         children: [
-          { part: "DropZoneLabel", purpose: "Names the target." },
+          { part: "DropZoneLabel" },
           {
             part: "FileTrigger",
-            purpose:
-              "Opens a file picker as an alternative. Install File trigger separately.",
+            optional: true,
+            note: "Install File trigger separately.",
           },
         ],
       },
@@ -924,25 +690,18 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "Slider",
-        purpose: "Owns the value or range.",
+        note: "Owns the value or range.",
         children: [
-          { part: "SliderLabel", purpose: "Names the slider." },
-          { part: "SliderValue", purpose: "Shows the current value or range." },
+          { part: "SliderLabel" },
+          { part: "SliderValue" },
           {
             part: "SliderTrack",
-            purpose: "Receives presses and drags.",
             children: [
               {
                 part: "SliderRail",
-                purpose: "Draws the track.",
-                children: [
-                  { part: "SliderRange", purpose: "Fills the selected part." },
-                ],
+                children: [{ part: "SliderRange" }],
               },
-              {
-                part: "SliderHandle",
-                purpose: "Moves one value. Add one for each value.",
-              },
+              { part: "SliderHandle", repeats: true },
             ],
           },
         ],
@@ -953,55 +712,36 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "SwitchField",
-        purpose: "Owns the on and off state and validation.",
+        note: "Owns the on and off state and validation.",
         children: [
           {
             part: "SwitchButton",
-            purpose:
-              "The clickable label. Its text becomes the accessible name.",
+            note: "Its text becomes the accessible name.",
             children: [
-              { part: "SwitchLabel", purpose: "Names the setting." },
+              { part: "SwitchLabel" },
               {
                 part: "SwitchControl",
-                purpose: "Draws the track.",
-                children: [
-                  {
-                    part: "SwitchThumb",
-                    purpose: "Moves when the state changes.",
-                  },
-                ],
+                children: [{ part: "SwitchThumb" }],
               },
             ],
           },
-          {
-            part: "SwitchDescription",
-            purpose: "Adds help below the label. Read as the description.",
-          },
-          { part: "SwitchError", purpose: "Shows the validation message." },
+          { part: "SwitchDescription" },
+          { part: "SwitchError" },
         ],
       },
     ],
     helper: {
       part: "Switch",
-      purpose:
-        "Renders all of these parts from children, description, and errorMessage. Use the parts only for a custom layout.",
+      note: "Renders all of these parts from children, description, and errorMessage. Use the parts only for a custom layout.",
     },
   },
   autocomplete: {
     parts: [
       {
         part: "Autocomplete",
-        purpose: "Connects the input to the list and filters it.",
         children: [
-          {
-            part: "SearchField",
-            purpose:
-              "Accepts the filter text. Install Search field separately.",
-          },
-          {
-            part: "ListBox",
-            purpose: "Shows the matching items. Install List box separately.",
-          },
+          { part: "SearchField", note: "Install Search field separately." },
+          { part: "ListBox", note: "Install List box separately." },
         ],
       },
     ],
@@ -1010,17 +750,9 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "Form",
-        purpose: "Validates its fields when you submit.",
         children: [
-          {
-            part: "TextField",
-            purpose:
-              "Adds a named value to the form. Install each field separately.",
-          },
-          {
-            part: "Button",
-            purpose: 'Submits the form. Set type="submit".',
-          },
+          { part: "TextField", note: "Install each field separately." },
+          { part: "Button", note: 'Set type="submit".' },
         ],
       },
     ],
@@ -1029,11 +761,7 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "Fieldset",
-        purpose: "Groups related controls.",
-        children: [
-          { part: "FieldsetLegend", purpose: "Names the group." },
-          { part: "FieldsetDescription", purpose: "Adds shared guidance." },
-        ],
+        children: [{ part: "FieldsetLegend" }, { part: "FieldsetDescription" }],
       },
     ],
   },
