@@ -1,4 +1,20 @@
-import type { CSSProperties, HTMLAttributes } from "react";
+"use client";
+
+import type { ChartValue as ChartAxisValue } from "@tanstack/charts";
+import { motion } from "@tanstack/charts/motion";
+import {
+  Chart as RendererChart,
+  type ChartProps as RendererChartProps,
+} from "@tanstack/charts/react/core";
+import {
+  type CSSProperties,
+  type HTMLAttributes,
+  type LiHTMLAttributes,
+  type ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { cn } from "./utils";
 
 const chartStyle = {
@@ -70,6 +86,22 @@ export function ChartTitle({
   );
 }
 
+export function ChartValue({
+  className,
+  ...props
+}: HTMLAttributes<HTMLSpanElement>) {
+  return (
+    <span
+      data-slot="chart-value"
+      className={cn(
+        "block text-2xl font-semibold tracking-tight tabular-nums",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
 export function ChartDescription({
   className,
   ...props
@@ -99,18 +131,102 @@ export function ChartAction({
   );
 }
 
-export interface ChartLegendItem {
-  label: string;
-  color: string;
+export const chartMotion = motion({
+  transition: { type: "spring", stiffness: 380, damping: 39 },
+});
+
+type ChartEntrance = "idle" | "waiting" | "replay" | "shown";
+
+export type ChartProps<
+  TDatum,
+  TXValue extends ChartAxisValue = ChartAxisValue,
+  TYValue extends ChartAxisValue = ChartAxisValue,
+> = Omit<RendererChartProps<TDatum, TXValue, TYValue>, "renderer"> & {
+  renderer?: RendererChartProps<TDatum, TXValue, TYValue>["renderer"];
+  children?: ReactNode;
+};
+
+export function Chart<
+  TDatum,
+  TXValue extends ChartAxisValue = ChartAxisValue,
+  TYValue extends ChartAxisValue = ChartAxisValue,
+>({
+  renderer = chartMotion,
+  children,
+  ...props
+}: ChartProps<TDatum, TXValue, TYValue>) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [entrance, setEntrance] = useState<ChartEntrance>("idle");
+  const animated = renderer.id === chartMotion.id;
+
+  useEffect(() => {
+    const element = ref.current;
+    if (
+      !animated ||
+      !element ||
+      matchMedia("(prefers-reduced-motion: reduce)").matches
+    )
+      return;
+    const { top, bottom } = element.getBoundingClientRect();
+    if (bottom > 0 && top < innerHeight) return;
+    setEntrance("waiting");
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) show("replay");
+      },
+      { rootMargin: "0px 0px -20% 0px" },
+    );
+    const reveal = () => show("shown");
+    function show(next: ChartEntrance) {
+      observer.disconnect();
+      element?.removeEventListener("focusin", reveal);
+      setEntrance(next);
+    }
+    observer.observe(element);
+    element.addEventListener("focusin", reveal);
+    return () => {
+      observer.disconnect();
+      element.removeEventListener("focusin", reveal);
+    };
+  }, [animated]);
+
+  return (
+    <div
+      ref={ref}
+      data-slot="chart-plot"
+      data-entrance={animated ? entrance : "idle"}
+      className="relative transition-opacity duration-300 ease-out-quint data-[entrance=waiting]:opacity-0 data-[entrance=waiting]:transition-none print:data-[entrance=waiting]:opacity-100"
+    >
+      <RendererChart
+        key={entrance === "replay" ? "replay" : "initial"}
+        renderer={renderer}
+        {...props}
+      />
+      {children}
+    </div>
+  );
+}
+
+export function ChartCenter({
+  className,
+  ...props
+}: HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div
+      data-slot="chart-center"
+      className={cn(
+        "pointer-events-none absolute inset-0 grid place-content-center text-center",
+        className,
+      )}
+      {...props}
+    />
+  );
 }
 
 export function ChartLegend({
-  items,
   className,
   ...props
-}: HTMLAttributes<HTMLUListElement> & {
-  items: readonly ChartLegendItem[];
-}) {
+}: HTMLAttributes<HTMLUListElement>) {
   return (
     <ul
       data-slot="chart-legend"
@@ -119,18 +235,39 @@ export function ChartLegend({
         className,
       )}
       {...props}
+    />
+  );
+}
+
+const legendSwatches = {
+  square: "size-2.5 rounded-[3px] bg-(--swatch)",
+  line: "h-0.5 w-3.5 rounded-full bg-(--swatch)",
+  dashed: "w-3.5 border-t-2 border-dashed border-(--swatch)",
+};
+
+export function ChartLegendItem({
+  color,
+  swatch = "square",
+  className,
+  children,
+  ...props
+}: LiHTMLAttributes<HTMLLIElement> & {
+  color: string;
+  swatch?: keyof typeof legendSwatches;
+}) {
+  return (
+    <li
+      data-slot="chart-legend-item"
+      className={cn("inline-flex min-w-0 items-center gap-2", className)}
+      {...props}
     >
-      {items.map((item) => (
-        <li key={item.label} className="inline-flex items-center gap-2">
-          <span
-            className="size-2.5 shrink-0 rounded-[3px]"
-            style={{ backgroundColor: item.color }}
-            aria-hidden="true"
-          />
-          {item.label}
-        </li>
-      ))}
-    </ul>
+      <span
+        aria-hidden="true"
+        className={cn("shrink-0", legendSwatches[swatch])}
+        style={{ "--swatch": color } as CSSProperties}
+      />
+      {children}
+    </li>
   );
 }
 

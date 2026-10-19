@@ -13,16 +13,11 @@ import {
 } from "@phosphor-icons/react";
 import { areaY, defineChart, lineY } from "@tanstack/charts";
 import { decorative } from "@tanstack/charts/mark/decorative";
-import { Chart } from "@tanstack/charts/react/core";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
 import { useId, useMemo, useRef, useState } from "react";
-import {
-  ChartPlot,
-  galleryRenderer,
-  groupTooltip,
-} from "@/components/charts/chart-plot";
+import { ChartPlot, groupTooltip } from "@/components/charts/chart-plot";
 import { AgentStatus } from "@/components/ui/agent-status";
 import { AnimatedNumber } from "@/components/ui/animated-number";
 import { Avatar } from "@/components/ui/avatar";
@@ -37,6 +32,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Chart } from "@/components/ui/chart";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
@@ -265,7 +261,6 @@ function RevenueScene({ className }: { className?: string }) {
           >
             <Chart
               definition={definition}
-              renderer={galleryRenderer}
               height={210}
               initialWidth={640}
               ariaLabel={`Revenue for this period and the last, over ${periodLabels[period]}`}

@@ -2,13 +2,14 @@
 
 import { defineChart } from "@tanstack/charts";
 import { treemap } from "@tanstack/charts/hierarchy/treemap";
-import { Chart } from "@tanstack/charts/react";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/ui/chart";
@@ -26,9 +27,27 @@ const rows = [
   { path: "Storage/Code/Packages", folder: "Code", gigabytes: 23 },
 ];
 
-const series = ["Media", "Backups", "Documents", "Code"].map(
-  (folder, index) => ({ label: folder, color: `var(--ts-chart-${index + 1})` }),
-);
+const series = [
+  { label: "Media", color: "var(--ts-chart-1)", ink: "var(--card)" },
+  {
+    label: "Backups",
+    color: "var(--ts-chart-2)",
+    ink: "color-mix(in oklab, var(--ts-chart-2) 30%, black)",
+  },
+  {
+    label: "Documents",
+    color: "var(--ts-chart-3)",
+    ink: "color-mix(in oklab, var(--ts-chart-3) 30%, black)",
+  },
+  {
+    label: "Code",
+    color: "var(--ts-chart-4)",
+    ink: "white",
+  },
+];
+
+const labelInk = (folder?: string) =>
+  series.find((item) => item.label === folder)?.ink ?? "var(--card)";
 
 const definition = defineChart({
   marks: [
@@ -37,7 +56,7 @@ const definition = defineChart({
       value: "gigabytes",
       color: (node) => node.data?.folder,
       label: "name",
-      labelFill: "var(--card)",
+      labelFill: (node) => labelInk(node.data?.folder),
       labelFontWeight: 600,
       paddingInner: 2,
       sort: (left, right) => right.value - left.value,
@@ -77,7 +96,13 @@ export function ChartTreemap() {
         initialWidth={520}
         ariaLabel="Treemap of storage used by folder, in gigabytes"
       />
-      <ChartLegend items={series} />
+      <ChartLegend>
+        {series.map((item) => (
+          <ChartLegendItem key={item.label} color={item.color}>
+            {item.label}
+          </ChartLegendItem>
+        ))}
+      </ChartLegend>
       <ChartTable
         caption="Storage used by folder, in gigabytes"
         columns={["Folder", "Subfolder", "Gigabytes"]}

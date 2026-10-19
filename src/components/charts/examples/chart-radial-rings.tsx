@@ -3,15 +3,16 @@
 import { defineChart } from "@tanstack/charts";
 import { decorative } from "@tanstack/charts/mark/decorative";
 import { polar, radialBarAngle } from "@tanstack/charts/polar";
-import { Chart } from "@tanstack/charts/react";
 import { scaleBand } from "@tanstack/charts/scales/band";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/ui/chart";
@@ -31,12 +32,18 @@ const series = rows.map((row, index) => ({
 }));
 
 const layout = {
-  radiusRatio: 0.84,
+  radiusRatio: 0.92,
   startAngle: -Math.PI * 0.75,
   endAngle: Math.PI * 0.75,
   scales: {
     angle: { scale: scaleLinear().domain([0, 100]) },
-    radius: { scale: () => scaleBand<string>().padding(0.24) },
+    radius: {
+      scale: () => scaleBand<string>().padding(0.24),
+      range: [
+        ({ radius }: { radius: number }) => radius * 0.42,
+        ({ radius }: { radius: number }) => radius,
+      ] as const,
+    },
   },
 };
 
@@ -106,7 +113,13 @@ export function ChartRadialRings() {
         initialWidth={520}
         ariaLabel="Progress to three fourth-quarter goals, in percent"
       />
-      <ChartLegend items={series} />
+      <ChartLegend>
+        {series.map((item) => (
+          <ChartLegendItem key={item.label} color={item.color}>
+            {item.label}
+          </ChartLegendItem>
+        ))}
+      </ChartLegend>
       <ChartTable
         caption="Progress to fourth-quarter goals"
         columns={["Goal", "Progress", "Complete (%)"]}

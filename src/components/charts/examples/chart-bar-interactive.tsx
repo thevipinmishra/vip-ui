@@ -1,18 +1,20 @@
 "use client";
 
 import { barY, defineChart } from "@tanstack/charts";
-import { Chart } from "@tanstack/charts/react";
 import { scaleBand } from "@tanstack/charts/scales/band";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { tooltip } from "@tanstack/charts/tooltip";
 import { useMemo, useState } from "react";
+import { AnimatedNumber } from "@/components/ui/animated-number";
 import {
+  Chart,
   ChartAction,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartTable,
   ChartTitle,
+  ChartValue,
 } from "@/components/ui/chart";
 import { ToggleButton } from "@/components/ui/toggle-button";
 import { ToggleButtonGroup } from "@/components/ui/toggle-button-group";
@@ -35,11 +37,12 @@ const sales = [
 const totalRevenue = sales.reduce((sum, row) => sum + row.revenue, 0);
 const totalOrders = sales.reduce((sum, row) => sum + row.orders, 0);
 
-const money = new Intl.NumberFormat("en-US", {
+const currency: Intl.NumberFormatOptions = {
   style: "currency",
   currency: "USD",
   maximumFractionDigits: 0,
-}).format;
+};
+const money = new Intl.NumberFormat("en-US", currency).format;
 const compactMoney = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
@@ -52,7 +55,8 @@ const metrics = {
     label: "Revenue",
     max: 250000,
     value: (row: (typeof sales)[number]) => row.revenue,
-    total: money(totalRevenue),
+    total: totalRevenue,
+    totalFormat: currency,
     format: money,
     tick: compactMoney,
   },
@@ -60,7 +64,8 @@ const metrics = {
     label: "Orders",
     max: 1600,
     value: (row: (typeof sales)[number]) => row.orders,
-    total: count(totalOrders),
+    total: totalOrders,
+    totalFormat: undefined,
     format: count,
     tick: count,
   },
@@ -68,7 +73,8 @@ const metrics = {
     label: "Average order",
     max: 200,
     value: (row: (typeof sales)[number]) => row.revenue / row.orders,
-    total: money(totalRevenue / totalOrders),
+    total: totalRevenue / totalOrders,
+    totalFormat: currency,
     format: money,
     tick: money,
   },
@@ -91,7 +97,8 @@ const formatMonthYear = (month: string) =>
 
 export function ChartBarInteractive() {
   const [metric, setMetric] = useState<Metric>("revenue");
-  const { label, max, value, total, format, tick } = metrics[metric];
+  const { label, max, value, total, totalFormat, format, tick } =
+    metrics[metric];
   const rows = useMemo(
     () => sales.map((row) => ({ month: row.month, value: value(row) })),
     [value],
@@ -128,7 +135,6 @@ export function ChartBarInteractive() {
             axis: { ticks: { count: 4, format: tick } },
           },
         },
-        svgAnimation: { duration: 300 },
         tooltip: {
           use: tooltip,
           content: ([point]) => ({
@@ -146,9 +152,9 @@ export function ChartBarInteractive() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>{label}</ChartTitle>
-        <span className="text-2xl font-semibold tracking-tight tabular-nums">
-          {total}
-        </span>
+        <ChartValue>
+          <AnimatedNumber value={total} formatOptions={totalFormat} />
+        </ChartValue>
         <ChartDescription>October 2025 to September 2026</ChartDescription>
       </ChartCaption>
       <ChartAction>

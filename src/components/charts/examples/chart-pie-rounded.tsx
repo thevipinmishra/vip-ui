@@ -2,13 +2,14 @@
 
 import { defineChart } from "@tanstack/charts";
 import { pie, polar, radialArc } from "@tanstack/charts/polar";
-import { Chart } from "@tanstack/charts/react";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/ui/chart";
@@ -89,7 +90,13 @@ export function ChartPieRounded() {
         initialWidth={520}
         ariaLabel={`Cloud costs of ${formatMoney(total)} in September, by service: compute, database, storage, network and other`}
       />
-      <ChartLegend items={series} />
+      <ChartLegend>
+        {series.map((item) => (
+          <ChartLegendItem key={item.label} color={item.color}>
+            {item.label}
+          </ChartLegendItem>
+        ))}
+      </ChartLegend>
       <ChartTable
         caption="Cloud costs in September, by service, in dollars"
         columns={["Service", "Cost", "Share"]}

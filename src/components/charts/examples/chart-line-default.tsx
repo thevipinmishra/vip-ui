@@ -1,16 +1,17 @@
 "use client";
 
 import { defineChart, lineY } from "@tanstack/charts";
-import { Chart } from "@tanstack/charts/react";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartTable,
   ChartTitle,
+  ChartValue,
 } from "@/components/ui/chart";
 
 const rows = [
@@ -96,9 +97,7 @@ export function ChartLineDefault() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Monthly recurring revenue</ChartTitle>
-        <span className="text-2xl font-semibold tracking-tight tabular-nums">
-          {formatMoney(latest)}
-        </span>
+        <ChartValue>{formatMoney(latest)}</ChartValue>
         <ChartDescription>
           {formatChange((latest - previous) / previous)} from August
         </ChartDescription>

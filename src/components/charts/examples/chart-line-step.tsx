@@ -2,11 +2,11 @@
 
 import { defineChart, lineY } from "@tanstack/charts";
 import { d3Curve } from "@tanstack/charts/d3/shape";
-import { Chart } from "@tanstack/charts/react";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { tooltip } from "@tanstack/charts/tooltip";
 import { curveStepAfter } from "d3-shape";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,

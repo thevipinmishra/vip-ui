@@ -1,11 +1,11 @@
 "use client";
 
 import { boxRows, boxY, defineChart } from "@tanstack/charts";
-import { Chart } from "@tanstack/charts/react";
 import { scaleBand } from "@tanstack/charts/scales/band";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
@@ -39,7 +39,7 @@ const definition = defineChart({
       x: "region",
       y: "ms",
       key: "id",
-      fill: "color-mix(in oklch, var(--ts-chart-1) 22%, var(--card))",
+      fill: "color-mix(in oklab, var(--ts-chart-1) 22%, var(--card))",
       stroke: "var(--ts-chart-1)",
       inset: 24,
       r: 3.5,

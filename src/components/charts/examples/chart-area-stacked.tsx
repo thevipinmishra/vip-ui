@@ -1,15 +1,16 @@
 "use client";
 
 import { areaY, defineChart, stack } from "@tanstack/charts";
-import { Chart } from "@tanstack/charts/react";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/ui/chart";
@@ -185,7 +186,13 @@ export function ChartAreaStacked() {
         initialWidth={520}
         ariaLabel="Monthly sessions from organic search, direct, referral and paid ads, stacked, October 2025 to September 2026"
       />
-      <ChartLegend items={channels} />
+      <ChartLegend>
+        {channels.map((item) => (
+          <ChartLegendItem key={item.label} color={item.color}>
+            {item.label}
+          </ChartLegendItem>
+        ))}
+      </ChartLegend>
       <ChartTable
         caption="Monthly sessions by channel"
         columns={["Month", ...channels.map((channel) => channel.label)]}

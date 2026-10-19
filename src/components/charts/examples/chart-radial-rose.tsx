@@ -2,15 +2,16 @@
 
 import { defineChart } from "@tanstack/charts";
 import { polar, radialBarRadius } from "@tanstack/charts/polar";
-import { Chart } from "@tanstack/charts/react";
 import { scaleBand } from "@tanstack/charts/scales/band";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/ui/chart";
@@ -37,7 +38,7 @@ const formatMoney = new Intl.NumberFormat("en-US", {
 const definition = defineChart({
   marks: [
     polar({
-      radiusRatio: 0.76,
+      radiusRatio: 0.94,
       scales: {
         angle: { scale: () => scaleBand<string>().padding(0.14) },
         radius: {
@@ -48,7 +49,8 @@ const definition = defineChart({
       marks: [
         radialBarRadius(rows, {
           angle: "region",
-          radius: "revenue",
+          radius1: () => 0,
+          radius2: "revenue",
           color: "region",
           key: "region",
           cornerRadius: 5,
@@ -89,7 +91,13 @@ export function ChartRadialRose() {
         initialWidth={520}
         ariaLabel="Revenue by region in the third quarter of 2026: North America, Europe, Asia Pacific, Latin America, and Middle East and Africa"
       />
-      <ChartLegend items={series} />
+      <ChartLegend>
+        {series.map((item) => (
+          <ChartLegendItem key={item.label} color={item.color}>
+            {item.label}
+          </ChartLegendItem>
+        ))}
+      </ChartLegend>
       <ChartTable
         caption="Revenue by region, third quarter of 2026, in dollars"
         columns={["Region", "Revenue"]}

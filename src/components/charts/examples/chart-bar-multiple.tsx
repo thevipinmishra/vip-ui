@@ -1,15 +1,16 @@
 "use client";
 
 import { barY, defineChart, group } from "@tanstack/charts";
-import { Chart } from "@tanstack/charts/react";
 import { scaleBand } from "@tanstack/charts/scales/band";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/ui/chart";
@@ -29,7 +30,7 @@ const months = [
 const series = [
   {
     label: "2025",
-    color: "color-mix(in oklch, var(--ts-chart-1) 40%, var(--card))",
+    color: "color-mix(in oklab, var(--ts-chart-1) 40%, var(--card))",
   },
   { label: "2026", color: "var(--ts-chart-1)" },
 ];
@@ -123,7 +124,13 @@ export function ChartBarMultiple() {
         initialWidth={520}
         ariaLabel="Monthly revenue in dollars for 2025 and 2026, January to September"
       />
-      <ChartLegend items={series} />
+      <ChartLegend>
+        {series.map((item) => (
+          <ChartLegendItem key={item.label} color={item.color}>
+            {item.label}
+          </ChartLegendItem>
+        ))}
+      </ChartLegend>
       <ChartTable
         caption="Monthly revenue in 2025 and 2026, in dollars"
         columns={["Month", "2025", "2026"]}

@@ -1,15 +1,16 @@
 "use client";
 
 import { barY, defineChart, stack } from "@tanstack/charts";
-import { Chart } from "@tanstack/charts/react";
 import { scaleBand } from "@tanstack/charts/scales/band";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/ui/chart";
@@ -119,7 +120,13 @@ export function ChartBarStacked() {
         initialWidth={520}
         ariaLabel="New support tickets per day by priority for the last 14 days, stacked"
       />
-      <ChartLegend items={priorities} />
+      <ChartLegend>
+        {priorities.map((item) => (
+          <ChartLegendItem key={item.label} color={item.color}>
+            {item.label}
+          </ChartLegendItem>
+        ))}
+      </ChartLegend>
       <ChartTable
         caption="New support tickets per day, by priority"
         columns={["Date", ...priorities.map((priority) => priority.label)]}

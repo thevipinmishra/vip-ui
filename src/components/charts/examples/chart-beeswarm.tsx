@@ -1,14 +1,15 @@
 "use client";
 
 import { defineChart, dodgeY, dot } from "@tanstack/charts";
-import { Chart } from "@tanstack/charts/react";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/ui/chart";
@@ -107,11 +108,17 @@ export function ChartBeeswarm() {
       </ChartCaption>
       <Chart
         definition={definition}
-        height={180}
+        height={140}
         initialWidth={520}
         ariaLabel={`Beeswarm of ${rows.length} closed deals by annual contract value, by customer segment`}
       />
-      <ChartLegend items={segments} />
+      <ChartLegend>
+        {segments.map((item) => (
+          <ChartLegendItem key={item.label} color={item.color}>
+            {item.label}
+          </ChartLegendItem>
+        ))}
+      </ChartLegend>
       <ChartTable
         caption="Closed deals in the third quarter"
         columns={["Deal", "Segment", "Annual contract value"]}

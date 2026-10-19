@@ -8,16 +8,17 @@ import {
   radialGrid,
   radialLine,
 } from "@tanstack/charts/polar";
-import { Chart } from "@tanstack/charts/react";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
 import { curveLinearClosed } from "d3-shape";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/ui/chart";
@@ -108,7 +109,13 @@ export function ChartRadarMultiple() {
         initialWidth={520}
         ariaLabel="Lighthouse scores out of 100 for the home page on mobile and desktop: performance, accessibility, best practices and SEO"
       />
-      <ChartLegend items={series} />
+      <ChartLegend>
+        {series.map((item) => (
+          <ChartLegendItem key={item.label} color={item.color}>
+            {item.label}
+          </ChartLegendItem>
+        ))}
+      </ChartLegend>
       <ChartTable
         caption="Lighthouse scores for the home page, out of 100"
         columns={["Category", "Mobile", "Desktop"]}

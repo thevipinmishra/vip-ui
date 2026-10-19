@@ -2,11 +2,11 @@
 
 import { barX, defineChart, text } from "@tanstack/charts";
 import { decorative } from "@tanstack/charts/mark/decorative";
-import { Chart } from "@tanstack/charts/react";
 import { scaleBand } from "@tanstack/charts/scales/band";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
@@ -44,12 +44,14 @@ const definition = defineChart({
     }),
     decorative(
       text(rows, {
-        x: (row) => (fitsInside(row.users) ? 0 : row.users / 2 + first / 80),
+        x: (row) => (fitsInside(row.users) ? 0 : row.users / 2),
         y: "stage",
+        dx: (row) => (fitsInside(row.users) ? 0 : 6),
         text: (row) => percent(row.users),
         anchor: (row) => (fitsInside(row.users) ? "middle" : "start"),
         fill: (row) =>
           fitsInside(row.users) ? "var(--card)" : "var(--foreground)",
+        fontSize: 12,
         fontWeight: 600,
       }),
     ),

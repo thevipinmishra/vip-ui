@@ -1,19 +1,22 @@
 "use client";
 
 import { areaY, defineChart, stack } from "@tanstack/charts";
-import { Chart } from "@tanstack/charts/react";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
 import { useMemo, useState } from "react";
+import { AnimatedNumber } from "@/components/ui/animated-number";
 import {
+  Chart,
   ChartAction,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
+  ChartValue,
 } from "@/components/ui/chart";
 import { ToggleButton } from "@/components/ui/toggle-button";
 import { ToggleButtonGroup } from "@/components/ui/toggle-button-group";
@@ -176,7 +179,6 @@ export function ChartAreaInteractive() {
         range: devices.map((device) => device.color),
       },
       focus: "group-x",
-      svgAnimation: { duration: 300 },
       tooltip: {
         use: tooltip,
         sort: "color-domain",
@@ -197,9 +199,9 @@ export function ChartAreaInteractive() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Visitors</ChartTitle>
-        <span className="text-2xl font-semibold tracking-tight tabular-nums">
-          {formatCount(total)}
-        </span>
+        <ChartValue>
+          <AnimatedNumber value={total} />
+        </ChartValue>
         <ChartDescription>
           {formatDay(days[0].date)} to {formatDay(days[days.length - 1].date)}
         </ChartDescription>
@@ -228,7 +230,13 @@ export function ChartAreaInteractive() {
         initialWidth={520}
         ariaLabel={`Daily desktop and mobile visitors for the last ${periods[period].label}, stacked`}
       />
-      <ChartLegend items={devices} />
+      <ChartLegend>
+        {devices.map((item) => (
+          <ChartLegendItem key={item.label} color={item.color}>
+            {item.label}
+          </ChartLegendItem>
+        ))}
+      </ChartLegend>
       <ChartTable
         caption={`Daily visitors for the last ${periods[period].label}`}
         columns={["Date", "Desktop", "Mobile"]}

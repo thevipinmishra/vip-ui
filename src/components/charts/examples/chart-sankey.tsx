@@ -4,13 +4,14 @@ import { defineChart, link, rect, text } from "@tanstack/charts";
 import { d3Curve } from "@tanstack/charts/d3/shape";
 import { decorative } from "@tanstack/charts/mark/decorative";
 import { sankeyDiagram } from "@tanstack/charts/network/sankey";
-import { Chart } from "@tanstack/charts/react";
 import { curveBumpX } from "d3-shape";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/ui/chart";
@@ -108,12 +109,10 @@ export function ChartSankey() {
         initialWidth={520}
         ariaLabel="Sankey diagram of 10,000 visits flowing to signups, trials and paid plans"
       />
-      <ChartLegend
-        items={[
-          { label: "Continued", color: kept },
-          { label: "Left", color: lost },
-        ]}
-      />
+      <ChartLegend>
+        <ChartLegendItem color={kept}>Continued</ChartLegendItem>
+        <ChartLegendItem color={lost}>Left</ChartLegendItem>
+      </ChartLegend>
       <ChartTable
         caption="Users moving between steps"
         columns={["From", "To", "Users"]}

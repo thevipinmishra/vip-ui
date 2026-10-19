@@ -3,28 +3,50 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { ApiReference } from "@/components/docs/api-reference";
 import { CodeBlock } from "@/components/docs/code-block";
+import { ComponentComposition } from "@/components/docs/component-composition";
+import type { CompositionPart } from "@/components/docs/component-compositions";
 import { InstallTabs } from "@/components/docs/install-tabs";
 import { ManualInstall } from "@/components/docs/manual-install";
 import { PackageManagerCommand } from "@/components/docs/package-manager-command";
 import type {
+  Chart,
   ChartAction,
   ChartFrame,
-  ChartLegend,
+  ChartLegendItem,
   ChartTable,
 } from "@/components/ui/chart";
 import { apiPart } from "@/lib/component-api";
 import { registryUrl } from "@/lib/registry-docs";
 import { cn } from "@/lib/utils";
 
-const usage = `import { Chart } from "@tanstack/charts/react";
+const usage = `"use client";
+
+import { barY, defineChart } from "@tanstack/charts";
+import { scaleBand } from "@tanstack/charts/scales/band";
+import { scaleLinear } from "@tanstack/charts/scales/linear";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/vip-ui/chart";
+
+const rows = [
+  { channel: "Direct", visits: 42 },
+  { channel: "Search", visits: 31 },
+];
+
+const definition = defineChart({
+  marks: [barY(rows, { x: "channel", y: "visits", key: "channel" })],
+  scales: {
+    x: { scale: scaleBand },
+    y: { scale: scaleLinear, grid: true },
+  },
+});
 
 <ChartFrame>
   <ChartCaption>
@@ -32,9 +54,70 @@ import {
     <ChartDescription>Visits in thousands</ChartDescription>
   </ChartCaption>
   <Chart definition={definition} height={220} ariaLabel="Visits by channel" />
-  <ChartLegend items={[{ label: "Direct", color: "var(--ts-chart-1)" }]} />
-  <ChartTable caption="Visits by channel" columns={columns} rows={rows} />
+  <ChartLegend>
+    <ChartLegendItem color="var(--ts-chart-1)">Visits</ChartLegendItem>
+  </ChartLegend>
+  <ChartTable
+    caption="Visits by channel, in thousands"
+    columns={["Channel", "Visits"]}
+    rows={rows.map((row) => [row.channel, row.visits])}
+  />
 </ChartFrame>`;
+
+const motionRenderer = `import { motion } from "@tanstack/charts/motion";
+
+const gentle = motion({
+  transition: { type: "spring", stiffness: 120, damping: 20 },
+});
+
+<Chart definition={definition} renderer={gentle} ariaLabel="Weekly revenue" />`;
+
+const motionOff = `import { svgChartRenderer } from "@tanstack/charts/svg/renderer";
+
+<Chart
+  definition={definition}
+  renderer={svgChartRenderer}
+  ariaLabel="Weekly revenue"
+/>`;
+const composition: CompositionPart[] = [
+  {
+    part: "ChartFrame",
+    note: "Sets the series colors and the tooltip styles.",
+    children: [
+      {
+        part: "ChartCaption",
+        optional: true,
+        children: [
+          { part: "ChartTitle" },
+          { part: "ChartValue", optional: true },
+          { part: "ChartDescription", optional: true },
+        ],
+      },
+      {
+        part: "ChartAction",
+        optional: true,
+        note: "Shows beside the caption. Moves below it on narrow screens.",
+      },
+      {
+        part: "Chart",
+        note: "Owns the motion. Accepts the TanStack core Chart props.",
+        children: [
+          {
+            part: "ChartCenter",
+            optional: true,
+            note: "Covers the plot and centers its content, such as a donut total.",
+          },
+        ],
+      },
+      {
+        part: "ChartLegend",
+        optional: true,
+        children: [{ part: "ChartLegendItem", repeats: true }],
+      },
+      { part: "ChartTable", note: "Screen readers only." },
+    ],
+  },
+];
 
 const theming = `:root {
   --chart-1: oklch(0.24 0.012 168);
@@ -75,19 +158,44 @@ const api = [
       {
         name: "children",
         type: "ReactNode",
-        description:
-          "Controls for the chart. They show beside the caption, or below it on narrow screens.",
+        description: "Controls for the chart, such as a period toggle.",
       },
     ],
   }),
-  apiPart<typeof ChartLegend>({
-    name: "ChartLegend",
+  apiPart<typeof Chart>({
+    name: "Chart",
+    description:
+      "Also accepts the props of the TanStack core Chart, such as definition, ariaLabel, height, and initialWidth.",
     props: [
       {
-        name: "items",
-        type: "{ label: string; color: string }[]",
+        name: "renderer",
+        type: "ChartRenderer",
+        default: "chartMotion",
+        description:
+          "Draws and animates the chart. chartMotion is a TanStack motion renderer with a spring.",
+      },
+      {
+        name: "children",
+        type: "ReactNode",
+        description: "Content on top of the plot, such as ChartCenter.",
+      },
+    ],
+  }),
+  apiPart<typeof ChartLegendItem>({
+    name: "ChartLegendItem",
+    props: [
+      {
+        name: "color",
+        type: "string",
         required: true,
-        description: "One swatch and label for each series.",
+        description: "The series color. Use the same value as the mark.",
+      },
+      {
+        name: "swatch",
+        type: '"square" | "line" | "dashed"',
+        default: '"square"',
+        description:
+          "The swatch shape. Use line for a line series and dashed for a dashed line.",
       },
     ],
   }),
@@ -117,17 +225,10 @@ const api = [
   }),
 ];
 
-const parts = [
-  ["ChartFrame", "A figure that sets the chart colors and tooltip styles."],
-  ["ChartCaption", "The figure caption. Put the title and description in it."],
-  ["ChartTitle", "The chart title."],
-  ["ChartDescription", "Units, time range, or other short context."],
-  ["ChartAction", "Controls, such as a period toggle."],
-  ["ChartLegend", "A list of series and their colors."],
-  ["ChartTable", "A data table for screen readers."],
-] as const;
-
 const linkClass = "text-primary underline underline-offset-4";
+
+const listClass =
+  "grid gap-2 text-sm leading-6 text-muted-foreground [&>li]:relative [&>li]:ps-4 [&>li]:before:absolute [&>li]:before:start-0 [&>li]:before:top-2.5 [&>li]:before:size-1.5 [&>li]:before:rounded-full [&>li]:before:bg-border";
 
 export async function ChartDocumentation() {
   const cliUrl = registryUrl("chart");
@@ -181,31 +282,56 @@ export async function ChartDocumentation() {
         >
           <SectionHeading id="chart-usage">Usage</SectionHeading>
           <Note className="mb-4">
-            Build the chart with TanStack{" "}
+            Build the definition with{" "}
             <a
               href="https://tanstack.com/charts/latest/docs/framework/react/adapter"
               className={linkClass}
             >
-              Chart
+              TanStack Charts
             </a>
-            . Put it in a ChartFrame.
+            . Show it with Chart, in a ChartFrame.
           </Note>
           <CodeBlock code={usage} filename="traffic-chart.tsx" />
-          <dl className="mt-6 divide-y divide-border/70 rounded-xl border border-border/70 bg-card/50 px-4 sm:px-5">
-            {parts.map(([name, description]) => (
-              <div
-                key={name}
-                className="grid gap-x-6 gap-y-1 py-3 sm:grid-cols-[minmax(0,10rem)_minmax(0,1fr)]"
-              >
-                <dt className="font-mono text-[13px] font-medium text-foreground">
-                  {name}
-                </dt>
-                <dd className="text-[13px] leading-5 text-muted-foreground">
-                  {description}
-                </dd>
-              </div>
-            ))}
-          </dl>
+        </section>
+
+        <section
+          id="composition"
+          aria-labelledby="chart-composition"
+          className="scroll-mt-28"
+        >
+          <SectionHeading id="chart-composition">Composition</SectionHeading>
+          <ComponentComposition parts={composition} />
+        </section>
+
+        <section
+          id="motion"
+          aria-labelledby="chart-motion"
+          className="scroll-mt-28"
+        >
+          <SectionHeading id="chart-motion">Motion</SectionHeading>
+          <ul className={listClass}>
+            <li>
+              When a chart scrolls into view, it fades in. Its bar, line, area,
+              and arc marks grow from their baseline.
+            </li>
+            <li>
+              A chart that the server renders on screen does not move when the
+              page loads. A chart that mounts later, for example after a link,
+              grows in.
+            </li>
+            <li>
+              When the data changes, each mark moves to its new value. Give each
+              mark a stable <code>key</code>.
+            </li>
+          </ul>
+          <Note className="mb-4 mt-6">
+            To change the motion of one chart, give it a renderer.
+          </Note>
+          <CodeBlock code={motionRenderer} filename="revenue-chart.tsx" />
+          <Note className="mb-4 mt-6">
+            To stop the motion, use the static SVG renderer.
+          </Note>
+          <CodeBlock code={motionOff} filename="revenue-chart.tsx" />
         </section>
 
         <section
@@ -215,9 +341,8 @@ export async function ChartDocumentation() {
         >
           <SectionHeading id="chart-theming">Theming</SectionHeading>
           <Note className="mb-4">
-            Charts use the shadcn colors <code>--chart-1</code> to{" "}
-            <code>--chart-5</code> and <code>--chart-6</code>. Set them for
-            light and dark mode.
+            Charts use the colors <code>--chart-1</code> to{" "}
+            <code>--chart-6</code>. Set them for light and dark mode.
           </Note>
           <CodeBlock code={theming} filename="globals.css" language="css" />
           <Note className="mb-4 mt-6">
@@ -234,7 +359,7 @@ export async function ChartDocumentation() {
           <SectionHeading id="chart-accessibility">
             Accessibility
           </SectionHeading>
-          <ul className="grid gap-2 text-sm leading-6 text-muted-foreground [&>li]:relative [&>li]:ps-4 [&>li]:before:absolute [&>li]:before:start-0 [&>li]:before:top-2.5 [&>li]:before:size-1.5 [&>li]:before:rounded-full [&>li]:before:bg-border">
+          <ul className={listClass}>
             <li>
               <code>ariaLabel</code> names the chart for screen readers.
             </li>
@@ -246,7 +371,9 @@ export async function ChartDocumentation() {
               to move between points.
             </li>
             <li>Press Enter to pin a tooltip. Press Escape to close it.</li>
-            <li>Animations stop when reduced motion is on.</li>
+            <li>
+              When reduced motion is on, charts show at once and do not move.
+            </li>
           </ul>
         </section>
 

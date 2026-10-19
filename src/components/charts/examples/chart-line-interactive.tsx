@@ -1,17 +1,18 @@
 "use client";
 
 import { defineChart, lineY } from "@tanstack/charts";
-import { Chart } from "@tanstack/charts/react";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
 import { useMemo, useState } from "react";
 import {
+  Chart,
   ChartAction,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/ui/chart";
@@ -141,7 +142,16 @@ export function ChartLineInteractive() {
         initialWidth={520}
         ariaLabel={`Median hours to the first support reply for the last 14 days${compare ? ", compared with the previous 14 days" : ""}`}
       />
-      <ChartLegend items={compare ? [current, previous] : [current]} />
+      <ChartLegend>
+        <ChartLegendItem color={current.color} swatch="line">
+          {current.label}
+        </ChartLegendItem>
+        {compare && (
+          <ChartLegendItem color={previous.color} swatch="dashed">
+            {previous.label}
+          </ChartLegendItem>
+        )}
+      </ChartLegend>
       <ChartTable
         caption="Median hours to the first reply"
         columns={["Date", current.label, previous.label]}
