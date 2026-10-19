@@ -2302,6 +2302,20 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           default: "8",
           description: "Distance from the trigger in pixels.",
         },
+        {
+          name: "placement",
+          type: '"top" | "bottom" | "left" | "right" | "start" | "end"',
+          default: '"top"',
+          description:
+            "The side of the trigger that the tooltip opens on. If there is not sufficient space, the tooltip moves to the opposite side.",
+        },
+        {
+          name: "arrowBoundaryOffset",
+          type: "number",
+          default: "8",
+          description:
+            "The minimum distance from TooltipArrow to the tooltip edge. It keeps the arrow off the rounded corner.",
+        },
       ],
     }),
   ],

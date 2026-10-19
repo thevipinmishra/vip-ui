@@ -1667,6 +1667,12 @@ export const componentPageData = {
       "Displays a short hint when its trigger is hovered or focused.",
     examples: [
       {
+        title: "Placement and arrow",
+        description:
+          "Set placement to top, bottom, left, or right. If there is not sufficient space, the tooltip moves to the opposite side. Add TooltipArrow to point at the trigger.",
+        sourcePath: "tooltip-placement-demo.tsx",
+      },
+      {
         title: "Icon button tooltips",
         description:
           "Give each icon Button an aria-label that matches the tooltip text. The tooltip opens above the trigger. Set placement to change the side.",
