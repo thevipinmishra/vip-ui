@@ -2,17 +2,19 @@
 
 import { barY, defineChart, link } from "@tanstack/charts";
 import { decorative } from "@tanstack/charts/mark/decorative";
-import { Chart } from "@tanstack/charts/react";
 import { scaleBand } from "@tanstack/charts/scales/band";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
+  ChartValue,
 } from "@/components/ui/chart";
 
 const rows = [
@@ -191,7 +193,7 @@ const definition = defineChart({
       axis: { ticks: { values: mondays, format: formatDay } },
     },
     y: {
-      scale: scaleLinear().domain([178, 210]),
+      scale: scaleLinear().domain([180, 210]),
       grid: true,
       axis: { ticks: { count: 5, format: (value: number) => `$${value}` } },
     },
@@ -219,9 +221,7 @@ export function ChartCandlestick() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>ACME share price</ChartTitle>
-        <span className="text-2xl font-semibold tracking-tight tabular-nums">
-          {formatPrice(last.close)}
-        </span>
+        <ChartValue>{formatPrice(last.close)}</ChartValue>
         <ChartDescription>
           {formatChange((last.close - first.open) / first.open)} since{" "}
           {formatDay(first.date)}
@@ -233,12 +233,10 @@ export function ChartCandlestick() {
         initialWidth={520}
         ariaLabel={`Candlestick chart of daily ACME share prices for ${rows.length} trading days, ${formatDay(first.date)} to ${formatDay(last.date)}`}
       />
-      <ChartLegend
-        items={[
-          { label: "Closed higher", color: up },
-          { label: "Closed lower", color: down },
-        ]}
-      />
+      <ChartLegend>
+        <ChartLegendItem color={up}>Closed higher</ChartLegendItem>
+        <ChartLegendItem color={down}>Closed lower</ChartLegendItem>
+      </ChartLegend>
       <ChartTable
         caption="Daily ACME share price, in dollars"
         columns={["Date", "Open", "High", "Low", "Close"]}

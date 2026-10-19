@@ -3,13 +3,14 @@
 import { defineChart } from "@tanstack/charts";
 import { sunburst } from "@tanstack/charts/hierarchy/sunburst";
 import { polar } from "@tanstack/charts/polar";
-import { Chart } from "@tanstack/charts/react";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/ui/chart";
@@ -46,7 +47,7 @@ const definition = defineChart({
           fill: (node) =>
             node.depth === 1
               ? regionColor(node.name)
-              : `color-mix(in oklch, ${regionColor(node.data?.region ?? "")} 55%, var(--card))`,
+              : `color-mix(in oklab, ${regionColor(node.data?.region ?? "")} 55%, var(--card))`,
           stroke: "var(--card)",
           strokeWidth: 1.5,
         }),
@@ -89,12 +90,13 @@ export function ChartSunburst() {
         initialWidth={520}
         ariaLabel="Sunburst of revenue by region, then by plan, in thousands of dollars"
       />
-      <ChartLegend
-        items={regions.map((region) => ({
-          label: region,
-          color: regionColor(region),
-        }))}
-      />
+      <ChartLegend>
+        {regions.map((region) => (
+          <ChartLegendItem key={region} color={regionColor(region)}>
+            {region}
+          </ChartLegendItem>
+        ))}
+      </ChartLegend>
       <ChartTable
         caption="Revenue by region and plan, in thousands of dollars"
         columns={["Region", "Plan", "Revenue ($k)"]}

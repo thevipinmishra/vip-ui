@@ -1,15 +1,16 @@
 "use client";
 
 import { areaY, defineChart, stack } from "@tanstack/charts";
-import { Chart } from "@tanstack/charts/react";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/ui/chart";
@@ -119,7 +120,13 @@ export function ChartAreaExpanded() {
         initialWidth={520}
         ariaLabel="Monthly share of sessions from desktop, mobile and tablet, October 2025 to September 2026"
       />
-      <ChartLegend items={devices} />
+      <ChartLegend>
+        {devices.map((item) => (
+          <ChartLegendItem key={item.label} color={item.color}>
+            {item.label}
+          </ChartLegendItem>
+        ))}
+      </ChartLegend>
       <ChartTable
         caption="Monthly share of sessions by device"
         columns={["Month", ...devices.map((device) => device.label)]}

@@ -7,11 +7,11 @@ import {
   radialDot,
   radialGrid,
 } from "@tanstack/charts/polar";
-import { Chart } from "@tanstack/charts/react";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
@@ -49,6 +49,10 @@ const definition = defineChart({
           labels: true,
           format: (value) => `${value}%`,
           labelAngle: Math.PI / 8,
+          labelAnchor: "start",
+          labelBaseline: "auto",
+          labelDx: 2,
+          labelDy: -2,
           labelFill: "var(--muted-foreground)",
           labelFontSize: 10,
         }),

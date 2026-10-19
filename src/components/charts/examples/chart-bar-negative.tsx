@@ -2,15 +2,16 @@
 
 import { barY, defineChart, ruleY } from "@tanstack/charts";
 import { decorative } from "@tanstack/charts/mark/decorative";
-import { Chart } from "@tanstack/charts/react";
 import { scaleBand } from "@tanstack/charts/scales/band";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/ui/chart";
@@ -116,12 +117,10 @@ export function ChartBarNegative() {
         initialWidth={520}
         ariaLabel="Monthly net new recurring revenue in dollars, October 2025 to September 2026, with gains above zero and losses below"
       />
-      <ChartLegend
-        items={[
-          { label: "Gain", color: gain },
-          { label: "Loss", color: loss },
-        ]}
-      />
+      <ChartLegend>
+        <ChartLegendItem color={gain}>Gain</ChartLegendItem>
+        <ChartLegendItem color={loss}>Loss</ChartLegendItem>
+      </ChartLegend>
       <ChartTable
         caption="Net new monthly recurring revenue, in dollars"
         columns={["Month", "Net new MRR"]}

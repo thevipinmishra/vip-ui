@@ -2,15 +2,16 @@
 
 import { areaY, defineChart, lineY } from "@tanstack/charts";
 import { decorative } from "@tanstack/charts/mark/decorative";
-import { Chart } from "@tanstack/charts/react";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/ui/chart";
@@ -40,13 +41,14 @@ const forecast = [
 const months = [...new Set([...actual, ...forecast].map((row) => row.month))];
 
 const series = [
-  { label: "Actual", color: "var(--ts-chart-1)" },
-  { label: "Forecast", color: "var(--ts-chart-3)" },
+  { label: "Actual", color: "var(--ts-chart-1)", swatch: "line" },
+  { label: "Forecast", color: "var(--ts-chart-3)", swatch: "dashed" },
   {
     label: "80% range",
     color: "color-mix(in oklch, var(--ts-chart-3) 30%, transparent)",
+    swatch: "square",
   },
-];
+] as const;
 
 const monthFormat = new Intl.DateTimeFormat("en-US", {
   month: "short",
@@ -155,7 +157,17 @@ export function ChartAreaRange() {
         initialWidth={520}
         ariaLabel="Monthly revenue from January to September 2026, and a forecast to March 2027 with an 80 percent range"
       />
-      <ChartLegend items={series} />
+      <ChartLegend>
+        {series.map((item) => (
+          <ChartLegendItem
+            key={item.label}
+            color={item.color}
+            swatch={item.swatch}
+          >
+            {item.label}
+          </ChartLegendItem>
+        ))}
+      </ChartLegend>
       <ChartTable
         caption="Monthly revenue and forecast, in dollars"
         columns={["Month", "Actual", "Forecast", "Low", "High"]}

@@ -2,15 +2,18 @@
 
 import { defineChart } from "@tanstack/charts";
 import { pie, polar, radialArc } from "@tanstack/charts/polar";
-import { Chart } from "@tanstack/charts/react";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
+  ChartCenter,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
+  ChartValue,
 } from "@/components/ui/chart";
 
 const rows = [
@@ -83,24 +86,24 @@ export function ChartPieDonut() {
         <ChartTitle>Subscriptions</ChartTitle>
         <ChartDescription>Active subscriptions by plan</ChartDescription>
       </ChartCaption>
-      <div className="relative">
-        <Chart
-          definition={definition}
-          height={220}
-          initialWidth={520}
-          ariaLabel={`${total.toLocaleString("en-US")} active subscriptions across the Starter, Pro, Business and Enterprise plans`}
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 grid place-content-center text-center"
-        >
-          <span className="text-2xl font-semibold tabular-nums">
-            {total.toLocaleString("en-US")}
-          </span>
-          <span className="text-xs text-muted-foreground">Active</span>
-        </div>
-      </div>
-      <ChartLegend items={series} />
+      <Chart
+        definition={definition}
+        height={220}
+        initialWidth={520}
+        ariaLabel={`${total.toLocaleString("en-US")} active subscriptions across the Starter, Pro, Business and Enterprise plans`}
+      >
+        <ChartCenter aria-hidden="true">
+          <ChartValue>{total.toLocaleString("en-US")}</ChartValue>
+          <ChartDescription>Active</ChartDescription>
+        </ChartCenter>
+      </Chart>
+      <ChartLegend>
+        {series.map((item) => (
+          <ChartLegendItem key={item.label} color={item.color}>
+            {item.label}
+          </ChartLegendItem>
+        ))}
+      </ChartLegend>
       <ChartTable
         caption="Active subscriptions by plan"
         columns={["Plan", "Monthly price", "Subscriptions"]}

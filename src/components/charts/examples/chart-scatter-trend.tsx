@@ -2,14 +2,15 @@
 
 import { defineChart, dot, linearRegressionY } from "@tanstack/charts";
 import { decorative } from "@tanstack/charts/mark/decorative";
-import { Chart } from "@tanstack/charts/react";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/ui/chart";
@@ -119,12 +120,12 @@ export function ChartScatterTrend() {
         initialWidth={520}
         ariaLabel="Weekly signups against ad spend for 12 weeks, with a rising linear trend line"
       />
-      <ChartLegend
-        items={[
-          { label: "Week", color: "var(--ts-chart-1)" },
-          { label: "Trend, 95% band", color: "var(--ts-chart-3)" },
-        ]}
-      />
+      <ChartLegend>
+        <ChartLegendItem color="var(--ts-chart-1)">Week</ChartLegendItem>
+        <ChartLegendItem color="var(--ts-chart-3)" swatch="line">
+          Trend, 95% band
+        </ChartLegendItem>
+      </ChartLegend>
       <ChartTable
         caption="Weekly ad spend and signups"
         columns={["Week", "Ad spend", "Signups"]}

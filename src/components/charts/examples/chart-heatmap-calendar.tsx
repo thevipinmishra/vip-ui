@@ -1,14 +1,15 @@
 "use client";
 
 import { cell, defineChart } from "@tanstack/charts";
-import { Chart } from "@tanstack/charts/react";
 import { scaleBand } from "@tanstack/charts/scales/band";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/ui/chart";
@@ -74,12 +75,7 @@ const weekFormat = new Intl.DateTimeFormat("en-US", {
   timeZone: "UTC",
 });
 
-const monthStarts = weeks.filter(
-  (week, index) =>
-    index === 0 ||
-    monthFormat.format(new Date(week)) !==
-      monthFormat.format(new Date(weeks[index - 1])),
-);
+const monthStarts = weeks.filter((week) => new Date(week).getUTCDate() <= 7);
 
 const definition = defineChart({
   marks: [
@@ -138,7 +134,13 @@ export function ChartHeatmapCalendar() {
         initialWidth={520}
         ariaLabel={`Calendar heatmap of production deploys per day for the last ${weeks.length} weeks`}
       />
-      <ChartLegend items={levels} />
+      <ChartLegend>
+        {levels.map((item) => (
+          <ChartLegendItem key={item.label} color={item.color}>
+            {item.label}
+          </ChartLegendItem>
+        ))}
+      </ChartLegend>
       <ChartTable
         caption="Production deploys per day"
         columns={["Week of", ...days]}

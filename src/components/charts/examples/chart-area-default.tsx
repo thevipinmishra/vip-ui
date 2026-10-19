@@ -2,16 +2,17 @@
 
 import { areaY, defineChart, lineY } from "@tanstack/charts";
 import { decorative } from "@tanstack/charts/mark/decorative";
-import { Chart } from "@tanstack/charts/react";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartTable,
   ChartTitle,
+  ChartValue,
 } from "@/components/ui/chart";
 
 const rows = [
@@ -74,8 +75,7 @@ const definition = defineChart({
       areaY(rows, {
         x: "date",
         y: "visitors",
-        fill: "var(--ts-chart-1)",
-        fillOpacity: 0.16,
+        fill: "url(#visitors-fill)",
       }),
     ),
     lineY(rows, {
@@ -96,6 +96,19 @@ const definition = defineChart({
       axis: { ticks: { count: 5, format: formatCount } },
     },
   },
+  gradients: [
+    {
+      id: "visitors-fill",
+      x1: 0,
+      y1: 1,
+      x2: 0,
+      y2: 0,
+      stops: [
+        { offset: 0, color: "var(--ts-chart-1)", opacity: 0 },
+        { offset: 1, color: "var(--ts-chart-1)", opacity: 0.32 },
+      ],
+    },
+  ],
   tooltip: {
     use: tooltip,
     content: ([point]) => ({
@@ -116,9 +129,7 @@ export function ChartAreaDefault() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Visitors</ChartTitle>
-        <span className="text-2xl font-semibold tracking-tight tabular-nums">
-          {formatCount(total)}
-        </span>
+        <ChartValue>{formatCount(total)}</ChartValue>
         <ChartDescription>
           {formatChange(change)} from the previous 30 days
         </ChartDescription>

@@ -1,14 +1,15 @@
 "use client";
 
 import { binX, defineChart, rect } from "@tanstack/charts";
-import { Chart } from "@tanstack/charts/react";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/ui/chart";
@@ -109,7 +110,13 @@ export function ChartHistogram() {
         initialWidth={520}
         ariaLabel={`Histogram of largest contentful paint for ${loads.length} page loads, in half-second ranges, rated good, needs improvement or poor`}
       />
-      <ChartLegend items={ratings} />
+      <ChartLegend>
+        {ratings.map((item) => (
+          <ChartLegendItem key={item.label} color={item.color}>
+            {item.label}
+          </ChartLegendItem>
+        ))}
+      </ChartLegend>
       <ChartTable
         caption="Page loads by largest contentful paint"
         columns={["Range", "Page loads", "Rating"]}

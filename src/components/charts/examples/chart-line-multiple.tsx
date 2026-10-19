@@ -1,15 +1,16 @@
 "use client";
 
 import { defineChart, lineY } from "@tanstack/charts";
-import { Chart } from "@tanstack/charts/react";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/ui/chart";
@@ -112,7 +113,13 @@ export function ChartLineMultiple() {
         initialWidth={520}
         ariaLabel="Hourly API response time at the 50th, 95th and 99th percentiles for the last 24 hours, in milliseconds"
       />
-      <ChartLegend items={percentiles} />
+      <ChartLegend>
+        {percentiles.map((item) => (
+          <ChartLegendItem key={item.label} color={item.color} swatch="line">
+            {item.label}
+          </ChartLegendItem>
+        ))}
+      </ChartLegend>
       <ChartTable
         caption="Hourly API response time percentiles, in milliseconds"
         columns={["Hour (UTC)", "p50", "p95", "p99"]}

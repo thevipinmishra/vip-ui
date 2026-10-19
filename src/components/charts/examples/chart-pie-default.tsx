@@ -2,13 +2,14 @@
 
 import { defineChart } from "@tanstack/charts";
 import { pie, polar, radialArc } from "@tanstack/charts/polar";
-import { Chart } from "@tanstack/charts/react";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/ui/chart";
@@ -83,7 +84,13 @@ export function ChartPieDefault() {
         initialWidth={520}
         ariaLabel="Share of visitors by browser for the last 30 days: Chrome, Safari, Edge, Firefox, Samsung Internet and other"
       />
-      <ChartLegend items={series} />
+      <ChartLegend>
+        {series.map((item) => (
+          <ChartLegendItem key={item.label} color={item.color}>
+            {item.label}
+          </ChartLegendItem>
+        ))}
+      </ChartLegend>
       <ChartTable
         caption="Visitors by browser, last 30 days"
         columns={["Browser", "Visitors", "Share"]}

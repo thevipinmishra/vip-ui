@@ -1,15 +1,17 @@
 "use client";
 
 import { defineChart, waffleY } from "@tanstack/charts";
-import { Chart } from "@tanstack/charts/react";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
+  ChartValue,
 } from "@/components/ui/chart";
 
 const answers = [
@@ -81,9 +83,7 @@ export function ChartWaffle() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Net Promoter Score</ChartTitle>
-        <span className="text-2xl font-semibold tracking-tight tabular-nums">
-          {score > 0 ? `+${score}` : score}
-        </span>
+        <ChartValue>{score > 0 ? `+${score}` : score}</ChartValue>
         <ChartDescription>
           {total} answers in September. One square is 1% of answers.
         </ChartDescription>
@@ -94,7 +94,13 @@ export function ChartWaffle() {
         initialWidth={520}
         ariaLabel={`Waffle chart of ${total} survey answers: ${rows.map((row) => `${row.percent}% ${row.group.toLowerCase()}`).join(", ")}. Net Promoter Score ${score}.`}
       />
-      <ChartLegend items={series} />
+      <ChartLegend>
+        {series.map((item) => (
+          <ChartLegendItem key={item.label} color={item.color}>
+            {item.label}
+          </ChartLegendItem>
+        ))}
+      </ChartLegend>
       <ChartTable
         caption="Survey answers by group"
         columns={["Group", "Scores", "People", "Share"]}

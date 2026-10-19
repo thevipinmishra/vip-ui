@@ -1,14 +1,15 @@
 "use client";
 
 import { defineChart, dot } from "@tanstack/charts";
-import { Chart } from "@tanstack/charts/react";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/ui/chart";
@@ -120,7 +121,13 @@ export function ChartScatterBubble() {
         initialWidth={520}
         ariaLabel="Growth against retention for eight markets, with bubble size for revenue"
       />
-      <ChartLegend items={series} />
+      <ChartLegend>
+        {series.map((item) => (
+          <ChartLegendItem key={item.label} color={item.color}>
+            {item.label}
+          </ChartLegendItem>
+        ))}
+      </ChartLegend>
       <ChartTable
         caption="Market growth, retention and revenue"
         columns={[

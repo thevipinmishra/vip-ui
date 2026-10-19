@@ -2,14 +2,15 @@
 
 import { cell, defineChart, text } from "@tanstack/charts";
 import { decorative } from "@tanstack/charts/mark/decorative";
-import { Chart } from "@tanstack/charts/react";
 import { scaleBand } from "@tanstack/charts/scales/band";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/ui/chart";
@@ -44,30 +45,38 @@ const levels = [
   {
     label: "Below 45%",
     min: 0,
-    color: "color-mix(in oklch, var(--ts-chart-1) 14%, var(--muted))",
+    color: "color-mix(in oklab, var(--ts-chart-1) 14%, var(--muted))",
+    text: "var(--foreground)",
   },
   {
     label: "45–54%",
     min: 45,
-    color: "color-mix(in oklch, var(--ts-chart-1) 32%, var(--muted))",
+    color: "color-mix(in oklab, var(--ts-chart-1) 36%, var(--muted))",
+    text: "var(--foreground)",
   },
   {
     label: "55–64%",
     min: 55,
-    color: "color-mix(in oklch, var(--ts-chart-1) 58%, var(--muted))",
+    color: "color-mix(in oklab, var(--ts-chart-1) 70%, var(--muted))",
+    text: "var(--card)",
   },
-  { label: "65% and above", min: 65, color: "var(--ts-chart-1)" },
+  {
+    label: "65% and above",
+    min: 65,
+    color: "var(--ts-chart-1)",
+    text: "var(--card)",
+  },
 ];
 
 const level = (percent: number) =>
-  levels.findLast((item) => percent >= item.min)?.label ?? levels[0].label;
+  levels.findLast((item) => percent >= item.min) ?? levels[0];
 
 const definition = defineChart({
   marks: [
     cell(rows, {
       x: "month",
       y: "cohort",
-      color: (row) => level(row.percent),
+      color: (row) => level(row.percent).label,
       key: (row) => `${row.cohort}-${row.month}`,
       inset: 2,
       radius: 4,
@@ -77,8 +86,8 @@ const definition = defineChart({
         x: "month",
         y: "cohort",
         text: (row) => `${row.percent}%`,
-        fill: (row) =>
-          row.percent >= 65 ? "var(--card)" : "var(--foreground)",
+        fill: (row) => level(row.percent).text,
+        fontSize: 12,
         fontWeight: 600,
       }),
     ),
@@ -127,7 +136,13 @@ export function ChartHeatmapMatrix() {
         initialWidth={520}
         ariaLabel="Cohort retention for users who signed up from April to August 2026, in percent, for each month after signup"
       />
-      <ChartLegend items={levels} />
+      <ChartLegend>
+        {levels.map((item) => (
+          <ChartLegendItem key={item.label} color={item.color}>
+            {item.label}
+          </ChartLegendItem>
+        ))}
+      </ChartLegend>
       <ChartTable
         caption="Users still active, in percent, by signup month"
         columns={["Signup month", "Signups", ...months]}

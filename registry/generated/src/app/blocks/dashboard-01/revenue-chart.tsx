@@ -2,26 +2,22 @@
 
 import { areaY, defineChart, lineY } from "@tanstack/charts";
 import { decorative } from "@tanstack/charts/mark/decorative";
-import { motion } from "@tanstack/charts/motion";
-import { Chart } from "@tanstack/charts/react/core";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
 import { useMemo, useState } from "react";
 import {
+  Chart,
+  ChartAction,
   ChartCaption,
   ChartDescription,
   ChartFrame,
+  ChartTable,
   ChartTitle,
 } from "../../../components/vip-ui/chart";
 import { ToggleButton } from "../../../components/vip-ui/toggle-button";
 import { ToggleButtonGroup } from "../../../components/vip-ui/toggle-button-group";
 import { revenue } from "./data";
-
-const renderer = motion({
-  initial: false,
-  transition: { type: "spring", stiffness: 420, damping: 38 },
-});
 
 const periods = {
   "7": "Last 7 days",
@@ -80,14 +76,14 @@ export function RevenueChart() {
 
   return (
     <ChartFrame className="shadow-[var(--shadow-card)] ring-1 ring-border/70">
-      <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
-        <ChartCaption className="mb-0">
-          <ChartTitle>Revenue</ChartTitle>
-          <ChartDescription>
-            ${(total * 1000).toLocaleString("en-US")} in the{" "}
-            {periods[period].toLowerCase()}
-          </ChartDescription>
-        </ChartCaption>
+      <ChartCaption>
+        <ChartTitle>Revenue</ChartTitle>
+        <ChartDescription>
+          ${(total * 1000).toLocaleString("en-US")} in the{" "}
+          {periods[period].toLowerCase()}
+        </ChartDescription>
+      </ChartCaption>
+      <ChartAction>
         <ToggleButtonGroup
           aria-label="Revenue period"
           selectionMode="single"
@@ -108,33 +104,18 @@ export function RevenueChart() {
             30 days
           </ToggleButton>
         </ToggleButtonGroup>
-      </div>
+      </ChartAction>
       <Chart
         definition={definition}
-        renderer={renderer}
         height={240}
         initialWidth={640}
         ariaLabel={`Daily revenue for the ${periods[period].toLowerCase()}, in thousands of dollars`}
       />
-      <div className="sr-only">
-        <table>
-          <caption>Daily revenue, in thousands of dollars</caption>
-          <thead>
-            <tr>
-              <th scope="col">Day</th>
-              <th scope="col">Revenue</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row) => (
-              <tr key={row.day}>
-                <th scope="row">{row.day}</th>
-                <td>{row.value}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <ChartTable
+        caption="Daily revenue, in thousands of dollars"
+        columns={["Day", "Revenue"]}
+        rows={rows.map((row) => [row.day, row.value])}
+      />
     </ChartFrame>
   );
 }

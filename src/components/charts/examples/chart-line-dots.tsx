@@ -2,15 +2,16 @@
 
 import { defineChart, dot, lineY, ruleY } from "@tanstack/charts";
 import { decorative } from "@tanstack/charts/mark/decorative";
-import { Chart } from "@tanstack/charts/react";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/ui/chart";
@@ -125,7 +126,13 @@ export function ChartLineDots() {
         initialWidth={520}
         ariaLabel={`Daily uptime for the last 14 days, with a ${target} percent target`}
       />
-      <ChartLegend items={status} />
+      <ChartLegend>
+        {status.map((item) => (
+          <ChartLegendItem key={item.label} color={item.color}>
+            {item.label}
+          </ChartLegendItem>
+        ))}
+      </ChartLegend>
       <ChartTable
         caption="Daily uptime and downtime"
         columns={["Date", "Uptime", "Downtime"]}

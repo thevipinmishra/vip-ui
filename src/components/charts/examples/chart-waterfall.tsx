@@ -2,15 +2,16 @@
 
 import { barY, defineChart, ruleY } from "@tanstack/charts";
 import { decorative } from "@tanstack/charts/mark/decorative";
-import { Chart } from "@tanstack/charts/react";
 import { scaleBand } from "@tanstack/charts/scales/band";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { tooltip } from "@tanstack/charts/tooltip";
 import {
+  Chart,
   ChartCaption,
   ChartDescription,
   ChartFrame,
   ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
 } from "@/components/ui/chart";
@@ -113,7 +114,13 @@ export function ChartWaterfall() {
         initialWidth={520}
         ariaLabel={`Waterfall from ${money(changes[0].amount)} revenue to ${money(profit)} net profit in the third quarter of 2026`}
       />
-      <ChartLegend items={series} />
+      <ChartLegend>
+        {series.map((item) => (
+          <ChartLegendItem key={item.label} color={item.color}>
+            {item.label}
+          </ChartLegendItem>
+        ))}
+      </ChartLegend>
       <ChartTable
         caption="Revenue to net profit, third quarter of 2026"
         columns={["Item", "Change", "Running total"]}

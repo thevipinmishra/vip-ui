@@ -7,19 +7,15 @@ import {
   TrendUpIcon,
 } from "@phosphor-icons/react";
 import { barY, defineChart, stack } from "@tanstack/charts";
-import { Chart } from "@tanstack/charts/react/core";
 import { scaleBand } from "@tanstack/charts/scales/band";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { tooltip } from "@tanstack/charts/tooltip";
 import { portal } from "@tanstack/charts/tooltip/portal";
 import { useMemo, useState } from "react";
-import {
-  ChartPlot,
-  galleryRenderer,
-  groupTooltip,
-} from "@/components/charts/chart-plot";
+import { ChartPlot, groupTooltip } from "@/components/charts/chart-plot";
 import { AnimatedNumber } from "@/components/ui/animated-number";
 import { Badge } from "@/components/ui/badge";
+import { Chart } from "@/components/ui/chart";
 import {
   EmptyState,
   EmptyStateDescription,
@@ -213,7 +209,6 @@ export function RevenueCard() {
           >
             <Chart
               definition={definition}
-              renderer={galleryRenderer}
               height={176}
               initialWidth={440}
               ariaLabel={`Revenue from Pro and Team plans for the last ${periodNames[period]}`}
