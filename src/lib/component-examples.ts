@@ -1031,6 +1031,48 @@ export const componentPageData = {
       },
     ],
   },
+  "prompt-input": {
+    usage: "prompt-input-demo.tsx",
+    description: "Writes and sends a prompt, with files and actions.",
+    examples: [
+      {
+        title: "Keyboard",
+        description:
+          'The default submitKey is "enter". Enter sends and Shift+Enter adds a line. Set submitKey to "mod+enter" for a multi-line editor, where Mod+Enter sends and Enter adds a line. IME composition never submits.',
+        sourcePath: "prompt-input-keyboard-demo.tsx",
+      },
+      {
+        title: "Attachments",
+        description:
+          "Set onFilesDropped to accept files dropped on the composer. Compose AttachmentList, FileTrigger, and Attachment for the file rows and the attach button. Install Attachment and File trigger separately.",
+        sourcePath: "prompt-input-attachments-demo.tsx",
+      },
+      {
+        title: "Stop while streaming",
+        description:
+          "Set isPending to turn the submit button into a Stop button, and set onStop to end the run. The submit button also disables while the textarea is empty.",
+        sourcePath: "prompt-input-stop-demo.tsx",
+      },
+      {
+        title: "Drag and drop",
+        description:
+          "Files dropped anywhere on the frame call onFilesDropped. While a file is over it, the frame swaps to a dashed overlay that reads Drop files to attach.",
+        sourcePath: "prompt-input-drop-demo.tsx",
+      },
+      {
+        title: "Footer actions",
+        description:
+          "Compose PromptInputFooter with your own controls, such as a model picker. PromptInputSubmit sends and stops from the component's context. Install Select separately.",
+        sourcePath: "prompt-input-model-demo.tsx",
+      },
+      {
+        title: "Full transcript",
+        description:
+          "Sends a seeded prompt and runs one turn: Reasoning streams above, Response streams below, and the actions arrive when the run ends. Typing a different prompt changes the turn, and Stop ends the run. Install Reasoning, Response, Copy button, and Source link separately.",
+        sourcePath: "prompt-input-transcript-demo.tsx",
+      },
+    ],
+  },
   "rating-input": {
     usage: "rating-input-demo.tsx",
     description: "Selects a star rating with radio controls.",
@@ -1093,6 +1135,60 @@ export const componentPageData = {
         description:
           "Control the selected range with the value and onChange props.",
         sourcePath: "range-calendar-controlled-demo.tsx",
+      },
+    ],
+  },
+  reasoning: {
+    usage: "reasoning-demo.tsx",
+    description: "Reveals an agent's thinking and how long it took.",
+    examples: [
+      {
+        title: "Auto collapse",
+        description:
+          "Set autoCollapse to collapse the panel when the run ends. A new run expands it again. Set isExpanded to control the panel yourself.",
+        sourcePath: "reasoning-auto-collapse-demo.tsx",
+      },
+      {
+        title: "Error",
+        description:
+          'Set status to "error" to show the failed state. The trigger reads Reasoning failed.',
+        sourcePath: "reasoning-error-demo.tsx",
+      },
+      {
+        title: "Long reasoning",
+        description:
+          "Set scrollable to cap the panel at 16rem and make the body scrollable and focusable from the keyboard.",
+        sourcePath: "reasoning-long-demo.tsx",
+      },
+    ],
+  },
+  response: {
+    usage: "response-demo.tsx",
+    description: "Shows a streaming answer with its status and actions.",
+    examples: [
+      {
+        title: "Actions",
+        description:
+          "Put buttons in ResponseActions. This example composes a Copy button and a Regenerate button. Install Copy button separately.",
+        sourcePath: "response-actions-demo.tsx",
+      },
+      {
+        title: "Stopped",
+        description:
+          'With status "stopped", ResponseNotice shows the Stopped marker and screen readers hear Response stopped once. Continue resumes the run from where it stopped.',
+        sourcePath: "response-stopped-demo.tsx",
+      },
+      {
+        title: "Error",
+        description:
+          'With status "error", the notice reads Something went wrong. and the actions can offer a retry.',
+        sourcePath: "response-error-demo.tsx",
+      },
+      {
+        title: "With reasoning and sources",
+        description:
+          "Response composes with Reasoning above it and Source link rows in ResponseFooter. Install Reasoning and Source link separately.",
+        sourcePath: "response-sources-demo.tsx",
       },
     ],
   },

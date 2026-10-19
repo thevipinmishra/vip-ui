@@ -21,6 +21,63 @@ export const compositions: Record<string, Composition> = {
       },
     ],
   },
+  "prompt-input": {
+    parts: [
+      {
+        part: "PromptInput",
+        note: "Owns the draft value, the submit key, and the file drop. Accepts TextField props for the value and validation.",
+        children: [
+          {
+            part: "PromptInputTextArea",
+            note: "Grows from minRows to maxRows, then scrolls.",
+          },
+          {
+            part: "PromptInputFooter",
+            note: "Put your own controls beside the submit button.",
+            children: [{ part: "PromptInputSubmit" }],
+          },
+        ],
+      },
+    ],
+  },
+  reasoning: {
+    parts: [
+      {
+        part: "Reasoning",
+        note: "Owns the open state and the duration count. Set status, duration, and autoCollapse on it.",
+        children: [
+          {
+            part: "ReasoningTrigger",
+            note: "Shows the state and the duration.",
+          },
+          {
+            part: "ReasoningPanel",
+            note: "Set scrollable to cap the body height and scroll it. The newest line stays in view while the run is thinking.",
+          },
+        ],
+      },
+    ],
+  },
+  response: {
+    parts: [
+      {
+        part: "Response",
+        note: "Owns the status. Screen readers hear Response complete, stopped, or failed once.",
+        children: [
+          {
+            part: "ResponseContent",
+            note: "Shows the caret while streaming and sets aria-busy.",
+          },
+          {
+            part: "ResponseNotice",
+            note: "Shows a marker for stopped and error.",
+          },
+          { part: "ResponseActions", note: "Row of buttons." },
+          { part: "ResponseFooter", note: "Row for sources and metadata." },
+        ],
+      },
+    ],
+  },
   "stagger-group": {
     parts: [
       {

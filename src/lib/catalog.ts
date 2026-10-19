@@ -459,6 +459,21 @@ const catalog: CatalogDefinition[] = [
         name: "Source link",
         useFor: "A linked source for an answer.",
       },
+      {
+        slug: "prompt-input",
+        name: "Prompt input",
+        useFor: "Write a prompt and send it, with files and actions.",
+      },
+      {
+        slug: "reasoning",
+        name: "Reasoning",
+        useFor: "Reveal an agent's thinking and how long it took.",
+      },
+      {
+        slug: "response",
+        name: "Response",
+        useFor: "Show a streaming answer with its status and actions.",
+      },
     ],
   },
   {
@@ -558,6 +573,7 @@ const reactAriaDocs: Record<string, string> = {
   tabs: "https://react-aria.adobe.com/Tabs",
   accordion: "https://react-aria.adobe.com/DisclosureGroup",
   disclosure: "https://react-aria.adobe.com/Disclosure",
+  reasoning: "https://react-aria.adobe.com/Disclosure",
   "tool-call": "https://react-aria.adobe.com/Disclosure",
   "source-link": "https://react-aria.adobe.com/Link",
   dialog: "https://react-aria.adobe.com/Modal",
@@ -567,6 +583,7 @@ const reactAriaDocs: Record<string, string> = {
   toast: "https://react-aria.adobe.com/Toast",
   "progress-bar": "https://react-aria.adobe.com/ProgressBar",
   "progress-ring": "https://react-aria.adobe.com/ProgressBar",
+  "prompt-input": "https://react-aria.adobe.com/TextField",
   meter: "https://react-aria.adobe.com/Meter",
   separator: "https://react-aria.adobe.com/Separator",
   breadcrumbs: "https://react-aria.adobe.com/Breadcrumbs",
