@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ItemHighlight } from "@/components/ui/item-highlight";
 import { activeSection, mainNav } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 import { DocsSearch } from "./docs-search";
@@ -27,8 +28,9 @@ export function SiteHeader() {
         </Link>
         <nav
           aria-label="Main navigation"
-          className="hidden items-center gap-0.5 lg:flex"
+          className="relative isolate hidden items-center gap-0.5 lg:flex"
         >
+          <ItemHighlight placement="under" items="a" />
           {mainNav.map((link) => (
             <Link
               key={link.href}
@@ -41,7 +43,7 @@ export function SiteHeader() {
                   : undefined
               }
               className={cn(
-                "inline-flex h-9 items-center rounded-md px-3 text-sm font-medium transition-[color,background-color] duration-150 ease-out-quint hover:bg-muted hover:text-foreground focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-transparent",
+                "inline-flex h-9 items-center rounded-md px-3 text-sm font-medium transition-[color,background-color] duration-150 ease-out-quint hover:text-foreground focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-transparent",
                 active === link.href
                   ? "text-foreground"
                   : "text-muted-foreground",

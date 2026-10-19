@@ -44,9 +44,9 @@ export const buttonStyles = tv({
       outline:
         "border border-border bg-card text-foreground shadow-[var(--shadow-card)] hover:bg-muted pressed:bg-muted",
       ghost:
-        "text-foreground hover:bg-muted pressed:bg-muted aria-[pressed=true]:bg-accent aria-[pressed=true]:text-accent-foreground aria-[pressed=true]:hover:bg-accent",
+        "text-foreground hover:bg-muted in-data-[item-highlight=under]:hover:bg-transparent pressed:bg-muted aria-[pressed=true]:bg-accent aria-[pressed=true]:text-accent-foreground aria-[pressed=true]:hover:bg-accent",
       minimal:
-        "text-muted-foreground hover:bg-muted hover:text-foreground pressed:bg-muted pressed:text-foreground",
+        "text-muted-foreground hover:bg-muted in-data-[item-highlight=under]:hover:bg-transparent hover:text-foreground pressed:bg-muted pressed:text-foreground",
       destructive:
         "bg-destructive text-background shadow-[var(--shadow-card)] hover:bg-destructive/90 pressed:bg-destructive/90",
     },

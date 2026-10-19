@@ -17,12 +17,18 @@ import {
   type TreeProps,
 } from "react-aria-components";
 import { cn } from "@/lib/utils";
+import { itemHighlightRing, withItemHighlight } from "./item-highlight";
 
-export function Tree<T extends object>({ className, ...props }: TreeProps<T>) {
+export function Tree<T extends object>({
+  className,
+  render,
+  ...props
+}: TreeProps<T>) {
   return (
     <AriaTree
       {...props}
       data-slot="tree"
+      render={withItemHighlight(render, { ring: true })}
       className={composeRenderProps(className, (className) =>
         cn(
           "grid max-h-96 min-w-0 gap-1 overflow-y-auto overscroll-contain rounded-lg border border-border bg-card p-2 text-sm shadow-[var(--shadow-card)] outline-none empty:min-h-24 empty:place-items-center empty:text-muted-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring",
@@ -54,7 +60,8 @@ export function TreeItem({
       textValue={props.textValue ?? title}
       className={composeRenderProps(className, (className) =>
         cn(
-          "group/tree-item min-w-0 rounded-md text-foreground outline-none transition-colors duration-150 ease-out-quint hover:bg-muted hover:duration-0 focus:bg-muted focus:duration-0 pressed:bg-muted selected:bg-accent selected:text-accent-foreground selected:font-medium selected:ring-1 selected:ring-primary/15 focus-visible:outline-1 focus-visible:outline-solid focus-visible:-outline-offset-1 focus-visible:outline-ring forced-colors:focus-visible:outline-2 forced-colors:focus-visible:-outline-offset-2 disabled:opacity-50 forced-colors:border-2 forced-colors:border-[Canvas] forced-colors:selected:border-[Highlight]",
+          "group/tree-item min-w-0 rounded-md text-foreground outline-none transition-colors duration-150 ease-out-quint pressed:bg-muted selected:bg-accent selected:text-accent-foreground selected:font-medium selected:ring-1 selected:ring-primary/15 disabled:opacity-50 forced-colors:border-2 forced-colors:border-[Canvas] forced-colors:selected:border-[Highlight]",
+          itemHighlightRing,
           className,
         ),
       )}

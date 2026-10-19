@@ -9,6 +9,7 @@ import {
   UsersIcon,
 } from "@phosphor-icons/react";
 import { Badge } from "@/components/ui/badge";
+import { ItemHighlight } from "@/components/ui/item-highlight";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { cn } from "@/lib/utils";
 
@@ -36,7 +37,8 @@ export function AppSidebar({ onNavigate }: { onNavigate?: () => void }) {
           <p className="truncate text-xs text-muted-foreground">Pro plan</p>
         </div>
       </div>
-      <nav aria-label="Main">
+      <nav aria-label="Main" className="relative isolate">
+        <ItemHighlight placement="under" items="a" />
         <ul className="grid gap-0.5">
           {navigation.map((item) => (
             <li key={item.label}>
@@ -48,7 +50,7 @@ export function AppSidebar({ onNavigate }: { onNavigate?: () => void }) {
                   "flex min-h-10 items-center gap-3 rounded-md px-2.5 text-sm font-medium transition-[color,background-color] duration-150 ease-out-quint focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-transparent",
                   item.current
                     ? "bg-accent text-accent-foreground"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                    : "text-muted-foreground hover:text-foreground",
                 )}
               >
                 <item.icon

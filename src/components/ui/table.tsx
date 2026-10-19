@@ -17,12 +17,23 @@ import {
   type TableProps,
 } from "react-aria-components";
 import { cn } from "@/lib/utils";
+import { ItemHighlight, itemHighlightRing } from "./item-highlight";
 
-export function Table({ className, ...props }: TableProps) {
+export function Table({ className, render, ...props }: TableProps) {
   return (
     <AriaTable
       {...props}
       data-slot="table"
+      render={(domProps, renderProps) => (
+        <div data-slot="table-frame" className="relative isolate">
+          <ItemHighlight ring items="tbody > [role=row]" />
+          {render ? (
+            render(domProps, renderProps)
+          ) : (
+            <table {...(domProps as React.ComponentProps<"table">)} />
+          )}
+        </div>
+      )}
       className={composeRenderProps(className, (className) =>
         cn(
           "w-full border-separate border-spacing-0 rounded-md text-start text-sm outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring",
@@ -111,7 +122,8 @@ export function Row<T extends object>({ className, ...props }: RowProps<T>) {
       data-slot="table-row"
       className={composeRenderProps(className, (className) =>
         cn(
-          "outline-none transition-colors duration-150 ease-out-quint hover:bg-muted hover:duration-0 focus:bg-muted focus:duration-0 selected:bg-accent disabled:cursor-default disabled:opacity-50 focus-visible:outline-1 focus-visible:outline-solid focus-visible:-outline-offset-1 focus-visible:outline-ring forced-colors:focus-visible:outline-2 forced-colors:focus-visible:-outline-offset-2 forced-colors:selected:*:relative forced-colors:selected:*:before:pointer-events-none forced-colors:selected:*:before:absolute forced-colors:selected:*:before:inset-0 forced-colors:selected:*:before:border-y-2 forced-colors:selected:*:before:border-[Highlight] forced-colors:selected:*:first:before:border-s-2 forced-colors:selected:*:last:before:border-e-2",
+          "outline-none transition-colors duration-150 ease-out-quint selected:bg-accent disabled:cursor-default disabled:opacity-50 forced-colors:selected:*:relative forced-colors:selected:*:before:pointer-events-none forced-colors:selected:*:before:absolute forced-colors:selected:*:before:inset-0 forced-colors:selected:*:before:border-y-2 forced-colors:selected:*:before:border-[Highlight] forced-colors:selected:*:first:before:border-s-2 forced-colors:selected:*:last:before:border-e-2",
+          itemHighlightRing,
           className,
         ),
       )}
