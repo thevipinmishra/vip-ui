@@ -43,8 +43,15 @@ import type { Presence } from "@/components/ui/presence";
 import type { PresenceList } from "@/components/ui/presence-list";
 import type { ProgressBar } from "@/components/ui/progress-bar";
 import type { ProgressRing } from "@/components/ui/progress-ring";
+import type {
+  PromptInput,
+  PromptInputSubmit,
+  PromptInputTextArea,
+} from "@/components/ui/prompt-input";
 import type { Radio, RadioGroup } from "@/components/ui/radio-group";
 import type { RatingInput } from "@/components/ui/rating-input";
+import type { Reasoning, ReasoningPanel } from "@/components/ui/reasoning";
+import type { Response, ResponseContent } from "@/components/ui/response";
 import type { SearchField } from "@/components/ui/search-field";
 import type { Select } from "@/components/ui/select";
 import type { Sheet, SheetClose } from "@/components/ui/sheet";
@@ -677,6 +684,186 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           name: "summary",
           type: "string",
           description: "Short text below the name.",
+        },
+      ],
+    }),
+  ],
+  "prompt-input": [
+    apiPart<typeof PromptInput>({
+      name: "PromptInput",
+      props: [
+        {
+          name: "label",
+          type: "string",
+          description:
+            "An accessible name for the textarea. The label is visually hidden. Without it, the textarea is named Message.",
+        },
+        {
+          name: "placeholder",
+          type: "string",
+          description:
+            "Placeholder text in the default textarea. Pass it to PromptInputTextArea when you compose the children.",
+        },
+        {
+          name: "submitKey",
+          type: '"enter" | "mod+enter"',
+          default: '"enter"',
+          description:
+            "Controls which key sends. Enter sends with Shift+Enter for a line, or Mod+Enter sends with Enter for a line. IME composition never submits.",
+        },
+        {
+          name: "isPending",
+          type: "boolean",
+          default: "false",
+          description:
+            "Turns the submit button into a Stop button. Set onStop to end the run.",
+        },
+        {
+          name: "onSubmit",
+          type: "(value: string) => void",
+          description:
+            "Called with the textarea value when the user submits. Focus returns to the textarea.",
+        },
+        {
+          name: "onStop",
+          type: "() => void",
+          description: "Called when the user stops a pending run.",
+        },
+        {
+          name: "onFilesDropped",
+          type: "(files: File[]) => void",
+          description:
+            "Called with files dropped on the frame. Without it, the frame ignores drops and no overlay shows.",
+        },
+        {
+          name: "dropLabel",
+          type: "string",
+          default: '"Drop files to attach"',
+          description:
+            "Copy shown in the overlay while files are dragged over the frame.",
+        },
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          description: "Sets the height, text size, and padding of the frame.",
+        },
+      ],
+    }),
+    apiPart<typeof PromptInputTextArea>({
+      name: "PromptInputTextArea",
+      props: [
+        {
+          name: "minRows",
+          type: "number",
+          default: "1",
+          description: "Rows shown at rest.",
+        },
+        {
+          name: "maxRows",
+          type: "number",
+          default: "8",
+          description: "Rows shown before the textarea starts to scroll.",
+        },
+      ],
+    }),
+    apiPart<typeof PromptInputSubmit>({
+      name: "PromptInputSubmit",
+      description:
+        "Renders Send, or Stop while isPending and onStop are set. Accepts Button props for variant, size, and aria-label.",
+      props: [
+        {
+          name: "isDisabled",
+          type: "boolean",
+          description:
+            "Disables the button. The Send button is also disabled while the textarea is empty.",
+        },
+      ],
+    }),
+  ],
+  reasoning: [
+    apiPart<typeof Reasoning>({
+      name: "Reasoning",
+      props: [
+        {
+          name: "status",
+          type: '"thinking" | "complete" | "error"',
+          required: true,
+          description:
+            "Sets the trigger text and icon. Thinking animates unless reduced motion is on.",
+        },
+        {
+          name: "duration",
+          type: "number",
+          description:
+            "Seconds of reasoning. Without it, a thinking run counts its own time and the count freezes when the run ends.",
+        },
+        {
+          name: "autoCollapse",
+          type: "boolean",
+          default: "false",
+          description:
+            "Collapses the panel when the status leaves thinking, and expands it when a new run starts. Set isExpanded to control the panel yourself.",
+        },
+        {
+          name: "defaultExpanded",
+          type: "boolean",
+          description:
+            "Opens the panel at first. The default is open while status is thinking.",
+        },
+        {
+          name: "isExpanded",
+          type: "boolean",
+          description: "Controls the panel.",
+        },
+        {
+          name: "onExpandedChange",
+          type: "(isExpanded: boolean) => void",
+          description: "Receives requests to open or close the panel.",
+        },
+      ],
+    }),
+    apiPart<typeof ReasoningPanel>({
+      name: "ReasoningPanel",
+      props: [
+        {
+          name: "scrollable",
+          type: "boolean",
+          default: "false",
+          description:
+            "Caps the body at 16rem and makes it scrollable and focusable from the keyboard.",
+        },
+        {
+          name: "autoScroll",
+          type: "boolean",
+          default: "true",
+          description:
+            "Keeps the newest line in view while a scrollable panel is thinking. Scrolling stops once the run ends, so reading back never fights the panel.",
+        },
+      ],
+    }),
+  ],
+  response: [
+    apiPart<typeof Response>({
+      name: "Response",
+      props: [
+        {
+          name: "status",
+          type: '"streaming" | "complete" | "stopped" | "error"',
+          required: true,
+          description:
+            "Sets the streaming state on the content, and announces the end once as Response complete, Response stopped, or Response failed.",
+        },
+      ],
+    }),
+    apiPart<typeof ResponseContent>({
+      name: "ResponseContent",
+      props: [
+        {
+          name: "caret",
+          type: "boolean",
+          default: "true",
+          description:
+            "Shows the caret at the end while the status is streaming.",
         },
       ],
     }),

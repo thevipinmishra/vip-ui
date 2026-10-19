@@ -118,11 +118,27 @@ import { ProgressBarBasicDemo } from "@/components/docs/progress-bar-basic-demo"
 import { ProgressBarDemo } from "@/components/docs/progress-bar-demo";
 import { ProgressRingBasicDemo } from "@/components/docs/progress-ring-basic-demo";
 import { ProgressRingDemo } from "@/components/docs/progress-ring-demo";
+import { PromptInputAttachmentsDemo } from "@/components/docs/prompt-input-attachments-demo";
+import { PromptInputDemo } from "@/components/docs/prompt-input-demo";
+import { PromptInputDropDemo } from "@/components/docs/prompt-input-drop-demo";
+import { PromptInputKeyboardDemo } from "@/components/docs/prompt-input-keyboard-demo";
+import { PromptInputModelDemo } from "@/components/docs/prompt-input-model-demo";
+import { PromptInputStopDemo } from "@/components/docs/prompt-input-stop-demo";
+import { PromptInputTranscriptDemo } from "@/components/docs/prompt-input-transcript-demo";
 import { RangeCalendarControlledDemo } from "@/components/docs/range-calendar-controlled-demo";
 import { RangeCalendarDemo } from "@/components/docs/range-calendar-demo";
 import { RangeCalendarLimitsDemo } from "@/components/docs/range-calendar-limits-demo";
 import { RatingInputDemo } from "@/components/docs/rating-input-demo";
 import { RatingInputReadOnlyDemo } from "@/components/docs/rating-input-read-only-demo";
+import { ReasoningAutoCollapseDemo } from "@/components/docs/reasoning-auto-collapse-demo";
+import { ReasoningDemo } from "@/components/docs/reasoning-demo";
+import { ReasoningErrorDemo } from "@/components/docs/reasoning-error-demo";
+import { ReasoningLongDemo } from "@/components/docs/reasoning-long-demo";
+import { ResponseActionsDemo } from "@/components/docs/response-actions-demo";
+import { ResponseDemo } from "@/components/docs/response-demo";
+import { ResponseErrorDemo } from "@/components/docs/response-error-demo";
+import { ResponseSourcesDemo } from "@/components/docs/response-sources-demo";
+import { ResponseStoppedDemo } from "@/components/docs/response-stopped-demo";
 import { SeparatorDemo } from "@/components/docs/separator-demo";
 import { SeparatorVerticalDemo } from "@/components/docs/separator-vertical-demo";
 import { SkeletonBasicDemo } from "@/components/docs/skeleton-basic-demo";
@@ -465,6 +481,9 @@ const entries: {
   { slug: "agent-status", name: "Agent status", demo: <AgentStatusDemo /> },
   { slug: "tool-call", name: "Tool call", demo: <ToolCallDemo /> },
   { slug: "source-link", name: "Source link", demo: <SourceLinkDemo /> },
+  { slug: "prompt-input", name: "Prompt input", demo: <PromptInputDemo /> },
+  { slug: "reasoning", name: "Reasoning", demo: <ReasoningDemo /> },
+  { slug: "response", name: "Response", demo: <ResponseDemo /> },
 ];
 
 const basicPreviews: Record<string, { demo: ReactNode; source: string }> = {
@@ -700,6 +719,25 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <PopoverPlacementDemo key="preview-1" />,
     <PopoverFormDemo key="preview-2" />,
     <PopoverPreviewDemo key="preview-3" />,
+  ],
+  "prompt-input": [
+    <PromptInputKeyboardDemo key="preview-1" />,
+    <PromptInputAttachmentsDemo key="preview-2" />,
+    <PromptInputStopDemo key="preview-3" />,
+    <PromptInputDropDemo key="preview-4" />,
+    <PromptInputModelDemo key="preview-5" />,
+    <PromptInputTranscriptDemo key="preview-6" />,
+  ],
+  reasoning: [
+    <ReasoningAutoCollapseDemo key="preview-1" />,
+    <ReasoningErrorDemo key="preview-2" />,
+    <ReasoningLongDemo key="preview-3" />,
+  ],
+  response: [
+    <ResponseActionsDemo key="preview-1" />,
+    <ResponseStoppedDemo key="preview-2" />,
+    <ResponseErrorDemo key="preview-3" />,
+    <ResponseSourcesDemo key="preview-4" />,
   ],
   "presence-list": [<PresenceListDemo key="preview-1" />],
   "progress-bar": [<ProgressBarDemo key="preview-1" />],

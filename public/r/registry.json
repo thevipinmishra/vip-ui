@@ -605,6 +605,9 @@
       "description": "Frame a TanStack chart with shadcn chart colors and tooltip styles.",
       "dependencies": ["@tanstack/charts@^0.18.0", "tailwind-variants@^3.3.1"],
       "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        },
         "light": {
           "success": "oklch(0.43 0.12 155)",
           "warning": "oklch(0.54 0.13 75)",
@@ -2928,6 +2931,72 @@
       ]
     },
     {
+      "name": "vip-prompt-input",
+      "type": "registry:ui",
+      "title": "Prompt Input",
+      "description": "Write a prompt and send it, with files and actions.",
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "motion@^13.5.1",
+        "react-aria-components@^1.22.1",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        },
+        "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/motion.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/motion.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/size.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/size.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/button.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/button.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/field-styles.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/field-styles.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/prompt-input.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/prompt-input.tsx"
+        }
+      ]
+    },
+    {
       "name": "vip-radio-group",
       "type": "registry:ui",
       "title": "Radio Group",
@@ -3101,6 +3170,72 @@
           "path": "registry/generated/src/components/vip-ui/rating-input.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/rating-input.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-reasoning",
+      "type": "registry:ui",
+      "title": "Reasoning",
+      "description": "Reveal an agent's thinking and how long it took.",
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "react-aria-components@^1.22.1",
+        "tailwind-variants@^3.3.1"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/collapsible-panel.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/collapsible-panel.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/disclosure.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/disclosure.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/reasoning.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/reasoning.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-response",
+      "type": "registry:ui",
+      "title": "Response",
+      "description": "Show a streaming answer with its status and actions.",
+      "dependencies": ["tailwind-variants@^3.3.1"],
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/utils.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/utils.ts"
+        },
+        {
+          "path": "registry/generated/src/components/vip-ui/response.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/response.tsx"
         }
       ]
     },
