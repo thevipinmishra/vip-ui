@@ -16,6 +16,7 @@ import {
   useSlottedContext,
 } from "react-aria-components";
 import { cn } from "./utils";
+import { itemHighlightRing, withItemHighlight } from "./item-highlight";
 import { SelectionMark } from "./list-box";
 import { Popover } from "./popover";
 
@@ -80,12 +81,14 @@ export function MenuPopover({
 
 export function MenuContent<T extends object>({
   className,
+  render,
   ...props
 }: MenuProps<T>) {
   return (
     <AriaMenu
       {...props}
       data-slot="menu-content"
+      render={withItemHighlight(render, { ring: true })}
       className={composeRenderProps(className, (className) =>
         cn("grid gap-1 outline-none [overflow-wrap:anywhere]", className),
       )}
@@ -107,7 +110,8 @@ export function MenuItem<T extends object>({
       data-slot="menu-item"
       className={composeRenderProps(className, (className) =>
         cn(
-          "group/item flex min-h-11 cursor-pointer items-center gap-2.5 rounded-md px-3 py-2 text-sm text-foreground outline-none transition-colors duration-150 ease-out-quint hover:bg-muted hover:duration-0 focus:bg-muted focus:duration-0 open:bg-muted focus-visible:-outline-offset-1 focus-visible:outline-1 focus-visible:outline-solid focus-visible:outline-ring forced-colors:focus-visible:-outline-offset-2 forced-colors:focus-visible:outline-2 selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&>[data-slot=kbd]]:ms-auto",
+          "group/item flex min-h-11 cursor-pointer items-center gap-2.5 rounded-md px-3 py-2 text-sm text-foreground outline-none transition-colors duration-150 ease-out-quint open:bg-muted selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&>[data-slot=kbd]]:ms-auto",
+          itemHighlightRing,
           className,
         ),
       )}

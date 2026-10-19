@@ -25,6 +25,7 @@ import {
   fieldSizeStyles,
   fieldTriggerStyles,
 } from "./field-styles";
+import { itemHighlightRing, withItemHighlight } from "./item-highlight";
 import { SelectionMark } from "./list-box";
 import { Popover } from "./popover";
 import type { Size } from "./size";
@@ -32,8 +33,7 @@ import { Tag, TagGroup, TagListView } from "./tag-group";
 
 const comboBoxPopoverStyles =
   "w-[var(--trigger-width)] rounded-lg border-0 p-1.5 ring-1 ring-border/70";
-const comboBoxItemStyles =
-  "group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none transition-colors duration-150 ease-out-quint hover:bg-muted hover:duration-0 focus:bg-muted focus:duration-0 focus-visible:-outline-offset-1 focus-visible:outline-1 focus-visible:outline-solid focus-visible:outline-ring forced-colors:focus-visible:-outline-offset-2 forced-colors:focus-visible:outline-2 selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50";
+const comboBoxItemStyles = `group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none transition-colors duration-150 ease-out-quint selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50 ${itemHighlightRing}`;
 
 export interface ComboBoxOption {
   id: string;
@@ -187,6 +187,7 @@ function ComboBoxDefaults({
       >
         <ListBox
           data-slot="combo-box-list-box"
+          render={withItemHighlight(undefined, { ring: true })}
           items={options ?? []}
           renderEmptyState={() => (
             <div className="px-3 py-3 text-sm text-muted-foreground">
@@ -340,6 +341,7 @@ export function ComboBoxContent({
     >
       <ListBox
         data-slot="combo-box-list-box"
+        render={withItemHighlight(undefined, { ring: true })}
         className="grid gap-1 outline-none"
         renderEmptyState={() => (
           <div className="px-3 py-3 text-sm text-muted-foreground">
