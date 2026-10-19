@@ -65,10 +65,15 @@ export function CommandPalette({
     <DialogContent
       modalSlot="command-palette"
       className="flex min-h-0 flex-col"
-      overlayProps={{ isOpen, onOpenChange }}
+      overlayProps={{
+        isOpen,
+        onOpenChange,
+        className: "sm:items-start sm:pt-[12vh]",
+      }}
       modalProps={{
         className: cn(
           "flex flex-col p-0 pb-[env(safe-area-inset-bottom)] sm:max-w-lg sm:p-0",
+          "sm:max-h-[calc(var(--visual-viewport-height,100dvh)-12vh-1rem)] sm:origin-top sm:duration-180 sm:exiting:duration-120 motion-safe:sm:entering:translate-y-0 motion-safe:sm:entering:scale-98 motion-safe:sm:exiting:translate-y-0 motion-safe:sm:exiting:scale-99",
           className,
         ),
       }}
@@ -94,7 +99,7 @@ export function CommandPalette({
         <MenuContent
           aria-label={title}
           autoFocus="first"
-          className="min-h-0 max-h-80 flex-1 gap-1 overflow-y-auto overscroll-contain p-2"
+          className="min-h-0 max-h-80 flex-1 max-sm:min-h-80 gap-1 overflow-y-auto overscroll-contain p-2"
           renderEmptyState={() => (
             <p className="px-3 py-6 text-center text-sm text-muted-foreground">
               {emptyMessage}
