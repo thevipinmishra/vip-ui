@@ -1,6 +1,6 @@
 # vip/ui
 
-vip/ui is a collection of React components distributed as source files through a shadcn-compatible registry. React Aria handles keyboard and focus behavior. Tailwind CSS v4 and Tailwind Variants handle styles. Motion handles animated state changes. The site also has themes, a chart gallery, and blocks. vip/ui is not an npm component package.
+vip/ui is a collection of React components distributed as source files through a shadcn-compatible registry. React Aria handles keyboard and focus behavior. Tailwind CSS v4 and Tailwind Variants handle styles. Motion handles animated state changes. The site also has color scales, themes made from them, a chart gallery, and blocks. vip/ui is not an npm component package.
 
 [Component catalog](https://vip-ui.vercel.app/components) · [Installation guide](https://vip-ui.vercel.app/components/installation) · [Blocks](https://vip-ui.vercel.app/blocks)
 

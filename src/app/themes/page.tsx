@@ -1,27 +1,25 @@
 import type { Metadata } from "next";
-import { findTheme, officialThemes } from "./official-themes";
-import { pageThemeCss, specimenCss } from "./theme-fonts";
 import { ThemeGallery } from "./theme-gallery";
 import { ThemeInstall } from "./theme-install";
 import { ThemeShowcase } from "./theme-showcase";
 import { ThemeStudio } from "./theme-studio";
+import { findTheme, pageThemeCss, specimenCss, themes } from "./themes";
 
 export const metadata: Metadata = {
   title: "Themes | vip/ui",
   description:
-    "Six themes and ten color scales for vip/ui and shadcn/ui, with a live preview on real product screens. Install with the shadcn CLI or copy the CSS.",
+    "Ten themes made from the vip/ui color scales, with a live preview on real product screens. Copy the CSS into any shadcn/ui project.",
 };
 
 const pageCss = Object.fromEntries(
-  officialThemes.map((theme) => [theme.slug, pageThemeCss(theme)]),
+  themes.map((theme) => [theme.slug, pageThemeCss(theme)]),
 );
 
 export default async function ThemesPage({
   searchParams,
 }: PageProps<"/themes">) {
   const { theme } = await searchParams;
-  const initial =
-    (typeof theme === "string" && findTheme(theme)) || officialThemes[0];
+  const initial = (typeof theme === "string" && findTheme(theme)) || themes[0];
 
   return (
     <ThemeStudio
@@ -31,7 +29,7 @@ export default async function ThemesPage({
       showcase={<ThemeShowcase />}
       gallery={<ThemeGallery />}
       install={Object.fromEntries(
-        officialThemes.map((option) => [
+        themes.map((option) => [
           option.slug,
           <ThemeInstall key={option.slug} theme={option} />,
         ]),

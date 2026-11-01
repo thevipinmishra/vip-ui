@@ -46,7 +46,7 @@ Open <http://localhost:3000/components>. `pnpm dev` runs `pnpm registry:build` f
 | `src/lib/utils.ts` | The `cn` helper. |
 | `src/app/globals.css` | Site theme and Tailwind settings. |
 | `scripts/generate-registry.mjs` | Registry generator. |
-| `scripts/generate-palettes.mjs` | Color scale generator. It writes `src/app/themes/palette-data.ts`. |
+| `scripts/generate-palettes.mjs` | Color scale generator. It writes `src/lib/palette-data.ts`. |
 | `public/r/`, `registry.json`, `registry/generated/` | Generated registry files. |
 
 ## Generated files

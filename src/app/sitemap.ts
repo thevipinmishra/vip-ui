@@ -9,6 +9,7 @@ const staticRoutes = [
   { path: "/components", priority: 0.9 },
   ...docsGuides.map((guide) => ({ path: guide.href, priority: 0.8 })),
   { path: "/themes", priority: 0.8 },
+  { path: "/colors", priority: 0.8 },
   { path: "/charts", priority: 0.8 },
   { path: "/blocks", priority: 0.8 },
   { path: "/license", priority: 0.3 },
