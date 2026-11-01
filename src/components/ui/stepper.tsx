@@ -102,6 +102,7 @@ export function Stepper({
           const active = index === currentStep;
           return (
             <li
+              // biome-ignore lint/suspicious/noArrayIndexKey: step order is the identity of a step
               key={`${index}-${step.label}`}
               data-slot="stepper-step"
               data-state={

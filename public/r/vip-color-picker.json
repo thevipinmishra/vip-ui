@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Color Picker",
   "description": "Selects a color with a color area, hue slider, and hex field in a popover.",
-  "dependencies": ["motion@^13.5.1", "react-aria-components@^1.22.1"],
+  "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
   "registryDependencies": [
     "https://vip-ui.vercel.app/r/vip-button.json",
     "https://vip-ui.vercel.app/r/vip-color-field.json",

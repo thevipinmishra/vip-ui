@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Spinner",
   "description": "Shows a loading indicator for a task with no known end time.",
-  "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
+  "dependencies": ["motion@^14.9.0", "tailwind-variants@^4.0.1"],
   "registryDependencies": ["https://vip-ui.vercel.app/r/vip-motion.json"],
   "files": [
     {

@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Marquee",
   "description": "Loops a strip of content, with a control to pause it.",
-  "dependencies": ["motion@^13.5.1"],
+  "dependencies": ["motion@^14.9.0"],
   "registryDependencies": [
     "https://vip-ui.vercel.app/r/vip-button.json",
     "https://vip-ui.vercel.app/r/vip-utils.json"
