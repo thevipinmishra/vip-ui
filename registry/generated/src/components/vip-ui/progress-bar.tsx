@@ -7,7 +7,7 @@ import {
   composeRenderProps,
   Label,
 } from "react-aria-components";
-import { duration, easeOut } from "./motion";
+import { duration, easeOut, loop } from "./motion";
 import { cn } from "./utils";
 
 export interface ProgressBarProps
@@ -74,7 +74,11 @@ export function ProgressBar({
                   transition={
                     reduceMotion
                       ? { duration: 0 }
-                      : { duration: 1.6, repeat: Infinity, ease: "linear" }
+                      : {
+                          duration: loop.sweep,
+                          repeat: Infinity,
+                          ease: "linear",
+                        }
                   }
                 />
               ) : (

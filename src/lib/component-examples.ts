@@ -5,16 +5,19 @@ export interface ComponentExampleMetadata {
   prerequisite?: string;
 }
 
+import { componentDescription } from "./catalog";
+
 export interface ComponentPageData {
   usage: string;
   description: string;
   examples: readonly ComponentExampleMetadata[];
 }
 
-export const componentPageData = {
+type ComponentPageSource = Omit<ComponentPageData, "description">;
+
+const pageSources = {
   button: {
     usage: "button-basic-demo.tsx",
-    description: "Triggers an action.",
     examples: [
       {
         title: "Variants",
@@ -54,7 +57,6 @@ export const componentPageData = {
   },
   select: {
     usage: "select-demo.tsx",
-    description: "Selects one option from a list.",
     examples: [
       {
         title: "Described options",
@@ -84,7 +86,6 @@ export const componentPageData = {
   },
   dialog: {
     usage: "dialog-demo.tsx",
-    description: "Shows a focused task above the page.",
     examples: [
       {
         title: "Alert dialog",
@@ -108,7 +109,6 @@ export const componentPageData = {
   },
   accordion: {
     usage: "accordion-demo.tsx",
-    description: "Displays collapsible sections of related content.",
     examples: [
       {
         title: "Divided",
@@ -132,7 +132,6 @@ export const componentPageData = {
   },
   alert: {
     usage: "alert-basic-demo.tsx",
-    description: "Displays an inline message about a status or event.",
     examples: [
       {
         title: "Variants",
@@ -150,7 +149,6 @@ export const componentPageData = {
   },
   "animated-number": {
     usage: "animated-number-basic-demo.tsx",
-    description: "Displays a number that animates when its value changes.",
     examples: [
       {
         title: "Digit slide",
@@ -168,7 +166,6 @@ export const componentPageData = {
   },
   attachment: {
     usage: "attachment-basic-demo.tsx",
-    description: "Displays a file's name, size, preview, and current state.",
     examples: [
       {
         title: "Adding and removing files",
@@ -180,12 +177,10 @@ export const componentPageData = {
   },
   autocomplete: {
     usage: "autocomplete-demo.tsx",
-    description: "Filters a list from a search field as you type.",
     examples: [],
   },
   avatar: {
     usage: "avatar-basic-demo.tsx",
-    description: "Displays an image or initials for a person.",
     examples: [
       {
         title: "Sizes",
@@ -209,7 +204,6 @@ export const componentPageData = {
   },
   badge: {
     usage: "badge-basic-demo.tsx",
-    description: "Shows a short label, status, or count.",
     examples: [
       {
         title: "Variants",
@@ -227,13 +221,10 @@ export const componentPageData = {
   },
   breadcrumbs: {
     usage: "breadcrumbs-demo.tsx",
-    description: "Displays a path of links to the current page.",
     examples: [],
   },
   "button-group": {
     usage: "button-group-basic-demo.tsx",
-    description:
-      "Joins related buttons into one row or column. Each button stays in the Tab order.",
     examples: [
       {
         title: "Orientations",
@@ -256,7 +247,6 @@ export const componentPageData = {
   },
   calendar: {
     usage: "calendar-demo.tsx",
-    description: "Displays a calendar for selecting a date.",
     examples: [
       {
         title: "Unavailable dates",
@@ -274,7 +264,6 @@ export const componentPageData = {
   },
   card: {
     usage: "card-basic-demo.tsx",
-    description: "Displays a card with a header, content, and footer.",
     examples: [
       {
         title: "Action",
@@ -292,7 +281,6 @@ export const componentPageData = {
   },
   checkbox: {
     usage: "checkbox-basic-demo.tsx",
-    description: "Selects or clears one option.",
     examples: [
       {
         title: "Description",
@@ -322,7 +310,6 @@ export const componentPageData = {
   },
   "checkbox-group": {
     usage: "checkbox-group-demo.tsx",
-    description: "Groups checkboxes for selecting multiple options.",
     examples: [
       {
         title: "Disabled",
@@ -345,7 +332,6 @@ export const componentPageData = {
   },
   "color-field": {
     usage: "color-field-demo.tsx",
-    description: "Accepts a hex color, or one color channel as a number.",
     examples: [
       {
         title: "Single channel",
@@ -374,8 +360,6 @@ export const componentPageData = {
   },
   "color-picker": {
     usage: "color-picker-demo.tsx",
-    description:
-      "Selects a color with a color area, a hue slider, and a hex field.",
     examples: [
       {
         title: "Controlled value",
@@ -387,7 +371,6 @@ export const componentPageData = {
   },
   "color-swatch": {
     usage: "color-swatch-basic-demo.tsx",
-    description: "Displays a sample of a color.",
     examples: [
       {
         title: "Named palette",
@@ -405,7 +388,6 @@ export const componentPageData = {
   },
   "color-swatch-picker": {
     usage: "color-swatch-picker-demo.tsx",
-    description: "Selects a color from a set of swatches.",
     examples: [
       {
         title: "Disabled",
@@ -423,7 +405,6 @@ export const componentPageData = {
   },
   "combo-box": {
     usage: "combo-box-basic-demo.tsx",
-    description: "Selects options from a list that filters as you type.",
     examples: [
       {
         title: "Described options",
@@ -453,7 +434,6 @@ export const componentPageData = {
   },
   "command-palette": {
     usage: "command-palette-basic-demo.tsx",
-    description: "Shows a dialog to search and run commands.",
     examples: [
       {
         title: "Sections and icons",
@@ -465,8 +445,6 @@ export const componentPageData = {
   },
   "context-menu": {
     usage: "context-menu-demo.tsx",
-    description:
-      "Shows actions for an item, opened by right-click, long press, or keyboard.",
     examples: [
       {
         title: "Grouped actions",
@@ -478,7 +456,6 @@ export const componentPageData = {
   },
   "copy-button": {
     usage: "copy-button-demo.tsx",
-    description: "Copies a value to the clipboard and shows the result.",
     examples: [
       {
         title: "Custom label and icon button",
@@ -490,7 +467,6 @@ export const componentPageData = {
   },
   "date-field": {
     usage: "date-field-demo.tsx",
-    description: "Accepts a date, with one segment for each part.",
     examples: [
       {
         title: "Minimum and maximum",
@@ -519,7 +495,6 @@ export const componentPageData = {
   },
   "date-picker": {
     usage: "date-picker-demo.tsx",
-    description: "Accepts a date that you type or select from a calendar.",
     examples: [
       {
         title: "Unavailable dates",
@@ -549,8 +524,6 @@ export const componentPageData = {
   },
   "date-range-picker": {
     usage: "date-range-picker-demo.tsx",
-    description:
-      "Accepts a date range that you type or select from a calendar.",
     examples: [
       {
         title: "Unavailable dates",
@@ -574,7 +547,6 @@ export const componentPageData = {
   },
   "description-list": {
     usage: "description-list-demo.tsx",
-    description: "Displays pairs of terms and details.",
     examples: [
       {
         title: "Inline components",
@@ -586,7 +558,6 @@ export const componentPageData = {
   },
   disclosure: {
     usage: "disclosure-demo.tsx",
-    description: "Shows or hides a section of content.",
     examples: [
       {
         title: "Expanded by default",
@@ -603,7 +574,6 @@ export const componentPageData = {
   },
   sheet: {
     usage: "sheet-basic-demo.tsx",
-    description: "Displays a panel that slides in from the edge of the screen.",
     examples: [
       {
         title: "Snap points",
@@ -627,7 +597,6 @@ export const componentPageData = {
   },
   "drop-zone": {
     usage: "drop-zone-basic-demo.tsx",
-    description: "Accepts files that you drag onto it.",
     examples: [
       {
         title: "Accepted file types",
@@ -639,7 +608,6 @@ export const componentPageData = {
   },
   "empty-state": {
     usage: "empty-state-demo.tsx",
-    description: "Displays a message when there is no content to show.",
     examples: [
       {
         title: "Without an action",
@@ -650,12 +618,10 @@ export const componentPageData = {
   },
   fieldset: {
     usage: "fieldset-demo.tsx",
-    description: "Groups related form controls under a legend.",
     examples: [],
   },
   "file-trigger": {
     usage: "file-trigger-basic-demo.tsx",
-    description: "Opens a file picker from a button or other trigger.",
     examples: [
       {
         title: "Multiple images",
@@ -667,7 +633,6 @@ export const componentPageData = {
   },
   form: {
     usage: "form-demo.tsx",
-    description: "Groups fields and handles validation and submission.",
     examples: [
       {
         title: "Custom validation",
@@ -685,7 +650,6 @@ export const componentPageData = {
   },
   "grid-list": {
     usage: "grid-list-demo.tsx",
-    description: "Displays a collection of interactive rows.",
     examples: [
       {
         title: "Unavailable row",
@@ -697,7 +661,6 @@ export const componentPageData = {
   },
   "input-group": {
     usage: "input-group-basic-demo.tsx",
-    description: "Groups an input with related text, icons, or actions.",
     examples: [
       {
         title: "Icon",
@@ -739,7 +702,6 @@ export const componentPageData = {
   },
   "kbd-code": {
     usage: "kbd-code-demo.tsx",
-    description: "Displays keyboard keys and inline code in text.",
     examples: [
       {
         title: "Key combination",
@@ -757,7 +719,6 @@ export const componentPageData = {
   },
   link: {
     usage: "link-demo.tsx",
-    description: "Displays a link to another page or location.",
     examples: [
       {
         title: "External link",
@@ -769,7 +730,6 @@ export const componentPageData = {
   },
   "list-box": {
     usage: "list-box-demo.tsx",
-    description: "Displays a list of options for selection.",
     examples: [
       {
         title: "Multiple selection",
@@ -781,7 +741,6 @@ export const componentPageData = {
   },
   menu: {
     usage: "menu-basic-demo.tsx",
-    description: "Opens a list of actions from a trigger.",
     examples: [
       {
         title: "Icons and shortcuts",
@@ -811,7 +770,6 @@ export const componentPageData = {
   },
   "agent-status": {
     usage: "agent-status-demo.tsx",
-    description: "Shows the current step of an agent and its state.",
     examples: [
       {
         title: "States",
@@ -823,7 +781,6 @@ export const componentPageData = {
   },
   message: {
     usage: "message-basic-demo.tsx",
-    description: "Displays a message in a conversation.",
     examples: [
       {
         title: "Sides",
@@ -835,7 +792,6 @@ export const componentPageData = {
   },
   meter: {
     usage: "meter-basic-demo.tsx",
-    description: "Displays a value within a known range.",
     examples: [
       {
         title: "Value label",
@@ -847,7 +803,6 @@ export const componentPageData = {
   },
   "native-select": {
     usage: "native-select-demo.tsx",
-    description: "Selects one option with the native HTML select.",
     examples: [
       {
         title: "Groups",
@@ -877,7 +832,6 @@ export const componentPageData = {
   },
   "number-field": {
     usage: "number-field-basic-demo.tsx",
-    description: "Accepts a number, with buttons to increase and decrease it.",
     examples: [
       {
         title: "Minimum and maximum",
@@ -907,7 +861,6 @@ export const componentPageData = {
   },
   pagination: {
     usage: "pagination-basic-demo.tsx",
-    description: "Displays links between pages of results.",
     examples: [
       {
         title: "URL-synced pages",
@@ -925,7 +878,6 @@ export const componentPageData = {
   },
   "inline-edit": {
     usage: "inline-edit-basic-demo.tsx",
-    description: "Edits text in place and keeps the draft when saving fails.",
     examples: [
       {
         title: "Disabled",
@@ -942,7 +894,6 @@ export const componentPageData = {
   },
   "password-strength-meter": {
     usage: "password-strength-meter-demo.tsx",
-    description: "Estimates password strength from length and character mix.",
     examples: [
       {
         title: "With password field",
@@ -954,7 +905,6 @@ export const componentPageData = {
   },
   "password-field": {
     usage: "password-field-basic-demo.tsx",
-    description: "Accepts a password, with a button to show or hide it.",
     examples: [
       {
         title: "Disabled",
@@ -972,7 +922,6 @@ export const componentPageData = {
   },
   popover: {
     usage: "popover-demo.tsx",
-    description: "Shows content in a panel next to its trigger.",
     examples: [
       {
         title: "Placement and arrow",
@@ -996,8 +945,6 @@ export const componentPageData = {
   },
   "presence-list": {
     usage: "presence-list-basic-demo.tsx",
-    description:
-      "Displays a list that animates items when you add, remove, or move them.",
     examples: [
       {
         title: "Adding and reordering",
@@ -1009,7 +956,6 @@ export const componentPageData = {
   },
   "progress-bar": {
     usage: "progress-bar-basic-demo.tsx",
-    description: "Displays the progress of a task in a horizontal bar.",
     examples: [
       {
         title: "Known and unknown progress",
@@ -1021,7 +967,6 @@ export const componentPageData = {
   },
   "progress-ring": {
     usage: "progress-ring-basic-demo.tsx",
-    description: "Displays the progress of a task in a circular indicator.",
     examples: [
       {
         title: "Known and unknown progress",
@@ -1033,7 +978,6 @@ export const componentPageData = {
   },
   "prompt-input": {
     usage: "prompt-input-demo.tsx",
-    description: "Writes and sends a prompt, with files and actions.",
     examples: [
       {
         title: "Keyboard",
@@ -1075,7 +1019,6 @@ export const componentPageData = {
   },
   "rating-input": {
     usage: "rating-input-demo.tsx",
-    description: "Selects a star rating with radio controls.",
     examples: [
       {
         title: "Read only",
@@ -1086,7 +1029,6 @@ export const componentPageData = {
   },
   "radio-group": {
     usage: "radio-group-demo.tsx",
-    description: "Groups radio buttons for selecting one option.",
     examples: [
       {
         title: "Described options",
@@ -1122,7 +1064,6 @@ export const componentPageData = {
   },
   "range-calendar": {
     usage: "range-calendar-demo.tsx",
-    description: "Displays a calendar for selecting a date range.",
     examples: [
       {
         title: "Unavailable dates",
@@ -1140,7 +1081,6 @@ export const componentPageData = {
   },
   reasoning: {
     usage: "reasoning-demo.tsx",
-    description: "Reveals an agent's thinking and how long it took.",
     examples: [
       {
         title: "Auto collapse",
@@ -1164,7 +1104,6 @@ export const componentPageData = {
   },
   response: {
     usage: "response-demo.tsx",
-    description: "Shows a streaming answer with its status and actions.",
     examples: [
       {
         title: "Actions",
@@ -1194,7 +1133,6 @@ export const componentPageData = {
   },
   "search-field": {
     usage: "search-field-basic-demo.tsx",
-    description: "Accepts a search query, with a button to clear it.",
     examples: [
       {
         title: "Disabled",
@@ -1217,7 +1155,6 @@ export const componentPageData = {
   },
   separator: {
     usage: "separator-demo.tsx",
-    description: "Separates sections of content with a line.",
     examples: [
       {
         title: "Vertical",
@@ -1229,7 +1166,6 @@ export const componentPageData = {
   },
   skeleton: {
     usage: "skeleton-basic-demo.tsx",
-    description: "Displays a placeholder while content loads.",
     examples: [
       {
         title: "Card",
@@ -1247,7 +1183,6 @@ export const componentPageData = {
   },
   slider: {
     usage: "slider-demo.tsx",
-    description: "Selects a value or range on a track.",
     examples: [
       {
         title: "Range",
@@ -1271,7 +1206,6 @@ export const componentPageData = {
   },
   spinner: {
     usage: "spinner-basic-demo.tsx",
-    description: "Displays an indeterminate loading indicator.",
     examples: [
       {
         title: "Variants",
@@ -1294,7 +1228,6 @@ export const componentPageData = {
   },
   stat: {
     usage: "stat-demo.tsx",
-    description: "Displays a labeled value with supporting details.",
     examples: [
       {
         title: "Trend",
@@ -1306,7 +1239,6 @@ export const componentPageData = {
   },
   stepper: {
     usage: "stepper-basic-demo.tsx",
-    description: "Shows the current and completed steps in a sequence.",
     examples: [
       {
         title: "Controlled step",
@@ -1318,7 +1250,6 @@ export const componentPageData = {
   },
   switch: {
     usage: "switch-basic-demo.tsx",
-    description: "Turns a setting on or off.",
     examples: [
       {
         title: "Description",
@@ -1342,8 +1273,6 @@ export const componentPageData = {
   },
   "data-table": {
     usage: "data-table-demo.tsx",
-    description:
-      "Displays rows with search, filters, sorting, selection, and pagination.",
     examples: [
       {
         title: "Column filters",
@@ -1355,7 +1284,6 @@ export const componentPageData = {
   },
   table: {
     usage: "table-basic-demo.tsx",
-    description: "Displays data in rows and columns.",
     examples: [
       {
         title: "Selectable projects",
@@ -1378,7 +1306,6 @@ export const componentPageData = {
   },
   tabs: {
     usage: "tabs-basic-demo.tsx",
-    description: "Displays one panel of related content at a time.",
     examples: [
       {
         title: "With icons",
@@ -1414,7 +1341,6 @@ export const componentPageData = {
   },
   "tag-group": {
     usage: "tag-group-demo.tsx",
-    description: "Displays a group of tags that users can remove or select.",
     examples: [
       {
         title: "Sizes",
@@ -1426,7 +1352,6 @@ export const componentPageData = {
   },
   "text-area": {
     usage: "text-area-basic-demo.tsx",
-    description: "Accepts multiple lines of text.",
     examples: [
       {
         title: "Description",
@@ -1461,7 +1386,6 @@ export const componentPageData = {
   },
   "text-field": {
     usage: "text-field-basic-demo.tsx",
-    description: "Accepts one line of text.",
     examples: [
       {
         title: "Description",
@@ -1496,7 +1420,6 @@ export const componentPageData = {
   },
   "text-reveal": {
     usage: "text-reveal-basic-demo.tsx",
-    description: "Reveals text one word or one character at a time.",
     examples: [
       {
         title: "Characters",
@@ -1514,7 +1437,6 @@ export const componentPageData = {
   },
   "text-scramble": {
     usage: "text-scramble-basic-demo.tsx",
-    description: "Scrambles the characters of text when it changes.",
     examples: [
       {
         title: "Glyphs",
@@ -1532,7 +1454,6 @@ export const componentPageData = {
   },
   presence: {
     usage: "presence-demo.tsx",
-    description: "Animates content when it is shown or hidden.",
     examples: [
       {
         title: "Inline status",
@@ -1544,7 +1465,6 @@ export const componentPageData = {
   },
   "source-link": {
     usage: "source-link-demo.tsx",
-    description: "Links an answer to its source.",
     examples: [
       {
         title: "Source list",
@@ -1556,7 +1476,6 @@ export const componentPageData = {
   },
   "stagger-group": {
     usage: "stagger-group-basic-demo.tsx",
-    description: "Animates a group of items into view one after another.",
     examples: [
       {
         title: "List",
@@ -1574,7 +1493,6 @@ export const componentPageData = {
   },
   "layout-morph": {
     usage: "layout-morph-demo.tsx",
-    description: "Animates the height of a container when its content changes.",
     examples: [
       {
         title: "Switching views",
@@ -1586,7 +1504,6 @@ export const componentPageData = {
   },
   marquee: {
     usage: "marquee-demo.tsx",
-    description: "Loops a strip of content with a pause control.",
     examples: [
       {
         title: "Reverse",
@@ -1604,7 +1521,6 @@ export const componentPageData = {
   },
   "text-swap": {
     usage: "text-swap-demo.tsx",
-    description: "Displays text that transitions when its value changes.",
     examples: [
       {
         title: "Button label",
@@ -1616,8 +1532,6 @@ export const componentPageData = {
   },
   "tool-call": {
     usage: "tool-call-demo.tsx",
-    description:
-      "Shows a tool call and its status. Expand it to see the input and output.",
     examples: [
       {
         title: "States",
@@ -1629,7 +1543,6 @@ export const componentPageData = {
   },
   "time-field": {
     usage: "time-field-demo.tsx",
-    description: "Accepts a time, with one segment for each part.",
     examples: [
       {
         title: "24-hour clock",
@@ -1658,12 +1571,10 @@ export const componentPageData = {
   },
   timeline: {
     usage: "timeline-demo.tsx",
-    description: "Displays events in a time-ordered sequence.",
     examples: [],
   },
   toast: {
     usage: "toast-demo.tsx",
-    description: "Displays a brief notification.",
     examples: [
       {
         title: "Variants",
@@ -1681,7 +1592,6 @@ export const componentPageData = {
   },
   "toggle-button": {
     usage: "toggle-button-demo.tsx",
-    description: "Turns an option on or off.",
     examples: [
       {
         title: "Independent toggles",
@@ -1699,7 +1609,6 @@ export const componentPageData = {
   },
   "toggle-button-group": {
     usage: "toggle-button-group-demo.tsx",
-    description: "Groups toggle buttons. Users select one option or more.",
     examples: [
       {
         title: "Multiple text styles",
@@ -1717,7 +1626,6 @@ export const componentPageData = {
   },
   "token-field": {
     usage: "token-field-basic-demo.tsx",
-    description: "Turns typed entries into tokens that you can edit.",
     examples: [
       {
         title: "Disabled",
@@ -1741,7 +1649,6 @@ export const componentPageData = {
   },
   toolbar: {
     usage: "toolbar-basic-demo.tsx",
-    description: "Groups related controls. Arrow keys move focus between them.",
     examples: [
       {
         title: "Formatting toolbar",
@@ -1765,8 +1672,6 @@ export const componentPageData = {
   },
   tooltip: {
     usage: "tooltip-demo.tsx",
-    description:
-      "Displays a short hint when its trigger is hovered or focused.",
     examples: [
       {
         title: "Placement and arrow",
@@ -1784,7 +1689,6 @@ export const componentPageData = {
   },
   tree: {
     usage: "tree-basic-demo.tsx",
-    description: "Displays nested items that users can expand and select.",
     examples: [
       {
         title: "Custom row content",
@@ -1794,7 +1698,20 @@ export const componentPageData = {
       },
     ],
   },
-} as const satisfies Record<string, ComponentPageData>;
+} as const satisfies Record<string, ComponentPageSource>;
+
+function withDescriptions<T extends Record<string, ComponentPageSource>>(
+  sources: T,
+) {
+  return Object.fromEntries(
+    Object.entries(sources).map(([slug, page]) => [
+      slug,
+      { ...page, description: componentDescription(slug) },
+    ]),
+  ) as { [Slug in keyof T]: T[Slug] & { description: string } };
+}
+
+export const componentPageData = withDescriptions(pageSources);
 
 export function getComponentPageData(
   slug: string,

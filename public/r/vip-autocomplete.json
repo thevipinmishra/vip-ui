@@ -3,7 +3,7 @@
   "name": "vip-autocomplete",
   "type": "registry:ui",
   "title": "Autocomplete",
-  "description": "Find suggestions as you type in a text field.",
+  "description": "Filters a menu or list from a search field as you type.",
   "dependencies": ["react-aria-components@^1.22.1"],
   "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
   "css": {

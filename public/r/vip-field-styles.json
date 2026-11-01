@@ -3,8 +3,9 @@
   "name": "vip-field-styles",
   "type": "registry:ui",
   "title": "Field Styles",
-  "description": "Shared theme-aware styling for text and segmented fields.",
+  "description": "Sets the theme styles of text and segmented fields.",
   "dependencies": [],
+  "registryDependencies": ["https://vip-ui.vercel.app/r/vip-size.json"],
   "cssVars": {
     "theme": {
       "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
@@ -17,12 +18,6 @@
     }
   },
   "files": [
-    {
-      "path": "src/components/ui/size.tsx",
-      "type": "registry:file",
-      "target": "@components/vip-ui/size.tsx",
-      "content": "\"use client\";\n\nimport { createContext, type ReactNode, useContext } from \"react\";\n\nexport type Size = \"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\";\n\nconst SizeContext = createContext<Size | undefined>(undefined);\n\nexport function useSize(size?: Size) {\n  const inherited = useContext(SizeContext);\n  return size ?? inherited;\n}\n\nexport function SizeProvider({\n  size,\n  children,\n}: {\n  size: Size | undefined;\n  children: ReactNode;\n}) {\n  return <SizeContext value={size}>{children}</SizeContext>;\n}\n"
-    },
     {
       "path": "src/components/ui/field-styles.tsx",
       "type": "registry:file",

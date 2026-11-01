@@ -29,7 +29,7 @@ export function GET() {
     lines.push(`## ${group.title}`, "", group.description, "");
     for (const component of group.components) {
       lines.push(
-        `- [${component.name}](${site}/components/${component.slug}.md): ${component.useFor}`,
+        `- [${component.name}](${site}/components/${component.slug}.md): ${component.description}`,
       );
     }
     lines.push("");

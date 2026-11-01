@@ -3,15 +3,10 @@
   "name": "vip-kbd-code",
   "type": "registry:ui",
   "title": "Kbd Code",
-  "description": "Display keyboard shortcuts and inline code.",
-  "dependencies": ["tailwind-variants@^3.3.1"],
+  "description": "Shows keyboard keys and inline code in text.",
+  "dependencies": [],
+  "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
   "files": [
-    {
-      "path": "src/lib/utils.ts",
-      "type": "registry:file",
-      "target": "@components/vip-ui/utils.ts",
-      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
-    },
     {
       "path": "src/components/ui/kbd-code.tsx",
       "type": "registry:file",

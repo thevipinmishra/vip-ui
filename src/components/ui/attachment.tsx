@@ -42,6 +42,8 @@ export function AttachmentList({
   );
 }
 
+export type AttachmentStatus = "ready" | "uploading" | "complete" | "error";
+
 export interface AttachmentProps
   extends Omit<
     ComponentProps<"li">,
@@ -54,9 +56,9 @@ export interface AttachmentProps
     | "onAnimationIteration"
   > {
   name: string;
-  size?: number;
+  fileSize?: number;
   previewUrl?: string;
-  status?: "ready" | "uploading" | "uploaded" | "error";
+  status?: AttachmentStatus;
   progress?: number;
   errorMessage?: string;
   onRemove?: () => void;
@@ -78,7 +80,7 @@ function formatSize(bytes: number) {
 
 export function Attachment({
   name,
-  size,
+  fileSize,
   previewUrl,
   status = "ready",
   progress,
@@ -106,7 +108,7 @@ export function Attachment({
   const statusText =
     status === "uploading"
       ? "Uploading"
-      : status === "uploaded"
+      : status === "complete"
         ? "Uploaded"
         : status === "error"
           ? (errorMessage ?? "Could not upload")
@@ -169,9 +171,9 @@ export function Attachment({
                 className="me-1 inline-block align-[-2px]"
               />
             )}
-            {size !== undefined && (
+            {fileSize !== undefined && (
               <>
-                <span>{formatSize(size)}</span>
+                <span>{formatSize(fileSize)}</span>
                 <span aria-hidden="true"> · </span>
               </>
             )}

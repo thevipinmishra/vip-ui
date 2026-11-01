@@ -38,8 +38,8 @@ export function ThemeToggle() {
       aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
       title={`Switch to ${isDark ? "light" : "dark"} theme`}
       className="grid size-10 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground outline-offset-4 outline-transparent transition-[color,background-color,outline-color,outline-offset] duration-150 ease-out-quint hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2"
-      whileHover={reduceMotion ? undefined : { scale: 1.06 }}
-      whileTap={reduceMotion ? undefined : { scale: 0.94 }}
+      whileHover={{ scale: reduceMotion ? 1 : 1.06 }}
+      whileTap={{ scale: reduceMotion ? 1 : 0.94 }}
       transition={{ type: "spring", stiffness: 500, damping: 36 }}
     >
       <span

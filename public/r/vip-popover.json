@@ -3,8 +3,12 @@
   "name": "vip-popover",
   "type": "registry:ui",
   "title": "Popover",
-  "description": "Show contextual content anchored to a trigger.",
-  "dependencies": ["react-aria-components@^1.22.1", "tailwind-variants@^3.3.1"],
+  "description": "Shows content in a panel anchored to its trigger.",
+  "dependencies": ["react-aria-components@^1.22.1"],
+  "registryDependencies": [
+    "https://vip-ui.vercel.app/r/vip-size.json",
+    "https://vip-ui.vercel.app/r/vip-utils.json"
+  ],
   "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
   "css": {
     "@plugin tailwindcss-react-aria-components": {}
@@ -21,18 +25,6 @@
     }
   },
   "files": [
-    {
-      "path": "src/lib/utils.ts",
-      "type": "registry:file",
-      "target": "@components/vip-ui/utils.ts",
-      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
-    },
-    {
-      "path": "src/components/ui/size.tsx",
-      "type": "registry:file",
-      "target": "@components/vip-ui/size.tsx",
-      "content": "\"use client\";\n\nimport { createContext, type ReactNode, useContext } from \"react\";\n\nexport type Size = \"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\";\n\nconst SizeContext = createContext<Size | undefined>(undefined);\n\nexport function useSize(size?: Size) {\n  const inherited = useContext(SizeContext);\n  return size ?? inherited;\n}\n\nexport function SizeProvider({\n  size,\n  children,\n}: {\n  size: Size | undefined;\n  children: ReactNode;\n}) {\n  return <SizeContext value={size}>{children}</SizeContext>;\n}\n"
-    },
     {
       "path": "src/components/ui/popover.tsx",
       "type": "registry:file",

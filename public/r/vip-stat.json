@@ -3,8 +3,9 @@
   "name": "vip-stat",
   "type": "registry:ui",
   "title": "Stat",
-  "description": "Display a labeled value and its context.",
-  "dependencies": ["tailwind-variants@^3.3.1"],
+  "description": "Shows a labeled metric with supporting details.",
+  "dependencies": [],
+  "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
   "cssVars": {
     "light": {
       "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
@@ -14,12 +15,6 @@
     }
   },
   "files": [
-    {
-      "path": "src/lib/utils.ts",
-      "type": "registry:file",
-      "target": "@components/vip-ui/utils.ts",
-      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
-    },
     {
       "path": "src/components/ui/stat.tsx",
       "type": "registry:file",

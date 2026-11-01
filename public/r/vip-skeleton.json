@@ -3,20 +3,18 @@
   "name": "vip-skeleton",
   "type": "registry:ui",
   "title": "Skeleton",
-  "description": "Reserve space while content is loading.",
-  "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
+  "description": "Shows a placeholder shape while content loads.",
+  "dependencies": ["motion@^13.5.1"],
+  "registryDependencies": [
+    "https://vip-ui.vercel.app/r/vip-motion.json",
+    "https://vip-ui.vercel.app/r/vip-utils.json"
+  ],
   "files": [
-    {
-      "path": "src/lib/utils.ts",
-      "type": "registry:file",
-      "target": "@components/vip-ui/utils.ts",
-      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
-    },
     {
       "path": "src/components/ui/skeleton.tsx",
       "type": "registry:file",
       "target": "@components/vip-ui/skeleton.tsx",
-      "content": "\"use client\";\n\nimport { motion, useReducedMotion } from \"motion/react\";\nimport type { ComponentProps } from \"react\";\nimport { cn } from \"./utils\";\n\nexport function Skeleton({\n  className,\n  children,\n  ...props\n}: ComponentProps<\"div\">) {\n  const reduceMotion = useReducedMotion();\n  return (\n    <div\n      {...props}\n      aria-hidden=\"true\"\n      data-slot=\"skeleton\"\n      className={cn(\n        \"relative isolate overflow-hidden rounded-md bg-muted forced-colors:bg-[GrayText]\",\n        className,\n      )}\n    >\n      {children}\n      {!reduceMotion && (\n        <motion.div\n          className=\"pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-card/60 to-transparent rtl:-scale-x-100 dark:via-foreground/[0.06]\"\n          initial={{ transform: \"translateX(-100%)\" }}\n          animate={{ transform: \"translateX(100%)\" }}\n          transition={{ duration: 1.6, ease: \"linear\", repeat: Infinity }}\n        />\n      )}\n    </div>\n  );\n}\n"
+      "content": "\"use client\";\n\nimport { motion, useReducedMotion } from \"motion/react\";\nimport type { ComponentProps } from \"react\";\nimport { loop } from \"./motion\";\nimport { cn } from \"./utils\";\n\nexport function Skeleton({\n  className,\n  children,\n  ...props\n}: ComponentProps<\"div\">) {\n  const reduceMotion = useReducedMotion();\n  return (\n    <div\n      {...props}\n      aria-hidden=\"true\"\n      data-slot=\"skeleton\"\n      className={cn(\n        \"relative isolate overflow-hidden rounded-md bg-muted forced-colors:bg-[GrayText]\",\n        className,\n      )}\n    >\n      {children}\n      {!reduceMotion && (\n        <motion.div\n          className=\"pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-card/60 to-transparent rtl:-scale-x-100 dark:via-foreground/[0.06]\"\n          initial={{ transform: \"translateX(-100%)\" }}\n          animate={{ transform: \"translateX(100%)\" }}\n          transition={{\n            duration: loop.sweep,\n            ease: \"linear\",\n            repeat: Infinity,\n          }}\n        />\n      )}\n    </div>\n  );\n}\n"
     }
   ]
 }

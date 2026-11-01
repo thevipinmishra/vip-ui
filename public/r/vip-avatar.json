@@ -3,15 +3,10 @@
   "name": "vip-avatar",
   "type": "registry:ui",
   "title": "Avatar",
-  "description": "Show a person with an image or initials.",
+  "description": "Shows an image or initials for a person.",
   "dependencies": ["@phosphor-icons/react@^2.1.10", "tailwind-variants@^3.3.1"],
+  "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
   "files": [
-    {
-      "path": "src/lib/utils.ts",
-      "type": "registry:file",
-      "target": "@components/vip-ui/utils.ts",
-      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
-    },
     {
       "path": "src/components/ui/avatar.tsx",
       "type": "registry:file",

@@ -1,0 +1,524 @@
+{
+  "groups": [
+    {
+      "title": "Actions",
+      "description": "Triggers, commands, and toggles.",
+      "items": [
+        {
+          "slug": "button",
+          "name": "Button",
+          "description": "Triggers an action with primary, secondary, or destructive emphasis."
+        },
+        {
+          "slug": "button-group",
+          "name": "Button group",
+          "description": "Joins related buttons, or a button and its menu, into one row or column."
+        },
+        {
+          "slug": "menu",
+          "name": "Menu",
+          "description": "Opens a list of actions from a trigger."
+        },
+        {
+          "slug": "context-menu",
+          "name": "Context menu",
+          "description": "Opens actions for an item on right-click, long press, or keyboard."
+        },
+        {
+          "slug": "toggle-button",
+          "name": "Toggle button",
+          "description": "Switches a button between selected and unselected states."
+        },
+        {
+          "slug": "toggle-button-group",
+          "name": "Toggle button group",
+          "description": "Groups toggle buttons for one or more choices."
+        },
+        {
+          "slug": "toolbar",
+          "name": "Toolbar",
+          "description": "Groups related controls in one tab stop, with arrow keys to move focus."
+        },
+        {
+          "slug": "file-trigger",
+          "name": "File trigger",
+          "description": "Opens the file picker from a button or other trigger."
+        },
+        {
+          "slug": "copy-button",
+          "name": "Copy button",
+          "description": "Copies a value to the clipboard and shows the result."
+        },
+        {
+          "slug": "command-palette",
+          "name": "Command palette",
+          "description": "Opens a search dialog to find and run commands."
+        }
+      ]
+    },
+    {
+      "title": "Forms",
+      "description": "Fields, choices, files, and validation.",
+      "items": [
+        {
+          "slug": "text-field",
+          "name": "Text field",
+          "description": "Accepts one line of text, with a label and validation."
+        },
+        {
+          "slug": "password-field",
+          "name": "Password field",
+          "description": "Accepts a password, with a button to show or hide it."
+        },
+        {
+          "slug": "password-strength-meter",
+          "name": "Password strength meter",
+          "description": "Rates a password by its length and character mix."
+        },
+        {
+          "slug": "inline-edit",
+          "name": "Inline edit",
+          "description": "Edits text in place and keeps the draft when the save fails."
+        },
+        {
+          "slug": "input-group",
+          "name": "Input group",
+          "description": "Joins an input with a prefix, suffix, or action."
+        },
+        {
+          "slug": "text-area",
+          "name": "Text area",
+          "description": "Accepts multiple lines of text."
+        },
+        {
+          "slug": "number-field",
+          "name": "Number field",
+          "description": "Accepts a number, with buttons to increase and decrease it."
+        },
+        {
+          "slug": "search-field",
+          "name": "Search field",
+          "description": "Accepts a search query, with a button to clear it."
+        },
+        {
+          "slug": "select",
+          "name": "Select",
+          "description": "Selects one option from a list in a popover."
+        },
+        {
+          "slug": "native-select",
+          "name": "Native select",
+          "description": "Selects one option with the native HTML select element."
+        },
+        {
+          "slug": "combo-box",
+          "name": "Combo box",
+          "description": "Selects one or more options from a list that filters as you type."
+        },
+        {
+          "slug": "autocomplete",
+          "name": "Autocomplete",
+          "description": "Filters a menu or list from a search field as you type."
+        },
+        {
+          "slug": "token-field",
+          "name": "Token field",
+          "description": "Turns typed entries into tokens that you can edit and remove."
+        },
+        {
+          "slug": "checkbox",
+          "name": "Checkbox",
+          "description": "Selects or clears one independent option."
+        },
+        {
+          "slug": "checkbox-group",
+          "name": "Checkbox group",
+          "description": "Groups checkboxes to select one or more options."
+        },
+        {
+          "slug": "radio-group",
+          "name": "Radio group",
+          "description": "Selects one option from a short visible list."
+        },
+        {
+          "slug": "rating-input",
+          "name": "Rating input",
+          "description": "Sets a star rating with radio controls."
+        },
+        {
+          "slug": "switch",
+          "name": "Switch",
+          "description": "Turns a setting on or off immediately."
+        },
+        {
+          "slug": "slider",
+          "name": "Slider",
+          "description": "Selects a value or range on a track between a minimum and maximum."
+        },
+        {
+          "slug": "drop-zone",
+          "name": "Drop zone",
+          "description": "Accepts files that you drag and drop onto it."
+        },
+        {
+          "slug": "attachment",
+          "name": "Attachment",
+          "description": "Shows the name, size, preview, and upload state of a file."
+        },
+        {
+          "slug": "form",
+          "name": "Form",
+          "description": "Groups fields and handles validation and submission."
+        },
+        {
+          "slug": "fieldset",
+          "name": "Fieldset",
+          "description": "Groups related native form controls under a legend."
+        }
+      ]
+    },
+    {
+      "title": "Date & color",
+      "description": "Structured dates, times, and colors.",
+      "items": [
+        {
+          "slug": "date-field",
+          "name": "Date field",
+          "description": "Accepts a date, with one editable segment for each part."
+        },
+        {
+          "slug": "time-field",
+          "name": "Time field",
+          "description": "Accepts a time, with one editable segment for each part."
+        },
+        {
+          "slug": "calendar",
+          "name": "Calendar",
+          "description": "Shows a month grid to select one date."
+        },
+        {
+          "slug": "range-calendar",
+          "name": "Range calendar",
+          "description": "Shows a month grid to select a start and end date."
+        },
+        {
+          "slug": "date-picker",
+          "name": "Date picker",
+          "description": "Accepts a date that you type or select from a calendar popover."
+        },
+        {
+          "slug": "date-range-picker",
+          "name": "Date range picker",
+          "description": "Accepts a date range that you type or select from a calendar popover."
+        },
+        {
+          "slug": "color-field",
+          "name": "Color field",
+          "description": "Accepts a hex color, or one color channel as a number."
+        },
+        {
+          "slug": "color-swatch",
+          "name": "Color swatch",
+          "description": "Shows a sample of a color."
+        },
+        {
+          "slug": "color-swatch-picker",
+          "name": "Color swatch picker",
+          "description": "Selects a color from a set of swatches."
+        },
+        {
+          "slug": "color-picker",
+          "name": "Color picker",
+          "description": "Selects a color with a color area, hue slider, and hex field in a popover."
+        }
+      ]
+    },
+    {
+      "title": "Overlays",
+      "description": "Panels and messages above the page.",
+      "items": [
+        {
+          "slug": "dialog",
+          "name": "Dialog",
+          "description": "Shows a focused task in a modal above the page."
+        },
+        {
+          "slug": "sheet",
+          "name": "Sheet",
+          "description": "Shows a swipeable panel that slides in from the edge of the screen."
+        },
+        {
+          "slug": "popover",
+          "name": "Popover",
+          "description": "Shows content in a panel anchored to its trigger."
+        },
+        {
+          "slug": "tooltip",
+          "name": "Tooltip",
+          "description": "Shows a short hint when you hover over or focus its trigger."
+        },
+        {
+          "slug": "toast",
+          "name": "Toast",
+          "description": "Shows a brief notification after an action."
+        }
+      ]
+    },
+    {
+      "title": "Navigation",
+      "description": "Links between pages and views.",
+      "items": [
+        {
+          "slug": "link",
+          "name": "Link",
+          "description": "Shows a link to another page or location."
+        },
+        {
+          "slug": "tabs",
+          "name": "Tabs",
+          "description": "Shows one panel of related content at a time."
+        },
+        {
+          "slug": "breadcrumbs",
+          "name": "Breadcrumbs",
+          "description": "Shows the path of links to the current page."
+        },
+        {
+          "slug": "pagination",
+          "name": "Pagination",
+          "description": "Shows links between pages of results."
+        }
+      ]
+    },
+    {
+      "title": "Collections",
+      "description": "Lists, trees, and tables of items.",
+      "items": [
+        {
+          "slug": "list-box",
+          "name": "List box",
+          "description": "Selects options from a list that stays visible."
+        },
+        {
+          "slug": "grid-list",
+          "name": "Grid list",
+          "description": "Shows a list of interactive rows that you can select and act on."
+        },
+        {
+          "slug": "tree",
+          "name": "Tree",
+          "description": "Shows nested items that you can expand, collapse, and select."
+        },
+        {
+          "slug": "tag-group",
+          "name": "Tag group",
+          "description": "Shows a group of tags that you can select or remove."
+        },
+        {
+          "slug": "table",
+          "name": "Table",
+          "description": "Shows data in rows and columns, with sortable headers."
+        },
+        {
+          "slug": "data-table",
+          "name": "Data table",
+          "description": "Shows rows with search, filters, sorting, selection, and pagination."
+        }
+      ]
+    },
+    {
+      "title": "Feedback",
+      "description": "Status, progress, and loading states.",
+      "items": [
+        {
+          "slug": "alert",
+          "name": "Alert",
+          "description": "Shows an inline message about a status or event."
+        },
+        {
+          "slug": "badge",
+          "name": "Badge",
+          "description": "Shows a short label, status, or count."
+        },
+        {
+          "slug": "progress-bar",
+          "name": "Progress bar",
+          "description": "Shows the progress of a task in a horizontal bar."
+        },
+        {
+          "slug": "progress-ring",
+          "name": "Progress ring",
+          "description": "Shows the progress of a task in a circular indicator."
+        },
+        {
+          "slug": "meter",
+          "name": "Meter",
+          "description": "Shows a measured value within a known range."
+        },
+        {
+          "slug": "stepper",
+          "name": "Stepper",
+          "description": "Shows the current and completed steps in a sequence."
+        },
+        {
+          "slug": "spinner",
+          "name": "Spinner",
+          "description": "Shows a loading indicator for a task with no known end time."
+        },
+        {
+          "slug": "skeleton",
+          "name": "Skeleton",
+          "description": "Shows a placeholder shape while content loads."
+        },
+        {
+          "slug": "empty-state",
+          "name": "Empty state",
+          "description": "Shows why a view is empty and what to do next."
+        }
+      ]
+    },
+    {
+      "title": "Display & layout",
+      "description": "Containers, sections, and values.",
+      "items": [
+        {
+          "slug": "card",
+          "name": "Card",
+          "description": "Groups related content and actions in one container."
+        },
+        {
+          "slug": "accordion",
+          "name": "Accordion",
+          "description": "Shows a set of sections that expand and collapse."
+        },
+        {
+          "slug": "disclosure",
+          "name": "Disclosure",
+          "description": "Shows or hides one section of content."
+        },
+        {
+          "slug": "separator",
+          "name": "Separator",
+          "description": "Shows a line between sections of content."
+        },
+        {
+          "slug": "avatar",
+          "name": "Avatar",
+          "description": "Shows an image or initials for a person."
+        },
+        {
+          "slug": "description-list",
+          "name": "Description list",
+          "description": "Shows pairs of terms and details."
+        },
+        {
+          "slug": "stat",
+          "name": "Stat",
+          "description": "Shows a labeled metric with supporting details."
+        },
+        {
+          "slug": "timeline",
+          "name": "Timeline",
+          "description": "Shows events in a time-ordered sequence."
+        },
+        {
+          "slug": "kbd-code",
+          "name": "Kbd & code",
+          "description": "Shows keyboard keys and inline code in text."
+        }
+      ]
+    },
+    {
+      "title": "AI",
+      "description": "Messages, agent steps, and sources.",
+      "items": [
+        {
+          "slug": "message",
+          "name": "Message",
+          "description": "Shows a message in a conversation."
+        },
+        {
+          "slug": "agent-status",
+          "name": "Agent status",
+          "description": "Shows the current step of an agent and its state."
+        },
+        {
+          "slug": "tool-call",
+          "name": "Tool call",
+          "description": "Shows a tool call and its status, and expands to show the input and output."
+        },
+        {
+          "slug": "source-link",
+          "name": "Source link",
+          "description": "Links an answer to its source."
+        },
+        {
+          "slug": "prompt-input",
+          "name": "Prompt input",
+          "description": "Accepts a prompt to send, with files and actions."
+        },
+        {
+          "slug": "reasoning",
+          "name": "Reasoning",
+          "description": "Reveals the thinking of an agent and how long it took."
+        },
+        {
+          "slug": "response",
+          "name": "Response",
+          "description": "Shows a streaming answer with its status and actions."
+        }
+      ]
+    },
+    {
+      "title": "Motion & effects",
+      "description": "Text and content transitions.",
+      "items": [
+        {
+          "slug": "text-swap",
+          "name": "Text swap",
+          "description": "Animates text when its value changes."
+        },
+        {
+          "slug": "animated-number",
+          "name": "Animated number",
+          "description": "Animates a number when its value changes."
+        },
+        {
+          "slug": "text-reveal",
+          "name": "Text reveal",
+          "description": "Reveals text one word or one character at a time."
+        },
+        {
+          "slug": "text-scramble",
+          "name": "Text scramble",
+          "description": "Resolves text from scrambled characters when its value changes."
+        },
+        {
+          "slug": "presence",
+          "name": "Presence",
+          "description": "Animates content when it is shown or hidden."
+        },
+        {
+          "slug": "presence-list",
+          "name": "Presence list",
+          "description": "Animates list items when you add, remove, or move them."
+        },
+        {
+          "slug": "stagger-group",
+          "name": "Stagger group",
+          "description": "Animates a group of items into view one after another."
+        },
+        {
+          "slug": "layout-morph",
+          "name": "Layout morph",
+          "description": "Animates the height of a container when its content changes."
+        },
+        {
+          "slug": "marquee",
+          "name": "Marquee",
+          "description": "Loops a strip of content, with a control to pause it."
+        }
+      ]
+    }
+  ]
+}

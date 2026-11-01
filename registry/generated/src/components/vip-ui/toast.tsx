@@ -20,7 +20,7 @@ import {
   UNSTABLE_ToastQueue as ToastQueue,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { easeOut } from "./motion";
+import { duration, easeOut } from "./motion";
 import { cn } from "./utils";
 
 const MotionToast = motion.create(AriaToast);
@@ -195,7 +195,7 @@ export function Toast({ className, children, ...props }: ToastSurfaceProps) {
           : { opacity: 1, y: 0 }
       }
       transition={{
-        duration: reduceMotion ? 0 : isClosing ? 0.18 : 0.24,
+        duration: reduceMotion ? 0 : isClosing ? duration.base : duration.slow,
         ease: easeOut,
       }}
       onAnimationComplete={() => {

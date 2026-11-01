@@ -419,7 +419,11 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           required: true,
           description: "Filename shown in the row.",
         },
-        { name: "size", type: "number", description: "File size in bytes." },
+        {
+          name: "fileSize",
+          type: "number",
+          description: "File size in bytes.",
+        },
         {
           name: "previewUrl",
           type: "string",
@@ -428,7 +432,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         },
         {
           name: "status",
-          type: '"ready" | "uploading" | "uploaded" | "error"',
+          type: '"ready" | "uploading" | "complete" | "error"',
           default: '"ready"',
           description: "Upload state. Your app sets it.",
         },
@@ -967,7 +971,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           name: "children",
           type: "ReactNode | (status: CopyButtonStatus) => ReactNode",
           description:
-            'The button content. Without it, the button shows an icon and status text. Pass a function to show content for each status. CopyButtonStatus is "idle", "copied", or "failed".',
+            'The button content. Without it, the button shows an icon and status text. Pass a function to show content for each status. CopyButtonStatus is "idle", "copied", or "error".',
         },
         {
           name: "aria-label",

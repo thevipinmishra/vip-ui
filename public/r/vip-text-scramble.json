@@ -3,15 +3,10 @@
   "name": "vip-text-scramble",
   "type": "registry:ui",
   "title": "Text Scramble",
-  "description": "Scramble the characters of text when it changes.",
-  "dependencies": ["motion@^13.5.1", "tailwind-variants@^3.3.1"],
+  "description": "Resolves text from scrambled characters when its value changes.",
+  "dependencies": ["motion@^13.5.1"],
+  "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
   "files": [
-    {
-      "path": "src/lib/utils.ts",
-      "type": "registry:file",
-      "target": "@components/vip-ui/utils.ts",
-      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
-    },
     {
       "path": "src/components/ui/text-scramble.tsx",
       "type": "registry:file",

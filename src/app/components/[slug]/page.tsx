@@ -195,6 +195,7 @@ import { ToolbarSizesDemo } from "@/components/docs/toolbar-sizes-demo";
 import { ToolbarVerticalDemo } from "@/components/docs/toolbar-vertical-demo";
 import { TreeBasicDemo } from "@/components/docs/tree-basic-demo";
 import { TreeDemo } from "@/components/docs/tree-demo";
+import { componentDescription } from "@/lib/catalog";
 import { getComponentPageData } from "@/lib/component-examples";
 
 const entries: {
@@ -796,7 +797,7 @@ export async function generateMetadata({
   return entry
     ? {
         title: `${entry.name} | vip/ui`,
-        description: getComponentPageData(slug)?.description ?? entry.name,
+        description: componentDescription(slug),
       }
     : {};
 }
@@ -812,7 +813,7 @@ export default async function NewComponentPage({
   return (
     <ComponentPage
       name={entry.name}
-      description={pageData?.description ?? entry.name}
+      description={componentDescription(slug)}
       preview={basic?.demo ?? entry.demo}
       previewSourcePath={`src/components/docs/${basic?.source ?? `${slug}-demo.tsx`}`}
       examples={withExamplePreviews(
