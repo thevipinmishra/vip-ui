@@ -53,20 +53,22 @@ const radii = [
   { name: "2xl", factor: 1.8 },
 ];
 
-function Section({
+export function Section({
   title,
   description,
   children,
 }: {
   title: string;
-  description: string;
+  description: ReactNode;
   children: ReactNode;
 }) {
   return (
     <section className="grid gap-5 border-t border-border/70 pt-8 first:border-t-0 first:pt-0 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-10">
       <div className="grid content-start gap-1.5">
         <h3 className="text-base font-semibold tracking-[-0.02em]">{title}</h3>
-        <p className="text-sm leading-6 text-muted-foreground">{description}</p>
+        <div className="text-sm leading-6 text-muted-foreground">
+          {description}
+        </div>
       </div>
       <div className="min-w-0">{children}</div>
     </section>

@@ -46,6 +46,7 @@ Open <http://localhost:3000/components>. `pnpm dev` runs `pnpm registry:build` f
 | `src/lib/utils.ts` | The `cn` helper. |
 | `src/app/globals.css` | Site theme and Tailwind settings. |
 | `scripts/generate-registry.mjs` | Registry generator. |
+| `scripts/generate-palettes.mjs` | Color scale generator. It writes `src/app/themes/palette-data.ts`. |
 | `public/r/`, `registry.json`, `registry/generated/` | Generated registry files. |
 
 ## Generated files
@@ -57,6 +58,8 @@ Open <http://localhost:3000/components>. `pnpm dev` runs `pnpm registry:build` f
 - `registry/generated/`
 
 Do not edit these files by hand. Change the source, then run `pnpm registry:build`. Commit the generated files in the same pull request as the source change.
+
+To change a color scale, edit its hue or chroma in `scripts/generate-palettes.mjs`, then run `pnpm palette:build`. The build checks the contrast and the sRGB gamut of each step. If a step fails a check, the build stops and does not write the file.
 
 On Windows, `pnpm registry:build` can fail to write to `public/r` while `pnpm dev` runs. If this occurs, stop the dev server, run the build, then start the server again.
 
