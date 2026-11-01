@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "motion/react";
 import type { ComponentProps } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-import { easeInOut, transitionFor } from "@/lib/motion";
+import { easeInOut, loop, transitionFor } from "@/lib/motion";
 
 const spinnerStyles = tv({
   base: "relative inline-flex shrink-0 items-center justify-center align-middle text-current",
@@ -58,7 +58,7 @@ export function Spinner({
               : ["rotate(0deg)", "rotate(360deg)"],
           }}
           transition={transitionFor(reducedMotion, {
-            duration: 0.8,
+            duration: loop.spin,
             ease: "linear",
             repeat: Infinity,
           })}
@@ -105,7 +105,7 @@ export function Spinner({
                     }
               }
               transition={transitionFor(reducedMotion, {
-                duration: 1.05,
+                duration: loop.pulse,
                 delay: -index * 0.16,
                 repeat: Infinity,
                 ease: easeInOut,
@@ -138,8 +138,8 @@ export function Spinner({
                   : { opacity: [0.2, 1, 0.2] }
               }
               transition={transitionFor(reducedMotion, {
-                duration: 0.96,
-                delay: -index * 0.12,
+                duration: loop.pulse,
+                delay: (-index * loop.pulse) / ticks.length,
                 repeat: Infinity,
                 ease: easeInOut,
               })}

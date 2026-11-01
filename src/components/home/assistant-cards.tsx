@@ -264,7 +264,7 @@ type Upload = {
   id: string;
   name: string;
   size: number;
-  status: "uploading" | "uploaded" | "error";
+  status: "uploading" | "complete" | "error";
   progress: number;
   error?: string;
   canRetry?: boolean;
@@ -278,7 +278,7 @@ const initialUploads: Upload[] = [
     id: "guide",
     name: "brand-guide.pdf",
     size: 2_516_582,
-    status: "uploaded",
+    status: "complete",
     progress: 100,
   },
   {
@@ -316,7 +316,7 @@ export function UploadCard() {
           return {
             ...upload,
             progress,
-            status: progress === 100 ? "uploaded" : "uploading",
+            status: progress === 100 ? "complete" : "uploading",
           };
         }),
       );
@@ -391,7 +391,7 @@ export function UploadCard() {
             <Attachment
               key={upload.id}
               name={upload.name}
-              size={upload.size}
+              fileSize={upload.size}
               status={upload.status}
               progress={upload.progress}
               errorMessage={upload.error}

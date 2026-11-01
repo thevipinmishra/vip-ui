@@ -12,6 +12,7 @@ import {
   ScalesIcon,
   SquaresFourIcon,
   TerminalWindowIcon,
+  WaveSineIcon,
 } from "@phosphor-icons/react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -25,12 +26,13 @@ import { Kbd, KbdGroup } from "@/components/ui/kbd-code";
 import { catalogComponents } from "@/lib/catalog";
 import { docsGuides, type Guide } from "@/lib/navigation";
 
-const shortcutTakenByDemo = new Set(["/components/command-palette", "/themes"]);
+const shortcutTakenByDemo = new Set(["/components/command-palette"]);
 
 const guideIcons: Record<Guide["href"], Icon> = {
   "/components/installation": TerminalWindowIcon,
   "/components/styling": PaintBrushIcon,
   "/components/react-aria": AtomIcon,
+  "/components/motion": WaveSineIcon,
 };
 
 const pages = [
@@ -58,6 +60,25 @@ export function DocsSearch() {
     setModifier(/Mac|iPhone|iPad/.test(navigator.userAgent) ? "⌘" : "Ctrl");
   }, []);
 
+  useEffect(() => {
+    if (!shortcut) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (
+        event.key.toLowerCase() !== "k" ||
+        !(event.metaKey || event.ctrlKey) ||
+        event.altKey ||
+        event.shiftKey ||
+        event.repeat
+      )
+        return;
+      if (!open && document.querySelector("[role='dialog']")) return;
+      event.preventDefault();
+      setOpen(!open);
+    };
+    window.addEventListener("keydown", onKeyDown, true);
+    return () => window.removeEventListener("keydown", onKeyDown, true);
+  }, [open, shortcut]);
+
   return (
     <>
       <Button
@@ -78,7 +99,7 @@ export function DocsSearch() {
       <CommandPalette
         isOpen={open}
         onOpenChange={setOpen}
-        shortcut={shortcut}
+        shortcut={false}
         title="Search components and pages"
         placeholder="Search components and pages"
         emptyMessage="No components or pages match."
@@ -103,7 +124,7 @@ export function DocsSearch() {
           {catalogComponents.map((component) => (
             <CommandPaletteItem
               key={component.slug}
-              textValue={`${component.name} ${component.group} ${component.useFor}`}
+              textValue={`${component.name} ${component.group} ${component.description}`}
               onAction={() => router.push(`/components/${component.slug}`)}
             >
               <span className="min-w-0 flex-1 truncate">{component.name}</span>

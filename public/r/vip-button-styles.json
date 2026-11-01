@@ -3,7 +3,7 @@
   "name": "vip-button-styles",
   "type": "registry:ui",
   "title": "Button Styles",
-  "description": "Shared variants and sizes used by vip/ui buttons and links.",
+  "description": "Sets the variants and sizes of buttons and button links.",
   "dependencies": ["tailwind-variants@^3.3.1"],
   "cssVars": {
     "theme": {

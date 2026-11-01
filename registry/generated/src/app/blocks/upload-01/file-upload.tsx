@@ -24,7 +24,7 @@ interface Upload {
   name: string;
   size: number;
   progress: number;
-  status: "uploading" | "uploaded" | "error";
+  status: "uploading" | "complete" | "error";
 }
 
 const initialUploads: Upload[] = [
@@ -33,7 +33,7 @@ const initialUploads: Upload[] = [
     name: "Launch brief.pdf",
     size: 2_400_000,
     progress: 100,
-    status: "uploaded",
+    status: "complete",
   },
   {
     id: "cover",
@@ -60,7 +60,7 @@ export function FileUpload() {
           return {
             ...upload,
             progress,
-            status: progress === 100 ? "uploaded" : "uploading",
+            status: progress === 100 ? "complete" : "uploading",
           };
         }),
       );
@@ -96,7 +96,7 @@ export function FileUpload() {
     setNotice(`${upload.name} removed.`);
   }
 
-  const done = uploads.filter((upload) => upload.status === "uploaded").length;
+  const done = uploads.filter((upload) => upload.status === "complete").length;
 
   return (
     <Card>
@@ -148,7 +148,7 @@ export function FileUpload() {
             <Attachment
               key={upload.id}
               name={upload.name}
-              size={upload.size}
+              fileSize={upload.size}
               status={upload.status}
               progress={upload.progress}
               onRemove={() => remove(upload)}

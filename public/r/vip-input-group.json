@@ -3,16 +3,18 @@
   "name": "vip-input-group",
   "type": "registry:ui",
   "title": "Input Group",
-  "description": "Combine an input with a prefix, suffix, or action.",
-  "dependencies": ["react-aria-components@^1.22.1", "tailwind-variants@^3.3.1"],
+  "description": "Joins an input with a prefix, suffix, or action.",
+  "dependencies": ["react-aria-components@^1.22.1"],
+  "registryDependencies": [
+    "https://vip-ui.vercel.app/r/vip-field-styles.json",
+    "https://vip-ui.vercel.app/r/vip-size.json",
+    "https://vip-ui.vercel.app/r/vip-utils.json"
+  ],
   "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
   "css": {
     "@plugin tailwindcss-react-aria-components": {}
   },
   "cssVars": {
-    "theme": {
-      "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
-    },
     "light": {
       "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
     },
@@ -21,24 +23,6 @@
     }
   },
   "files": [
-    {
-      "path": "src/lib/utils.ts",
-      "type": "registry:file",
-      "target": "@components/vip-ui/utils.ts",
-      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
-    },
-    {
-      "path": "src/components/ui/size.tsx",
-      "type": "registry:file",
-      "target": "@components/vip-ui/size.tsx",
-      "content": "\"use client\";\n\nimport { createContext, type ReactNode, useContext } from \"react\";\n\nexport type Size = \"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\";\n\nconst SizeContext = createContext<Size | undefined>(undefined);\n\nexport function useSize(size?: Size) {\n  const inherited = useContext(SizeContext);\n  return size ?? inherited;\n}\n\nexport function SizeProvider({\n  size,\n  children,\n}: {\n  size: Size | undefined;\n  children: ReactNode;\n}) {\n  return <SizeContext value={size}>{children}</SizeContext>;\n}\n"
-    },
-    {
-      "path": "src/components/ui/field-styles.tsx",
-      "type": "registry:file",
-      "target": "@components/vip-ui/field-styles.tsx",
-      "content": "import type { Size } from \"./size\";\n\nexport const fieldSizeStyles = {\n  xs: \"[--field-h:1.75rem] [--field-px:0.5rem] [--field-radius:var(--radius-sm)] [--field-text:0.75rem] [--field-icon:0.875rem]\",\n  sm: \"[--field-h:2.25rem] [--field-px:0.75rem] [--field-radius:var(--radius-md)] [--field-text:0.875rem] [--field-icon:1rem]\",\n  md: \"[--field-h:2.75rem] [--field-px:0.875rem] [--field-radius:var(--radius-lg)] [--field-text:0.875rem] [--field-icon:1rem]\",\n  lg: \"[--field-h:3rem] [--field-px:0.875rem] [--field-radius:var(--radius-lg)] [--field-text:0.875rem] [--field-icon:1rem]\",\n  xl: \"[--field-h:3.5rem] [--field-px:1rem] [--field-radius:var(--radius-xl)] [--field-text:1rem] [--field-icon:1.25rem]\",\n} satisfies Record<Size, string>;\n\nexport const fieldHeight = \"min-h-[var(--field-h,3rem)]\";\nexport const fieldInnerHeight = \"min-h-[calc(var(--field-h,3rem)-0.25rem)]\";\nexport const fieldPaddingX = \"px-[var(--field-px,0.875rem)]\";\nexport const fieldRadius = \"rounded-[var(--field-radius,var(--radius-lg))]\";\nexport const fieldText =\n  \"text-base sm:text-[length:var(--field-text,0.875rem)] sm:[line-height:var(--tw-leading,1.25rem)]\";\nexport const fieldIcon =\n  \"[&_svg:not([class*='size-'])]:size-[var(--field-icon,1rem)]\";\n\nexport const fieldLabelStyles =\n  \"text-sm font-medium text-foreground [overflow-wrap:anywhere]\";\nexport const fieldDescriptionStyles =\n  \"text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]\";\nexport const fieldErrorStyles =\n  \"text-xs leading-5 text-destructive [overflow-wrap:anywhere] transition-[opacity,translate] duration-200 ease-out-quint starting:opacity-0 motion-safe:starting:-translate-y-1\";\n\nexport const fieldInputStyles = `${fieldHeight} ${fieldRadius} ${fieldText} w-full cursor-text border border-input bg-card text-foreground shadow-[var(--shadow-card)] outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-out-quint placeholder:text-muted-foreground/80 hover:border-primary/45 focus:border-ring focus:ring-1 focus:ring-ring invalid:border-destructive invalid:hover:border-destructive invalid:focus:border-destructive invalid:focus:ring-destructive [&[readonly]]:bg-muted/40 [&[readonly]]:hover:border-input disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 disabled:hover:border-input`;\n\nexport const segmentedFieldStyles = `${fieldHeight} ${fieldRadius} flex min-w-0 items-center border border-input bg-card shadow-[var(--shadow-card)] transition-[color,background-color,border-color,box-shadow] duration-150 ease-out-quint hover:border-primary/45 focus-within:border-ring focus-within:hover:border-ring focus-within:ring-1 focus-within:ring-ring group-invalid:border-destructive group-invalid:hover:border-destructive group-invalid:focus-within:border-destructive group-invalid:focus-within:hover:border-destructive group-invalid:focus-within:ring-destructive group-data-[readonly]:bg-muted/40 group-data-[readonly]:hover:border-input group-disabled:bg-muted group-disabled:opacity-60 group-disabled:hover:border-input`;\n\nexport const fieldTriggerStyles = `${fieldIcon} group/trigger grid size-[calc(var(--field-h,3rem)-0.25rem)] shrink-0 cursor-pointer place-items-center rounded-[calc(var(--field-radius,var(--radius-lg))-0.125rem)] text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-out-quint hover:bg-muted hover:text-foreground pressed:bg-muted pressed:text-foreground focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring disabled:cursor-default disabled:opacity-50`;\n\nexport const fieldChevronStyles =\n  \"grid place-items-center transition-transform duration-250 ease-out-quint group-aria-expanded/trigger:rotate-180 motion-reduce:transition-none\";\n"
-    },
     {
       "path": "src/components/ui/input-group.tsx",
       "type": "registry:file",

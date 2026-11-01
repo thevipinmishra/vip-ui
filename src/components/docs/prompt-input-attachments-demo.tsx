@@ -16,12 +16,12 @@ interface Item {
   id: number;
   name: string;
   size: number;
-  status: "uploading" | "uploaded";
+  status: "uploading" | "complete";
 }
 
 export function PromptInputAttachmentsDemo() {
   const [items, setItems] = useState<Item[]>([
-    { id: 1, name: "Release-checklist.pdf", size: 284672, status: "uploaded" },
+    { id: 1, name: "Release-checklist.pdf", size: 284672, status: "complete" },
   ]);
 
   const addFiles = (files: File[]) => {
@@ -36,7 +36,7 @@ export function PromptInputAttachmentsDemo() {
       window.setTimeout(() => {
         setItems((current) =>
           current.map((row) =>
-            row.id === item.id ? { ...row, status: "uploaded" as const } : row,
+            row.id === item.id ? { ...row, status: "complete" as const } : row,
           ),
         );
       }, 900);
@@ -60,7 +60,7 @@ export function PromptInputAttachmentsDemo() {
               <Attachment
                 key={item.id}
                 name={item.name}
-                size={item.size}
+                fileSize={item.size}
                 status={item.status}
                 onRemove={() =>
                   setItems((current) =>

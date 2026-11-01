@@ -3,7 +3,7 @@
   "name": "vip-size",
   "type": "registry:ui",
   "title": "Size",
-  "description": "Share one size scale across buttons, toggles, and their groups.",
+  "description": "Sets one size scale for buttons, toggles, and their groups.",
   "dependencies": [],
   "files": [
     {
