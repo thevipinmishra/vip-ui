@@ -21,8 +21,8 @@ export function ResponseSourcesDemo() {
       </Reasoning>
       <Response status="complete" className="w-full">
         <ResponseContent>
-          The composer grows to maxRows before it scrolls, and the registry
-          ships Button, the field styles, and Attachment with it.
+          The composer grows to maxRows, then scrolls. Install Attachment
+          separately to show the files in the composer.
         </ResponseContent>
         <ResponseFooter>
           <SourceLink

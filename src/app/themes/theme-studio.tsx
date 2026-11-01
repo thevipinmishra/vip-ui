@@ -1,63 +1,38 @@
 "use client";
 
-import { ArrowDownIcon, MoonIcon, SunIcon } from "@phosphor-icons/react";
-import {
-  type ReactNode,
-  useEffect,
-  useRef,
-  useState,
-  useSyncExternalStore,
-} from "react";
+import { ArrowDownIcon } from "@phosphor-icons/react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import {
   Radio as AriaRadio,
   RadioGroup as AriaRadioGroup,
 } from "react-aria-components";
 import { flushSync } from "react-dom";
 import { CopyButton } from "@/components/docs/copy-button";
+import { ModeSwitch } from "@/components/docs/mode-switch";
 import {
   PageActions,
   PageHeader,
   PageHeaderDescription,
+  PageHeaderHeading,
 } from "@/components/docs/page-header";
 import { buttonLinkStyles } from "@/components/ui/button-styles";
 import { withItemHighlight } from "@/components/ui/item-highlight";
 import { Tab, TabList, TabPanel, Tabs } from "@/components/ui/tabs";
-import { ToggleButton } from "@/components/ui/toggle-button";
-import { ToggleButtonGroup } from "@/components/ui/toggle-button-group";
 import { easeInOut } from "@/lib/motion";
-import { updateSiteTheme } from "@/lib/update-site-theme";
-import { cn } from "@/lib/utils";
 import {
-  findTheme,
-  type OfficialTheme,
-  officialThemes,
-  themeCss,
-} from "./official-themes";
+  applySiteMode,
+  currentSiteMode,
+  type SiteMode,
+  useSiteMode,
+} from "@/lib/site-mode";
+import { updateSiteTheme } from "@/lib/update-site-theme";
 import { ThemeTokens } from "./theme-tokens";
+import { findTheme, type Theme, themeCss, themes } from "./themes";
 
-type Mode = "light" | "dark";
 type Point = { x: number; y: number };
-
-const modeStorageKey = "vip-ui-theme";
-
-const display =
-  "font-[family-name:var(--theme-display-family)] [font-weight:var(--theme-display-weight)] tracking-[var(--theme-display-tracking)]";
 
 const panelClass =
   "docs-tab-panel mt-8 min-w-0 rounded-none bg-transparent p-0 shadow-none ring-0";
-
-function subscribeToMode(onChange: () => void) {
-  const observer = new MutationObserver(onChange);
-  observer.observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ["class"],
-  });
-  return () => observer.disconnect();
-}
-
-function currentMode(): Mode {
-  return document.documentElement.classList.contains("dark") ? "dark" : "light";
-}
 
 function reveal(origin: Point | null, update: () => void) {
   const root = document.documentElement;
@@ -121,7 +96,7 @@ function useOrigin() {
   };
 }
 
-function ThemeOption({ theme }: { theme: OfficialTheme }) {
+function ThemeOption({ theme }: { theme: Theme }) {
   return (
     <AriaRadio
       value={theme.slug}
@@ -130,46 +105,11 @@ function ThemeOption({ theme }: { theme: OfficialTheme }) {
       <span data-specimen={theme.slug} className="flex items-center gap-2">
         <span
           aria-hidden="true"
-          className="size-3.5 rounded-full ring-1 ring-foreground/15"
-          style={{
-            background:
-              "linear-gradient(135deg, var(--primary) 50%, var(--accent) 50%)",
-          }}
+          className="size-3.5 rounded-full bg-[var(--primary)] ring-1 ring-foreground/15"
         />
         {theme.name}
       </span>
     </AriaRadio>
-  );
-}
-
-function ModeSwitch({
-  mode,
-  onChange,
-  className,
-}: {
-  mode: Mode;
-  onChange: (mode: Mode) => void;
-  className?: string;
-}) {
-  return (
-    <ToggleButtonGroup
-      aria-label="Appearance"
-      selectionMode="single"
-      disallowEmptySelection
-      selectedKeys={[mode]}
-      onSelectionChange={(keys) => {
-        const [next] = keys;
-        if (next === "light" || next === "dark") onChange(next);
-      }}
-      className={className}
-    >
-      <ToggleButton id="light" variant="segmented" aria-label="Light">
-        <SunIcon size={16} aria-hidden="true" />
-      </ToggleButton>
-      <ToggleButton id="dark" variant="segmented" aria-label="Dark">
-        <MoonIcon size={16} aria-hidden="true" />
-      </ToggleButton>
-    </ToggleButtonGroup>
   );
 }
 
@@ -189,28 +129,19 @@ export function ThemeStudio({
   install: Record<string, ReactNode>;
 }) {
   const [slug, setSlug] = useState(initialSlug);
-  const mode = useSyncExternalStore(
-    subscribeToMode,
-    currentMode,
-    (): Mode => "light",
-  );
+  const mode = useSiteMode();
   const pickerRef = useRef<HTMLDivElement>(null);
   const origin = useOrigin();
-  const theme = findTheme(slug) ?? officialThemes[0];
+  const theme = findTheme(slug) ?? themes[0];
 
   function selectTheme(next: string) {
     if (next === slug || !findTheme(next)) return;
     reveal(origin.read(), () => setSlug(next));
   }
 
-  function selectMode(next: Mode) {
-    if (next === currentMode()) return;
-    reveal(origin.read(), () => {
-      document.documentElement.classList.toggle("dark", next === "dark");
-    });
-    try {
-      window.localStorage.setItem(modeStorageKey, next);
-    } catch {}
+  function selectMode(next: SiteMode) {
+    if (next === currentSiteMode()) return;
+    reveal(origin.read(), () => applySiteMode(next));
   }
 
   useEffect(() => {
@@ -242,17 +173,10 @@ export function ThemeStudio({
       />
 
       <PageHeader className="site-container">
-        <h1
-          className={cn(
-            "text-[clamp(2.5rem,5vw,3.5rem)] leading-[1.05] [text-wrap:balance]",
-            display,
-          )}
-        >
-          Themes
-        </h1>
+        <PageHeaderHeading>Themes</PageHeaderHeading>
         <PageHeaderDescription>
-          Six themes for vip/ui and any shadcn/ui project. Pick one and the
-          whole page restyles live, on unmodified components.
+          Ten themes made from the vip/ui color scales, for vip/ui and any
+          shadcn/ui project. Select a theme to restyle this page.
         </PageHeaderDescription>
         <PageActions>
           <a href="#install" className={buttonLinkStyles()}>
@@ -286,7 +210,7 @@ export function ThemeStudio({
             })}
             className="flex min-w-0 gap-1 overflow-x-auto rounded-lg border border-border bg-secondary p-1 [scrollbar-width:none]"
           >
-            {officialThemes.map((option) => (
+            {themes.map((option) => (
               <ThemeOption key={option.slug} theme={option} />
             ))}
           </AriaRadioGroup>
@@ -324,7 +248,7 @@ export function ThemeStudio({
           <div className="grid max-w-2xl gap-3">
             <h2
               id="install-title"
-              className={cn("text-4xl leading-tight sm:text-5xl", display)}
+              className="text-3xl font-semibold leading-tight tracking-[-0.05em] sm:text-4xl"
             >
               Use {theme.name} in your app
             </h2>

@@ -8,8 +8,35 @@ import {
   List,
   TextLink,
 } from "@/components/docs/guide";
+import { paletteGroups } from "@/lib/palettes";
 
 export const metadata = guideMetadata("/components/styling");
+
+const scaleTheme = `:root {
+  --background: var(--gray-2);
+  --foreground: var(--gray-12);
+  --card: var(--gray-1);
+  --popover: var(--gray-1);
+  --primary: var(--blue-9);
+  --primary-foreground: var(--blue-1);
+  --secondary: var(--gray-3);
+  --muted: var(--gray-3);
+  --muted-foreground: var(--gray-11);
+  --accent: var(--gray-4);
+  --border: var(--gray-6);
+  --input: var(--gray-7);
+  --ring: var(--blue-9);
+  --destructive: var(--red-9);
+}
+
+.dark {
+  --background: var(--gray-1);
+  --card: var(--gray-2);
+  --popover: var(--gray-3);
+  --secondary: var(--gray-4);
+  --muted: var(--gray-4);
+  --accent: var(--gray-5);
+}`;
 
 const recipe = `export const buttonStyles = tv({
   variants: {
@@ -37,8 +64,9 @@ export default function StylingPage() {
           .
         </p>
         <p>
-          To use a ready-made palette, copy its CSS from{" "}
-          <TextLink href="/themes">Themes</TextLink>.
+          To use the vip/ui colors, copy a theme from{" "}
+          <TextLink href="/themes">Themes</TextLink>. Each theme uses the{" "}
+          <TextLink href="#color-scales">color scales</TextLink>.
         </p>
         <p>vip/ui adds these tokens to your global CSS file:</p>
         <List>
@@ -64,6 +92,34 @@ export default function StylingPage() {
           </TextLink>{" "}
           add all of them.
         </p>
+      </GuideSection>
+
+      <GuideSection id="color-scales" title="Color scales">
+        <p>
+          vip/ui has ten color scales with 12 steps each. Get the CSS from{" "}
+          <TextLink href="/colors">Colors</TextLink>. It sets variables such as{" "}
+          <Code>--blue-1</Code> to <Code>--blue-12</Code> in <Code>:root</Code>{" "}
+          and <Code>.dark</Code>.
+        </p>
+        <p>Use each step for one purpose:</p>
+        <List>
+          {paletteGroups.map((group) => (
+            <li key={group.name}>
+              {group.name}, steps {group.steps.join(", ")}: {group.use}
+            </li>
+          ))}
+        </List>
+        <p>
+          A step has the same lightness in every scale, so all scales pass the
+          same checks. Step 11 on step 1 or 2 is at least 4.5:1. Step 12 on step
+          1 or 2 is at least 7:1. Step 1 on step 9 is at least 4.5:1. On Yellow
+          in light mode, use step 12 on step 9.
+        </p>
+        <p>
+          The <TextLink href="/themes">themes</TextLink> set the shadcn tokens
+          to steps. To make your own theme, map the tokens to steps:
+        </p>
+        <CodeBlock code={scaleTheme} filename="globals.css" />
       </GuideSection>
 
       <GuideSection id="dark-mode" title="Dark mode">

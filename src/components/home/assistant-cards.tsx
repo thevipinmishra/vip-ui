@@ -3,7 +3,6 @@
 import {
   CheckCircleIcon,
   CloudArrowUpIcon,
-  PaperPlaneRightIcon,
   RocketLaunchIcon,
   SparkleIcon,
 } from "@phosphor-icons/react";
@@ -17,17 +16,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { DropZone, DropZoneLabel } from "@/components/ui/drop-zone";
 import { FileTrigger } from "@/components/ui/file-trigger";
-import { Form } from "@/components/ui/form";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/components/ui/input-group";
 import { Message } from "@/components/ui/message";
+import { PromptInput } from "@/components/ui/prompt-input";
 import { SourceLink } from "@/components/ui/source-link";
 import { Spinner } from "@/components/ui/spinner";
 import { Stepper } from "@/components/ui/stepper";
-import { TextField, TextFieldLabel } from "@/components/ui/text-field";
 import { TextSwap } from "@/components/ui/text-swap";
 import {
   ToolCall,
@@ -46,7 +39,6 @@ type Turn = { id: number; question: string; answer?: string };
 
 export function ChatCard() {
   const [turns, setTurns] = useState<Turn[]>([]);
-  const [draft, setDraft] = useState("");
   const timer = useRef<number | undefined>(undefined);
   const log = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
@@ -62,12 +54,11 @@ export function ChatCard() {
     });
   }, [turns, reduceMotion]);
 
-  function send() {
-    const question = draft.trim();
+  function send(value: string) {
+    const question = value.trim();
     if (!question || working) return;
     const id = turns.length;
     setTurns((current) => [...current, { id, question }]);
-    setDraft("");
     timer.current = window.setTimeout(() => {
       setTurns((current) =>
         current.map((turn) =>
@@ -159,38 +150,12 @@ export function ChatCard() {
         </BlockBody>
       </div>
       <BlockFooter className="border-t border-border/70 pt-4">
-        <Form
-          className="w-full"
-          onSubmit={(event) => {
-            event.preventDefault();
-            send();
-          }}
-        >
-          <TextField
-            name="prompt"
-            value={draft}
-            onChange={setDraft}
-            className="w-full"
-          >
-            <TextFieldLabel className="sr-only">
-              Ask the assistant
-            </TextFieldLabel>
-            <InputGroup>
-              <InputGroupInput placeholder="Ask about a component" />
-              <InputGroupAddon>
-                <Button
-                  type="submit"
-                  iconOnly
-                  className="size-9"
-                  aria-label="Send"
-                  isDisabled={!draft.trim() || working}
-                >
-                  <PaperPlaneRightIcon size={16} aria-hidden="true" />
-                </Button>
-              </InputGroupAddon>
-            </InputGroup>
-          </TextField>
-        </Form>
+        <PromptInput
+          label="Ask the assistant"
+          placeholder="Ask about a component"
+          isPending={working}
+          onSubmit={send}
+        />
       </BlockFooter>
     </Block>
   );

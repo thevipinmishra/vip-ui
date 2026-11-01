@@ -53,7 +53,7 @@ export function ReasoningDemo() {
 
   return (
     <div className="grid w-full max-w-lg justify-items-start gap-2">
-      <Reasoning status={status} autoCollapse className="w-full">
+      <Reasoning status={status} className="w-full">
         <ReasoningTrigger />
         <ReasoningPanel scrollable>{thought}</ReasoningPanel>
       </Reasoning>

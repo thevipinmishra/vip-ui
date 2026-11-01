@@ -96,6 +96,29 @@ export default async function InstallationPage() {
         />
       </GuideSection>
 
+      <GuideSection id="theme" title="Add a theme">
+        <p>
+          Components use the shadcn color tokens, such as <Code>--primary</Code>{" "}
+          and <Code>--border</Code>. Your shadcn theme works with no changes.
+        </p>
+        <p>To use the vip/ui colors:</p>
+        <List>
+          <li>
+            Open <TextLink href="/themes">Themes</TextLink> and select a theme.
+          </li>
+          <li>
+            Copy its CSS into your global CSS file, after the <Code>:root</Code>{" "}
+            and <Code>.dark</Code> rules.
+          </li>
+        </List>
+        <p>
+          Each theme sets the color tokens to steps of the{" "}
+          <TextLink href="/colors">color scales</TextLink>. To use the scales in
+          your own styles, such as <Code>bg-blue-3</Code>, copy their CSS from
+          Colors.
+        </p>
+      </GuideSection>
+
       <GuideSection id="add-component" title="Add a component">
         <p>
           Copy the command from a component page, such as{" "}
@@ -174,7 +197,9 @@ export default async function InstallationPage() {
             <p>
               Add this CSS to your global CSS file one time. It loads the plugin
               and adds status colors, shadows, and easing curves. All other
-              colors and the radius come from your shadcn theme.
+              colors come from your shadcn theme or a{" "}
+              <TextLink href="#theme">vip/ui theme</TextLink>. The radius comes
+              from your shadcn theme.
             </p>
             <CodeBlock code={setupCss} filename="globals.css" language="css" />
           </InstallStep>

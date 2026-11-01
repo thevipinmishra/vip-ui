@@ -23,7 +23,20 @@ export type ReasoningStatus = "thinking" | "complete" | "error";
 
 interface ReasoningContextValue {
   status: ReasoningStatus;
-  label: string;
+  seconds: number;
+}
+
+function formatSeconds(seconds: number) {
+  if (seconds < 60) return `${seconds}s`;
+  const minutes = Math.floor(seconds / 60);
+  const rest = seconds % 60;
+  return rest === 0 ? `${minutes}m` : `${minutes}m ${rest}s`;
+}
+
+function statusText(status: ReasoningStatus, seconds: number) {
+  if (status === "error") return "Reasoning failed";
+  const verb = status === "thinking" ? "Thinking" : "Thought";
+  return seconds > 0 ? `${verb} for ${formatSeconds(seconds)}` : verb;
 }
 
 const ReasoningContext = createContext<ReasoningContextValue | null>(null);
@@ -84,19 +97,9 @@ export function Reasoning({
   }, [status, autoCollapse, isExpanded]);
 
   const seconds = duration ?? elapsed;
-  const label =
-    status === "thinking"
-      ? seconds > 0
-        ? `Thinking for ${seconds}s`
-        : "Thinking"
-      : status === "complete"
-        ? seconds > 0
-          ? `Thought for ${seconds}s`
-          : "Thought"
-        : "Reasoning failed";
 
   return (
-    <ReasoningContext value={{ status, label }}>
+    <ReasoningContext value={{ status, seconds }}>
       <Disclosure
         {...props}
         isExpanded={expanded}
@@ -106,14 +109,10 @@ export function Reasoning({
         }}
         data-slot="reasoning"
         data-status={status}
-        className={composeRenderProps(className, (className) => cn(className))}
+        className={className}
       >
         <output className="sr-only" aria-live="polite" aria-atomic="true">
-          {status === "error"
-            ? "Reasoning failed"
-            : status === "complete"
-              ? label
-              : ""}
+          {status === "thinking" ? "" : statusText(status, seconds)}
         </output>
         {children ?? (
           <>
@@ -135,20 +134,16 @@ export function ReasoningTrigger({
   className,
   ...props
 }: ReasoningTriggerProps) {
-  const { status, label } = useReasoningContext();
-  const accessibleLabel =
-    props["aria-label"] ??
-    (status === "thinking"
-      ? "Reasoning, in progress"
-      : status === "complete"
-        ? "Reasoning, complete"
-        : "Reasoning, failed");
+  const { status, seconds } = useReasoningContext();
+  const thinking = status === "thinking";
   return (
     <DisclosureHeader
       {...props}
-      aria-label={accessibleLabel}
       data-slot="reasoning-trigger"
-      className={cn("text-muted-foreground", className)}
+      className={cn(
+        "text-muted-foreground aria-expanded:rounded-b-none",
+        className,
+      )}
     >
       <span className="flex min-w-0 items-center gap-2">
         <span
@@ -177,8 +172,11 @@ export function ReasoningTrigger({
             className="text-destructive transition-[opacity,scale] duration-150 ease-out-quint data-active:opacity-100 motion-reduce:transition-none not-data-active:scale-75 not-data-active:opacity-0"
           />
         </span>
-        <span aria-hidden="true" className="min-w-0 font-normal tabular-nums">
-          {label}
+        <span className="min-w-0 font-normal tabular-nums">
+          {thinking ? "Thinking" : statusText(status, seconds)}
+          {thinking && seconds > 0 && (
+            <span aria-hidden="true"> for {formatSeconds(seconds)}</span>
+          )}
         </span>
       </span>
     </DisclosureHeader>
@@ -201,18 +199,30 @@ export function ReasoningPanel({
 }: ReasoningPanelProps) {
   const { status } = useReasoningContext();
   const contentRef = useRef<HTMLDivElement | null>(null);
+  const bodyRef = useRef<HTMLDivElement | null>(null);
   const thinking = status === "thinking";
   const thinkingRef = useRef(thinking);
   thinkingRef.current = thinking;
 
   useEffect(() => {
     const element = contentRef.current;
-    if (!element || !scrollable || !autoScroll) return;
+    const body = bodyRef.current;
+    if (!element || !body || !scrollable || !autoScroll) return;
+    let pinned = true;
+    const handleScroll = () => {
+      pinned =
+        element.scrollHeight - element.scrollTop - element.clientHeight < 8;
+    };
     const observer = new ResizeObserver(() => {
-      if (thinkingRef.current) element.scrollTop = element.scrollHeight;
+      if (thinkingRef.current && pinned)
+        element.scrollTop = element.scrollHeight;
     });
-    observer.observe(element);
-    return () => observer.disconnect();
+    element.addEventListener("scroll", handleScroll, { passive: true });
+    observer.observe(body);
+    return () => {
+      element.removeEventListener("scroll", handleScroll);
+      observer.disconnect();
+    };
   }, [scrollable, autoScroll]);
 
   return (
@@ -233,7 +243,7 @@ export function ReasoningPanel({
             "max-h-64 overflow-y-auto overscroll-contain rounded-b-lg focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring focus-visible:-outline-offset-2",
         )}
       >
-        {children}
+        <div ref={bodyRef}>{children}</div>
       </div>
     </CollapsiblePanel>
   );
