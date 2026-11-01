@@ -48,10 +48,5 @@
     "tailwindcss-react-aria-components": "^2.2.0",
     "typescript": "^5.9.3"
   },
-  "packageManager": "pnpm@12.14.0",
-  "intent": {
-    "skills": [
-      "*"
-    ]
-  }
+  "packageManager": "pnpm@12.14.0"
 }
