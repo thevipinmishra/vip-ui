@@ -52,6 +52,7 @@ export const mainNav: NavLink[] = [
   { href: "/blocks", label: "Blocks" },
   { href: "/charts", label: "Charts" },
   { href: "/themes", label: "Themes" },
+  { href: "/colors", label: "Colors" },
 ];
 
 export function activeSection(pathname: string) {

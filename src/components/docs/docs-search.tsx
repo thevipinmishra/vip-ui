@@ -11,6 +11,7 @@ import {
   PaletteIcon,
   ScalesIcon,
   SquaresFourIcon,
+  SwatchesIcon,
   TerminalWindowIcon,
   WaveSineIcon,
 } from "@phosphor-icons/react";
@@ -46,6 +47,7 @@ const pages = [
   { href: "/blocks", label: "Blocks", icon: SquaresFourIcon },
   { href: "/charts", label: "Charts", icon: ChartBarIcon },
   { href: "/themes", label: "Themes", icon: PaletteIcon },
+  { href: "/colors", label: "Colors", icon: SwatchesIcon },
   { href: "/license", label: "License", icon: ScalesIcon },
 ];
 

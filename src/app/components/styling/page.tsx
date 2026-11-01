@@ -1,4 +1,3 @@
-import { palettes } from "@/app/themes/palettes";
 import { CodeBlock } from "@/components/docs/code-block";
 import {
   Code,
@@ -9,31 +8,34 @@ import {
   List,
   TextLink,
 } from "@/components/docs/guide";
+import { paletteGroups } from "@/lib/palettes";
 
 export const metadata = guideMetadata("/components/styling");
-
-const scaleNames = new Intl.ListFormat("en", { type: "conjunction" }).format(
-  palettes.map((palette) => palette.name),
-);
 
 const scaleTheme = `:root {
   --background: var(--gray-2);
   --foreground: var(--gray-12);
   --card: var(--gray-1);
-  --muted: var(--gray-3);
-  --muted-foreground: var(--gray-11);
-  --border: var(--gray-6);
-  --input: var(--gray-7);
+  --popover: var(--gray-1);
   --primary: var(--blue-9);
   --primary-foreground: var(--blue-1);
-  --ring: var(--blue-8);
+  --secondary: var(--gray-3);
+  --muted: var(--gray-3);
+  --muted-foreground: var(--gray-11);
+  --accent: var(--gray-4);
+  --border: var(--gray-6);
+  --input: var(--gray-7);
+  --ring: var(--blue-9);
   --destructive: var(--red-9);
-  --destructive-foreground: var(--red-1);
 }
 
 .dark {
   --background: var(--gray-1);
   --card: var(--gray-2);
+  --popover: var(--gray-3);
+  --secondary: var(--gray-4);
+  --muted: var(--gray-4);
+  --accent: var(--gray-5);
 }`;
 
 const recipe = `export const buttonStyles = tv({
@@ -62,8 +64,9 @@ export default function StylingPage() {
           .
         </p>
         <p>
-          To use a ready-made palette, copy its CSS from{" "}
-          <TextLink href="/themes">Themes</TextLink>.
+          To use the vip/ui colors, copy a theme from{" "}
+          <TextLink href="/themes">Themes</TextLink>. Each theme uses the{" "}
+          <TextLink href="#color-scales">color scales</TextLink>.
         </p>
         <p>vip/ui adds these tokens to your global CSS file:</p>
         <List>
@@ -93,33 +96,29 @@ export default function StylingPage() {
 
       <GuideSection id="color-scales" title="Color scales">
         <p>
-          vip/ui has ten color scales: {scaleNames}. Each scale has 12 steps,
-          with one value for light mode and one for dark mode. A step has the
-          same lightness in every scale. Thus, if you change the scale, the
-          contrast stays almost the same.
-        </p>
-        <p>
-          To add the scales, copy their CSS from the Colors tab on{" "}
-          <TextLink href="/themes">Themes</TextLink>. The CSS sets variables
-          from <Code>--blue-1</Code> to <Code>--blue-12</Code> in{" "}
-          <Code>:root</Code> and <Code>.dark</Code>.
+          vip/ui has ten color scales with 12 steps each. Get the CSS from{" "}
+          <TextLink href="/colors">Colors</TextLink>. It sets variables such as{" "}
+          <Code>--blue-1</Code> to <Code>--blue-12</Code> in <Code>:root</Code>{" "}
+          and <Code>.dark</Code>.
         </p>
         <p>Use each step for one purpose:</p>
         <List>
-          <li>Steps 1 and 2: backgrounds.</li>
-          <li>
-            Steps 3, 4, and 5: fills for the normal, hover, and pressed state.
-          </li>
-          <li>Steps 6, 7, and 8: borders. Use step 8 for focus rings.</li>
-          <li>Steps 9 and 10: solid fills and their hover state.</li>
-          <li>Steps 11 and 12: text.</li>
+          {paletteGroups.map((group) => (
+            <li key={group.name}>
+              {group.name}, steps {group.steps.join(", ")}: {group.use}
+            </li>
+          ))}
         </List>
         <p>
-          Each scale passes these contrast checks. Step 11 on step 1 or 2 is at
-          least 4.5:1. Step 12 on step 1 or 2 is at least 7:1. Step 1 on step 9
-          is at least 4.5:1. On Yellow in light mode, use step 12 on step 9.
+          A step has the same lightness in every scale, so all scales pass the
+          same checks. Step 11 on step 1 or 2 is at least 4.5:1. Step 12 on step
+          1 or 2 is at least 7:1. Step 1 on step 9 is at least 4.5:1. On Yellow
+          in light mode, use step 12 on step 9.
         </p>
-        <p>To make a theme from the scales, set the shadcn tokens to steps:</p>
+        <p>
+          The <TextLink href="/themes">themes</TextLink> set the shadcn tokens
+          to steps. To make your own theme, map the tokens to steps:
+        </p>
         <CodeBlock code={scaleTheme} filename="globals.css" />
       </GuideSection>
 

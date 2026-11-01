@@ -9,6 +9,7 @@ import {
   ListIcon,
   PaletteIcon,
   SquaresFourIcon,
+  SwatchesIcon,
 } from "@phosphor-icons/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -35,6 +36,7 @@ const icons: Record<string, Icon> = {
   "/blocks": SquaresFourIcon,
   "/charts": ChartBarIcon,
   "/themes": PaletteIcon,
+  "/colors": SwatchesIcon,
 };
 
 const sections = [{ href: "/", label: "Home" }, ...mainNav];
