@@ -3,11 +3,14 @@
   "name": "vip-disclosure",
   "type": "registry:ui",
   "title": "Disclosure",
-  "description": "Reveal optional details in place.",
+  "description": "Shows or hides one section of content.",
   "dependencies": [
     "@phosphor-icons/react@^2.1.10",
-    "react-aria-components@^1.22.1",
-    "tailwind-variants@^3.3.1"
+    "react-aria-components@^1.22.1"
+  ],
+  "registryDependencies": [
+    "https://vip-ui.vercel.app/r/vip-collapsible-panel.json",
+    "https://vip-ui.vercel.app/r/vip-utils.json"
   ],
   "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
   "css": {
@@ -19,18 +22,6 @@
     }
   },
   "files": [
-    {
-      "path": "src/lib/utils.ts",
-      "type": "registry:file",
-      "target": "@components/vip-ui/utils.ts",
-      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
-    },
-    {
-      "path": "src/components/ui/collapsible-panel.tsx",
-      "type": "registry:file",
-      "target": "@components/vip-ui/collapsible-panel.tsx",
-      "content": "\"use client\";\n\nimport {\n  DisclosurePanel as AriaDisclosurePanel,\n  composeRenderProps,\n  type DisclosurePanelProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport const collapsibleChevronStyles =\n  \"shrink-0 text-muted-foreground transition-transform duration-250 ease-out-quint group-aria-expanded/trigger:rotate-180 motion-reduce:transition-none\";\n\nexport function CollapsiblePanel({\n  className,\n  ...props\n}: DisclosurePanelProps) {\n  return (\n    <AriaDisclosurePanel\n      data-slot=\"collapsible-panel\"\n      {...props}\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"h-(--disclosure-panel-height) overflow-clip transition-[height,opacity] duration-250 ease-out-quint aria-hidden:opacity-0 motion-reduce:transition-none\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n"
-    },
     {
       "path": "src/components/ui/disclosure.tsx",
       "type": "registry:file",

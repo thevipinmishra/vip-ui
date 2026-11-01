@@ -95,7 +95,7 @@ export function AttachmentDemo() {
           <Attachment
             key={item.id}
             name={item.file.name}
-            size={item.file.size}
+            fileSize={item.file.size}
             previewUrl={item.previewUrl}
             onRemove={() => remove(item)}
           />

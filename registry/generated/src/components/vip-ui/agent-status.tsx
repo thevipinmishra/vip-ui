@@ -3,7 +3,7 @@
 import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import type { ComponentProps } from "react";
-import { easeInOut } from "./motion";
+import { easeInOut, loop } from "./motion";
 import { cn } from "./utils";
 
 export type AgentStatusState = "thinking" | "working" | "complete" | "error";
@@ -75,7 +75,7 @@ export function AgentStatus({
                   reduceMotion
                     ? { duration: 0 }
                     : {
-                        duration: 1.1,
+                        duration: loop.pulse,
                         delay: index * 0.13,
                         repeat: Infinity,
                         ease: easeInOut,

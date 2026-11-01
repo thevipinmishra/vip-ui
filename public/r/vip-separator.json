@@ -3,7 +3,7 @@
   "name": "vip-separator",
   "type": "registry:ui",
   "title": "Separator",
-  "description": "Divide related groups of content.",
+  "description": "Shows a line between sections of content.",
   "dependencies": ["react-aria-components@^1.22.1", "tailwind-variants@^3.3.1"],
   "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
   "css": {

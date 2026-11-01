@@ -2,7 +2,7 @@
 
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { type ComponentProps, useMemo, useRef } from "react";
-import { easeOut, transitionFor } from "@/lib/motion";
+import { duration, easeOut, maxStagger, transitionFor } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 export interface TextRevealProps
@@ -13,8 +13,6 @@ export interface TextRevealProps
   stagger?: number;
   delay?: number;
 }
-
-const MAX_TOTAL_STAGGER = 0.6;
 
 const hidden = { opacity: 0, y: "100%" };
 const shown = { opacity: 1, y: "0%" };
@@ -48,7 +46,7 @@ export function TextReveal({
   const visible = reducedMotion || trigger === "mount" || inView;
   const tokens = useMemo(() => tokenize(text, split), [text, split]);
   const total = tokens.reduce((count, token) => count + token.units.length, 0);
-  const step = Math.min(stagger, MAX_TOTAL_STAGGER / Math.max(total - 1, 1));
+  const step = Math.min(stagger, maxStagger / Math.max(total - 1, 1));
   let order = 0;
 
   function unit(value: string, key: string) {
@@ -63,7 +61,7 @@ export function TextReveal({
           initial={hidden}
           animate={visible ? shown : hidden}
           transition={transitionFor(reducedMotion, {
-            duration: 0.5,
+            duration: duration.reveal,
             delay: unitDelay,
             ease: easeOut,
           })}

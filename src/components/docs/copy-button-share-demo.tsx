@@ -17,7 +17,7 @@ export function CopyButtonShareDemo() {
             {(status) =>
               status === "copied"
                 ? "Link copied"
-                : status === "failed"
+                : status === "error"
                   ? "Try again"
                   : "Copy release link"
             }

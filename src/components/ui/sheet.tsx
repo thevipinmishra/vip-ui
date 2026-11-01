@@ -35,7 +35,7 @@ import {
   type TextProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { duration, easeOut } from "@/lib/motion";
+import { duration, easeOut, easeSheet } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { Button, type ButtonProps as StyledButtonProps } from "./button";
 import { SizeProvider } from "./size";
@@ -47,11 +47,9 @@ type SwipeDirection = SheetRenderProps["swipeDirection"];
 const sheetStack =
   "translate(var(--sheet-stack-x,0px),var(--sheet-stack-y,0px)) scale(var(--sheet-stack-scale,0.94))";
 
-const sheetCss = `@keyframes vip-sheet-backdrop{from{opacity:0}to{opacity:1}}@keyframes vip-sheet-stack{from{transform:translate(0px,0px) scale(1)}to{transform:${sheetStack}}}[data-sheet-scroll][data-sheet-unsnapped]{scroll-snap-type:none!important}@supports not (animation-timeline:view()){[data-slot=sheet]{transition:transform .32s cubic-bezier(.32,.72,0,1)}[data-slot=sheet][data-has-descendants]{transform:${sheetStack}}}@media (prefers-reduced-motion:reduce){[data-slot=sheet]{transition:none}}`;
-
-const sheetEase = [0.32, 0.72, 0, 1] as const;
-
 const sheetDuration = { enter: 0.32, exit: 0.24, settle: 0.3 } as const;
+
+const sheetCss = `@keyframes vip-sheet-backdrop{from{opacity:0}to{opacity:1}}@keyframes vip-sheet-stack{from{transform:translate(0px,0px) scale(1)}to{transform:${sheetStack}}}[data-sheet-scroll][data-sheet-unsnapped]{scroll-snap-type:none!important}@supports not (animation-timeline:view()){[data-slot=sheet]{transition:transform ${sheetDuration.enter}s cubic-bezier(${easeSheet.join(",")})}[data-slot=sheet][data-has-descendants]{transform:${sheetStack}}}@media (prefers-reduced-motion:reduce){[data-slot=sheet]{transition:none}}`;
 
 const sheetSurfaceStyles = tv({
   base: "flex max-h-[var(--visual-viewport-height,100dvh)] min-w-0 max-w-full flex-col bg-card text-card-foreground [overflow-wrap:anywhere] shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70 data-[has-descendants]:rounded-xl",
@@ -272,7 +270,7 @@ function tweenScroll(
   frame = requestAnimationFrame(() => {
     controls = animate(from, to, {
       duration,
-      ease: sheetEase,
+      ease: easeSheet,
       onUpdate: (value) => {
         if (
           !scroller.isConnected ||

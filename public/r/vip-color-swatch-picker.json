@@ -3,8 +3,12 @@
   "name": "vip-color-swatch-picker",
   "type": "registry:ui",
   "title": "Color Swatch Picker",
-  "description": "Choose from a set of color swatches.",
-  "dependencies": ["react-aria-components@^1.22.1", "tailwind-variants@^3.3.1"],
+  "description": "Selects a color from a set of swatches.",
+  "dependencies": ["react-aria-components@^1.22.1"],
+  "registryDependencies": [
+    "https://vip-ui.vercel.app/r/vip-color-swatch.json",
+    "https://vip-ui.vercel.app/r/vip-utils.json"
+  ],
   "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
   "css": {
     "@plugin tailwindcss-react-aria-components": {}
@@ -15,18 +19,6 @@
     }
   },
   "files": [
-    {
-      "path": "src/lib/utils.ts",
-      "type": "registry:file",
-      "target": "@components/vip-ui/utils.ts",
-      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
-    },
-    {
-      "path": "src/components/ui/color-swatch.tsx",
-      "type": "registry:file",
-      "target": "@components/vip-ui/color-swatch.tsx",
-      "content": "\"use client\";\n\nimport {\n  ColorSwatch as AriaColorSwatch,\n  type ColorSwatchProps,\n  composeRenderProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport function ColorSwatch({ className, style, ...props }: ColorSwatchProps) {\n  return (\n    <AriaColorSwatch\n      {...props}\n      data-slot=\"color-swatch\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"size-9 shrink-0 rounded-md ring-1 ring-foreground/20 ring-inset\",\n          className,\n        ),\n      )}\n      style={composeRenderProps(style, (style, { color }) => ({\n        background: `linear-gradient(${color}, ${color}), repeating-conic-gradient(var(--border) 0% 25%, var(--background) 0% 50%) 50% / 12px 12px`,\n        ...style,\n      }))}\n    />\n  );\n}\n"
-    },
     {
       "path": "src/components/ui/color-swatch-picker.tsx",
       "type": "registry:file",

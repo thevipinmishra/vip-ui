@@ -22,118 +22,43 @@ const libSources = new Map(
 const packageJson = JSON.parse(
   await readFile(path.join(root, "package.json"), "utf8"),
 );
-const registryOrigin =
-  process.env.NEXT_PUBLIC_REGISTRY_URL || "https://vip-ui.vercel.app";
-const descriptions = {
-  "agent-status": "Show an agent's current step and outcome.",
-  accordion: "Reveal one or more sections of related content.",
-  alert: "Show information, success, warning, or error messages.",
-  "animated-number": "Animate a number when its value changes.",
-  autocomplete: "Find suggestions as you type in a text field.",
-  attachment: "Preview and manage files before or during an upload.",
-  avatar: "Show a person with an image or initials.",
-  badge: "Label an item with short status or metadata.",
-  breadcrumbs: "Link back through a page hierarchy.",
-  "button-link":
-    "Style a navigation link like a button without tying it to a router.",
-  "button-group":
-    "Group related actions without turning them into a selection control.",
-  "button-styles":
-    "Shared variants and sizes used by vip/ui buttons and links.",
-  button: "Trigger an action with primary, secondary, or destructive emphasis.",
-  calendar: "Choose a date in a keyboard-accessible calendar.",
-  card: "Group related content, actions, and metadata.",
-  chart: "Frame a TanStack chart with shadcn chart colors and tooltip styles.",
-  "checkbox-group": "Select any number of related options in a form.",
-  checkbox: "Toggle an independent choice in a form.",
-  "collapsible-panel":
-    "Animate a disclosure panel while keeping its content accessible.",
-  "color-field": "Enter a color using a text value.",
-  "color-picker": "Choose a color with visual controls and a hex field.",
-  "color-swatch-picker": "Choose from a set of color swatches.",
-  "color-swatch": "Show a named color sample.",
-  "copy-button": "Copy a value with success and failure feedback.",
-  "combo-box": "Filter and select one or several options.",
-  "context-menu":
-    "Open actions beside an item with pointer, touch, or keyboard.",
-  "command-palette": "Find and run actions with keyboard search.",
-  "data-table":
-    "Search, filter, sort, select, and paginate rows in a client-side table.",
-  "date-field": "Enter a date one editable segment at a time.",
-  "date-picker": "Choose a single date from a field and calendar.",
-  "date-range-picker": "Choose a start and end date from a field and calendar.",
-  "date-segment": "Render the editable segments used in date and time fields.",
-  "description-list": "Pair labels with related values.",
-  dialog: "Show a focused task above the current page.",
-  disclosure: "Reveal optional details in place.",
-  "drop-zone": "Accept files by drag and drop or file picker.",
-  "empty-state": "Explain why a collection is empty and what to do next.",
-  fieldset: "Group related native form controls under a legend.",
-  "field-styles": "Shared theme-aware styling for text and segmented fields.",
-  "file-trigger": "Open a file picker from an accessible trigger.",
-  form: "Group fields and handle form validation.",
-  "grid-list": "Select and act on rows with keyboard navigation.",
-  "input-group": "Combine an input with a prefix, suffix, or action.",
-  "inline-edit": "Edit text in place and handle save errors.",
-  "item-highlight": "Move one highlight to the hovered or focused item.",
-  "kbd-code": "Display keyboard shortcuts and inline code.",
-  link: "Navigate with an accessible text link.",
-  "list-box": "Select an option from a visible list.",
-  "layout-morph": "Animate the height of a container when its content changes.",
-  menu: "Choose an action from a popover menu.",
-  marquee: "Loop a strip of content with a pause control.",
-  message: "Display an entry in a conversation.",
-  meter: "Display a measured value against a known range.",
-  "number-field": "Enter or step through numeric values.",
-  "native-select": "Choose an option with the device's native select menu.",
-  pagination: "Navigate between pages of results.",
-  presence: "Animate content when it is shown or hidden.",
-  "password-field": "Enter a password and toggle its visibility.",
-  "password-strength-meter":
-    "Estimate password strength beside any password field.",
-  popover: "Show contextual content anchored to a trigger.",
-  "presence-list": "Animate list items when they enter, leave, or move.",
-  "press-button": "Handle press interactions for shared button controls.",
-  "progress-bar": "Show progress for a task with a known completion point.",
-  "progress-ring": "Show known or unknown progress in a circular indicator.",
-  "prompt-input": "Write a prompt and send it, with files and actions.",
-  "radio-group": "Choose one option from a visible set.",
-  "rating-input": "Choose a star rating with radio controls.",
-  "range-calendar": "Select a start and end date in a calendar.",
-  reasoning: "Reveal an agent's thinking and how long it took.",
-  response: "Show a streaming answer with its status and actions.",
-  "search-field": "Search with a labeled input and clear control.",
-  "source-link": "Link an answer to a named source.",
-  select: "Choose one option from a list in a popover.",
-  separator: "Divide related groups of content.",
-  sheet: "Show a swipeable panel of content from the edge of the screen.",
-  size: "Share one size scale across buttons, toggles, and their groups.",
-  skeleton: "Reserve space while content is loading.",
-  slider: "Adjust a value by dragging or with the keyboard.",
-  spinner: "Indicate that a task is running without a known end time.",
-  stat: "Display a labeled value and its context.",
-  stepper: "Show the current stage of a multi-step process.",
-  "stagger-group": "Animate a group of items into view one after another.",
-  switch: "Turn a setting on or off.",
-  table: "Present rows and columns with sortable headers.",
-  tabs: "Switch between related content panels.",
-  "tag-group": "Navigate and remove tags with the keyboard.",
-  "text-area": "Enter a longer answer with a labeled field.",
-  "text-field": "Enter and validate a single line of text.",
-  "text-swap": "Animate text when its value changes.",
-  "text-reveal": "Reveal text one word or one character at a time.",
-  "text-scramble": "Scramble the characters of text when it changes.",
-  timeline: "Show dated events in a semantic sequence.",
-  "time-field": "Enter a time one editable segment at a time.",
-  "tool-call": "Inspect a tool request and result behind a disclosure.",
-  toast: "Show feedback after an action without interrupting the page.",
-  "toggle-button-group": "Choose one or more persistent actions in a group.",
-  "toggle-button": "Turn a persistent action on or off.",
-  "token-field": "Enter and edit several tags in one field.",
-  toolbar: "Group related actions with arrow-key navigation.",
-  tooltip: "Show short supplementary help on hover or focus.",
-  tree: "Browse and select items in a nested collection.",
-};
+const registryOrigin = (
+  process.env.NEXT_PUBLIC_REGISTRY_URL || "https://vip-ui.vercel.app"
+).replace(/\/$/, "");
+const catalogDescriptions = new Map(
+  JSON.parse(
+    await readFile(path.join(root, "src/lib/catalog.json"), "utf8"),
+  ).groups.flatMap((group) =>
+    group.items.map((item) => {
+      if (typeof item.description !== "string" || !item.description.trim())
+        throw new Error(
+          `src/lib/catalog.json has no description for ${item.slug}`,
+        );
+      return [item.slug, item.description];
+    }),
+  ),
+);
+const internalDescriptions = JSON.parse(
+  await readFile(path.join(root, "src/lib/internal-descriptions.json"), "utf8"),
+);
+for (const slug of Object.keys(internalDescriptions)) {
+  if (catalogDescriptions.has(slug))
+    throw new Error(
+      `${slug} is in src/lib/catalog.json and src/lib/internal-descriptions.json`,
+    );
+}
+export function componentDescription(name) {
+  const description =
+    catalogDescriptions.get(name) ??
+    (Object.hasOwn(internalDescriptions, name)
+      ? internalDescriptions[name]
+      : undefined);
+  if (typeof description !== "string" || !description.trim())
+    throw new Error(
+      `${name} has no description in src/lib/catalog.json or src/lib/internal-descriptions.json`,
+    );
+  return description;
+}
 const groupItems = {
   "button-group": ["button"],
   "toggle-button-group": ["toggle-button"],
@@ -192,67 +117,106 @@ export function packageName(specifier) {
   return specifier.split("/")[0];
 }
 
-export function createItem(name, sources) {
-  const seen = new Set();
+export function itemUrl(name) {
+  return `${registryOrigin}/r/vip-${name}.json`;
+}
+
+function titleFor(name) {
+  return name
+    .split("-")
+    .map((word) => word[0].toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+function ownImports(name, source, sources) {
   const dependencies = new Set();
-  const files = [];
-  const libs = new Set();
-  function visit(slug) {
-    if (seen.has(slug)) return;
-    const source = sources.get(slug);
-    if (!source) throw new Error(`${name} imports missing component ${slug}`);
-    seen.add(slug);
-    for (const specifier of importsFrom(source)) {
-      if (specifier.startsWith("./")) {
-        visit(specifier.slice(2).replace(/\.tsx$/, ""));
-      } else if (libSources.has(specifier.replace(/^@\/lib\//, ""))) {
-        libs.add(specifier.replace(/^@\/lib\//, ""));
-      } else if (specifier === "react") {
-      } else if (
-        !specifier.startsWith("@/") &&
-        !specifier.startsWith("node:")
-      ) {
-        dependencies.add(packageName(specifier));
-      } else {
-        throw new Error(`Unhandled import in ${slug}: ${specifier}`);
-      }
-    }
-    files.push({
-      path: `src/components/ui/${slug}.tsx`,
-      type: "registry:file",
-      target: `@components/vip-ui/${slug}.tsx`,
-      content: portableSource(source),
-    });
-  }
-  visit(name);
-  for (const item of groupItems[name] ?? []) visit(item);
-  if (name === "chart") dependencies.add("@tanstack/charts");
-  for (const lib of [...libs].sort().reverse()) {
-    const source = libSources.get(lib);
-    for (const specifier of importsFrom(source))
+  const registryDependencies = new Set();
+  for (const specifier of importsFrom(source)) {
+    const lib = specifier.replace(/^@\/lib\//, "");
+    if (specifier.startsWith("./")) {
+      const slug = specifier.slice(2).replace(/\.tsx?$/, "");
+      if (!sources.has(slug))
+        throw new Error(`${name} imports missing component ${slug}`);
+      registryDependencies.add(slug);
+    } else if (specifier.startsWith("@/lib/") && libSources.has(lib)) {
+      registryDependencies.add(lib);
+    } else if (specifier === "react") {
+    } else if (
+      !specifier.startsWith("@/") &&
+      !specifier.startsWith(".") &&
+      !specifier.startsWith("node:")
+    ) {
       dependencies.add(packageName(specifier));
-    files.unshift({
-      path: `src/lib/${lib}.ts`,
-      type: "registry:file",
-      target: `@components/vip-ui/${lib}.ts`,
-      content: portableSource(source),
-    });
+    } else {
+      throw new Error(`Unhandled import in ${name}: ${specifier}`);
+    }
   }
+  return { dependencies, registryDependencies };
+}
+
+function linkedItems(registryDependencies) {
+  return registryDependencies.size
+    ? { registryDependencies: [...registryDependencies].sort().map(itemUrl) }
+    : {};
+}
+
+export function createLibItem(name) {
+  const source = libSources.get(name);
+  if (source === undefined) throw new Error(`Missing shared library ${name}`);
+  const { dependencies, registryDependencies } = ownImports(
+    name,
+    source,
+    new Map(),
+  );
+  const content = portableSource(source);
+  return {
+    $schema: "https://ui.shadcn.com/schema/registry-item.json",
+    name: `vip-${name}`,
+    type: "registry:lib",
+    title: titleFor(name),
+    description: componentDescription(name),
+    dependencies: [...dependencies].sort().map(versioned),
+    ...linkedItems(registryDependencies),
+    ...styleSetup([content], dependencies),
+    files: [
+      {
+        path: `src/lib/${name}.ts`,
+        type: "registry:file",
+        target: `@components/vip-ui/${name}.ts`,
+        content,
+      },
+    ],
+  };
+}
+
+export function createItem(name, sources) {
+  const source = sources.get(name);
+  if (source === undefined) throw new Error(`Missing component ${name}`);
+  const { dependencies, registryDependencies } = ownImports(
+    name,
+    source,
+    sources,
+  );
+  for (const item of groupItems[name] ?? []) registryDependencies.add(item);
+  if (name === "chart") dependencies.add("@tanstack/charts");
+  const content = portableSource(source);
+  const files = [
+    {
+      path: `src/components/ui/${name}.tsx`,
+      type: "registry:file",
+      target: `@components/vip-ui/${name}.tsx`,
+      content,
+    },
+  ];
   return {
     $schema: "https://ui.shadcn.com/schema/registry-item.json",
     name: `vip-${name}`,
     type: "registry:ui",
-    title: name
-      .split("-")
-      .map((word) => word[0].toUpperCase() + word.slice(1))
-      .join(" "),
-    description:
-      descriptions[name] || `A ${name.replaceAll("-", " ")} component.`,
+    title: titleFor(name),
+    description: componentDescription(name),
     dependencies: [...dependencies].sort().map(versioned),
-    ...styleSetup(
-      files.map((file) => file.content),
-      dependencies,
-    ),
+    ...linkedItems(registryDependencies),
+    ...styleSetup([content], dependencies),
     files,
   };
 }
@@ -264,13 +228,8 @@ function relativeImport(from, target) {
 
 function createRouteItem(routeDirectory, sources, routeFiles) {
   const dependencies = new Set();
+  const registryDependencies = new Set();
   const files = [];
-  const installed = new Set();
-  function install(file) {
-    if (installed.has(file.target)) return;
-    files.push(file);
-    installed.add(file.target);
-  }
   for (const [relative, source] of routeFiles) {
     const pathInApp = `${routeDirectory}/${relative}`;
     let content = source.replace(/\r\n/g, "\n");
@@ -278,24 +237,15 @@ function createRouteItem(routeDirectory, sources, routeFiles) {
       const lib = specifier.replace(/^@\/lib\//, "");
       if (specifier.startsWith("@/components/ui/")) {
         const slug = specifier.slice("@/components/ui/".length);
-        const uiItem = createItem(slug, sources);
-        for (const file of uiItem.files) install(file);
-        for (const dependency of uiItem.dependencies)
-          dependencies.add(dependencyName(dependency));
+        if (!sources.has(slug))
+          throw new Error(`${pathInApp} imports missing component ${slug}`);
+        registryDependencies.add(slug);
         content = content.replaceAll(
           specifier,
           relativeImport(pathInApp, `src/components/vip-ui/${slug}`),
         );
       } else if (specifier.startsWith("@/lib/") && libSources.has(lib)) {
-        const libSource = libSources.get(lib);
-        install({
-          path: `src/lib/${lib}.ts`,
-          type: "registry:file",
-          target: `@components/vip-ui/${lib}.ts`,
-          content: portableSource(libSource),
-        });
-        for (const libImport of importsFrom(libSource))
-          dependencies.add(packageName(libImport));
+        registryDependencies.add(lib);
         content = content.replaceAll(
           specifier,
           relativeImport(pathInApp, `src/components/vip-ui/${lib}`),
@@ -333,6 +283,7 @@ function createRouteItem(routeDirectory, sources, routeFiles) {
       .map((dependency) =>
         dependency === "server-only" ? dependency : versioned(dependency),
       ),
+    ...linkedItems(registryDependencies),
     ...styleSetup(
       files.map((file) => file.content),
       dependencies,
@@ -394,6 +345,39 @@ export async function readBlockCatalog() {
   return blocks;
 }
 
+export function checkRegistryDependencies(items) {
+  const urls = new Map(
+    items.map((item) => [`${registryOrigin}/r/${item.name}.json`, item]),
+  );
+  for (const item of items) {
+    for (const dependency of item.registryDependencies ?? []) {
+      if (!/^https?:\/\//.test(dependency))
+        throw new Error(
+          `${item.name} has the bare registry dependency ${dependency}`,
+        );
+      if (!urls.has(dependency))
+        throw new Error(
+          `${item.name} depends on ${dependency}, which is not a generated item`,
+        );
+    }
+  }
+  const visiting = new Set();
+  const done = new Set();
+  function visit(item, trail) {
+    if (done.has(item)) return;
+    if (visiting.has(item))
+      throw new Error(
+        `Registry dependency cycle: ${[...trail, item.name].join(" -> ")}`,
+      );
+    visiting.add(item);
+    for (const dependency of item.registryDependencies ?? [])
+      visit(urls.get(dependency), [...trail, item.name]);
+    visiting.delete(item);
+    done.add(item);
+  }
+  for (const item of items) visit(item, []);
+}
+
 function catalogItem(item, sources) {
   const { $schema: _schema, files, ...rest } = item;
   return {
@@ -429,25 +413,35 @@ export async function generate() {
     }
   }
   await rm(sourceDirectory, { recursive: true, force: true });
-  const catalogItems = [];
-  const registrySources = new Map();
-  for (const name of sources.keys()) {
-    const item = createItem(name, sources);
-    catalogItems.push(catalogItem(item, registrySources));
-    await writeFile(
-      path.join(outputDirectory, `vip-${name}.json`),
-      `${JSON.stringify(item, null, 2)}\n`,
-    );
+  for (const slug of Object.keys(internalDescriptions)) {
+    if (!sources.has(slug) && !libSources.has(slug))
+      throw new Error(
+        `src/lib/internal-descriptions.json describes missing file ${slug}`,
+      );
   }
+  const items = [];
+  for (const name of libSources.keys()) {
+    if (sources.has(name))
+      throw new Error(`Component ${name} has the name of a shared library`);
+    items.push(createLibItem(name));
+  }
+  for (const name of sources.keys()) items.push(createItem(name, sources));
   const blocks = await readBlockCatalog();
   for (const block of blocks) {
-    if (sources.has(block.name))
-      throw new Error(`Block ${block.name} has the name of a component`);
-    const item = createBlockItem(
-      block,
-      sources,
-      await readRouteFiles(path.join(blocksDirectory, block.name)),
+    if (sources.has(block.name) || libSources.has(block.name))
+      throw new Error(`Block ${block.name} has the name of another item`);
+    items.push(
+      createBlockItem(
+        block,
+        sources,
+        await readRouteFiles(path.join(blocksDirectory, block.name)),
+      ),
     );
+  }
+  checkRegistryDependencies(items);
+  const catalogItems = [];
+  const registrySources = new Map();
+  for (const item of items) {
     catalogItems.push(catalogItem(item, registrySources));
     await writeFile(
       path.join(outputDirectory, `${item.name}.json`),
@@ -470,7 +464,7 @@ export async function generate() {
   await writeFile(path.join(outputDirectory, "registry.json"), json);
   await writeFile(path.join(outputDirectory, "setup.css"), setupCss());
   console.log(
-    `Generated ${sources.size} components and ${blocks.length} blocks in public/r`,
+    `Generated ${libSources.size} libraries, ${sources.size} components, and ${blocks.length} blocks in public/r`,
   );
 }
 

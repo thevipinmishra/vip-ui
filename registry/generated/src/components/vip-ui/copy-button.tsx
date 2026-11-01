@@ -9,7 +9,7 @@ import { cn } from "./utils";
 import { Button, type ButtonProps } from "./button";
 import { buttonLabel } from "./button-styles";
 
-export type CopyButtonStatus = "idle" | "copied" | "failed";
+export type CopyButtonStatus = "idle" | "copied" | "error";
 
 export interface CopyButtonProps
   extends Omit<
@@ -52,7 +52,7 @@ export function CopyButton({
       await navigator.clipboard.writeText(value);
       result = "copied";
     } catch {
-      result = "failed";
+      result = "error";
     }
 
     if (id !== requestId.current) return;
@@ -69,7 +69,7 @@ export function CopyButton({
     <>
       {status === "copied" ? (
         <CheckIcon />
-      ) : status === "failed" ? (
+      ) : status === "error" ? (
         <WarningIcon />
       ) : (
         <CopyIcon />
@@ -78,7 +78,7 @@ export function CopyButton({
         buttonLabel(
           status === "copied"
             ? "Copied"
-            : status === "failed"
+            : status === "error"
               ? "Retry"
               : "Copy",
         )}
@@ -126,7 +126,7 @@ export function CopyButton({
       <output className="sr-only" aria-live="polite" aria-atomic="true">
         {status === "copied"
           ? "Copied to clipboard"
-          : status === "failed"
+          : status === "error"
             ? "Copy failed. Try again."
             : ""}
       </output>

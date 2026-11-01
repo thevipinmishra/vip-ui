@@ -34,14 +34,14 @@ export function CopyButton({
             <>
               {status === "copied" ? (
                 <CheckIcon size={16} />
-              ) : status === "failed" ? (
+              ) : status === "error" ? (
                 <WarningIcon size={16} />
               ) : (
                 <CopyIcon size={16} />
               )}
               {status === "copied"
                 ? "Copied"
-                : status === "failed"
+                : status === "error"
                   ? "Retry"
                   : text}
             </>

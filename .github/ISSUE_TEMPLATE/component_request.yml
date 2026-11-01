@@ -1,0 +1,32 @@
+name: Component request
+description: Ask for a new component or a new feature in a component.
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: Look at the [component catalog](https://vip-ui.vercel.app/components) first. Make sure that the component does not exist.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What do you want to do? Why do the current components not do it?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed component
+      description: Give its name, its parts, and its main props.
+    validations:
+      required: true
+  - type: input
+    id: react-aria
+    attributes:
+      label: React Aria primitive
+      description: The React Aria component or hook to build on, if there is one.
+      placeholder: DisclosureGroup
+  - type: textarea
+    id: examples
+    attributes:
+      label: Examples
+      description: Links to similar components in other libraries or products.

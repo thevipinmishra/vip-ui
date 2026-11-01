@@ -195,7 +195,7 @@ export function Chart<
       ref={ref}
       data-slot="chart-plot"
       data-entrance={animated ? entrance : "idle"}
-      className="relative transition-opacity duration-300 ease-out-quint data-[entrance=waiting]:opacity-0 data-[entrance=waiting]:transition-none print:data-[entrance=waiting]:opacity-100"
+      className="relative transition-opacity duration-250 ease-out-quint data-[entrance=waiting]:opacity-0 data-[entrance=waiting]:transition-none print:data-[entrance=waiting]:opacity-100"
     >
       <RendererChart
         key={entrance === "replay" ? "replay" : "initial"}

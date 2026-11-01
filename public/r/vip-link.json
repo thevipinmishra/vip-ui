@@ -3,8 +3,9 @@
   "name": "vip-link",
   "type": "registry:ui",
   "title": "Link",
-  "description": "Navigate with an accessible text link.",
-  "dependencies": ["react-aria-components@^1.22.1", "tailwind-variants@^3.3.1"],
+  "description": "Shows a link to another page or location.",
+  "dependencies": ["react-aria-components@^1.22.1"],
+  "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
   "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
   "css": {
     "@plugin tailwindcss-react-aria-components": {}
@@ -15,12 +16,6 @@
     }
   },
   "files": [
-    {
-      "path": "src/lib/utils.ts",
-      "type": "registry:file",
-      "target": "@components/vip-ui/utils.ts",
-      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
-    },
     {
       "path": "src/components/ui/link.tsx",
       "type": "registry:file",
