@@ -50,10 +50,7 @@ export function PromptInputAttachmentsDemo() {
         onFilesDropped={addFiles}
         onSubmit={() => setItems([])}
       >
-        <PromptInputTextArea
-          aria-label="Message"
-          placeholder="Add a message with your files"
-        />
+        <PromptInputTextArea placeholder="Add a message with your files" />
         {items.length > 0 && (
           <AttachmentList className="px-3 pt-3">
             {items.map((item) => (
@@ -79,6 +76,7 @@ export function PromptInputAttachmentsDemo() {
             <Button
               type="button"
               variant="ghost"
+              size="sm"
               iconOnly
               aria-label="Attach files"
             >

@@ -43,7 +43,6 @@ interface PromptInputContextValue {
   isPending: boolean;
   hasValue: boolean;
   submitKey: PromptInputSubmitKey;
-  reportValue: (value: string) => void;
   textAreaRef: React.RefObject<HTMLTextAreaElement | null>;
 }
 
@@ -90,6 +89,8 @@ export function PromptInput({
   onStop,
   onFilesDropped,
   dropLabel = "Drop files to attach",
+  value,
+  defaultValue = "",
   onChange,
   ref,
   ...props
@@ -98,24 +99,22 @@ export function PromptInput({
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const dragDepthRef = useRef(0);
   const onFilesDroppedRef = useRef(onFilesDropped);
-  const [hasValue, setHasValue] = useState(false);
+  const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
+  const isControlled = value !== undefined;
+  const currentValue = isControlled ? value : uncontrolledValue;
+  const hasValue = currentValue.trim().length > 0;
   const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
     onFilesDroppedRef.current = onFilesDropped;
   }, [onFilesDropped]);
 
-  const reportValue = useCallback((value: string) => {
-    const next = value.trim().length > 0;
-    setHasValue((current) => (current === next ? current : next));
-  }, []);
-
   const submit = useCallback(() => {
-    const value = textAreaRef.current?.value ?? "";
-    if (!value.trim() || isPending) return;
-    onSubmit?.(value);
+    if (!hasValue || isPending) return;
+    onSubmit?.(currentValue);
+    if (!isControlled) setUncontrolledValue("");
     textAreaRef.current?.focus();
-  }, [isPending, onSubmit]);
+  }, [currentValue, hasValue, isControlled, isPending, onSubmit]);
 
   useEffect(() => {
     const element = rootRef.current;
@@ -172,16 +171,17 @@ export function PromptInput({
     <AriaTextField
       {...props}
       ref={setRootRef}
-      onChange={(value) => {
-        reportValue(value);
-        onChange?.(value);
+      value={currentValue}
+      onChange={(next) => {
+        if (!isControlled) setUncontrolledValue(next);
+        onChange?.(next);
       }}
       data-slot="prompt-input"
       data-size={size}
       data-dragging={isDragging || undefined}
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex w-full min-w-0 flex-col rounded-[var(--field-radius,var(--radius-lg))] border border-input bg-card text-foreground shadow-[var(--shadow-card)] outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-out-quint [&:hover]:border-primary/45 [&:focus-within]:border-ring [&:focus-within]:ring-1 [&:focus-within]:ring-ring [&:focus-within:hover]:border-ring data-[invalid]:border-destructive [&[data-invalid]:hover]:border-destructive [&[data-invalid]:focus-within]:border-destructive [&[data-invalid]:focus-within]:ring-destructive data-[readonly]:bg-muted/40 [&[data-readonly]:hover]:border-input data-[disabled]:bg-muted data-[disabled]:opacity-60 [&[data-disabled]:hover]:border-input data-[dragging]:border-primary/60",
+          "relative flex w-full min-w-0 flex-col rounded-[var(--field-radius,var(--radius-lg))] border border-input bg-card text-foreground shadow-[var(--shadow-card)] outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-out-quint [&:hover]:border-primary/45 [&:focus-within]:border-ring [&:focus-within]:ring-1 [&:focus-within]:ring-ring [&:focus-within:hover]:border-ring data-[invalid]:border-destructive [&[data-invalid]:hover]:border-destructive [&[data-invalid]:focus-within]:border-destructive [&[data-invalid]:focus-within]:ring-destructive data-[readonly]:bg-muted/40 [&[data-readonly]:hover]:border-input data-[disabled]:bg-muted data-[disabled]:opacity-60 [&[data-disabled]:hover]:border-input data-[dragging]:border-primary/60",
           size && fieldSizeStyles[size],
           className,
         ),
@@ -194,7 +194,6 @@ export function PromptInput({
           isPending,
           hasValue,
           submitKey,
-          reportValue,
           textAreaRef,
         }}
       >
@@ -261,8 +260,7 @@ export function PromptInputTextArea({
   onKeyDown,
   ...props
 }: PromptInputTextAreaProps) {
-  const { reportValue, submitKey, submit, textAreaRef } =
-    usePromptInputContext();
+  const { submitKey, submit, textAreaRef } = usePromptInputContext();
   const localRef = useRef<HTMLTextAreaElement | null>(null);
 
   const resize = useCallback(() => {
@@ -289,18 +287,7 @@ export function PromptInputTextArea({
 
   useLayoutEffect(() => {
     resize();
-    reportValue(localRef.current?.value ?? "");
   });
-
-  useEffect(() => {
-    const element = localRef.current;
-    if (!element) return;
-    const handleInput = () => {
-      resize();
-    };
-    element.addEventListener("input", handleInput);
-    return () => element.removeEventListener("input", handleInput);
-  }, [resize]);
 
   useEffect(() => {
     const element = localRef.current;
@@ -395,7 +382,7 @@ export function PromptInputSubmit({
       iconOnly
       aria-label={label}
       onPress={stopping ? stop : submit}
-      isDisabled={isDisabled || (!isPending && !hasValue)}
+      isDisabled={isDisabled || (isPending ? !stop : !hasValue)}
       className={className}
     >
       <span
