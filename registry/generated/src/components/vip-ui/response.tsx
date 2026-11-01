@@ -102,11 +102,9 @@ export function ResponseActions({
   className,
   ...props
 }: ComponentProps<"div">) {
-  const { status } = useResponseContext();
   return (
     <div
       {...props}
-      key={status}
       data-slot="response-actions"
       className={cn(
         "flex min-w-0 flex-wrap items-center gap-1 transition-[opacity,translate] duration-200 ease-out-quint starting:opacity-0 motion-safe:starting:translate-y-0.5",

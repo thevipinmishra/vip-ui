@@ -994,25 +994,25 @@ const pageSources = {
       {
         title: "Stop while streaming",
         description:
-          "Set isPending to turn the submit button into a Stop button, and set onStop to end the run. The submit button also disables while the textarea is empty.",
+          "Set isPending and onStop to change Send to Stop while a run streams. Send is disabled while the textarea is empty, and while isPending is set without onStop.",
         sourcePath: "prompt-input-stop-demo.tsx",
       },
       {
         title: "Drag and drop",
         description:
-          "Files dropped anywhere on the frame call onFilesDropped. While a file is over it, the frame swaps to a dashed overlay that reads Drop files to attach.",
+          "Files dropped on the frame go to onFilesDropped. While a file is over the frame, a dashed overlay shows dropLabel.",
         sourcePath: "prompt-input-drop-demo.tsx",
       },
       {
         title: "Footer actions",
         description:
-          "Compose PromptInputFooter with your own controls, such as a model picker. PromptInputSubmit sends and stops from the component's context. Install Select separately.",
+          "Put your own controls in PromptInputFooter, such as a model picker. PromptInputSubmit gets its state from PromptInput. Install Select separately.",
         sourcePath: "prompt-input-model-demo.tsx",
       },
       {
         title: "Full transcript",
         description:
-          "Sends a seeded prompt and runs one turn: Reasoning streams above, Response streams below, and the actions arrive when the run ends. Typing a different prompt changes the turn, and Stop ends the run. Install Reasoning, Response, Copy button, and Source link separately.",
+          "Push Send to run one turn. Reasoning streams first, then Response streams with the caret. The actions and sources show when the run ends. Stop ends the run. The second prompt fails once to show the error state. Install Message, Reasoning, Response, Copy button, and Source link separately.",
         sourcePath: "prompt-input-transcript-demo.tsx",
       },
     ],

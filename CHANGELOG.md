@@ -33,6 +33,10 @@ Concise, user-visible changes. Versions track site releases, not a published npm
 
 ### Documentation
 
+- New Colors page at `/colors` with ten color scales: Gray, Red, Orange, Yellow, Green, Teal, Cyan, Blue, Violet, and Pink. Each scale has 12 OKLCH steps for light and dark mode. The page shows the purpose of each step and the contrast of the text steps. It copies the CSS for one scale or all scales, and a Tailwind `@theme` block that adds classes such as `bg-blue-3`.
+- The Themes page has ten themes made from the color scales: Gray, and one theme for each hue on Gray neutrals. The six earlier themes are removed: Atelier, Signal, Canopy, Vesper, Marigold, and Graphite. A theme sets colors only, not fonts, radius, or shadows. The Tokens tab shows the scale step of each token. Each color pair passes 4.5:1 in light and dark mode.
+- The Installation guide has an Add a theme section. The Styling guide has a Color scales section with the purpose of each step, the contrast checks, and how to map the shadcn tokens to steps.
+
 - New Motion guide at `/components/motion`. It shows the motion tokens, springs, loops, tuned timings, and the reduced motion rules, with live demos.
 - The home page shows motion components. Text swap, Animated number, Text scramble, and Toggle button group play one time when they come into view, and again on hover or focus.
 - Each card in the component index shows a preview. The preview loads when the card is near the screen. Motion previews play when you move the pointer over the card. Overlay previews are drawings and do not open.
