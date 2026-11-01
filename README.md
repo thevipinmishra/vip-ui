@@ -46,15 +46,15 @@ Use `pnpm lint` and `pnpm build` to check changes. `pnpm registry:build` regener
 
 ## Project layout
 
-| Path | Purpose |
-| --- | --- |
-| `src/components/ui/` | Component source files |
-| `src/components/docs/`, `src/app/components/` | Component demos and documentation pages |
-| `src/app/blocks/`, `src/lib/blocks.json` | Installable Next.js blocks and their catalog |
-| `src/lib/catalog.json` | Component names, groups, navigation order, and descriptions |
-| `scripts/generate-registry.mjs` | Registry generator |
-| `public/r/`, `registry.json`, `registry/generated/` | Generated registry files |
-| `src/app/globals.css` | Site theme and Tailwind settings |
+| Path                                                | Purpose                                                     |
+| --------------------------------------------------- | ----------------------------------------------------------- |
+| `src/components/ui/`                                | Component source files                                      |
+| `src/components/docs/`, `src/app/components/`       | Component demos and documentation pages                     |
+| `src/app/blocks/`, `src/lib/blocks.json`            | Installable Next.js blocks and their catalog                |
+| `src/lib/catalog.json`                              | Component names, groups, navigation order, and descriptions |
+| `scripts/generate-registry.mjs`                     | Registry generator                                          |
+| `public/r/`, `registry.json`, `registry/generated/` | Generated registry files                                    |
+| `src/app/globals.css`                               | Site theme and Tailwind settings                            |
 
 ## Contributing
 

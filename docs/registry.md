@@ -12,13 +12,13 @@ pnpm registry:build
 
 `scripts/generate-registry.mjs` reads `src/components/ui/`, `src/lib/utils.ts`, `src/lib/motion.ts`, and the blocks in `src/app/blocks/`. It reads item descriptions from `src/lib/catalog.json` and, for files without a docs page, from `src/lib/internal-descriptions.json`. Each block folder must have an entry in `src/lib/blocks.json`, and each item must have a description, or the build throws. It writes:
 
-| Path | Purpose |
-| --- | --- |
-| `public/r/vip-*.json` | Hosted item payloads, including file contents and package dependencies |
+| Path                     | Purpose                                                                                 |
+| ------------------------ | --------------------------------------------------------------------------------------- |
+| `public/r/vip-*.json`    | Hosted item payloads, including file contents and package dependencies                  |
 | `public/r/registry.json` | Hosted catalog for `shadcn list` and `search`; file entries contain paths, not contents |
-| `public/r/setup.css` | Theme CSS that the installation guide shows for a manual install |
-| `registry.json` | Root source catalog for GitHub installs |
-| `registry/generated/` | Portable source files referenced by the root catalog |
+| `public/r/setup.css`     | Theme CSS that the installation guide shows for a manual install                        |
+| `registry.json`          | Root source catalog for GitHub installs                                                 |
+| `registry/generated/`    | Portable source files referenced by the root catalog                                    |
 
 Commit these generated files alongside changes to their source. Never edit the generated copies.
 
@@ -42,10 +42,10 @@ Each item declares only what its own file needs: the npm `dependencies`, and the
 
 Two `NEXT_PUBLIC_` variables control absolute links. Next.js inlines them at build time, so they must be present when the site is built, not only at request time.
 
-| Variable | Purpose |
-| --- | --- |
+| Variable                   | Purpose                                                                                                                                                                                                                                                                                                                              |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `NEXT_PUBLIC_REGISTRY_URL` | Public HTTPS origin used for the `homepage` in both generated catalogs and for the CLI install commands on component pages, block pages, and the installation guide. Without it, the catalogs use `https://vip-ui.vercel.app`. The commands use `http://localhost:3000` in development, and a production build shows no CLI command. |
-| `NEXT_PUBLIC_SITE_URL` | Optional canonical origin for `metadataBase`, the sitemap, robots, `llms.txt`, and Markdown exports. When it is unset, `src/lib/site-url.ts` falls back to `NEXT_PUBLIC_REGISTRY_URL`. |
+| `NEXT_PUBLIC_SITE_URL`     | Optional canonical origin for `metadataBase`, the sitemap, robots, `llms.txt`, and Markdown exports. When it is unset, `src/lib/site-url.ts` falls back to `NEXT_PUBLIC_REGISTRY_URL`.                                                                                                                                               |
 
 Set `NEXT_PUBLIC_REGISTRY_URL=https://vip-ui.vercel.app` in the Vercel project's build environment (Production, and Preview too if previews should show install commands) before redeploying. Do not end the value with a slash; the generator writes it to `homepage` as it is. `src/lib/site-url.ts` throws during a production build when neither variable is set, so a deployment cannot silently publish localhost links.
 

@@ -5,9 +5,9 @@
   "title": "Toggle Button",
   "description": "Switches a button between selected and unselected states.",
   "dependencies": [
-    "motion@^13.5.1",
+    "motion@^14.9.0",
     "react-aria-components@^1.22.1",
-    "tailwind-variants@^3.3.1"
+    "tailwind-variants@^4.0.1"
   ],
   "registryDependencies": [
     "https://vip-ui.vercel.app/r/vip-button-styles.json",
