@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Button Styles",
   "description": "Sets the variants and sizes of buttons and button links.",
-  "dependencies": ["tailwind-variants@^3.3.1"],
+  "dependencies": ["tailwind-variants@^4.0.1"],
   "cssVars": {
     "theme": {
       "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"

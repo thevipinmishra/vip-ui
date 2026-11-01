@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Agent Status",
   "description": "Shows the current step of an agent and its state.",
-  "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^13.5.1"],
+  "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.9.0"],
   "registryDependencies": [
     "https://vip-ui.vercel.app/r/vip-motion.json",
     "https://vip-ui.vercel.app/r/vip-utils.json"
