@@ -6,7 +6,7 @@
   "description": "Copies a value to the clipboard and shows the result.",
   "dependencies": [
     "@phosphor-icons/react@^2.1.10",
-    "motion@^13.5.1",
+    "motion@^14.9.0",
     "react-aria-components@^1.22.1"
   ],
   "registryDependencies": [

@@ -28,26 +28,26 @@ Open <http://localhost:3000/components>. `pnpm dev` runs `pnpm registry:build` f
 
 ## Where things live
 
-| Path | Contents |
-| --- | --- |
-| `src/components/ui/` | Component source files. Each file becomes a registry item. |
-| `src/components/docs/` | Demos and the parts of the docs site. |
-| `src/app/components/` | Component docs routes. Most components use `[slug]/page.tsx`. |
-| `src/app/blocks/` | Full-page blocks. `src/lib/blocks.json` lists them. |
-| `src/lib/catalog.json` | Component names, groups, navigation order, and the one description of each component. |
-| `src/lib/catalog.ts` | Catalog helpers and React Aria links. |
-| `src/lib/internal-descriptions.json` | Descriptions of shared files that have no docs page. |
-| `src/lib/component-examples.ts` | Usage demo and examples for each component page. |
-| `src/components/docs/catalog-preview-registry.ts` | The preview on each card of the component index. |
-| `src/lib/component-api.ts` | API reference tables. |
-| `src/components/docs/component-compositions.ts` | Part trees for components that have more than one part. |
-| `src/lib/registry-docs.ts` | Manual install plan, registry namespace, and the list of shared files. |
-| `src/lib/motion.ts` | Motion easing, durations, and springs. |
-| `src/lib/utils.ts` | The `cn` helper. |
-| `src/app/globals.css` | Site theme and Tailwind settings. |
-| `scripts/generate-registry.mjs` | Registry generator. |
-| `scripts/generate-palettes.mjs` | Color scale generator. It writes `src/lib/palette-data.ts`. |
-| `public/r/`, `registry.json`, `registry/generated/` | Generated registry files. |
+| Path                                                | Contents                                                                              |
+| --------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `src/components/ui/`                                | Component source files. Each file becomes a registry item.                            |
+| `src/components/docs/`                              | Demos and the parts of the docs site.                                                 |
+| `src/app/components/`                               | Component docs routes. Most components use `[slug]/page.tsx`.                         |
+| `src/app/blocks/`                                   | Full-page blocks. `src/lib/blocks.json` lists them.                                   |
+| `src/lib/catalog.json`                              | Component names, groups, navigation order, and the one description of each component. |
+| `src/lib/catalog.ts`                                | Catalog helpers and React Aria links.                                                 |
+| `src/lib/internal-descriptions.json`                | Descriptions of shared files that have no docs page.                                  |
+| `src/lib/component-examples.ts`                     | Usage demo and examples for each component page.                                      |
+| `src/components/docs/catalog-preview-registry.ts`   | The preview on each card of the component index.                                      |
+| `src/lib/component-api.ts`                          | API reference tables.                                                                 |
+| `src/components/docs/component-compositions.ts`     | Part trees for components that have more than one part.                               |
+| `src/lib/registry-docs.ts`                          | Manual install plan, registry namespace, and the list of shared files.                |
+| `src/lib/motion.ts`                                 | Motion easing, durations, and springs.                                                |
+| `src/lib/utils.ts`                                  | The `cn` helper.                                                                      |
+| `src/app/globals.css`                               | Site theme and Tailwind settings.                                                     |
+| `scripts/generate-registry.mjs`                     | Registry generator.                                                                   |
+| `scripts/generate-palettes.mjs`                     | Color scale generator. It writes `src/lib/palette-data.ts`.                           |
+| `public/r/`, `registry.json`, `registry/generated/` | Generated registry files.                                                             |
 
 ## Generated files
 
