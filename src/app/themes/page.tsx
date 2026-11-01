@@ -9,7 +9,7 @@ import { ThemeStudio } from "./theme-studio";
 export const metadata: Metadata = {
   title: "Themes | vip/ui",
   description:
-    "Six themes for vip/ui and shadcn/ui with a live preview on real product screens. Install with the shadcn CLI or copy the CSS.",
+    "Six themes and ten color scales for vip/ui and shadcn/ui, with a live preview on real product screens. Install with the shadcn CLI or copy the CSS.",
 };
 
 const pageCss = Object.fromEntries(

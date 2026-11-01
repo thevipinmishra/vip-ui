@@ -14,7 +14,7 @@ export const docsGuides = [
     href: "/components/styling",
     label: "Styling",
     description:
-      "Change the theme, dark mode, and the styles of a component. vip/ui uses your shadcn theme.",
+      "Change the theme, color scales, dark mode, and the styles of a component. vip/ui uses your shadcn theme.",
   },
   {
     href: "/components/react-aria",

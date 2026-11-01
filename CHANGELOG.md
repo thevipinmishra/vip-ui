@@ -33,6 +33,9 @@ Concise, user-visible changes. Versions track site releases, not a published npm
 
 ### Documentation
 
+- The Themes page has a Colors tab with ten color scales: Gray, Red, Orange, Yellow, Green, Teal, Cyan, Blue, Violet, and Pink. Each scale has 12 OKLCH steps for light and dark mode. The tab shows the contrast of the text steps and copies the CSS for one scale or all scales.
+- The Styling guide has a Color scales section. It gives the purpose of each step, the contrast that each scale passes, and how to set the shadcn tokens to steps.
+
 - New Motion guide at `/components/motion`. It shows the motion tokens, springs, loops, tuned timings, and the reduced motion rules, with live demos.
 - The home page shows motion components. Text swap, Animated number, Text scramble, and Toggle button group play one time when they come into view, and again on hover or focus.
 - Each card in the component index shows a preview. The preview loads when the card is near the screen. Motion previews play when you move the pointer over the card. Overlay previews are drawings and do not open.

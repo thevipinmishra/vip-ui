@@ -33,6 +33,7 @@ import {
   officialThemes,
   themeCss,
 } from "./official-themes";
+import { ThemePalettes } from "./theme-palettes";
 import { ThemeTokens } from "./theme-tokens";
 
 type Mode = "light" | "dark";
@@ -303,6 +304,7 @@ export function ThemeStudio({
           <Tab id="preview">Preview</Tab>
           <Tab id="components">All components</Tab>
           <Tab id="tokens">Tokens</Tab>
+          <Tab id="colors">Colors</Tab>
         </TabList>
         <TabPanel id="preview" className={panelClass}>
           {showcase}
@@ -312,6 +314,9 @@ export function ThemeStudio({
         </TabPanel>
         <TabPanel id="tokens" className={panelClass}>
           <ThemeTokens theme={theme} mode={mode} />
+        </TabPanel>
+        <TabPanel id="colors" className={panelClass}>
+          <ThemePalettes mode={mode} />
         </TabPanel>
       </Tabs>
 

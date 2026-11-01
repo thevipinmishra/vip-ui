@@ -18,7 +18,7 @@ export function GET() {
         `- [${guide.label}](${site}${guide.href}): ${guide.description}`,
     ),
     `- [Components](${site}/components): the full catalog, grouped by purpose.`,
-    `- [Themes](${site}/themes): live OKLCH theme tokens with copyable CSS.`,
+    `- [Themes](${site}/themes): live OKLCH theme tokens and ten 12-step color scales, with copyable CSS.`,
     `- [Charts](${site}/charts): chart examples built on TanStack Charts.`,
     `- [Blocks](${site}/blocks): complete page sections, such as dashboards, sign-in forms, and settings, that install as Next.js routes.`,
     `- [License](${site}/license): MIT.`,

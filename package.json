@@ -8,6 +8,7 @@
     "dev": "next dev",
     "prebuild": "pnpm registry:build",
     "build": "next build",
+    "palette:build": "node scripts/generate-palettes.mjs && biome format --write src/app/themes/palette-data.ts",
     "registry:build": "node scripts/generate-registry.mjs && biome format --write public/r registry.json",
     "test:registry": "node --test scripts/generate-registry.test.mjs",
     "test:registry:cli": "node scripts/test-registry-cli.mjs",
