@@ -16,6 +16,8 @@ import {
   displayPath,
   fileName,
   readSharedFile,
+  registryNamespace,
+  registryNamespaceUrl,
   registryUrl,
   type SharedFileSlug,
   sharedFiles,
@@ -27,6 +29,10 @@ const componentsJson = `{
   "tsx": true,
   "tailwind": { "css": "src/app/globals.css", "cssVariables": true }
 }`;
+
+function namespaceJson(url: string) {
+  return JSON.stringify({ registries: { [registryNamespace]: url } }, null, 2);
+}
 
 const usage = `import { Button } from "@/components/vip-ui/button";
 
@@ -40,6 +46,7 @@ export default async function InstallationPage() {
     "utf8",
   );
   const buttonUrl = registryUrl("button");
+  const namespaceUrl = registryNamespaceUrl();
   const shared = await Promise.all(
     (Object.keys(sharedFiles) as SharedFileSlug[]).map(async (slug) => ({
       slug,
@@ -109,8 +116,13 @@ export default async function InstallationPage() {
         <p>The CLI does these steps:</p>
         <List>
           <li>
-            Adds the component files to a <Code>vip-ui/</Code> folder in your
+            Adds the component file to a <Code>vip-ui/</Code> folder in your
             components alias.
+          </li>
+          <li>
+            Adds the files that the component needs, such as{" "}
+            <Code>utils.ts</Code> and <Code>popover.tsx</Code>. Each file is a
+            separate registry item. All components use the same copy.
           </li>
           <li>Installs the packages that the component uses.</li>
           <li>
@@ -123,6 +135,27 @@ export default async function InstallationPage() {
           </li>
         </List>
       </GuideSection>
+
+      {namespaceUrl ? (
+        <GuideSection id="namespace" title="Add the namespace">
+          <p>
+            Add vip/ui to the <Code>registries</Code> in your{" "}
+            <Code>components.json</Code>. Keep your other values.
+          </p>
+          <CodeBlock
+            code={namespaceJson(namespaceUrl)}
+            filename="components.json"
+            language="json"
+          />
+          <p>
+            Then add items by name. Item names start with <Code>vip-</Code>.
+          </p>
+          <PackageManagerCommand
+            action="run"
+            args={`shadcn@latest add ${registryNamespace}/vip-button`}
+          />
+        </GuideSection>
+      ) : null}
 
       <GuideSection id="manual" title="Install manually">
         <p>Use these steps if you do not use the CLI.</p>

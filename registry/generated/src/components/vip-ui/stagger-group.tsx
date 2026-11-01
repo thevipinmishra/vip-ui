@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import type { HTMLAttributes, ReactNode } from "react";
-import { easeOut, transitionFor } from "./motion";
+import { duration, easeOut, maxStagger, transitionFor } from "./motion";
 import { cn } from "./utils";
 
 type StaggerAttributes = Omit<
@@ -14,8 +14,6 @@ type StaggerAttributes = Omit<
   | "onAnimationEnd"
   | "onAnimationIteration"
 >;
-
-const MAX_TOTAL_DELAY = 0.6;
 
 export interface StaggerGroupProps extends StaggerAttributes {
   children: ReactNode;
@@ -42,8 +40,7 @@ export function StaggerGroup({
         delayChildren: (index: number, total: number) =>
           reducedMotion
             ? 0
-            : index *
-              Math.min(stagger, MAX_TOTAL_DELAY / Math.max(total - 1, 1)),
+            : index * Math.min(stagger, maxStagger / Math.max(total - 1, 1)),
       },
     },
   };
@@ -89,7 +86,7 @@ export function StaggerItem({
       className={cn(className)}
       variants={itemVariants}
       transition={transitionFor(reducedMotion, {
-        duration: 0.4,
+        duration: duration.reveal,
         ease: easeOut,
       })}
     >

@@ -3,15 +3,10 @@
   "name": "vip-timeline",
   "type": "registry:ui",
   "title": "Timeline",
-  "description": "Show dated events in a semantic sequence.",
-  "dependencies": ["@phosphor-icons/react@^2.1.10", "tailwind-variants@^3.3.1"],
+  "description": "Shows events in a time-ordered sequence.",
+  "dependencies": ["@phosphor-icons/react@^2.1.10"],
+  "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
   "files": [
-    {
-      "path": "src/lib/utils.ts",
-      "type": "registry:file",
-      "target": "@components/vip-ui/utils.ts",
-      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
-    },
     {
       "path": "src/components/ui/timeline.tsx",
       "type": "registry:file",

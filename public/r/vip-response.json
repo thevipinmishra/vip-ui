@@ -3,20 +3,15 @@
   "name": "vip-response",
   "type": "registry:ui",
   "title": "Response",
-  "description": "Show a streaming answer with its status and actions.",
-  "dependencies": ["tailwind-variants@^3.3.1"],
+  "description": "Shows a streaming answer with its status and actions.",
+  "dependencies": [],
+  "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
   "cssVars": {
     "theme": {
       "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
     }
   },
   "files": [
-    {
-      "path": "src/lib/utils.ts",
-      "type": "registry:file",
-      "target": "@components/vip-ui/utils.ts",
-      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
-    },
     {
       "path": "src/components/ui/response.tsx",
       "type": "registry:file",

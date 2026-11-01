@@ -3,8 +3,9 @@
   "name": "vip-alert",
   "type": "registry:ui",
   "title": "Alert",
-  "description": "Show information, success, warning, or error messages.",
+  "description": "Shows an inline message about a status or event.",
   "dependencies": ["@phosphor-icons/react@^2.1.10", "tailwind-variants@^3.3.1"],
+  "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
   "cssVars": {
     "light": {
       "success": "oklch(0.43 0.12 155)",
@@ -26,12 +27,6 @@
     }
   },
   "files": [
-    {
-      "path": "src/lib/utils.ts",
-      "type": "registry:file",
-      "target": "@components/vip-ui/utils.ts",
-      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
-    },
     {
       "path": "src/components/ui/alert.tsx",
       "type": "registry:file",

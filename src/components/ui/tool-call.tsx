@@ -4,7 +4,7 @@ import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import { type ComponentProps, useState } from "react";
 import { composeRenderProps } from "react-aria-components";
-import { easeInOut } from "@/lib/motion";
+import { easeInOut, loop } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { CollapsiblePanel } from "./collapsible-panel";
 import { Disclosure, DisclosureHeader } from "./disclosure";
@@ -85,7 +85,11 @@ export function ToolCallTrigger({
                 transition={
                   reduceMotion
                     ? { duration: 0 }
-                    : { duration: 1.2, repeat: Infinity, ease: easeInOut }
+                    : {
+                        duration: loop.pulse,
+                        repeat: Infinity,
+                        ease: easeInOut,
+                      }
                 }
               />
             ) : status === "complete" ? (

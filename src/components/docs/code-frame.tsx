@@ -81,7 +81,7 @@ export function CodeFrame({
             label={copyText}
             iconOnly
             variant="minimal"
-            className="size-8 hover:bg-accent pressed:bg-accent data-[status=copied]:text-foreground data-[status=failed]:text-destructive"
+            className="size-8 hover:bg-accent pressed:bg-accent data-[status=copied]:text-foreground data-[status=error]:text-destructive"
           />
         </div>
       </div>

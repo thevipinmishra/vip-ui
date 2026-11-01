@@ -71,8 +71,7 @@ export async function GET(
   const markdown = buildComponentMarkdown({
     slug,
     name: component.name,
-    description:
-      pageData?.description ?? registryItem.description ?? component.useFor,
+    description: component.description,
     site: siteUrl(),
     manual: manualInstallPlan(registryItem, slug),
     cliUrl: registryUrl(slug),

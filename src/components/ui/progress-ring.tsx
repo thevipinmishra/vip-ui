@@ -7,7 +7,7 @@ import {
   composeRenderProps,
   Label,
 } from "react-aria-components";
-import { duration, easeOut } from "@/lib/motion";
+import { duration, easeOut, loop } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 export interface ProgressRingProps
@@ -58,7 +58,7 @@ export function ProgressRing({
               }}
               transition={
                 isIndeterminate && !reducedMotion
-                  ? { duration: 1.5, ease: "linear", repeat: Infinity }
+                  ? { duration: loop.sweep, ease: "linear", repeat: Infinity }
                   : { duration: 0 }
               }
             >

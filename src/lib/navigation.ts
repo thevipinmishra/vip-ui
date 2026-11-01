@@ -22,6 +22,12 @@ export const docsGuides = [
     description:
       "Interactive components wrap React Aria Components. React Aria supplies their behavior, state, and accessibility.",
   },
+  {
+    href: "/components/motion",
+    label: "Motion",
+    description:
+      "Components share one set of durations, curves, and springs. Motion shows a change of state and obeys the reduced motion setting.",
+  },
 ] as const satisfies readonly (NavLink & { description: string })[];
 
 export type Guide = (typeof docsGuides)[number];

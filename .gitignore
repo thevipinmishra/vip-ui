@@ -16,9 +16,17 @@
 /skills/
 /skills-lock.json
 /graphify-out/
+/.audit/
 
 *.md
-/docs/
+!/README.md
+!/CHANGELOG.md
+!/CONTRIBUTING.md
+!/SECURITY.md
+!/.github/**
+/docs/*
+!/docs/registry.md
+!/docs/styling.md
 
 /tests/
 /playwright.config.ts

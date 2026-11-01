@@ -1,0 +1,69 @@
+name: Bug report
+description: Report a problem with a component or the docs site.
+labels: ["bug"]
+body:
+  - type: input
+    id: component
+    attributes:
+      label: Component
+      description: The component name or registry item, for example Button or vip-button.
+    validations:
+      required: true
+  - type: dropdown
+    id: install-method
+    attributes:
+      label: Install method
+      options:
+        - CLI (shadcn add)
+        - Manual copy
+        - Not installed (docs site only)
+    validations:
+      required: true
+  - type: dropdown
+    id: framework
+    attributes:
+      label: Framework
+      options:
+        - Next.js App Router
+        - Next.js Pages Router
+        - Vite
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: Framework, React, and Tailwind CSS versions.
+      placeholder: Next.js 16.3, React 19.2, Tailwind CSS 4.3
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and operating system
+      placeholder: Chrome 141 on Windows 11
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Give a link to a minimal repository or sandbox. If you cannot, write the steps.
+      placeholder: |
+        1. Install the component.
+        2. Render it with these props.
+        3. Push Tab.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+      description: Include error messages and screenshots if you have them.
+    validations:
+      required: true

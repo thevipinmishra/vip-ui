@@ -9,7 +9,7 @@ import {
   useReducedMotion,
 } from "motion/react";
 import { type ComponentProps, useEffect, useMemo, useState } from "react";
-import { easeOut, springSnappy, transitionFor } from "@/lib/motion";
+import { duration, easeOut, springSnappy, transitionFor } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 export interface AnimatedNumberProps
@@ -88,7 +88,7 @@ function CountingNumber({
       return;
     }
     const controls = animate(number, value, {
-      duration: 0.45,
+      duration: duration.reveal,
       ease: easeOut,
     });
     return () => controls.stop();

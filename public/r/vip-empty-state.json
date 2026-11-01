@@ -3,15 +3,10 @@
   "name": "vip-empty-state",
   "type": "registry:ui",
   "title": "Empty State",
-  "description": "Explain why a collection is empty and what to do next.",
-  "dependencies": ["tailwind-variants@^3.3.1"],
+  "description": "Shows why a view is empty and what to do next.",
+  "dependencies": [],
+  "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
   "files": [
-    {
-      "path": "src/lib/utils.ts",
-      "type": "registry:file",
-      "target": "@components/vip-ui/utils.ts",
-      "content": "import { type CnOptions, cn as mergeClasses } from \"tailwind-variants\";\n\nexport function cn(...classes: CnOptions): string {\n  return mergeClasses(...classes) ?? \"\";\n}\n"
-    },
     {
       "path": "src/components/ui/empty-state.tsx",
       "type": "registry:file",
