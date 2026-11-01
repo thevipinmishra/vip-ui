@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
+import { Message } from "@/components/ui/message";
 import { PromptInput } from "@/components/ui/prompt-input";
 import {
   Reasoning,
@@ -13,186 +14,209 @@ import {
   Response,
   ResponseActions,
   ResponseContent,
+  ResponseFooter,
+  ResponseNotice,
 } from "@/components/ui/response";
 import { SourceLink } from "@/components/ui/source-link";
 
-type Phase = "idle" | "thinking" | "streaming" | "complete" | "error";
+type Phase = "stopped" | "thinking" | "streaming" | "complete" | "error";
 
 interface Turn {
   prompt: string;
   thought: string;
   answer: string;
   sources: Array<{ label: string; href: string }>;
-  fails?: boolean;
+  failAt?: number;
 }
 
 const TURNS: Turn[] = [
   {
-    prompt: "What changed in the rollout plan for billing exports?",
+    prompt: "How does the composer handle a long prompt?",
     thought: [
-      "The ticket lists two changes, so I should name both and keep the answer short.",
-      "The export job writes the settlement column behind the existing flag, so no backfill is required.",
-      "The read path can stay on the current index while the new filter rolls out, which keeps the cutover observable from the logs.",
-      "The remaining risk is the batch window on the read replica, and the maintenance page already explains it.",
+      "The question is about Prompt input, so I should check how its textarea sizes itself.",
+      "PromptInputTextArea starts at minRows and adds one row for each new line of text.",
+      "At maxRows it stops growing and scrolls, so the footer stays in view.",
+      "The defaults are one row and eight rows, and both are props.",
     ].join(" "),
     answer: [
-      "Two changes. The export job now writes the settlement column behind the existing billing flag, so no backfill is required.",
-      "The read path stays on the current index while the new filter rolls out, which keeps the cutover observable from the logs.",
-      "The remaining risk is the batch window on the read replica, which the maintenance page already explains.",
+      "The textarea grows one row at a time until it reaches maxRows, which is 8 by default.",
+      "After that it scrolls, so the footer and the Send button stay in view.",
+      "Set minRows to start with a taller box.",
     ].join(" "),
     sources: [
-      {
-        label: "Billing exports",
-        href: "https://vip-ui.vercel.app/components/response",
-      },
-      {
-        label: "Read replicas",
-        href: "https://vip-ui.vercel.app/components/source-link",
-      },
+      { label: "Prompt input", href: "/components/prompt-input" },
+      { label: "Text area", href: "/components/text-area" },
     ],
   },
   {
-    prompt: "Does that hold for the EU tenant?",
+    prompt: "Can people attach files?",
     thought: [
-      "The EU tenant runs a separate write path, so the flag does not cover it.",
-      "Its writes land in the regional queue, and the settlement column is not part of that batch.",
+      "Prompt input accepts dropped files through onFilesDropped.",
+      "The attach button and the file rows come from File trigger and Attachment, which install separately.",
     ].join(" "),
     answer: [
-      "Not yet. The flag covers the US queue only.",
-      "The EU write path lands in the regional queue, where the settlement column is not part of the batch.",
+      "Yes. Set onFilesDropped to accept files dropped on the composer.",
+      "Put a File trigger button in PromptInputFooter, and show each file with Attachment.",
     ].join(" "),
     sources: [
-      {
-        label: "Regional queues",
-        href: "https://vip-ui.vercel.app/components/response",
-      },
+      { label: "Attachment", href: "/components/attachment" },
+      { label: "File trigger", href: "/components/file-trigger" },
     ],
-    fails: true,
+    failAt: 9,
   },
 ];
 
 const HINTS: Record<Phase, string> = {
-  idle: "The run stopped. Send the prompt again to restart it.",
-  thinking:
-    "Reasoning streams into the panel, which keeps the newest line in view.",
+  stopped: "The run stopped. Send a prompt to start a new run.",
+  thinking: "The newest reasoning line stays in view.",
   streaming: "The answer streams with the caret. Stop ends the run.",
-  complete: "Copy, regenerate, or send a follow-up prompt.",
-  error: "The run failed. Send the prompt again, or edit it first.",
+  complete: "Copy the answer, or send the next prompt.",
+  error: "The second prompt fails once on purpose. Retry runs it again.",
 };
 
-function useWordStream(text: string, run: boolean, interval: number) {
-  const [count, setCount] = useState(0);
-  const countRef = useRef(0);
-  countRef.current = count;
-
-  useEffect(() => {
-    if (!run) return;
-    setCount(0);
-    countRef.current = 0;
-    const words = text.split(" ");
-    const id = window.setInterval(() => {
-      if (countRef.current >= words.length) {
-        window.clearInterval(id);
-        return;
-      }
-      countRef.current += 1;
-      setCount(countRef.current);
-    }, interval);
-    return () => window.clearInterval(id);
-  }, [run, text, interval]);
-
-  return text.split(" ").slice(0, count).join(" ");
+function words(text: string) {
+  return text.split(" ");
 }
 
 export function PromptInputTranscriptDemo() {
   const [turn, setTurn] = useState(0);
+  const [run, setRun] = useState(0);
+  const [prompt, setPrompt] = useState(TURNS[0].prompt);
   const [phase, setPhase] = useState<Phase>("complete");
-  const [draft, setDraft] = useState("");
-  const current = TURNS[turn];
-  const thought = useWordStream(current.thought, phase !== "idle", 22);
-  const answer = useWordStream(
-    current.answer,
-    phase === "streaming" || phase === "complete",
-    30,
+  const [thoughtCount, setThoughtCount] = useState(
+    words(TURNS[0].thought).length,
   );
+  const [answerCount, setAnswerCount] = useState(words(TURNS[0].answer).length);
+  const [draft, setDraft] = useState(TURNS[1].prompt);
+  const [isRetry, setIsRetry] = useState(false);
+  const logRef = useRef<HTMLDivElement>(null);
+  const current = TURNS[turn];
+  const thoughtWords = words(current.thought);
+  const answerWords = words(current.answer);
+  const failAt = isRetry ? undefined : current.failAt;
+  const answerEnd = failAt ?? answerWords.length;
 
   useEffect(() => {
-    if (phase === "thinking" && thought.length >= current.thought.length) {
-      const id = window.setTimeout(() => setPhase("streaming"), 300);
-      return () => window.clearTimeout(id);
+    let id: number | undefined;
+    if (phase === "thinking") {
+      id =
+        thoughtCount < thoughtWords.length
+          ? window.setTimeout(() => setThoughtCount((count) => count + 1), 60)
+          : window.setTimeout(() => setPhase("streaming"), 300);
+    } else if (phase === "streaming") {
+      id =
+        answerCount < answerEnd
+          ? window.setTimeout(() => setAnswerCount((count) => count + 1), 30)
+          : window.setTimeout(() => {
+              setPhase(failAt ? "error" : "complete");
+              setDraft(
+                (value) => value || TURNS[(turn + 1) % TURNS.length].prompt,
+              );
+            }, 300);
     }
-    if (phase === "streaming" && answer.length >= current.answer.length) {
-      const id = window.setTimeout(
-        () => setPhase(current.fails ? "error" : "complete"),
-        300,
-      );
-      return () => window.clearTimeout(id);
-    }
-  }, [phase, thought, answer, current]);
+    return () => window.clearTimeout(id);
+  }, [
+    phase,
+    thoughtCount,
+    answerCount,
+    thoughtWords.length,
+    answerEnd,
+    failAt,
+    turn,
+  ]);
+
+  const start = (index: number, text: string, retry = false) => {
+    setTurn(index);
+    setIsRetry(retry);
+    setPrompt(text);
+    setThoughtCount(0);
+    setAnswerCount(0);
+    setRun((value) => value + 1);
+    setPhase("thinking");
+  };
 
   const submit = (value: string) => {
-    const index = TURNS.findIndex((entry) => entry.prompt === value.trim());
-    if (index === -1) return;
-    setTurn(index);
-    setPhase("thinking");
+    const text = value.trim();
+    const match = TURNS.findIndex((entry) => entry.prompt === text);
+    start(match === -1 ? (turn + 1) % TURNS.length : match, text);
     setDraft("");
   };
+
+  const answer = answerWords.slice(0, answerCount).join(" ");
+
+  useEffect(() => {
+    const log = logRef.current;
+    if (!log || phase !== "streaming" || !answer) return;
+    log.scrollTop = log.scrollHeight;
+  }, [phase, answer]);
 
   return (
     <div data-testid="transcript-demo" className="grid w-full max-w-xl gap-3">
       <div
-        key={turn}
+        key={run}
+        ref={logRef}
         role="log"
         aria-label="Conversation"
-        className="grid max-h-80 min-h-44 content-start gap-2 overflow-y-auto rounded-lg border border-border bg-card p-3 shadow-[var(--shadow-card)]"
+        className="grid max-h-96 min-h-44 content-start gap-3 overflow-y-auto rounded-lg border border-border bg-card p-3 shadow-[var(--shadow-card)]"
       >
-        <p className="ms-auto max-w-[85%] rounded-2xl rounded-se-md bg-accent px-3.5 py-2 text-sm leading-6 text-accent-foreground">
-          {current.prompt}
-        </p>
+        <Message sender="You" side="outgoing">
+          {prompt}
+        </Message>
         <Reasoning
-          status={
-            phase === "error"
-              ? "error"
-              : phase === "thinking" || phase === "streaming"
-                ? "thinking"
-                : "complete"
-          }
+          status={phase === "thinking" ? "thinking" : "complete"}
+          autoCollapse
           className="w-full"
         >
           <ReasoningTrigger />
-          <ReasoningPanel scrollable>{thought}</ReasoningPanel>
+          <ReasoningPanel scrollable>
+            {thoughtWords.slice(0, thoughtCount).join(" ")}
+          </ReasoningPanel>
         </Reasoning>
         <Response
           status={
-            phase === "error"
-              ? "error"
-              : phase === "complete"
-                ? "complete"
-                : "streaming"
+            phase === "thinking" || phase === "streaming" ? "streaming" : phase
           }
           className="w-full"
         >
           <ResponseContent>{answer}</ResponseContent>
+          <ResponseNotice />
           {phase === "complete" && (
             <>
               <ResponseActions>
                 <CopyButton value={current.answer} variant="ghost" size="sm" />
-                <Button type="button" variant="ghost" size="sm">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onPress={() => start(turn, prompt, true)}
+                >
                   Regenerate
                 </Button>
               </ResponseActions>
-              <div className="grid gap-2">
+              <ResponseFooter className="grid gap-2">
                 {current.sources.map((source, index) => (
                   <SourceLink
-                    key={source.label}
+                    key={source.href}
                     href={source.href}
                     label={source.label}
-                    source="vip/ui"
+                    source="vip/ui docs"
                     index={index + 1}
                   />
                 ))}
-              </div>
+              </ResponseFooter>
             </>
+          )}
+          {phase === "error" && (
+            <ResponseActions>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onPress={() => start(turn, prompt, true)}
+              >
+                Retry
+              </Button>
+            </ResponseActions>
           )}
         </Response>
       </div>
@@ -203,7 +227,7 @@ export function PromptInputTranscriptDemo() {
         isPending={phase === "thinking" || phase === "streaming"}
         placeholder="Ask a follow-up"
         onSubmit={submit}
-        onStop={() => setPhase("idle")}
+        onStop={() => setPhase("stopped")}
       />
       <p className="text-xs leading-5 text-muted-foreground">{HINTS[phase]}</p>
     </div>

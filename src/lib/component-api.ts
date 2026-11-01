@@ -720,13 +720,13 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: "boolean",
           default: "false",
           description:
-            "Turns the submit button into a Stop button. Set onStop to end the run.",
+            "Changes Send to Stop when onStop is set. Without onStop, Send is disabled.",
         },
         {
           name: "onSubmit",
           type: "(value: string) => void",
           description:
-            "Called with the textarea value when the user submits. Focus returns to the textarea.",
+            "Called with the textarea value on send. Focus returns to the textarea. If value is not set, the textarea clears after each send.",
         },
         {
           name: "onStop",
@@ -779,7 +779,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           name: "isDisabled",
           type: "boolean",
           description:
-            "Disables the button. The Send button is also disabled while the textarea is empty.",
+            "Disables the button. Send is also disabled while the textarea is empty.",
         },
       ],
     }),
@@ -799,7 +799,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           name: "duration",
           type: "number",
           description:
-            "Seconds of reasoning. Without it, a thinking run counts its own time and the count freezes when the run ends.",
+            "Seconds of reasoning. Without it, a thinking run counts its own time and the count stops when the run ends. 60 seconds or more show as minutes and seconds.",
         },
         {
           name: "autoCollapse",
@@ -841,7 +841,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: "boolean",
           default: "true",
           description:
-            "Keeps the newest line in view while a scrollable panel is thinking. Scrolling stops once the run ends, so reading back never fights the panel.",
+            "Keeps the newest line in view while a scrollable panel is thinking. Scroll up to pause it, and scroll to the end to start it again.",
         },
       ],
     }),
