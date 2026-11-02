@@ -1,6 +1,6 @@
 # Styling and variants
 
-vip/ui uses [Tailwind Variants v3](https://www.tailwind-variants.org/llms.txt) for reusable styles and class merging. The canonical recipes live in `src/components/ui/`. An installed component owns its copy of the recipe; edit that copy to change its appearance. Theme colors such as `bg-primary` and `text-foreground` come from your shadcn CSS variables, including the extra roles in the [styling guide](https://vip-ui.vercel.app/components/styling#theme).
+vip/ui uses [Tailwind Variants v3](https://www.tailwind-variants.org/llms.txt) for reusable styles and class merging. The canonical recipes live in `src/components/ui/`. An installed component owns its copy of the recipe; edit that copy to change its appearance. Theme colors such as `bg-primary` and `text-foreground` come from your shadcn CSS variables, including the extra roles in the [styling guide](https://vip-ui.dev/components/styling#theme).
 
 ## Change a reusable variant
 
@@ -50,4 +50,4 @@ Tailwind's class merger does not understand every custom utility. An arbitrary `
 
 Install `tailwind-variants` and replace your existing vip/ui files with the updated registry versions. If you copied files manually, include `vip-ui/utils.ts`, `vip-ui/motion.ts`, and `vip-ui/size.tsx` where the Manual tab lists them, and keep the `./` imports; do not switch those imports to shadcn's `lib/utils.ts`. The `size` prop of `<Button>` and `<ButtonLink>` changed: `size="default"` is now `size="md"`, and `size="icon"` is now the `iconOnly` prop. Review local changes before replacing any installed component.
 
-Tailwind v4 must scan the file containing a recipe. The site's `src/components/ui/` is scanned with its other app sources. If you install files outside your app's scanned source tree, add that location with Tailwind's `@source` directive in your stylesheet. Components use React Aria state variants such as `selected:` and `pressed:`. These variants come from the `tailwindcss-react-aria-components` plugin. A CLI install adds the plugin to your stylesheet. For a manual install, add it as the [installation guide](https://vip-ui.vercel.app/components/installation#manual) shows.
+Tailwind v4 must scan the file containing a recipe. The site's `src/components/ui/` is scanned with its other app sources. If you install files outside your app's scanned source tree, add that location with Tailwind's `@source` directive in your stylesheet. Components use React Aria state variants such as `selected:` and `pressed:`. These variants come from the `tailwindcss-react-aria-components` plugin. A CLI install adds the plugin to your stylesheet. For a manual install, add it as the [installation guide](https://vip-ui.dev/components/installation#manual) shows.

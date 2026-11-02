@@ -2,7 +2,7 @@
 
 vip/ui publishes shadcn-compatible JSON items at `/r/vip-<name>.json` and a catalog at `/r/registry.json`. The same generated sources support a public GitHub registry. Component items contain React and TypeScript files. Block items, such as `vip-dashboard-01`, also contain Next.js App Router routes.
 
-The confirmed public origin is `https://vip-ui.vercel.app`.
+The confirmed public origin is `https://vip-ui.dev`.
 
 ## Generate the registry
 
@@ -26,7 +26,7 @@ Commit these generated files alongside changes to their source. Never edit the g
 
 Each item ships only its own file, with an explicit `@components/vip-ui/` target. An item gets the files that it imports from other items through `registryDependencies`. `src/lib/utils.ts` and `src/lib/motion.ts` become the `registry:lib` items `vip-utils` and `vip-motion`. Each file in `src/components/ui/` becomes a `registry:ui` item, `vip-<file>`. This includes shared files without a docs page, such as `vip-size`, `vip-button-styles`, `vip-field-styles`, `vip-item-highlight`, `vip-collapsible-panel`, and `vip-date-segment`. A component that imports another component, such as Select and `popover.tsx`, links that component's item. The shadcn CLI resolves the graph and writes each file one time. A second install skips identical files and does not replace a shared file under older components.
 
-Each `registryDependencies` entry is a full URL, such as `https://vip-ui.vercel.app/r/vip-utils.json`. The generator builds the URL from `NEXT_PUBLIC_REGISTRY_URL`. It throws if an entry is a bare name, if a URL does not resolve to a generated item, or if the graph has a cycle. Bare names resolve to upstream shadcn components, and namespaced names need configuration in the consumer's `components.json`. A full URL works for every consumer. One item ships each file, and `catalogItem()` throws if two items write the same file.
+Each `registryDependencies` entry is a full URL, such as `https://vip-ui.dev/r/vip-utils.json`. The generator builds the URL from `NEXT_PUBLIC_REGISTRY_URL`. It throws if an entry is a bare name, if a URL does not resolve to a generated item, or if the graph has a cycle. Bare names resolve to upstream shadcn components, and namespaced names need configuration in the consumer's `components.json`. A full URL works for every consumer. One item ships each file, and `catalogItem()` throws if two items write the same file.
 
 Each item declares only what its own file needs: the npm `dependencies`, and the theme variables that the file uses. Components that use `cn` link `vip-utils`, which wraps `cn` from `tailwind-variants` and declares that package. Components that use the shared easing and springs link `vip-motion`, which declares `motion`. Components with `tv()` recipes also declare `tailwind-variants` directly. Items whose file imports `react-aria-components` declare `tailwindcss-react-aria-components` as a dev dependency and add `@plugin tailwindcss-react-aria-components` to the consumer's CSS. The plugin supplies React Aria state variants such as `selected:` and `pressed:`, which the generated sources keep. The CLI merges the packages, plugin, and variables of all items in the graph.
 
@@ -42,17 +42,17 @@ Each item declares only what its own file needs: the npm `dependencies`, and the
 
 Two `NEXT_PUBLIC_` variables control absolute links. Next.js inlines them at build time, so they must be present when the site is built, not only at request time.
 
-| Variable                   | Purpose                                                                                                                                                                                                                                                                                                                              |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `NEXT_PUBLIC_REGISTRY_URL` | Public HTTPS origin used for the `homepage` in both generated catalogs and for the CLI install commands on component pages, block pages, and the installation guide. Without it, the catalogs use `https://vip-ui.vercel.app`. The commands use `http://localhost:3000` in development, and a production build shows no CLI command. |
-| `NEXT_PUBLIC_SITE_URL`     | Optional canonical origin for `metadataBase`, the sitemap, robots, `llms.txt`, and Markdown exports. When it is unset, `src/lib/site-url.ts` falls back to `NEXT_PUBLIC_REGISTRY_URL`.                                                                                                                                               |
+| Variable                   | Purpose                                                                                                                                                                                                                                                                                                                       |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_REGISTRY_URL` | Public HTTPS origin used for the `homepage` in both generated catalogs and for the CLI install commands on component pages, block pages, and the installation guide. Without it, the catalogs use `https://vip-ui.dev`. The commands use `http://localhost:3000` in development, and a production build shows no CLI command. |
+| `NEXT_PUBLIC_SITE_URL`     | Optional canonical origin for `metadataBase`, the sitemap, robots, `llms.txt`, and Markdown exports. When it is unset, `src/lib/site-url.ts` falls back to `NEXT_PUBLIC_REGISTRY_URL`.                                                                                                                                        |
 
-Set `NEXT_PUBLIC_REGISTRY_URL=https://vip-ui.vercel.app` in the Vercel project's build environment (Production, and Preview too if previews should show install commands) before redeploying. Do not end the value with a slash; the generator writes it to `homepage` as it is. `src/lib/site-url.ts` throws during a production build when neither variable is set, so a deployment cannot silently publish localhost links.
+Set `NEXT_PUBLIC_REGISTRY_URL=https://vip-ui.dev` in the Vercel project's build environment (Production, and Preview too if previews should show install commands) before redeploying. Do not end the value with a slash; the generator writes it to `homepage` as it is. `src/lib/site-url.ts` throws during a production build when neither variable is set, so a deployment cannot silently publish localhost links.
 
 `scripts/generate-registry.mjs` runs outside the Next.js runtime and does not load `.env*` files. To use a different origin, set the variable in the shell before you regenerate locally:
 
 ```powershell
-$env:NEXT_PUBLIC_REGISTRY_URL="https://vip-ui.vercel.app"; pnpm registry:build
+$env:NEXT_PUBLIC_REGISTRY_URL="https://vip-ui.dev"; pnpm registry:build
 ```
 
 Set `NEXT_PUBLIC_SITE_URL` only when the site is served from a different origin than the registry; otherwise the registry origin is used for both.
@@ -62,21 +62,21 @@ Set `NEXT_PUBLIC_SITE_URL` only when the site is served from a different origin 
 After setting the environment variable and redeploying, check the deployment from outside:
 
 ```bash
-curl -s https://vip-ui.vercel.app/r/registry.json
-curl -s https://vip-ui.vercel.app/r/vip-button.json
-curl -s https://vip-ui.vercel.app/components/button
-curl -s https://vip-ui.vercel.app/components/button.md
-curl -s https://vip-ui.vercel.app/llms.txt
-curl -s https://vip-ui.vercel.app/sitemap.xml
+curl -s https://vip-ui.dev/r/registry.json
+curl -s https://vip-ui.dev/r/vip-button.json
+curl -s https://vip-ui.dev/components/button
+curl -s https://vip-ui.dev/components/button.md
+curl -s https://vip-ui.dev/llms.txt
+curl -s https://vip-ui.dev/sitemap.xml
 ```
 
 Acceptance checks:
 
-- `/r/registry.json` contains `"homepage": "https://vip-ui.vercel.app"`, and `/r/vip-button.json` returns valid JSON.
-- `/components/button` shows `pnpm dlx shadcn@latest add https://vip-ui.vercel.app/r/vip-button.json`.
-- `/components/button.md`, `/llms.txt`, `/sitemap.xml`, and page metadata use `https://vip-ui.vercel.app` for absolute links.
+- `/r/registry.json` contains `"homepage": "https://vip-ui.dev"`, and `/r/vip-button.json` returns valid JSON.
+- `/components/button` shows `pnpm dlx shadcn@latest add https://vip-ui.dev/r/vip-button.json`.
+- `/components/button.md`, `/llms.txt`, `/sitemap.xml`, and page metadata use `https://vip-ui.dev` for absolute links.
 - No published file under `registry.json`, `registry/generated/`, or `public/r/` contains `localhost`.
-- Every `registryDependencies` URL in `/r/vip-select.json` starts with `https://vip-ui.vercel.app/r/` and returns valid JSON.
+- Every `registryDependencies` URL in `/r/vip-select.json` starts with `https://vip-ui.dev/r/` and returns valid JSON.
 - A clean consumer installs and renders Button using the deploy command below.
 
 ## Host the static catalog
@@ -84,27 +84,27 @@ Acceptance checks:
 Serve `public/r/` without changing filenames. The catalog and items must be accessible as JSON at the same directory level:
 
 ```text
-https://vip-ui.vercel.app/r/registry.json
-https://vip-ui.vercel.app/r/vip-button.json
+https://vip-ui.dev/r/registry.json
+https://vip-ui.dev/r/vip-button.json
 ```
 
 Check from outside the deployment, then use the CLI from a project with `components.json`:
 
 ```bash
-pnpm dlx shadcn@latest list https://vip-ui.vercel.app/r/registry.json
-pnpm dlx shadcn@latest search https://vip-ui.vercel.app/r/registry.json --query button
-pnpm dlx shadcn@latest view https://vip-ui.vercel.app/r/vip-button.json
-pnpm dlx shadcn@latest add https://vip-ui.vercel.app/r/vip-button.json --dry-run
+pnpm dlx shadcn@latest list https://vip-ui.dev/r/registry.json
+pnpm dlx shadcn@latest search https://vip-ui.dev/r/registry.json --query button
+pnpm dlx shadcn@latest view https://vip-ui.dev/r/vip-button.json
+pnpm dlx shadcn@latest add https://vip-ui.dev/r/vip-button.json --dry-run
 ```
 
-`list` and `search` read the catalog. `view` and `add` read an item. For a real install, remove `--dry-run`. The consumer's `components.json` must set `tsx` and `tailwind.cssVariables` to `true`; see the [project setup](https://vip-ui.vercel.app/components/installation#setup). Items add only the vip/ui theme variables and do not replace the project's shadcn theme. Check existing files with `--diff` or `--view` before applying an update. See shadcn's [registry getting started](https://ui.shadcn.com/docs/registry/getting-started) guide for the HTTP contract.
+`list` and `search` read the catalog. `view` and `add` read an item. For a real install, remove `--dry-run`. The consumer's `components.json` must set `tsx` and `tailwind.cssVariables` to `true`; see the [project setup](https://vip-ui.dev/components/installation#setup). Items add only the vip/ui theme variables and do not replace the project's shadcn theme. Check existing files with `--diff` or `--view` before applying an update. See shadcn's [registry getting started](https://ui.shadcn.com/docs/registry/getting-started) guide for the HTTP contract.
 
 ### Configure a namespace
 
 Users can add a namespace to their `components.json` with the CLI:
 
 ```bash
-pnpm dlx shadcn@latest registry add '@vip-ui=https://vip-ui.vercel.app/r/{name}.json'
+pnpm dlx shadcn@latest registry add '@vip-ui=https://vip-ui.dev/r/{name}.json'
 pnpm dlx shadcn@latest add @vip-ui/vip-button
 ```
 
@@ -113,7 +113,7 @@ The URL template resolves `@vip-ui/vip-button` to `/r/vip-button.json`. The cata
 ```json
 {
   "registries": {
-    "@vip-ui": "https://vip-ui.vercel.app/r/{name}.json"
+    "@vip-ui": "https://vip-ui.dev/r/{name}.json"
   }
 }
 ```
@@ -122,7 +122,7 @@ Keep the rest of the consumer's existing `components.json`; do not replace their
 
 ## Publish from GitHub
 
-For installs without a registry server, commit the generated root `registry.json` **and** `registry/generated/` to a public GitHub repository. The root catalog uses `NEXT_PUBLIC_REGISTRY_URL`, or `https://vip-ui.vercel.app` when it is not set, as its `homepage`. For a different origin, set the variable before you regenerate and commit. The GitHub CLI reads the root catalog and source files, not `public/r/vip-*.json`. The `registryDependencies` in the root catalog are full URLs to the hosted origin, so a GitHub install gets the linked items, such as `vip-utils`, from that origin.
+For installs without a registry server, commit the generated root `registry.json` **and** `registry/generated/` to a public GitHub repository. The root catalog uses `NEXT_PUBLIC_REGISTRY_URL`, or `https://vip-ui.dev` when it is not set, as its `homepage`. For a different origin, set the variable before you regenerate and commit. The GitHub CLI reads the root catalog and source files, not `public/r/vip-*.json`. The `registryDependencies` in the root catalog are full URLs to the hosted origin, so a GitHub install gets the linked items, such as `vip-utils`, from that origin.
 
 After pushing, validate and inspect using the repository's actual owner and name:
 

@@ -26,13 +26,13 @@ export function ResponseSourcesDemo() {
         </ResponseContent>
         <ResponseFooter>
           <SourceLink
-            href="https://vip-ui.vercel.app/components/prompt-input"
+            href="https://vip-ui.dev/components/prompt-input"
             label="Prompt input"
             source="vip/ui"
             index={1}
           />
           <SourceLink
-            href="https://vip-ui.vercel.app/components/attachment"
+            href="https://vip-ui.dev/components/attachment"
             label="Attachment"
             source="vip/ui"
             index={2}
