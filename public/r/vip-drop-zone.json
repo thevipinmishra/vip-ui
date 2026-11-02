@@ -4,7 +4,10 @@
   "type": "registry:ui",
   "title": "Drop Zone",
   "description": "Accepts files that you drag and drop onto it.",
-  "dependencies": ["react-aria-components@^1.22.1"],
+  "dependencies": [
+    "@phosphor-icons/react@^2.1.10",
+    "react-aria-components@^1.22.1"
+  ],
   "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
   "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
   "css": {
@@ -12,7 +15,8 @@
   },
   "cssVars": {
     "theme": {
-      "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+      "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)",
+      "ease-spring": "linear(0, 0.1251, 0.3554, 0.5737, 0.7411, 0.8551, 0.9259, 0.9666, 0.988, 0.9981, 1.002, 1)"
     }
   },
   "files": [
@@ -20,7 +24,7 @@
       "path": "src/components/ui/drop-zone.tsx",
       "type": "registry:file",
       "target": "@components/vip-ui/drop-zone.tsx",
-      "content": "\"use client\";\n\nimport {\n  DropZone as AriaDropZone,\n  composeRenderProps,\n  type DropZoneProps,\n  Text,\n  type TextProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport function DropZone({ className, ...props }: DropZoneProps) {\n  return (\n    <AriaDropZone\n      {...props}\n      data-slot=\"drop-zone\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"flex min-h-32 min-w-0 flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border bg-card p-5 text-center text-sm text-foreground outline-none [overflow-wrap:anywhere] transition-[background-color,border-color,box-shadow] duration-150 ease-out-quint drop-target:border-solid drop-target:border-primary drop-target:bg-accent drop-target:ring-2 drop-target:ring-primary/25 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring disabled:opacity-50 forced-colors:drop-target:border-[Highlight]\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n\nexport function DropZoneLabel({ className, ...props }: TextProps) {\n  return (\n    <Text\n      {...props}\n      slot=\"label\"\n      data-slot=\"drop-zone-label\"\n      className={cn(\"text-sm font-medium text-foreground\", className)}\n    />\n  );\n}\n"
+      "content": "\"use client\";\n\nimport { UploadSimpleIcon } from \"@phosphor-icons/react\";\nimport type { ComponentProps } from \"react\";\nimport {\n  DropZone as AriaDropZone,\n  composeRenderProps,\n  type DropZoneProps,\n  Text,\n  type TextProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport function DropZone({ className, ...props }: DropZoneProps) {\n  return (\n    <AriaDropZone\n      {...props}\n      data-slot=\"drop-zone\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"group/drop-zone flex min-h-32 min-w-0 flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-input bg-card p-5 text-center text-sm text-foreground outline-offset-4 outline-transparent [overflow-wrap:anywhere] transition-[background-color,border-color,outline-color,outline-offset,scale] duration-200 ease-out-quint drop-target:border-solid drop-target:border-primary drop-target:bg-[color-mix(in_oklab,var(--accent)_70%,var(--card))] motion-safe:drop-target:scale-[1.01] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:opacity-50 motion-reduce:outline-offset-2 forced-colors:drop-target:border-[Highlight]\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n\nexport function DropZoneIcon({\n  className,\n  children,\n  ...props\n}: ComponentProps<\"span\">) {\n  return (\n    <span\n      {...props}\n      aria-hidden=\"true\"\n      data-slot=\"drop-zone-icon\"\n      className={cn(\n        \"grid size-10 shrink-0 place-items-center rounded-lg bg-muted text-muted-foreground transition-[translate,background-color,color] duration-350 ease-spring group-drop-target/drop-zone:bg-primary group-drop-target/drop-zone:text-primary-foreground motion-safe:group-drop-target/drop-zone:-translate-y-1 forced-colors:border [&_svg:not([class*='size-'])]:size-5\",\n        className,\n      )}\n    >\n      {children ?? <UploadSimpleIcon />}\n    </span>\n  );\n}\n\nexport function DropZoneLabel({ className, ...props }: TextProps) {\n  return (\n    <Text\n      {...props}\n      slot=\"label\"\n      data-slot=\"drop-zone-label\"\n      className={cn(\"text-sm font-medium text-foreground\", className)}\n    />\n  );\n}\n\nexport function DropZoneDescription({\n  className,\n  ...props\n}: ComponentProps<\"p\">) {\n  return (\n    <p\n      {...props}\n      data-slot=\"drop-zone-description\"\n      className={cn(\"-mt-2 text-xs leading-5 text-muted-foreground\", className)}\n    />\n  );\n}\n"
     }
   ]
 }

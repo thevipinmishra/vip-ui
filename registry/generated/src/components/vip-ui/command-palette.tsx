@@ -1,25 +1,128 @@
 "use client";
 
 import { MagnifyingGlassIcon } from "@phosphor-icons/react";
-import { type ReactNode, useEffect } from "react";
+import { type ReactNode, useEffect, useLayoutEffect, useRef } from "react";
 import {
   Collection,
+  composeRenderProps,
   Header,
+  Keyboard,
   MenuSection,
   type MenuSectionProps,
+  Text,
 } from "react-aria-components";
 import { cn } from "./utils";
 import { Autocomplete } from "./autocomplete";
 import { DialogContent, DialogTitle } from "./dialog";
 import { Kbd } from "./kbd-code";
-import { MenuContent, MenuItem } from "./menu";
+import { MenuContent, MenuItem, type MenuItemProps } from "./menu";
 import {
   SearchField,
   SearchFieldClear,
   SearchFieldInput,
 } from "./search-field";
 
-export { MenuItem as CommandPaletteItem };
+export interface CommandPaletteItemProps<T extends object>
+  extends MenuItemProps<T> {
+  shortcut?: string;
+}
+
+export function CommandPaletteItem<T extends object>({
+  shortcut,
+  className,
+  children,
+  ...props
+}: CommandPaletteItemProps<T>) {
+  return (
+    <MenuItem
+      {...props}
+      className={composeRenderProps(className, (className) =>
+        cn(
+          "[&_svg]:text-muted-foreground [&_svg:not([class*='size-'])]:size-[1.125rem]",
+          className,
+        ),
+      )}
+    >
+      {composeRenderProps(children, (content) =>
+        shortcut ? (
+          <>
+            <Text
+              slot="label"
+              className="flex min-w-0 flex-1 items-center gap-2.5"
+            >
+              {content}
+            </Text>
+            <Keyboard
+              data-slot="command-palette-shortcut"
+              className="inline-flex min-h-5 min-w-5 shrink-0 items-center justify-center rounded-sm border border-border bg-muted px-1.5 font-mono text-xs font-medium whitespace-nowrap text-muted-foreground"
+            >
+              {shortcut}
+            </Keyboard>
+          </>
+        ) : (
+          content
+        ),
+      )}
+    </MenuItem>
+  );
+}
+
+function CommandPaletteList({
+  title,
+  emptyMessage,
+  onAction,
+  children,
+}: {
+  title: string;
+  emptyMessage: string;
+  onAction: () => void;
+  children: ReactNode;
+}) {
+  const frameRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const frame = frameRef.current;
+    const list = listRef.current;
+    if (!frame || !list) return;
+    const observer = new ResizeObserver(() => {
+      frame.style.setProperty(
+        "--palette-list-height",
+        `${list.offsetHeight}px`,
+      );
+    });
+    observer.observe(list);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={frameRef}
+      data-slot="command-palette-list"
+      className="flex min-h-0 flex-1 flex-col sm:h-(--palette-list-height) sm:flex-none sm:overflow-clip sm:transition-[height] sm:duration-200 sm:ease-out-quint motion-reduce:transition-none"
+    >
+      <MenuContent
+        ref={listRef}
+        aria-label={title}
+        autoFocus="first"
+        className="min-h-0 max-h-80 shrink-0 max-sm:min-h-80 max-sm:flex-1 gap-1 overflow-y-auto overscroll-contain p-2"
+        renderEmptyState={() => (
+          <div className="grid justify-items-center gap-2 px-3 py-8 text-center text-sm text-muted-foreground">
+            <MagnifyingGlassIcon
+              size={20}
+              aria-hidden="true"
+              className="text-muted-foreground/70"
+            />
+            <p>{emptyMessage}</p>
+          </div>
+        )}
+        onAction={onAction}
+      >
+        {children}
+      </MenuContent>
+    </div>
+  );
+}
 
 export interface CommandPaletteProps {
   isOpen: boolean;
@@ -82,7 +185,7 @@ export function CommandPalette({
       <Autocomplete>
         <SearchField autoFocus aria-label={placeholder} className="shrink-0">
           {({ isEmpty }) => (
-            <div className="relative flex items-center border-b border-border/70 focus-within:border-ring">
+            <div className="relative flex items-center border-b border-border/70">
               <MagnifyingGlassIcon
                 size={18}
                 aria-hidden="true"
@@ -96,19 +199,13 @@ export function CommandPalette({
             </div>
           )}
         </SearchField>
-        <MenuContent
-          aria-label={title}
-          autoFocus="first"
-          className="min-h-0 max-h-80 flex-1 max-sm:min-h-80 gap-1 overflow-y-auto overscroll-contain p-2"
-          renderEmptyState={() => (
-            <p className="px-3 py-6 text-center text-sm text-muted-foreground">
-              {emptyMessage}
-            </p>
-          )}
+        <CommandPaletteList
+          title={title}
+          emptyMessage={emptyMessage}
           onAction={() => onOpenChange(false)}
         >
           {children}
-        </MenuContent>
+        </CommandPaletteList>
       </Autocomplete>
       <div
         aria-hidden="true"

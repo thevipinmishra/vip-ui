@@ -114,7 +114,10 @@ export function DateRangePicker<T extends DateValue>({
               data-slot="date-range-picker-trigger"
               variant="ghost"
               iconOnly
-              className={cn(fieldTriggerStyles, "me-1")}
+              className={cn(
+                fieldTriggerStyles,
+                "me-[var(--field-inset,0.25rem)]",
+              )}
             >
               <DateRangePickerChevron />
             </Button>
