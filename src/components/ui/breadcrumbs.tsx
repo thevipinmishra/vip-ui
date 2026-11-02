@@ -29,6 +29,43 @@ export function Breadcrumbs<T extends object>({
   );
 }
 
+function BreadcrumbSeparator() {
+  return (
+    <CaretRightIcon
+      size={14}
+      aria-hidden="true"
+      data-slot="breadcrumb-separator"
+      className="h-5 shrink-0 text-muted-foreground/70 rtl:rotate-180"
+    />
+  );
+}
+
+export function BreadcrumbItem({
+  className,
+  children,
+  ...props
+}: Omit<BreadcrumbProps, "children"> & { children: ReactNode }) {
+  return (
+    <AriaBreadcrumb
+      {...props}
+      data-slot="breadcrumb"
+      className={composeRenderProps(className, (className) =>
+        cn(
+          "flex min-w-0 items-center gap-2 transition-[opacity,translate] duration-250 ease-out-quint starting:opacity-0 motion-safe:starting:-translate-x-1 rtl:motion-safe:starting:translate-x-1",
+          className,
+        ),
+      )}
+    >
+      {({ isCurrent }) => (
+        <>
+          {children}
+          {!isCurrent && <BreadcrumbSeparator />}
+        </>
+      )}
+    </AriaBreadcrumb>
+  );
+}
+
 export function Breadcrumb({
   id,
   style,
@@ -43,7 +80,10 @@ export function Breadcrumb({
       style={style}
       data-slot="breadcrumb"
       className={composeRenderProps(className, (className) =>
-        cn("flex min-w-0 items-start gap-2", className),
+        cn(
+          "flex min-w-0 items-start gap-2 transition-[opacity,translate] duration-250 ease-out-quint starting:opacity-0 motion-safe:starting:-translate-x-1 rtl:motion-safe:starting:translate-x-1",
+          className,
+        ),
       )}
     >
       {({ isCurrent }) => (
@@ -51,6 +91,7 @@ export function Breadcrumb({
           {isCurrent ? (
             <span
               aria-current="page"
+              data-slot="breadcrumb-current"
               className="min-w-0 font-medium text-foreground [overflow-wrap:anywhere]"
             >
               {children}
@@ -59,18 +100,12 @@ export function Breadcrumb({
             <Link
               {...linkProps}
               data-slot="breadcrumb-link"
-              className="min-w-0 rounded-sm text-muted-foreground underline-offset-4 [overflow-wrap:anywhere] transition-[color,background-color,box-shadow] duration-150 ease-out-quint hover:text-foreground hover:underline focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-transparent disabled:cursor-default disabled:opacity-60"
+              className="min-w-0 cursor-pointer rounded-sm text-muted-foreground underline-offset-4 [overflow-wrap:anywhere] decoration-transparent transition-[color,background-color,box-shadow,text-decoration-color] duration-150 ease-out-quint underline hover:text-foreground hover:decoration-current focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-transparent disabled:cursor-default disabled:text-muted-foreground/60 disabled:no-underline"
             >
               {children}
             </Link>
           )}
-          {!isCurrent && (
-            <CaretRightIcon
-              size={14}
-              aria-hidden="true"
-              className="h-5 shrink-0 text-muted-foreground rtl:rotate-180"
-            />
-          )}
+          {!isCurrent && <BreadcrumbSeparator />}
         </>
       )}
     </AriaBreadcrumb>
