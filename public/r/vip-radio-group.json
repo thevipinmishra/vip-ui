@@ -6,8 +6,8 @@
   "description": "Selects one option from a short visible list.",
   "dependencies": ["react-aria-components@^1.22.1", "tailwind-variants@^4.0.1"],
   "registryDependencies": [
-    "https://vip-ui.vercel.app/r/vip-field-styles.json",
-    "https://vip-ui.vercel.app/r/vip-utils.json"
+    "https://vip-ui.dev/r/vip-field-styles.json",
+    "https://vip-ui.dev/r/vip-utils.json"
   ],
   "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
   "css": {

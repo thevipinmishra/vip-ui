@@ -6,9 +6,9 @@
   "description": "Shows a month grid to select a start and end date.",
   "dependencies": ["react-aria-components@^1.22.1"],
   "registryDependencies": [
-    "https://vip-ui.vercel.app/r/vip-calendar.json",
-    "https://vip-ui.vercel.app/r/vip-item-highlight.json",
-    "https://vip-ui.vercel.app/r/vip-utils.json"
+    "https://vip-ui.dev/r/vip-calendar.json",
+    "https://vip-ui.dev/r/vip-item-highlight.json",
+    "https://vip-ui.dev/r/vip-utils.json"
   ],
   "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
   "css": {

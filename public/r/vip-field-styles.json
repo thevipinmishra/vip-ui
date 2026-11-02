@@ -5,7 +5,7 @@
   "title": "Field Styles",
   "description": "Sets the theme styles of text and segmented fields.",
   "dependencies": [],
-  "registryDependencies": ["https://vip-ui.vercel.app/r/vip-size.json"],
+  "registryDependencies": ["https://vip-ui.dev/r/vip-size.json"],
   "cssVars": {
     "theme": {
       "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)",

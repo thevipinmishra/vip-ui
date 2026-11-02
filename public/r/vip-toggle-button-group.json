@@ -6,10 +6,10 @@
   "description": "Groups toggle buttons for one or more choices.",
   "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
   "registryDependencies": [
-    "https://vip-ui.vercel.app/r/vip-item-highlight.json",
-    "https://vip-ui.vercel.app/r/vip-size.json",
-    "https://vip-ui.vercel.app/r/vip-toggle-button.json",
-    "https://vip-ui.vercel.app/r/vip-utils.json"
+    "https://vip-ui.dev/r/vip-item-highlight.json",
+    "https://vip-ui.dev/r/vip-size.json",
+    "https://vip-ui.dev/r/vip-toggle-button.json",
+    "https://vip-ui.dev/r/vip-utils.json"
   ],
   "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
   "css": {

@@ -6,9 +6,9 @@
   "description": "Triggers an action with primary, secondary, or destructive emphasis.",
   "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
   "registryDependencies": [
-    "https://vip-ui.vercel.app/r/vip-button-styles.json",
-    "https://vip-ui.vercel.app/r/vip-motion.json",
-    "https://vip-ui.vercel.app/r/vip-size.json"
+    "https://vip-ui.dev/r/vip-button-styles.json",
+    "https://vip-ui.dev/r/vip-motion.json",
+    "https://vip-ui.dev/r/vip-size.json"
   ],
   "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
   "css": {

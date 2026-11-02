@@ -6,8 +6,8 @@
   "description": "Reveals text one word or one character at a time.",
   "dependencies": ["motion@^14.9.0"],
   "registryDependencies": [
-    "https://vip-ui.vercel.app/r/vip-motion.json",
-    "https://vip-ui.vercel.app/r/vip-utils.json"
+    "https://vip-ui.dev/r/vip-motion.json",
+    "https://vip-ui.dev/r/vip-utils.json"
   ],
   "files": [
     {

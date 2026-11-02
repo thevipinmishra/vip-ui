@@ -7,15 +7,15 @@
   "categories": ["settings"],
   "dependencies": ["motion@^14.9.0"],
   "registryDependencies": [
-    "https://vip-ui.vercel.app/r/vip-avatar.json",
-    "https://vip-ui.vercel.app/r/vip-button.json",
-    "https://vip-ui.vercel.app/r/vip-card.json",
-    "https://vip-ui.vercel.app/r/vip-file-trigger.json",
-    "https://vip-ui.vercel.app/r/vip-form.json",
-    "https://vip-ui.vercel.app/r/vip-input-group.json",
-    "https://vip-ui.vercel.app/r/vip-select.json",
-    "https://vip-ui.vercel.app/r/vip-text-area.json",
-    "https://vip-ui.vercel.app/r/vip-text-field.json"
+    "https://vip-ui.dev/r/vip-avatar.json",
+    "https://vip-ui.dev/r/vip-button.json",
+    "https://vip-ui.dev/r/vip-card.json",
+    "https://vip-ui.dev/r/vip-file-trigger.json",
+    "https://vip-ui.dev/r/vip-form.json",
+    "https://vip-ui.dev/r/vip-input-group.json",
+    "https://vip-ui.dev/r/vip-select.json",
+    "https://vip-ui.dev/r/vip-text-area.json",
+    "https://vip-ui.dev/r/vip-text-field.json"
   ],
   "cssVars": {
     "theme": {

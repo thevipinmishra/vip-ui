@@ -5,7 +5,7 @@
   "title": "Response",
   "description": "Shows a streaming answer with its status and actions.",
   "dependencies": [],
-  "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+  "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
   "cssVars": {
     "theme": {
       "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
