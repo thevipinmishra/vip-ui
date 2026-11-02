@@ -218,13 +218,25 @@ export function ToastPreview() {
       <div
         className={cn(
           surface,
-          "absolute inset-x-4 bottom-4 flex items-start gap-2.5 p-3",
+          "absolute inset-x-10 bottom-4 h-16 -translate-y-5",
+        )}
+      />
+      <div
+        className={cn(
+          surface,
+          "absolute inset-x-7 bottom-4 h-16 -translate-y-2.5",
+        )}
+      />
+      <div
+        className={cn(
+          surface,
+          "absolute inset-x-4 bottom-4 flex h-16 items-start gap-2.5 p-3",
         )}
       >
         <CheckCircleIcon
           size={18}
           weight="fill"
-          className="mt-px shrink-0 text-(--chart-2)"
+          className="mt-px shrink-0 text-success"
         />
         <span className="grid min-w-0 gap-0.5">
           <span className="text-sm font-medium">Draft saved</span>

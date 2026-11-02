@@ -7,6 +7,7 @@ import { MenuBasicDemo } from "@/components/docs/menu-basic-demo";
 import { MenuDemo } from "@/components/docs/menu-demo";
 import { MenuNestedDemo } from "@/components/docs/menu-nested-demo";
 import { MenuPlacementDemo } from "@/components/docs/menu-placement-demo";
+import { MenuSectionsDemo } from "@/components/docs/menu-sections-demo";
 import { MenuSelectionDemo } from "@/components/docs/menu-selection-demo";
 import { componentPageData } from "@/lib/component-examples";
 
@@ -27,7 +28,8 @@ export default function MenuPage() {
         <MenuDemo key="example-1" />,
         <MenuNestedDemo key="example-2" />,
         <MenuSelectionDemo key="example-3" />,
-        <MenuPlacementDemo key="example-4" />,
+        <MenuSectionsDemo key="example-4" />,
+        <MenuPlacementDemo key="example-5" />,
       ])}
       sourcePath="src/components/ui/menu.tsx"
     />

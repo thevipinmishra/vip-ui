@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useState } from "react";
+import { createContext, type ReactNode, useContext, useState } from "react";
 import {
   CheckboxButton as AriaCheckboxButton,
   type CheckboxButtonProps as AriaCheckboxButtonProps,
@@ -11,12 +11,32 @@ import {
   Text,
   type ValidationResult,
 } from "react-aria-components";
+import { tv, type VariantProps } from "tailwind-variants";
 import { cn } from "@/lib/utils";
-import { fieldDescriptionStyles, fieldErrorStyles } from "./field-styles";
+import {
+  choiceCardStyles,
+  fieldDescriptionStyles,
+  fieldErrorStyles,
+} from "./field-styles";
 
-export interface CheckboxProps
-  extends Omit<AriaCheckboxFieldProps, "children"> {
-  ref?: React.Ref<HTMLDivElement>;
+const checkboxFieldStyles = tv({
+  base: "relative inline-flex min-h-11 min-w-0 max-w-full flex-col justify-center gap-1 py-1 text-sm text-foreground disabled:opacity-50",
+  variants: {
+    variant: {
+      default: "",
+      card: ["flex", choiceCardStyles],
+    },
+  },
+  defaultVariants: { variant: "default" },
+});
+
+type CheckboxVariant = NonNullable<
+  VariantProps<typeof checkboxFieldStyles>["variant"]
+>;
+
+const CheckboxVariantContext = createContext<CheckboxVariant>("default");
+
+export interface CheckboxProps extends Omit<CheckboxFieldProps, "children"> {
   /** The label. Omit it and pass aria-label when the checkbox has no visible label. */
   children?: ReactNode;
   description?: ReactNode;
@@ -72,21 +92,27 @@ export function Checkbox({
   );
 }
 
+export interface CheckboxFieldProps extends AriaCheckboxFieldProps {
+  ref?: React.Ref<HTMLDivElement>;
+  variant?: CheckboxVariant;
+}
+
 export function CheckboxField({
+  variant = "default",
   className,
   ...props
-}: AriaCheckboxFieldProps & React.RefAttributes<HTMLDivElement>) {
+}: CheckboxFieldProps) {
   return (
-    <AriaCheckboxField
-      {...props}
-      data-slot="checkbox"
-      className={composeRenderProps(className, (className) =>
-        cn(
-          "relative inline-flex min-h-11 min-w-0 max-w-full flex-col justify-center gap-1 py-1 text-sm text-foreground disabled:opacity-50",
-          className,
-        ),
-      )}
-    />
+    <CheckboxVariantContext.Provider value={variant}>
+      <AriaCheckboxField
+        {...props}
+        data-slot="checkbox"
+        data-variant={variant}
+        className={composeRenderProps(className, (className) =>
+          checkboxFieldStyles({ variant, className }),
+        )}
+      />
+    </CheckboxVariantContext.Provider>
   );
 }
 
@@ -114,13 +140,16 @@ export function CheckboxIndicator({
   className,
   ...props
 }: React.HTMLAttributes<HTMLSpanElement>) {
+  const variant = useContext(CheckboxVariantContext);
   return (
     <span
       {...props}
       aria-hidden="true"
       data-slot="checkbox-indicator"
       className={cn(
-        "grid size-5 shrink-0 place-items-center rounded-sm border border-muted-foreground/75 bg-card shadow-[var(--shadow-inset)] outline-offset-4 outline-transparent transition-[background-color,border-color,outline-color,outline-offset,scale] duration-150 ease-out-quint group-hover/checkbox:border-primary motion-safe:group-pressed/checkbox:scale-90 group-selected/checkbox:border-primary group-selected/checkbox:bg-primary group-indeterminate/checkbox:border-primary group-indeterminate/checkbox:bg-primary group-invalid/checkbox:border-destructive group-invalid/checkbox:group-hover/checkbox:border-destructive group-invalid/checkbox:group-selected/checkbox:bg-destructive group-focus-visible/checkbox:outline-2 group-focus-visible/checkbox:outline-offset-2 group-focus-visible/checkbox:outline-ring motion-reduce:outline-offset-2 forced-colors:border-[ButtonText] forced-colors:group-selected/checkbox:border-[Highlight] forced-colors:group-selected/checkbox:bg-[Highlight] forced-colors:group-indeterminate/checkbox:border-[Highlight] forced-colors:group-indeterminate/checkbox:bg-[Highlight] forced-colors:group-disabled/checkbox:border-[GrayText] forced-colors:group-disabled/checkbox:bg-[Canvas]",
+        "grid size-5 shrink-0 place-items-center rounded-sm border border-muted-foreground/75 bg-card shadow-[var(--shadow-inset)] transition-[background-color,border-color,box-shadow,outline-color,outline-offset,scale] duration-150 ease-out-quint group-hover/checkbox:border-primary motion-safe:group-pressed/checkbox:scale-90 group-selected/checkbox:border-primary group-selected/checkbox:bg-primary group-selected/checkbox:shadow-none group-indeterminate/checkbox:border-primary group-indeterminate/checkbox:bg-primary group-indeterminate/checkbox:shadow-none group-invalid/checkbox:border-destructive group-invalid/checkbox:group-hover/checkbox:border-destructive group-invalid/checkbox:group-selected/checkbox:bg-destructive group-invalid/checkbox:group-indeterminate/checkbox:bg-destructive forced-colors:border-[ButtonText] forced-colors:group-selected/checkbox:border-[Highlight] forced-colors:group-selected/checkbox:bg-[Highlight] forced-colors:group-indeterminate/checkbox:border-[Highlight] forced-colors:group-indeterminate/checkbox:bg-[Highlight] forced-colors:group-disabled/checkbox:border-[GrayText] forced-colors:group-disabled/checkbox:bg-[Canvas]",
+        variant === "default" &&
+          "outline-offset-4 outline-transparent group-focus-visible/checkbox:outline-2 group-focus-visible/checkbox:outline-offset-2 group-focus-visible/checkbox:outline-ring motion-reduce:outline-offset-2",
         className,
       )}
     >

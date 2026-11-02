@@ -34,7 +34,7 @@ const durations = [
     name: "duration.slow",
     value: "250 ms",
     css: "duration-250",
-    use: "Disclosure panels, chevrons, height changes, and toast entrances.",
+    use: "Disclosure panels, chevrons, and height changes.",
   },
   {
     name: "duration.reveal",
@@ -78,7 +78,7 @@ const springs = [
     name: "springPop",
     value: "visualDuration 0.28, bounce 0.12",
     css: "duration-350 ease-spring",
-    use: "Parts that pop with a small overshoot: switch thumb, radio dot, and slider thumb.",
+    use: "Parts that pop with a small overshoot: switch thumb, radio dot, slider thumb, and rating stars.",
   },
 ];
 
@@ -134,8 +134,8 @@ const tuned = [
   },
   {
     name: "Toast",
-    value: "slow in, base out",
-    use: "The stack moves with Motion layout animation.",
+    value: "350 ms in, 200 ms out",
+    use: "The stack moves on ease-spring. A swipe moves the toast with the pointer.",
   },
   {
     name: "Chart",
@@ -325,7 +325,7 @@ export default function MotionPage() {
           </li>
           <li>
             Presence: an element animates out before React removes it, such as
-            Presence, PresenceList, TextSwap, and Toast.
+            Presence, PresenceList, and TextSwap.
           </li>
           <li>Values: a number counts to a new value.</li>
           <li>Gestures: a sheet follows a swipe.</li>

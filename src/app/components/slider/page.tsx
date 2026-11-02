@@ -3,10 +3,12 @@ import {
   ComponentPage,
   withExamplePreviews,
 } from "@/components/docs/component-page";
+import { SliderCustomDemo } from "@/components/docs/slider-custom-demo";
 import { SliderDemo } from "@/components/docs/slider-demo";
 import { SliderDisabledDemo } from "@/components/docs/slider-disabled-demo";
 import { SliderRangeDemo } from "@/components/docs/slider-range-demo";
 import { SliderStepDemo } from "@/components/docs/slider-step-demo";
+import { SliderVerticalDemo } from "@/components/docs/slider-vertical-demo";
 import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
@@ -25,7 +27,9 @@ export default function SliderPage() {
       previewSourcePath={page.usage}
       examples={withExamplePreviews(page.examples, [
         <SliderRangeDemo key="range" />,
-        <SliderStepDemo key="step" />,
+        <SliderStepDemo key="marks" />,
+        <SliderVerticalDemo key="vertical" />,
+        <SliderCustomDemo key="custom-layout" />,
         <SliderDisabledDemo key="disabled" />,
       ])}
       sourcePath="src/components/ui/slider.tsx"

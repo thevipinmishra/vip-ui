@@ -31,6 +31,7 @@ import type { InlineEdit } from "@/components/ui/inline-edit";
 import type { InputGroup, InputGroupAddon } from "@/components/ui/input-group";
 import type { LayoutMorph } from "@/components/ui/layout-morph";
 import type { Marquee } from "@/components/ui/marquee";
+import type { MenuItem, MenuSection } from "@/components/ui/menu";
 import type { Message } from "@/components/ui/message";
 import type { Meter } from "@/components/ui/meter";
 import type { NativeSelect } from "@/components/ui/native-select";
@@ -53,9 +54,9 @@ import type { RatingInput } from "@/components/ui/rating-input";
 import type { Reasoning, ReasoningPanel } from "@/components/ui/reasoning";
 import type { Response, ResponseContent } from "@/components/ui/response";
 import type { SearchField } from "@/components/ui/search-field";
-import type { Select } from "@/components/ui/select";
+import type { Select, SelectSection } from "@/components/ui/select";
 import type { Sheet, SheetClose } from "@/components/ui/sheet";
-import type { Slider } from "@/components/ui/slider";
+import type { Slider, SliderMarks } from "@/components/ui/slider";
 import type { SourceLink } from "@/components/ui/source-link";
 import type { Spinner } from "@/components/ui/spinner";
 import type { StaggerGroup, StaggerItem } from "@/components/ui/stagger-group";
@@ -75,7 +76,11 @@ import type { TextScramble } from "@/components/ui/text-scramble";
 import type { TextSwap } from "@/components/ui/text-swap";
 import type { TimeField } from "@/components/ui/time-field";
 import type { TimelineItem, TimelineTitle } from "@/components/ui/timeline";
-import type { showToast, ToastMessage } from "@/components/ui/toast";
+import type {
+  showToast,
+  ToastMessage,
+  ToastViewport,
+} from "@/components/ui/toast";
 import type { ToggleButton } from "@/components/ui/toggle-button";
 import type { ToggleButtonGroup } from "@/components/ui/toggle-button-group";
 import type { TokenField } from "@/components/ui/token-field";
@@ -561,6 +566,41 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: "string",
           default: '"Select an option"',
           description: "Text in the trigger when no option is selected.",
+        },
+      ],
+    }),
+    apiPart<typeof SelectSection>({
+      name: "SelectSection",
+      props: [
+        {
+          name: "title",
+          type: "string",
+          description:
+            "The section heading. It stays at the top while the list scrolls.",
+        },
+      ],
+    }),
+  ],
+  menu: [
+    apiPart<typeof MenuItem>({
+      name: "MenuItem",
+      props: [
+        {
+          name: "variant",
+          type: '"default" | "destructive"',
+          default: '"default"',
+          description:
+            "destructive colors the text and icon for an action that deletes or removes data.",
+        },
+      ],
+    }),
+    apiPart<typeof MenuSection>({
+      name: "MenuSection",
+      props: [
+        {
+          name: "title",
+          type: "string",
+          description: "The section heading.",
         },
       ],
     }),
@@ -1250,7 +1290,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"md"',
           description:
-            "Heights are 28, 36, 44, 48, and 56 pixels. Text, padding, and icons scale with the size. In a sized Toolbar, ButtonGroup, or ToggleButtonGroup, the button uses the size of the group. On touch screens, the touch area is at least 44 pixels high. An ancestor with overflow: hidden clips it.",
+            "Heights are 28, 36, 44, 48, and 56 pixels. Inside a sized Toolbar, ButtonGroup, or ToggleButtonGroup, the group size applies. On touch screens, the touch area is at least 44 pixels high.",
         },
         {
           name: "iconOnly",
@@ -1371,15 +1411,22 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "label",
-          type: "string",
-          required: true,
-          description: "Visible label for the rating group.",
+          type: "ReactNode",
+          description:
+            "The visible label of the group. Without it, pass aria-label.",
         },
         {
           name: "max",
           type: "number",
           default: "5",
-          description: "Number of stars. Use a positive whole number.",
+          description: "Number of steps. Use a positive whole number.",
+        },
+        {
+          name: "icon",
+          type: "Icon",
+          default: "StarIcon",
+          description:
+            "A Phosphor icon for each step. Steps up to the rating use the fill weight.",
         },
         {
           name: "value",
@@ -1397,7 +1444,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         {
           name: "onValueChange",
           type: "(value: number) => void",
-          description: "Called when a star is selected.",
+          description: "Called when a step is selected.",
         },
       ],
     }),
@@ -1690,6 +1737,20 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       name: "DialogContent",
       props: [
         {
+          name: "size",
+          type: '"sm" | "md" | "lg" | "xl" | "full"',
+          default: '"md"',
+          description:
+            "The maximum width from 640px up: 24rem, 28rem, 36rem, or 48rem. full fills the screen less a 1rem gutter. On phones, every size is full width, and full also fills the height.",
+        },
+        {
+          name: "children",
+          type: "ReactNode | ({ close }) => ReactNode",
+          required: true,
+          description:
+            "A function receives close, for example to close the dialog after a form submits.",
+        },
+        {
           name: "overlayProps",
           type: "ModalOverlayProps",
           default: "{ isDismissable: true }",
@@ -1700,7 +1761,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           name: "modalProps",
           type: "ModalProps",
           description:
-            "Props for the panel. To change the width, set className here, for example sm:max-w-lg.",
+            "Props for the panel. For a width that is not in size, set className here, for example sm:max-w-2xl.",
         },
       ],
     }),
@@ -1787,7 +1848,21 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: '"bottom" | "top" | "left" | "right" | "start" | "end" | "center"',
           default: '"bottom"',
           description:
-            "The edge the sheet comes from. start and end mirror in right-to-left locales. A bottom sheet is 85% of the viewport height. Set a different height with className.",
+            "The edge the sheet comes from. start and end mirror in right-to-left locales. A top or bottom sheet fits its content up to a maximum height. Set a fixed height with className.",
+        },
+        {
+          name: "size",
+          type: '"sm" | "md" | "lg" | "xl" | "full"',
+          default: '"md"',
+          description:
+            "A left or right sheet is 20rem, 26rem, 36rem, or 48rem wide, and always leaves 3.5rem of the page visible. A top or bottom sheet has a maximum width of 28rem, 42rem, 56rem, or 72rem. full fills the screen.",
+        },
+        {
+          name: "inset",
+          type: "boolean",
+          default: "false",
+          description:
+            "Moves the sheet 0.5rem in from the screen edges and rounds all corners.",
         },
         {
           name: "swipeDirection",
@@ -1935,6 +2010,13 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: "(checked: boolean) => void",
           description: "Alias for onChange. Both run when both are set.",
         },
+        {
+          name: "variant",
+          type: '"default" | "card"',
+          default: '"default"',
+          description:
+            "Selects the plain or card appearance. A card toggles the checkbox from anywhere inside it. CheckboxField takes the same prop.",
+        },
       ],
     }),
   ],
@@ -1958,6 +2040,12 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: "string | ((validation: ValidationResult) => string)",
           description:
             "Shown below the options when the group is invalid. Without it, the browser validation message shows. With label, description, or errorMessage, the group adds CheckboxGroupError for you.",
+        },
+        {
+          name: "orientation",
+          type: '"horizontal" | "vertical"',
+          default: '"vertical"',
+          description: "Lays out the options in a column or a wrapping row.",
         },
       ],
     }),
@@ -2138,6 +2226,12 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           description: "Sets the size of the field and of the calendar button.",
         },
         {
+          name: "presets",
+          type: "DatePickerPreset[]",
+          description:
+            "Shortcuts beside the calendar, such as Today. Each has a label and a value. A preset sets the value and closes the calendar.",
+        },
+        {
           name: "label",
           type: "string",
           description:
@@ -2160,6 +2254,12 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"lg"',
           description: "Sets the size of the field and of the calendar button.",
+        },
+        {
+          name: "presets",
+          type: "DateRangePickerPreset[]",
+          description:
+            "Shortcuts beside the calendar, such as Last 7 days. Each has a label and a start and end value. A preset sets the value and closes the calendar.",
         },
         {
           name: "label",
@@ -2320,6 +2420,55 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: "string",
           description: "Label above the track, next to the value.",
         },
+        {
+          name: "thumbLabels",
+          type: "string[]",
+          description:
+            "Names each handle, in value order. Give one when defaultValue or value is an array.",
+        },
+        {
+          name: "marks",
+          type: "number[]",
+          description:
+            "Values to label along the track. For custom labels, compose SliderMarks.",
+        },
+        {
+          name: "fillOffset",
+          type: "number",
+          description:
+            "The value the fill starts from. Set 0 for a range that goes below zero.",
+        },
+        {
+          name: "orientation",
+          type: '"horizontal" | "vertical"',
+          default: '"horizontal"',
+          description:
+            "A vertical slider is 14rem tall. Set the height with className.",
+        },
+      ],
+    }),
+    apiPart<typeof SliderMarks>({
+      name: "SliderMarks",
+      props: [
+        {
+          name: "values",
+          type: "number[]",
+          required: true,
+          description:
+            "The values to label. Labels in the selected range use the foreground color.",
+        },
+        {
+          name: "children",
+          type: "(value: number) => ReactNode",
+          description:
+            "Renders each label. Without it, the slider formatOptions format the value.",
+        },
+        {
+          name: "offset",
+          type: "number",
+          description:
+            "The offset of the SliderRange fill, so labels in the filled part use the foreground color.",
+        },
       ],
     }),
   ],
@@ -2441,6 +2590,17 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
     }),
   ],
   toast: [
+    apiPart<typeof ToastViewport>({
+      name: "ToastViewport",
+      props: [
+        {
+          name: "children",
+          type: "({ toast }) => ReactElement",
+          description:
+            "Renders each toast. Build it from Toast, ToastIcon, ToastContent, ToastTitle, ToastDescription, ToastAction, and ToastClose.",
+        },
+      ],
+    }),
     apiPart<ToastMessage>({
       name: "showToast message",
       description:
@@ -2463,6 +2623,12 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           default: '"info"',
           description: "Sets the icon and its colors.",
         },
+        {
+          name: "action",
+          type: "{ label: string; onAction: () => void }",
+          description:
+            "Adds a button after the text. A press calls onAction and closes the toast.",
+        },
       ],
     }),
     apiPart<NonNullable<Parameters<typeof showToast>[1]>>({
@@ -2473,7 +2639,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: "number",
           default: "5000",
           description:
-            "Milliseconds before the toast closes. Values under 5000 become 5000. Set 0 to keep the toast open until the user closes it. Hover and focus pause the timer.",
+            "Milliseconds before the toast closes. Values under 5000 become 5000. Set 0 to keep the toast open until the user closes it. A toast with an action defaults to 0. Hover and focus pause the timer.",
         },
       ],
     }),

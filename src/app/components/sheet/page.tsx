@@ -5,8 +5,11 @@ import {
 } from "@/components/docs/component-page";
 import { SheetBasicDemo } from "@/components/docs/sheet-basic-demo";
 import { SheetDemo } from "@/components/docs/sheet-demo";
+import { SheetFormDemo } from "@/components/docs/sheet-form-demo";
+import { SheetInsetDemo } from "@/components/docs/sheet-inset-demo";
 import { SheetNestedDemo } from "@/components/docs/sheet-nested-demo";
 import { SheetPlacementDemo } from "@/components/docs/sheet-placement-demo";
+import { SheetSizesDemo } from "@/components/docs/sheet-sizes-demo";
 import { componentPageData } from "@/lib/component-examples";
 
 export const metadata: Metadata = {
@@ -23,9 +26,12 @@ export default function SheetPage() {
       preview={<SheetBasicDemo />}
       previewSourcePath={page.usage}
       examples={withExamplePreviews(page.examples, [
-        <SheetDemo key="example-1" />,
-        <SheetPlacementDemo key="example-2" />,
-        <SheetNestedDemo key="example-3" />,
+        <SheetSizesDemo key="sizes" />,
+        <SheetInsetDemo key="inset" />,
+        <SheetDemo key="snap-points" />,
+        <SheetPlacementDemo key="edge-placement" />,
+        <SheetFormDemo key="form" />,
+        <SheetNestedDemo key="nested-sheets" />,
       ])}
       sourcePath="src/components/ui/sheet.tsx"
     />

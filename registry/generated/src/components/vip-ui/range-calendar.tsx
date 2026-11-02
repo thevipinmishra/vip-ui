@@ -4,7 +4,6 @@ import {
   RangeCalendar as AriaRangeCalendar,
   CalendarCell,
   CalendarGrid,
-  CalendarGridBody,
   CalendarGridHeader,
   CalendarHeaderCell,
   composeRenderProps,
@@ -13,6 +12,7 @@ import {
 } from "react-aria-components";
 import { cn } from "./utils";
 import {
+  CalendarGridBody,
   CalendarHeader,
   calendarCellBaseClass,
   calendarCells,

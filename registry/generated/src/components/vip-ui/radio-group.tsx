@@ -21,14 +21,18 @@ import {
 } from "react-aria-components";
 import { tv, type VariantProps } from "tailwind-variants";
 import { cn } from "./utils";
-import { fieldDescriptionStyles, fieldErrorStyles } from "./field-styles";
+import {
+  choiceCardStyles,
+  fieldDescriptionStyles,
+  fieldErrorStyles,
+} from "./field-styles";
 
 const radioFieldStyles = tv({
   base: "relative flex min-h-11 min-w-0 flex-col justify-center gap-1 py-1 text-sm text-foreground disabled:opacity-50",
   variants: {
     variant: {
       default: "",
-      card: "min-h-12 rounded-lg bg-card px-3.5 py-2.5 shadow-[var(--shadow-card)] ring-1 ring-border outline-offset-4 outline-transparent transition-[background-color,box-shadow,outline-color,outline-offset] duration-150 ease-out-quint has-[[data-hovered]]:bg-muted has-[[data-focus-visible]]:outline-2 has-[[data-focus-visible]]:outline-offset-2 has-[[data-focus-visible]]:outline-ring motion-reduce:outline-offset-2 selected:bg-accent selected:ring-primary/40 invalid:ring-destructive/60 forced-colors:border forced-colors:selected:border-[Highlight]",
+      card: choiceCardStyles,
     },
   },
   defaultVariants: { variant: "default" },
@@ -223,14 +227,13 @@ export function RadioIndicator({
       aria-hidden="true"
       data-slot="radio-indicator"
       className={cn(
-        "grid size-5 shrink-0 place-items-center rounded-full border border-muted-foreground/75 bg-card shadow-[var(--shadow-inset)] transition-[border-color,outline-color,outline-offset,scale] duration-150 ease-out-quint group-hover/radio:border-primary motion-safe:group-pressed/radio:scale-90 group-selected/radio:border-primary group-invalid/radio:border-destructive group-invalid/radio:group-hover/radio:border-destructive forced-colors:border-[ButtonText] forced-colors:group-selected/radio:border-[Highlight] forced-colors:group-disabled/radio:border-[GrayText]",
-        // Card radios show the focus ring around the whole card instead.
+        "grid size-5 shrink-0 place-items-center rounded-full border border-muted-foreground/75 bg-card shadow-[var(--shadow-inset)] transition-[background-color,border-color,box-shadow,outline-color,outline-offset,scale] duration-150 ease-out-quint group-hover/radio:border-primary motion-safe:group-pressed/radio:scale-90 group-selected/radio:border-primary group-selected/radio:bg-primary group-selected/radio:shadow-none group-invalid/radio:border-destructive group-invalid/radio:group-hover/radio:border-destructive group-invalid/radio:group-selected/radio:bg-destructive forced-colors:border-[ButtonText] forced-colors:group-selected/radio:border-[Highlight] forced-colors:group-selected/radio:bg-[Highlight] forced-colors:group-disabled/radio:border-[GrayText] forced-colors:group-disabled/radio:bg-[Canvas]",
         variant === "default" &&
           "outline-offset-4 outline-transparent group-focus-visible/radio:outline-2 group-focus-visible/radio:outline-offset-2 group-focus-visible/radio:outline-ring motion-reduce:outline-offset-2",
         className,
       )}
     >
-      <span className="size-2 scale-0 rounded-full bg-primary transition-[scale] duration-350 ease-spring group-selected/radio:scale-100 motion-reduce:transition-none forced-colors:bg-[Highlight] forced-colors:group-disabled/radio:bg-[GrayText]" />
+      <span className="size-2 scale-0 rounded-full bg-primary-foreground transition-[scale] duration-150 ease-out-quint group-selected/radio:scale-100 group-selected/radio:duration-350 group-selected/radio:ease-spring motion-reduce:transition-none forced-colors:bg-[HighlightText] forced-colors:group-disabled/radio:bg-[GrayText]" />
     </span>
   );
 }

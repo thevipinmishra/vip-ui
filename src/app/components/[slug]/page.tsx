@@ -24,6 +24,7 @@ import { CardBasicDemo } from "@/components/docs/card-basic-demo";
 import { CardDemo } from "@/components/docs/card-demo";
 import { CheckboxGroupDemo } from "@/components/docs/checkbox-group-demo";
 import { CheckboxGroupDisabledDemo } from "@/components/docs/checkbox-group-disabled-demo";
+import { CheckboxGroupHorizontalDemo } from "@/components/docs/checkbox-group-horizontal-demo";
 import { CheckboxGroupLayoutDemo } from "@/components/docs/checkbox-group-layout-demo";
 import { CheckboxGroupRequiredDemo } from "@/components/docs/checkbox-group-required-demo";
 import { ColorFieldChannelDemo } from "@/components/docs/color-field-channel-demo";
@@ -55,11 +56,13 @@ import { DateFieldTimeDemo } from "@/components/docs/date-field-time-demo";
 import { DatePickerControlledDemo } from "@/components/docs/date-picker-controlled-demo";
 import { DatePickerDemo } from "@/components/docs/date-picker-demo";
 import { DatePickerDisabledDemo } from "@/components/docs/date-picker-disabled-demo";
+import { DatePickerPresetsDemo } from "@/components/docs/date-picker-presets-demo";
 import { DatePickerSizesDemo } from "@/components/docs/date-picker-sizes-demo";
 import { DatePickerUnavailableDemo } from "@/components/docs/date-picker-unavailable-demo";
 import { DateRangePickerDemo } from "@/components/docs/date-range-picker-demo";
 import { DateRangePickerDisabledDemo } from "@/components/docs/date-range-picker-disabled-demo";
 import { DateRangePickerLimitsDemo } from "@/components/docs/date-range-picker-limits-demo";
+import { DateRangePickerPresetsDemo } from "@/components/docs/date-range-picker-presets-demo";
 import { DateRangePickerSizesDemo } from "@/components/docs/date-range-picker-sizes-demo";
 import { DescriptionListComponentsDemo } from "@/components/docs/description-list-components-demo";
 import { DescriptionListDemo } from "@/components/docs/description-list-demo";
@@ -129,7 +132,9 @@ import { RangeCalendarControlledDemo } from "@/components/docs/range-calendar-co
 import { RangeCalendarDemo } from "@/components/docs/range-calendar-demo";
 import { RangeCalendarLimitsDemo } from "@/components/docs/range-calendar-limits-demo";
 import { RatingInputDemo } from "@/components/docs/rating-input-demo";
+import { RatingInputIconDemo } from "@/components/docs/rating-input-icon-demo";
 import { RatingInputReadOnlyDemo } from "@/components/docs/rating-input-read-only-demo";
+import { RatingInputRequiredDemo } from "@/components/docs/rating-input-required-demo";
 import { ReasoningAutoCollapseDemo } from "@/components/docs/reasoning-auto-collapse-demo";
 import { ReasoningDemo } from "@/components/docs/reasoning-demo";
 import { ReasoningErrorDemo } from "@/components/docs/reasoning-error-demo";
@@ -661,9 +666,10 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <DateFieldSizesDemo key="preview-4" />,
   ],
   "checkbox-group": [
-    <CheckboxGroupDisabledDemo key="preview-1" />,
-    <CheckboxGroupRequiredDemo key="preview-2" />,
-    <CheckboxGroupLayoutDemo key="preview-3" />,
+    <CheckboxGroupHorizontalDemo key="preview-1" />,
+    <CheckboxGroupLayoutDemo key="preview-2" />,
+    <CheckboxGroupDisabledDemo key="preview-3" />,
+    <CheckboxGroupRequiredDemo key="preview-4" />,
   ],
   "color-swatch": [
     <ColorSwatchDemo key="preview-1" />,
@@ -672,9 +678,10 @@ const examplePreviews: Record<string, ReactNode[]> = {
   "command-palette": [<CommandPaletteDemo shortcut={false} key="preview-1" />],
   "date-picker": [
     <DatePickerUnavailableDemo key="preview-1" />,
-    <DatePickerDisabledDemo key="preview-2" />,
-    <DatePickerControlledDemo key="preview-3" />,
-    <DatePickerSizesDemo key="preview-4" />,
+    <DatePickerPresetsDemo key="preview-2" />,
+    <DatePickerDisabledDemo key="preview-3" />,
+    <DatePickerControlledDemo key="preview-4" />,
+    <DatePickerSizesDemo key="preview-5" />,
   ],
   "data-table": [<DataTableColumnFiltersDemo key="preview-1" />],
   "password-strength-meter": [
@@ -682,8 +689,9 @@ const examplePreviews: Record<string, ReactNode[]> = {
   ],
   "date-range-picker": [
     <DateRangePickerLimitsDemo key="preview-1" />,
-    <DateRangePickerDisabledDemo key="preview-2" />,
-    <DateRangePickerSizesDemo key="preview-3" />,
+    <DateRangePickerPresetsDemo key="preview-2" />,
+    <DateRangePickerDisabledDemo key="preview-3" />,
+    <DateRangePickerSizesDemo key="preview-4" />,
   ],
   disclosure: [
     <DisclosureExpandedDemo key="preview-1" />,
@@ -710,7 +718,11 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <InlineEditDisabledDemo key="preview-1" />,
     <InlineEditDemo key="preview-2" />,
   ],
-  "rating-input": [<RatingInputReadOnlyDemo key="preview-1" />],
+  "rating-input": [
+    <RatingInputIconDemo key="preview-1" />,
+    <RatingInputReadOnlyDemo key="preview-2" />,
+    <RatingInputRequiredDemo key="preview-3" />,
+  ],
   pagination: [
     <PaginationDemo key="preview-1" />,
     <PaginationSizesDemo key="preview-2" />,

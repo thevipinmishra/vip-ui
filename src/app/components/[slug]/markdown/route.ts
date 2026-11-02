@@ -1,6 +1,6 @@
 import { access, readFile } from "node:fs/promises";
 import path from "node:path";
-import { catalogComponents, getComponent } from "@/lib/catalog";
+import { catalogComponents, componentName, getComponent } from "@/lib/catalog";
 import { componentApi } from "@/lib/component-api";
 import {
   type ComponentPageData,
@@ -45,7 +45,7 @@ async function buildExamples(pageData: ComponentPageData) {
       description: example.description,
       code: await readDemoSource(example.sourcePath),
       filename: path.basename(example.sourcePath),
-      prerequisite: example.prerequisite,
+      uses: example.uses?.map(componentName),
     })),
   );
 }

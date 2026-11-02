@@ -2,6 +2,7 @@
 
 import {
   Dialog,
+  DialogBody,
   DialogClose,
   DialogContent,
   DialogDescription,
@@ -61,12 +62,12 @@ export function DialogScrollableDemo() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Project handoff</DialogTitle>
+          <DialogDescription>
+            Review each section before sharing the project with your team.
+          </DialogDescription>
           <DialogClose />
         </DialogHeader>
-        <DialogDescription>
-          Review each section before sharing the project with your team.
-        </DialogDescription>
-        <div className="mt-5 grid gap-5">
+        <DialogBody className="grid gap-5">
           {sections.map((section) => (
             <section key={section.title}>
               <h3 className="text-sm font-semibold">{section.title}</h3>
@@ -75,7 +76,7 @@ export function DialogScrollableDemo() {
               </p>
             </section>
           ))}
-        </div>
+        </DialogBody>
         <DialogFooter>
           <DialogClose variant="outline">Done</DialogClose>
         </DialogFooter>

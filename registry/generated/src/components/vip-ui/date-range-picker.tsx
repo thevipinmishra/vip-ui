@@ -1,19 +1,23 @@
 "use client";
 
 import { CaretDownIcon } from "@phosphor-icons/react";
+import { useContext } from "react";
 import {
   DateRangePicker as AriaDateRangePicker,
   composeRenderProps,
   DateInput,
   type DateRangePickerProps,
+  DateRangePickerStateContext,
   type DateValue,
   FieldError,
   Group,
   Label,
+  type RangeValue,
   Text,
 } from "react-aria-components";
 import { cn } from "./utils";
 import { Button } from "./button";
+import { CalendarPresets } from "./calendar";
 import { DateSegment } from "./date-segment";
 import {
   fieldChevronStyles,
@@ -29,11 +33,17 @@ import { Popover } from "./popover";
 import { RangeCalendar } from "./range-calendar";
 import type { Size } from "./size";
 
+export interface DateRangePickerPreset<T extends DateValue = DateValue> {
+  label: string;
+  value: RangeValue<T>;
+}
+
 export function DateRangePicker<T extends DateValue>({
   className,
   label,
   description,
   size,
+  presets,
   children,
   ...props
 }: DateRangePickerProps<T> &
@@ -41,6 +51,7 @@ export function DateRangePicker<T extends DateValue>({
     label?: string;
     description?: string;
     size?: Size;
+    presets?: DateRangePickerPreset<T>[];
   }) {
   return (
     <AriaDateRangePicker
@@ -121,12 +132,46 @@ export function DateRangePicker<T extends DateValue>({
             data-slot="date-range-picker-error"
             className={fieldErrorStyles}
           />
-          <Popover data-slot="date-range-picker-popover" className="p-3">
+          <Popover
+            data-slot="date-range-picker-popover"
+            placement="bottom start"
+            className="flex p-3 max-sm:flex-col"
+          >
+            {presets && <DateRangePickerPresets presets={presets} />}
             <RangeCalendar />
           </Popover>
         </>
       )}
     </AriaDateRangePicker>
+  );
+}
+
+function DateRangePickerPresets<T extends DateValue>({
+  presets,
+}: {
+  presets: DateRangePickerPreset<T>[];
+}) {
+  const state = useContext(DateRangePickerStateContext);
+  const value = state?.value;
+  return (
+    <CalendarPresets
+      presets={presets.map((preset) => preset.label)}
+      selected={
+        presets.find(
+          (preset) =>
+            value?.start &&
+            value.end &&
+            preset.value.start.compare(value.start) === 0 &&
+            preset.value.end.compare(value.end) === 0,
+        )?.label ?? null
+      }
+      onSelect={(label) => {
+        const preset = presets.find((preset) => preset.label === label);
+        if (!preset || !state) return;
+        state.setValue(preset.value);
+        state.close();
+      }}
+    />
   );
 }
 

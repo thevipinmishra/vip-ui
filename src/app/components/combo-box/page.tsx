@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ComboBoxAsyncDemo } from "@/components/docs/combo-box-async-demo";
 import { ComboBoxBasicDemo } from "@/components/docs/combo-box-basic-demo";
 import { ComboBoxDemo } from "@/components/docs/combo-box-demo";
 import { ComboBoxDisabledDemo } from "@/components/docs/combo-box-disabled-demo";
@@ -28,6 +29,7 @@ export default function ComboBoxPage() {
         <ComboBoxDemo key="described-options" />,
         <ComboBoxDisabledDemo key="disabled" />,
         <ComboBoxMultipleDemo key="multiple-selection" />,
+        <ComboBoxAsyncDemo key="async-loading" />,
         <ComboBoxSizesDemo key="sizes" />,
       ])}
       sourcePath="src/components/ui/combo-box.tsx"

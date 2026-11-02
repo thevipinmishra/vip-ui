@@ -4,6 +4,7 @@ import {
   withExamplePreviews,
 } from "@/components/docs/component-page";
 import { SwitchBasicDemo } from "@/components/docs/switch-basic-demo";
+import { SwitchControlFirstDemo } from "@/components/docs/switch-control-first-demo";
 import { SwitchDemo } from "@/components/docs/switch-demo";
 import { SwitchDescriptionDemo } from "@/components/docs/switch-description-demo";
 import { SwitchDisabledDemo } from "@/components/docs/switch-disabled-demo";
@@ -26,6 +27,7 @@ export default function SwitchPage() {
       examples={withExamplePreviews(page.examples, [
         <SwitchDescriptionDemo key="description" />,
         <SwitchDisabledDemo key="disabled" />,
+        <SwitchControlFirstDemo key="control-first" />,
         <SwitchDemo key="custom-layout" />,
       ])}
       sourcePath="src/components/ui/switch.tsx"
