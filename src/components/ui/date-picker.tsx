@@ -1,11 +1,13 @@
 "use client";
 
 import { CaretDownIcon } from "@phosphor-icons/react";
+import { useContext } from "react";
 import {
   DatePicker as AriaDatePicker,
   composeRenderProps,
   DateInput,
   type DatePickerProps,
+  DatePickerStateContext,
   type DateValue,
   FieldError,
   Group,
@@ -14,7 +16,7 @@ import {
 } from "react-aria-components";
 import { cn } from "@/lib/utils";
 import { Button } from "./button";
-import { Calendar } from "./calendar";
+import { Calendar, CalendarPresets } from "./calendar";
 import { DateSegment } from "./date-segment";
 import {
   fieldChevronStyles,
@@ -29,11 +31,17 @@ import {
 import { Popover } from "./popover";
 import type { Size } from "./size";
 
+export interface DatePickerPreset<T extends DateValue = DateValue> {
+  label: string;
+  value: T;
+}
+
 export function DatePicker<T extends DateValue>({
   className,
   label,
   description,
   size,
+  presets,
   children,
   ...props
 }: DatePickerProps<T> &
@@ -41,6 +49,7 @@ export function DatePicker<T extends DateValue>({
     label?: string;
     description?: string;
     size?: Size;
+    presets?: DatePickerPreset<T>[];
   }) {
   return (
     <AriaDatePicker
@@ -101,12 +110,41 @@ export function DatePicker<T extends DateValue>({
             data-slot="date-picker-error"
             className={fieldErrorStyles}
           />
-          <Popover data-slot="date-picker-popover" className="p-3">
+          <Popover
+            data-slot="date-picker-popover"
+            placement="bottom start"
+            className="flex p-3 max-sm:flex-col"
+          >
+            {presets && <DatePickerPresets presets={presets} />}
             <Calendar />
           </Popover>
         </>
       )}
     </AriaDatePicker>
+  );
+}
+
+function DatePickerPresets<T extends DateValue>({
+  presets,
+}: {
+  presets: DatePickerPreset<T>[];
+}) {
+  const state = useContext(DatePickerStateContext);
+  const value = state?.value;
+  return (
+    <CalendarPresets
+      presets={presets.map((preset) => preset.label)}
+      selected={
+        presets.find((preset) => value && preset.value.compare(value) === 0)
+          ?.label ?? null
+      }
+      onSelect={(label) => {
+        const preset = presets.find((preset) => preset.label === label);
+        if (!preset || !state) return;
+        state.setValue(preset.value);
+        state.close();
+      }}
+    />
   );
 }
 

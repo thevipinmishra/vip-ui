@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CheckboxBasicDemo } from "@/components/docs/checkbox-basic-demo";
+import { CheckboxCardDemo } from "@/components/docs/checkbox-card-demo";
 import { CheckboxDemo } from "@/components/docs/checkbox-demo";
 import { CheckboxDescriptionDemo } from "@/components/docs/checkbox-description-demo";
 import { CheckboxDisabledDemo } from "@/components/docs/checkbox-disabled-demo";
@@ -28,6 +29,7 @@ export default function CheckboxPage() {
         <CheckboxDescriptionDemo key="description" />,
         <CheckboxRequiredDemo key="required" />,
         <CheckboxDemo key="indeterminate" />,
+        <CheckboxCardDemo key="card" />,
         <CheckboxDisabledDemo key="disabled" />,
       ])}
       sourcePath="src/components/ui/checkbox.tsx"

@@ -27,13 +27,11 @@ export function SheetPlacementDemo() {
       <SheetTrigger>
         <Button variant="outline">Shortcuts</Button>
         <Sheet position="top">
-          <SheetHeader className="flex items-start justify-between gap-4">
-            <div>
-              <SheetTitle>Keyboard shortcuts</SheetTitle>
-              <SheetDescription>
-                Quick reference for the workspace.
-              </SheetDescription>
-            </div>
+          <SheetHeader>
+            <SheetTitle>Keyboard shortcuts</SheetTitle>
+            <SheetDescription>
+              Quick reference for the workspace.
+            </SheetDescription>
             <SheetClose />
           </SheetHeader>
           <SheetBody>
@@ -60,11 +58,9 @@ export function SheetPlacementDemo() {
         <Button variant="outline">Collections</Button>
         <Sheet position="left">
           <SheetHandle />
-          <SheetHeader className="flex items-start justify-between gap-4">
-            <div>
-              <SheetTitle>Collections</SheetTitle>
-              <SheetDescription>Open a file collection.</SheetDescription>
-            </div>
+          <SheetHeader>
+            <SheetTitle>Collections</SheetTitle>
+            <SheetDescription>Open a file collection.</SheetDescription>
             <SheetClose />
           </SheetHeader>
           <SheetBody className="grid content-start gap-1 px-3">
@@ -85,13 +81,9 @@ export function SheetPlacementDemo() {
         <Button variant="outline">Filter projects</Button>
         <Sheet position="right">
           <SheetHandle />
-          <SheetHeader className="flex items-start justify-between gap-4">
-            <div>
-              <SheetTitle>Filter projects</SheetTitle>
-              <SheetDescription>
-                Choose which statuses to show.
-              </SheetDescription>
-            </div>
+          <SheetHeader>
+            <SheetTitle>Filter projects</SheetTitle>
+            <SheetDescription>Choose which statuses to show.</SheetDescription>
             <SheetClose />
           </SheetHeader>
           <SheetBody>

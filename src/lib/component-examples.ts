@@ -2,7 +2,7 @@ export interface ComponentExampleMetadata {
   title: string;
   description?: string;
   sourcePath: string;
-  prerequisite?: string;
+  uses?: readonly string[];
 }
 
 import { componentDescription } from "./catalog";
@@ -26,32 +26,33 @@ const pageSources = {
       {
         title: "Sizes",
         description:
-          "Use xs in table rows, sm in toolbars, and md for most actions. Use lg next to a field and xl for a main call to action. The default is md. Icons scale with the size.",
+          "Use xs in table rows, sm in toolbars, md for most actions, and xl for a main call to action.",
         sourcePath: "button-sizes-demo.tsx",
       },
       {
         title: "With icon",
         description:
-          "Put the icon before or after the label. Set aria-hidden on the icon so the label stays the accessible name.",
+          "Set aria-hidden on the icon so the label stays the accessible name.",
         sourcePath: "button-with-icon-demo.tsx",
       },
       {
         title: "Icon buttons",
-        description:
-          "Set iconOnly and give each button an aria-label. The label replaces the missing visible text. An icon-only button is a square at each size.",
+        description: "Set iconOnly and give each button an aria-label.",
         sourcePath: "button-icon-demo.tsx",
       },
       {
         title: "Loading",
         description:
-          "Set isPending while a task runs. The button keeps focus and ignores presses until isPending is false. Install Spinner separately.",
+          "Set isPending while a task runs. The button keeps focus and ignores presses.",
         sourcePath: "button-loading-demo.tsx",
+        uses: ["spinner"],
       },
       {
         title: "Link",
         description:
-          "ButtonLink renders an anchor that looks like a button. To use your router, pass its link component to the as prop. Install Button link separately.",
+          "To use your router, pass its link component to the as prop.",
         sourcePath: "button-link-demo.tsx",
+        uses: ["button-link"],
       },
     ],
   },
@@ -61,25 +62,26 @@ const pageSources = {
       {
         title: "Described options",
         description:
-          "Add a description inside each SelectItem. Set textValue to the option name, so the trigger shows only the name.",
+          "Set textValue to the option name, so the trigger shows only the name.",
         sourcePath: "select-descriptions-demo.tsx",
       },
       {
         title: "Disabled",
-        description:
-          "Use isDisabled to keep the current value visible and prevent changes.",
         sourcePath: "select-disabled-demo.tsx",
       },
       {
+        title: "Sections",
+        sourcePath: "select-sections-demo.tsx",
+      },
+      {
         title: "Invalid selection",
-        description:
-          "Use isInvalid while the controlled value is empty. The error clears when an option is selected.",
+        description: "Set isInvalid while the controlled value is empty.",
         sourcePath: "select-invalid-demo.tsx",
       },
       {
         title: "Sizes",
         description:
-          "Set size on the select. The trigger changes. The list keeps one row height, so options stay easy to touch.",
+          "The list keeps one row height, so options stay easy to touch.",
         sourcePath: "select-sizes-demo.tsx",
       },
     ],
@@ -88,21 +90,31 @@ const pageSources = {
     usage: "dialog-demo.tsx",
     examples: [
       {
+        title: "Sizes",
+        sourcePath: "dialog-sizes-demo.tsx",
+      },
+      {
         title: "Alert dialog",
         description:
-          'Set role="alertdialog" on DialogContent for a confirmation. Outside clicks do not close it. Escape and the buttons do.',
+          'Set role="alertdialog" on DialogContent. An outside click nudges the dialog and does not close it.',
         sourcePath: "dialog-alert-demo.tsx",
+      },
+      {
+        title: "Form",
+        description:
+          "Put the form around DialogBody and DialogFooter, and call close after submit.",
+        sourcePath: "dialog-form-demo.tsx",
+        uses: ["form", "text-field", "text-area"],
       },
       {
         title: "Scrollable content",
         description:
-          "Put long content inside DialogContent. The dialog scrolls, and the page behind it does not.",
+          "Only DialogBody scrolls. The header and footer stay in view.",
         sourcePath: "dialog-scrollable-demo.tsx",
       },
       {
         title: "Controlled open state",
-        description:
-          "Control the dialog with isOpen and onOpenChange. Escape and outside clicks also call onOpenChange.",
+        description: "Escape and outside clicks also call onOpenChange.",
         sourcePath: "dialog-controlled-demo.tsx",
       },
     ],
@@ -113,19 +125,17 @@ const pageSources = {
       {
         title: "Divided",
         description:
-          'Set variant="divided" to separate sections with lines instead of cards. Use it inside a container that already has a surface.',
+          'Use variant="divided" inside a container that already has a surface.',
         sourcePath: "accordion-billing-demo.tsx",
       },
       {
         title: "Multiple open sections",
         description:
-          "Set allowsMultipleExpanded to keep more than one section open. Use defaultExpandedKeys to open sections on the first render.",
+          "Set allowsMultipleExpanded to keep more than one section open.",
         sourcePath: "accordion-multiple-demo.tsx",
       },
       {
         title: "Disabled section",
-        description:
-          "Set isDisabled on an AccordionItem. People cannot open or close that section.",
         sourcePath: "accordion-disabled-demo.tsx",
       },
     ],
@@ -135,15 +145,14 @@ const pageSources = {
     examples: [
       {
         title: "Variants",
-        description:
-          'Set variant to "info", "success", "warning", "error", or "neutral". The icon shows the status, so color is not the only signal.',
         sourcePath: "alert-demo.tsx",
       },
       {
         title: "Action",
         description:
-          "To add an action, build the alert from its parts. Put the text and the ButtonLink in a flex-wrap row, so the action moves below the text in a narrow alert. Install Button link separately.",
+          "Build the alert from its parts. The action moves below the text in a narrow alert.",
         sourcePath: "alert-action-demo.tsx",
+        uses: ["button-link"],
       },
     ],
   },
@@ -152,14 +161,13 @@ const pageSources = {
     examples: [
       {
         title: "Digit slide",
-        description:
-          'Set variant="slide" to move only the digits that change. Digits slide up when the value increases and down when it decreases.',
+        description: 'Set variant="slide" to move only the digits that change.',
         sourcePath: "animated-number-slide-demo.tsx",
       },
       {
         title: "Number format",
         description:
-          "Set locale and formatOptions to show a currency, a percent, or a unit. The accessible text uses the same format.",
+          "Set locale and formatOptions. Screen readers hear the same format.",
         sourcePath: "animated-number-format-demo.tsx",
       },
     ],
@@ -169,9 +177,9 @@ const pageSources = {
     examples: [
       {
         title: "Adding and removing files",
-        description:
-          "Check the type and size of each file before you add it. Pass onRemove to show a remove button. Install Drop zone and File trigger separately.",
+        description: "Check the type and size of each file before you add it.",
         sourcePath: "attachment-demo.tsx",
+        uses: ["drop-zone", "file-trigger"],
       },
     ],
   },
@@ -184,20 +192,18 @@ const pageSources = {
     examples: [
       {
         title: "Sizes",
-        description:
-          "Use xs in lines of text and lists, md in most places, and xl in profile headers. The initials scale with the avatar.",
         sourcePath: "avatar-sizes-demo.tsx",
       },
       {
         title: "Fallback",
         description:
-          'Avatar shows initials until the image loads, and when the image does not load. The initials come from the first two words of name. Set initials to change them, or set initials="" to show a person icon.',
+          'Initials show until the image loads, and if it fails. Set initials="" to show a person icon.',
         sourcePath: "avatar-fallback-demo.tsx",
       },
       {
         title: "Group",
         description:
-          "Put avatars in AvatarGroup to overlap them, and give the group an aria-label. For people not shown, add an Avatar with a short count, such as +2, as its initials.",
+          "Give AvatarGroup an aria-label. Show the people not shown as a count, such as +2.",
         sourcePath: "avatar-demo.tsx",
       },
     ],
@@ -207,14 +213,12 @@ const pageSources = {
     examples: [
       {
         title: "Variants",
-        description:
-          'Set variant to "neutral", "accent", "success", "warning", "error", or "outline".',
         sourcePath: "badge-variants-demo.tsx",
       },
       {
         title: "Dot",
         description:
-          "Set dot to show a status marker before the label. Screen readers do not read the dot, so the label must name the status.",
+          "Screen readers skip the dot, so the label must name the status.",
         sourcePath: "badge-demo.tsx",
       },
     ],
@@ -228,19 +232,17 @@ const pageSources = {
     examples: [
       {
         title: "Orientations",
-        description:
-          'The default orientation is a row. Set orientation="vertical" for a column.',
         sourcePath: "button-group-orientations-demo.tsx",
       },
       {
         title: "Split button",
-        description:
-          "Put a MenuTrigger in the group for more actions. Give the icon button an aria-label. Install Menu separately.",
+        description: "Give the icon button an aria-label.",
         sourcePath: "button-group-demo.tsx",
+        uses: ["menu"],
       },
       {
         title: "Sizes",
-        description: "Set size on the group. Each button in the group uses it.",
+        description: "Set size on the group, not on each button.",
         sourcePath: "button-group-sizes-demo.tsx",
       },
     ],
@@ -251,13 +253,11 @@ const pageSources = {
       {
         title: "Unavailable dates",
         description:
-          "Use isDateUnavailable to mark dates unavailable. Set minValue and maxValue to limit the selectable range.",
+          "Set isDateUnavailable, minValue, and maxValue to limit the choices.",
         sourcePath: "calendar-unavailable-demo.tsx",
       },
       {
         title: "Controlled value",
-        description:
-          "Control the selected date with the value and onChange props.",
         sourcePath: "calendar-controlled-demo.tsx",
       },
     ],
@@ -268,14 +268,15 @@ const pageSources = {
       {
         title: "Action",
         description:
-          "Put CardAction in CardHeader to show a control beside the title. The action uses up to half the header width.",
+          "CardAction sits beside the title and uses up to half the header width.",
         sourcePath: "card-action-demo.tsx",
       },
       {
         title: "Form",
         description:
-          "Wrap CardContent and CardFooter in a Form so the footer button submits the fields. Install Form and Text field separately.",
+          "Wrap the content and footer in a Form so the footer button submits.",
         sourcePath: "card-demo.tsx",
+        uses: ["form", "text-field"],
       },
     ],
   },
@@ -284,26 +285,26 @@ const pageSources = {
     examples: [
       {
         title: "Description",
-        description:
-          "Set description to show help below the label. Screen readers announce it after the label.",
         sourcePath: "checkbox-description-demo.tsx",
       },
       {
         title: "Required",
-        description:
-          "Set isRequired inside a Form. The error shows after the first submit and clears when the box is checked. Set errorMessage to replace the browser message.",
+        description: "The error shows after the first submit.",
         sourcePath: "checkbox-required-demo.tsx",
+        uses: ["form", "button"],
       },
       {
         title: "Indeterminate",
-        description:
-          "Set isIndeterminate when only some child options are selected. Point aria-controls at the options it controls.",
+        description: "Point aria-controls at the child options.",
         sourcePath: "checkbox-demo.tsx",
       },
       {
+        title: "Card",
+        description: "The whole card toggles the checkbox.",
+        sourcePath: "checkbox-card-demo.tsx",
+      },
+      {
         title: "Disabled",
-        description:
-          "Use isDisabled to keep the option visible and prevent changes.",
         sourcePath: "checkbox-disabled-demo.tsx",
       },
     ],
@@ -312,21 +313,25 @@ const pageSources = {
     usage: "checkbox-group-demo.tsx",
     examples: [
       {
+        title: "Horizontal",
+        sourcePath: "checkbox-group-horizontal-demo.tsx",
+      },
+      {
+        title: "Card grid",
+        description:
+          "Put CheckboxGroupItems between the label and the error to lay out the options.",
+        sourcePath: "checkbox-group-layout-demo.tsx",
+      },
+      {
         title: "Disabled",
-        description: "Set isDisabled on CheckboxGroup to disable every option.",
         sourcePath: "checkbox-group-disabled-demo.tsx",
       },
       {
         title: "Required",
         description:
-          "Set isRequired inside a Form to ask for at least one option. The error shows after the first submit.",
+          "Asks for at least one option. The error shows after the first submit.",
         sourcePath: "checkbox-group-required-demo.tsx",
-      },
-      {
-        title: "Custom layout",
-        description:
-          "Compose CheckboxGroupLabel, CheckboxGroupItems, and CheckboxGroupError to change the layout. Here the options sit in a row.",
-        sourcePath: "checkbox-group-layout-demo.tsx",
+        uses: ["form", "button"],
       },
     ],
   },
@@ -341,19 +346,15 @@ const pageSources = {
       },
       {
         title: "Disabled",
-        description:
-          "Use isDisabled to keep the current value visible and prevent changes.",
         sourcePath: "color-field-disabled-demo.tsx",
       },
       {
         title: "Controlled value",
-        description:
-          "Control the color with value and onChange. A ColorSwatch shows the current value. Install Color swatch separately.",
         sourcePath: "color-field-controlled-demo.tsx",
+        uses: ["color-swatch"],
       },
       {
         title: "Sizes",
-        description: "Set size on the field. The default is lg.",
         sourcePath: "color-field-sizes-demo.tsx",
       },
     ],
@@ -363,8 +364,6 @@ const pageSources = {
     examples: [
       {
         title: "Controlled value",
-        description:
-          "Control the color with value and onChange. The trigger swatch, area, hue slider, and hex field stay in sync.",
         sourcePath: "color-picker-controlled-demo.tsx",
       },
     ],
@@ -375,13 +374,11 @@ const pageSources = {
       {
         title: "Named palette",
         description:
-          'Set colorName to give each swatch an accessible name. Without it, the swatch uses a generated name, such as "vibrant red".',
+          'Set colorName for the accessible name. Without it, the name is generated, such as "vibrant red".',
         sourcePath: "color-swatch-demo.tsx",
       },
       {
         title: "Transparency",
-        description:
-          "A checkerboard shows behind a color with an alpha value below 1.",
         sourcePath: "color-swatch-transparency-demo.tsx",
       },
     ],
@@ -391,14 +388,11 @@ const pageSources = {
     examples: [
       {
         title: "Disabled",
-        description:
-          "Set isDisabled on a ColorSwatchPickerItem to make one color unavailable.",
         sourcePath: "color-swatch-picker-disabled-demo.tsx",
       },
       {
         title: "Controlled value",
-        description:
-          "Control the selected color with value and onChange. Give each item an aria-label.",
+        description: "Give each item an aria-label.",
         sourcePath: "color-swatch-picker-controlled-demo.tsx",
       },
     ],
@@ -408,26 +402,28 @@ const pageSources = {
     examples: [
       {
         title: "Described options",
-        description:
-          "Add a description inside each ComboBoxItem. Set textValue to the option name for filtering.",
+        description: "Set textValue to the option name for filtering.",
         sourcePath: "combo-box-demo.tsx",
       },
       {
         title: "Disabled",
-        description:
-          "Use isDisabled to keep the current value visible and prevent changes.",
         sourcePath: "combo-box-disabled-demo.tsx",
       },
       {
         title: "Multiple selection",
-        description:
-          'Set selectionMode="multiple". Control the selected array with value and onChange.',
         sourcePath: "combo-box-multiple-demo.tsx",
+      },
+      {
+        title: "Async loading",
+        description:
+          "When you set items, the combo box does not filter them. Filter in your load function.",
+        sourcePath: "combo-box-async-demo.tsx",
+        uses: ["spinner"],
       },
       {
         title: "Sizes",
         description:
-          "Set size on the combo box. The input and the trigger change. The list keeps one row height, so options stay easy to touch.",
+          "The list keeps one row height, so options stay easy to touch.",
         sourcePath: "combo-box-sizes-demo.tsx",
       },
     ],
@@ -438,7 +434,7 @@ const pageSources = {
       {
         title: "Sections and icons",
         description:
-          "Put related items in a CommandPaletteSection. When an item has an icon, set textValue so that search can find it.",
+          "When an item has an icon, set textValue so search can find it.",
         sourcePath: "command-palette-demo.tsx",
       },
     ],
@@ -448,8 +444,6 @@ const pageSources = {
     examples: [
       {
         title: "Grouped actions",
-        description:
-          "Use ContextMenuSeparator to group actions. Set isDisabled to show an action that is not available.",
         sourcePath: "context-menu-grouped-demo.tsx",
       },
     ],
@@ -460,7 +454,7 @@ const pageSources = {
       {
         title: "Custom label and icon button",
         description:
-          "Pass a function as children to show a label for each status. Set iconOnly for an icon-only button, and give it an aria-label.",
+          "Pass a function as children to show a label for each status.",
         sourcePath: "copy-button-share-demo.tsx",
       },
     ],
@@ -471,24 +465,21 @@ const pageSources = {
       {
         title: "Minimum and maximum",
         description:
-          "Set minValue and maxValue to limit the date. A date outside the limits shows an error when the field loses focus.",
+          "A date outside the limits shows an error when the field loses focus.",
         sourcePath: "date-field-limits-demo.tsx",
       },
       {
         title: "Date and time",
         description:
-          "Pass a CalendarDateTime value to add time segments. Set granularity to change the smallest segment.",
+          "Pass a CalendarDateTime to add time segments. Set granularity to change the smallest one.",
         sourcePath: "date-field-time-demo.tsx",
       },
       {
         title: "Disabled",
-        description:
-          "Use isDisabled to keep the current value visible and prevent changes.",
         sourcePath: "date-field-disabled-demo.tsx",
       },
       {
         title: "Sizes",
-        description: "Set size on the field. The default is lg.",
         sourcePath: "date-field-sizes-demo.tsx",
       },
     ],
@@ -499,25 +490,23 @@ const pageSources = {
       {
         title: "Unavailable dates",
         description:
-          "Use isDateUnavailable to mark dates unavailable. Set minValue and maxValue to limit the selectable range.",
+          "Set isDateUnavailable, minValue, and maxValue to limit the choices.",
         sourcePath: "date-picker-unavailable-demo.tsx",
       },
       {
+        title: "Presets",
+        sourcePath: "date-picker-presets-demo.tsx",
+      },
+      {
         title: "Disabled",
-        description:
-          "Use isDisabled to keep the current value visible and prevent changes.",
         sourcePath: "date-picker-disabled-demo.tsx",
       },
       {
         title: "Controlled value",
-        description:
-          "Control the selected date with the value and onChange props.",
         sourcePath: "date-picker-controlled-demo.tsx",
       },
       {
         title: "Sizes",
-        description:
-          "Set size on the date picker. The field and the calendar button change. The calendar keeps one size.",
         sourcePath: "date-picker-sizes-demo.tsx",
       },
     ],
@@ -528,19 +517,19 @@ const pageSources = {
       {
         title: "Unavailable dates",
         description:
-          "Use isDateUnavailable to mark dates unavailable. Set minValue and maxValue to limit the selectable range. A range cannot include an unavailable date unless you set allowsNonContiguousRanges.",
+          "A range cannot include an unavailable date unless you set allowsNonContiguousRanges.",
         sourcePath: "date-range-picker-limits-demo.tsx",
       },
       {
+        title: "Presets",
+        sourcePath: "date-range-picker-presets-demo.tsx",
+      },
+      {
         title: "Disabled",
-        description:
-          "Use isDisabled to keep the current value visible and prevent changes.",
         sourcePath: "date-range-picker-disabled-demo.tsx",
       },
       {
         title: "Sizes",
-        description:
-          "Set size on the date range picker. The field and the calendar button change. The calendar keeps one size.",
         sourcePath: "date-range-picker-sizes-demo.tsx",
       },
     ],
@@ -550,9 +539,9 @@ const pageSources = {
     examples: [
       {
         title: "Inline components",
-        description:
-          "Put a Badge, Link, or other inline component in DescriptionDetail. Long values wrap inside the detail column. Install Badge and Link separately.",
+        description: "Long values wrap inside the detail column.",
         sourcePath: "description-list-components-demo.tsx",
+        uses: ["badge", "link"],
       },
     ],
   },
@@ -561,13 +550,10 @@ const pageSources = {
     examples: [
       {
         title: "Expanded by default",
-        description:
-          "Set defaultExpanded to show the panel on the first render. People can still close it.",
         sourcePath: "disclosure-expanded-demo.tsx",
       },
       {
         title: "Disabled",
-        description: "Set isDisabled. People cannot open or close the panel.",
         sourcePath: "disclosure-disabled-demo.tsx",
       },
     ],
@@ -576,22 +562,38 @@ const pageSources = {
     usage: "sheet-basic-demo.tsx",
     examples: [
       {
+        title: "Sizes",
+        sourcePath: "sheet-sizes-demo.tsx",
+      },
+      {
+        title: "Inset",
+        sourcePath: "sheet-inset-demo.tsx",
+      },
+      {
         title: "Snap points",
         description:
-          'Set snapPoints to the visible size at each stop. The sheet opens at the first stop. Here, "100%" shows all of the sheet and "40dvh" adds a shorter stop.',
+          "Set snapPoints to the visible size at each stop. The sheet opens at the first stop.",
         sourcePath: "sheet-demo.tsx",
       },
       {
         title: "Edge placement",
         description:
-          "Set position to choose the edge. To close the sheet, swipe it or drag the handle toward that edge.",
+          "Swipe the sheet or drag the handle toward its edge to close it.",
         sourcePath: "sheet-placement-demo.tsx",
+        uses: ["checkbox-group"],
+      },
+      {
+        title: "Form",
+        description:
+          "Put the form around SheetBody and SheetFooter so the footer stays in view.",
+        sourcePath: "sheet-form-demo.tsx",
+        uses: ["form", "text-field", "text-area", "select", "switch"],
       },
       {
         title: "Nested sheets",
-        description:
-          "Put a SheetTrigger inside a Sheet to open a second sheet on top. Escape and outside clicks close the top sheet first. To close the nested sheet after an action, control its SheetTrigger.",
+        description: "Escape and outside clicks close the top sheet first.",
         sourcePath: "sheet-nested-demo.tsx",
+        uses: ["text-field"],
       },
     ],
   },
@@ -600,9 +602,9 @@ const pageSources = {
     examples: [
       {
         title: "Accepted file types",
-        description:
-          "Use getDropOperation to accept or cancel a drop. Add a FileTrigger so users can also choose files. Install File trigger separately.",
+        description: "Use getDropOperation to accept or cancel a drop.",
         sourcePath: "drop-zone-demo.tsx",
+        uses: ["file-trigger"],
       },
     ],
   },
@@ -611,7 +613,6 @@ const pageSources = {
     examples: [
       {
         title: "Without an action",
-        description: "Leave out EmptyStateActions when there is no next step.",
         sourcePath: "empty-state-no-action-demo.tsx",
       },
     ],
@@ -626,7 +627,7 @@ const pageSources = {
       {
         title: "Multiple images",
         description:
-          "Set allowsMultiple to select more than one file. acceptedFileTypes only filters the picker. Check each file in onSelect.",
+          "acceptedFileTypes only filters the picker. Check each file in onSelect.",
         sourcePath: "file-trigger-demo.tsx",
       },
     ],
@@ -637,13 +638,13 @@ const pageSources = {
       {
         title: "Custom validation",
         description:
-          "Pass validate to a field. Return an error message, or null when the value is valid. The error shows or clears when the field loses focus or when you submit.",
+          "Return an error message from validate, or null when the value is valid.",
         sourcePath: "form-validation-demo.tsx",
       },
       {
         title: "Server errors",
         description:
-          'Pass server errors to validationErrors, keyed by field name. Push Save to see the error for "maya". The error clears when you change the value and leave the field.',
+          'Pass server errors to validationErrors, keyed by field name. Push Save with "maya" to see one.',
         sourcePath: "form-server-errors-demo.tsx",
       },
     ],
@@ -653,8 +654,7 @@ const pageSources = {
     examples: [
       {
         title: "Unavailable row",
-        description:
-          "Set isDisabled on a row that users cannot select. Show the reason in the row.",
+        description: "Set isDisabled on the row and show the reason in it.",
         sourcePath: "grid-list-disabled-demo.tsx",
       },
     ],
@@ -664,20 +664,16 @@ const pageSources = {
     examples: [
       {
         title: "Icon",
-        description:
-          "Put an icon in InputGroupAddon. Set aria-hidden on the icon so the label stays the accessible name.",
         sourcePath: "input-group-icon-demo.tsx",
       },
       {
         title: "Button",
-        description:
-          "Put a submit Button in InputGroupAddon. Disable it until the input has a value.",
         sourcePath: "input-group-demo.tsx",
       },
       {
         title: "Text area",
         description:
-          'Use InputGroupTextArea in a TextArea. Set align="block-end" on InputGroupAddon to add a row below the text.',
+          'Set align="block-end" on InputGroupAddon to add a row below the text.',
         sourcePath: "input-group-notes-demo.tsx",
       },
       {
@@ -689,13 +685,13 @@ const pageSources = {
       {
         title: "Invalid",
         description:
-          "Set isInvalid on the TextField and add TextFieldError. InputGroup inherits the state.",
+          "Set isInvalid on the TextField. InputGroup inherits the state.",
         sourcePath: "input-group-invalid-demo.tsx",
       },
       {
         title: "Sizes",
         description:
-          "Set size on the TextField. The group and its icon use that size. The default is lg.",
+          "Set size on the TextField. The group and its icon use it.",
         sourcePath: "input-group-sizes-demo.tsx",
       },
     ],
@@ -705,14 +701,13 @@ const pageSources = {
     examples: [
       {
         title: "Key combination",
-        description:
-          "Put each key in a Kbd, and put the keys of one shortcut in KbdGroup. The outer kbd element marks the keys as one combination.",
+        description: "Put the keys of one shortcut in KbdGroup.",
         sourcePath: "kbd-code-group-demo.tsx",
       },
       {
         title: "Long code",
         description:
-          "InlineCode breaks a long value to fit the line. Each line keeps its padding and rounded corners.",
+          "InlineCode wraps a long value and keeps its padding on each line.",
         sourcePath: "kbd-code-wrap-demo.tsx",
       },
     ],
@@ -723,7 +718,7 @@ const pageSources = {
       {
         title: "External link",
         description:
-          'Set target="_blank" to open the page in a new tab. Add hidden text that tells screen reader users about the new tab.',
+          "Add hidden text that tells screen reader users about the new tab.",
         sourcePath: "link-external-demo.tsx",
       },
     ],
@@ -733,8 +728,6 @@ const pageSources = {
     examples: [
       {
         title: "Multiple selection",
-        description:
-          'Set selectionMode="multiple" to select more than one option. Use defaultSelectedKeys to set the initial selection.',
         sourcePath: "list-box-multiple-demo.tsx",
       },
     ],
@@ -745,25 +738,27 @@ const pageSources = {
       {
         title: "Icons and shortcuts",
         description:
-          "Put an icon before the label and a Kbd after it. Kbd only shows the shortcut. Add the key handler yourself.",
+          "Kbd only shows the shortcut. Add the key handler yourself.",
         sourcePath: "menu-demo.tsx",
       },
       {
         title: "Nested menu",
-        description:
-          "Wrap a MenuItem and a MenuPopover in SubmenuTrigger. The submenu opens next to the menu, or below the item on small screens.",
+        description: "On small screens, the submenu opens below the item.",
         sourcePath: "menu-nested-demo.tsx",
       },
       {
         title: "Selection",
-        description:
-          'Set selectionMode to "single" or "multiple". Control the value with selectedKeys and onSelectionChange.',
         sourcePath: "menu-selection-demo.tsx",
+      },
+      {
+        title: "Sections",
+        description: "Each MenuSection can have its own selectionMode.",
+        sourcePath: "menu-sections-demo.tsx",
       },
       {
         title: "Placement and arrow",
         description:
-          "Use MenuPopover and MenuContent instead of Menu to set placement. Add PopoverArrow inside MenuPopover to point at the trigger.",
+          "Use MenuPopover and MenuContent instead of Menu to set placement.",
         sourcePath: "menu-placement-demo.tsx",
       },
     ],
@@ -773,8 +768,7 @@ const pageSources = {
     examples: [
       {
         title: "States",
-        description:
-          'Set state to "thinking", "working", "complete", or "error". Screen readers announce each change.',
+        description: "Screen readers announce each change.",
         sourcePath: "agent-status-states-demo.tsx",
       },
     ],
@@ -784,8 +778,7 @@ const pageSources = {
     examples: [
       {
         title: "Sides",
-        description:
-          'Set side to "incoming", "outgoing", or "system". A system message shows no sender or avatar. Put buttons in actions.',
+        description: "A system message shows no sender or avatar.",
         sourcePath: "message-demo.tsx",
       },
     ],
@@ -795,8 +788,7 @@ const pageSources = {
     examples: [
       {
         title: "Value label",
-        description:
-          "Set valueLabel to show the reading in your own units. Screen readers read this text as the value.",
+        description: "Screen readers read valueLabel as the value.",
         sourcePath: "meter-demo.tsx",
       },
     ],
@@ -806,26 +798,22 @@ const pageSources = {
     examples: [
       {
         title: "Groups",
-        description:
-          "Wrap options in optgroup to group them. Set disabled on an option that is not available.",
         sourcePath: "native-select-groups-demo.tsx",
       },
       {
         title: "Disabled",
-        description:
-          "Set disabled to keep the current value visible and prevent changes.",
         sourcePath: "native-select-disabled-demo.tsx",
       },
       {
         title: "Invalid selection",
-        description:
-          "Set error to show a message below the field and mark it invalid. The example checks the value when you submit. Install Form separately.",
+        description: "Set error to show a message below the field.",
         sourcePath: "native-select-invalid-demo.tsx",
+        uses: ["form"],
       },
       {
         title: "Sizes",
         description:
-          "Set size on the select. The default is lg. The browser draws the option list, so the list does not change.",
+          "The browser draws the option list, so its size does not change.",
         sourcePath: "native-select-sizes-demo.tsx",
       },
     ],
@@ -835,26 +823,19 @@ const pageSources = {
     examples: [
       {
         title: "Minimum and maximum",
-        description:
-          "Set minValue and maxValue to limit the value. The buttons stop at each limit.",
+        description: "The step buttons stop at each limit.",
         sourcePath: "number-field-limits-demo.tsx",
       },
       {
         title: "Currency formatting",
-        description:
-          "Use formatOptions for currency and step to set the increment.",
         sourcePath: "number-field-currency-demo.tsx",
       },
       {
         title: "Disabled",
-        description:
-          "Use isDisabled to keep the current value visible and prevent changes.",
         sourcePath: "number-field-disabled-demo.tsx",
       },
       {
         title: "Sizes",
-        description:
-          "Set size on the field. The step buttons change with the field. The default is lg.",
         sourcePath: "number-field-sizes-demo.tsx",
       },
     ],
@@ -865,13 +846,12 @@ const pageSources = {
       {
         title: "URL-synced pages",
         description:
-          "Keep the page number in the URL, so that the Back button and shared links work. Set isDisabled on Previous at the first page and on Next at the last page.",
+          "Keep the page in the URL, so the Back button and shared links work.",
         sourcePath: "pagination-demo.tsx",
       },
       {
         title: "Sizes",
-        description:
-          "Set size on Pagination. Use sm or xs below a dense table. Each link and the ellipsis use the size.",
+        description: "Use sm or xs below a dense table.",
         sourcePath: "pagination-sizes-demo.tsx",
       },
     ],
@@ -881,13 +861,12 @@ const pageSources = {
     examples: [
       {
         title: "Disabled",
-        description: "Use isDisabled to show the value without an edit action.",
         sourcePath: "inline-edit-disabled-demo.tsx",
       },
       {
         title: "Save error",
         description:
-          "Throw an error from onSave to keep the editor open. The error message shows below the field.",
+          "Throw an error from onSave to keep the editor open and show the message.",
         sourcePath: "inline-edit-demo.tsx",
       },
     ],
@@ -897,9 +876,8 @@ const pageSources = {
     examples: [
       {
         title: "With password field",
-        description:
-          "Pass the field value to password. Install Password field separately.",
         sourcePath: "password-strength-meter-field-demo.tsx",
+        uses: ["password-field"],
       },
     ],
   },
@@ -908,15 +886,13 @@ const pageSources = {
     examples: [
       {
         title: "Disabled",
-        description:
-          "Use isDisabled to prevent input. The reveal button is also disabled.",
         sourcePath: "password-field-disabled-demo.tsx",
       },
       {
         title: "New password",
-        description:
-          'Set autoComplete="new-password" and minLength. The field shows an error on submit when the password is too short. Install Form separately.',
+        description: 'Set autoComplete="new-password" and minLength.',
         sourcePath: "password-field-demo.tsx",
+        uses: ["form"],
       },
     ],
   },
@@ -926,20 +902,22 @@ const pageSources = {
       {
         title: "Placement and arrow",
         description:
-          'Set placement to top, bottom, left, or right. If there is not sufficient space, the panel moves to the opposite side. Add start or end to align an edge of the panel with the trigger, for example "bottom start". Add PopoverArrow to point at the trigger. It follows the side the panel opens on.',
+          'Add start or end to align an edge, such as "bottom start". PopoverArrow follows the side.',
         sourcePath: "popover-placement-demo.tsx",
       },
       {
         title: "Form",
         description:
-          'PopoverDialog passes close to a function child. Call it after the form submits. A Button with slot="close" closes the popover without submitting. Send stays disabled until the field has text. Focus moves to the field with autoFocus and returns to the trigger on close. Install Text area separately.',
+          "Call close from the PopoverDialog render function after the form submits.",
         sourcePath: "popover-form-demo.tsx",
+        uses: ["text-area"],
       },
       {
         title: "Hover preview",
         description:
-          "Wrap a link and a Popover in PreviewTrigger from react-aria-components. The preview opens after a delay on hover or keyboard focus, and on long press with touch. Tab moves into the preview. Put content directly in the Popover and label it with aria-labelledby. A PopoverDialog would move focus on hover. Install Avatar and Link separately.",
+          "Use PreviewTrigger from react-aria-components with a plain Popover, so hover does not move focus.",
         sourcePath: "popover-preview-demo.tsx",
+        uses: ["avatar", "link"],
       },
     ],
   },
@@ -949,7 +927,7 @@ const pageSources = {
       {
         title: "Adding and reordering",
         description:
-          "Pass items and getKey so rows keep their identity when they enter, leave, or move. The example moves focus before a focused button is removed or disabled.",
+          "Pass getKey so rows keep their identity when they enter, leave, or move.",
         sourcePath: "presence-list-demo.tsx",
       },
     ],
@@ -959,8 +937,6 @@ const pageSources = {
     examples: [
       {
         title: "Known and unknown progress",
-        description:
-          "Set value when you know the progress. Set isIndeterminate when you do not. An indeterminate bar shows no value.",
         sourcePath: "progress-bar-demo.tsx",
       },
     ],
@@ -970,8 +946,7 @@ const pageSources = {
     examples: [
       {
         title: "Known and unknown progress",
-        description:
-          "Set value when you know the progress. Set isIndeterminate when you do not. Set showValue={false} to hide the value in the center.",
+        description: "Set showValue={false} to hide the value in the center.",
         sourcePath: "progress-ring-demo.tsx",
       },
     ],
@@ -982,38 +957,43 @@ const pageSources = {
       {
         title: "Keyboard",
         description:
-          'The default submitKey is "enter". Enter sends and Shift+Enter adds a line. Set submitKey to "mod+enter" for a multi-line editor, where Mod+Enter sends and Enter adds a line. IME composition never submits.',
+          'Set submitKey="mod+enter" for multi-line input. IME composition never submits.',
         sourcePath: "prompt-input-keyboard-demo.tsx",
       },
       {
         title: "Attachments",
-        description:
-          "Set onFilesDropped to accept files dropped on the composer. Compose AttachmentList, FileTrigger, and Attachment for the file rows and the attach button. Install Attachment and File trigger separately.",
+        description: "Set onFilesDropped to accept dropped files.",
         sourcePath: "prompt-input-attachments-demo.tsx",
+        uses: ["attachment", "file-trigger"],
       },
       {
         title: "Stop while streaming",
-        description:
-          "Set isPending and onStop to change Send to Stop while a run streams. Send is disabled while the textarea is empty, and while isPending is set without onStop.",
+        description: "Set isPending and onStop to change Send to Stop.",
         sourcePath: "prompt-input-stop-demo.tsx",
       },
       {
         title: "Drag and drop",
         description:
-          "Files dropped on the frame go to onFilesDropped. While a file is over the frame, a dashed overlay shows dropLabel.",
+          "While a file is over the frame, an overlay shows dropLabel.",
         sourcePath: "prompt-input-drop-demo.tsx",
       },
       {
         title: "Footer actions",
-        description:
-          "Put your own controls in PromptInputFooter, such as a model picker. PromptInputSubmit gets its state from PromptInput. Install Select separately.",
+        description: "PromptInputSubmit gets its state from PromptInput.",
         sourcePath: "prompt-input-model-demo.tsx",
+        uses: ["select"],
       },
       {
         title: "Full transcript",
-        description:
-          "Push Send to run one turn. Reasoning streams first, then Response streams with the caret. The actions and sources show when the run ends. Stop ends the run. The second prompt fails once to show the error state. Install Message, Reasoning, Response, Copy button, and Source link separately.",
+        description: "The second prompt fails once to show the error state.",
         sourcePath: "prompt-input-transcript-demo.tsx",
+        uses: [
+          "message",
+          "reasoning",
+          "response",
+          "copy-button",
+          "source-link",
+        ],
       },
     ],
   },
@@ -1021,9 +1001,18 @@ const pageSources = {
     usage: "rating-input-demo.tsx",
     examples: [
       {
+        title: "Custom icon",
+        sourcePath: "rating-input-icon-demo.tsx",
+      },
+      {
         title: "Read only",
-        description: "Use isReadOnly to show a rating that cannot change.",
         sourcePath: "rating-input-read-only-demo.tsx",
+      },
+      {
+        title: "Required",
+        description: "The error shows after the first submit.",
+        sourcePath: "rating-input-required-demo.tsx",
+        uses: ["form", "button"],
       },
     ],
   },
@@ -1032,33 +1021,29 @@ const pageSources = {
     examples: [
       {
         title: "Described options",
-        description:
-          "Set description on each Radio to show help below its label.",
         sourcePath: "radio-group-description-demo.tsx",
       },
       {
         title: "Horizontal",
-        description:
-          'Set orientation="horizontal" to show the options in a row.',
         sourcePath: "radio-group-horizontal-demo.tsx",
       },
       {
         title: "Card options",
         description:
-          'Set variant="card" when each choice needs a label and description. The whole card selects the option. Compose RadioGroupLabel and RadioGroupItems to change the gap.',
+          "Compose the RadioField parts to put content beside the label.",
         sourcePath: "radio-group-card-demo.tsx",
       },
       {
         title: "Disabled",
         description:
-          "Set isDisabled on a Radio to make one option unavailable. Set it on RadioGroup to disable all options.",
+          "Set isDisabled on one Radio, or on RadioGroup for all options.",
         sourcePath: "radio-group-disabled-demo.tsx",
       },
       {
         title: "Required",
-        description:
-          "Set isRequired inside a Form. The error shows after the first submit and clears when an option is selected.",
+        description: "The error shows after the first submit.",
         sourcePath: "radio-group-required-demo.tsx",
+        uses: ["form", "button"],
       },
     ],
   },
@@ -1068,13 +1053,11 @@ const pageSources = {
       {
         title: "Unavailable dates",
         description:
-          "Use isDateUnavailable to mark dates unavailable. Set minValue and maxValue to limit the selectable range. A range cannot include an unavailable date unless you set allowsNonContiguousRanges.",
+          "A range cannot include an unavailable date unless you set allowsNonContiguousRanges.",
         sourcePath: "range-calendar-limits-demo.tsx",
       },
       {
         title: "Controlled value",
-        description:
-          "Control the selected range with the value and onChange props.",
         sourcePath: "range-calendar-controlled-demo.tsx",
       },
     ],
@@ -1085,19 +1068,16 @@ const pageSources = {
       {
         title: "Auto collapse",
         description:
-          "Set autoCollapse to collapse the panel when the run ends. A new run expands it again. Set isExpanded to control the panel yourself.",
+          "The panel collapses when the run ends and expands for a new run.",
         sourcePath: "reasoning-auto-collapse-demo.tsx",
       },
       {
         title: "Error",
-        description:
-          'Set status to "error" to show the failed state. The trigger reads Reasoning failed.',
         sourcePath: "reasoning-error-demo.tsx",
       },
       {
         title: "Long reasoning",
-        description:
-          "Set scrollable to cap the panel at 16rem and make the body scrollable and focusable from the keyboard.",
+        description: "Set scrollable to cap the panel at 16rem.",
         sourcePath: "reasoning-long-demo.tsx",
       },
     ],
@@ -1107,27 +1087,23 @@ const pageSources = {
     examples: [
       {
         title: "Actions",
-        description:
-          "Put buttons in ResponseActions. This example composes a Copy button and a Regenerate button. Install Copy button separately.",
         sourcePath: "response-actions-demo.tsx",
+        uses: ["copy-button"],
       },
       {
         title: "Stopped",
         description:
-          'With status "stopped", ResponseNotice shows the Stopped marker and screen readers hear Response stopped once. Continue resumes the run from where it stopped.',
+          "Screen readers hear Response stopped once. Continue resumes the run.",
         sourcePath: "response-stopped-demo.tsx",
       },
       {
         title: "Error",
-        description:
-          'With status "error", the notice reads Something went wrong. and the actions can offer a retry.',
         sourcePath: "response-error-demo.tsx",
       },
       {
         title: "With reasoning and sources",
-        description:
-          "Response composes with Reasoning above it and Source link rows in ResponseFooter. Install Reasoning and Source link separately.",
         sourcePath: "response-sources-demo.tsx",
+        uses: ["reasoning", "source-link"],
       },
     ],
   },
@@ -1136,19 +1112,16 @@ const pageSources = {
     examples: [
       {
         title: "Disabled",
-        description: "Use isDisabled to prevent input.",
         sourcePath: "search-field-disabled-demo.tsx",
       },
       {
         title: "Filtered results",
-        description:
-          "Control the query with value and onChange. SearchFieldClear resets the query and the list.",
+        description: "SearchFieldClear resets the query and the list.",
         sourcePath: "search-field-demo.tsx",
       },
       {
         title: "Sizes",
-        description:
-          "Use xl for a main search. Use sm in a filter bar, and give each control in the bar the same size.",
+        description: "Give each control in a filter bar the same size.",
         sourcePath: "search-field-sizes-demo.tsx",
       },
     ],
@@ -1159,7 +1132,7 @@ const pageSources = {
       {
         title: "Vertical",
         description:
-          'Set orientation="vertical" inside a flex row. The line takes the height of the row.',
+          "Use it inside a flex row. The line takes the height of the row.",
         sourcePath: "separator-vertical-demo.tsx",
       },
     ],
@@ -1170,14 +1143,14 @@ const pageSources = {
       {
         title: "Card",
         description:
-          "Match each Skeleton to the size and shape of the content it replaces. Skeleton is hidden from screen readers, so put a loading message in an output.",
+          "Skeleton is hidden from screen readers, so put a loading message in an output.",
         sourcePath: "skeleton-demo.tsx",
       },
       {
         title: "Loading state",
-        description:
-          "Show the content in place of the skeletons when it loads. Keep the same size so the layout does not move. Install Avatar separately.",
+        description: "Keep the same size so the layout does not move.",
         sourcePath: "skeleton-loading-demo.tsx",
+        uses: ["avatar"],
       },
     ],
   },
@@ -1186,20 +1159,26 @@ const pageSources = {
     examples: [
       {
         title: "Range",
-        description:
-          "Pass an array to defaultValue for two SliderHandles. Give each handle an aria-label.",
+        description: "Use thumbLabels to give each handle a name.",
         sourcePath: "slider-range-demo.tsx",
       },
       {
-        title: "Step",
+        title: "Marks",
         description:
-          "Set step to change the increment. Use formatOptions to format the value.",
+          "Set step to the mark interval so the handle stops on each mark.",
         sourcePath: "slider-step-demo.tsx",
       },
       {
+        title: "Vertical",
+        sourcePath: "slider-vertical-demo.tsx",
+      },
+      {
+        title: "Custom layout",
+        description: "Without a visible label, pass aria-label to Slider.",
+        sourcePath: "slider-custom-demo.tsx",
+      },
+      {
         title: "Disabled",
-        description:
-          "Use isDisabled to keep the current value visible and prevent changes.",
         sourcePath: "slider-disabled-demo.tsx",
       },
     ],
@@ -1214,14 +1193,13 @@ const pageSources = {
       },
       {
         title: "Sizes",
-        description:
-          'Set size to "xs", "sm", "md", "lg", or "xl". The spinner draws with the current text color.',
+        description: "The spinner uses the current text color.",
         sourcePath: "spinner-sizes-demo.tsx",
       },
       {
         title: "Loading in context",
         description:
-          'Set isPending on a Button and put a size="sm" Spinner inside it. Set decorative when text next to the spinner names the wait.',
+          "Set decorative when text next to the spinner names the wait.",
         sourcePath: "spinner-usage-demo.tsx",
       },
     ],
@@ -1232,8 +1210,9 @@ const pageSources = {
       {
         title: "Trend",
         description:
-          "Put a Badge in StatDetail to show the change. Include a plus or minus sign so the direction does not depend on color. Install Badge separately.",
+          "Include a plus or minus sign so the direction does not depend on color.",
         sourcePath: "stat-trend-demo.tsx",
+        uses: ["badge"],
       },
     ],
   },
@@ -1242,8 +1221,6 @@ const pageSources = {
     examples: [
       {
         title: "Controlled step",
-        description:
-          "Keep currentStep in state and change it from your own buttons.",
         sourcePath: "stepper-demo.tsx",
       },
     ],
@@ -1253,21 +1230,23 @@ const pageSources = {
     examples: [
       {
         title: "Description",
-        description:
-          "Set description to show help below the label. Screen readers announce it after the label.",
         sourcePath: "switch-description-demo.tsx",
       },
       {
         title: "Disabled",
-        description:
-          "Use isDisabled for a setting that the user cannot change.",
         sourcePath: "switch-disabled-demo.tsx",
+      },
+      {
+        title: "Control first",
+        description: "Put SwitchControl before SwitchLabel.",
+        sourcePath: "switch-control-first-demo.tsx",
       },
       {
         title: "Custom layout",
         description:
-          "Compose SwitchField, SwitchButton, and the other parts to style each piece. Keep SwitchDescription outside SwitchButton so it is read as a description, not as part of the label.",
+          "Keep SwitchDescription outside SwitchButton so it is read as a description.",
         sourcePath: "switch-demo.tsx",
+        uses: ["badge"],
       },
     ],
   },
@@ -1276,8 +1255,7 @@ const pageSources = {
     examples: [
       {
         title: "Column filters",
-        description:
-          "Set filter on a column to add a text or select filter. The column also needs sortValue.",
+        description: "A filtered column also needs sortValue.",
         sourcePath: "data-table-column-filters-demo.tsx",
       },
     ],
@@ -1292,14 +1270,12 @@ const pageSources = {
       },
       {
         title: "Sortable columns",
-        description:
-          "Set allowsSorting on each sortable Column. Table does not sort the rows. Sort them in onSortChange and pass sortDescriptor back.",
+        description: "Table does not sort the rows. Sort them in onSortChange.",
         sourcePath: "table-sorting-demo.tsx",
       },
       {
         title: "Filter invoices",
-        description:
-          "Filter the rows with a controlled SearchField and Select. renderEmptyState shows a message when no rows match.",
+        description: "renderEmptyState shows a message when no rows match.",
         sourcePath: "table-filter-demo.tsx",
       },
     ],
@@ -1309,32 +1285,25 @@ const pageSources = {
     examples: [
       {
         title: "With icons",
-        description:
-          "Put an icon before the label in TabsTrigger. Set aria-hidden on the icon so the label stays the tab's name.",
         sourcePath: "tabs-demo.tsx",
       },
       {
         title: "Disabled tab",
-        description:
-          "Set isDisabled on a TabsTrigger to keep an unavailable tab visible. The arrow keys skip it.",
+        description: "The arrow keys skip a disabled tab.",
         sourcePath: "tabs-disabled-demo.tsx",
       },
       {
         title: "Vertical",
-        description:
-          'Set orientation="vertical" to show the tabs in a column next to the panel. In a narrow space, the panel moves below the tabs. The Up and Down arrow keys move between tabs.',
+        description: "In a narrow space, the panel moves below the tabs.",
         sourcePath: "tabs-vertical-demo.tsx",
       },
       {
         title: "Many tabs",
-        description:
-          "When the tabs do not fit, the list scrolls horizontally. The arrow keys scroll the focused tab into view.",
+        description: "The list scrolls and keeps the focused tab in view.",
         sourcePath: "tabs-overflow-demo.tsx",
       },
       {
         title: "Sizes",
-        description:
-          "Set size on TabsList. Each tab uses it. Without a size, tabs are 44 pixels high on small screens and 36 pixels from 640 pixels.",
         sourcePath: "tabs-sizes-demo.tsx",
       },
     ],
@@ -1344,8 +1313,6 @@ const pageSources = {
     examples: [
       {
         title: "Sizes",
-        description:
-          "Set size on TagGroup to xs, sm, or md. The remove button scales with the tag.",
         sourcePath: "tag-group-sizes-demo.tsx",
       },
     ],
@@ -1355,31 +1322,24 @@ const pageSources = {
     examples: [
       {
         title: "Description",
-        description: "Set description to show help below the field.",
         sourcePath: "text-area-description-demo.tsx",
       },
       {
         title: "Disabled",
-        description:
-          "Use isDisabled to keep the current value visible and prevent changes.",
         sourcePath: "text-area-disabled-demo.tsx",
       },
       {
         title: "Read only",
-        description:
-          "Use isReadOnly to keep the value selectable but prevent changes.",
         sourcePath: "text-area-read-only-demo.tsx",
       },
       {
         title: "Invalid",
-        description:
-          "Use isInvalid with TextAreaError to show an error. The error clears when the value is valid.",
         sourcePath: "text-area-invalid-demo.tsx",
       },
       {
         title: "Sizes",
         description:
-          "Set size to change the padding, radius, and text size. The height does not change.",
+          "Size changes the padding, radius, and text, not the height.",
         sourcePath: "text-area-sizes-demo.tsx",
       },
     ],
@@ -1389,31 +1349,23 @@ const pageSources = {
     examples: [
       {
         title: "Description",
-        description: "Set description to show help below the field.",
         sourcePath: "text-field-description-demo.tsx",
       },
       {
         title: "Disabled",
-        description:
-          "Use isDisabled to keep the current value visible and prevent changes.",
         sourcePath: "text-field-disabled-demo.tsx",
       },
       {
         title: "Read only",
-        description:
-          "Use isReadOnly to keep the value selectable but prevent changes.",
         sourcePath: "text-field-read-only-demo.tsx",
       },
       {
         title: "Invalid",
-        description:
-          "Use isInvalid with TextFieldError to show an error. The error clears when the value is valid.",
         sourcePath: "text-field-invalid-demo.tsx",
       },
       {
         title: "Sizes",
-        description:
-          "Set size on the field. The default is lg. To put a button next to the field, give the button the same size.",
+        description: "Give a button next to the field the same size.",
         sourcePath: "text-field-sizes-demo.tsx",
       },
     ],
@@ -1424,13 +1376,12 @@ const pageSources = {
       {
         title: "Characters",
         description:
-          'Set split="characters" to reveal one character at a time. A word stays on one line unless it is wider than its container.',
+          "A word stays on one line unless it is wider than its container.",
         sourcePath: "text-reveal-characters-demo.tsx",
       },
       {
         title: "Sequence",
-        description:
-          "Set delay to start one reveal after another. The default trigger starts each reveal when its text comes into view.",
+        description: "Set delay to start one reveal after another.",
         sourcePath: "text-reveal-demo.tsx",
       },
     ],
@@ -1440,14 +1391,12 @@ const pageSources = {
     examples: [
       {
         title: "Glyphs",
-        description:
-          "Set glyphs to choose the characters that show during the scramble. Use characters that have the same width in your font.",
+        description: "Use characters that have the same width in your font.",
         sourcePath: "text-scramble-demo.tsx",
       },
       {
         title: "Duration",
-        description:
-          "Set duration to the time in seconds that the text takes to resolve. Use a short duration for status labels.",
+        description: "Use a short duration for status labels.",
         sourcePath: "text-scramble-duration-demo.tsx",
       },
     ],
@@ -1458,7 +1407,7 @@ const pageSources = {
       {
         title: "Inline status",
         description:
-          'Set as="span" to show content in a line of text or beside a control. Keep the output element outside Presence, so screen readers announce the change.',
+          "Keep the output element outside Presence, so screen readers announce the change.",
         sourcePath: "presence-inline-demo.tsx",
       },
     ],
@@ -1468,8 +1417,7 @@ const pageSources = {
     examples: [
       {
         title: "Source list",
-        description:
-          "Put several sources in a list. Set index to the citation number in the answer.",
+        description: "Set index to the citation number in the answer.",
         sourcePath: "source-link-list-demo.tsx",
       },
     ],
@@ -1479,14 +1427,12 @@ const pageSources = {
     examples: [
       {
         title: "List",
-        description:
-          'Set as="ul" or as="ol" on StaggerGroup and as="li" on each StaggerItem. The list keeps its semantics.',
         sourcePath: "stagger-group-demo.tsx",
       },
       {
         title: "Timing",
         description:
-          "Set stagger to the delay in seconds between items. In a long group the delay gets shorter, so the last item starts within 0.6 seconds.",
+          "In a long group the delay gets shorter, so the last item starts within 0.6 seconds.",
         sourcePath: "stagger-group-timing-demo.tsx",
       },
     ],
@@ -1497,8 +1443,9 @@ const pageSources = {
       {
         title: "Switching views",
         description:
-          "Set contentKey to the selected view. Keep the control outside LayoutMorph, so focus stays on the control. Install Toggle button group separately.",
+          "Keep the control outside LayoutMorph, so focus stays on the control.",
         sourcePath: "layout-morph-views-demo.tsx",
+        uses: ["toggle-button-group"],
       },
     ],
   },
@@ -1507,14 +1454,13 @@ const pageSources = {
     examples: [
       {
         title: "Reverse",
-        description:
-          "Set reverse to move the content toward the end edge. In a right-to-left layout, both directions change sides.",
+        description: "In a right-to-left layout, both directions change sides.",
         sourcePath: "marquee-reverse-demo.tsx",
       },
       {
         title: "Speed and spacing",
         description:
-          "Set speed in pixels per second. Set --marquee-gap in className to change the space between items.",
+          "Set speed in pixels per second and --marquee-gap for the space between items.",
         sourcePath: "marquee-speed-demo.tsx",
       },
     ],
@@ -1524,8 +1470,7 @@ const pageSources = {
     examples: [
       {
         title: "Button label",
-        description:
-          "Put TextSwap in a Button to change its label after an action. Set a minimum width so the button keeps its size.",
+        description: "Set a minimum width so the button keeps its size.",
         sourcePath: "text-swap-button-demo.tsx",
       },
     ],
@@ -1535,8 +1480,7 @@ const pageSources = {
     examples: [
       {
         title: "States",
-        description:
-          'Set status to "running", "complete", or "error". Screen readers announce each change.',
+        description: "Screen readers announce each change.",
         sourcePath: "tool-call-states-demo.tsx",
       },
     ],
@@ -1546,25 +1490,20 @@ const pageSources = {
     examples: [
       {
         title: "24-hour clock",
-        description:
-          "Set hourCycle to 24 to use a 24-hour clock in every locale.",
         sourcePath: "time-field-24-hour-demo.tsx",
       },
       {
         title: "Minimum and maximum",
         description:
-          "Set minValue and maxValue to limit the time. A time outside the limits shows an error when the field loses focus.",
+          "A time outside the limits shows an error when the field loses focus.",
         sourcePath: "time-field-limits-demo.tsx",
       },
       {
         title: "Disabled",
-        description:
-          "Use isDisabled to keep the current value visible and prevent changes.",
         sourcePath: "time-field-disabled-demo.tsx",
       },
       {
         title: "Sizes",
-        description: "Set size on the field. The default is lg.",
         sourcePath: "time-field-sizes-demo.tsx",
       },
     ],
@@ -1578,14 +1517,24 @@ const pageSources = {
     examples: [
       {
         title: "Variants",
-        description:
-          'Set variant to "success", "warning", or "error" in the toast content. The default is "info". Each variant has its own icon.',
         sourcePath: "toast-status-demo.tsx",
+      },
+      {
+        title: "Action",
+        description:
+          "A toast with an action stays open until the user closes it.",
+        sourcePath: "toast-action-demo.tsx",
+      },
+      {
+        title: "Stack",
+        description:
+          "Hover or focus the stack to expand it. Swipe a toast to close it.",
+        sourcePath: "toast-stack-demo.tsx",
       },
       {
         title: "Timeout",
         description:
-          "A toast closes after 5 seconds. Set timeout in milliseconds to keep it open longer. Set timeout to 0 to keep it open until the user closes it.",
+          "A toast closes after 5 seconds. Set timeout to 0 to keep it open.",
         sourcePath: "toast-timeout-demo.tsx",
       },
     ],
@@ -1595,14 +1544,12 @@ const pageSources = {
     examples: [
       {
         title: "Independent toggles",
-        description:
-          "Control each toggle with isSelected and onChange. Give every button a visible label.",
         sourcePath: "toggle-button-independent-demo.tsx",
       },
       {
         title: "Sizes",
         description:
-          "Set size to change the height. The default is md. Set iconOnly for a square toggle, and give it an aria-label.",
+          "Set iconOnly for a square toggle, and give it an aria-label.",
         sourcePath: "toggle-button-sizes-demo.tsx",
       },
     ],
@@ -1612,14 +1559,10 @@ const pageSources = {
     examples: [
       {
         title: "Multiple text styles",
-        description:
-          'Set selectionMode="multiple" to select more than one option, and control selectedKeys with onSelectionChange.',
         sourcePath: "toggle-button-group-editor-demo.tsx",
       },
       {
         title: "Sizes",
-        description:
-          "Set size on the group. Each toggle in the group uses it. Without a size, segmented toggles are 44 pixels high on small screens and 36 pixels from 640 pixels.",
         sourcePath: "toggle-button-group-sizes-demo.tsx",
       },
     ],
@@ -1629,20 +1572,16 @@ const pageSources = {
     examples: [
       {
         title: "Disabled",
-        description:
-          "Use isDisabled to keep the tokens visible and prevent changes.",
         sourcePath: "token-field-disabled-demo.tsx",
       },
       {
         title: "Project tags",
         description:
-          "Pass a TagFieldValue as the value and commit the draft with onSubmit. Uncommitted text is not a token.",
+          "Commit the draft with onSubmit. Uncommitted text is not a token.",
         sourcePath: "token-field-demo.tsx",
       },
       {
         title: "Sizes",
-        description:
-          "Set size on the field. The default is lg. Tokens keep one size.",
         sourcePath: "token-field-sizes-demo.tsx",
       },
     ],
@@ -1652,20 +1591,17 @@ const pageSources = {
     examples: [
       {
         title: "Formatting toolbar",
-        description:
-          'Set selectionMode="multiple" on ToggleButtonGroup for styles that combine. A Separator divides groups of controls.',
         sourcePath: "toolbar-demo.tsx",
       },
       {
         title: "Vertical toolbar",
-        description:
-          'Set orientation="vertical". The up and down arrow keys move focus.',
+        description: "The up and down arrow keys move focus.",
         sourcePath: "toolbar-vertical-demo.tsx",
       },
       {
         title: "Sizes",
         description:
-          "Set size on the toolbar. Its buttons and toggles use that size. Popovers that open from the toolbar keep the default size.",
+          "Popovers that open from the toolbar keep the default size.",
         sourcePath: "toolbar-sizes-demo.tsx",
       },
     ],
@@ -1676,13 +1612,12 @@ const pageSources = {
       {
         title: "Placement and arrow",
         description:
-          "Set placement to top, bottom, left, or right. If there is not sufficient space, the tooltip moves to the opposite side. Add TooltipArrow to point at the trigger.",
+          "If there is no space, the tooltip moves to the opposite side.",
         sourcePath: "tooltip-placement-demo.tsx",
       },
       {
         title: "Icon button tooltips",
-        description:
-          "Give each icon Button an aria-label that matches the tooltip text. The tooltip opens above the trigger. Set placement to change the side.",
+        description: "Match each aria-label to the tooltip text.",
         sourcePath: "tooltip-actions-demo.tsx",
       },
     ],
@@ -1692,8 +1627,7 @@ const pageSources = {
     examples: [
       {
         title: "Custom row content",
-        description:
-          "Use content to show more details in a row. Typeahead still uses title.",
+        description: "Typeahead still uses title.",
         sourcePath: "tree-demo.tsx",
       },
     ],
