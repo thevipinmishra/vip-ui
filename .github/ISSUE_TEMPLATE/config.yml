@@ -1,7 +1,7 @@
 blank_issues_enabled: false
 contact_links:
   - name: Documentation
-    url: https://vip-ui.vercel.app/components
+    url: https://vip-ui.dev/components
     about: Read the install steps, examples, and API references.
   - name: Security vulnerability
     url: https://github.com/thevipinmishra/vip-ui/security/advisories/new

@@ -5,7 +5,7 @@
   "title": "Chart",
   "description": "Frames a TanStack chart with shadcn chart colors and tooltip styles.",
   "dependencies": ["@tanstack/charts@^1.1.0"],
-  "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+  "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
   "cssVars": {
     "theme": {
       "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"

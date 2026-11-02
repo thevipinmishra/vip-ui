@@ -85,7 +85,7 @@ To change an existing component, edit its source file and its docs data. Then ru
 - Use React Aria Components for interactive behavior: focus, keyboard, press, selection, and overlays. Do not write your own keyboard or focus logic when React Aria has it.
 - Pass `className` through `composeRenderProps` on React Aria components, then merge it with `cn` from `@/lib/utils`.
 - Add a `data-slot` attribute to each rendered part, for example `data-slot="switch-button"`.
-- Use Tailwind CSS v4 and Tailwind Variants. Use a `tv()` recipe when a component has a variant or size axis. Keep each variant value a complete class string. See [styling and variants](https://vip-ui.vercel.app/components/styling).
+- Use Tailwind CSS v4 and Tailwind Variants. Use a `tv()` recipe when a component has a variant or size axis. Keep each variant value a complete class string. See [styling and variants](https://vip-ui.dev/components/styling).
 - Use theme colors such as `bg-primary` and `text-foreground`. Do not use fixed color values.
 - Use the shared size scale. `src/components/ui/size.tsx` has the `Size` type, `SizeProvider`, and `useSize`. The control heights are xs 28px, sm 36px, md 44px, lg 48px, and xl 56px. Groups pass their size to their items through `SizeProvider`.
 - Every animated component must respect reduced motion. Use `motion-safe:` and `motion-reduce:` classes for CSS motion. For Motion, use `useReducedMotion` with `transitionFor` from `@/lib/motion`.

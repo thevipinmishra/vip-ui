@@ -5,7 +5,7 @@
   "title": "Stat",
   "description": "Shows a labeled metric with supporting details.",
   "dependencies": ["@phosphor-icons/react@^2.1.10"],
-  "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+  "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
   "cssVars": {
     "light": {
       "success": "oklch(0.43 0.12 155)",

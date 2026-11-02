@@ -5,7 +5,7 @@
   "title": "Badge",
   "description": "Shows a short label, status, or count.",
   "dependencies": ["tailwind-variants@^4.0.1"],
-  "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+  "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
   "cssVars": {
     "light": {
       "success": "oklch(0.43 0.12 155)",

@@ -7,11 +7,11 @@
   "categories": ["dashboard"],
   "dependencies": ["@phosphor-icons/react@^2.1.10"],
   "registryDependencies": [
-    "https://vip-ui.vercel.app/r/vip-animated-number.json",
-    "https://vip-ui.vercel.app/r/vip-badge.json",
-    "https://vip-ui.vercel.app/r/vip-stat.json",
-    "https://vip-ui.vercel.app/r/vip-toggle-button.json",
-    "https://vip-ui.vercel.app/r/vip-toggle-button-group.json"
+    "https://vip-ui.dev/r/vip-animated-number.json",
+    "https://vip-ui.dev/r/vip-badge.json",
+    "https://vip-ui.dev/r/vip-stat.json",
+    "https://vip-ui.dev/r/vip-toggle-button.json",
+    "https://vip-ui.dev/r/vip-toggle-button-group.json"
   ],
   "cssVars": {
     "light": {

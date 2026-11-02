@@ -6,8 +6,8 @@
   "description": "Shows an inline message about a status or event.",
   "dependencies": ["@phosphor-icons/react@^2.1.10", "tailwind-variants@^4.0.1"],
   "registryDependencies": [
-    "https://vip-ui.vercel.app/r/vip-button.json",
-    "https://vip-ui.vercel.app/r/vip-utils.json"
+    "https://vip-ui.dev/r/vip-button.json",
+    "https://vip-ui.dev/r/vip-utils.json"
   ],
   "cssVars": {
     "light": {

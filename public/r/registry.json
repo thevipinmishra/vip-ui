@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "vip-ui",
-  "homepage": "https://vip-ui.vercel.app",
+  "homepage": "https://vip-ui.dev",
   "items": [
     {
       "name": "vip-utils",
@@ -41,8 +41,8 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-collapsible-panel.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-collapsible-panel.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -74,8 +74,8 @@
       "description": "Shows the current step of an agent and its state.",
       "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.9.0"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "cssVars": {
         "light": {
@@ -107,8 +107,8 @@
         "tailwind-variants@^4.0.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "cssVars": {
         "light": {
@@ -145,8 +145,8 @@
       "description": "Animates a number when its value changes.",
       "dependencies": ["motion@^14.9.0"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "files": [
         {
@@ -163,10 +163,10 @@
       "description": "Shows the name, size, preview, and upload state of a file.",
       "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.9.0"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-progress-bar.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-progress-bar.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "cssVars": {
         "theme": {
@@ -217,7 +217,7 @@
         "@phosphor-icons/react@^2.1.10",
         "tailwind-variants@^4.0.1"
       ],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/avatar.tsx",
@@ -232,7 +232,7 @@
       "title": "Badge",
       "description": "Shows a short label, status, or count.",
       "dependencies": ["tailwind-variants@^4.0.1"],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "cssVars": {
         "light": {
           "success": "oklch(0.43 0.12 155)",
@@ -270,7 +270,7 @@
         "@phosphor-icons/react@^2.1.10",
         "react-aria-components@^1.22.1"
       ],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
         "@plugin tailwindcss-react-aria-components": {}
@@ -295,9 +295,9 @@
       "description": "Joins related buttons, or a button and its menu, into one row or column.",
       "dependencies": [],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "cssVars": {
         "light": {
@@ -322,8 +322,8 @@
       "description": "Shows a navigation link with button styles, for any router.",
       "dependencies": [],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button-styles.json",
-        "https://vip-ui.vercel.app/r/vip-size.json"
+        "https://vip-ui.dev/r/vip-button-styles.json",
+        "https://vip-ui.dev/r/vip-size.json"
       ],
       "files": [
         {
@@ -367,9 +367,9 @@
       "description": "Triggers an action with primary, secondary, or destructive emphasis.",
       "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button-styles.json",
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-size.json"
+        "https://vip-ui.dev/r/vip-button-styles.json",
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-size.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -394,9 +394,9 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-item-highlight.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-item-highlight.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -427,7 +427,7 @@
       "title": "Card",
       "description": "Groups related content and actions in one container.",
       "dependencies": ["react-aria-components@^1.22.1"],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
         "@plugin tailwindcss-react-aria-components": {}
@@ -457,7 +457,7 @@
       "title": "Chart",
       "description": "Frames a TanStack chart with shadcn chart colors and tooltip styles.",
       "dependencies": ["@tanstack/charts@^1.1.0"],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "cssVars": {
         "theme": {
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
@@ -488,8 +488,8 @@
       "description": "Groups checkboxes to select one or more options.",
       "dependencies": ["react-aria-components@^1.22.1"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-field-styles.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -513,8 +513,8 @@
         "tailwind-variants@^4.0.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-field-styles.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -545,7 +545,7 @@
       "title": "Collapsible Panel",
       "description": "Animates a disclosure panel and keeps its content accessible.",
       "dependencies": ["react-aria-components@^1.22.1"],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
         "@plugin tailwindcss-react-aria-components": {}
@@ -570,9 +570,9 @@
       "description": "Accepts a hex color, or one color channel as a number.",
       "dependencies": ["react-aria-components@^1.22.1"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-field-styles.json",
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -593,13 +593,13 @@
       "description": "Selects a color with a color area, hue slider, and hex field in a popover.",
       "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-color-field.json",
-        "https://vip-ui.vercel.app/r/vip-color-swatch.json",
-        "https://vip-ui.vercel.app/r/vip-field-styles.json",
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-popover.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-color-field.json",
+        "https://vip-ui.dev/r/vip-color-swatch.json",
+        "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-popover.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -631,8 +631,8 @@
       "description": "Selects a color from a set of swatches.",
       "dependencies": ["react-aria-components@^1.22.1"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-color-swatch.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-color-swatch.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -658,7 +658,7 @@
       "title": "Color Swatch",
       "description": "Shows a sample of a color.",
       "dependencies": ["react-aria-components@^1.22.1"],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
         "@plugin tailwindcss-react-aria-components": {}
@@ -681,13 +681,13 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-field-styles.json",
-        "https://vip-ui.vercel.app/r/vip-item-highlight.json",
-        "https://vip-ui.vercel.app/r/vip-list-box.json",
-        "https://vip-ui.vercel.app/r/vip-popover.json",
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-tag-group.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-item-highlight.json",
+        "https://vip-ui.dev/r/vip-list-box.json",
+        "https://vip-ui.dev/r/vip-popover.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-tag-group.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -722,12 +722,12 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-autocomplete.json",
-        "https://vip-ui.vercel.app/r/vip-dialog.json",
-        "https://vip-ui.vercel.app/r/vip-kbd-code.json",
-        "https://vip-ui.vercel.app/r/vip-menu.json",
-        "https://vip-ui.vercel.app/r/vip-search-field.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-autocomplete.json",
+        "https://vip-ui.dev/r/vip-dialog.json",
+        "https://vip-ui.dev/r/vip-kbd-code.json",
+        "https://vip-ui.dev/r/vip-menu.json",
+        "https://vip-ui.dev/r/vip-search-field.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -752,7 +752,7 @@
       "title": "Context Menu",
       "description": "Opens actions for an item on right-click, long press, or keyboard.",
       "dependencies": ["react-aria-components@^1.22.1"],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-menu.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-menu.json"],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
         "@plugin tailwindcss-react-aria-components": {}
@@ -776,10 +776,10 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-button-styles.json",
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-button-styles.json",
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -803,11 +803,11 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-search-field.json",
-        "https://vip-ui.vercel.app/r/vip-select.json",
-        "https://vip-ui.vercel.app/r/vip-table.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-search-field.json",
+        "https://vip-ui.dev/r/vip-select.json",
+        "https://vip-ui.dev/r/vip-table.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -836,10 +836,10 @@
       "description": "Accepts a date, with one editable segment for each part.",
       "dependencies": ["react-aria-components@^1.22.1"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-date-segment.json",
-        "https://vip-ui.vercel.app/r/vip-field-styles.json",
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-date-segment.json",
+        "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -863,13 +863,13 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-calendar.json",
-        "https://vip-ui.vercel.app/r/vip-date-segment.json",
-        "https://vip-ui.vercel.app/r/vip-field-styles.json",
-        "https://vip-ui.vercel.app/r/vip-popover.json",
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-calendar.json",
+        "https://vip-ui.dev/r/vip-date-segment.json",
+        "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-popover.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -893,14 +893,14 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-calendar.json",
-        "https://vip-ui.vercel.app/r/vip-date-segment.json",
-        "https://vip-ui.vercel.app/r/vip-field-styles.json",
-        "https://vip-ui.vercel.app/r/vip-popover.json",
-        "https://vip-ui.vercel.app/r/vip-range-calendar.json",
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-calendar.json",
+        "https://vip-ui.dev/r/vip-date-segment.json",
+        "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-popover.json",
+        "https://vip-ui.dev/r/vip-range-calendar.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -920,7 +920,7 @@
       "title": "Date Segment",
       "description": "Shows the editable segments of date and time fields.",
       "dependencies": ["react-aria-components@^1.22.1"],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
         "@plugin tailwindcss-react-aria-components": {}
@@ -944,7 +944,7 @@
       "title": "Description List",
       "description": "Shows pairs of terms and details.",
       "dependencies": [],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/description-list.tsx",
@@ -965,9 +965,9 @@
         "tailwind-variants@^4.0.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -1002,8 +1002,8 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-collapsible-panel.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-collapsible-panel.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -1031,7 +1031,7 @@
         "@phosphor-icons/react@^2.1.10",
         "react-aria-components@^1.22.1"
       ],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
         "@plugin tailwindcss-react-aria-components": {}
@@ -1056,7 +1056,7 @@
       "title": "Empty State",
       "description": "Shows why a view is empty and what to do next.",
       "dependencies": [],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "cssVars": {
         "light": {
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
@@ -1079,7 +1079,7 @@
       "title": "Field Styles",
       "description": "Sets the theme styles of text and segmented fields.",
       "dependencies": [],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-size.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-size.json"],
       "cssVars": {
         "theme": {
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)",
@@ -1106,7 +1106,7 @@
       "title": "Fieldset",
       "description": "Groups related native form controls under a legend.",
       "dependencies": [],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "cssVars": {
         "light": {
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
@@ -1129,7 +1129,7 @@
       "title": "File Trigger",
       "description": "Opens the file picker from a button or other trigger.",
       "dependencies": ["react-aria-components@^1.22.1"],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-button.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-button.json"],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
         "@plugin tailwindcss-react-aria-components": {}
@@ -1148,7 +1148,7 @@
       "title": "Form",
       "description": "Groups fields and handles validation and submission.",
       "dependencies": ["react-aria-components@^1.22.1"],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
         "@plugin tailwindcss-react-aria-components": {}
@@ -1168,8 +1168,8 @@
       "description": "Shows a list of interactive rows that you can select and act on.",
       "dependencies": ["react-aria-components@^1.22.1"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-item-highlight.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-item-highlight.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -1206,12 +1206,12 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-field-styles.json",
-        "https://vip-ui.vercel.app/r/vip-input-group.json",
-        "https://vip-ui.vercel.app/r/vip-spinner.json",
-        "https://vip-ui.vercel.app/r/vip-text-field.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-input-group.json",
+        "https://vip-ui.dev/r/vip-spinner.json",
+        "https://vip-ui.dev/r/vip-text-field.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -1246,10 +1246,10 @@
       "description": "Joins an input with a prefix, suffix, or action.",
       "dependencies": ["react-aria-components@^1.22.1"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-field-styles.json",
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -1278,8 +1278,8 @@
       "description": "Moves one highlight to the hovered or focused item.",
       "dependencies": ["motion@^14.9.0"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "cssVars": {
         "light": {
@@ -1303,7 +1303,7 @@
       "title": "Kbd Code",
       "description": "Shows keyboard keys and inline code in text.",
       "dependencies": [],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/kbd-code.tsx",
@@ -1319,8 +1319,8 @@
       "description": "Animates the height of a container when its content changes.",
       "dependencies": ["motion@^14.9.0"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "files": [
         {
@@ -1336,7 +1336,7 @@
       "title": "Link",
       "description": "Shows a link to another page or location.",
       "dependencies": ["react-aria-components@^1.22.1"],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
         "@plugin tailwindcss-react-aria-components": {}
@@ -1361,8 +1361,8 @@
       "description": "Selects options from a list that stays visible.",
       "dependencies": ["react-aria-components@^1.22.1"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-item-highlight.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-item-highlight.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -1396,8 +1396,8 @@
       "description": "Loops a strip of content, with a control to pause it.",
       "dependencies": ["motion@^14.9.0"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "files": [
         {
@@ -1417,10 +1417,10 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-item-highlight.json",
-        "https://vip-ui.vercel.app/r/vip-list-box.json",
-        "https://vip-ui.vercel.app/r/vip-popover.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-item-highlight.json",
+        "https://vip-ui.dev/r/vip-list-box.json",
+        "https://vip-ui.dev/r/vip-popover.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -1451,7 +1451,7 @@
       "title": "Message",
       "description": "Shows a message in a conversation.",
       "dependencies": [],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "cssVars": {
         "light": {
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
@@ -1475,8 +1475,8 @@
       "description": "Shows a measured value within a known range.",
       "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -1505,9 +1505,9 @@
       "description": "Selects one option with the native HTML select element.",
       "dependencies": ["@phosphor-icons/react@^2.1.10"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-field-styles.json",
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "cssVars": {
         "theme": {
@@ -1538,9 +1538,9 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-field-styles.json",
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -1570,11 +1570,11 @@
         "tailwind-variants@^4.0.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button-styles.json",
-        "https://vip-ui.vercel.app/r/vip-item-highlight.json",
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-button-styles.json",
+        "https://vip-ui.dev/r/vip-item-highlight.json",
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -1608,9 +1608,9 @@
       "description": "Accepts a password, with a button to show or hide it.",
       "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.9.0"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-input-group.json",
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-text-field.json"
+        "https://vip-ui.dev/r/vip-input-group.json",
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-text-field.json"
       ],
       "files": [
         {
@@ -1627,8 +1627,8 @@
       "description": "Rates a password by its length and character mix.",
       "dependencies": ["react-aria-components@^1.22.1"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-meter.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-meter.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -1664,8 +1664,8 @@
       "description": "Shows content in a panel anchored to its trigger.",
       "dependencies": ["react-aria-components@^1.22.1"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -1697,8 +1697,8 @@
       "description": "Animates list items when you add, remove, or move them.",
       "dependencies": ["motion@^14.9.0"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "files": [
         {
@@ -1715,8 +1715,8 @@
       "description": "Animates content when it is shown or hidden.",
       "dependencies": ["motion@^14.9.0"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "files": [
         {
@@ -1732,7 +1732,7 @@
       "title": "Press Button",
       "description": "Handles press interactions for shared button controls.",
       "dependencies": ["react-aria-components@^1.22.1"],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
         "@plugin tailwindcss-react-aria-components": {}
@@ -1757,8 +1757,8 @@
       "description": "Shows the progress of a task in a horizontal bar.",
       "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -1791,8 +1791,8 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -1816,10 +1816,10 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-field-styles.json",
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -1854,8 +1854,8 @@
         "tailwind-variants@^4.0.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-field-styles.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -1888,9 +1888,9 @@
       "description": "Shows a month grid to select a start and end date.",
       "dependencies": ["react-aria-components@^1.22.1"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-calendar.json",
-        "https://vip-ui.vercel.app/r/vip-item-highlight.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-calendar.json",
+        "https://vip-ui.dev/r/vip-item-highlight.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -1919,9 +1919,9 @@
       "description": "Sets a star rating with radio controls.",
       "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.9.0"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-radio-group.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-radio-group.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "cssVars": {
         "theme": {
@@ -1946,9 +1946,9 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-collapsible-panel.json",
-        "https://vip-ui.vercel.app/r/vip-disclosure.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-collapsible-panel.json",
+        "https://vip-ui.dev/r/vip-disclosure.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -1973,7 +1973,7 @@
       "title": "Response",
       "description": "Shows a streaming answer with its status and actions.",
       "dependencies": [],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "cssVars": {
         "theme": {
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
@@ -1997,9 +1997,9 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-field-styles.json",
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -2028,12 +2028,12 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-field-styles.json",
-        "https://vip-ui.vercel.app/r/vip-item-highlight.json",
-        "https://vip-ui.vercel.app/r/vip-list-box.json",
-        "https://vip-ui.vercel.app/r/vip-popover.json",
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-item-highlight.json",
+        "https://vip-ui.dev/r/vip-list-box.json",
+        "https://vip-ui.dev/r/vip-popover.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -2094,10 +2094,10 @@
         "tailwind-variants@^4.0.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -2140,8 +2140,8 @@
       "description": "Shows a placeholder shape while content loads.",
       "dependencies": ["motion@^14.9.0"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "files": [
         {
@@ -2158,8 +2158,8 @@
       "description": "Selects a value or range on a track between a minimum and maximum.",
       "dependencies": ["react-aria-components@^1.22.1"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-field-styles.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -2198,7 +2198,7 @@
         "@phosphor-icons/react@^2.1.10",
         "react-aria-components@^1.22.1"
       ],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
         "@plugin tailwindcss-react-aria-components": {}
@@ -2243,8 +2243,8 @@
       "description": "Animates a group of items into view one after another.",
       "dependencies": ["motion@^14.9.0"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "files": [
         {
@@ -2260,7 +2260,7 @@
       "title": "Stat",
       "description": "Shows a labeled metric with supporting details.",
       "dependencies": ["@phosphor-icons/react@^2.1.10"],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "cssVars": {
         "light": {
           "success": "oklch(0.43 0.12 155)",
@@ -2290,8 +2290,8 @@
       "description": "Shows the current and completed steps in a sequence.",
       "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.9.0"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "cssVars": {
         "theme": {
@@ -2313,8 +2313,8 @@
       "description": "Turns a setting on or off immediately.",
       "dependencies": ["react-aria-components@^1.22.1"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-field-styles.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -2352,10 +2352,10 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-checkbox.json",
-        "https://vip-ui.vercel.app/r/vip-item-highlight.json",
-        "https://vip-ui.vercel.app/r/vip-spinner.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-checkbox.json",
+        "https://vip-ui.dev/r/vip-item-highlight.json",
+        "https://vip-ui.dev/r/vip-spinner.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -2390,11 +2390,11 @@
       "description": "Shows one panel of related content at a time.",
       "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button-styles.json",
-        "https://vip-ui.vercel.app/r/vip-item-highlight.json",
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-button-styles.json",
+        "https://vip-ui.dev/r/vip-item-highlight.json",
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -2433,9 +2433,9 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-field-styles.json",
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -2468,9 +2468,9 @@
       "description": "Accepts multiple lines of text.",
       "dependencies": ["react-aria-components@^1.22.1"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-field-styles.json",
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -2491,9 +2491,9 @@
       "description": "Accepts one line of text, with a label and validation.",
       "dependencies": ["react-aria-components@^1.22.1"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-field-styles.json",
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -2514,8 +2514,8 @@
       "description": "Reveals text one word or one character at a time.",
       "dependencies": ["motion@^14.9.0"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "files": [
         {
@@ -2531,7 +2531,7 @@
       "title": "Text Scramble",
       "description": "Resolves text from scrambled characters when its value changes.",
       "dependencies": ["motion@^14.9.0"],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/text-scramble.tsx",
@@ -2547,8 +2547,8 @@
       "description": "Animates text when its value changes.",
       "dependencies": ["motion@^14.9.0"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "files": [
         {
@@ -2565,10 +2565,10 @@
       "description": "Accepts a time, with one editable segment for each part.",
       "dependencies": ["react-aria-components@^1.22.1"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-date-segment.json",
-        "https://vip-ui.vercel.app/r/vip-field-styles.json",
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-date-segment.json",
+        "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -2588,7 +2588,7 @@
       "title": "Timeline",
       "description": "Shows events in a time-ordered sequence.",
       "dependencies": ["@phosphor-icons/react@^2.1.10"],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/timeline.tsx",
@@ -2608,8 +2608,8 @@
         "tailwind-variants@^4.0.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button-styles.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-button-styles.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -2646,10 +2646,10 @@
       "description": "Groups toggle buttons for one or more choices.",
       "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-item-highlight.json",
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-toggle-button.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-item-highlight.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-toggle-button.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -2682,10 +2682,10 @@
         "tailwind-variants@^4.0.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button-styles.json",
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-button-styles.json",
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -2719,9 +2719,9 @@
       "description": "Turns typed entries into tokens that you can edit and remove.",
       "dependencies": ["react-aria-components@^1.22.1"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-field-styles.json",
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -2757,10 +2757,10 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-collapsible-panel.json",
-        "https://vip-ui.vercel.app/r/vip-disclosure.json",
-        "https://vip-ui.vercel.app/r/vip-motion.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-collapsible-panel.json",
+        "https://vip-ui.dev/r/vip-disclosure.json",
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -2794,10 +2794,10 @@
       "description": "Groups related controls in one tab stop, with arrow keys to move focus.",
       "dependencies": ["react-aria-components@^1.22.1"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-item-highlight.json",
-        "https://vip-ui.vercel.app/r/vip-size.json",
-        "https://vip-ui.vercel.app/r/vip-toggle-button-group.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-item-highlight.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-toggle-button-group.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -2827,7 +2827,7 @@
       "title": "Tooltip",
       "description": "Shows a short hint when you hover over or focus its trigger.",
       "dependencies": ["react-aria-components@^1.22.1"],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
         "@plugin tailwindcss-react-aria-components": {}
@@ -2861,10 +2861,10 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-checkbox.json",
-        "https://vip-ui.vercel.app/r/vip-item-highlight.json",
-        "https://vip-ui.vercel.app/r/vip-spinner.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-checkbox.json",
+        "https://vip-ui.dev/r/vip-item-highlight.json",
+        "https://vip-ui.dev/r/vip-spinner.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -2903,21 +2903,21 @@
         "@tanstack/charts@^1.1.0"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-avatar.json",
-        "https://vip-ui.vercel.app/r/vip-badge.json",
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-card.json",
-        "https://vip-ui.vercel.app/r/vip-chart.json",
-        "https://vip-ui.vercel.app/r/vip-item-highlight.json",
-        "https://vip-ui.vercel.app/r/vip-menu.json",
-        "https://vip-ui.vercel.app/r/vip-progress-bar.json",
-        "https://vip-ui.vercel.app/r/vip-search-field.json",
-        "https://vip-ui.vercel.app/r/vip-sheet.json",
-        "https://vip-ui.vercel.app/r/vip-stat.json",
-        "https://vip-ui.vercel.app/r/vip-table.json",
-        "https://vip-ui.vercel.app/r/vip-toggle-button.json",
-        "https://vip-ui.vercel.app/r/vip-toggle-button-group.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-avatar.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-chart.json",
+        "https://vip-ui.dev/r/vip-item-highlight.json",
+        "https://vip-ui.dev/r/vip-menu.json",
+        "https://vip-ui.dev/r/vip-progress-bar.json",
+        "https://vip-ui.dev/r/vip-search-field.json",
+        "https://vip-ui.dev/r/vip-sheet.json",
+        "https://vip-ui.dev/r/vip-stat.json",
+        "https://vip-ui.dev/r/vip-table.json",
+        "https://vip-ui.dev/r/vip-toggle-button.json",
+        "https://vip-ui.dev/r/vip-toggle-button-group.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "cssVars": {
         "theme": {
@@ -2973,11 +2973,11 @@
       "categories": ["dashboard"],
       "dependencies": ["@phosphor-icons/react@^2.1.10"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-animated-number.json",
-        "https://vip-ui.vercel.app/r/vip-badge.json",
-        "https://vip-ui.vercel.app/r/vip-stat.json",
-        "https://vip-ui.vercel.app/r/vip-toggle-button.json",
-        "https://vip-ui.vercel.app/r/vip-toggle-button-group.json"
+        "https://vip-ui.dev/r/vip-animated-number.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-stat.json",
+        "https://vip-ui.dev/r/vip-toggle-button.json",
+        "https://vip-ui.dev/r/vip-toggle-button-group.json"
       ],
       "cssVars": {
         "light": {
@@ -3008,15 +3008,15 @@
       "categories": ["authentication"],
       "dependencies": ["@phosphor-icons/react@^2.1.10"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-alert.json",
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-card.json",
-        "https://vip-ui.vercel.app/r/vip-checkbox.json",
-        "https://vip-ui.vercel.app/r/vip-form.json",
-        "https://vip-ui.vercel.app/r/vip-link.json",
-        "https://vip-ui.vercel.app/r/vip-password-field.json",
-        "https://vip-ui.vercel.app/r/vip-separator.json",
-        "https://vip-ui.vercel.app/r/vip-text-field.json"
+        "https://vip-ui.dev/r/vip-alert.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-checkbox.json",
+        "https://vip-ui.dev/r/vip-form.json",
+        "https://vip-ui.dev/r/vip-link.json",
+        "https://vip-ui.dev/r/vip-password-field.json",
+        "https://vip-ui.dev/r/vip-separator.json",
+        "https://vip-ui.dev/r/vip-text-field.json"
       ],
       "files": [
         {
@@ -3039,11 +3039,11 @@
       "categories": ["authentication"],
       "dependencies": ["@phosphor-icons/react@^2.1.10"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-form.json",
-        "https://vip-ui.vercel.app/r/vip-link.json",
-        "https://vip-ui.vercel.app/r/vip-separator.json",
-        "https://vip-ui.vercel.app/r/vip-text-field.json"
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-form.json",
+        "https://vip-ui.dev/r/vip-link.json",
+        "https://vip-ui.dev/r/vip-separator.json",
+        "https://vip-ui.dev/r/vip-text-field.json"
       ],
       "cssVars": {
         "theme": {
@@ -3076,15 +3076,15 @@
       "categories": ["authentication"],
       "dependencies": ["@phosphor-icons/react@^2.1.10"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-card.json",
-        "https://vip-ui.vercel.app/r/vip-checkbox.json",
-        "https://vip-ui.vercel.app/r/vip-form.json",
-        "https://vip-ui.vercel.app/r/vip-link.json",
-        "https://vip-ui.vercel.app/r/vip-password-field.json",
-        "https://vip-ui.vercel.app/r/vip-password-strength-meter.json",
-        "https://vip-ui.vercel.app/r/vip-select.json",
-        "https://vip-ui.vercel.app/r/vip-text-field.json"
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-checkbox.json",
+        "https://vip-ui.dev/r/vip-form.json",
+        "https://vip-ui.dev/r/vip-link.json",
+        "https://vip-ui.dev/r/vip-password-field.json",
+        "https://vip-ui.dev/r/vip-password-strength-meter.json",
+        "https://vip-ui.dev/r/vip-select.json",
+        "https://vip-ui.dev/r/vip-text-field.json"
       ],
       "cssVars": {
         "light": {
@@ -3115,15 +3115,15 @@
       "categories": ["settings"],
       "dependencies": ["motion@^14.9.0"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-avatar.json",
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-card.json",
-        "https://vip-ui.vercel.app/r/vip-file-trigger.json",
-        "https://vip-ui.vercel.app/r/vip-form.json",
-        "https://vip-ui.vercel.app/r/vip-input-group.json",
-        "https://vip-ui.vercel.app/r/vip-select.json",
-        "https://vip-ui.vercel.app/r/vip-text-area.json",
-        "https://vip-ui.vercel.app/r/vip-text-field.json"
+        "https://vip-ui.dev/r/vip-avatar.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-file-trigger.json",
+        "https://vip-ui.dev/r/vip-form.json",
+        "https://vip-ui.dev/r/vip-input-group.json",
+        "https://vip-ui.dev/r/vip-select.json",
+        "https://vip-ui.dev/r/vip-text-area.json",
+        "https://vip-ui.dev/r/vip-text-field.json"
       ],
       "cssVars": {
         "theme": {
@@ -3157,11 +3157,11 @@
       "categories": ["settings"],
       "dependencies": [],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-card.json",
-        "https://vip-ui.vercel.app/r/vip-checkbox.json",
-        "https://vip-ui.vercel.app/r/vip-radio-group.json",
-        "https://vip-ui.vercel.app/r/vip-switch.json"
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-checkbox.json",
+        "https://vip-ui.dev/r/vip-radio-group.json",
+        "https://vip-ui.dev/r/vip-switch.json"
       ],
       "files": [
         {
@@ -3184,11 +3184,11 @@
       "categories": ["settings"],
       "dependencies": ["@phosphor-icons/react@^2.1.10"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-badge.json",
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-card.json",
-        "https://vip-ui.vercel.app/r/vip-meter.json",
-        "https://vip-ui.vercel.app/r/vip-radio-group.json"
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-meter.json",
+        "https://vip-ui.dev/r/vip-radio-group.json"
       ],
       "files": [
         {
@@ -3211,12 +3211,12 @@
       "categories": ["marketing"],
       "dependencies": ["@phosphor-icons/react@^2.1.10"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-animated-number.json",
-        "https://vip-ui.vercel.app/r/vip-badge.json",
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-toggle-button.json",
-        "https://vip-ui.vercel.app/r/vip-toggle-button-group.json",
-        "https://vip-ui.vercel.app/r/vip-utils.json"
+        "https://vip-ui.dev/r/vip-animated-number.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-toggle-button.json",
+        "https://vip-ui.dev/r/vip-toggle-button-group.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "cssVars": {
         "light": {
@@ -3251,14 +3251,14 @@
       "categories": ["application"],
       "dependencies": ["@phosphor-icons/react@^2.1.10"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-avatar.json",
-        "https://vip-ui.vercel.app/r/vip-badge.json",
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-card.json",
-        "https://vip-ui.vercel.app/r/vip-form.json",
-        "https://vip-ui.vercel.app/r/vip-menu.json",
-        "https://vip-ui.vercel.app/r/vip-select.json",
-        "https://vip-ui.vercel.app/r/vip-text-field.json"
+        "https://vip-ui.dev/r/vip-avatar.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-form.json",
+        "https://vip-ui.dev/r/vip-menu.json",
+        "https://vip-ui.dev/r/vip-select.json",
+        "https://vip-ui.dev/r/vip-text-field.json"
       ],
       "files": [
         {
@@ -3284,11 +3284,11 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-attachment.json",
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-card.json",
-        "https://vip-ui.vercel.app/r/vip-drop-zone.json",
-        "https://vip-ui.vercel.app/r/vip-file-trigger.json"
+        "https://vip-ui.dev/r/vip-attachment.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-drop-zone.json",
+        "https://vip-ui.dev/r/vip-file-trigger.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {

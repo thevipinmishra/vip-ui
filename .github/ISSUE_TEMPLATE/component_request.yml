@@ -4,7 +4,7 @@ labels: ["enhancement"]
 body:
   - type: markdown
     attributes:
-      value: Look at the [component catalog](https://vip-ui.vercel.app/components) first. Make sure that the component does not exist.
+      value: Look at the [component catalog](https://vip-ui.dev/components) first. Make sure that the component does not exist.
   - type: textarea
     id: problem
     attributes:
