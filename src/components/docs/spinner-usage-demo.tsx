@@ -1,27 +1,37 @@
+"use client";
+
+import { FloppyDiskIcon } from "@phosphor-icons/react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 
 export function SpinnerUsageDemo() {
+  const [isSaving, setIsSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+
   return (
-    <div className="grid w-full max-w-2xl gap-3 sm:grid-cols-2">
-      <div className="flex min-h-40 flex-col items-start justify-between rounded-xl bg-card p-4 shadow-[var(--shadow-card)] ring-1 ring-border/70">
-        <p className="text-xs font-medium text-muted-foreground">
-          Small in a button
-        </p>
-        <Button isPending>
+    <div className="flex flex-col items-center gap-3">
+      <Button
+        isPending={isSaving}
+        onPress={() => {
+          setIsSaving(true);
+          setSaved(false);
+          setTimeout(() => {
+            setIsSaving(false);
+            setSaved(true);
+          }, 1600);
+        }}
+      >
+        {isSaving ? (
           <Spinner size="sm" decorative />
-          Saving
-        </Button>
-      </div>
-      <div className="flex min-h-40 flex-col justify-between rounded-xl bg-card p-4 shadow-[var(--shadow-card)] ring-1 ring-border/70">
-        <p className="text-xs font-medium text-muted-foreground">
-          Medium with a status
-        </p>
-        <output className="flex items-center gap-3 text-sm font-medium">
-          <Spinner decorative className="text-primary" />
-          Loading
-        </output>
-      </div>
+        ) : (
+          <FloppyDiskIcon aria-hidden="true" />
+        )}
+        {isSaving ? "Saving" : "Save changes"}
+      </Button>
+      <output aria-live="polite" className="h-5 text-sm text-muted-foreground">
+        {saved ? "Changes saved." : ""}
+      </output>
     </div>
   );
 }

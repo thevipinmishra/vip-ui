@@ -1,38 +1,25 @@
 import { Spinner } from "@/components/ui/spinner";
 
-const patterns = [
-  { variant: "ring", use: "Actions and pages" },
-  { variant: "segments", use: "Dense interfaces" },
-  { variant: "dots", use: "Inline messages" },
+const variants = [
+  { variant: "ring", name: "Ring" },
+  { variant: "segments", name: "Segments" },
+  { variant: "dots", name: "Dots" },
 ] as const;
 
 export function SpinnerDemo() {
   return (
-    <div className="w-full max-w-2xl">
-      <div className="grid gap-3 sm:grid-cols-3">
-        {patterns.map(({ variant, use }) => (
-          <div
-            key={variant}
-            className="flex min-h-44 flex-col rounded-xl bg-card p-4 shadow-[var(--shadow-card)] ring-1 ring-border/70"
-          >
-            <div
-              data-slot="spinner-stage"
-              className="grid h-20 shrink-0 place-items-center"
-            >
-              <Spinner
-                variant={variant}
-                size="lg"
-                decorative
-                className="text-primary"
-              />
-            </div>
-            <div className="mt-auto pt-3 text-center">
-              <p className="text-sm font-medium capitalize">{variant}</p>
-              <p className="mt-1 text-xs text-muted-foreground">{use}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
+    <ul className="grid w-full max-w-lg grid-cols-3 divide-x divide-border/70 rounded-xl bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70">
+      {variants.map(({ variant, name }) => (
+        <li
+          key={variant}
+          className="flex flex-col items-center gap-4 px-3 pt-8 pb-5"
+        >
+          <Spinner variant={variant} size="lg" aria-label={`${name} spinner`} />
+          <span className="text-xs font-medium text-muted-foreground">
+            {name}
+          </span>
+        </li>
+      ))}
+    </ul>
   );
 }
