@@ -1,11 +1,11 @@
 import type { Size } from "./size";
 
 export const fieldSizeStyles = {
-  xs: "[--field-h:1.75rem] [--field-px:0.5rem] [--field-radius:var(--radius-sm)] [--field-text:0.75rem] [--field-icon:0.875rem]",
-  sm: "[--field-h:2.25rem] [--field-px:0.75rem] [--field-radius:var(--radius-md)] [--field-text:0.875rem] [--field-icon:1rem]",
-  md: "[--field-h:2.75rem] [--field-px:0.875rem] [--field-radius:var(--radius-lg)] [--field-text:0.875rem] [--field-icon:1rem]",
-  lg: "[--field-h:3rem] [--field-px:0.875rem] [--field-radius:var(--radius-lg)] [--field-text:0.875rem] [--field-icon:1rem]",
-  xl: "[--field-h:3.5rem] [--field-px:1rem] [--field-radius:var(--radius-xl)] [--field-text:1rem] [--field-icon:1.25rem]",
+  xs: "[--field-h:1.75rem] [--field-px:0.5rem] [--field-inset:0.125rem] [--field-radius:var(--radius-sm)] [--field-text:0.75rem] [--field-icon:0.875rem]",
+  sm: "[--field-h:2.25rem] [--field-px:0.75rem] [--field-inset:0.1875rem] [--field-radius:var(--radius-md)] [--field-text:0.875rem] [--field-icon:1rem]",
+  md: "[--field-h:2.75rem] [--field-px:0.875rem] [--field-inset:0.25rem] [--field-radius:var(--radius-lg)] [--field-text:0.875rem] [--field-icon:1rem]",
+  lg: "[--field-h:3rem] [--field-px:0.875rem] [--field-inset:0.25rem] [--field-radius:var(--radius-lg)] [--field-text:0.875rem] [--field-icon:1rem]",
+  xl: "[--field-h:3.5rem] [--field-px:1rem] [--field-inset:0.3125rem] [--field-radius:var(--radius-xl)] [--field-text:1rem] [--field-icon:1.25rem]",
 } satisfies Record<Size, string>;
 
 export const fieldHeight = "min-h-[var(--field-h,3rem)]";
@@ -31,7 +31,16 @@ export const fieldInputStyles = `${fieldHeight} ${fieldRadius} ${fieldText} w-fu
 
 export const segmentedFieldStyles = `${fieldHeight} ${fieldRadius} flex min-w-0 items-center border border-input bg-card shadow-[var(--shadow-card)] transition-[color,background-color,border-color,box-shadow] duration-150 ease-out-quint hover:border-primary/45 focus-within:border-ring focus-within:hover:border-ring focus-within:ring-1 focus-within:ring-ring group-invalid:border-destructive group-invalid:hover:border-destructive group-invalid:focus-within:border-destructive group-invalid:focus-within:hover:border-destructive group-invalid:focus-within:ring-destructive group-data-[readonly]:bg-muted/40 group-data-[readonly]:hover:border-input group-disabled:bg-muted group-disabled:opacity-60 group-disabled:hover:border-input`;
 
-export const fieldTriggerStyles = `${fieldIcon} group/trigger grid size-[calc(var(--field-h,3rem)-0.25rem)] shrink-0 cursor-pointer place-items-center rounded-[calc(var(--field-radius,var(--radius-lg))-0.125rem)] text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-out-quint hover:bg-muted hover:text-foreground pressed:bg-muted pressed:text-foreground focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring disabled:cursor-default disabled:opacity-50`;
+export const fieldTriggerStyles = `${fieldIcon} group/trigger grid size-[calc(var(--field-h,3rem)-2px-2*var(--field-inset,0.25rem))] shrink-0 cursor-pointer place-items-center rounded-[max(0.1875rem,calc(var(--field-radius,var(--radius-lg))-1px-var(--field-inset,0.25rem)))] text-muted-foreground outline-none transition-[color,background-color,scale,opacity] duration-150 ease-out-quint hover:bg-muted hover:text-foreground pressed:bg-muted pressed:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground motion-safe:pressed:scale-[0.92] focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring disabled:cursor-default disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-muted-foreground`;
+
+export const fieldActionStyles =
+  "h-[calc(var(--field-h,3rem)-2px-2*var(--field-inset,0.25rem))] rounded-[max(0.1875rem,calc(var(--field-radius,var(--radius-lg))-1px-var(--field-inset,0.25rem)))] px-3 text-[length:var(--field-text,0.875rem)] motion-safe:pressed:scale-[0.96] [&_svg:not([class*='size-'])]:size-[var(--field-icon,1rem)]";
+
+export const fieldTriggerEndStyles =
+  "absolute inset-y-0 end-[calc(1px+var(--field-inset,0.25rem))] my-auto";
+
+export const fieldTriggerInputPadding =
+  "pe-[calc(var(--field-h,3rem)+0.25rem)]";
 
 export const fieldChevronStyles =
-  "grid place-items-center transition-transform duration-250 ease-out-quint group-aria-expanded/trigger:rotate-180 motion-reduce:transition-none";
+  "grid place-items-center transition-[rotate] duration-350 ease-spring group-aria-expanded/trigger:rotate-180 motion-reduce:transition-none";
