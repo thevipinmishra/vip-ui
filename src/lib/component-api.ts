@@ -60,8 +60,10 @@ import type { Slider, SliderMarks } from "@/components/ui/slider";
 import type { SourceLink } from "@/components/ui/source-link";
 import type { Spinner } from "@/components/ui/spinner";
 import type { StaggerGroup, StaggerItem } from "@/components/ui/stagger-group";
+import type { StatTrend } from "@/components/ui/stat";
 import type { Stepper } from "@/components/ui/stepper";
 import type { Switch } from "@/components/ui/switch";
+import type { Column } from "@/components/ui/table";
 import type {
   Tabs,
   TabsContent,
@@ -1361,6 +1363,26 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       ],
     }),
   ],
+  stat: [
+    apiPart<typeof StatTrend>({
+      name: "StatTrend",
+      props: [
+        {
+          name: "direction",
+          type: '"up" | "down" | "neutral"',
+          required: true,
+          description: "Sets the arrow.",
+        },
+        {
+          name: "invert",
+          type: "boolean",
+          default: "false",
+          description:
+            "Shows a fall as good and a rise as bad. Use it for values such as churn or response time.",
+        },
+      ],
+    }),
+  ],
   avatar: [
     apiPart<typeof Avatar>({
       name: "Avatar",
@@ -1482,6 +1504,20 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       ],
     }),
   ],
+  table: [
+    apiPart<typeof Column>({
+      name: "Column",
+      props: [
+        {
+          name: "allowsResizing",
+          type: "boolean",
+          default: "false",
+          description:
+            "Adds a resize handle at the end of the column. The table must be in TableContainer.",
+        },
+      ],
+    }),
+  ],
   tree: [
     apiPart<typeof TreeItem>({
       name: "TreeItem",
@@ -1587,6 +1623,23 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           description:
             "Receives selected row keys, including keys on other pages.",
         },
+        {
+          name: "disabledKeys",
+          type: "Iterable<Key>",
+          description: "Rows that cannot be selected or focused.",
+        },
+        {
+          name: "onRowAction",
+          type: "(key: Key) => void",
+          description:
+            "Called when a user clicks a row or presses Enter on it. The checkbox still selects the row.",
+        },
+        {
+          name: "resizable",
+          type: "boolean",
+          default: "false",
+          description: "Adds a resize handle to each column header.",
+        },
       ],
     }),
     apiPart<DataTableColumn<unknown>>({
@@ -1624,6 +1677,17 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           description: "Aligns the header and cells. Use end for numbers.",
         },
         {
+          name: "width",
+          type: "number | string",
+          description:
+            'Starting width in pixels, a percentage, or a fraction such as "2fr".',
+        },
+        {
+          name: "minWidth",
+          type: "number | string",
+          description: "Smallest width the column can resize to.",
+        },
+        {
           name: "filter",
           type: '{ type: "text" } | { type: "select"; options: readonly SelectOption[] }',
           description:
@@ -1658,15 +1722,15 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         {
           name: "href",
           type: "string",
-          required: true,
-          description: "The URL of the page.",
+          description:
+            "The URL of the page. Without it, handle onPress to change the page.",
         },
         {
           name: "isCurrent",
           type: "boolean",
           default: "false",
           description:
-            'Shows the link as the current page and sets aria-current="page".',
+            'Shows the link as the current page and sets aria-current="page". The current-page marker glides to the new link.',
         },
         {
           name: "isDisabled",
@@ -1674,6 +1738,11 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           default: "false",
           description:
             "Keeps the link visible but stops navigation. The link leaves the Tab order.",
+        },
+        {
+          name: "onPress",
+          type: "(event: PressEvent) => void",
+          description: "Called when the link is pressed.",
         },
         {
           name: "size",
@@ -1690,10 +1759,16 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "status",
-          type: '"latest" | "complete"',
+          type: '"complete" | "latest" | "upcoming"',
           default: '"complete"',
           description:
-            'Marks the newest event. Screen readers announce "Latest" before it.',
+            'Sets the marker. Screen readers announce "Latest" or "Upcoming" before the item.',
+        },
+        {
+          name: "icon",
+          type: "ReactNode",
+          description:
+            "Replaces the check or dot in the marker. Use a 14 pixel icon.",
         },
       ],
     }),
@@ -2433,6 +2508,13 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"lg"',
           description: "Sets the size of the field and of the step buttons.",
+        },
+        {
+          name: "steppers",
+          type: '"split" | "stacked"',
+          default: '"split"',
+          description:
+            "Puts the step buttons on each side of the value, or stacks them at the end.",
         },
         {
           name: "label",

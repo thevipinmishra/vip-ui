@@ -199,7 +199,7 @@ export function Attachment({
               aria-label={`${name} upload`}
               value={progress ?? 0}
               isIndeterminate={progress === undefined}
-              className="mt-2 transition-opacity duration-200 ease-out-quint starting:opacity-0"
+              className="mt-2 gap-0 transition-opacity duration-200 ease-out-quint starting:opacity-0 *:not-data-[slot=progress-bar-track]:hidden [&_[data-slot=progress-bar-track]]:h-1.5"
             />
           )}
         </div>

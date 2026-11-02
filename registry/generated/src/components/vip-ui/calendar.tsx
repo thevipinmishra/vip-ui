@@ -42,7 +42,7 @@ export const calendarHeaderCellStyles =
   "pb-1 text-xs font-medium text-muted-foreground";
 
 export const calendarCellBaseClass =
-  "relative grid aspect-square w-full cursor-pointer place-items-center text-sm tabular-nums outline-none transition-colors duration-150 ease-out-quint data-today:after:absolute data-today:after:bottom-1 data-today:after:size-1 data-today:after:rounded-full data-today:after:bg-primary selected:data-today:after:bg-current outside-month:text-muted-foreground/50 unavailable:cursor-not-allowed unavailable:text-muted-foreground unavailable:line-through disabled:cursor-default disabled:text-muted-foreground/50 focus-visible:outline-2 focus-visible:outline-solid focus-visible:z-10 focus-visible:outline-offset-2 focus-visible:outline-ring forced-colors:border-2 forced-colors:border-[Canvas] forced-colors:data-today:after:bg-[CanvasText] forced-colors:outside-month:text-[GrayText] forced-colors:disabled:text-[GrayText]";
+  "relative grid in-data-[months]:outside-month:invisible aspect-square w-full cursor-pointer place-items-center text-sm tabular-nums outline-none transition-colors duration-150 ease-out-quint data-today:after:absolute data-today:after:bottom-1 data-today:after:size-1 data-today:after:rounded-full data-today:after:bg-primary selected:data-today:after:bg-current outside-month:text-muted-foreground/50 unavailable:cursor-not-allowed unavailable:text-muted-foreground unavailable:line-through disabled:cursor-default disabled:text-muted-foreground/50 focus-visible:outline-2 focus-visible:outline-solid focus-visible:z-10 focus-visible:outline-offset-2 focus-visible:outline-ring forced-colors:border-2 forced-colors:border-[Canvas] forced-colors:data-today:after:bg-[CanvasText] forced-colors:outside-month:text-[GrayText] forced-colors:disabled:text-[GrayText]";
 
 export const calendarCellClass = `${calendarCellBaseClass} rounded-md transition-[color,background-color,scale] motion-safe:pressed:scale-90 selected:bg-primary selected:text-primary-foreground invalid:selected:bg-destructive invalid:selected:text-destructive-foreground forced-colors:selected:border-[Highlight]`;
 
@@ -57,38 +57,35 @@ export function Calendar<T extends DateValue>({
     <AriaCalendar
       {...props}
       data-slot="calendar"
+      data-months={months > 1 ? months : undefined}
       render={withItemHighlight(render, { items: calendarCells })}
       className={composeRenderProps(className, (className) =>
         cn(calendarStyles, months > 1 && calendarMonthsStyles, className),
       )}
     >
       {children ?? (
-        <>
-          <CalendarHeader />
-          <CalendarMonths count={months}>
-            {(offset) => (
-              <CalendarGrid
-                key={offset}
-                offset={offset ? { months: offset } : undefined}
-                className={calendarGridStyles}
-                weekdayStyle="short"
-              >
-                <CalendarGridHeader>
-                  {(day) => (
-                    <CalendarHeaderCell className={calendarHeaderCellStyles}>
-                      {day}
-                    </CalendarHeaderCell>
-                  )}
-                </CalendarGridHeader>
-                <CalendarGridBody>
-                  {(date) => (
-                    <CalendarCell date={date} className={calendarCellClass} />
-                  )}
-                </CalendarGridBody>
-              </CalendarGrid>
-            )}
-          </CalendarMonths>
-        </>
+        <CalendarMonths count={months}>
+          {(offset) => (
+            <CalendarGrid
+              offset={offset ? { months: offset } : undefined}
+              className={calendarGridStyles}
+              weekdayStyle="short"
+            >
+              <CalendarGridHeader>
+                {(day) => (
+                  <CalendarHeaderCell className={calendarHeaderCellStyles}>
+                    {day}
+                  </CalendarHeaderCell>
+                )}
+              </CalendarGridHeader>
+              <CalendarGridBody>
+                {(date) => (
+                  <CalendarCell date={date} className={calendarCellClass} />
+                )}
+              </CalendarGridBody>
+            </CalendarGrid>
+          )}
+        </CalendarMonths>
       )}
     </AriaCalendar>
   );
@@ -101,13 +98,26 @@ export function CalendarMonths({
   count: number;
   children: (offset: number) => ReactNode;
 }) {
-  if (count <= 1) return children(0);
+  if (count <= 1) {
+    return (
+      <>
+        <CalendarHeader />
+        {children(0)}
+      </>
+    );
+  }
   return (
-    <div
-      data-slot="calendar-months"
-      className="flex flex-wrap gap-x-6 gap-y-4 *:w-77 *:max-w-full"
-    >
-      {Array.from({ length: count }, (_, offset) => children(offset))}
+    <div data-slot="calendar-months" className="flex flex-wrap gap-x-6 gap-y-4">
+      {Array.from({ length: count }, (_, index) => index).map((offset) => (
+        <div key={offset} className="w-77 max-w-full">
+          <CalendarHeader
+            offset={offset}
+            previous={offset === 0}
+            next={offset === count - 1}
+          />
+          {children(offset)}
+        </div>
+      ))}
     </div>
   );
 }
@@ -139,7 +149,17 @@ function useMonthSlide(ref: RefObject<HTMLElement | null>, distance: number) {
   }, [month, ref, distance]);
 }
 
-export function CalendarHeader() {
+export interface CalendarHeaderProps {
+  offset?: number;
+  previous?: boolean;
+  next?: boolean;
+}
+
+export function CalendarHeader({
+  offset = 0,
+  previous = true,
+  next = true,
+}: CalendarHeaderProps) {
   const headingRef = useRef<HTMLHeadingElement>(null);
   useMonthSlide(headingRef, 0.375);
   return (
@@ -147,21 +167,30 @@ export function CalendarHeader() {
       data-slot="calendar-header"
       className="mb-3 flex items-center justify-between gap-2"
     >
-      <Button
-        slot="previous"
-        aria-label="Previous month"
-        variant="ghost"
-        iconOnly
-      >
-        <CaretLeftIcon aria-hidden="true" className="rtl:rotate-180" />
-      </Button>
+      {previous ? (
+        <Button
+          slot="previous"
+          aria-label="Previous month"
+          variant="ghost"
+          iconOnly
+        >
+          <CaretLeftIcon aria-hidden="true" className="rtl:rotate-180" />
+        </Button>
+      ) : (
+        <span aria-hidden="true" className="size-11 shrink-0" />
+      )}
       <CalendarHeading
         ref={headingRef}
+        offset={offset ? { months: offset } : undefined}
         className="min-w-0 text-center text-sm font-semibold [overflow-wrap:anywhere] [text-wrap:balance]"
       />
-      <Button slot="next" aria-label="Next month" variant="ghost" iconOnly>
-        <CaretRightIcon aria-hidden="true" className="rtl:rotate-180" />
-      </Button>
+      {next ? (
+        <Button slot="next" aria-label="Next month" variant="ghost" iconOnly>
+          <CaretRightIcon aria-hidden="true" className="rtl:rotate-180" />
+        </Button>
+      ) : (
+        <span aria-hidden="true" className="size-11 shrink-0" />
+      )}
     </div>
   );
 }

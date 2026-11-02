@@ -1,6 +1,6 @@
 "use client";
 
-import { XIcon } from "@phosphor-icons/react";
+import { CheckIcon, XIcon } from "@phosphor-icons/react";
 import {
   Button as AriaButton,
   Tag as AriaTag,
@@ -10,8 +10,10 @@ import {
   Label,
   TagList,
   type TagProps,
+  Text,
 } from "react-aria-components";
 import { cn } from "@/lib/utils";
+import { fieldDescriptionStyles, fieldErrorStyles } from "./field-styles";
 import { type Size, SizeProvider, useSize } from "./size";
 
 type TagSize = Extract<Size, "xs" | "sm" | "md">;
@@ -65,6 +67,34 @@ export function TagGroupLabel({
   );
 }
 
+export function TagGroupDescription({
+  className,
+  ...props
+}: React.ComponentProps<typeof Text>) {
+  return (
+    <Text
+      {...props}
+      slot="description"
+      data-slot="tag-group-description"
+      className={cn(fieldDescriptionStyles, className)}
+    />
+  );
+}
+
+export function TagGroupError({
+  className,
+  ...props
+}: React.ComponentProps<typeof Text>) {
+  return (
+    <Text
+      {...props}
+      slot="errorMessage"
+      data-slot="tag-group-error"
+      className={cn(fieldErrorStyles, className)}
+    />
+  );
+}
+
 export function TagListView<T extends object>({
   className,
   ...props
@@ -103,7 +133,7 @@ export function Tag({
       }
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex max-w-full cursor-default items-center gap-1 rounded-lg bg-card pe-1 text-sm font-medium shadow-[var(--shadow-card)] ring-1 ring-border/80 data-[selection-mode]:not-data-disabled:cursor-pointer outline-offset-4 outline-transparent transition-[color,background-color,box-shadow,scale,outline-color,outline-offset] duration-150 ease-out-quint hover:bg-muted motion-safe:pressed:scale-[0.96] selected:bg-accent selected:text-accent-foreground selected:ring-primary/35 disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 forced-colors:border",
+          "group/tag flex max-w-full cursor-default items-center gap-1 rounded-lg bg-card pe-1 text-sm font-medium shadow-[var(--shadow-card)] ring-1 ring-border/80 data-[selection-mode]:not-data-disabled:cursor-pointer data-[href]:cursor-pointer outline-offset-4 outline-transparent transition-[color,background-color,box-shadow,scale,opacity,outline-color,outline-offset] duration-150 ease-out-quint starting:scale-90 starting:opacity-0 hover:bg-muted motion-safe:pressed:scale-[0.96] selected:bg-accent selected:text-accent-foreground selected:ring-primary/35 disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 forced-colors:border",
           styles.tag,
           className,
         ),
@@ -111,6 +141,20 @@ export function Tag({
     >
       {(state) => (
         <>
+          {state.selectionMode !== "none" && (
+            <span
+              aria-hidden="true"
+              data-slot="tag-check"
+              className="-me-1 grid grid-cols-[0fr] transition-[grid-template-columns] duration-350 ease-spring group-selected/tag:grid-cols-[1fr] motion-reduce:transition-none"
+            >
+              <span className="min-w-0 overflow-hidden">
+                <CheckIcon
+                  weight="bold"
+                  className="me-1 size-3.5 scale-50 opacity-0 transition-[scale,opacity] duration-200 ease-out-quint group-selected/tag:scale-100 group-selected/tag:opacity-100"
+                />
+              </span>
+            </span>
+          )}
           <span
             className={cn(
               "min-w-0 truncate",

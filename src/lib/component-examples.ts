@@ -235,7 +235,22 @@ const pageSources = {
   },
   breadcrumbs: {
     usage: "breadcrumbs-demo.tsx",
-    examples: [],
+    examples: [
+      {
+        title: "Folder path",
+        description:
+          "Pass items for a path that changes. onAction gets the id of the pressed breadcrumb.",
+        sourcePath: "breadcrumbs-folders-demo.tsx",
+        uses: ["button"],
+      },
+      {
+        title: "Collapsed path",
+        description:
+          "Use BreadcrumbItem for a breadcrumb that is not a link, such as a menu of hidden pages.",
+        sourcePath: "breadcrumbs-collapsed-demo.tsx",
+        uses: ["menu", "button"],
+      },
+    ],
   },
   "button-group": {
     usage: "button-group-basic-demo.tsx",
@@ -287,6 +302,19 @@ const pageSources = {
           "Wrap the content and footer in a Form so the footer button submits.",
         sourcePath: "card-demo.tsx",
         uses: ["form", "text-field"],
+      },
+      {
+        title: "Media",
+        description:
+          "Put CardMedia first or last. It follows the card corners.",
+        sourcePath: "card-media-demo.tsx",
+        uses: ["badge"],
+      },
+      {
+        title: "Linked card",
+        description:
+          "Put CardLink in the title. The whole card opens the link. Give other buttons in the card relative z-10 so they stay clickable.",
+        sourcePath: "card-link-demo.tsx",
       },
     ],
   },
@@ -414,6 +442,10 @@ const pageSources = {
         title: "Described options",
         description: "Set textValue to the option name for filtering.",
         sourcePath: "combo-box-demo.tsx",
+      },
+      {
+        title: "Leading icon",
+        sourcePath: "combo-box-icon-demo.tsx",
       },
       {
         title: "Disabled",
@@ -848,6 +880,18 @@ const pageSources = {
         sourcePath: "number-field-currency-demo.tsx",
       },
       {
+        title: "Stacked steppers",
+        description:
+          "Each button is half the field height. On touch screens, use the split layout.",
+        sourcePath: "number-field-stacked-demo.tsx",
+      },
+      {
+        title: "Composition",
+        description:
+          "Set a unit in formatOptions, so screen readers read the unit with the value.",
+        sourcePath: "number-field-composition-demo.tsx",
+      },
+      {
         title: "Disabled",
         sourcePath: "number-field-disabled-demo.tsx",
       },
@@ -863,7 +907,7 @@ const pageSources = {
       {
         title: "URL-synced pages",
         description:
-          "Keep the page in the URL, so the Back button and shared links work.",
+          "Keep the page in the URL, so the Back button and shared links work. RouterProvider sends link presses to your router.",
         sourcePath: "pagination-demo.tsx",
       },
       {
@@ -1225,19 +1269,32 @@ const pageSources = {
     examples: [
       {
         title: "Variants",
-        description: 'Set variant to "ring", "segments", or "dots".',
+        description:
+          "Each variant animates only transform and opacity, so it stays smooth when the page is busy. With reduced motion, it stops.",
         sourcePath: "spinner-demo.tsx",
       },
       {
         title: "Sizes",
-        description: "The spinner uses the current text color.",
         sourcePath: "spinner-sizes-demo.tsx",
       },
       {
-        title: "Loading in context",
+        title: "Color",
+        description: "The spinner uses the current text color.",
+        sourcePath: "spinner-color-demo.tsx",
+      },
+      {
+        title: "In a button",
         description:
-          "Set decorative when text next to the spinner names the wait.",
+          "Set decorative when text next to the spinner names the wait. isPending keeps focus on the button and ignores presses.",
         sourcePath: "spinner-usage-demo.tsx",
+        uses: ["button"],
+      },
+      {
+        title: "Loading overlay",
+        description:
+          "Set aria-busy on the region while it loads, and keep the old content in place.",
+        sourcePath: "spinner-overlay-demo.tsx",
+        uses: ["button"],
       },
     ],
   },
@@ -1247,9 +1304,19 @@ const pageSources = {
       {
         title: "Trend",
         description:
-          "Include a plus or minus sign so the direction does not depend on color.",
+          "Include a plus or minus sign so the direction does not depend on color. Set invert when a lower value is better.",
         sourcePath: "stat-trend-demo.tsx",
-        uses: ["badge"],
+      },
+      {
+        title: "Group",
+        description:
+          "StatGroup joins stats in one surface. The columns wrap on narrow screens.",
+        sourcePath: "stat-group-demo.tsx",
+      },
+      {
+        title: "Live value",
+        sourcePath: "stat-live-demo.tsx",
+        uses: ["animated-number"],
       },
     ],
   },
@@ -1295,15 +1362,23 @@ const pageSources = {
         description: "A filtered column also needs sortValue.",
         sourcePath: "data-table-column-filters-demo.tsx",
       },
+      {
+        title: "Resizable columns and row actions",
+        description:
+          "Set width on a column to set its starting width. onRowAction runs when a user clicks a row or presses Enter on it.",
+        sourcePath: "data-table-resizable-demo.tsx",
+      },
     ],
   },
   table: {
     usage: "table-basic-demo.tsx",
     examples: [
       {
-        title: "Selectable projects",
-        description: 'Set selectionMode="single" to select one row.',
+        title: "Multiple selection",
+        description:
+          'selectionMode="multiple" adds a checkbox column. A disabled row cannot be selected.',
         sourcePath: "table-demo.tsx",
+        uses: ["checkbox", "badge"],
       },
       {
         title: "Sortable columns",
@@ -1314,6 +1389,36 @@ const pageSources = {
         title: "Filter invoices",
         description: "renderEmptyState shows a message when no rows match.",
         sourcePath: "table-filter-demo.tsx",
+      },
+      {
+        title: "Resizable columns",
+        description:
+          "Put the table in TableContainer. Drag a column edge, or focus it and use the arrow keys.",
+        sourcePath: "table-resizable-demo.tsx",
+      },
+      {
+        title: "Expandable rows",
+        description:
+          "Put child rows after the cells of a row, and set treeColumn to the column that shows the expand button.",
+        sourcePath: "table-expandable-demo.tsx",
+      },
+      {
+        title: "Reorder rows",
+        description:
+          "Pass dragAndDropHooks to add a drag handle column. To move a row with the keyboard, press Right Arrow to go to the handle, press Enter, then use the arrow keys.",
+        sourcePath: "table-reorder-demo.tsx",
+        uses: ["checkbox"],
+      },
+      {
+        title: "Load more",
+        description:
+          "TableLoadMoreItem calls onLoadMore when it scrolls into view. The header stays at the top.",
+        sourcePath: "table-load-more-demo.tsx",
+        uses: ["spinner"],
+      },
+      {
+        title: "Footer",
+        sourcePath: "table-footer-demo.tsx",
       },
     ],
   },
@@ -1348,6 +1453,16 @@ const pageSources = {
   "tag-group": {
     usage: "tag-group-demo.tsx",
     examples: [
+      {
+        title: "Selection",
+        description:
+          'Set selectionMode="multiple" to use tags as filters. A disabled tag cannot be selected.',
+        sourcePath: "tag-group-selection-demo.tsx",
+      },
+      {
+        title: "Links",
+        sourcePath: "tag-group-links-demo.tsx",
+      },
       {
         title: "Sizes",
         sourcePath: "tag-group-sizes-demo.tsx",
@@ -1557,7 +1672,18 @@ const pageSources = {
   },
   timeline: {
     usage: "timeline-demo.tsx",
-    examples: [],
+    examples: [
+      {
+        title: "Process",
+        description:
+          'Mark steps that have not happened with status="upcoming". The line to an upcoming step is dashed.',
+        sourcePath: "timeline-process-demo.tsx",
+      },
+      {
+        title: "Icons",
+        sourcePath: "timeline-icons-demo.tsx",
+      },
+    ],
   },
   toast: {
     usage: "toast-demo.tsx",
@@ -1676,6 +1802,23 @@ const pageSources = {
         title: "Custom row content",
         description: "Typeahead still uses title.",
         sourcePath: "tree-demo.tsx",
+      },
+      {
+        title: "Checkbox selection",
+        description:
+          'selectionMode="multiple" adds a checkbox to each row. A disabled row cannot be selected.',
+        sourcePath: "tree-selection-demo.tsx",
+        uses: ["checkbox"],
+      },
+      {
+        title: "Sections",
+        sourcePath: "tree-sections-demo.tsx",
+      },
+      {
+        title: "Drag and drop",
+        description:
+          "Drop a row on a folder to move it into the folder. To move a row with the keyboard, press Right Arrow to go to the handle, press Enter, then use the arrow keys.",
+        sourcePath: "tree-drag-demo.tsx",
       },
     ],
   },
