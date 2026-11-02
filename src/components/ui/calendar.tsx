@@ -2,6 +2,8 @@
 
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import {
+  type ReactNode,
+  type RefObject,
   useContext,
   useLayoutEffect,
   useRef,
@@ -30,6 +32,7 @@ import { Button } from "./button";
 import { itemHighlightRing, withItemHighlight } from "./item-highlight";
 
 export const calendarStyles = "w-77 max-w-full text-foreground";
+export const calendarMonthsStyles = "w-auto";
 export const calendarGridStyles =
   "w-full table-fixed border-separate border-spacing-0 text-center";
 export const calendarCells =
@@ -41,7 +44,7 @@ export const calendarHeaderCellStyles =
 export const calendarCellBaseClass =
   "relative grid aspect-square w-full cursor-pointer place-items-center text-sm tabular-nums outline-none transition-colors duration-150 ease-out-quint data-today:after:absolute data-today:after:bottom-1 data-today:after:size-1 data-today:after:rounded-full data-today:after:bg-primary selected:data-today:after:bg-current outside-month:text-muted-foreground/50 unavailable:cursor-not-allowed unavailable:text-muted-foreground unavailable:line-through disabled:cursor-default disabled:text-muted-foreground/50 focus-visible:outline-2 focus-visible:outline-solid focus-visible:z-10 focus-visible:outline-offset-2 focus-visible:outline-ring forced-colors:border-2 forced-colors:border-[Canvas] forced-colors:data-today:after:bg-[CanvasText] forced-colors:outside-month:text-[GrayText] forced-colors:disabled:text-[GrayText]";
 
-export const calendarCellClass = `${calendarCellBaseClass} rounded-md selected:bg-primary selected:text-primary-foreground invalid:selected:bg-destructive invalid:selected:text-destructive-foreground forced-colors:selected:border-[Highlight]`;
+export const calendarCellClass = `${calendarCellBaseClass} rounded-md transition-[color,background-color,scale] motion-safe:pressed:scale-90 selected:bg-primary selected:text-primary-foreground invalid:selected:bg-destructive invalid:selected:text-destructive-foreground forced-colors:selected:border-[Highlight]`;
 
 export function Calendar<T extends DateValue>({
   className,
@@ -49,39 +52,96 @@ export function Calendar<T extends DateValue>({
   render,
   ...props
 }: CalendarProps<T> & React.RefAttributes<HTMLDivElement>) {
+  const months = Math.max(1, props.visibleDuration?.months ?? 1);
   return (
     <AriaCalendar
       {...props}
       data-slot="calendar"
       render={withItemHighlight(render, { items: calendarCells })}
       className={composeRenderProps(className, (className) =>
-        cn(calendarStyles, className),
+        cn(calendarStyles, months > 1 && calendarMonthsStyles, className),
       )}
     >
       {children ?? (
         <>
           <CalendarHeader />
-          <CalendarGrid className={calendarGridStyles} weekdayStyle="short">
-            <CalendarGridHeader>
-              {(day) => (
-                <CalendarHeaderCell className={calendarHeaderCellStyles}>
-                  {day}
-                </CalendarHeaderCell>
-              )}
-            </CalendarGridHeader>
-            <CalendarGridBody>
-              {(date) => (
-                <CalendarCell date={date} className={calendarCellClass} />
-              )}
-            </CalendarGridBody>
-          </CalendarGrid>
+          <CalendarMonths count={months}>
+            {(offset) => (
+              <CalendarGrid
+                key={offset}
+                offset={offset ? { months: offset } : undefined}
+                className={calendarGridStyles}
+                weekdayStyle="short"
+              >
+                <CalendarGridHeader>
+                  {(day) => (
+                    <CalendarHeaderCell className={calendarHeaderCellStyles}>
+                      {day}
+                    </CalendarHeaderCell>
+                  )}
+                </CalendarGridHeader>
+                <CalendarGridBody>
+                  {(date) => (
+                    <CalendarCell date={date} className={calendarCellClass} />
+                  )}
+                </CalendarGridBody>
+              </CalendarGrid>
+            )}
+          </CalendarMonths>
         </>
       )}
     </AriaCalendar>
   );
 }
 
+export function CalendarMonths({
+  count,
+  children,
+}: {
+  count: number;
+  children: (offset: number) => ReactNode;
+}) {
+  if (count <= 1) return children(0);
+  return (
+    <div
+      data-slot="calendar-months"
+      className="flex flex-wrap gap-x-6 gap-y-4 *:w-77 *:max-w-full"
+    >
+      {Array.from({ length: count }, (_, offset) => children(offset))}
+    </div>
+  );
+}
+
+function useMonthSlide(ref: RefObject<HTMLElement | null>, distance: number) {
+  const calendar = useContext(CalendarStateContext);
+  const range = useContext(RangeCalendarStateContext);
+  const month = (calendar ?? range)?.visibleRange.start;
+  const shown = useRef(month);
+
+  useLayoutEffect(() => {
+    const from = shown.current;
+    shown.current = month;
+    const node = ref.current;
+    if (!node || !from || !month) return;
+    const step = Math.sign(month.compare(from));
+    if (!step) return;
+    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const side = getComputedStyle(node).direction === "rtl" ? -1 : 1;
+    node.animate(
+      still
+        ? { opacity: [0, 1] }
+        : {
+            opacity: [0, 1],
+            transform: [`translateX(${step * side * distance}rem)`, "none"],
+          },
+      { duration: still ? 120 : 260, easing: "cubic-bezier(0.23, 1, 0.32, 1)" },
+    );
+  }, [month, ref, distance]);
+}
+
 export function CalendarHeader() {
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  useMonthSlide(headingRef, 0.375);
   return (
     <div
       data-slot="calendar-header"
@@ -93,11 +153,14 @@ export function CalendarHeader() {
         variant="ghost"
         iconOnly
       >
-        <CaretLeftIcon aria-hidden="true" />
+        <CaretLeftIcon aria-hidden="true" className="rtl:rotate-180" />
       </Button>
-      <CalendarHeading className="min-w-0 text-center text-sm font-semibold [overflow-wrap:anywhere] [text-wrap:balance]" />
+      <CalendarHeading
+        ref={headingRef}
+        className="min-w-0 text-center text-sm font-semibold [overflow-wrap:anywhere] [text-wrap:balance]"
+      />
       <Button slot="next" aria-label="Next month" variant="ghost" iconOnly>
-        <CaretRightIcon aria-hidden="true" />
+        <CaretRightIcon aria-hidden="true" className="rtl:rotate-180" />
       </Button>
     </div>
   );
@@ -107,31 +170,7 @@ export function CalendarGridBody(
   props: CalendarGridBodyProps & React.RefAttributes<HTMLTableSectionElement>,
 ) {
   const ref = useRef<HTMLTableSectionElement>(null);
-  const calendar = useContext(CalendarStateContext);
-  const range = useContext(RangeCalendarStateContext);
-  const month = (calendar ?? range)?.visibleRange.start;
-  const shown = useRef(month);
-
-  useLayoutEffect(() => {
-    const from = shown.current;
-    shown.current = month;
-    const body = ref.current;
-    if (!body || !from || !month) return;
-    const step = Math.sign(month.compare(from));
-    if (!step) return;
-    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const side = getComputedStyle(body).direction === "rtl" ? -1 : 1;
-    body.animate(
-      still
-        ? { opacity: [0, 1] }
-        : {
-            opacity: [0, 1],
-            transform: [`translateX(${step * side * 0.75}rem)`, "none"],
-          },
-      { duration: still ? 120 : 260, easing: "cubic-bezier(0.23, 1, 0.32, 1)" },
-    );
-  }, [month]);
-
+  useMonthSlide(ref, 0.75);
   return <AriaCalendarGridBody {...props} ref={mergeRefs(ref, props.ref)} />;
 }
 
