@@ -4,7 +4,7 @@ import { CheckIcon, XIcon } from "@phosphor-icons/react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { type ComponentProps, useState } from "react";
 import { composeRenderProps } from "react-aria-components";
-import { duration, easeInOut, easeOut, loop, springPop } from "./motion";
+import { duration, easeOut, springPop } from "./motion";
 import { cn } from "./utils";
 import { CollapsiblePanel } from "./collapsible-panel";
 import { Disclosure, DisclosureHeader } from "./disclosure";
@@ -73,18 +73,7 @@ function ToolCallIcon({ status }: { status: ToolCallStatus }) {
           transition={reduceMotion ? { duration: 0 } : springPop}
         >
           {status === "running" ? (
-            <motion.span
-              className="size-2 rounded-full bg-current forced-colors:bg-[CanvasText]"
-              initial={false}
-              animate={
-                reduceMotion ? { opacity: 1 } : { opacity: [0.4, 1, 0.4] }
-              }
-              transition={
-                reduceMotion
-                  ? { duration: 0 }
-                  : { duration: loop.pulse, repeat: Infinity, ease: easeInOut }
-              }
-            />
+            <span className="size-2 rounded-full bg-current [animation-duration:1.1s] motion-safe:animate-pulse forced-colors:bg-[CanvasText]" />
           ) : status === "complete" ? (
             <CheckIcon size={16} weight="bold" />
           ) : (
