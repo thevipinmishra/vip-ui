@@ -1,3 +1,11 @@
 allowBuilds:
   sharp: false
   unrs-resolver: false
+permissions:
+  "@tanstack/charts":
+    skills: true
+  "@tanstack/react-table":
+    skills: true
+skills:
+  dirs:
+    - .agents/skills
