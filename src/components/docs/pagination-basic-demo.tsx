@@ -16,11 +16,9 @@ export function PaginationBasicDemo() {
       <PaginationList className="flex-nowrap gap-1 sm:gap-2">
         <PaginationItem>
           <PaginationLink
-            href="#preview"
             isDisabled={page === 1}
             aria-label="Previous page"
-            onClick={(event) => {
-              event.preventDefault();
+            onPress={() => {
               setPage((current) => current - 1);
             }}
           >
@@ -31,10 +29,8 @@ export function PaginationBasicDemo() {
         {[1, 2, 3].map((number) => (
           <PaginationItem key={number}>
             <PaginationLink
-              href="#preview"
               isCurrent={page === number}
-              onClick={(event) => {
-                event.preventDefault();
+              onPress={() => {
                 setPage(number);
               }}
               aria-label={`Page ${number}`}
@@ -45,11 +41,9 @@ export function PaginationBasicDemo() {
         ))}
         <PaginationItem>
           <PaginationLink
-            href="#preview"
             isDisabled={page === 3}
             aria-label="Next page"
-            onClick={(event) => {
-              event.preventDefault();
+            onPress={() => {
               setPage((current) => current + 1);
             }}
           >
