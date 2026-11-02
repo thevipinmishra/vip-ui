@@ -3,6 +3,7 @@ import { ComboBoxAsyncDemo } from "@/components/docs/combo-box-async-demo";
 import { ComboBoxBasicDemo } from "@/components/docs/combo-box-basic-demo";
 import { ComboBoxDemo } from "@/components/docs/combo-box-demo";
 import { ComboBoxDisabledDemo } from "@/components/docs/combo-box-disabled-demo";
+import { ComboBoxIconDemo } from "@/components/docs/combo-box-icon-demo";
 import { ComboBoxMultipleDemo } from "@/components/docs/combo-box-multiple-demo";
 import { ComboBoxSizesDemo } from "@/components/docs/combo-box-sizes-demo";
 import {
@@ -27,6 +28,7 @@ export default function ComboBoxPage() {
       previewSourcePath={page.usage}
       examples={withExamplePreviews(page.examples, [
         <ComboBoxDemo key="described-options" />,
+        <ComboBoxIconDemo key="leading-icon" />,
         <ComboBoxDisabledDemo key="disabled" />,
         <ComboBoxMultipleDemo key="multiple-selection" />,
         <ComboBoxAsyncDemo key="async-loading" />,

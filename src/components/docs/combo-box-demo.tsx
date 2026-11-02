@@ -3,6 +3,7 @@
 import {
   ComboBox,
   ComboBoxContent,
+  ComboBoxControl,
   ComboBoxDescription,
   ComboBoxError,
   ComboBoxInput,
@@ -27,10 +28,10 @@ export function ComboBoxDemo() {
   return (
     <ComboBox className="w-full max-w-[340px]">
       <ComboBoxLabel>Framework</ComboBoxLabel>
-      <div className="relative flex items-center">
+      <ComboBoxControl>
         <ComboBoxInput placeholder="Search frameworks" />
         <ComboBoxTrigger />
-      </div>
+      </ComboBoxControl>
       <ComboBoxDescription>
         Type to filter the list, then select one.
       </ComboBoxDescription>

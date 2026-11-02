@@ -341,11 +341,9 @@ export function InvoicesCard() {
           <PaginationList className="flex-nowrap gap-1">
             <PaginationItem>
               <PaginationLink
-                href="#invoices"
                 aria-label="Previous page"
                 isDisabled={page === 0}
-                onClick={(event) => {
-                  event.preventDefault();
+                onPress={() => {
                   setPage((current) => Math.max(0, current - 1));
                 }}
               >
@@ -354,11 +352,9 @@ export function InvoicesCard() {
             </PaginationItem>
             <PaginationItem>
               <PaginationLink
-                href="#invoices"
                 aria-label="Next page"
                 isDisabled={page >= pages - 1}
-                onClick={(event) => {
-                  event.preventDefault();
+                onPress={() => {
                   setPage((current) => Math.min(pages - 1, current + 1));
                 }}
               >

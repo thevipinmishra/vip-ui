@@ -13,7 +13,6 @@ import {
 import { cn } from "@/lib/utils";
 import {
   CalendarGridBody,
-  CalendarHeader,
   CalendarMonths,
   calendarCellBaseClass,
   calendarCells,
@@ -40,38 +39,35 @@ export function RangeCalendar<T extends DateValue>({
     <AriaRangeCalendar
       {...props}
       data-slot="range-calendar"
+      data-months={months > 1 ? months : undefined}
       render={withItemHighlight(render, { items: calendarCells })}
       className={composeRenderProps(className, (className) =>
         cn(calendarStyles, months > 1 && calendarMonthsStyles, className),
       )}
     >
       {children ?? (
-        <>
-          <CalendarHeader />
-          <CalendarMonths count={months}>
-            {(offset) => (
-              <CalendarGrid
-                key={offset}
-                offset={offset ? { months: offset } : undefined}
-                className={calendarGridStyles}
-                weekdayStyle="short"
-              >
-                <CalendarGridHeader>
-                  {(day) => (
-                    <CalendarHeaderCell className={calendarHeaderCellStyles}>
-                      {day}
-                    </CalendarHeaderCell>
-                  )}
-                </CalendarGridHeader>
-                <CalendarGridBody>
-                  {(date) => (
-                    <CalendarCell date={date} className={rangeCellClass} />
-                  )}
-                </CalendarGridBody>
-              </CalendarGrid>
-            )}
-          </CalendarMonths>
-        </>
+        <CalendarMonths count={months}>
+          {(offset) => (
+            <CalendarGrid
+              offset={offset ? { months: offset } : undefined}
+              className={calendarGridStyles}
+              weekdayStyle="short"
+            >
+              <CalendarGridHeader>
+                {(day) => (
+                  <CalendarHeaderCell className={calendarHeaderCellStyles}>
+                    {day}
+                  </CalendarHeaderCell>
+                )}
+              </CalendarGridHeader>
+              <CalendarGridBody>
+                {(date) => (
+                  <CalendarCell date={date} className={rangeCellClass} />
+                )}
+              </CalendarGridBody>
+            </CalendarGrid>
+          )}
+        </CalendarMonths>
       )}
     </AriaRangeCalendar>
   );

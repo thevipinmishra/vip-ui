@@ -1,19 +1,15 @@
-"use client";
-
-import { motion, useReducedMotion } from "motion/react";
 import type { ComponentProps } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-import { easeInOut, loop, transitionFor } from "./motion";
 
 const spinnerStyles = tv({
-  base: "relative inline-flex shrink-0 items-center justify-center align-middle text-current",
+  base: "relative inline-grid shrink-0 place-items-center align-middle text-current [&>*]:col-start-1 [&>*]:row-start-1",
   variants: {
     size: {
-      xs: "size-3.5",
-      sm: "size-4",
-      md: "size-6",
-      lg: "size-10",
-      xl: "size-14",
+      xs: "size-3.5 [--spinner-stroke:1.75px]",
+      sm: "size-4 [--spinner-stroke:2px]",
+      md: "size-6 [--spinner-stroke:2.5px]",
+      lg: "size-10 [--spinner-stroke:3.5px]",
+      xl: "size-14 [--spinner-stroke:4.5px]",
     },
   },
   defaultVariants: { size: "md" },
@@ -27,6 +23,12 @@ type SpinnerProps = Omit<ComponentProps<"output">, "children"> & {
 
 const ticks = [0, 45, 90, 135, 180, 225, 270, 315];
 
+const dots = [
+  "[animation-delay:-0.32s]",
+  "[animation-delay:-0.16s]",
+  "[animation-delay:0s]",
+];
+
 export function Spinner({
   variant = "ring",
   size = "md",
@@ -34,9 +36,6 @@ export function Spinner({
   className,
   ...props
 }: SpinnerProps) {
-  const reducedMotion = useReducedMotion();
-  const still = reducedMotion === true;
-
   return (
     <output
       {...props}
@@ -47,70 +46,35 @@ export function Spinner({
       className={spinnerStyles({ size, className })}
     >
       {variant === "ring" && (
-        <motion.svg
-          viewBox="0 0 40 40"
-          fill="none"
-          className="size-full"
-          aria-hidden="true"
-          animate={{
-            transform: still
-              ? "rotate(0deg)"
-              : ["rotate(0deg)", "rotate(360deg)"],
-          }}
-          transition={transitionFor(reducedMotion, {
-            duration: loop.spin,
-            ease: "linear",
-            repeat: Infinity,
-          })}
-        >
-          <circle
-            cx="20"
-            cy="20"
-            r="15"
-            stroke="currentColor"
-            strokeOpacity="0.18"
-            strokeWidth="4"
+        <>
+          <span
+            aria-hidden="true"
+            className="size-full rounded-full border-[length:var(--spinner-stroke)] border-current opacity-15"
           />
-          <circle
-            cx="20"
-            cy="20"
-            r="15"
-            stroke="currentColor"
-            strokeWidth="4"
-            strokeLinecap="round"
-            strokeDasharray="28 95"
-            transform="rotate(-90 20 20)"
-          />
-        </motion.svg>
+          <span
+            aria-hidden="true"
+            className="relative size-full animate-spin [animation-duration:0.75s] motion-reduce:animate-none"
+          >
+            <span className="absolute inset-0 rounded-full bg-[conic-gradient(from_0deg,transparent_15%,currentColor)] [mask-image:radial-gradient(farthest-side,transparent_calc(100%-var(--spinner-stroke)-0.5px),#000_calc(100%-var(--spinner-stroke)))] forced-colors:hidden" />
+            <span className="absolute inset-0 hidden rounded-full border-[length:var(--spinner-stroke)] border-transparent border-t-[CanvasText] forced-colors:block" />
+            <span className="absolute start-1/2 top-0 size-[var(--spinner-stroke)] -translate-x-1/2 rtl:translate-x-1/2 rounded-full bg-current forced-colors:bg-[CanvasText]" />
+          </span>
+        </>
       )}
       {variant === "dots" && (
         <span
-          className="flex size-full items-center justify-center gap-[13%]"
           aria-hidden="true"
+          className="flex size-full items-center justify-center gap-[12%]"
         >
-          {[0, 1, 2].map((index) => (
-            <motion.span
-              key={index}
-              className="size-[20%] rounded-full bg-current forced-colors:bg-[CanvasText]"
-              animate={
-                still
-                  ? { opacity: 1, transform: "translateY(0%) scale(1)" }
-                  : {
-                      opacity: [0.38, 1, 0.38],
-                      transform: [
-                        "translateY(0%) scale(0.78)",
-                        "translateY(-20%) scale(1)",
-                        "translateY(0%) scale(0.78)",
-                      ],
-                    }
-              }
-              transition={transitionFor(reducedMotion, {
-                duration: loop.pulse,
-                delay: -index * 0.16,
-                repeat: Infinity,
-                ease: easeInOut,
-              })}
-            />
+          {dots.map((delay) => (
+            <span
+              key={delay}
+              className={`flex h-[60%] w-[20%] items-center animate-bounce [animation-duration:0.9s] motion-reduce:animate-none ${delay}`}
+            >
+              <span
+                className={`aspect-square w-full rounded-full bg-current animate-pulse [animation-duration:0.9s] motion-reduce:animate-none forced-colors:bg-[CanvasText] ${delay}`}
+              />
+            </span>
           ))}
         </span>
       )}
@@ -118,31 +82,21 @@ export function Spinner({
         <svg
           viewBox="0 0 40 40"
           fill="none"
-          className="size-full"
           aria-hidden="true"
+          className="size-full animate-spin [animation-duration:0.8s] [animation-timing-function:steps(8,end)] motion-reduce:animate-none"
         >
           {ticks.map((angle, index) => (
-            <motion.line
+            <line
               key={angle}
               x1="20"
-              y1="5"
+              y1="4"
               x2="20"
               y2="11"
               stroke="currentColor"
-              strokeWidth="3"
+              strokeWidth="3.5"
               strokeLinecap="round"
-              transform={`rotate(${angle} 20 20)`}
-              animate={
-                still
-                  ? { opacity: index === 0 ? 1 : 0.4 }
-                  : { opacity: [0.2, 1, 0.2] }
-              }
-              transition={transitionFor(reducedMotion, {
-                duration: loop.pulse,
-                delay: (-index * loop.pulse) / ticks.length,
-                repeat: Infinity,
-                ease: easeInOut,
-              })}
+              strokeOpacity={1 - index * 0.11}
+              transform={`rotate(${-angle} 20 20)`}
             />
           ))}
         </svg>
