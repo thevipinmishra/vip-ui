@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+import type { Selection } from "react-aria-components";
 import { Badge } from "@/components/ui/badge";
 import {
   Cell,
@@ -7,6 +9,7 @@ import {
   Row,
   Table,
   TableBody,
+  TableContainer,
   TableHeader,
 } from "@/components/ui/table";
 
@@ -31,32 +34,50 @@ const statusVariants = {
 } as const;
 
 export function TableDemo() {
+  const [selected, setSelected] = useState<Selection>(new Set(["atlas"]));
+  const count = selected === "all" ? projects.length - 1 : selected.size;
+
   return (
-    <div className="w-full max-w-2xl overflow-x-auto rounded-lg border border-border bg-card shadow-[var(--shadow-card)]">
-      <Table aria-label="Projects" selectionMode="single">
-        <TableHeader>
-          <Column id="name" isRowHeader>
-            Project
-          </Column>
-          <Column id="owner">Owner</Column>
-          <Column id="status">Status</Column>
-        </TableHeader>
-        <TableBody items={projects}>
-          {(project) => (
-            <Row id={project.id}>
-              <Cell>
-                <span className="font-medium">{project.name}</span>
-              </Cell>
-              <Cell>{project.owner}</Cell>
-              <Cell>
-                <Badge variant={statusVariants[project.status]} dot>
-                  {project.status}
-                </Badge>
-              </Cell>
-            </Row>
-          )}
-        </TableBody>
-      </Table>
+    <div className="grid w-full max-w-2xl gap-2">
+      <TableContainer>
+        <Table
+          aria-label="Projects"
+          selectionMode="multiple"
+          selectedKeys={selected}
+          onSelectionChange={setSelected}
+          disabledKeys={["orbit"]}
+          className="min-w-[30rem]"
+        >
+          <TableHeader>
+            <Column id="name" isRowHeader>
+              Project
+            </Column>
+            <Column id="owner">Owner</Column>
+            <Column id="status">Status</Column>
+          </TableHeader>
+          <TableBody items={projects}>
+            {(project) => (
+              <Row id={project.id}>
+                <Cell>
+                  <span className="font-medium">{project.name}</span>
+                </Cell>
+                <Cell>{project.owner}</Cell>
+                <Cell>
+                  <Badge variant={statusVariants[project.status]} dot>
+                    {project.status}
+                  </Badge>
+                </Cell>
+              </Row>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <output
+        aria-live="polite"
+        className="text-sm text-muted-foreground tabular-nums"
+      >
+        {count === 0 ? "No projects selected" : `${count} selected`}
+      </output>
     </div>
   );
 }
