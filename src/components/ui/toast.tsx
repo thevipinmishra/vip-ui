@@ -7,119 +7,168 @@ import {
   XCircleIcon,
   XIcon,
 } from "@phosphor-icons/react";
-import { motion, useReducedMotion } from "motion/react";
-import { useEffect, useSyncExternalStore } from "react";
+import {
+  type CSSProperties,
+  createContext,
+  type PointerEvent,
+  type ReactElement,
+  type TransitionEvent,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useSyncExternalStore,
+} from "react";
 import {
   Button as AriaButton,
   UNSTABLE_Toast as AriaToast,
   UNSTABLE_ToastContent as AriaToastContent,
   UNSTABLE_ToastRegion as AriaToastRegion,
   composeRenderProps,
+  type QueuedToast,
   Text,
   type ToastOptions,
   UNSTABLE_ToastQueue as ToastQueue,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { duration, easeOut } from "@/lib/motion";
 import { cn } from "@/lib/utils";
+import { buttonStyles, touchTarget } from "./button-styles";
 
-const MotionToast = motion.create(AriaToast);
-
-type MotionHandlers =
-  | "onAnimationStart"
-  | "onAnimationEnd"
-  | "onAnimationIteration"
-  | "onDrag"
-  | "onDragStart"
-  | "onDragEnd"
-  | "onDragEnter"
-  | "onDragExit"
-  | "onDragLeave"
-  | "onDragOver"
-  | "onHoverStart"
-  | "onHoverEnd";
-
-type ToastSurfaceProps = Omit<
-  React.ComponentProps<typeof AriaToast>,
-  MotionHandlers | "style"
->;
-type ToastCloseProps = React.ComponentProps<typeof AriaButton>;
-
-const toastIconStyles = tv({
-  base: "grid size-9 shrink-0 place-items-center rounded-lg",
-  variants: {
-    variant: {
-      info: "bg-accent text-accent-foreground",
-      success: "bg-success-subtle text-success-foreground",
-      warning: "bg-warning-subtle text-warning-foreground",
-      error: "bg-destructive/10 text-destructive",
-    },
-  },
-  defaultVariants: { variant: "info" },
-});
+const stackPeek = 10;
+const stackGap = 8;
+const exitFallback = 400;
 
 export interface ToastMessage {
   title: string;
   description?: string;
   variant?: "info" | "success" | "warning" | "error";
+  action?: { label: string; onAction: () => void };
 }
 
-const toastIcons = {
-  info: InfoIcon,
-  success: CheckCircleIcon,
-  warning: WarningIcon,
-  error: XCircleIcon,
+interface ToastLayout {
+  index: number;
+  offset: number;
+  height: number;
+  closing: boolean;
+}
+
+interface StackLayout {
+  front: number;
+  collapsed: number;
+  expanded: number;
+}
+
+const restingLayout: ToastLayout = {
+  index: 0,
+  offset: 0,
+  height: 0,
+  closing: false,
 };
 
-function prefersReducedMotion() {
-  return (
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  );
+function reuse<T extends object>(previous: T | undefined, next: T): T {
+  if (!previous) return next;
+  for (const field in next) {
+    if (previous[field] !== next[field]) return next;
+  }
+  return previous;
 }
 
 class AnimatedToastQueue extends ToastQueue<ToastMessage> {
-  private closing = new Set<string>();
-  private exitListeners = new Set<() => void>();
+  private closing = new Map<string, ToastLayout>();
+  private heights = new Map<string, number>();
+  private listeners = new Set<() => void>();
+  private layouts = new Map<string, ToastLayout>();
+  private stackLayout: StackLayout = { front: 0, collapsed: 0, expanded: 0 };
+
+  constructor(options?: ConstructorParameters<typeof ToastQueue>[0]) {
+    super(options);
+    this.subscribe(() => this.emit());
+  }
+
+  subscribeToLayout = (listener: () => void) => {
+    this.listeners.add(listener);
+    return () => {
+      this.listeners.delete(listener);
+    };
+  };
+
+  getStack = () => this.stackLayout;
+
+  getLayout = (key: string) => this.layouts.get(key) ?? restingLayout;
+
+  private emit() {
+    const layouts = new Map<string, ToastLayout>();
+    let offset = 0;
+    let index = 0;
+    for (const toast of this.visibleToasts) {
+      if (this.closing.has(toast.key)) continue;
+      const height = this.heights.get(toast.key) ?? 0;
+      layouts.set(
+        toast.key,
+        reuse(this.layouts.get(toast.key), {
+          index,
+          offset,
+          height,
+          closing: false,
+        }),
+      );
+      offset += height + stackGap;
+      index++;
+    }
+    for (const [key, frozen] of this.closing) {
+      layouts.set(key, reuse(this.layouts.get(key), frozen));
+    }
+    this.layouts = layouts;
+    if (index > 0) {
+      const front =
+        [...layouts.values()].find(
+          (layout) => layout.index === 0 && !layout.closing,
+        )?.height ?? 0;
+      this.stackLayout = reuse(this.stackLayout, {
+        front,
+        collapsed: front + (index - 1) * stackPeek,
+        expanded: offset - stackGap,
+      });
+    }
+    for (const listener of this.listeners) listener();
+  }
 
   isClosing(key: string) {
     return this.closing.has(key);
   }
 
-  subscribeToExit = (listener: () => void) => {
-    this.exitListeners.add(listener);
-    return () => {
-      this.exitListeners.delete(listener);
-    };
-  };
+  setHeight(key: string, height: number) {
+    if (this.heights.get(key) === height || this.closing.has(key)) return;
+    this.heights.set(key, height);
+    this.emit();
+  }
 
   close(key: string) {
-    if (
-      this.closing.has(key) ||
-      prefersReducedMotion() ||
-      !this.visibleToasts.some((toast) => toast.key === key)
-    ) {
+    if (this.closing.has(key)) return;
+    if (!this.visibleToasts.some((toast) => toast.key === key)) {
       super.close(key);
       return;
     }
-    this.closing.add(key);
-    for (const listener of this.exitListeners) listener();
+    this.closing.set(key, { ...this.getLayout(key), closing: true });
+    this.emit();
+    window.setTimeout(() => this.finishClose(key), exitFallback);
   }
 
   finishClose(key: string) {
     if (!this.closing.delete(key)) return;
+    this.heights.delete(key);
     super.close(key);
   }
 
   finishAll() {
-    for (const key of [...this.closing]) this.finishClose(key);
+    for (const key of [...this.closing.keys()]) this.finishClose(key);
   }
 }
 
 export const toastQueue = new AnimatedToastQueue({ maxVisibleToasts: 3 });
 
 export function showToast(message: ToastMessage, options?: ToastOptions) {
-  const timeout = options?.timeout ?? 5000;
+  const timeout = options?.timeout ?? (message.action ? 0 : 5000);
   return toastQueue.add(message, {
     ...options,
     timeout:
@@ -129,11 +178,38 @@ export function showToast(message: ToastMessage, options?: ToastOptions) {
   });
 }
 
+function useToastStack() {
+  return useSyncExternalStore(
+    toastQueue.subscribeToLayout,
+    toastQueue.getStack,
+    toastQueue.getStack,
+  );
+}
+
+function useToastLayout(key: string) {
+  const getLayout = () => toastQueue.getLayout(key);
+  return useSyncExternalStore(
+    toastQueue.subscribeToLayout,
+    getLayout,
+    getLayout,
+  );
+}
+
+const ToastKeyContext = createContext<string | null>(null);
+
+type ToastRenderer = (props: {
+  toast: QueuedToast<ToastMessage>;
+}) => ReactElement;
+
 export function ToastViewport({
   className,
+  children = renderToast,
 }: {
   className?: React.ComponentProps<typeof AriaToastRegion>["className"];
+  children?: ToastRenderer;
 }) {
+  const stack = useToastStack();
+
   useEffect(() => () => toastQueue.finishAll(), []);
 
   return (
@@ -141,77 +217,251 @@ export function ToastViewport({
       queue={toastQueue}
       data-slot="toast-viewport"
       aria-label="Notifications"
+      style={
+        {
+          "--toast-front-height": `${stack.front}px`,
+          height: `calc(${stack.collapsed}px * (1 - var(--toast-expanded)) + ${stack.expanded}px * var(--toast-expanded))`,
+        } as CSSProperties
+      }
       className={composeRenderProps(className, (className) =>
         cn(
-          "fixed inset-x-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-60 flex flex-col-reverse gap-2 outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring sm:inset-x-auto sm:end-4 sm:w-96",
+          "fixed inset-x-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-60 outline-none [--toast-expanded:0] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-solid focus-visible:outline-ring has-focus-visible:[--toast-expanded:1] data-hovered:[--toast-expanded:1] sm:inset-x-auto sm:end-4 sm:w-96",
           className,
         ),
       )}
     >
-      {({ toast }) => {
-        const variant = toast.content.variant ?? "info";
-        const Icon = toastIcons[variant];
-        return (
-          <Toast toast={toast}>
-            <span
-              aria-hidden="true"
-              data-slot="toast-icon"
-              className={toastIconStyles({ variant })}
-            >
-              <Icon size={18} />
-            </span>
-            <ToastContent>
-              <ToastTitle>{toast.content.title}</ToastTitle>
-              {toast.content.description && (
-                <ToastDescription>{toast.content.description}</ToastDescription>
-              )}
-            </ToastContent>
-            <ToastClose />
-          </Toast>
-        );
-      }}
+      {children}
     </AriaToastRegion>
   );
 }
 
-export function Toast({ className, children, ...props }: ToastSurfaceProps) {
-  const reduceMotion = useReducedMotion();
-  const key = props.toast.key;
-  const isClosing = useSyncExternalStore(
-    toastQueue.subscribeToExit,
-    () => toastQueue.isClosing(key),
-    () => false,
+function renderToast({ toast }: { toast: QueuedToast<ToastMessage> }) {
+  const { title, description, variant, action } = toast.content;
+  return (
+    <Toast toast={toast}>
+      <ToastIcon variant={variant} />
+      <ToastContent>
+        <ToastTitle>{title}</ToastTitle>
+        {description && <ToastDescription>{description}</ToastDescription>}
+      </ToastContent>
+      {action && (
+        <ToastAction onPress={action.onAction}>{action.label}</ToastAction>
+      )}
+      <ToastClose />
+    </Toast>
   );
+}
+
+type ToastProps = Omit<
+  React.ComponentProps<typeof AriaToast<ToastMessage>>,
+  "style"
+>;
+
+interface Swipe {
+  id: number;
+  x: number;
+  y: number;
+  dx: number;
+  velocity: number;
+  time: number;
+  active: boolean;
+}
+
+export function Toast({
+  className,
+  children,
+  onPointerDown,
+  onPointerMove,
+  onPointerUp,
+  onPointerCancel,
+  onTransitionEnd,
+  ...props
+}: ToastProps) {
+  const key = props.toast.key;
+  const { index, offset, height, closing: isClosing } = useToastLayout(key);
+  const shellRef = useRef<HTMLDivElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
+  const swipe = useRef<Swipe | null>(null);
+
+  useLayoutEffect(() => {
+    const body = bodyRef.current;
+    if (!body) return;
+    const measure = () => toastQueue.setHeight(key, body.offsetHeight);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(body);
+    return () => observer.disconnect();
+  }, [key]);
+
+  const resetSwipe = (shell: HTMLElement) => {
+    delete shell.dataset.swiping;
+    shell.style.removeProperty("--toast-swipe");
+    shell.style.removeProperty("--toast-swipe-fade");
+  };
+
+  const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    onPointerDown?.(event);
+    if (event.button !== 0 || isClosing) return;
+    if ((event.target as Element).closest("button, a, input, textarea")) return;
+    swipe.current = {
+      id: event.pointerId,
+      x: event.clientX,
+      y: event.clientY,
+      dx: 0,
+      velocity: 0,
+      time: event.timeStamp,
+      active: false,
+    };
+  };
+
+  const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    onPointerMove?.(event);
+    const state = swipe.current;
+    const shell = shellRef.current;
+    if (!state || !shell || state.id !== event.pointerId) return;
+    const dx = event.clientX - state.x;
+    const dy = event.clientY - state.y;
+    if (!state.active) {
+      if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+      if (Math.abs(dy) > Math.abs(dx)) {
+        swipe.current = null;
+        return;
+      }
+      state.active = true;
+      shell.setPointerCapture(event.pointerId);
+      shell.dataset.swiping = "";
+      window.getSelection()?.removeAllRanges();
+    }
+    const elapsed = Math.max(event.timeStamp - state.time, 1);
+    state.velocity = (dx - state.dx) / elapsed;
+    state.dx = dx;
+    state.time = event.timeStamp;
+    const fade = Math.max(0, 1 - Math.abs(dx) / shell.offsetWidth);
+    shell.style.setProperty("--toast-swipe", `${dx}px`);
+    shell.style.setProperty("--toast-swipe-fade", String(fade));
+  };
+
+  const endSwipe = (event: PointerEvent<HTMLDivElement>) => {
+    const state = swipe.current;
+    const shell = shellRef.current;
+    swipe.current = null;
+    if (!state?.active || !shell) return;
+    const distance = Math.abs(state.dx);
+    const flick =
+      Math.abs(state.velocity) > 0.45 &&
+      Math.sign(state.velocity) === Math.sign(state.dx);
+    const dismiss =
+      event.type === "pointerup" &&
+      (distance > Math.min(96, shell.offsetWidth / 3) ||
+        (flick && distance > 16));
+    if (!dismiss) {
+      resetSwipe(shell);
+      return;
+    }
+    delete shell.dataset.swiping;
+    shell.style.setProperty(
+      "--toast-swipe",
+      state.dx > 0 ? "calc(100% + 2rem)" : "calc(-100% - 2rem)",
+    );
+    toastQueue.close(key);
+  };
+
+  const shellStyle = {
+    zIndex: isClosing ? 20 : 10 - index,
+    "--toast-height": `${height}px`,
+    "--toast-y": `calc(-1 * (${index * stackPeek}px * (1 - var(--toast-expanded)) + ${offset}px * var(--toast-expanded)))`,
+    "--toast-scale": `calc(1 - ${index * 0.05} * (1 - var(--toast-expanded)))`,
+    "--toast-ink": index === 0 ? 1 : "var(--toast-expanded)",
+    height: height
+      ? "calc(var(--toast-front-height) * (1 - var(--toast-expanded)) + var(--toast-height) * var(--toast-expanded))"
+      : undefined,
+  } as CSSProperties;
 
   return (
-    <MotionToast
+    <ToastKeyContext value={key}>
+      <AriaToast
+        {...props}
+        ref={shellRef}
+        data-slot="toast"
+        data-closing={isClosing || undefined}
+        style={shellStyle}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={(event) => {
+          onPointerUp?.(event);
+          endSwipe(event);
+        }}
+        onPointerCancel={(event) => {
+          onPointerCancel?.(event);
+          endSwipe(event);
+        }}
+        onTransitionEnd={(event: TransitionEvent<HTMLDivElement>) => {
+          onTransitionEnd?.(event);
+          if (
+            event.target === event.currentTarget &&
+            event.propertyName === "opacity" &&
+            toastQueue.isClosing(key)
+          ) {
+            toastQueue.finishClose(key);
+          }
+        }}
+        className={composeRenderProps(className, (className) =>
+          cn(
+            "group/toast absolute inset-x-0 bottom-0 origin-top touch-pan-y overflow-clip rounded-xl bg-popover text-popover-foreground opacity-[var(--toast-swipe-fade,1)] shadow-[var(--shadow-float)] ring-1 ring-border/70 outline-none transition-[translate,scale,height,opacity] duration-350 ease-spring [scale:var(--toast-scale)] [translate:var(--toast-swipe,0px)_var(--toast-y)] focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring starting:opacity-0 starting:[translate:0_100%] data-swiping:transition-none data-closing:pointer-events-none data-closing:opacity-0 data-closing:duration-200 data-closing:ease-out-quint data-closing:[scale:calc(var(--toast-scale)*0.96)] motion-reduce:transition-opacity motion-reduce:duration-200 motion-reduce:ease-out-quint forced-colors:border",
+            className,
+          ),
+        )}
+      >
+        {(renderProps) => (
+          <div
+            ref={bodyRef}
+            data-slot="toast-body"
+            className="flex items-start gap-2.5 py-3 ps-3.5 pe-2.5 opacity-(--toast-ink) transition-opacity duration-200 ease-out-quint group-data-swiping/toast:transition-none"
+          >
+            {typeof children === "function" ? children(renderProps) : children}
+          </div>
+        )}
+      </AriaToast>
+    </ToastKeyContext>
+  );
+}
+
+const toastIconStyles = tv({
+  base: "grid size-5 shrink-0 place-items-center",
+  variants: {
+    variant: {
+      info: "text-muted-foreground",
+      success: "text-success",
+      warning: "text-warning",
+      error: "text-destructive",
+    },
+  },
+  defaultVariants: { variant: "info" },
+});
+
+const toastIcons = {
+  info: InfoIcon,
+  success: CheckCircleIcon,
+  warning: WarningIcon,
+  error: XCircleIcon,
+};
+
+export function ToastIcon({
+  variant = "info",
+  className,
+  children,
+  ...props
+}: React.ComponentProps<"span"> & { variant?: ToastMessage["variant"] }) {
+  const Icon = toastIcons[variant];
+  return (
+    <span
       {...props}
-      data-slot="toast"
-      layout={reduceMotion ? false : "position"}
-      initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-      animate={
-        isClosing
-          ? { opacity: 0, y: reduceMotion ? 0 : 8 }
-          : { opacity: 1, y: 0 }
-      }
-      transition={{
-        duration: reduceMotion ? 0 : isClosing ? duration.base : duration.slow,
-        ease: easeOut,
-      }}
-      onAnimationComplete={() => {
-        if (isClosing) toastQueue.finishClose(key);
-      }}
-      className={composeRenderProps(className, (className) =>
-        cn(
-          "flex shrink-0 items-start gap-3 rounded-xl bg-popover p-3 text-popover-foreground shadow-[var(--shadow-float)] ring-1 ring-border/70 outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring forced-colors:border",
-          className,
-        ),
-      )}
+      aria-hidden="true"
+      data-slot="toast-icon"
+      className={toastIconStyles({ variant, className })}
     >
-      {(renderProps) =>
-        typeof children === "function" ? children(renderProps) : children
-      }
-    </MotionToast>
+      {children ?? <Icon size={20} weight="fill" />}
+    </span>
   );
 }
 
@@ -223,10 +473,7 @@ export function ToastContent({
     <AriaToastContent
       {...props}
       data-slot="toast-content"
-      className={cn(
-        "flex min-h-9 min-w-0 flex-1 flex-col justify-center",
-        className,
-      )}
+      className={cn("min-w-0 flex-1", className)}
     />
   );
 }
@@ -241,7 +488,7 @@ export function ToastTitle({
       slot="title"
       data-slot="toast-title"
       className={cn(
-        "block text-sm font-semibold [overflow-wrap:anywhere]",
+        "block text-sm leading-5 font-medium tracking-[-0.01em] [overflow-wrap:anywhere]",
         className,
       )}
     />
@@ -258,14 +505,43 @@ export function ToastDescription({
       slot="description"
       data-slot="toast-description"
       className={cn(
-        "mt-1 block text-sm leading-5 text-muted-foreground [overflow-wrap:anywhere]",
+        "mt-0.5 block text-sm leading-5 text-muted-foreground [overflow-wrap:anywhere]",
         className,
       )}
     />
   );
 }
 
-export function ToastClose({ className, children, ...props }: ToastCloseProps) {
+export function ToastAction({
+  className,
+  onPress,
+  ...props
+}: React.ComponentProps<typeof AriaButton>) {
+  const key = useContext(ToastKeyContext);
+  return (
+    <AriaButton
+      {...props}
+      data-slot="toast-action"
+      onPress={(event) => {
+        onPress?.(event);
+        if (key) toastQueue.close(key);
+      }}
+      className={composeRenderProps(className, (className) =>
+        buttonStyles({
+          variant: "secondary",
+          size: "xs",
+          className: cn("-my-1 self-center", className),
+        }),
+      )}
+    />
+  );
+}
+
+export function ToastClose({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof AriaButton>) {
   return (
     <AriaButton
       {...props}
@@ -274,7 +550,8 @@ export function ToastClose({ className, children, ...props }: ToastCloseProps) {
       aria-label={props["aria-label"] ?? "Dismiss notification"}
       className={composeRenderProps(className, (className) =>
         cn(
-          "-m-1 grid size-11 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-out-quint hover:bg-muted hover:text-foreground pressed:bg-muted pressed:text-foreground motion-safe:pressed:scale-[0.96] focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring disabled:cursor-default disabled:opacity-50 [&_svg]:pointer-events-none",
+          "-my-1.5 grid size-8 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-out-quint hover:bg-muted hover:text-foreground pressed:bg-muted pressed:text-foreground motion-safe:pressed:scale-[0.94] focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring disabled:cursor-default disabled:opacity-50 [&_svg]:pointer-events-none",
+          touchTarget,
           className,
         ),
       )}
@@ -283,5 +560,3 @@ export function ToastClose({ className, children, ...props }: ToastCloseProps) {
     </AriaButton>
   );
 }
-
-export { AriaToastRegion as ToastRegion };

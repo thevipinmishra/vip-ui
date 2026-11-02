@@ -6,7 +6,6 @@ import { tooltip } from "@tanstack/charts/tooltip";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartLegend,
   ChartLegendItem,
@@ -88,7 +87,6 @@ export function ChartTreemap() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Storage</ChartTitle>
-        <ChartDescription>Space used by folder, in gigabytes</ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

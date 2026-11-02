@@ -7,7 +7,6 @@ import { tooltip } from "@tanstack/charts/tooltip";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartTable,
   ChartTitle,
@@ -74,7 +73,6 @@ export function ChartBarHorizontal() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Top pages</ChartTitle>
-        <ChartDescription>Page views, last 30 days</ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

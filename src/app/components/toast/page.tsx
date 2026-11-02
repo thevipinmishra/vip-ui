@@ -3,7 +3,9 @@ import {
   ComponentPage,
   withExamplePreviews,
 } from "@/components/docs/component-page";
+import { ToastActionDemo } from "@/components/docs/toast-action-demo";
 import { ToastDemo } from "@/components/docs/toast-demo";
+import { ToastStackDemo } from "@/components/docs/toast-stack-demo";
 import { ToastStatusDemo } from "@/components/docs/toast-status-demo";
 import { ToastTimeoutDemo } from "@/components/docs/toast-timeout-demo";
 import { componentPageData } from "@/lib/component-examples";
@@ -23,6 +25,8 @@ export default function ToastPage() {
       previewSourcePath={page.usage}
       examples={withExamplePreviews(page.examples, [
         <ToastStatusDemo key="variants" />,
+        <ToastActionDemo key="action" />,
+        <ToastStackDemo key="stack" />,
         <ToastTimeoutDemo key="timeout" />,
       ])}
       sourcePath="src/components/ui/toast.tsx"

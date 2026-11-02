@@ -8,7 +8,6 @@ import { curveBumpX } from "d3-shape";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartLegend,
   ChartLegendItem,
@@ -101,7 +100,6 @@ export function ChartSankey() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Signup flow</ChartTitle>
-        <ChartDescription>Users from first visit to paid plan</ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

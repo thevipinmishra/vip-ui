@@ -7,7 +7,6 @@ import { tooltip } from "@tanstack/charts/tooltip";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartLegend,
   ChartLegendItem,
@@ -112,7 +111,6 @@ export function ChartBarStacked() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>New tickets</ChartTitle>
-        <ChartDescription>By priority, last 14 days</ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

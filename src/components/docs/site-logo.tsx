@@ -1,5 +1,22 @@
 import { cn } from "@/lib/utils";
 
+function SiteMark({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 32 32"
+      fill="currentColor"
+      aria-hidden="true"
+      className={cn("size-8 shrink-0", className)}
+    >
+      <path d="M7.71 32H7a7 7 0 0 1-7-7V7a7 7 0 0 1 7-7h13.51z" />
+      <path
+        d="M24.29 0H25a7 7 0 0 1 7 7v18a7 7 0 0 1-7 7H11.49z"
+        fillOpacity={0.5}
+      />
+    </svg>
+  );
+}
+
 export function SiteLogo({ className }: { className?: string }) {
   return (
     <span
@@ -8,17 +25,9 @@ export function SiteLogo({ className }: { className?: string }) {
         className,
       )}
     >
-      <span
-        aria-hidden="true"
-        className="grid size-8 shrink-0 grid-cols-2 gap-0.5 rounded-md bg-primary p-[7px]"
-      >
-        <span className="rounded-[2px] bg-primary-foreground" />
-        <span className="rounded-[2px] bg-primary-foreground/55" />
-        <span className="rounded-[2px] bg-primary-foreground/55" />
-        <span className="rounded-[2px] bg-primary-foreground" />
-      </span>
+      <SiteMark />
       <span className="text-[19px]">
-        vip<span className="text-primary">/</span>ui
+        vip<span className="text-muted-foreground">/</span>ui
       </span>
     </span>
   );

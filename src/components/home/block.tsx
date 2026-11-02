@@ -24,7 +24,7 @@ export function Block({
     <Card className={cn("flex min-w-0 flex-col", className)}>
       <CardHeader className="min-h-9 flex-row items-start justify-between gap-3">
         <div className="grid min-w-0 gap-0.5 self-center">
-          <CardTitle as="h2">{title}</CardTitle>
+          <CardTitle as="h3">{title}</CardTitle>
           {description && (
             <CardDescription className="leading-5">
               {description}

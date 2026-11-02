@@ -145,7 +145,14 @@ export const compositions: Record<string, Composition> = {
           { part: "SelectError" },
           {
             part: "SelectContent",
-            children: [{ part: "SelectItem", repeats: true }],
+            children: [
+              {
+                part: "SelectSection",
+                optional: true,
+                repeats: true,
+                children: [{ part: "SelectItem", repeats: true }],
+              },
+            ],
           },
         ],
       },
@@ -165,14 +172,20 @@ export const compositions: Record<string, Composition> = {
                 part: "DialogHeader",
                 children: [
                   { part: "DialogTitle" },
+                  { part: "DialogDescription", optional: true },
                   {
                     part: "DialogClose",
+                    optional: true,
                     note: "Can also go in DialogFooter as a text button.",
                   },
                 ],
               },
-              { part: "DialogDescription" },
-              { part: "DialogFooter" },
+              {
+                part: "DialogBody",
+                optional: true,
+                note: "Scrolls when the content does not fit.",
+              },
+              { part: "DialogFooter", optional: true },
             ],
           },
         ],
@@ -259,7 +272,7 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "ToastViewport",
-        note: "Render it once in the root layout. Shows up to three toasts at a time.",
+        note: "Render it once in the root layout. Stacks up to three toasts.",
       },
     ],
     helper: {
@@ -280,7 +293,14 @@ export const compositions: Record<string, Composition> = {
               {
                 part: "MenuContent",
                 note: "Owns focus and selection.",
-                children: [{ part: "MenuItem", repeats: true }],
+                children: [
+                  {
+                    part: "MenuSection",
+                    optional: true,
+                    repeats: true,
+                    children: [{ part: "MenuItem", repeats: true }],
+                  },
+                ],
               },
             ],
           },
@@ -506,7 +526,7 @@ export const compositions: Record<string, Composition> = {
                 part: "SheetHeader",
                 children: [
                   { part: "SheetTitle" },
-                  { part: "SheetDescription" },
+                  { part: "SheetDescription", optional: true },
                 ],
               },
               {
@@ -747,7 +767,7 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "Slider",
-        note: "Owns the value or range.",
+        note: "Owns the values. Without children, it renders a label, value, and one handle per value.",
         children: [
           { part: "SliderLabel" },
           { part: "SliderValue" },
@@ -758,9 +778,14 @@ export const compositions: Record<string, Composition> = {
                 part: "SliderRail",
                 children: [{ part: "SliderRange" }],
               },
-              { part: "SliderHandle", repeats: true },
+              {
+                part: "SliderHandle",
+                repeats: true,
+                note: "One per value. Set index on each.",
+              },
             ],
           },
+          { part: "SliderMarks", optional: true },
         ],
       },
     ],
@@ -778,6 +803,7 @@ export const compositions: Record<string, Composition> = {
               { part: "SwitchLabel" },
               {
                 part: "SwitchControl",
+                note: "Put it before SwitchLabel to show the control first.",
                 children: [{ part: "SwitchThumb" }],
               },
             ],

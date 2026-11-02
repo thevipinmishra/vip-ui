@@ -18,11 +18,11 @@ export function DialogDemo() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Dialog title</DialogTitle>
+          <DialogDescription>
+            Review the details before you continue.
+          </DialogDescription>
           <DialogClose />
         </DialogHeader>
-        <DialogDescription>
-          Review the details before you continue.
-        </DialogDescription>
         <DialogFooter>
           <DialogClose variant="outline">Close</DialogClose>
         </DialogFooter>

@@ -58,6 +58,9 @@ export function Switch({
   );
 }
 
+const switchControlFirst =
+  "group-has-[[data-slot=switch-control]~[data-slot=switch-label]]/switch-field:col-span-1 group-has-[[data-slot=switch-control]~[data-slot=switch-label]]/switch-field:col-start-2 group-has-[[data-slot=switch-control]~[data-slot=switch-label]]/switch-field:ms-3 group-has-[[data-slot=switch-control]~[data-slot=switch-label]]/switch-field:me-0";
+
 export function SwitchField({
   className,
   ...props
@@ -68,7 +71,7 @@ export function SwitchField({
       data-slot="switch"
       className={composeRenderProps(className, (className) =>
         cn(
-          "relative inline-grid min-h-11 min-w-0 max-w-full grid-cols-[minmax(0,1fr)_auto] content-center items-center py-1 text-sm text-foreground disabled:opacity-50",
+          "group/switch-field relative inline-grid min-h-11 min-w-0 max-w-full grid-cols-[minmax(0,1fr)_auto] content-center items-center py-1 text-sm text-foreground disabled:opacity-50 has-[[data-slot=switch-control]~[data-slot=switch-label]]:grid-cols-[auto_minmax(0,1fr)]",
           className,
         ),
       )}
@@ -105,7 +108,7 @@ export function SwitchLabel({
       {...props}
       data-slot="switch-label"
       className={cn(
-        "me-4 min-w-0 font-medium [overflow-wrap:anywhere]",
+        "me-4 min-w-0 font-medium [overflow-wrap:anywhere] [[data-slot=switch-control]+&]:ms-3 [[data-slot=switch-control]+&]:me-0",
         className,
       )}
     />
@@ -124,6 +127,7 @@ export function SwitchDescription({
       className={cn(
         fieldDescriptionStyles,
         "col-start-1 row-start-2 me-4 mt-1",
+        switchControlFirst,
         className,
       )}
     />
@@ -142,6 +146,7 @@ export function SwitchError({
       className={cn(
         fieldErrorStyles,
         "relative col-span-full row-start-3 mt-1",
+        switchControlFirst,
         className,
       )}
     />

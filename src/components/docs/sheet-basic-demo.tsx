@@ -17,7 +17,7 @@ export function SheetBasicDemo() {
   return (
     <SheetTrigger>
       <Button>View order</Button>
-      <Sheet className="h-[50dvh]">
+      <Sheet>
         <SheetHandle />
         <SheetHeader>
           <SheetTitle>Order summary</SheetTitle>

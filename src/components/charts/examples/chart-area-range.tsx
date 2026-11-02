@@ -8,7 +8,6 @@ import { tooltip } from "@tanstack/charts/tooltip";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartLegend,
   ChartLegendItem,
@@ -147,9 +146,6 @@ export function ChartAreaRange() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Revenue forecast</ChartTitle>
-        <ChartDescription>
-          Monthly revenue to September. Forecast to March 2027.
-        </ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

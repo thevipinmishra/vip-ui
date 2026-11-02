@@ -7,7 +7,6 @@ import { tooltip } from "@tanstack/charts/tooltip";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartLegend,
   ChartLegendItem,
@@ -103,9 +102,6 @@ export function ChartLineMultiple() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>API latency</ChartTitle>
-        <ChartDescription>
-          Response time percentiles, last 24 hours
-        </ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

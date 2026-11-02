@@ -91,6 +91,7 @@ function SingleComboBox({
   return (
     <AriaComboBox
       {...props}
+      allowsEmptyCollection={props.allowsEmptyCollection ?? true}
       data-slot="combo-box"
       data-size={size}
       selectedKey={value ?? props.selectedKey}
@@ -132,6 +133,7 @@ function MultipleComboBox({
   return (
     <AriaComboBox
       {...props}
+      allowsEmptyCollection={props.allowsEmptyCollection ?? true}
       data-slot="combo-box"
       data-size={size}
       className={composeRenderProps(className, (className) =>
@@ -323,11 +325,13 @@ function ComboBoxChevron() {
   );
 }
 
-export function ComboBoxContent({
+export function ComboBoxContent<T extends object>({
   className,
   children,
   ...props
-}: React.ComponentProps<typeof Popover>) {
+}: Omit<React.ComponentProps<typeof Popover>, "children"> & {
+  children?: ReactNode | ((item: T) => ReactNode);
+}) {
   return (
     <Popover
       {...props}

@@ -15,7 +15,6 @@ import { curveLinearClosed } from "d3-shape";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartLegend,
   ChartLegendItem,
@@ -101,7 +100,6 @@ export function ChartRadarMultiple() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Lighthouse scores</ChartTitle>
-        <ChartDescription>Home page, mobile and desktop</ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

@@ -49,27 +49,74 @@ const sheetStack =
 
 const sheetDuration = { enter: 0.32, exit: 0.24, settle: 0.3 } as const;
 
+const scrollEdgeCss =
+  "@keyframes vip-edge-start{from{border-top-color:transparent}to{border-top-color:var(--color-border)}}@keyframes vip-edge-end{from{border-bottom-color:var(--color-border)}to{border-bottom-color:transparent}}@supports (animation-timeline:scroll()){[data-scroll-edges]{animation:vip-edge-start linear both,vip-edge-end linear both;animation-timeline:scroll(self),scroll(self);animation-range:0px 1rem,calc(100% - 1rem) 100%}}";
+
 const sheetCss = `@keyframes vip-sheet-backdrop{from{opacity:0}to{opacity:1}}@keyframes vip-sheet-stack{from{transform:translate(0px,0px) scale(1)}to{transform:${sheetStack}}}[data-sheet-scroll][data-sheet-unsnapped]{scroll-snap-type:none!important}@supports not (animation-timeline:view()){[data-slot=sheet]{transition:transform ${sheetDuration.enter}s cubic-bezier(${easeSheet.join(",")})}[data-slot=sheet][data-has-descendants]{transform:${sheetStack}}}@media (prefers-reduced-motion:reduce){[data-slot=sheet]{transition:none}}`;
 
 const sheetSurfaceStyles = tv({
-  base: "flex max-h-[var(--visual-viewport-height,100dvh)] min-w-0 max-w-full flex-col bg-card text-card-foreground [overflow-wrap:anywhere] shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70 data-[has-descendants]:rounded-xl",
+  base: "flex max-h-[var(--visual-viewport-height,100dvh)] min-w-0 max-w-full flex-col overflow-clip bg-card text-card-foreground [overflow-wrap:anywhere] shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70 data-[has-descendants]:rounded-xl",
   variants: {
     position: {
       bottom:
-        "h-[calc(var(--visual-viewport-height,100dvh)*0.85)] w-full max-w-2xl origin-top overflow-clip rounded-t-xl [--sheet-stack-y:-0.5rem]",
-      top: "max-h-[min(26rem,calc(var(--visual-viewport-height,100dvh)-3.5rem))] w-full max-w-2xl origin-bottom overflow-clip rounded-b-xl [--sheet-stack-y:0.5rem]",
-      left: "h-[var(--visual-viewport-height,100dvh)] w-[min(26rem,calc(100vw-3.5rem))] max-w-[var(--visual-viewport-width,100vw)] origin-right overflow-clip rounded-r-xl [--sheet-stack-scale:0.96] [--sheet-stack-x:0.75rem]",
+        "max-h-[calc(var(--visual-viewport-height,100dvh)-2.5rem)] w-full max-w-(--sheet-edge-size) origin-top rounded-t-xl [--sheet-stack-y:-0.5rem]",
+      top: "max-h-[min(26rem,calc(var(--visual-viewport-height,100dvh)-3.5rem))] w-full max-w-(--sheet-edge-size) origin-bottom rounded-b-xl [--sheet-stack-y:0.5rem]",
+      left: "h-[var(--visual-viewport-height,100dvh)] w-(--sheet-side-size) max-w-[var(--visual-viewport-width,100vw)] origin-right rounded-r-xl [--sheet-stack-scale:0.96] [--sheet-stack-x:0.75rem]",
       right:
-        "h-[var(--visual-viewport-height,100dvh)] w-[min(26rem,calc(100vw-3.5rem))] max-w-[var(--visual-viewport-width,100vw)] origin-left overflow-clip rounded-l-xl [--sheet-stack-scale:0.96] [--sheet-stack-x:-0.75rem]",
+        "h-[var(--visual-viewport-height,100dvh)] w-(--sheet-side-size) max-w-[var(--visual-viewport-width,100vw)] origin-left rounded-l-xl [--sheet-stack-scale:0.96] [--sheet-stack-x:-0.75rem]",
       center:
-        "max-h-[calc(var(--visual-viewport-height,100dvh)-2rem)] w-[calc(100%-2rem)] max-w-md overflow-clip rounded-xl",
+        "max-h-[calc(var(--visual-viewport-height,100dvh)-2rem)] w-[calc(100%-2rem)] max-w-(--sheet-center-size) rounded-xl",
     },
+    size: {
+      sm: "[--sheet-center-size:24rem] [--sheet-edge-size:28rem] [--sheet-side-size:min(20rem,calc(100vw-3.5rem))]",
+      md: "[--sheet-center-size:28rem] [--sheet-edge-size:42rem] [--sheet-side-size:min(26rem,calc(100vw-3.5rem))]",
+      lg: "[--sheet-center-size:36rem] [--sheet-edge-size:56rem] [--sheet-side-size:min(36rem,calc(100vw-3.5rem))]",
+      xl: "[--sheet-center-size:48rem] [--sheet-edge-size:72rem] [--sheet-side-size:min(48rem,calc(100vw-3.5rem))]",
+      full: "rounded-none [--sheet-center-size:100%] [--sheet-edge-size:100%] [--sheet-side-size:100vw]",
+    },
+    inset: { true: "m-2 rounded-xl", false: "" },
   },
-  defaultVariants: { position: "bottom" },
+  compoundVariants: [
+    {
+      size: "full",
+      position: ["top", "bottom", "center"],
+      class:
+        "h-[var(--visual-viewport-height,100dvh)] max-h-[var(--visual-viewport-height,100dvh)]",
+    },
+    { size: "full", position: "center", class: "w-full" },
+    {
+      inset: true,
+      position: ["top", "bottom"],
+      class: "w-[calc(100%-1rem)]",
+    },
+    {
+      inset: true,
+      position: ["left", "right"],
+      class:
+        "h-[calc(var(--visual-viewport-height,100dvh)-1rem)] max-w-[calc(var(--visual-viewport-width,100vw)-1rem)]",
+    },
+    {
+      inset: true,
+      size: "full",
+      position: ["top", "bottom", "center"],
+      class:
+        "h-[calc(var(--visual-viewport-height,100dvh)-1rem)] max-h-[calc(var(--visual-viewport-height,100dvh)-1rem)]",
+    },
+    {
+      inset: true,
+      size: "full",
+      position: "center",
+      class: "w-[calc(100%-1rem)]",
+    },
+  ],
+  defaultVariants: { position: "bottom", size: "md", inset: false },
 });
+
+export type SheetSize = "sm" | "md" | "lg" | "xl" | "full";
 
 interface SheetFrameState {
   position: Position;
+  size: SheetSize;
   axis: Axis;
   before: boolean;
   after: boolean;
@@ -194,13 +241,19 @@ function resumeSnap(scroller: HTMLElement) {
   scroller.removeAttribute("data-sheet-unsnapped");
 }
 
+function viewportSize(content: Element, axis: Axis) {
+  const stage = content.closest('[data-slot="sheet"]')?.parentElement;
+  if (axis === "y") return stage?.clientHeight || window.innerHeight;
+  return stage?.clientWidth || window.innerWidth;
+}
+
 function isOffscreen(content: Element) {
   const rect = content.getBoundingClientRect();
   return (
     rect.right <= 0.5 ||
     rect.bottom <= 0.5 ||
-    rect.left >= window.innerWidth - 0.5 ||
-    rect.top >= window.innerHeight - 0.5
+    rect.left >= viewportSize(content, "x") - 0.5 ||
+    rect.top >= viewportSize(content, "y") - 0.5
   );
 }
 
@@ -208,7 +261,7 @@ function visibleRange(scroller: HTMLElement, axis: Axis) {
   const content = scroller.querySelector("[data-sheet-content]");
   if (!content) return [-Infinity, Infinity];
   const rect = content.getBoundingClientRect();
-  const size = axis === "y" ? window.innerHeight : window.innerWidth;
+  const size = viewportSize(content, axis);
   const scroll = getScroll(scroller, axis);
   const margin = 48;
   return [
@@ -291,7 +344,7 @@ function tweenScroll(
 
 function visiblePercent(content: Element, axis: Axis) {
   const rect = content.getBoundingClientRect();
-  const size = axis === "y" ? window.innerHeight : window.innerWidth;
+  const size = viewportSize(content, axis);
   const start = axis === "y" ? rect.top : rect.left;
   const end = axis === "y" ? rect.bottom : rect.right;
   return Math.round(
@@ -309,6 +362,8 @@ export interface SheetProps
   children: ReactNode;
   className?: AriaSheetProps["className"];
   position?: SheetOverlayProps["position"];
+  size?: SheetSize;
+  inset?: boolean;
   swipeDirection?: SheetOverlayProps["swipeDirection"];
   snapPoints?: SheetOverlayProps["snapPoints"];
   preventDismissal?: boolean;
@@ -321,6 +376,8 @@ export function Sheet({
   children,
   className,
   position = "bottom",
+  size = "md",
+  inset = false,
   swipeDirection,
   snapPoints,
   preventDismissal = false,
@@ -333,6 +390,9 @@ export function Sheet({
     <>
       <style href="vip-sheet" precedence="default">
         {sheetCss}
+      </style>
+      <style href="vip-scroll-edges" precedence="default">
+        {scrollEdgeCss}
       </style>
       <SheetOverlay
         data-slot="sheet-overlay"
@@ -356,15 +416,22 @@ export function Sheet({
         />
         <AriaSheet
           data-slot="sheet"
+          data-size={size}
           stackAnimation="vip-sheet-stack"
           className={composeRenderProps(className, (className, render) =>
-            sheetSurfaceStyles({ position: render.position, className }),
+            sheetSurfaceStyles({
+              position: render.position,
+              size,
+              inset,
+              className,
+            }),
           )}
         >
           {({ position, swipeDirection, isEntering, isExpanded }) => (
             <SheetFrame
               {...props}
               position={position}
+              size={size}
               swipeDirection={swipeDirection}
               isEntering={isEntering}
               isExpanded={isExpanded}
@@ -384,6 +451,7 @@ function SheetFrame({
   children,
   ref,
   position,
+  size,
   swipeDirection,
   isEntering,
   isExpanded,
@@ -394,6 +462,8 @@ function SheetFrame({
   SheetProps,
   | "className"
   | "position"
+  | "size"
+  | "inset"
   | "swipeDirection"
   | "snapPoints"
   | "preventDismissal"
@@ -402,6 +472,7 @@ function SheetFrame({
   | "onOpenChange"
 > & {
   position: Position;
+  size: SheetSize;
   swipeDirection: SwipeDirection;
   isEntering: boolean;
   isExpanded: boolean;
@@ -497,6 +568,7 @@ function SheetFrame({
       <SheetFrameContext.Provider
         value={{
           position,
+          size,
           axis,
           before,
           after,
@@ -733,10 +805,12 @@ export function SheetHeader({
       {...props}
       data-slot="sheet-header"
       className={cn(
-        "shrink-0 px-5 pt-4 *:data-[slot=sheet-close]:-my-2 *:data-[slot=sheet-close]:-me-3",
+        "grid shrink-0 grid-cols-[minmax(0,1fr)_auto] items-start px-5 pt-4 pb-3",
+        "*:data-[slot=sheet-close]:col-start-2 *:data-[slot=sheet-close]:row-start-1 *:data-[slot=sheet-close]:-my-2 *:data-[slot=sheet-close]:ms-4 *:data-[slot=sheet-close]:-me-3 *:data-[slot=sheet-description]:col-span-full",
         (sheet?.position === "top" ||
           sheet?.position === "left" ||
-          sheet?.position === "right") &&
+          sheet?.position === "right" ||
+          sheet?.size === "full") &&
           "pt-[max(1rem,env(safe-area-inset-top))]",
         className,
       )}
@@ -781,8 +855,9 @@ export function SheetBody({
     <div
       {...props}
       data-slot="sheet-body"
+      data-scroll-edges=""
       className={cn(
-        "min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-4",
+        "min-h-0 flex-1 overflow-y-auto overscroll-contain border-y border-transparent px-5 py-2",
         sheet?.hasSnapPoints && !sheet.isExpanded && "overflow-y-hidden",
         className,
       )}
@@ -799,7 +874,7 @@ export function SheetFooter({
       {...props}
       data-slot="sheet-footer"
       className={cn(
-        "flex shrink-0 flex-wrap justify-end gap-2 border-t border-border px-5 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]",
+        "flex shrink-0 flex-col gap-2 px-5 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:flex-row sm:flex-wrap sm:justify-end",
         className,
       )}
     />

@@ -8,25 +8,34 @@ import {
   CheckboxGroupLabel,
 } from "@/components/ui/checkbox-group";
 
-const days = [
-  { id: "mon", label: "Mon" },
-  { id: "tue", label: "Tue" },
-  { id: "wed", label: "Wed" },
-  { id: "thu", label: "Thu" },
-  { id: "fri", label: "Fri" },
+const addOns = [
+  {
+    id: "backups",
+    label: "Daily backups",
+    description: "30 days of snapshots.",
+  },
+  {
+    id: "support",
+    label: "Priority support",
+    description: "Replies in 1 hour.",
+  },
+  { id: "sso", label: "Single sign-on", description: "SAML and OIDC." },
+  { id: "audit", label: "Audit log", description: "Export every event." },
 ];
 
 export function CheckboxGroupLayoutDemo() {
   return (
-    <CheckboxGroup
-      defaultValue={["mon", "wed", "fri"]}
-      className="w-full max-w-sm"
-    >
-      <CheckboxGroupLabel>Backup days</CheckboxGroupLabel>
-      <CheckboxGroupItems className="flex-row flex-wrap gap-x-5">
-        {days.map((day) => (
-          <Checkbox key={day.id} value={day.id}>
-            {day.label}
+    <CheckboxGroup defaultValue={["backups"]} className="w-full max-w-md">
+      <CheckboxGroupLabel>Add-ons</CheckboxGroupLabel>
+      <CheckboxGroupItems className="grid gap-2 sm:grid-cols-2">
+        {addOns.map((addOn) => (
+          <Checkbox
+            key={addOn.id}
+            value={addOn.id}
+            variant="card"
+            description={addOn.description}
+          >
+            {addOn.label}
           </Checkbox>
         ))}
       </CheckboxGroupItems>

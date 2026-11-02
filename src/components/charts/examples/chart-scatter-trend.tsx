@@ -7,7 +7,6 @@ import { tooltip } from "@tanstack/charts/tooltip";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartLegend,
   ChartLegendItem,
@@ -110,9 +109,6 @@ export function ChartScatterTrend() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Ad spend and signups</ChartTitle>
-        <ChartDescription>
-          Paid search, July to September, with a linear trend
-        </ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

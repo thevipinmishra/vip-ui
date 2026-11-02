@@ -15,7 +15,7 @@
       "path": "src/components/ui/context-menu.tsx",
       "type": "registry:file",
       "target": "@components/vip-ui/context-menu.tsx",
-      "content": "\"use client\";\n\nimport {\n  MenuTrigger as AriaMenuTrigger,\n  type MenuTriggerProps,\n} from \"react-aria-components\";\n\nexport {\n  Menu as ContextMenu,\n  MenuContent as ContextMenuContent,\n  MenuItem as ContextMenuItem,\n  MenuPopover as ContextMenuPopover,\n  MenuSeparator as ContextMenuSeparator,\n} from \"./menu\";\n\nexport function ContextMenuTrigger(props: Omit<MenuTriggerProps, \"trigger\">) {\n  return <AriaMenuTrigger {...props} trigger=\"contextMenu\" />;\n}\n"
+      "content": "\"use client\";\n\nimport {\n  MenuTrigger as AriaMenuTrigger,\n  type MenuTriggerProps,\n} from \"react-aria-components\";\n\nexport {\n  Menu as ContextMenu,\n  MenuContent as ContextMenuContent,\n  MenuItem as ContextMenuItem,\n  MenuPopover as ContextMenuPopover,\n  MenuSection as ContextMenuSection,\n  MenuSeparator as ContextMenuSeparator,\n} from \"./menu\";\n\nexport function ContextMenuTrigger(props: Omit<MenuTriggerProps, \"trigger\">) {\n  return <AriaMenuTrigger {...props} trigger=\"contextMenu\" />;\n}\n"
     }
   ]
 }

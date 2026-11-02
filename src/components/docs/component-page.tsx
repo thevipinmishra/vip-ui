@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import type { ReactNode } from "react";
-import { getComponent, getNeighbors } from "@/lib/catalog";
+import { Fragment, type ReactNode } from "react";
+import { componentName, getComponent, getNeighbors } from "@/lib/catalog";
 import { componentApi } from "@/lib/component-api";
 import {
   type ComponentExampleMetadata,
@@ -152,9 +152,11 @@ export async function ComponentPage({
           className="mt-14 scroll-mt-24"
         >
           <SectionHeading title={example.title} />
-          {example.description && (
-            <p className="mb-5 max-w-[670px] text-sm leading-7 text-muted-foreground">
+          {(example.description || example.uses) && (
+            <p className="-mt-2 mb-5 max-w-[670px] text-sm leading-6 text-muted-foreground">
               {example.description}
+              {example.description && example.uses && " "}
+              {example.uses && <ExampleUses slugs={example.uses} />}
             </p>
           )}
           <PreviewPanel
@@ -199,6 +201,28 @@ export async function ComponentPage({
         }
       />
     </article>
+  );
+}
+
+function ExampleUses({ slugs }: { slugs: readonly string[] }) {
+  return (
+    <>
+      Also install{" "}
+      {slugs.map((slug, index) => {
+        const component = getComponent(slug);
+        return (
+          <Fragment key={slug}>
+            {index > 0 && (index === slugs.length - 1 ? " and " : ", ")}
+            {component ? (
+              <TextLink href={`/components/${slug}`}>{component.name}</TextLink>
+            ) : (
+              componentName(slug)
+            )}
+          </Fragment>
+        );
+      })}
+      .
+    </>
   );
 }
 

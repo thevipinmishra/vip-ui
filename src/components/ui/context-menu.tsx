@@ -10,6 +10,7 @@ export {
   MenuContent as ContextMenuContent,
   MenuItem as ContextMenuItem,
   MenuPopover as ContextMenuPopover,
+  MenuSection as ContextMenuSection,
   MenuSeparator as ContextMenuSeparator,
 } from "./menu";
 
