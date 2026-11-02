@@ -11,7 +11,9 @@ import { AvatarBasicDemo } from "@/components/docs/avatar-basic-demo";
 import { AvatarDemo } from "@/components/docs/avatar-demo";
 import { AvatarFallbackDemo } from "@/components/docs/avatar-fallback-demo";
 import { AvatarSizesDemo } from "@/components/docs/avatar-sizes-demo";
+import { BreadcrumbsCollapsedDemo } from "@/components/docs/breadcrumbs-collapsed-demo";
 import { BreadcrumbsDemo } from "@/components/docs/breadcrumbs-demo";
+import { BreadcrumbsFoldersDemo } from "@/components/docs/breadcrumbs-folders-demo";
 import { ButtonGroupBasicDemo } from "@/components/docs/button-group-basic-demo";
 import { ButtonGroupDemo } from "@/components/docs/button-group-demo";
 import { ButtonGroupOrientationsDemo } from "@/components/docs/button-group-orientations-demo";
@@ -22,6 +24,8 @@ import { CalendarUnavailableDemo } from "@/components/docs/calendar-unavailable-
 import { CardActionDemo } from "@/components/docs/card-action-demo";
 import { CardBasicDemo } from "@/components/docs/card-basic-demo";
 import { CardDemo } from "@/components/docs/card-demo";
+import { CardLinkDemo } from "@/components/docs/card-link-demo";
+import { CardMediaDemo } from "@/components/docs/card-media-demo";
 import { CheckboxGroupDemo } from "@/components/docs/checkbox-group-demo";
 import { CheckboxGroupDisabledDemo } from "@/components/docs/checkbox-group-disabled-demo";
 import { CheckboxGroupHorizontalDemo } from "@/components/docs/checkbox-group-horizontal-demo";
@@ -48,6 +52,7 @@ import {
 } from "@/components/docs/component-page";
 import { DataTableColumnFiltersDemo } from "@/components/docs/data-table-column-filters-demo";
 import { DataTableDemo } from "@/components/docs/data-table-demo";
+import { DataTableResizableDemo } from "@/components/docs/data-table-resizable-demo";
 import { DateFieldDemo } from "@/components/docs/date-field-demo";
 import { DateFieldDisabledDemo } from "@/components/docs/date-field-disabled-demo";
 import { DateFieldLimitsDemo } from "@/components/docs/date-field-limits-demo";
@@ -102,11 +107,13 @@ import { MarqueeSpeedDemo } from "@/components/docs/marquee-speed-demo";
 import { MeterBasicDemo } from "@/components/docs/meter-basic-demo";
 import { MeterDemo } from "@/components/docs/meter-demo";
 import { NumberFieldBasicDemo } from "@/components/docs/number-field-basic-demo";
+import { NumberFieldCompositionDemo } from "@/components/docs/number-field-composition-demo";
 import { NumberFieldCurrencyDemo } from "@/components/docs/number-field-currency-demo";
 import { NumberFieldDemo } from "@/components/docs/number-field-demo";
 import { NumberFieldDisabledDemo } from "@/components/docs/number-field-disabled-demo";
 import { NumberFieldLimitsDemo } from "@/components/docs/number-field-limits-demo";
 import { NumberFieldSizesDemo } from "@/components/docs/number-field-sizes-demo";
+import { NumberFieldStackedDemo } from "@/components/docs/number-field-stacked-demo";
 import { PaginationBasicDemo } from "@/components/docs/pagination-basic-demo";
 import { PaginationDemo } from "@/components/docs/pagination-demo";
 import { PaginationSizesDemo } from "@/components/docs/pagination-sizes-demo";
@@ -158,21 +165,32 @@ import { SkeletonLoadingDemo } from "@/components/docs/skeleton-loading-demo";
 import { SourceLinkDemo } from "@/components/docs/source-link-demo";
 import { SourceLinkListDemo } from "@/components/docs/source-link-list-demo";
 import { SpinnerBasicDemo } from "@/components/docs/spinner-basic-demo";
+import { SpinnerColorDemo } from "@/components/docs/spinner-color-demo";
 import { SpinnerDemo } from "@/components/docs/spinner-demo";
+import { SpinnerOverlayDemo } from "@/components/docs/spinner-overlay-demo";
 import { SpinnerSizesDemo } from "@/components/docs/spinner-sizes-demo";
 import { SpinnerUsageDemo } from "@/components/docs/spinner-usage-demo";
 import { StaggerGroupBasicDemo } from "@/components/docs/stagger-group-basic-demo";
 import { StaggerGroupDemo } from "@/components/docs/stagger-group-demo";
 import { StaggerGroupTimingDemo } from "@/components/docs/stagger-group-timing-demo";
 import { StatDemo } from "@/components/docs/stat-demo";
+import { StatGroupDemo } from "@/components/docs/stat-group-demo";
+import { StatLiveDemo } from "@/components/docs/stat-live-demo";
 import { StatTrendDemo } from "@/components/docs/stat-trend-demo";
 import { StepperBasicDemo } from "@/components/docs/stepper-basic-demo";
 import { StepperDemo } from "@/components/docs/stepper-demo";
 import { TableBasicDemo } from "@/components/docs/table-basic-demo";
 import { TableDemo } from "@/components/docs/table-demo";
+import { TableExpandableDemo } from "@/components/docs/table-expandable-demo";
 import { TableFilterDemo } from "@/components/docs/table-filter-demo";
+import { TableFooterDemo } from "@/components/docs/table-footer-demo";
+import { TableLoadMoreDemo } from "@/components/docs/table-load-more-demo";
+import { TableReorderDemo } from "@/components/docs/table-reorder-demo";
+import { TableResizableDemo } from "@/components/docs/table-resizable-demo";
 import { TableSortingDemo } from "@/components/docs/table-sorting-demo";
 import { TagGroupDemo } from "@/components/docs/tag-group-demo";
+import { TagGroupLinksDemo } from "@/components/docs/tag-group-links-demo";
+import { TagGroupSelectionDemo } from "@/components/docs/tag-group-selection-demo";
 import { TagGroupSizesDemo } from "@/components/docs/tag-group-sizes-demo";
 import { TextRevealBasicDemo } from "@/components/docs/text-reveal-basic-demo";
 import { TextRevealCharactersDemo } from "@/components/docs/text-reveal-characters-demo";
@@ -188,6 +206,8 @@ import { TimeFieldDisabledDemo } from "@/components/docs/time-field-disabled-dem
 import { TimeFieldLimitsDemo } from "@/components/docs/time-field-limits-demo";
 import { TimeFieldSizesDemo } from "@/components/docs/time-field-sizes-demo";
 import { TimelineDemo } from "@/components/docs/timeline-demo";
+import { TimelineIconsDemo } from "@/components/docs/timeline-icons-demo";
+import { TimelineProcessDemo } from "@/components/docs/timeline-process-demo";
 import { ToggleButtonDemo } from "@/components/docs/toggle-button-demo";
 import { ToggleButtonGroupDemo } from "@/components/docs/toggle-button-group-demo";
 import { ToggleButtonGroupEditorDemo } from "@/components/docs/toggle-button-group-editor-demo";
@@ -207,6 +227,9 @@ import { ToolbarSizesDemo } from "@/components/docs/toolbar-sizes-demo";
 import { ToolbarVerticalDemo } from "@/components/docs/toolbar-vertical-demo";
 import { TreeBasicDemo } from "@/components/docs/tree-basic-demo";
 import { TreeDemo } from "@/components/docs/tree-demo";
+import { TreeDragDemo } from "@/components/docs/tree-drag-demo";
+import { TreeSectionsDemo } from "@/components/docs/tree-sections-demo";
+import { TreeSelectionDemo } from "@/components/docs/tree-selection-demo";
 import { componentDescription } from "@/lib/catalog";
 import { getComponentPageData } from "@/lib/component-examples";
 
@@ -603,6 +626,14 @@ const basicPreviews: Record<string, { demo: ReactNode; source: string }> = {
 };
 
 const examplePreviews: Record<string, ReactNode[]> = {
+  timeline: [
+    <TimelineProcessDemo key="preview-1" />,
+    <TimelineIconsDemo key="preview-2" />,
+  ],
+  breadcrumbs: [
+    <BreadcrumbsFoldersDemo key="preview-1" />,
+    <BreadcrumbsCollapsedDemo key="preview-2" />,
+  ],
   "agent-status": [<AgentStatusStatesDemo key="preview-1" />],
   "tool-call": [
     <ToolCallStatesDemo key="preview-1" />,
@@ -618,7 +649,12 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <AvatarFallbackDemo key="preview-2" />,
     <AvatarDemo key="preview-3" />,
   ],
-  card: [<CardActionDemo key="preview-1" />, <CardDemo key="preview-2" />],
+  card: [
+    <CardActionDemo key="preview-1" />,
+    <CardDemo key="preview-2" />,
+    <CardMediaDemo key="preview-3" />,
+    <CardLinkDemo key="preview-4" />,
+  ],
   "description-list": [<DescriptionListComponentsDemo key="preview-1" />],
   "kbd-code": [
     <KbdCodeGroupDemo key="preview-1" />,
@@ -629,7 +665,11 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <SkeletonLoadingDemo key="preview-2" />,
   ],
   separator: [<SeparatorVerticalDemo key="preview-1" />],
-  stat: [<StatTrendDemo key="preview-1" />],
+  stat: [
+    <StatTrendDemo key="preview-1" />,
+    <StatGroupDemo key="preview-2" />,
+    <StatLiveDemo key="preview-3" />,
+  ],
   "text-swap": [<TextSwapButtonDemo key="preview-1" />],
   "text-reveal": [
     <TextRevealCharactersDemo key="preview-1" />,
@@ -696,7 +736,10 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <DatePickerControlledDemo key="preview-4" />,
     <DatePickerSizesDemo key="preview-5" />,
   ],
-  "data-table": [<DataTableColumnFiltersDemo key="preview-1" />],
+  "data-table": [
+    <DataTableColumnFiltersDemo key="preview-1" />,
+    <DataTableResizableDemo key="preview-2" />,
+  ],
   "password-strength-meter": [
     <PasswordStrengthMeterFieldDemo key="preview-1" />,
   ],
@@ -727,8 +770,10 @@ const examplePreviews: Record<string, ReactNode[]> = {
   "number-field": [
     <NumberFieldLimitsDemo key="preview-1" />,
     <NumberFieldCurrencyDemo key="preview-2" />,
-    <NumberFieldDisabledDemo key="preview-3" />,
-    <NumberFieldSizesDemo key="preview-4" />,
+    <NumberFieldStackedDemo key="preview-3" />,
+    <NumberFieldCompositionDemo key="preview-4" />,
+    <NumberFieldDisabledDemo key="preview-5" />,
+    <NumberFieldSizesDemo key="preview-6" />,
   ],
   "inline-edit": [
     <InlineEditDisabledDemo key="preview-1" />,
@@ -744,7 +789,11 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <PaginationDemo key="preview-1" />,
     <PaginationSizesDemo key="preview-2" />,
   ],
-  "tag-group": [<TagGroupSizesDemo key="preview-1" />],
+  "tag-group": [
+    <TagGroupSelectionDemo key="preview-1" />,
+    <TagGroupLinksDemo key="preview-2" />,
+    <TagGroupSizesDemo key="preview-3" />,
+  ],
   popover: [
     <PopoverPlacementDemo key="preview-1" />,
     <PopoverFormDemo key="preview-2" />,
@@ -784,13 +833,20 @@ const examplePreviews: Record<string, ReactNode[]> = {
   spinner: [
     <SpinnerDemo key="preview-1" />,
     <SpinnerSizesDemo key="preview-2" />,
-    <SpinnerUsageDemo key="preview-3" />,
+    <SpinnerColorDemo key="preview-3" />,
+    <SpinnerUsageDemo key="preview-4" />,
+    <SpinnerOverlayDemo key="preview-5" />,
   ],
   stepper: [<StepperDemo key="preview-1" />],
   table: [
     <TableDemo key="preview-1" />,
     <TableSortingDemo key="preview-2" />,
     <TableFilterDemo key="preview-3" />,
+    <TableResizableDemo key="preview-4" />,
+    <TableExpandableDemo key="preview-5" />,
+    <TableReorderDemo key="preview-6" />,
+    <TableLoadMoreDemo key="preview-7" />,
+    <TableFooterDemo key="preview-8" />,
   ],
   "toggle-button": [
     <ToggleButtonIndependentDemo key="preview-1" />,
@@ -816,7 +872,12 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <TimeFieldDisabledDemo key="preview-3" />,
     <TimeFieldSizesDemo key="preview-4" />,
   ],
-  tree: [<TreeDemo key="preview-1" />],
+  tree: [
+    <TreeDemo key="preview-1" />,
+    <TreeSelectionDemo key="preview-2" />,
+    <TreeSectionsDemo key="preview-3" />,
+    <TreeDragDemo key="preview-4" />,
+  ],
 };
 
 export function generateStaticParams() {

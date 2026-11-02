@@ -377,9 +377,45 @@ export const compositions: Record<string, Composition> = {
             children: [
               { part: "InputGroupInput", note: "Use it in TextField." },
               { part: "InputGroupTextArea", note: "Use it in TextArea." },
-              { part: "InputGroupAddon" },
+              {
+                part: "InputGroupAddon",
+                repeats: true,
+                children: [
+                  {
+                    part: "InputGroupButton",
+                    optional: true,
+                    note: "Fits inside the field edge at each size.",
+                  },
+                ],
+              },
             ],
           },
+        ],
+      },
+    ],
+  },
+  "number-field": {
+    parts: [
+      {
+        part: "NumberField",
+        note: "Owns the value, limits, step, and number format.",
+        children: [
+          { part: "NumberFieldLabel" },
+          {
+            part: "NumberFieldGroup",
+            children: [
+              { part: "NumberFieldDecrement", optional: true },
+              { part: "NumberFieldInput" },
+              { part: "NumberFieldIncrement", optional: true },
+              {
+                part: "NumberFieldSteppers",
+                optional: true,
+                note: "Stacks both step buttons. Use it in place of NumberFieldDecrement and NumberFieldIncrement.",
+              },
+            ],
+          },
+          { part: "NumberFieldDescription", optional: true },
+          { part: "NumberFieldError" },
         ],
       },
     ],
@@ -391,8 +427,18 @@ export const compositions: Record<string, Composition> = {
         note: "Owns the search and selected value.",
         children: [
           { part: "ComboBoxLabel" },
-          { part: "ComboBoxInput" },
-          { part: "ComboBoxTrigger" },
+          {
+            part: "ComboBoxControl",
+            children: [
+              {
+                part: "ComboBoxIcon",
+                optional: true,
+                note: "The input moves its text to make room for the icon.",
+              },
+              { part: "ComboBoxInput" },
+              { part: "ComboBoxTrigger" },
+            ],
+          },
           {
             part: "ComboBoxTags",
             note: "Use it in multiple selection mode. The default layout includes it.",
@@ -504,6 +550,11 @@ export const compositions: Record<string, Composition> = {
                 repeats: true,
                 note: "The last one is the current page. It shows as text.",
               },
+              {
+                part: "BreadcrumbItem",
+                optional: true,
+                note: "Holds content that is not a link, such as a menu trigger.",
+              },
             ],
           },
         ],
@@ -595,6 +646,8 @@ export const compositions: Record<string, Composition> = {
               },
             ],
           },
+          { part: "TagGroupDescription", optional: true },
+          { part: "TagGroupError", optional: true },
         ],
       },
     ],
@@ -602,48 +655,104 @@ export const compositions: Record<string, Composition> = {
   table: {
     parts: [
       {
-        part: "Table",
-        note: "Owns selection and sorting. Put it in an element with overflow-x-auto to let it scroll on small screens.",
+        part: "TableContainer",
+        optional: true,
+        note: "Scrolls the table and keeps the header in view. Column resizing needs it.",
         children: [
           {
-            part: "TableHeader",
+            part: "Table",
+            note: "Owns selection, sorting, expanded rows, and drag and drop.",
             children: [
               {
-                part: "Column",
-                repeats: true,
-                note: "Set isRowHeader on the column that names each row.",
-              },
-            ],
-          },
-          {
-            part: "TableBody",
-            children: [
-              {
-                part: "Row",
-                repeats: true,
+                part: "TableHeader",
+                note: "Adds the select-all and drag columns when the table needs them.",
                 children: [
                   {
-                    part: "Cell",
+                    part: "Column",
                     repeats: true,
-                    note: "Its text stays on one line. Add whitespace-normal to let it wrap.",
+                    note: "Set isRowHeader on the column that names each row.",
+                    children: [{ part: "ColumnResizer", optional: true }],
                   },
                 ],
+              },
+              {
+                part: "TableBody",
+                children: [
+                  {
+                    part: "Row",
+                    repeats: true,
+                    note: "Adds the checkbox and drag handle cells. Put child rows after the cells to make the row expandable.",
+                    children: [
+                      {
+                        part: "Cell",
+                        repeats: true,
+                        note: "Its text stays on one line. Add whitespace-normal to let it wrap.",
+                      },
+                    ],
+                  },
+                  { part: "TableLoadMoreItem", optional: true },
+                ],
+              },
+              {
+                part: "TableFooter",
+                optional: true,
+                children: [{ part: "Row", repeats: true }],
               },
             ],
           },
         ],
       },
     ],
+    helper: {
+      part: "TableDropIndicator",
+      note: "Return it from renderDropIndicator in useDragAndDrop.",
+    },
+  },
+  tree: {
+    parts: [
+      {
+        part: "Tree",
+        note: "Owns selection, expanded rows, and drag and drop.",
+        children: [
+          {
+            part: "TreeSection",
+            optional: true,
+            repeats: true,
+            children: [{ part: "TreeHeader" }],
+          },
+          {
+            part: "TreeItem",
+            repeats: true,
+            note: "Put child TreeItem elements inside it to make it expandable.",
+          },
+          { part: "TreeLoadMoreItem", optional: true },
+        ],
+      },
+    ],
+    helper: {
+      part: "TreeDropIndicator",
+      note: "Return it from renderDropIndicator in useDragAndDrop.",
+    },
   },
   card: {
     parts: [
       {
         part: "Card",
         children: [
+          { part: "CardMedia", optional: true },
           {
             part: "CardHeader",
             children: [
-              { part: "CardTitle" },
+              {
+                part: "CardTitle",
+                children: [
+                  {
+                    part: "CardLink",
+                    optional: true,
+                    note: "Makes the whole card open the link.",
+                  },
+                ],
+              },
               { part: "CardDescription" },
               { part: "CardAction", optional: true },
             ],
@@ -669,11 +778,23 @@ export const compositions: Record<string, Composition> = {
   stat: {
     parts: [
       {
-        part: "Stat",
+        part: "StatGroup",
+        optional: true,
         children: [
-          { part: "StatLabel" },
-          { part: "StatValue" },
-          { part: "StatDetail", optional: true },
+          {
+            part: "Stat",
+            repeats: true,
+            children: [
+              { part: "StatIcon", optional: true },
+              { part: "StatLabel" },
+              { part: "StatValue" },
+              {
+                part: "StatDetail",
+                optional: true,
+                children: [{ part: "StatTrend", optional: true }],
+              },
+            ],
+          },
         ],
       },
     ],
