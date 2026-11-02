@@ -84,7 +84,10 @@ import type {
 import type { ToggleButton } from "@/components/ui/toggle-button";
 import type { ToggleButtonGroup } from "@/components/ui/toggle-button-group";
 import type { TokenField } from "@/components/ui/token-field";
-import type { ToolCallTrigger } from "@/components/ui/tool-call";
+import type {
+  ToolCallSection,
+  ToolCallTrigger,
+} from "@/components/ui/tool-call";
 import type { Toolbar } from "@/components/ui/toolbar";
 import type { TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import type { TreeItem } from "@/components/ui/tree";
@@ -288,7 +291,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: "string | number",
           required: true,
           description:
-            "Change it with the content to crossfade the content and animate the height. Other size changes, such as a window resize, do not animate.",
+            "Change it with the content to crossfade the content and animate the size. The width animates only when the morph fits its content, such as with w-fit. Other size changes, such as a window resize, do not animate.",
         },
       ],
     }),
@@ -445,7 +448,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           name: "progress",
           type: "number",
           description:
-            "Upload percentage from 0 to 100. Without it, the progress bar is indeterminate.",
+            "Upload percentage from 0 to 100. The status text shows it. Without it, the progress bar is indeterminate.",
         },
         {
           name: "errorMessage",
@@ -722,12 +725,23 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: '"running" | "complete" | "error"',
           required: true,
           description:
-            "Sets the icon and the status text. Running animates unless reduced motion is on. Screen readers announce changes.",
+            "Sets the icon and the status text. A change crossfades both. Running pulses unless reduced motion is on. Screen readers announce changes.",
         },
         {
           name: "summary",
           type: "string",
           description: "Short text below the name.",
+        },
+      ],
+    }),
+    apiPart<typeof ToolCallSection>({
+      name: "ToolCallSection",
+      props: [
+        {
+          name: "label",
+          type: "string",
+          required: true,
+          description: "Heading above the section, such as Input or Output.",
         },
       ],
     }),
@@ -934,10 +948,16 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           description: "The saved value at first, uncontrolled.",
         },
         {
+          name: "placeholder",
+          type: "string",
+          default: '"Not set"',
+          description: "Text shown when the value is empty.",
+        },
+        {
           name: "onSave",
           type: "(value: string) => void | Promise<void>",
           description:
-            "Called when you save a changed value. If it throws, the editor stays open and shows the error message. When controlled, update value here.",
+            "Called when you save a changed value. While its promise is pending, the save button shows a spinner. If it throws, the editor stays open and shows the error message. When controlled, update value here.",
         },
         {
           name: "isDisabled",
@@ -1270,6 +1290,19 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: "string",
           description:
             "Text that search matches. Without it, search uses the text children. Set it when the item has an icon or other elements.",
+        },
+        {
+          name: "shortcut",
+          type: "string",
+          description:
+            "A key hint at the end of the item. Screen readers hear it as the item description. It does not add a key handler.",
+        },
+        {
+          name: "variant",
+          type: '"default" | "destructive"',
+          default: '"default"',
+          description:
+            "Destructive colors the item for actions you cannot undo.",
         },
       ],
     }),
@@ -1718,6 +1751,24 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           description: "Sets the colors and the icon.",
         },
         {
+          name: "action",
+          type: "ReactNode",
+          description:
+            "Controls after the text, such as a button. Works with title.",
+        },
+        {
+          name: "onDismiss",
+          type: "() => void",
+          description:
+            "Shows a close button. Remove the alert in this function.",
+        },
+        {
+          name: "dismissLabel",
+          type: "string",
+          default: '"Dismiss"',
+          description: "Accessible name of the close button.",
+        },
+        {
           name: "children",
           type: "ReactNode",
           description:
@@ -1786,6 +1837,13 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: "boolean",
           description:
             "Makes the button a square for one icon. The default is true without children and false with children.",
+        },
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"sm" without children, "md" with children',
+          description:
+            "The Button size. An icon-only close button uses sm to stay compact.",
         },
       ],
     }),
@@ -1942,6 +2000,13 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: "boolean",
           description:
             "Makes the button a square for one icon. The default is true without children and false with children.",
+        },
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"sm" without children, "md" with children',
+          description:
+            "The Button size. An icon-only close button uses sm to stay compact.",
         },
       ],
     }),

@@ -17,7 +17,20 @@ export const compositions: Record<string, Composition> = {
       {
         part: "ToolCall",
         note: "Owns the expanded state. Accepts isExpanded, defaultExpanded, and onExpandedChange.",
-        children: [{ part: "ToolCallTrigger" }, { part: "ToolCallPanel" }],
+        children: [
+          { part: "ToolCallTrigger" },
+          {
+            part: "ToolCallPanel",
+            children: [
+              {
+                part: "ToolCallSection",
+                optional: true,
+                repeats: true,
+                children: [{ part: "ToolCallCode", optional: true }],
+              },
+            ],
+          },
+        ],
       },
     ],
   },
@@ -121,6 +134,8 @@ export const compositions: Record<string, Composition> = {
           { part: "AlertIcon" },
           { part: "AlertTitle" },
           { part: "AlertDescription" },
+          { part: "AlertAction", optional: true },
+          { part: "AlertDismiss", optional: true },
         ],
       },
     ],
@@ -753,7 +768,9 @@ export const compositions: Record<string, Composition> = {
       {
         part: "DropZone",
         children: [
+          { part: "DropZoneIcon", optional: true },
           { part: "DropZoneLabel" },
+          { part: "DropZoneDescription", optional: true },
           {
             part: "FileTrigger",
             optional: true,
