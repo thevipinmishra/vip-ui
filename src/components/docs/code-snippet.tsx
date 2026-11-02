@@ -32,10 +32,12 @@ export async function CodeSnippet({
           {lightTokens.map((line, lineIndex) => (
             <span
               className="line"
+              // biome-ignore lint/suspicious/noArrayIndexKey: shiki token positions are static for a given snippet
               key={`${lineIndex}-${line.map((token) => token.content).join("")}`}
             >
               {line.map((token, tokenIndex) => (
                 <span
+                  // biome-ignore lint/suspicious/noArrayIndexKey: shiki token positions are static for a given snippet
                   key={`${tokenIndex}-${token.content}`}
                   style={
                     {

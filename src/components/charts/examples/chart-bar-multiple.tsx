@@ -7,7 +7,6 @@ import { tooltip } from "@tanstack/charts/tooltip";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartLegend,
   ChartLegendItem,
@@ -116,7 +115,6 @@ export function ChartBarMultiple() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Revenue, year over year</ChartTitle>
-        <ChartDescription>January to September, 2025 and 2026</ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

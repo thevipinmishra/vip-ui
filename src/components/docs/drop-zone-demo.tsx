@@ -45,6 +45,7 @@ export function DropZoneDemo() {
         className="grid gap-1 text-sm text-muted-foreground"
       >
         {files.map((file, index) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: duplicate file names need the position to stay unique
           <li key={`${file.name}-${index}`} className="truncate">
             {file.name}
           </li>

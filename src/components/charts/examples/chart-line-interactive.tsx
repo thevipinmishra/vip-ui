@@ -9,7 +9,6 @@ import {
   Chart,
   ChartAction,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartLegend,
   ChartLegendItem,
@@ -123,9 +122,6 @@ export function ChartLineInteractive() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>First reply time</ChartTitle>
-        <ChartDescription>
-          Median hours to the first reply, by day
-        </ChartDescription>
       </ChartCaption>
       <ChartAction>
         <ToggleButton

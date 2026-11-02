@@ -6,7 +6,6 @@ import { tooltip } from "@tanstack/charts/tooltip";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartLegend,
   ChartLegendItem,
@@ -76,7 +75,6 @@ export function ChartPieDefault() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Browsers</ChartTitle>
-        <ChartDescription>Visitors by browser, last 30 days</ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

@@ -84,7 +84,6 @@ export function ChartPieDonut() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Subscriptions</ChartTitle>
-        <ChartDescription>Active subscriptions by plan</ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

@@ -7,7 +7,6 @@ import { tooltip } from "@tanstack/charts/tooltip";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartTable,
   ChartTitle,
@@ -99,7 +98,6 @@ export function ChartBarDefault() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Monthly revenue</ChartTitle>
-        <ChartDescription>October 2025 to September 2026</ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

@@ -6,7 +6,6 @@ import { tooltip } from "@tanstack/charts/tooltip";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartLegend,
   ChartLegendItem,
@@ -34,7 +33,6 @@ const rows = deploysPerDay.map((deploys, index) => ({
 }));
 
 const weeks = [...new Set(rows.map((row) => row.week))];
-const total = deploysPerDay.reduce((sum, deploys) => sum + deploys, 0);
 
 const levels = [
   { label: "0", max: 0, color: "var(--muted)" },
@@ -124,9 +122,6 @@ export function ChartHeatmapCalendar() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Deploys</ChartTitle>
-        <ChartDescription>
-          {total} production deploys in the last {weeks.length} weeks
-        </ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}
