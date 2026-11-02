@@ -21,7 +21,7 @@ export function EmptyStateIcon({ className, ...props }: ComponentProps<"div">) {
       aria-hidden="true"
       data-slot="empty-state-icon"
       className={cn(
-        "grid size-11 shrink-0 place-items-center rounded-lg bg-accent text-accent-foreground [&_svg:not([class*='size-'])]:size-5",
+        "mb-1 grid size-12 shrink-0 place-items-center rounded-xl bg-card text-foreground/80 shadow-[var(--shadow-card)] ring-1 ring-border forced-colors:border [&_svg:not([class*='size-'])]:size-6",
         className,
       )}
     />
@@ -53,7 +53,7 @@ export function EmptyStateDescription({
     <p
       data-slot="empty-state-description"
       className={cn(
-        "max-w-sm text-sm leading-6 text-muted-foreground [overflow-wrap:anywhere] [text-wrap:pretty]",
+        "-mt-1.5 max-w-sm text-sm leading-6 text-muted-foreground [overflow-wrap:anywhere] [text-wrap:pretty]",
         className,
       )}
       {...props}

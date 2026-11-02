@@ -13,7 +13,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { DropZone, DropZoneLabel } from "@/components/ui/drop-zone";
+import {
+  DropZone,
+  DropZoneDescription,
+  DropZoneIcon,
+  DropZoneLabel,
+} from "@/components/ui/drop-zone";
 import { FileTrigger } from "@/components/ui/file-trigger";
 
 const acceptedTypes = ["image/png", "image/jpeg", "application/pdf"];
@@ -124,13 +129,13 @@ export function FileUpload() {
           }}
           className="min-h-48"
         >
-          <span className="grid size-12 place-items-center rounded-full bg-accent text-accent-foreground">
-            <CloudArrowUpIcon size={24} aria-hidden="true" />
-          </span>
+          <DropZoneIcon className="size-12 rounded-full">
+            <CloudArrowUpIcon size={24} />
+          </DropZoneIcon>
           <DropZoneLabel>Drop files here</DropZoneLabel>
-          <p className="text-xs text-muted-foreground">
+          <DropZoneDescription>
             PNG, JPEG, or PDF up to 10 MB each
-          </p>
+          </DropZoneDescription>
           <FileTrigger
             acceptedFileTypes={acceptedTypes}
             allowsMultiple

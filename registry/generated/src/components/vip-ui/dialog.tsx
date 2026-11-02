@@ -153,7 +153,7 @@ export function DialogHeader({
       data-slot="dialog-header"
       className={cn(
         "grid shrink-0 grid-cols-[minmax(0,1fr)_auto] items-start",
-        "*:data-[slot=dialog-close]:col-start-2 *:data-[slot=dialog-close]:row-start-1 *:data-[slot=dialog-close]:-my-2 *:data-[slot=dialog-close]:ms-4 *:data-[slot=dialog-close]:-me-3 *:data-[slot=dialog-description]:col-span-full",
+        "*:data-[slot=dialog-close]:col-start-2 *:data-[slot=dialog-close]:row-start-1 *:data-[slot=dialog-close]:-my-1 *:data-[slot=dialog-close]:ms-4 *:data-[slot=dialog-close]:-me-2 *:data-[slot=dialog-description]:col-span-full",
         className,
       )}
     />
@@ -230,15 +230,20 @@ export function DialogClose({
   className,
   children,
   onPress,
+  variant,
+  size,
+  iconOnly,
   ...props
 }: ButtonProps) {
   const close = useContext(CloseContext);
+  const isIconOnly = iconOnly ?? !children;
   return (
     <Button
       {...props}
       data-slot="dialog-close"
-      variant={props.variant ?? "ghost"}
-      iconOnly={props.iconOnly ?? !children}
+      variant={variant ?? "ghost"}
+      size={size ?? (isIconOnly ? "sm" : "md")}
+      iconOnly={isIconOnly}
       aria-label={
         props["aria-label"] ?? (children ? undefined : "Close dialog")
       }

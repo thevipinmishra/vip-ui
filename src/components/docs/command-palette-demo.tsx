@@ -5,6 +5,7 @@ import {
   GearSixIcon,
   MagnifyingGlassIcon,
   MoonIcon,
+  SignOutIcon,
   UserPlusIcon,
 } from "@phosphor-icons/react";
 import { useState } from "react";
@@ -33,39 +34,27 @@ export function CommandPaletteDemo({
         shortcut={shortcut}
       >
         <CommandPaletteSection title="Project">
-          <CommandPaletteItem textValue="New project">
-            <FolderPlusIcon
-              size={17}
-              aria-hidden="true"
-              className="text-muted-foreground"
-            />
+          <CommandPaletteItem textValue="New project" shortcut="N">
+            <FolderPlusIcon aria-hidden="true" />
             New project
           </CommandPaletteItem>
-          <CommandPaletteItem textValue="Invite teammate">
-            <UserPlusIcon
-              size={17}
-              aria-hidden="true"
-              className="text-muted-foreground"
-            />
+          <CommandPaletteItem textValue="Invite teammate" shortcut="I">
+            <UserPlusIcon aria-hidden="true" />
             Invite teammate
           </CommandPaletteItem>
         </CommandPaletteSection>
         <CommandPaletteSection title="Preferences">
-          <CommandPaletteItem textValue="Open settings">
-            <GearSixIcon
-              size={17}
-              aria-hidden="true"
-              className="text-muted-foreground"
-            />
+          <CommandPaletteItem textValue="Open settings" shortcut=",">
+            <GearSixIcon aria-hidden="true" />
             Open settings
           </CommandPaletteItem>
-          <CommandPaletteItem textValue="Change theme">
-            <MoonIcon
-              size={17}
-              aria-hidden="true"
-              className="text-muted-foreground"
-            />
+          <CommandPaletteItem textValue="Change theme" shortcut="T">
+            <MoonIcon aria-hidden="true" />
             Change theme
+          </CommandPaletteItem>
+          <CommandPaletteItem textValue="Log out" variant="destructive">
+            <SignOutIcon aria-hidden="true" />
+            Log out
           </CommandPaletteItem>
         </CommandPaletteSection>
       </CommandPalette>

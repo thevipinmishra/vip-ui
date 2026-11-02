@@ -2,7 +2,12 @@
 
 import { useState } from "react";
 import type { DropItem, FileDropItem } from "react-aria-components";
-import { DropZone, DropZoneLabel } from "@/components/ui/drop-zone";
+import {
+  DropZone,
+  DropZoneDescription,
+  DropZoneIcon,
+  DropZoneLabel,
+} from "@/components/ui/drop-zone";
 import { FileTrigger } from "@/components/ui/file-trigger";
 
 const acceptedTypes = ["image/png", "image/jpeg", "application/pdf"];
@@ -28,8 +33,9 @@ export function DropZoneDemo() {
           setFiles((current) => [...current, ...dropped]);
         }}
       >
+        <DropZoneIcon />
         <DropZoneLabel>Drop images or PDFs here</DropZoneLabel>
-        <p className="text-xs text-muted-foreground">PNG, JPEG, or PDF</p>
+        <DropZoneDescription>PNG, JPEG, or PDF</DropZoneDescription>
         <FileTrigger
           label="Browse files"
           acceptedFileTypes={acceptedTypes}

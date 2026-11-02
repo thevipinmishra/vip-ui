@@ -806,7 +806,7 @@ export function SheetHeader({
       data-slot="sheet-header"
       className={cn(
         "grid shrink-0 grid-cols-[minmax(0,1fr)_auto] items-start px-5 pt-4 pb-3",
-        "*:data-[slot=sheet-close]:col-start-2 *:data-[slot=sheet-close]:row-start-1 *:data-[slot=sheet-close]:-my-2 *:data-[slot=sheet-close]:ms-4 *:data-[slot=sheet-close]:-me-3 *:data-[slot=sheet-description]:col-span-full",
+        "*:data-[slot=sheet-close]:col-start-2 *:data-[slot=sheet-close]:row-start-1 *:data-[slot=sheet-close]:-my-1 *:data-[slot=sheet-close]:ms-4 *:data-[slot=sheet-close]:-me-2 *:data-[slot=sheet-description]:col-span-full",
         (sheet?.position === "top" ||
           sheet?.position === "left" ||
           sheet?.position === "right" ||
@@ -884,16 +884,19 @@ export function SheetFooter({
 export function SheetClose({
   children,
   variant = "ghost",
+  size,
   iconOnly,
   ...props
 }: StyledButtonProps) {
+  const isIconOnly = iconOnly ?? !children;
   return (
     <Button
       {...props}
       slot="close"
       data-slot="sheet-close"
       variant={variant}
-      iconOnly={iconOnly ?? !children}
+      size={size ?? (isIconOnly ? "sm" : "md")}
+      iconOnly={isIconOnly}
       aria-label={props["aria-label"] ?? (children ? undefined : "Close sheet")}
     >
       {children ?? <XIcon aria-hidden="true" />}

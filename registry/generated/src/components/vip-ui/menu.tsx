@@ -87,7 +87,7 @@ export function MenuContent<T extends object>({
   className,
   render,
   ...props
-}: MenuProps<T>) {
+}: MenuProps<T> & React.RefAttributes<HTMLDivElement>) {
   return (
     <AriaMenu
       {...props}

@@ -1,5 +1,6 @@
 "use client";
 
+import { CodeIcon } from "@phosphor-icons/react/ssr";
 import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,8 +23,13 @@ export function ChartSourceSheet({
 }) {
   return (
     <SheetTrigger>
-      <Button variant="ghost" size="sm" aria-label={`View code for ${title}`}>
-        View code
+      <Button
+        variant="minimal"
+        size="sm"
+        iconOnly
+        aria-label={`View code for ${title}`}
+      >
+        <CodeIcon size={16} aria-hidden="true" />
       </Button>
       <Sheet position="right">
         <SheetHandle />

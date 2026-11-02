@@ -73,6 +73,7 @@ import { DropZoneBasicDemo } from "@/components/docs/drop-zone-basic-demo";
 import { DropZoneDemo } from "@/components/docs/drop-zone-demo";
 import { EmptyStateDemo } from "@/components/docs/empty-state-demo";
 import { EmptyStateNoActionDemo } from "@/components/docs/empty-state-no-action-demo";
+import { EmptyStateSearchDemo } from "@/components/docs/empty-state-search-demo";
 import { FieldsetDemo } from "@/components/docs/fieldset-demo";
 import { FileTriggerBasicDemo } from "@/components/docs/file-trigger-basic-demo";
 import { FileTriggerDemo } from "@/components/docs/file-trigger-demo";
@@ -84,11 +85,13 @@ import { GridListDisabledDemo } from "@/components/docs/grid-list-disabled-demo"
 import { InlineEditBasicDemo } from "@/components/docs/inline-edit-basic-demo";
 import { InlineEditDemo } from "@/components/docs/inline-edit-demo";
 import { InlineEditDisabledDemo } from "@/components/docs/inline-edit-disabled-demo";
+import { InlineEditEmptyDemo } from "@/components/docs/inline-edit-empty-demo";
 import { KbdCodeDemo } from "@/components/docs/kbd-code-demo";
 import { KbdCodeGroupDemo } from "@/components/docs/kbd-code-group-demo";
 import { KbdCodeWrapDemo } from "@/components/docs/kbd-code-wrap-demo";
 import { LayoutMorphDemo } from "@/components/docs/layout-morph-demo";
 import { LayoutMorphViewsDemo } from "@/components/docs/layout-morph-views-demo";
+import { LayoutMorphWidthDemo } from "@/components/docs/layout-morph-width-demo";
 import { LinkDemo } from "@/components/docs/link-demo";
 import { LinkExternalDemo } from "@/components/docs/link-external-demo";
 import { ListBoxDemo } from "@/components/docs/list-box-demo";
@@ -121,6 +124,8 @@ import { ProgressBarBasicDemo } from "@/components/docs/progress-bar-basic-demo"
 import { ProgressBarDemo } from "@/components/docs/progress-bar-demo";
 import { ProgressRingBasicDemo } from "@/components/docs/progress-ring-basic-demo";
 import { ProgressRingDemo } from "@/components/docs/progress-ring-demo";
+import { ProgressRingLabelDemo } from "@/components/docs/progress-ring-label-demo";
+import { ProgressRingSizesDemo } from "@/components/docs/progress-ring-sizes-demo";
 import { PromptInputAttachmentsDemo } from "@/components/docs/prompt-input-attachments-demo";
 import { PromptInputDemo } from "@/components/docs/prompt-input-demo";
 import { PromptInputDropDemo } from "@/components/docs/prompt-input-drop-demo";
@@ -131,6 +136,7 @@ import { PromptInputTranscriptDemo } from "@/components/docs/prompt-input-transc
 import { RangeCalendarControlledDemo } from "@/components/docs/range-calendar-controlled-demo";
 import { RangeCalendarDemo } from "@/components/docs/range-calendar-demo";
 import { RangeCalendarLimitsDemo } from "@/components/docs/range-calendar-limits-demo";
+import { RangeCalendarMonthsDemo } from "@/components/docs/range-calendar-months-demo";
 import { RatingInputDemo } from "@/components/docs/rating-input-demo";
 import { RatingInputIconDemo } from "@/components/docs/rating-input-icon-demo";
 import { RatingInputReadOnlyDemo } from "@/components/docs/rating-input-read-only-demo";
@@ -193,6 +199,7 @@ import { TokenFieldDemo } from "@/components/docs/token-field-demo";
 import { TokenFieldDisabledDemo } from "@/components/docs/token-field-disabled-demo";
 import { TokenFieldSizesDemo } from "@/components/docs/token-field-sizes-demo";
 import { ToolCallDemo } from "@/components/docs/tool-call-demo";
+import { ToolCallSequenceDemo } from "@/components/docs/tool-call-sequence-demo";
 import { ToolCallStatesDemo } from "@/components/docs/tool-call-states-demo";
 import { ToolbarBasicDemo } from "@/components/docs/toolbar-basic-demo";
 import { ToolbarDemo } from "@/components/docs/toolbar-demo";
@@ -597,7 +604,10 @@ const basicPreviews: Record<string, { demo: ReactNode; source: string }> = {
 
 const examplePreviews: Record<string, ReactNode[]> = {
   "agent-status": [<AgentStatusStatesDemo key="preview-1" />],
-  "tool-call": [<ToolCallStatesDemo key="preview-1" />],
+  "tool-call": [
+    <ToolCallStatesDemo key="preview-1" />,
+    <ToolCallSequenceDemo key="preview-2" />,
+  ],
   "source-link": [<SourceLinkListDemo key="preview-1" />],
   "animated-number": [
     <AnimatedNumberSlideDemo key="preview-1" />,
@@ -634,7 +644,10 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <StaggerGroupDemo key="preview-1" />,
     <StaggerGroupTimingDemo key="preview-2" />,
   ],
-  "layout-morph": [<LayoutMorphViewsDemo key="preview-1" />],
+  "layout-morph": [
+    <LayoutMorphViewsDemo key="preview-1" />,
+    <LayoutMorphWidthDemo key="preview-2" />,
+  ],
   marquee: [
     <MarqueeReverseDemo key="preview-1" />,
     <MarqueeSpeedDemo key="preview-2" />,
@@ -698,7 +711,10 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <DisclosureDisabledDemo key="preview-2" />,
   ],
   "drop-zone": [<DropZoneDemo key="preview-1" />],
-  "empty-state": [<EmptyStateNoActionDemo key="preview-1" />],
+  "empty-state": [
+    <EmptyStateNoActionDemo key="preview-1" />,
+    <EmptyStateSearchDemo key="preview-2" />,
+  ],
   "file-trigger": [<FileTriggerDemo key="preview-1" />],
   form: [
     <FormValidationDemo key="preview-1" />,
@@ -716,7 +732,8 @@ const examplePreviews: Record<string, ReactNode[]> = {
   ],
   "inline-edit": [
     <InlineEditDisabledDemo key="preview-1" />,
-    <InlineEditDemo key="preview-2" />,
+    <InlineEditEmptyDemo key="preview-2" />,
+    <InlineEditDemo key="preview-3" />,
   ],
   "rating-input": [
     <RatingInputIconDemo key="preview-1" />,
@@ -754,10 +771,15 @@ const examplePreviews: Record<string, ReactNode[]> = {
   ],
   "presence-list": [<PresenceListDemo key="preview-1" />],
   "progress-bar": [<ProgressBarDemo key="preview-1" />],
-  "progress-ring": [<ProgressRingDemo key="preview-1" />],
+  "progress-ring": [
+    <ProgressRingDemo key="preview-1" />,
+    <ProgressRingSizesDemo key="preview-2" />,
+    <ProgressRingLabelDemo key="preview-3" />,
+  ],
   "range-calendar": [
     <RangeCalendarLimitsDemo key="preview-1" />,
     <RangeCalendarControlledDemo key="preview-2" />,
+    <RangeCalendarMonthsDemo key="preview-3" />,
   ],
   spinner: [
     <SpinnerDemo key="preview-1" />,

@@ -3,20 +3,23 @@ import {
   InfoIcon,
   WarningIcon,
   XCircleIcon,
+  XIcon,
 } from "@phosphor-icons/react/ssr";
 import type { HTMLAttributes, ReactNode } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 import { cn } from "./utils";
+import { Button } from "./button";
 
 const alertStyles = tv({
-  base: "group/alert flex min-w-0 gap-2.5 rounded-xl px-4 py-3 shadow-[var(--shadow-card)] ring-1 forced-colors:border",
+  base: "group/alert flex min-w-0 items-start gap-2.5 rounded-xl px-4 py-3 shadow-[var(--shadow-card)] ring-1 ring-inset forced-colors:border",
   variants: {
     variant: {
-      info: "bg-accent text-accent-foreground ring-primary/15",
-      success: "bg-success-subtle text-success-foreground ring-success/15",
-      warning: "bg-warning-subtle text-warning-foreground ring-warning/20",
-      error: "bg-destructive/10 text-foreground ring-destructive/20",
-      neutral: "bg-card text-card-foreground ring-border/70",
+      info: "bg-accent text-accent-foreground ring-primary/12",
+      success: "bg-success-subtle text-success-foreground ring-success/20",
+      warning: "bg-warning-subtle text-warning-foreground ring-warning/25",
+      error:
+        "bg-[color-mix(in_oklab,var(--destructive)_9%,var(--card))] text-foreground ring-destructive/25",
+      neutral: "bg-card text-card-foreground ring-border",
     },
   },
   defaultVariants: { variant: "info" },
@@ -30,12 +33,18 @@ export interface AlertProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
   title?: string;
   variant?: AlertVariant;
+  action?: ReactNode;
+  onDismiss?: () => void;
+  dismissLabel?: string;
   children?: ReactNode;
 }
 
 export function Alert({
   title,
   variant = "info",
+  action,
+  onDismiss,
+  dismissLabel = "Dismiss",
   className,
   children,
   ...props
@@ -50,17 +59,61 @@ export function Alert({
       {title ? (
         <>
           <AlertIcon />
-          <div className="min-w-0">
-            <AlertTitle>{title}</AlertTitle>
-            {children != null && children !== false && (
-              <AlertDescription>{children}</AlertDescription>
-            )}
+          <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-4 gap-y-2.5">
+            <div className="min-w-0 flex-[1_1_12rem]">
+              <AlertTitle>{title}</AlertTitle>
+              {children != null && children !== false && (
+                <AlertDescription>{children}</AlertDescription>
+              )}
+            </div>
+            {action && <AlertAction>{action}</AlertAction>}
           </div>
         </>
       ) : (
         children
       )}
+      {onDismiss && <AlertDismiss label={dismissLabel} onDismiss={onDismiss} />}
     </div>
+  );
+}
+
+export function AlertAction({
+  className,
+  ...props
+}: HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div
+      {...props}
+      data-slot="alert-action"
+      className={cn("flex shrink-0 flex-wrap gap-2", className)}
+    />
+  );
+}
+
+export function AlertDismiss({
+  label = "Dismiss",
+  onDismiss,
+  className,
+}: {
+  label?: string;
+  onDismiss: () => void;
+  className?: string;
+}) {
+  return (
+    <Button
+      variant="ghost"
+      iconOnly
+      size="sm"
+      aria-label={label}
+      onPress={onDismiss}
+      data-slot="alert-dismiss"
+      className={cn(
+        "-my-2 -me-2 shrink-0 text-current/70 hover:bg-current/8 hover:text-current pressed:bg-current/12",
+        className,
+      )}
+    >
+      <XIcon aria-hidden="true" />
+    </Button>
   );
 }
 
@@ -84,11 +137,11 @@ export function AlertIcon({
           />
           <CheckCircleIcon
             size={20}
-            className="hidden group-data-[variant=success]/alert:block"
+            className="hidden group-data-[variant=success]/alert:block group-data-[variant=success]/alert:text-success"
           />
           <WarningIcon
             size={20}
-            className="hidden group-data-[variant=warning]/alert:block"
+            className="hidden group-data-[variant=warning]/alert:block group-data-[variant=warning]/alert:text-warning"
           />
           <XCircleIcon
             size={20}
