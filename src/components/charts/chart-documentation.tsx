@@ -238,170 +238,176 @@ export async function ChartDocumentation() {
       id="documentation"
       aria-label="Chart documentation"
       data-toc-skip
-      className="scroll-mt-28 border-t border-border/70 pb-28 pt-14"
+      className="border-t border-border/70 pb-24 pt-12"
     >
-      <div className="max-w-3xl space-y-14">
-        <section
-          id="installation"
-          aria-labelledby="chart-installation"
-          className="scroll-mt-28"
-        >
-          <SectionHeading id="chart-installation">Installation</SectionHeading>
-          <InstallTabs
-            cliAvailable={Boolean(cliUrl)}
-            cli={
-              <div className="space-y-4">
-                <Note>
-                  Complete the{" "}
-                  <Link
-                    href="/components/installation#setup"
-                    className={linkClass}
-                  >
-                    one-time setup
-                  </Link>{" "}
-                  first.
-                </Note>
-                {cliUrl ? (
-                  <PackageManagerCommand
-                    action="run"
-                    args={`shadcn@latest add ${cliUrl}`}
-                  />
-                ) : (
-                  <Note>The CLI needs a public registry URL. Use Manual.</Note>
-                )}
-              </div>
-            }
-            custom={<ManualInstall slug="chart" name="Chart" />}
-          />
-        </section>
+      <div className="mx-auto max-w-3xl">
+        <div className="space-y-14">
+          <section
+            id="installation"
+            aria-labelledby="chart-installation"
+            className="scroll-mt-8"
+          >
+            <SectionHeading id="chart-installation">
+              Installation
+            </SectionHeading>
+            <InstallTabs
+              cliAvailable={Boolean(cliUrl)}
+              cli={
+                <div className="space-y-4">
+                  <Note>
+                    Complete the{" "}
+                    <Link
+                      href="/components/installation#setup"
+                      className={linkClass}
+                    >
+                      one-time setup
+                    </Link>{" "}
+                    first.
+                  </Note>
+                  {cliUrl ? (
+                    <PackageManagerCommand
+                      action="run"
+                      args={`shadcn@latest add ${cliUrl}`}
+                    />
+                  ) : (
+                    <Note>
+                      The CLI needs a public registry URL. Use Manual.
+                    </Note>
+                  )}
+                </div>
+              }
+              custom={<ManualInstall slug="chart" name="Chart" />}
+            />
+          </section>
 
-        <section
-          id="usage"
-          aria-labelledby="chart-usage"
-          className="scroll-mt-28"
-        >
-          <SectionHeading id="chart-usage">Usage</SectionHeading>
-          <Note className="mb-4">
-            Build the definition with{" "}
-            <a
-              href="https://tanstack.com/charts/latest/docs/framework/react/adapter"
-              className={linkClass}
-            >
-              TanStack Charts
-            </a>
-            . Show it with Chart, in a ChartFrame.
-          </Note>
-          <CodeBlock code={usage} filename="traffic-chart.tsx" />
-        </section>
+          <section
+            id="usage"
+            aria-labelledby="chart-usage"
+            className="scroll-mt-8"
+          >
+            <SectionHeading id="chart-usage">Usage</SectionHeading>
+            <Note className="mb-4">
+              Build the definition with{" "}
+              <a
+                href="https://tanstack.com/charts/latest/docs/framework/react/adapter"
+                className={linkClass}
+              >
+                TanStack Charts
+              </a>
+              . Show it with Chart, in a ChartFrame.
+            </Note>
+            <CodeBlock code={usage} filename="traffic-chart.tsx" />
+          </section>
 
-        <section
-          id="composition"
-          aria-labelledby="chart-composition"
-          className="scroll-mt-28"
-        >
-          <SectionHeading id="chart-composition">Composition</SectionHeading>
-          <ComponentComposition parts={composition} />
-        </section>
+          <section
+            id="composition"
+            aria-labelledby="chart-composition"
+            className="scroll-mt-8"
+          >
+            <SectionHeading id="chart-composition">Composition</SectionHeading>
+            <ComponentComposition parts={composition} />
+          </section>
 
-        <section
-          id="motion"
-          aria-labelledby="chart-motion"
-          className="scroll-mt-28"
-        >
-          <SectionHeading id="chart-motion">Motion</SectionHeading>
-          <ul className={listClass}>
-            <li>
-              When a chart scrolls into view, it fades in. Its bar, line, area,
-              and arc marks grow from their baseline.
-            </li>
-            <li>
-              A chart that the server renders on screen does not move when the
-              page loads. A chart that mounts later, for example after a link,
-              grows in.
-            </li>
-            <li>
-              When the data changes, each mark moves to its new value. Give each
-              mark a stable <code>key</code>.
-            </li>
-          </ul>
-          <Note className="mb-4 mt-6">
-            To change the motion of one chart, give it a renderer.
-          </Note>
-          <CodeBlock code={motionRenderer} filename="revenue-chart.tsx" />
-          <Note className="mb-4 mt-6">
-            To stop the motion, use the static SVG renderer.
-          </Note>
-          <CodeBlock code={motionOff} filename="revenue-chart.tsx" />
-        </section>
+          <section
+            id="motion"
+            aria-labelledby="chart-motion"
+            className="scroll-mt-8"
+          >
+            <SectionHeading id="chart-motion">Motion</SectionHeading>
+            <ul className={listClass}>
+              <li>
+                When a chart scrolls into view, it fades in. Its bar, line,
+                area, and arc marks grow from their baseline.
+              </li>
+              <li>
+                A chart that the server renders on screen does not move when the
+                page loads. A chart that mounts later, for example after a link,
+                grows in.
+              </li>
+              <li>
+                When the data changes, each mark moves to its new value. Give
+                each mark a stable <code>key</code>.
+              </li>
+            </ul>
+            <Note className="mb-4 mt-6">
+              To change the motion of one chart, give it a renderer.
+            </Note>
+            <CodeBlock code={motionRenderer} filename="revenue-chart.tsx" />
+            <Note className="mb-4 mt-6">
+              To stop the motion, use the static SVG renderer.
+            </Note>
+            <CodeBlock code={motionOff} filename="revenue-chart.tsx" />
+          </section>
 
-        <section
-          id="theming"
-          aria-labelledby="chart-theming"
-          className="scroll-mt-28"
-        >
-          <SectionHeading id="chart-theming">Theming</SectionHeading>
-          <Note className="mb-4">
-            Charts use the colors <code>--chart-1</code> to{" "}
-            <code>--chart-6</code>. Set them for light and dark mode.
-          </Note>
-          <CodeBlock code={theming} filename="globals.css" language="css" />
-          <Note className="mb-4 mt-6">
-            To change one chart, set a color on its frame.
-          </Note>
-          <CodeBlock code={override} filename="chart.tsx" />
-        </section>
+          <section
+            id="theming"
+            aria-labelledby="chart-theming"
+            className="scroll-mt-8"
+          >
+            <SectionHeading id="chart-theming">Theming</SectionHeading>
+            <Note className="mb-4">
+              Charts use the colors <code>--chart-1</code> to{" "}
+              <code>--chart-6</code>. Set them for light and dark mode.
+            </Note>
+            <CodeBlock code={theming} filename="globals.css" language="css" />
+            <Note className="mb-4 mt-6">
+              To change one chart, set a color on its frame.
+            </Note>
+            <CodeBlock code={override} filename="chart.tsx" />
+          </section>
 
-        <section
-          id="accessibility"
-          aria-labelledby="chart-accessibility"
-          className="scroll-mt-28"
-        >
-          <SectionHeading id="chart-accessibility">
-            Accessibility
-          </SectionHeading>
-          <ul className={listClass}>
-            <li>
-              <code>ariaLabel</code> names the chart for screen readers.
-            </li>
-            <li>
-              <code>ChartTable</code> gives screen readers the exact values.
-            </li>
-            <li>
-              Press Tab to focus a chart that has tooltips. Use the arrow keys
-              to move between points.
-            </li>
-            <li>Press Enter to pin a tooltip. Press Escape to close it.</li>
-            <li>
-              When reduced motion is on, charts show at once and do not move.
-            </li>
-          </ul>
-        </section>
+          <section
+            id="accessibility"
+            aria-labelledby="chart-accessibility"
+            className="scroll-mt-8"
+          >
+            <SectionHeading id="chart-accessibility">
+              Accessibility
+            </SectionHeading>
+            <ul className={listClass}>
+              <li>
+                <code>ariaLabel</code> names the chart for screen readers.
+              </li>
+              <li>
+                <code>ChartTable</code> gives screen readers the exact values.
+              </li>
+              <li>
+                Press Tab to focus a chart that has tooltips. Use the arrow keys
+                to move between points.
+              </li>
+              <li>Press Enter to pin a tooltip. Press Escape to close it.</li>
+              <li>
+                When reduced motion is on, charts show at once and do not move.
+              </li>
+            </ul>
+          </section>
 
-        <section id="api" aria-labelledby="chart-api" className="scroll-mt-28">
-          <div className="mb-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-            <h2
-              id="chart-api"
-              className="text-[23px] font-semibold tracking-[-0.045em]"
-            >
-              API reference
-            </h2>
-            <a
-              href="https://tanstack.com/charts/latest/docs/reference/chart-definitions"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 rounded-md text-sm font-medium text-primary underline decoration-primary/40 underline-offset-4 transition-[color,background-color,box-shadow] duration-150 ease-out-quint hover:decoration-primary focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:decoration-primary-foreground/40 focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-transparent"
-            >
-              TanStack Charts API
-              <ArrowUpRightIcon size={16} aria-hidden="true" />
-              <span className="sr-only"> (opens in a new tab)</span>
-            </a>
-          </div>
-          <Note className="mb-6">
-            All parts also accept <code>className</code> and native HTML
-            attributes.
-          </Note>
-          <ApiReference parts={api} slug="chart" />
-        </section>
+          <section id="api" aria-labelledby="chart-api" className="scroll-mt-8">
+            <div className="mb-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+              <h2
+                id="chart-api"
+                className="text-[23px] font-semibold tracking-[-0.045em]"
+              >
+                API reference
+              </h2>
+              <a
+                href="https://tanstack.com/charts/latest/docs/reference/chart-definitions"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 rounded-md text-sm font-medium text-primary underline decoration-primary/40 underline-offset-4 transition-[color,background-color,box-shadow] duration-150 ease-out-quint hover:decoration-primary focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:decoration-primary-foreground/40 focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-transparent"
+              >
+                TanStack Charts API
+                <ArrowUpRightIcon size={16} aria-hidden="true" />
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </div>
+            <Note className="mb-6">
+              All parts also accept <code>className</code> and native HTML
+              attributes.
+            </Note>
+            <ApiReference parts={api} slug="chart" />
+          </section>
+        </div>
       </div>
     </section>
   );
@@ -409,7 +415,7 @@ export async function ChartDocumentation() {
 
 function SectionHeading({ id, children }: { id: string; children: string }) {
   return (
-    <h2 id={id} className="mb-5 text-[23px] font-semibold tracking-[-0.045em]">
+    <h2 id={id} className="sr-only">
       {children}
     </h2>
   );
