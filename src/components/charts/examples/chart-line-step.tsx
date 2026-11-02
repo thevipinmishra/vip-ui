@@ -8,7 +8,6 @@ import { curveStepAfter } from "d3-shape";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartTable,
   ChartTitle,
@@ -88,9 +87,6 @@ export function ChartLineStep() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>New checkout rollout</ChartTitle>
-        <ChartDescription>
-          Share of users with the new checkout
-        </ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

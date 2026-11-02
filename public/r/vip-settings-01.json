@@ -5,7 +5,7 @@
   "title": "Settings 01",
   "description": "A profile form with a save bar for unsaved changes.",
   "categories": ["settings"],
-  "dependencies": ["motion@^13.5.1"],
+  "dependencies": ["motion@^14.9.0"],
   "registryDependencies": [
     "https://vip-ui.vercel.app/r/vip-avatar.json",
     "https://vip-ui.vercel.app/r/vip-button.json",

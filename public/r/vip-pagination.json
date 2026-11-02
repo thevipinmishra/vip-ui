@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Pagination",
   "description": "Shows links between pages of results.",
-  "dependencies": ["tailwind-variants@^3.3.1"],
+  "dependencies": ["tailwind-variants@^4.0.1"],
   "registryDependencies": [
     "https://vip-ui.vercel.app/r/vip-button-styles.json",
     "https://vip-ui.vercel.app/r/vip-item-highlight.json",

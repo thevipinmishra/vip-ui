@@ -6,7 +6,6 @@ import { tooltip } from "@tanstack/charts/tooltip";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartLegend,
   ChartLegendItem,
@@ -38,8 +37,6 @@ const rows = sizes.map((value, index) => ({
   value,
   segment: segment(value),
 }));
-
-const total = sizes.reduce((sum, value) => sum + value, 0);
 
 const money = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -102,9 +99,6 @@ export function ChartBeeswarm() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Closed deals</ChartTitle>
-        <ChartDescription>
-          {rows.length} deals worth {formatMoney(total)} in the third quarter
-        </ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

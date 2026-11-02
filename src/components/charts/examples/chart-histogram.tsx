@@ -6,7 +6,6 @@ import { tooltip } from "@tanstack/charts/tooltip";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartLegend,
   ChartLegendItem,
@@ -100,9 +99,6 @@ export function ChartHistogram() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Load time distribution</ChartTitle>
-        <ChartDescription>
-          Largest contentful paint for a sample of {loads.length} page loads
-        </ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

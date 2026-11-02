@@ -9,7 +9,6 @@ import { tooltip } from "@tanstack/charts/tooltip";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartLegend,
   ChartLegendItem,
@@ -105,7 +104,6 @@ export function ChartRadialRings() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Q4 goals</ChartTitle>
-        <ChartDescription>Progress to each target, in percent</ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

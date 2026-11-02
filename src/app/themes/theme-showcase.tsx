@@ -17,7 +17,7 @@ import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
 import { useId, useMemo, useRef, useState } from "react";
-import { ChartPlot, groupTooltip } from "@/components/charts/chart-plot";
+import { ChartPlot } from "@/components/charts/chart-plot";
 import { AgentStatus } from "@/components/ui/agent-status";
 import { AnimatedNumber } from "@/components/ui/animated-number";
 import { Avatar } from "@/components/ui/avatar";
@@ -96,6 +96,12 @@ const money = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 0,
 });
 
+const moneyCompact = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  notation: "compact",
+});
+
 type Period = "7d" | "30d" | "12m";
 type RevenuePoint = { label: string; current: number; previous: number };
 
@@ -146,14 +152,6 @@ function RevenueScene({ className }: { className?: string }) {
   const previous = rows.reduce((sum, row) => sum + row.previous, 0) * 1000;
   const change = ((total - previous) / previous) * 100;
   const max = Math.max(...rows.map((row) => row.current));
-  const series = useMemo(
-    () =>
-      rows.flatMap((row) => [
-        { label: row.label, series: "This period", value: row.current },
-        { label: row.label, series: "Last period", value: row.previous },
-      ]),
-    [rows],
-  );
   const definition = useMemo(
     () =>
       defineChart({
@@ -164,39 +162,59 @@ function RevenueScene({ className }: { className?: string }) {
               x: "label",
               y: "current",
               fill: "var(--ts-chart-1)",
-              fillOpacity: 0.16,
+              fillOpacity: 0.12,
             }),
           ),
-          lineY(series, {
-            id: "revenue-lines",
+          lineY(rows, {
+            id: "revenue-previous",
             x: "label",
-            y: "value",
-            z: "series",
-            color: "series",
+            y: "previous",
+            stroke: "var(--muted-foreground)",
+            strokeWidth: 1.5,
+            strokeDasharray: "4 4",
+          }),
+          lineY(rows, {
+            id: "revenue-current",
+            x: "label",
+            y: "current",
+            stroke: "var(--ts-chart-1)",
             strokeWidth: 2.25,
           }),
         ],
         scales: {
           x: { scale: scalePoint },
-          y: { scale: scaleLinear().domain([0, max * 1.15]), grid: true },
-        },
-        color: {
-          domain: ["This period", "Last period"],
-          range: ["var(--ts-chart-1)", "var(--ts-chart-2)"],
+          y: {
+            scale: scaleLinear().domain([0, max * 1.15]),
+            grid: true,
+            axis: {
+              ticks: {
+                count: 4,
+                format: (value: number) => moneyCompact.format(value * 1000),
+              },
+            },
+          },
         },
         focus: "group-x",
         tooltip: {
           use: tooltip,
-          content: (points, { primaryPoint }) =>
-            groupTooltip<(typeof series)[number]>(
-              points[0].datum.label,
-              points,
-              (row) => money.format(row.value * 1000),
-              primaryPoint,
-            ),
+          content: ([point]) => ({
+            title: point.datum.label,
+            rows: [
+              {
+                label: "This period",
+                value: money.format(point.datum.current * 1000),
+                color: "var(--ts-chart-1)",
+              },
+              {
+                label: "Last period",
+                value: money.format(point.datum.previous * 1000),
+                color: "var(--muted-foreground)",
+              },
+            ],
+          }),
         },
       }),
-    [rows, series, max],
+    [rows, max],
   );
 
   return (
@@ -256,7 +274,7 @@ function RevenueScene({ className }: { className?: string }) {
             rows={rows.map((row) => [row.label, row.current, row.previous])}
             legend={[
               { label: "This period", color: "var(--ts-chart-1)" },
-              { label: "Last period", color: "var(--ts-chart-2)" },
+              { label: "Last period", color: "var(--muted-foreground)" },
             ]}
           >
             <Chart

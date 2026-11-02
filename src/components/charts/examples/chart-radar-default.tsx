@@ -15,7 +15,6 @@ import { curveLinearClosed } from "d3-shape";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartTable,
   ChartTitle,
@@ -29,8 +28,6 @@ const rows = [
   { area: "Support", satisfied: 91 },
   { area: "Reliability", satisfied: 86 },
 ];
-
-const responses = 1248;
 
 const definition = defineChart({
   marks: [
@@ -94,10 +91,6 @@ export function ChartRadarDefault() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Customer satisfaction</ChartTitle>
-        <ChartDescription>
-          Percent satisfied by area, {responses.toLocaleString("en-US")} survey
-          answers
-        </ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

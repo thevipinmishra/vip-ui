@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Progress Ring",
   "description": "Shows the progress of a task in a circular indicator.",
-  "dependencies": ["motion@^13.5.1", "react-aria-components@^1.22.1"],
+  "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
   "registryDependencies": [
     "https://vip-ui.vercel.app/r/vip-motion.json",
     "https://vip-ui.vercel.app/r/vip-utils.json"

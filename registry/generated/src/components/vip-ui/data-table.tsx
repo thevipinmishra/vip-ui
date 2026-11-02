@@ -3,12 +3,19 @@
 import {
   type ColumnDef,
   type ColumnFiltersState,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
+  columnFilteringFeature,
+  createFilteredRowModel,
+  createPaginatedRowModel,
+  createSortedRowModel,
+  filterFn_equalsString,
+  filterFn_includesString,
+  globalFilteringFeature,
+  type RowData,
+  rowPaginationFeature,
+  rowSortingFeature,
   type SortingState,
-  useReactTable,
+  tableFeatures,
+  useTable,
 } from "@tanstack/react-table";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { type Key, useLocale } from "react-aria-components";
@@ -22,6 +29,16 @@ import { Cell, Column, Row, Table, TableBody, TableHeader } from "./table";
 const collator = new Intl.Collator(undefined, {
   numeric: true,
   sensitivity: "base",
+});
+
+const features = tableFeatures({
+  columnFilteringFeature,
+  globalFilteringFeature,
+  rowPaginationFeature,
+  rowSortingFeature,
+  filteredRowModel: createFilteredRowModel(),
+  paginatedRowModel: createPaginatedRowModel(),
+  sortedRowModel: createSortedRowModel(),
 });
 
 export interface DataTableColumn<T> {
@@ -49,7 +66,7 @@ export interface DataTableProps<T> {
   className?: string;
 }
 
-export function DataTable<T extends object>({
+export function DataTable<T extends RowData>({
   label,
   rows,
   columns,
@@ -76,7 +93,7 @@ export function DataTable<T extends object>({
     ? Math.max(1, Math.floor(pageSize))
     : 5;
 
-  const tableColumns = useMemo<ColumnDef<T>[]>(
+  const tableColumns = useMemo<ColumnDef<typeof features, T>[]>(
     () =>
       columns.map((column, index) => ({
         id: column.id,
@@ -88,8 +105,10 @@ export function DataTable<T extends object>({
         enableColumnFilter: Boolean(column.sortValue && column.filter),
         enableGlobalFilter: index === 0 && Boolean(getSearchText),
         filterFn:
-          column.filter?.type === "select" ? "equalsString" : "includesString",
-        sortingFn: (a, b, id) => {
+          column.filter?.type === "select"
+            ? filterFn_equalsString
+            : filterFn_includesString,
+        sortFn: (a, b, id) => {
           const first = a.getValue<string | number>(id);
           const second = b.getValue<string | number>(id);
           return typeof first === "number" && typeof second === "number"
@@ -100,8 +119,9 @@ export function DataTable<T extends object>({
     [columns, getSearchText],
   );
 
-  const table = useReactTable({
-    data: rows as T[],
+  const table = useTable({
+    features,
+    data: rows,
     columns: tableColumns,
     getRowId: (row) => String(getRowId(row)),
     state: {
@@ -109,15 +129,24 @@ export function DataTable<T extends object>({
       globalFilter: query,
       sorting,
       pagination: { pageIndex, pageSize: size },
-      rowSelection: Object.fromEntries(
-        [...selection].map((key) => [String(key), true]),
-      ),
     },
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
     onColumnFiltersChange: setColumnFilters,
-    getSortedRowModel: getSortedRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    onGlobalFilterChange: (updater) => {
+      setQuery((current) => {
+        const next = typeof updater === "function" ? updater(current) : updater;
+        return next == null ? "" : String(next);
+      });
+      setPageIndex(0);
+    },
+    onPaginationChange: (updater) => {
+      setPageIndex((current) => {
+        const previous = { pageIndex: current, pageSize: size };
+        const next =
+          typeof updater === "function" ? updater(previous) : updater;
+        return next.pageIndex;
+      });
+    },
+    onSortingChange: setSorting,
     globalFilterFn: (row, _columnId, value: string) =>
       getSearchText?.(row.original)
         .toLocaleLowerCase()
@@ -136,7 +165,10 @@ export function DataTable<T extends object>({
     [...selection].filter((key) => pageKeys.has(key)),
   );
   const filteredCount = table.getFilteredRowModel().rows.length;
-  const selectedCount = table.getSelectedRowModel().rows.length;
+  const selectedCount = rows.reduce(
+    (count, row) => count + (selection.has(getRowId(row)) ? 1 : 0),
+    0,
+  );
   const firstRow =
     filteredCount === 0 ? 0 : Math.min(pageIndex * size + 1, filteredCount);
   const lastRow = Math.min((pageIndex + 1) * size, filteredCount);
