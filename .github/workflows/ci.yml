@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
-      NEXT_PUBLIC_REGISTRY_URL: https://vip-ui.vercel.app
+      NEXT_PUBLIC_REGISTRY_URL: https://vip-ui.dev
       NEXT_TELEMETRY_DISABLED: 1
     steps:
       - uses: actions/checkout@v7

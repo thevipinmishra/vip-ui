@@ -23,7 +23,7 @@ const packageJson = JSON.parse(
   await readFile(path.join(root, "package.json"), "utf8"),
 );
 const registryOrigin = (
-  process.env.NEXT_PUBLIC_REGISTRY_URL || "https://vip-ui.vercel.app"
+  process.env.NEXT_PUBLIC_REGISTRY_URL || "https://vip-ui.dev"
 ).replace(/\/$/, "");
 const catalogDescriptions = new Map(
   JSON.parse(

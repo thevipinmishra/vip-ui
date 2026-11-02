@@ -5,7 +5,7 @@
 vip/ui has no versioned releases. We support:
 
 - The latest code on the `main` branch.
-- The hosted registry at <https://vip-ui.vercel.app/r/registry.json>.
+- The hosted registry at <https://vip-ui.dev/r/registry.json>.
 
 Installed components are copies in your project. To get a fix, install the component again from the registry.
 
@@ -36,6 +36,6 @@ In scope:
 
 - Component source in `src/components/ui/`.
 - Registry files that the CLI installs.
-- The docs site at <https://vip-ui.vercel.app>.
+- The docs site at <https://vip-ui.dev>.
 
 If the problem is in a dependency, such as React Aria, Motion, or Next.js, report it to that project.
