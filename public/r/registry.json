@@ -426,9 +426,16 @@
       "type": "registry:ui",
       "title": "Card",
       "description": "Groups related content and actions in one container.",
-      "dependencies": [],
+      "dependencies": ["react-aria-components@^1.22.1"],
       "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
       "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        },
         "light": {
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
@@ -797,7 +804,6 @@
       ],
       "registryDependencies": [
         "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-checkbox.json",
         "https://vip-ui.vercel.app/r/vip-search-field.json",
         "https://vip-ui.vercel.app/r/vip-select.json",
         "https://vip-ui.vercel.app/r/vip-table.json",
@@ -1558,13 +1564,22 @@
       "type": "registry:ui",
       "title": "Pagination",
       "description": "Shows links between pages of results.",
-      "dependencies": ["tailwind-variants@^4.0.1"],
+      "dependencies": [
+        "motion@^14.9.0",
+        "react-aria-components@^1.22.1",
+        "tailwind-variants@^4.0.1"
+      ],
       "registryDependencies": [
         "https://vip-ui.vercel.app/r/vip-button-styles.json",
         "https://vip-ui.vercel.app/r/vip-item-highlight.json",
+        "https://vip-ui.vercel.app/r/vip-motion.json",
         "https://vip-ui.vercel.app/r/vip-size.json",
         "https://vip-ui.vercel.app/r/vip-utils.json"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
       "cssVars": {
         "theme": {
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
@@ -2212,8 +2227,7 @@
       "type": "registry:ui",
       "title": "Spinner",
       "description": "Shows a loading indicator for a task with no known end time.",
-      "dependencies": ["motion@^14.9.0", "tailwind-variants@^4.0.1"],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-motion.json"],
+      "dependencies": ["tailwind-variants@^4.0.1"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/spinner.tsx",
@@ -2245,13 +2259,19 @@
       "type": "registry:ui",
       "title": "Stat",
       "description": "Shows a labeled metric with supporting details.",
-      "dependencies": [],
+      "dependencies": ["@phosphor-icons/react@^2.1.10"],
       "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
       "cssVars": {
         "light": {
+          "success": "oklch(0.43 0.12 155)",
+          "success-subtle": "oklch(0.955 0.035 155)",
+          "success-foreground": "oklch(0.32 0.09 155)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
         "dark": {
+          "success": "oklch(0.74 0.13 155)",
+          "success-subtle": "oklch(0.24 0.045 155)",
+          "success-foreground": "oklch(0.86 0.085 155)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
         }
       },
@@ -2332,7 +2352,9 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
+        "https://vip-ui.vercel.app/r/vip-checkbox.json",
         "https://vip-ui.vercel.app/r/vip-item-highlight.json",
+        "https://vip-ui.vercel.app/r/vip-spinner.json",
         "https://vip-ui.vercel.app/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
@@ -2341,13 +2363,16 @@
       },
       "cssVars": {
         "theme": {
-          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)",
+          "ease-spring": "linear(0, 0.1251, 0.3554, 0.5737, 0.7411, 0.8551, 0.9259, 0.9666, 0.988, 0.9981, 1.002, 1)"
         },
         "light": {
-          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)"
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
         "dark": {
-          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)"
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
         }
       },
       "files": [
@@ -2408,6 +2433,7 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
+        "https://vip-ui.vercel.app/r/vip-field-styles.json",
         "https://vip-ui.vercel.app/r/vip-size.json",
         "https://vip-ui.vercel.app/r/vip-utils.json"
       ],
@@ -2417,7 +2443,8 @@
       },
       "cssVars": {
         "theme": {
-          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)",
+          "ease-spring": "linear(0, 0.1251, 0.3554, 0.5737, 0.7411, 0.8551, 0.9259, 0.9666, 0.988, 0.9981, 1.002, 1)"
         },
         "light": {
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
@@ -2834,7 +2861,9 @@
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
+        "https://vip-ui.vercel.app/r/vip-checkbox.json",
         "https://vip-ui.vercel.app/r/vip-item-highlight.json",
+        "https://vip-ui.vercel.app/r/vip-spinner.json",
         "https://vip-ui.vercel.app/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
@@ -2843,7 +2872,8 @@
       },
       "cssVars": {
         "theme": {
-          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)",
+          "ease-spring": "linear(0, 0.1251, 0.3554, 0.5737, 0.7411, 0.8551, 0.9259, 0.9666, 0.988, 0.9981, 1.002, 1)"
         },
         "light": {
           "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",

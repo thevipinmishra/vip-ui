@@ -18,13 +18,20 @@ import {
   useTable,
 } from "@tanstack/react-table";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
-import { type Key, useLocale } from "react-aria-components";
+import { type ColumnProps, type Key, useLocale } from "react-aria-components";
 import { cn } from "./utils";
 import { Button } from "./button";
-import { Checkbox } from "./checkbox";
 import { SearchField } from "./search-field";
 import { Select, type SelectOption } from "./select";
-import { Cell, Column, Row, Table, TableBody, TableHeader } from "./table";
+import {
+  Cell,
+  Column,
+  Row,
+  Table,
+  TableBody,
+  TableContainer,
+  TableHeader,
+} from "./table";
 
 const collator = new Intl.Collator(undefined, {
   numeric: true,
@@ -47,6 +54,8 @@ export interface DataTableColumn<T> {
   cell: (row: T) => ReactNode;
   sortValue?: (row: T) => string | number;
   align?: "start" | "end";
+  width?: ColumnProps["defaultWidth"];
+  minWidth?: ColumnProps["minWidth"];
   filter?:
     | { type: "text" }
     | { type: "select"; options: readonly SelectOption[] };
@@ -63,6 +72,9 @@ export interface DataTableProps<T> {
   selectedKeys?: Iterable<Key>;
   defaultSelectedKeys?: Iterable<Key>;
   onSelectionChange?: (keys: Set<Key>) => void;
+  disabledKeys?: Iterable<Key>;
+  onRowAction?: (key: Key) => void;
+  resizable?: boolean;
   className?: string;
 }
 
@@ -77,6 +89,9 @@ export function DataTable<T extends RowData>({
   selectedKeys,
   defaultSelectedKeys,
   onSelectionChange,
+  disabledKeys,
+  onRowAction,
+  resizable = false,
   className,
 }: DataTableProps<T>) {
   const { locale } = useLocale();
@@ -276,10 +291,12 @@ export function DataTable<T extends RowData>({
           )}
         </div>
       )}
-      <div className="@container overflow-x-auto">
+      <TableContainer className="@container rounded-none border-0 bg-transparent shadow-none">
         <Table
           aria-label={label}
           className="min-w-[640px]"
+          disabledKeys={disabledKeys}
+          onRowAction={onRowAction}
           selectionMode={selectable ? "multiple" : "none"}
           selectionBehavior="toggle"
           selectedKeys={selectable ? visibleSelection : undefined}
@@ -296,26 +313,15 @@ export function DataTable<T extends RowData>({
           }}
         >
           <TableHeader className="bg-muted/60">
-            {selectable && (
-              <Column
-                id="selection"
-                focusMode="child"
-                allowsArrowNavigation
-                className="w-14 px-3 py-1 text-center"
-              >
-                <Checkbox
-                  slot="selection"
-                  aria-label="Select all rows on this page"
-                  className="w-full items-center"
-                />
-              </Column>
-            )}
             {columns.map((column, index) => (
               <Column
                 key={column.id}
                 id={column.id}
                 isRowHeader={index === 0}
                 allowsSorting={Boolean(column.sortValue)}
+                allowsResizing={resizable}
+                defaultWidth={column.width}
+                minWidth={column.minWidth ?? (resizable ? 96 : undefined)}
                 className={column.align === "end" ? "text-end" : undefined}
               >
                 {column.header}
@@ -339,18 +345,6 @@ export function DataTable<T extends RowData>({
           >
             {(row) => (
               <Row id={getRowId(row.original)}>
-                {selectable && (
-                  <Cell
-                    focusMode="child"
-                    allowsArrowNavigation
-                    className="w-14 px-3 py-1 text-center"
-                  >
-                    <Checkbox
-                      slot="selection"
-                      className="w-full items-center"
-                    />
-                  </Cell>
-                )}
                 {columns.map((column) => (
                   <Cell
                     key={column.id}
@@ -363,7 +357,7 @@ export function DataTable<T extends RowData>({
             )}
           </TableBody>
         </Table>
-      </div>
+      </TableContainer>
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border bg-muted/20 px-4 py-3 text-sm text-muted-foreground sm:px-5">
         <output aria-live="polite" aria-atomic="true" className="tabular-nums">
           {filteredCount === 0
