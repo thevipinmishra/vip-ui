@@ -2,7 +2,11 @@
 
 import { useRef, useState } from "react";
 import type { DropItem, FileDropItem } from "react-aria-components";
-import { DropZone, DropZoneLabel } from "@/components/ui/drop-zone";
+import {
+  DropZone,
+  DropZoneIcon,
+  DropZoneLabel,
+} from "@/components/ui/drop-zone";
 
 export function DropZoneBasicDemo() {
   const [files, setFiles] = useState<{ id: number; name: string }[]>([]);
@@ -28,6 +32,7 @@ export function DropZoneBasicDemo() {
           ]);
         }}
       >
+        <DropZoneIcon />
         <DropZoneLabel>Drop files here</DropZoneLabel>
       </DropZone>
       <ul
