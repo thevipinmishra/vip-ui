@@ -6,13 +6,13 @@
   "description": "Selects a color with a color area, hue slider, and hex field in a popover.",
   "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
   "registryDependencies": [
-    "https://vip-ui.vercel.app/r/vip-button.json",
-    "https://vip-ui.vercel.app/r/vip-color-field.json",
-    "https://vip-ui.vercel.app/r/vip-color-swatch.json",
-    "https://vip-ui.vercel.app/r/vip-field-styles.json",
-    "https://vip-ui.vercel.app/r/vip-motion.json",
-    "https://vip-ui.vercel.app/r/vip-popover.json",
-    "https://vip-ui.vercel.app/r/vip-utils.json"
+    "https://vip-ui.dev/r/vip-button.json",
+    "https://vip-ui.dev/r/vip-color-field.json",
+    "https://vip-ui.dev/r/vip-color-swatch.json",
+    "https://vip-ui.dev/r/vip-field-styles.json",
+    "https://vip-ui.dev/r/vip-motion.json",
+    "https://vip-ui.dev/r/vip-popover.json",
+    "https://vip-ui.dev/r/vip-utils.json"
   ],
   "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
   "css": {

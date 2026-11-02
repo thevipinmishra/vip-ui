@@ -5,7 +5,7 @@
   "title": "Timeline",
   "description": "Shows events in a time-ordered sequence.",
   "dependencies": ["@phosphor-icons/react@^2.1.10"],
-  "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+  "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
   "files": [
     {
       "path": "src/components/ui/timeline.tsx",

@@ -9,12 +9,12 @@
     "react-aria-components@^1.22.1"
   ],
   "registryDependencies": [
-    "https://vip-ui.vercel.app/r/vip-autocomplete.json",
-    "https://vip-ui.vercel.app/r/vip-dialog.json",
-    "https://vip-ui.vercel.app/r/vip-kbd-code.json",
-    "https://vip-ui.vercel.app/r/vip-menu.json",
-    "https://vip-ui.vercel.app/r/vip-search-field.json",
-    "https://vip-ui.vercel.app/r/vip-utils.json"
+    "https://vip-ui.dev/r/vip-autocomplete.json",
+    "https://vip-ui.dev/r/vip-dialog.json",
+    "https://vip-ui.dev/r/vip-kbd-code.json",
+    "https://vip-ui.dev/r/vip-menu.json",
+    "https://vip-ui.dev/r/vip-search-field.json",
+    "https://vip-ui.dev/r/vip-utils.json"
   ],
   "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
   "css": {

@@ -7,11 +7,11 @@
   "categories": ["settings"],
   "dependencies": [],
   "registryDependencies": [
-    "https://vip-ui.vercel.app/r/vip-button.json",
-    "https://vip-ui.vercel.app/r/vip-card.json",
-    "https://vip-ui.vercel.app/r/vip-checkbox.json",
-    "https://vip-ui.vercel.app/r/vip-radio-group.json",
-    "https://vip-ui.vercel.app/r/vip-switch.json"
+    "https://vip-ui.dev/r/vip-button.json",
+    "https://vip-ui.dev/r/vip-card.json",
+    "https://vip-ui.dev/r/vip-checkbox.json",
+    "https://vip-ui.dev/r/vip-radio-group.json",
+    "https://vip-ui.dev/r/vip-switch.json"
   ],
   "files": [
     {

@@ -5,7 +5,7 @@
   "title": "Form",
   "description": "Groups fields and handles validation and submission.",
   "dependencies": ["react-aria-components@^1.22.1"],
-  "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+  "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
   "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
   "css": {
     "@plugin tailwindcss-react-aria-components": {}

@@ -5,7 +5,7 @@
   "title": "Message",
   "description": "Shows a message in a conversation.",
   "dependencies": [],
-  "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+  "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
   "cssVars": {
     "light": {
       "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"

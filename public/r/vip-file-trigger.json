@@ -5,7 +5,7 @@
   "title": "File Trigger",
   "description": "Opens the file picker from a button or other trigger.",
   "dependencies": ["react-aria-components@^1.22.1"],
-  "registryDependencies": ["https://vip-ui.vercel.app/r/vip-button.json"],
+  "registryDependencies": ["https://vip-ui.dev/r/vip-button.json"],
   "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
   "css": {
     "@plugin tailwindcss-react-aria-components": {}

@@ -6,8 +6,8 @@
   "description": "Animates a group of items into view one after another.",
   "dependencies": ["motion@^14.9.0"],
   "registryDependencies": [
-    "https://vip-ui.vercel.app/r/vip-motion.json",
-    "https://vip-ui.vercel.app/r/vip-utils.json"
+    "https://vip-ui.dev/r/vip-motion.json",
+    "https://vip-ui.dev/r/vip-utils.json"
   ],
   "files": [
     {

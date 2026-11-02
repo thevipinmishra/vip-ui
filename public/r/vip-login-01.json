@@ -7,15 +7,15 @@
   "categories": ["authentication"],
   "dependencies": ["@phosphor-icons/react@^2.1.10"],
   "registryDependencies": [
-    "https://vip-ui.vercel.app/r/vip-alert.json",
-    "https://vip-ui.vercel.app/r/vip-button.json",
-    "https://vip-ui.vercel.app/r/vip-card.json",
-    "https://vip-ui.vercel.app/r/vip-checkbox.json",
-    "https://vip-ui.vercel.app/r/vip-form.json",
-    "https://vip-ui.vercel.app/r/vip-link.json",
-    "https://vip-ui.vercel.app/r/vip-password-field.json",
-    "https://vip-ui.vercel.app/r/vip-separator.json",
-    "https://vip-ui.vercel.app/r/vip-text-field.json"
+    "https://vip-ui.dev/r/vip-alert.json",
+    "https://vip-ui.dev/r/vip-button.json",
+    "https://vip-ui.dev/r/vip-card.json",
+    "https://vip-ui.dev/r/vip-checkbox.json",
+    "https://vip-ui.dev/r/vip-form.json",
+    "https://vip-ui.dev/r/vip-link.json",
+    "https://vip-ui.dev/r/vip-password-field.json",
+    "https://vip-ui.dev/r/vip-separator.json",
+    "https://vip-ui.dev/r/vip-text-field.json"
   ],
   "files": [
     {

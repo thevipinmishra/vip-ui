@@ -6,9 +6,9 @@
   "description": "Joins related buttons, or a button and its menu, into one row or column.",
   "dependencies": [],
   "registryDependencies": [
-    "https://vip-ui.vercel.app/r/vip-button.json",
-    "https://vip-ui.vercel.app/r/vip-size.json",
-    "https://vip-ui.vercel.app/r/vip-utils.json"
+    "https://vip-ui.dev/r/vip-button.json",
+    "https://vip-ui.dev/r/vip-size.json",
+    "https://vip-ui.dev/r/vip-utils.json"
   ],
   "cssVars": {
     "light": {

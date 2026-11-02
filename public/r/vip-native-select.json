@@ -6,9 +6,9 @@
   "description": "Selects one option with the native HTML select element.",
   "dependencies": ["@phosphor-icons/react@^2.1.10"],
   "registryDependencies": [
-    "https://vip-ui.vercel.app/r/vip-field-styles.json",
-    "https://vip-ui.vercel.app/r/vip-size.json",
-    "https://vip-ui.vercel.app/r/vip-utils.json"
+    "https://vip-ui.dev/r/vip-field-styles.json",
+    "https://vip-ui.dev/r/vip-size.json",
+    "https://vip-ui.dev/r/vip-utils.json"
   ],
   "cssVars": {
     "theme": {
