@@ -149,10 +149,16 @@ const pageSources = {
       },
       {
         title: "Action",
-        description:
-          "Build the alert from its parts. The action moves below the text in a narrow alert.",
+        description: "The action moves below the text in a narrow alert.",
         sourcePath: "alert-action-demo.tsx",
         uses: ["button-link"],
+      },
+      {
+        title: "Dismiss",
+        description:
+          "Move focus to a nearby control before the alert leaves, so focus is not lost.",
+        sourcePath: "alert-dismiss-demo.tsx",
+        uses: ["presence"],
       },
     ],
   },
@@ -180,6 +186,10 @@ const pageSources = {
         description: "Check the type and size of each file before you add it.",
         sourcePath: "attachment-demo.tsx",
         uses: ["drop-zone", "file-trigger"],
+      },
+      {
+        title: "Upload states",
+        sourcePath: "attachment-upload-demo.tsx",
       },
     ],
   },
@@ -432,7 +442,7 @@ const pageSources = {
     usage: "command-palette-basic-demo.tsx",
     examples: [
       {
-        title: "Sections and icons",
+        title: "Sections, icons, and shortcuts",
         description:
           "When an item has an icon, set textValue so search can find it.",
         sourcePath: "command-palette-demo.tsx",
@@ -614,6 +624,13 @@ const pageSources = {
       {
         title: "Without an action",
         sourcePath: "empty-state-no-action-demo.tsx",
+      },
+      {
+        title: "No search results",
+        description:
+          "After the clear action, move focus back to the search field.",
+        sourcePath: "empty-state-search-demo.tsx",
+        uses: ["search-field", "button"],
       },
     ],
   },
@@ -864,9 +881,13 @@ const pageSources = {
         sourcePath: "inline-edit-disabled-demo.tsx",
       },
       {
+        title: "Empty value",
+        sourcePath: "inline-edit-empty-demo.tsx",
+      },
+      {
         title: "Save error",
         description:
-          "Throw an error from onSave to keep the editor open and show the message.",
+          "Return a promise from onSave to show progress. Throw to keep the editor open with the message.",
         sourcePath: "inline-edit-demo.tsx",
       },
     ],
@@ -948,6 +969,16 @@ const pageSources = {
         title: "Known and unknown progress",
         description: "Set showValue={false} to hide the value in the center.",
         sourcePath: "progress-ring-demo.tsx",
+      },
+      {
+        title: "Sizes",
+        sourcePath: "progress-ring-sizes-demo.tsx",
+      },
+      {
+        title: "Value label",
+        description:
+          "Set valueLabel to replace the percentage. Screen readers hear the same text.",
+        sourcePath: "progress-ring-label-demo.tsx",
       },
     ],
   },
@@ -1059,6 +1090,12 @@ const pageSources = {
       {
         title: "Controlled value",
         sourcePath: "range-calendar-controlled-demo.tsx",
+      },
+      {
+        title: "Two months",
+        description:
+          "Set visibleDuration. The months wrap to one column in a narrow space.",
+        sourcePath: "range-calendar-months-demo.tsx",
       },
     ],
   },
@@ -1447,6 +1484,12 @@ const pageSources = {
         sourcePath: "layout-morph-views-demo.tsx",
         uses: ["toggle-button-group"],
       },
+      {
+        title: "Width",
+        description: "Set w-fit on LayoutMorph to animate the width.",
+        sourcePath: "layout-morph-width-demo.tsx",
+        uses: ["toggle-button-group", "spinner"],
+      },
     ],
   },
   marquee: {
@@ -1482,6 +1525,10 @@ const pageSources = {
         title: "States",
         description: "Screen readers announce each change.",
         sourcePath: "tool-call-states-demo.tsx",
+      },
+      {
+        title: "Sequence",
+        sourcePath: "tool-call-sequence-demo.tsx",
       },
     ],
   },
