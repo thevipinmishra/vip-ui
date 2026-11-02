@@ -1,6 +1,14 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import {
+  animate,
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useTransform,
+} from "motion/react";
+import { useEffect } from "react";
+import { useNumberFormatter } from "react-aria";
 import {
   ProgressBar as AriaProgressBar,
   type ProgressBarProps as AriaProgressBarProps,
@@ -18,6 +26,27 @@ export interface ProgressRingProps
   className?: AriaProgressBarProps["className"];
 }
 
+const strokeWidths = { sm: 3.5, md: 3, lg: 2.5 } as const;
+
+function RingValue({ percentage }: { percentage: number }) {
+  const reducedMotion = useReducedMotion();
+  const formatter = useNumberFormatter({ style: "percent" });
+  const shown = useMotionValue(percentage);
+  const text = useTransform(shown, (value) =>
+    formatter.format(Math.round(value) / 100),
+  );
+
+  useEffect(() => {
+    const controls = animate(shown, percentage, {
+      duration: reducedMotion ? 0 : duration.reveal,
+      ease: easeOut,
+    });
+    return () => controls.stop();
+  }, [percentage, reducedMotion, shown]);
+
+  return <motion.span>{text}</motion.span>;
+}
+
 export function ProgressRing({
   label,
   size = "md",
@@ -26,6 +55,9 @@ export function ProgressRing({
   ...props
 }: ProgressRingProps) {
   const reducedMotion = useReducedMotion();
+  const plainValue =
+    props.valueLabel === undefined && props.formatOptions === undefined;
+  const strokeWidth = strokeWidths[size];
   return (
     <AriaProgressBar
       {...props}
@@ -34,7 +66,7 @@ export function ProgressRing({
         cn("inline-grid justify-items-center gap-2 text-foreground", className),
       )}
     >
-      {({ percentage, valueText, isIndeterminate }) => (
+      {({ percentage = 0, valueText, isIndeterminate }) => (
         <>
           <span
             data-slot="progress-ring-graphic"
@@ -67,25 +99,27 @@ export function ProgressRing({
                 cy="20"
                 r="16"
                 stroke="currentColor"
-                strokeWidth="3"
-                className="text-secondary forced-colors:text-[GrayText]"
+                strokeWidth={strokeWidth}
+                className="text-muted-foreground/20 forced-colors:text-[GrayText]"
               />
               <motion.circle
                 cx="20"
                 cy="20"
                 r="16"
                 stroke="currentColor"
-                strokeWidth="3"
+                strokeWidth={strokeWidth}
                 strokeLinecap="round"
                 transform="rotate(-90 20 20)"
                 className="text-primary forced-colors:text-[Highlight]"
                 initial={false}
                 animate={{
-                  pathLength: isIndeterminate ? 0.28 : (percentage ?? 0) / 100,
+                  pathLength: isIndeterminate ? 0.28 : percentage / 100,
+                  opacity: isIndeterminate || percentage > 0 ? 1 : 0,
                 }}
                 transition={{
-                  duration: reducedMotion ? 0 : duration.slow,
+                  duration: reducedMotion ? 0 : duration.reveal,
                   ease: easeOut,
+                  opacity: { duration: reducedMotion ? 0 : duration.fast },
                 }}
               />
             </motion.svg>
@@ -94,14 +128,20 @@ export function ProgressRing({
                 className={cn(
                   "absolute inset-[15%] grid place-items-center text-center font-semibold leading-tight tabular-nums [overflow-wrap:anywhere]",
                   size === "lg"
-                    ? "text-sm"
+                    ? "text-base tracking-tight"
                     : size === "sm"
                       ? "text-[10px]"
                       : "text-xs",
                 )}
                 aria-hidden="true"
               >
-                {isIndeterminate ? "…" : valueText}
+                {isIndeterminate ? (
+                  "…"
+                ) : plainValue ? (
+                  <RingValue percentage={percentage} />
+                ) : (
+                  valueText
+                )}
               </span>
             )}
           </span>

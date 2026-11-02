@@ -2,11 +2,11 @@
 
 import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import {
   InputGroup,
   InputGroupAddon,
+  InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group";
 import {
@@ -34,9 +34,9 @@ export function InputGroupDemo() {
           </InputGroupAddon>
           <InputGroupInput placeholder="Project name" />
           <InputGroupAddon>
-            <Button type="submit" variant="ghost" isDisabled={!query.trim()}>
+            <InputGroupButton type="submit" isDisabled={!query.trim()}>
               Find
-            </Button>
+            </InputGroupButton>
           </InputGroupAddon>
         </InputGroup>
         <TextFieldDescription>Search by project name.</TextFieldDescription>

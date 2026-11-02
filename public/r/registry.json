@@ -106,7 +106,10 @@
         "@phosphor-icons/react@^2.1.10",
         "tailwind-variants@^4.0.1"
       ],
-      "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "registryDependencies": [
+        "https://vip-ui.vercel.app/r/vip-button.json",
+        "https://vip-ui.vercel.app/r/vip-utils.json"
+      ],
       "cssVars": {
         "light": {
           "success": "oklch(0.43 0.12 155)",
@@ -166,10 +169,16 @@
         "https://vip-ui.vercel.app/r/vip-utils.json"
       ],
       "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)",
+          "ease-spring": "linear(0, 0.1251, 0.3554, 0.5737, 0.7411, 0.8551, 0.9259, 0.9666, 0.988, 0.9981, 1.002, 1)"
+        },
         "light": {
+          "success": "oklch(0.43 0.12 155)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
         "dark": {
+          "success": "oklch(0.74 0.13 155)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
         }
       },
@@ -624,7 +633,8 @@
       },
       "cssVars": {
         "theme": {
-          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)",
+          "ease-spring": "linear(0, 0.1251, 0.3554, 0.5737, 0.7411, 0.8551, 0.9259, 0.9666, 0.988, 0.9981, 1.002, 1)"
         }
       },
       "files": [
@@ -715,6 +725,11 @@
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
         "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        }
       },
       "files": [
         {
@@ -1006,7 +1021,10 @@
       "type": "registry:ui",
       "title": "Drop Zone",
       "description": "Accepts files that you drag and drop onto it.",
-      "dependencies": ["react-aria-components@^1.22.1"],
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "react-aria-components@^1.22.1"
+      ],
       "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -1014,7 +1032,8 @@
       },
       "cssVars": {
         "theme": {
-          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)",
+          "ease-spring": "linear(0, 0.1251, 0.3554, 0.5737, 0.7411, 0.8551, 0.9259, 0.9666, 0.988, 0.9981, 1.002, 1)"
         }
       },
       "files": [
@@ -1032,6 +1051,14 @@
       "description": "Shows why a view is empty and what to do next.",
       "dependencies": [],
       "registryDependencies": ["https://vip-ui.vercel.app/r/vip-utils.json"],
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/empty-state.tsx",
@@ -1049,7 +1076,8 @@
       "registryDependencies": ["https://vip-ui.vercel.app/r/vip-size.json"],
       "cssVars": {
         "theme": {
-          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)",
+          "ease-spring": "linear(0, 0.1251, 0.3554, 0.5737, 0.7411, 0.8551, 0.9259, 0.9666, 0.988, 0.9981, 1.002, 1)"
         },
         "light": {
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
@@ -1167,13 +1195,36 @@
       "type": "registry:ui",
       "title": "Inline Edit",
       "description": "Edits text in place and keeps the draft when the save fails.",
-      "dependencies": ["@phosphor-icons/react@^2.1.10"],
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "react-aria-components@^1.22.1"
+      ],
       "registryDependencies": [
         "https://vip-ui.vercel.app/r/vip-button.json",
         "https://vip-ui.vercel.app/r/vip-field-styles.json",
+        "https://vip-ui.vercel.app/r/vip-input-group.json",
+        "https://vip-ui.vercel.app/r/vip-spinner.json",
         "https://vip-ui.vercel.app/r/vip-text-field.json",
         "https://vip-ui.vercel.app/r/vip-utils.json"
       ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)",
+          "ease-spring": "linear(0, 0.1251, 0.3554, 0.5737, 0.7411, 0.8551, 0.9259, 0.9666, 0.988, 0.9981, 1.002, 1)"
+        },
+        "light": {
+          "success": "oklch(0.43 0.12 155)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/inline-edit.tsx",
@@ -1189,6 +1240,7 @@
       "description": "Joins an input with a prefix, suffix, or action.",
       "dependencies": ["react-aria-components@^1.22.1"],
       "registryDependencies": [
+        "https://vip-ui.vercel.app/r/vip-button.json",
         "https://vip-ui.vercel.app/r/vip-field-styles.json",
         "https://vip-ui.vercel.app/r/vip-size.json",
         "https://vip-ui.vercel.app/r/vip-utils.json"
@@ -1488,6 +1540,11 @@
       "css": {
         "@plugin tailwindcss-react-aria-components": {}
       },
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/number-field.tsx",
@@ -1536,8 +1593,6 @@
       "description": "Accepts a password, with a button to show or hide it.",
       "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.9.0"],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-button.json",
-        "https://vip-ui.vercel.app/r/vip-field-styles.json",
         "https://vip-ui.vercel.app/r/vip-input-group.json",
         "https://vip-ui.vercel.app/r/vip-motion.json",
         "https://vip-ui.vercel.app/r/vip-text-field.json"
@@ -1715,7 +1770,11 @@
       "type": "registry:ui",
       "title": "Progress Ring",
       "description": "Shows the progress of a task in a circular indicator.",
-      "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
+      "dependencies": [
+        "motion@^14.9.0",
+        "react-aria@^3.53.1",
+        "react-aria-components@^1.22.1"
+      ],
       "registryDependencies": [
         "https://vip-ui.vercel.app/r/vip-motion.json",
         "https://vip-ui.vercel.app/r/vip-utils.json"
@@ -1930,6 +1989,11 @@
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
         "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        }
       },
       "files": [
         {
@@ -2676,6 +2740,9 @@
         "@plugin tailwindcss-react-aria-components": {}
       },
       "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        },
         "light": {
           "success": "oklch(0.43 0.12 155)",
           "success-subtle": "oklch(0.955 0.035 155)"

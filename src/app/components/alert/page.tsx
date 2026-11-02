@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { AlertActionDemo } from "@/components/docs/alert-action-demo";
 import { AlertBasicDemo } from "@/components/docs/alert-basic-demo";
 import { AlertDemo } from "@/components/docs/alert-demo";
+import { AlertDismissDemo } from "@/components/docs/alert-dismiss-demo";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -24,6 +25,7 @@ export default function AlertPage() {
       examples={withExamplePreviews(page.examples, [
         <AlertDemo key="variants" />,
         <AlertActionDemo key="action" />,
+        <AlertDismissDemo key="dismiss" />,
       ])}
       sourcePath="src/components/ui/alert.tsx"
     />

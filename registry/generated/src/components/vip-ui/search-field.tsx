@@ -19,6 +19,8 @@ import {
   fieldInputStyles,
   fieldLabelStyles,
   fieldSizeStyles,
+  fieldTriggerEndStyles,
+  fieldTriggerInputPadding,
   fieldTriggerStyles,
 } from "./field-styles";
 import type { Size } from "./size";
@@ -63,7 +65,7 @@ export function SearchField({
             <div className={cn("relative flex items-center", fieldIcon)}>
               <MagnifyingGlassIcon
                 aria-hidden="true"
-                className="pointer-events-none absolute start-[var(--field-px,0.875rem)] text-muted-foreground group-disabled:opacity-60"
+                className="pointer-events-none absolute start-[var(--field-px,0.875rem)] text-muted-foreground transition-colors duration-150 ease-out-quint group-focus-within:text-foreground group-disabled:opacity-60"
               />
               <SearchFieldInput placeholder={placeholder} />
               {!isEmpty && <SearchFieldClear />}
@@ -102,7 +104,8 @@ export function SearchFieldInput({
       className={composeRenderProps(className, (className) =>
         cn(
           fieldInputStyles,
-          "ps-[calc(var(--field-px,0.875rem)+var(--field-icon,1rem)+0.625rem)] pe-[var(--field-h,3rem)] [&::-webkit-search-cancel-button]:hidden",
+          fieldTriggerInputPadding,
+          "ps-[calc(var(--field-px,0.875rem)+var(--field-icon,1rem)+0.625rem)] [&::-webkit-search-cancel-button]:hidden",
           className,
         ),
       )}
@@ -123,7 +126,8 @@ export function SearchFieldClear({
       className={composeRenderProps(className, (className) =>
         cn(
           fieldTriggerStyles,
-          "absolute inset-y-0 end-1 my-auto group-empty:hidden",
+          fieldTriggerEndStyles,
+          "group-empty:hidden starting:scale-75 starting:opacity-0",
           className,
         ),
       )}

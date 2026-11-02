@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  CheckCircleIcon,
   FileCodeIcon,
   FileImageIcon,
   FilePdfIcon,
@@ -105,9 +106,15 @@ export function Attachment({
               )
             ? FileCodeIcon
             : FileTextIcon;
+  const percent =
+    progress === undefined
+      ? undefined
+      : Math.round(Math.min(100, Math.max(0, progress)));
   const statusText =
     status === "uploading"
-      ? "Uploading"
+      ? percent === undefined
+        ? "Uploading"
+        : `Uploading ${percent}%`
       : status === "complete"
         ? "Uploaded"
         : status === "error"
@@ -131,7 +138,7 @@ export function Attachment({
         layout: springLayout,
       })}
       className={cn(
-        "flex min-w-0 items-center gap-3 rounded-lg border border-border bg-card p-2 text-sm shadow-[var(--shadow-card)]",
+        "flex min-w-0 items-center gap-3 rounded-lg border border-border bg-card p-2 text-sm shadow-[var(--shadow-card)] transition-[border-color] duration-200 ease-out-quint",
         status === "error" && "border-destructive/60",
         className,
       )}
@@ -171,6 +178,14 @@ export function Attachment({
                 className="me-1 inline-block align-[-2px]"
               />
             )}
+            {status === "complete" && (
+              <CheckCircleIcon
+                size={13}
+                weight="fill"
+                aria-hidden="true"
+                className="me-1 inline-block align-[-2px] text-success transition-[opacity,scale] duration-350 ease-spring starting:scale-50 starting:opacity-0"
+              />
+            )}
             {fileSize !== undefined && (
               <>
                 <span>{formatSize(fileSize)}</span>
@@ -184,7 +199,7 @@ export function Attachment({
               aria-label={`${name} upload`}
               value={progress ?? 0}
               isIndeterminate={progress === undefined}
-              className="mt-2"
+              className="mt-2 transition-opacity duration-200 ease-out-quint starting:opacity-0"
             />
           )}
         </div>
@@ -198,6 +213,7 @@ export function Attachment({
         <Button
           type="button"
           variant="ghost"
+          size="sm"
           iconOnly
           aria-label={`Remove ${name}`}
           onPress={onRemove}

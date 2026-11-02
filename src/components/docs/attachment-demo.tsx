@@ -4,7 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import type { DropItem, FileDropItem } from "react-aria-components";
 import { Attachment, AttachmentList } from "@/components/ui/attachment";
 import { Button } from "@/components/ui/button";
-import { DropZone, DropZoneLabel } from "@/components/ui/drop-zone";
+import {
+  DropZone,
+  DropZoneDescription,
+  DropZoneIcon,
+  DropZoneLabel,
+} from "@/components/ui/drop-zone";
 import { FileTrigger } from "@/components/ui/file-trigger";
 
 type LocalAttachment = { id: string; file: File; previewUrl?: string };
@@ -74,10 +79,11 @@ export function AttachmentDemo() {
           addFiles(dropped);
         }}
       >
+        <DropZoneIcon />
         <DropZoneLabel>Add files to a support request</DropZoneLabel>
-        <p className="text-xs text-muted-foreground">
+        <DropZoneDescription>
           PNG, JPEG, or PDF up to 5 MB each
-        </p>
+        </DropZoneDescription>
         <FileTrigger
           acceptedFileTypes={acceptedTypes}
           allowsMultiple

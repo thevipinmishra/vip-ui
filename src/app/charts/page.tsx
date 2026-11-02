@@ -4,7 +4,7 @@ import { ChartGallery } from "@/components/charts/chart-gallery";
 export const metadata: Metadata = {
   title: "Charts | vip/ui",
   description:
-    "Accessible charts, built with TanStack Charts. Add a chart to your app. Change it to suit your data.",
+    "Accessible charts with motion, built with TanStack Charts. Copy the source, then make the chart yours.",
 };
 
 export default async function ChartsPage({

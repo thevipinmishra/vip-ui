@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AttachmentBasicDemo } from "@/components/docs/attachment-basic-demo";
 import { AttachmentDemo } from "@/components/docs/attachment-demo";
+import { AttachmentUploadDemo } from "@/components/docs/attachment-upload-demo";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -22,6 +23,7 @@ export default function AttachmentPage() {
       previewSourcePath={page.usage}
       examples={withExamplePreviews(page.examples, [
         <AttachmentDemo key="example-1" />,
+        <AttachmentUploadDemo key="example-2" />,
       ])}
       sourcePath="src/components/ui/attachment.tsx"
     />

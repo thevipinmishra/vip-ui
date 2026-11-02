@@ -2,7 +2,9 @@
 
 import {
   ToolCall,
+  ToolCallCode,
   ToolCallPanel,
+  ToolCallSection,
   ToolCallTrigger,
 } from "@/components/ui/tool-call";
 
@@ -15,14 +17,12 @@ export function ToolCallDemo() {
         summary="Found the disclosure guide"
       />
       <ToolCallPanel>
-        <p className="text-xs font-medium text-muted-foreground">Input</p>
-        <pre className="mt-1 overflow-x-auto rounded-md bg-muted/60 p-3 font-mono text-xs leading-5">
-          {`{ "query": "disclosure expansion" }`}
-        </pre>
-        <p className="mt-3 text-xs font-medium text-muted-foreground">Output</p>
-        <p className="mt-1">
-          Disclosure supports controlled and default expanded state.
-        </p>
+        <ToolCallSection label="Input">
+          <ToolCallCode>{`{ "query": "disclosure expansion" }`}</ToolCallCode>
+        </ToolCallSection>
+        <ToolCallSection label="Output">
+          <p>Disclosure supports controlled and default expanded state.</p>
+        </ToolCallSection>
       </ToolCallPanel>
     </ToolCall>
   );

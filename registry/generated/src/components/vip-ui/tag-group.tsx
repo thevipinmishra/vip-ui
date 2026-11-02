@@ -20,17 +20,17 @@ const tagSizeStyles = {
   xs: {
     tag: "min-h-7 rounded-md ps-2 text-xs",
     label: "py-0.5",
-    remove: "size-6 rounded-sm [&_svg]:size-3",
+    remove: "size-5 rounded-sm [&_svg]:size-3",
   },
   sm: {
     tag: "min-h-9 ps-2.5",
     label: "py-1",
-    remove: "size-8 [&_svg]:size-3",
+    remove: "size-7 [&_svg]:size-3",
   },
   md: {
     tag: "min-h-11 ps-3",
     label: "py-1.5",
-    remove: "size-11 [&_svg]:size-3.5",
+    remove: "size-9 [&_svg]:size-3.5",
   },
 } satisfies Record<TagSize, Record<"tag" | "label" | "remove", string>>;
 
@@ -125,7 +125,7 @@ export function Tag({
               slot="remove"
               data-slot="tag-remove"
               className={cn(
-                "grid shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-out-quint hover:bg-card hover:text-foreground motion-safe:pressed:scale-[0.96] focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring",
+                "grid shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-out-quint [&:hover]:bg-muted [&:hover]:text-foreground [&:active]:bg-muted [&:active]:text-foreground motion-safe:[&:active]:scale-[0.96] [&:focus-visible]:outline-2 [&:focus-visible]:outline-solid [&:focus-visible]:-outline-offset-2 [&:focus-visible]:outline-ring",
                 styles.remove,
               )}
             >

@@ -14,7 +14,11 @@ import { Attachment, AttachmentList } from "@/components/ui/attachment";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { DropZone, DropZoneLabel } from "@/components/ui/drop-zone";
+import {
+  DropZone,
+  DropZoneIcon,
+  DropZoneLabel,
+} from "@/components/ui/drop-zone";
 import { FileTrigger } from "@/components/ui/file-trigger";
 import { Message } from "@/components/ui/message";
 import { PromptInput } from "@/components/ui/prompt-input";
@@ -332,12 +336,9 @@ export function UploadCard() {
             );
           }}
         >
-          <span
-            aria-hidden="true"
-            className="grid size-9 shrink-0 place-items-center rounded-lg bg-accent text-accent-foreground"
-          >
+          <DropZoneIcon className="size-9">
             <CloudArrowUpIcon size={17} />
-          </span>
+          </DropZoneIcon>
           <DropZoneLabel>Drop files here</DropZoneLabel>
           <FileTrigger
             acceptedFileTypes={acceptedTypes}

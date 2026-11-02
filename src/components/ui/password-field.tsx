@@ -4,9 +4,12 @@ import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 import { duration, easeOut } from "@/lib/motion";
-import { Button } from "./button";
-import { fieldTriggerStyles } from "./field-styles";
-import { InputGroup, InputGroupAddon, InputGroupInput } from "./input-group";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "./input-group";
 import {
   TextField,
   TextFieldDescription,
@@ -44,14 +47,12 @@ export function PasswordField({
       isDisabled={isDisabled}
     >
       <TextFieldLabel>{label}</TextFieldLabel>
-      <InputGroup className="pe-1">
+      <InputGroup>
         <InputGroupInput placeholder={placeholder} />
         <InputGroupAddon>
-          <Button
+          <InputGroupButton
             type="button"
-            variant="ghost"
             iconOnly
-            className={fieldTriggerStyles}
             isDisabled={isDisabled}
             aria-label={visible ? "Hide password" : "Show password"}
             aria-pressed={visible}
@@ -85,7 +86,7 @@ export function PasswordField({
                 <EyeSlashIcon />
               </motion.span>
             </span>
-          </Button>
+          </InputGroupButton>
         </InputGroupAddon>
       </InputGroup>
       {description && (
