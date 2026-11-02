@@ -4,6 +4,7 @@ import { useAsyncList } from "react-aria-components";
 import {
   ComboBox,
   ComboBoxContent,
+  ComboBoxControl,
   ComboBoxInput,
   ComboBoxItem,
   ComboBoxLabel,
@@ -59,12 +60,12 @@ export function ComboBoxAsyncDemo() {
       className="w-full max-w-[340px]"
     >
       <ComboBoxLabel>Assignee</ComboBoxLabel>
-      <div className="relative flex items-center">
+      <ComboBoxControl>
         <ComboBoxInput placeholder="Search people" />
         <ComboBoxTrigger>
           {list.isLoading ? <Spinner size="sm" decorative /> : undefined}
         </ComboBoxTrigger>
-      </div>
+      </ComboBoxControl>
       <ComboBoxContent<Person>>
         {(person) => (
           <ComboBoxItem id={person.id} textValue={person.name}>
