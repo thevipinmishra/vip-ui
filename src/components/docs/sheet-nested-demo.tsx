@@ -32,11 +32,9 @@ export function SheetNestedDemo() {
       <Button>Share project</Button>
       <Sheet className="h-[min(32rem,85dvh)]">
         <SheetHandle />
-        <SheetHeader className="flex items-start justify-between gap-4">
-          <div>
-            <SheetTitle>Share project</SheetTitle>
-            <SheetDescription>People with access can edit.</SheetDescription>
-          </div>
+        <SheetHeader>
+          <SheetTitle>Share project</SheetTitle>
+          <SheetDescription>People with access can edit.</SheetDescription>
           <SheetClose />
         </SheetHeader>
         <SheetBody>

@@ -8,7 +8,6 @@ import { tooltip } from "@tanstack/charts/tooltip";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartLegend,
   ChartLegendItem,
@@ -83,7 +82,6 @@ export function ChartRadialRose() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Revenue by region</ChartTitle>
-        <ChartDescription>Third quarter of 2026</ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

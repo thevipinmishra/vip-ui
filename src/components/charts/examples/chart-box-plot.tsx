@@ -7,7 +7,6 @@ import { tooltip } from "@tanstack/charts/tooltip";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartTable,
   ChartTitle,
@@ -83,9 +82,6 @@ export function ChartBoxPlot() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Latency by region</ChartTitle>
-        <ChartDescription>
-          Time per request from the health check, last hour
-        </ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

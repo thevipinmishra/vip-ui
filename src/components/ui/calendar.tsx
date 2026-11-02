@@ -2,20 +2,32 @@
 
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import {
+  useContext,
+  useLayoutEffect,
+  useRef,
+  useSyncExternalStore,
+} from "react";
+import { mergeRefs } from "react-aria/mergeRefs";
+import {
   Calendar as AriaCalendar,
+  CalendarGridBody as AriaCalendarGridBody,
+  ListBox as AriaListBox,
+  ListBoxItem as AriaListBoxItem,
   CalendarCell,
   CalendarGrid,
-  CalendarGridBody,
+  type CalendarGridBodyProps,
   CalendarGridHeader,
   CalendarHeaderCell,
   CalendarHeading,
   type CalendarProps,
+  CalendarStateContext,
   composeRenderProps,
   type DateValue,
+  RangeCalendarStateContext,
 } from "react-aria-components";
 import { cn } from "@/lib/utils";
 import { Button } from "./button";
-import { withItemHighlight } from "./item-highlight";
+import { itemHighlightRing, withItemHighlight } from "./item-highlight";
 
 export const calendarStyles = "w-77 max-w-full text-foreground";
 export const calendarGridStyles =
@@ -88,5 +100,106 @@ export function CalendarHeader() {
         <CaretRightIcon aria-hidden="true" />
       </Button>
     </div>
+  );
+}
+
+export function CalendarGridBody(
+  props: CalendarGridBodyProps & React.RefAttributes<HTMLTableSectionElement>,
+) {
+  const ref = useRef<HTMLTableSectionElement>(null);
+  const calendar = useContext(CalendarStateContext);
+  const range = useContext(RangeCalendarStateContext);
+  const month = (calendar ?? range)?.visibleRange.start;
+  const shown = useRef(month);
+
+  useLayoutEffect(() => {
+    const from = shown.current;
+    shown.current = month;
+    const body = ref.current;
+    if (!body || !from || !month) return;
+    const step = Math.sign(month.compare(from));
+    if (!step) return;
+    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const side = getComputedStyle(body).direction === "rtl" ? -1 : 1;
+    body.animate(
+      still
+        ? { opacity: [0, 1] }
+        : {
+            opacity: [0, 1],
+            transform: [`translateX(${step * side * 0.75}rem)`, "none"],
+          },
+      { duration: still ? 120 : 260, easing: "cubic-bezier(0.23, 1, 0.32, 1)" },
+    );
+  }, [month]);
+
+  return <AriaCalendarGridBody {...props} ref={mergeRefs(ref, props.ref)} />;
+}
+
+const narrowQuery = "(max-width: 639px)";
+
+function subscribeToNarrow(onChange: () => void) {
+  const media = window.matchMedia(narrowQuery);
+  media.addEventListener("change", onChange);
+  return () => media.removeEventListener("change", onChange);
+}
+
+function isNarrowViewport() {
+  return window.matchMedia(narrowQuery).matches;
+}
+
+export interface CalendarPresetsProps {
+  presets: readonly string[];
+  selected: string | null;
+  onSelect: (preset: string) => void;
+  "aria-label"?: string;
+  className?: string;
+}
+
+export function CalendarPresets({
+  presets,
+  selected,
+  onSelect,
+  className,
+  ...props
+}: CalendarPresetsProps) {
+  const narrow = useSyncExternalStore(
+    subscribeToNarrow,
+    isNarrowViewport,
+    () => false,
+  );
+  return (
+    <AriaListBox
+      aria-label={props["aria-label"] ?? "Presets"}
+      data-slot="calendar-presets"
+      orientation={narrow ? "horizontal" : "vertical"}
+      selectionMode="single"
+      disallowEmptySelection
+      selectedKeys={selected === null ? [] : [selected]}
+      onSelectionChange={(keys) => {
+        if (keys === "all") return;
+        const [key] = keys;
+        if (key !== undefined) onSelect(String(key));
+      }}
+      items={presets.map((preset) => ({ id: preset }))}
+      render={withItemHighlight(undefined, { ring: true })}
+      className={cn(
+        "flex shrink-0 gap-1 border-border/70 outline-none max-sm:-mx-3 max-sm:-mt-3 max-sm:mb-3 max-sm:w-0 max-sm:min-w-[calc(100%+1.5rem)] max-sm:overflow-x-auto max-sm:overscroll-x-contain max-sm:border-b max-sm:p-1.5 max-sm:[scrollbar-width:none] sm:-my-3 sm:-ms-3 sm:me-3 sm:w-40 sm:flex-col sm:border-e sm:p-1.5",
+        className,
+      )}
+    >
+      {(item) => (
+        <AriaListBoxItem
+          id={item.id}
+          textValue={item.id}
+          data-slot="calendar-preset"
+          className={cn(
+            "flex min-h-11 shrink-0 cursor-pointer items-center rounded-md px-3 text-sm whitespace-nowrap text-foreground outline-none transition-colors duration-150 ease-out-quint selected:bg-accent selected:font-medium selected:text-accent-foreground sm:whitespace-normal",
+            itemHighlightRing,
+          )}
+        >
+          {item.id}
+        </AriaListBoxItem>
+      )}
+    </AriaListBox>
   );
 }

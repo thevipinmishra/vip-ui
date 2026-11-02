@@ -19,13 +19,11 @@ export function SheetDemo() {
       <Button>Resize order</Button>
       <Sheet className="h-[60dvh]" snapPoints={["100%", "40dvh"]}>
         <SheetHandle />
-        <SheetHeader className="flex items-start justify-between gap-4">
-          <div>
-            <SheetTitle>Order summary</SheetTitle>
-            <SheetDescription>
-              Drag the handle or use the arrow keys to change the sheet height.
-            </SheetDescription>
-          </div>
+        <SheetHeader>
+          <SheetTitle>Order summary</SheetTitle>
+          <SheetDescription>
+            Drag the handle or use the arrow keys to change the sheet height.
+          </SheetDescription>
           <SheetClose />
         </SheetHeader>
         <SheetBody>

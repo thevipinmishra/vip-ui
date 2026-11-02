@@ -10,7 +10,6 @@ import {
   Chart,
   ChartAction,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartLegend,
   ChartLegendItem,
@@ -202,9 +201,6 @@ export function ChartAreaInteractive() {
         <ChartValue>
           <AnimatedNumber value={total} />
         </ChartValue>
-        <ChartDescription>
-          {formatDay(days[0].date)} to {formatDay(days[days.length - 1].date)}
-        </ChartDescription>
       </ChartCaption>
       <ChartAction>
         <ToggleButtonGroup

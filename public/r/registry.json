@@ -381,6 +381,7 @@
       "description": "Shows a month grid to select one date.",
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
+        "react-aria@^3.53.1",
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
@@ -491,7 +492,10 @@
       "type": "registry:ui",
       "title": "Checkbox",
       "description": "Selects or clears one independent option.",
-      "dependencies": ["react-aria-components@^1.22.1"],
+      "dependencies": [
+        "react-aria-components@^1.22.1",
+        "tailwind-variants@^4.0.1"
+      ],
       "registryDependencies": [
         "https://vip-ui.vercel.app/r/vip-field-styles.json",
         "https://vip-ui.vercel.app/r/vip-utils.json"
@@ -869,6 +873,7 @@
       ],
       "registryDependencies": [
         "https://vip-ui.vercel.app/r/vip-button.json",
+        "https://vip-ui.vercel.app/r/vip-calendar.json",
         "https://vip-ui.vercel.app/r/vip-date-segment.json",
         "https://vip-ui.vercel.app/r/vip-field-styles.json",
         "https://vip-ui.vercel.app/r/vip-popover.json",
@@ -934,7 +939,9 @@
       "description": "Shows a focused task in a modal above the page.",
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "react-aria-components@^1.22.1"
+        "react-aria@^3.53.1",
+        "react-aria-components@^1.22.1",
+        "tailwind-variants@^4.0.1"
       ],
       "registryDependencies": [
         "https://vip-ui.vercel.app/r/vip-button.json",
@@ -1786,11 +1793,9 @@
           "ease-spring": "linear(0, 0.1251, 0.3554, 0.5737, 0.7411, 0.8551, 0.9259, 0.9666, 0.988, 0.9981, 1.002, 1)"
         },
         "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
           "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
         },
         "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
           "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
         }
       },
@@ -1838,8 +1843,9 @@
       "type": "registry:ui",
       "title": "Rating Input",
       "description": "Sets a star rating with radio controls.",
-      "dependencies": ["@phosphor-icons/react@^2.1.10"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.9.0"],
       "registryDependencies": [
+        "https://vip-ui.vercel.app/r/vip-motion.json",
         "https://vip-ui.vercel.app/r/vip-radio-group.json",
         "https://vip-ui.vercel.app/r/vip-utils.json"
       ],
@@ -2507,12 +2513,11 @@
       "description": "Shows a brief notification after an action.",
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "motion@^14.9.0",
         "react-aria-components@^1.22.1",
         "tailwind-variants@^4.0.1"
       ],
       "registryDependencies": [
-        "https://vip-ui.vercel.app/r/vip-motion.json",
+        "https://vip-ui.vercel.app/r/vip-button-styles.json",
         "https://vip-ui.vercel.app/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
@@ -2521,20 +2526,17 @@
       },
       "cssVars": {
         "theme": {
-          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)",
+          "ease-spring": "linear(0, 0.1251, 0.3554, 0.5737, 0.7411, 0.8551, 0.9259, 0.9666, 0.988, 0.9981, 1.002, 1)"
         },
         "light": {
-          "success-subtle": "oklch(0.955 0.035 155)",
-          "success-foreground": "oklch(0.32 0.09 155)",
-          "warning-subtle": "oklch(0.965 0.045 85)",
-          "warning-foreground": "oklch(0.36 0.09 75)",
+          "success": "oklch(0.43 0.12 155)",
+          "warning": "oklch(0.54 0.13 75)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
         },
         "dark": {
-          "success-subtle": "oklch(0.24 0.045 155)",
-          "success-foreground": "oklch(0.86 0.085 155)",
-          "warning-subtle": "oklch(0.27 0.045 75)",
-          "warning-foreground": "oklch(0.89 0.07 75)",
+          "success": "oklch(0.74 0.13 155)",
+          "warning": "oklch(0.78 0.11 75)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
         }
       },

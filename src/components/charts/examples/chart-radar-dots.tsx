@@ -13,7 +13,6 @@ import { tooltip } from "@tanstack/charts/tooltip";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartTable,
   ChartTitle,
@@ -93,9 +92,6 @@ export function ChartRadarDots() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Wind direction</ChartTitle>
-        <ChartDescription>
-          Share of hours from each direction, September 2026
-        </ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

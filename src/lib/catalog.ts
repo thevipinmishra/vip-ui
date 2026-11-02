@@ -106,6 +106,13 @@ export function getComponent(slug: string): CatalogComponent | undefined {
   return componentsBySlug.get(slug);
 }
 
+export function componentName(slug: string): string {
+  const name = componentsBySlug.get(slug)?.name;
+  if (name) return name;
+  const words = slug.replaceAll("-", " ");
+  return words.charAt(0).toUpperCase() + words.slice(1);
+}
+
 export function componentDescription(slug: string): string {
   const description = componentsBySlug.get(slug)?.description;
   if (!description) throw new Error(`src/lib/catalog.json has no ${slug}`);

@@ -8,7 +8,6 @@ import { tooltip } from "@tanstack/charts/tooltip";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartLegend,
   ChartLegendItem,
@@ -104,9 +103,6 @@ export function ChartWaterfall() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Profit bridge</ChartTitle>
-        <ChartDescription>
-          Revenue to net profit, third quarter of 2026
-        </ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

@@ -10,7 +10,6 @@ import {
   Chart,
   ChartAction,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartTable,
   ChartTitle,
@@ -155,7 +154,6 @@ export function ChartBarInteractive() {
         <ChartValue>
           <AnimatedNumber value={total} formatOptions={totalFormat} />
         </ChartValue>
-        <ChartDescription>October 2025 to September 2026</ChartDescription>
       </ChartCaption>
       <ChartAction>
         <ToggleButtonGroup

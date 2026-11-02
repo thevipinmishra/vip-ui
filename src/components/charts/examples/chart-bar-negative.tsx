@@ -8,7 +8,6 @@ import { tooltip } from "@tanstack/charts/tooltip";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartLegend,
   ChartLegendItem,
@@ -107,9 +106,6 @@ export function ChartBarNegative() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Net new MRR</ChartTitle>
-        <ChartDescription>
-          New and expansion revenue minus churn, by month
-        </ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

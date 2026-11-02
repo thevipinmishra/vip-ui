@@ -5,8 +5,12 @@ import { useSyncExternalStore } from "react";
 import {
   Menu as AriaMenu,
   MenuItem as AriaMenuItem,
+  type MenuItemProps as AriaMenuItemProps,
+  MenuSection as AriaMenuSection,
+  type MenuSectionProps as AriaMenuSectionProps,
+  Collection,
   composeRenderProps,
-  type MenuItemProps,
+  Header,
   type MenuProps,
   MenuTrigger,
   PopoverContext,
@@ -96,9 +100,14 @@ export function MenuContent<T extends object>({
   );
 }
 
+export interface MenuItemProps<T extends object> extends AriaMenuItemProps<T> {
+  variant?: "default" | "destructive";
+}
+
 export function MenuItem<T extends object>({
   className,
   children,
+  variant = "default",
   ...props
 }: MenuItemProps<T>) {
   return (
@@ -108,9 +117,12 @@ export function MenuItem<T extends object>({
         props.textValue ?? (typeof children === "string" ? children : undefined)
       }
       data-slot="menu-item"
+      data-variant={variant}
       className={composeRenderProps(className, (className) =>
         cn(
           "group/item flex min-h-11 cursor-pointer items-center gap-2.5 rounded-md px-3 py-2 text-sm text-foreground outline-none transition-colors duration-150 ease-out-quint open:bg-muted selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&>[data-slot=kbd]]:ms-auto",
+          variant === "destructive" &&
+            "text-destructive [&>svg]:text-destructive",
           itemHighlightRing,
           className,
         ),
@@ -133,6 +145,40 @@ export function MenuItem<T extends object>({
         ),
       )}
     </AriaMenuItem>
+  );
+}
+
+export interface MenuSectionProps<T extends object>
+  extends AriaMenuSectionProps<T> {
+  title?: string;
+}
+
+export function MenuSection<T extends object>({
+  title,
+  items,
+  dependencies,
+  className,
+  children,
+  ...props
+}: MenuSectionProps<T>) {
+  return (
+    <AriaMenuSection
+      {...props}
+      data-slot="menu-section"
+      className={cn("grid gap-1", className)}
+    >
+      {title && (
+        <Header
+          data-slot="menu-header"
+          className="px-3 pt-1.5 pb-0.5 text-xs font-medium text-muted-foreground"
+        >
+          {title}
+        </Header>
+      )}
+      <Collection items={items} dependencies={dependencies}>
+        {children}
+      </Collection>
+    </AriaMenuSection>
   );
 }
 

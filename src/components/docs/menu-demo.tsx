@@ -7,6 +7,7 @@ import {
   EyeIcon,
   LinkIcon,
   PencilSimpleIcon,
+  TrashIcon,
 } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { Kbd } from "@/components/ui/kbd-code";
@@ -55,6 +56,11 @@ export function MenuDemo() {
           <MenuItem isDisabled>
             <ArchiveIcon size={16} aria-hidden="true" className={iconClass} />
             Archive
+          </MenuItem>
+          <MenuItem variant="destructive">
+            <TrashIcon size={16} aria-hidden="true" />
+            Delete
+            <Kbd>Del</Kbd>
           </MenuItem>
         </MenuContent>
       </MenuPopover>

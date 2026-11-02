@@ -7,7 +7,6 @@ import { tooltip } from "@tanstack/charts/tooltip";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartLegend,
   ChartLegendItem,
@@ -126,9 +125,6 @@ export function ChartHeatmapMatrix() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Retention by signup month</ChartTitle>
-        <ChartDescription>
-          Share of each signup month still active after 1 to 5 months
-        </ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

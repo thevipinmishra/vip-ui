@@ -8,7 +8,6 @@ import { tooltip } from "@tanstack/charts/tooltip";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartTable,
   ChartTitle,
@@ -92,7 +91,6 @@ export function ChartFunnel() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Checkout funnel</ChartTitle>
-        <ChartDescription>Users at each step, last 30 days</ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

@@ -7,11 +7,15 @@ import {
   Select as AriaSelect,
   type SelectProps as AriaSelectProps,
   SelectValue as AriaSelectValue,
+  Collection,
   composeRenderProps,
   FieldError,
+  Header,
   Label,
   ListBox,
   ListBoxItem,
+  ListBoxSection,
+  type ListBoxSectionProps,
   Text,
 } from "react-aria-components";
 import { cn } from "@/lib/utils";
@@ -235,11 +239,13 @@ export function SelectValue({
   );
 }
 
-export function SelectContent({
+export function SelectContent<T extends object>({
   className,
   children,
   ...props
-}: React.ComponentProps<typeof Popover>) {
+}: Omit<React.ComponentProps<typeof Popover>, "children"> & {
+  children?: ReactNode | ((item: T) => ReactNode);
+}) {
   return (
     <Popover
       {...props}
@@ -288,6 +294,40 @@ export function SelectItem({
         </>
       ))}
     </ListBoxItem>
+  );
+}
+
+export interface SelectSectionProps<T extends object>
+  extends ListBoxSectionProps<T> {
+  title?: string;
+}
+
+export function SelectSection<T extends object>({
+  title,
+  items,
+  dependencies,
+  className,
+  children,
+  ...props
+}: SelectSectionProps<T>) {
+  return (
+    <ListBoxSection
+      {...props}
+      data-slot="select-section"
+      className={cn("grid gap-1", className)}
+    >
+      {title && (
+        <Header
+          data-slot="select-header"
+          className="sticky -top-1.5 z-20 -mx-1.5 bg-popover px-4 pt-2 pb-1 text-xs font-medium text-muted-foreground"
+        >
+          {title}
+        </Header>
+      )}
+      <Collection items={items} dependencies={dependencies}>
+        {children}
+      </Collection>
+    </ListBoxSection>
   );
 }
 

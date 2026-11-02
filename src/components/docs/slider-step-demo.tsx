@@ -9,7 +9,8 @@ export function SliderStepDemo() {
       defaultValue={0.5}
       minValue={0}
       maxValue={1}
-      step={0.1}
+      step={0.25}
+      marks={[0, 0.25, 0.5, 0.75, 1]}
       formatOptions={{ style: "percent" }}
       className="w-full max-w-sm"
     />

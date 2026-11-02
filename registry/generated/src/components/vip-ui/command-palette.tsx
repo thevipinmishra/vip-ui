@@ -64,7 +64,7 @@ export function CommandPalette({
   return (
     <DialogContent
       modalSlot="command-palette"
-      className="flex min-h-0 flex-col"
+      className="overflow-clip p-0 pb-[env(safe-area-inset-bottom)] sm:p-0"
       overlayProps={{
         isOpen,
         onOpenChange,
@@ -72,7 +72,7 @@ export function CommandPalette({
       }}
       modalProps={{
         className: cn(
-          "flex flex-col p-0 pb-[env(safe-area-inset-bottom)] sm:max-w-lg sm:p-0",
+          "sm:max-w-lg",
           "sm:max-h-[calc(var(--visual-viewport-height,100dvh)-12vh-1rem)] sm:origin-top sm:duration-180 sm:exiting:duration-120 motion-safe:sm:entering:translate-y-0 motion-safe:sm:entering:scale-98 motion-safe:sm:exiting:translate-y-0 motion-safe:sm:exiting:scale-99",
           className,
         ),

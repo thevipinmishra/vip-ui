@@ -7,7 +7,6 @@ import { tooltip } from "@tanstack/charts/tooltip";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartLegend,
   ChartLegendItem,
@@ -178,7 +177,6 @@ export function ChartAreaStacked() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Sessions by channel</ChartTitle>
-        <ChartDescription>October 2025 to September 2026</ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

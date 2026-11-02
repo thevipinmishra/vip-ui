@@ -14,17 +14,18 @@ import {
 export function DialogAlertDemo() {
   return (
     <Dialog>
-      <DialogTrigger>Archive item</DialogTrigger>
-      <DialogContent role="alertdialog">
+      <DialogTrigger variant="outline">Delete project</DialogTrigger>
+      <DialogContent role="alertdialog" size="sm">
         <DialogHeader>
-          <DialogTitle>Archive this item?</DialogTitle>
+          <DialogTitle>Delete this project?</DialogTitle>
+          <DialogDescription>
+            This deletes the project and its files for all members. You cannot
+            undo this.
+          </DialogDescription>
         </DialogHeader>
-        <DialogDescription>
-          The item moves out of the active list. You can restore it later.
-        </DialogDescription>
         <DialogFooter>
           <DialogClose variant="outline">Cancel</DialogClose>
-          <DialogClose variant="default">Archive item</DialogClose>
+          <DialogClose variant="destructive">Delete project</DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>

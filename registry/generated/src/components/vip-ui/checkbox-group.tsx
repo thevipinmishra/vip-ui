@@ -19,6 +19,7 @@ export interface CheckboxGroupProps
   label?: ReactNode;
   description?: ReactNode;
   errorMessage?: string | ((validation: ValidationResult) => string);
+  orientation?: "horizontal" | "vertical";
   children: ReactNode;
 }
 
@@ -27,6 +28,7 @@ export function CheckboxGroup({
   label,
   description,
   errorMessage,
+  orientation = "vertical",
   children,
   ...props
 }: CheckboxGroupProps) {
@@ -34,8 +36,12 @@ export function CheckboxGroup({
     <AriaCheckboxGroup
       {...props}
       data-slot="checkbox-group"
+      data-orientation={orientation}
       className={composeRenderProps(className, (className) =>
-        cn("flex min-w-0 flex-col gap-1", className),
+        cn(
+          "group/checkbox-group flex min-w-0 flex-col gap-1 data-[orientation=horizontal]:flex-row data-[orientation=horizontal]:flex-wrap data-[orientation=horizontal]:gap-x-6",
+          className,
+        ),
       )}
     >
       {label != null && <CheckboxGroupLabel>{label}</CheckboxGroupLabel>}
@@ -59,7 +65,7 @@ export function CheckboxGroupLabel({
       {...props}
       data-slot="checkbox-group-label"
       className={cn(
-        "pb-1 text-sm font-semibold text-foreground [overflow-wrap:anywhere]",
+        "w-full pb-1 text-sm font-semibold text-foreground [overflow-wrap:anywhere]",
         className,
       )}
     />
@@ -74,7 +80,10 @@ export function CheckboxGroupItems({
     <div
       {...props}
       data-slot="checkbox-group-items"
-      className={cn("flex flex-col gap-1", className)}
+      className={cn(
+        "flex w-full flex-col gap-1 group-data-[orientation=horizontal]/checkbox-group:flex-row group-data-[orientation=horizontal]/checkbox-group:flex-wrap group-data-[orientation=horizontal]/checkbox-group:gap-x-6",
+        className,
+      )}
     />
   );
 }
@@ -90,7 +99,7 @@ export function CheckboxGroupDescription({
       data-slot="checkbox-group-description"
       className={cn(
         fieldDescriptionStyles,
-        "pb-1 [[data-slot=checkbox-group-label]+&]:-mt-1",
+        "w-full pb-1 [[data-slot=checkbox-group-label]+&]:-mt-1",
         className,
       )}
     />
@@ -105,7 +114,7 @@ export function CheckboxGroupError({
     <FieldError
       {...props}
       data-slot="checkbox-group-error"
-      className={cn(fieldErrorStyles, className)}
+      className={cn(fieldErrorStyles, "w-full", className)}
     />
   );
 }

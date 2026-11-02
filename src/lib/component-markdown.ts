@@ -15,7 +15,7 @@ export interface ComponentMarkdownInput {
     description?: string;
     code?: string;
     filename?: string;
-    prerequisite?: string;
+    uses?: readonly string[];
   }[];
   reactAria?: { name: string; href: string };
 }
@@ -104,13 +104,13 @@ export function buildComponentMarkdown({
       if (example.description) {
         lines.push("", example.description.trim());
       }
+      if (example.uses?.length) {
+        lines.push("", `Also install: ${example.uses.join(", ")}.`);
+      }
       if (example.code) {
         lines.push("", "```tsx", example.code.trim(), "```");
         if (example.filename) {
           lines.push("", `Source: \`${example.filename}\``);
-        }
-        if (example.prerequisite) {
-          lines.push("", `Prerequisite: ${example.prerequisite}`);
         }
       }
     });

@@ -84,9 +84,7 @@ export function ChartWaffle() {
       <ChartCaption>
         <ChartTitle>Net Promoter Score</ChartTitle>
         <ChartValue>{score > 0 ? `+${score}` : score}</ChartValue>
-        <ChartDescription>
-          {total} answers in September. One square is 1% of answers.
-        </ChartDescription>
+        <ChartDescription>One square is 1% of answers.</ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

@@ -6,7 +6,6 @@ import { tooltip } from "@tanstack/charts/tooltip";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartLegend,
   ChartLegendItem,
@@ -80,9 +79,6 @@ export function ChartPieRounded() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Cloud costs</ChartTitle>
-        <ChartDescription>
-          {formatMoney(total)} in September, by service
-        </ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}

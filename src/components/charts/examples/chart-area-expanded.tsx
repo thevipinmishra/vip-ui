@@ -7,7 +7,6 @@ import { tooltip } from "@tanstack/charts/tooltip";
 import {
   Chart,
   ChartCaption,
-  ChartDescription,
   ChartFrame,
   ChartLegend,
   ChartLegendItem,
@@ -110,9 +109,6 @@ export function ChartAreaExpanded() {
     <ChartFrame>
       <ChartCaption>
         <ChartTitle>Device share</ChartTitle>
-        <ChartDescription>
-          Share of sessions, October 2025 to September 2026
-        </ChartDescription>
       </ChartCaption>
       <Chart
         definition={definition}
