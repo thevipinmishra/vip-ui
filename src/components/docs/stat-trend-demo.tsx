@@ -1,15 +1,34 @@
 import {
-  ArrowDownRightIcon,
-  ArrowUpRightIcon,
-} from "@phosphor-icons/react/ssr";
-import { Badge } from "@/components/ui/badge";
-import { Stat, StatDetail, StatLabel, StatValue } from "@/components/ui/stat";
+  Stat,
+  StatDetail,
+  StatLabel,
+  StatTrend,
+  StatValue,
+} from "@/components/ui/stat";
 
 const stats = [
-  { label: "Revenue", value: "$48,200", change: "+12%", isUp: true },
-  { label: "New customers", value: "1,284", change: "+8%", isUp: true },
-  { label: "Active users", value: "9,630", change: "−3%", isUp: false },
-];
+  {
+    label: "Revenue",
+    value: "$48,200",
+    change: "+12%",
+    direction: "up",
+    invert: false,
+  },
+  {
+    label: "Active users",
+    value: "9,630",
+    change: "−3%",
+    direction: "down",
+    invert: false,
+  },
+  {
+    label: "Churn rate",
+    value: "1.8%",
+    change: "−0.4 pt",
+    direction: "down",
+    invert: true,
+  },
+] as const;
 
 export function StatTrendDemo() {
   return (
@@ -18,15 +37,10 @@ export function StatTrendDemo() {
         <Stat key={stat.label}>
           <StatLabel>{stat.label}</StatLabel>
           <StatValue>{stat.value}</StatValue>
-          <StatDetail className="flex flex-wrap items-center gap-2">
-            <Badge variant={stat.isUp ? "success" : "error"}>
-              {stat.isUp ? (
-                <ArrowUpRightIcon size={12} aria-hidden="true" />
-              ) : (
-                <ArrowDownRightIcon size={12} aria-hidden="true" />
-              )}
+          <StatDetail>
+            <StatTrend direction={stat.direction} invert={stat.invert}>
               {stat.change}
-            </Badge>
+            </StatTrend>
             From last month
           </StatDetail>
         </Stat>
