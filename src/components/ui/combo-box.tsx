@@ -20,9 +20,12 @@ import {
   fieldChevronStyles,
   fieldDescriptionStyles,
   fieldErrorStyles,
+  fieldIcon,
   fieldInputStyles,
   fieldLabelStyles,
   fieldSizeStyles,
+  fieldTriggerEndStyles,
+  fieldTriggerInputPadding,
   fieldTriggerStyles,
 } from "./field-styles";
 import { itemHighlightRing, withItemHighlight } from "./item-highlight";
@@ -173,10 +176,10 @@ function ComboBoxDefaults({
   return (
     <>
       {label && <ComboBoxLabel>{label}</ComboBoxLabel>}
-      <div className="relative flex items-center">
+      <ComboBoxControl>
         <ComboBoxInput placeholder={placeholder} />
         <ComboBoxTrigger />
-      </div>
+      </ComboBoxControl>
       {multiple && <ComboBoxTags />}
       {description && <ComboBoxDescription>{description}</ComboBoxDescription>}
       <ComboBoxError />
@@ -279,6 +282,40 @@ export function ComboBoxLabel({
   );
 }
 
+export function ComboBoxControl({
+  className,
+  ...props
+}: React.ComponentPropsWithRef<"div">) {
+  return (
+    <div
+      {...props}
+      data-slot="combo-box-control"
+      className={cn(
+        fieldIcon,
+        "relative flex min-w-0 items-center has-[>[data-slot=combo-box-icon]]:[&>input]:ps-[calc(var(--field-px,0.875rem)+var(--field-icon,1rem)+0.625rem)]",
+        className,
+      )}
+    />
+  );
+}
+
+export function ComboBoxIcon({
+  className,
+  ...props
+}: React.ComponentPropsWithRef<"span">) {
+  return (
+    <span
+      aria-hidden="true"
+      {...props}
+      data-slot="combo-box-icon"
+      className={cn(
+        "pointer-events-none absolute start-[var(--field-px,0.875rem)] z-10 grid place-items-center text-muted-foreground transition-colors duration-150 ease-out-quint group-focus-within:text-foreground group-disabled:opacity-60",
+        className,
+      )}
+    />
+  );
+}
+
 export function ComboBoxInput({
   className,
   ...props
@@ -290,7 +327,8 @@ export function ComboBoxInput({
       className={composeRenderProps(className, (className) =>
         cn(
           fieldInputStyles,
-          "ps-[var(--field-px,0.875rem)] pe-[var(--field-h,3rem)]",
+          fieldTriggerInputPadding,
+          "ps-[var(--field-px,0.875rem)]",
           className,
         ),
       )}
@@ -309,7 +347,7 @@ export function ComboBoxTrigger({
       data-slot="combo-box-trigger"
       aria-label={props["aria-label"] ?? "Show options"}
       className={composeRenderProps(className, (className) =>
-        cn(fieldTriggerStyles, "absolute inset-y-0 end-1 my-auto", className),
+        cn(fieldTriggerStyles, fieldTriggerEndStyles, className),
       )}
     >
       {children ?? <ComboBoxChevron />}
