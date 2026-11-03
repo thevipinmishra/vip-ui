@@ -32,16 +32,6 @@ export const metadata = pageMetadata({
 });
 
 const componentCount = catalogComponents.length;
-
-const stack = [
-  "React 19",
-  "TypeScript",
-  "Tailwind CSS v4",
-  "React Aria",
-  "Motion",
-  "shadcn registry",
-  "MIT license",
-];
 const installArgs = `shadcn@latest add ${registryUrl("button") ?? "@vip-ui/button"}`;
 
 const usage = `import { Button } from "@/components/vip-ui/button";
@@ -155,13 +145,11 @@ export default function Home() {
             id="hero-title"
             className="mx-auto mt-8 max-w-4xl text-[clamp(2.375rem,1.25rem+5vw,5rem)] leading-[1.04] font-semibold tracking-[-0.045em] text-balance sm:tracking-[-0.06em]"
           >
-            Accessible React components
+            React Aria, set in motion
           </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-pretty text-muted-foreground sm:mt-6 sm:text-lg sm:leading-8">
-            {componentCount} components built on React Aria Components, Tailwind
-            CSS v4, and Motion. Each one handles keyboard, focus, and screen
-            reader behavior. The shadcn CLI copies the source into your project,
-            so you own every line.
+          <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-pretty text-muted-foreground sm:mt-6 sm:text-lg sm:leading-8">
+            Tailwind CSS v4 components, animated with Motion springs and shared
+            easing tokens. Install the source with the shadcn CLI.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <ButtonLink as={Link} href="/components/installation" size="lg">
@@ -181,24 +169,6 @@ export default function Home() {
               Browse components
             </ButtonLink>
           </div>
-          <ul
-            aria-label="Stack"
-            className="mx-auto mt-8 flex max-w-2xl flex-wrap items-center justify-center gap-x-5 gap-y-1.5 sm:gap-x-3 text-sm text-muted-foreground"
-          >
-            {stack.map((item, index) => (
-              <li key={item} className="flex items-center gap-3">
-                {index > 0 && (
-                  <span
-                    aria-hidden="true"
-                    className="text-border max-sm:hidden"
-                  >
-                    ·
-                  </span>
-                )}
-                {item}
-              </li>
-            ))}
-          </ul>
         </section>
 
         <section
