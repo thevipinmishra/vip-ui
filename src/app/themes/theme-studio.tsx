@@ -29,6 +29,14 @@ import { updateSiteTheme } from "@/lib/update-site-theme";
 import { ThemeTokens } from "./theme-tokens";
 import { findTheme, type Theme, themeCss, themes } from "./themes";
 
+const swatches = [
+  "var(--primary)",
+  "var(--chart-2)",
+  "var(--chart-3)",
+  "var(--chart-4)",
+  "var(--chart-5)",
+];
+
 type Point = { x: number; y: number };
 
 const panelClass =
@@ -172,12 +180,29 @@ export function ThemeStudio({
         dangerouslySetInnerHTML={{ __html: specimenCss + revealCss }}
       />
 
-      <PageHeader className="site-container">
-        <PageHeaderHeading>Themes</PageHeaderHeading>
+      <PageHeader className="site-container relative isolate items-center pb-2 pt-12 text-center sm:pb-6 sm:pt-20">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 -top-28 -z-10 mx-auto h-96 max-w-5xl rounded-full opacity-70 blur-3xl"
+          style={{
+            background:
+              "radial-gradient(50% 50% at 50% 50%, color-mix(in oklab, var(--primary) 18%, transparent) 0%, transparent 70%)",
+          }}
+        />
+        <span aria-hidden="true" className="flex h-7 items-center opacity-90">
+          {swatches.map((swatch) => (
+            <span
+              key={swatch}
+              className="-ms-1.5 size-5 rounded-full ring-2 ring-background first:ms-0"
+              style={{ background: swatch }}
+            />
+          ))}
+        </span>
+        <PageHeaderHeading size="lg">Themes</PageHeaderHeading>
         <PageHeaderDescription>
           Ten themes for vip/ui and shadcn/ui. Select one to preview it.
         </PageHeaderDescription>
-        <PageActions>
+        <PageActions className="mt-2 justify-center">
           <a href="#install" className={buttonLinkStyles()}>
             Install {theme.name}
             <ArrowDownIcon size={16} aria-hidden="true" />

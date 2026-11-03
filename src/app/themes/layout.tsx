@@ -11,7 +11,7 @@ export default function ThemesLayout({ children }: LayoutProps<"/themes">) {
         Skip to content
       </a>
       <SiteHeader />
-      <main id="main" className="flex-1 pb-24 pt-10 sm:pt-14">
+      <main id="main" className="flex-1 pb-24">
         {children}
       </main>
       <SiteFooter />
