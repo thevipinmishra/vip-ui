@@ -20,7 +20,7 @@ import {
 import { ThemeSection } from "@/components/home/theme-section";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Card } from "@/components/ui/card";
-import { catalogComponents, catalogGroups } from "@/lib/catalog";
+import { catalogComponents } from "@/lib/catalog";
 import { registryUrl } from "@/lib/registry-docs";
 
 export const metadata: Metadata = {
@@ -52,62 +52,55 @@ const cliFacts = [
   {
     term: "Dependencies",
     detail:
-      "The CLI installs the packages that the component uses. It also adds the Tailwind plugin and the theme variables.",
+      "The CLI installs the packages, the Tailwind plugin, and the theme variables.",
   },
   {
     term: "Any React app",
-    detail:
-      "Components do not import from Next.js. You can use them in a Vite app.",
+    detail: "Components do not import from Next.js. They work in Vite too.",
   },
   {
     term: "Manual install",
-    detail:
-      "Each component page lists the files and packages. You can copy them without the CLI.",
+    detail: "Copy the files from the component page. You do not need the CLI.",
   },
 ];
 
 const accessibilityFacts = [
   {
     term: "Keyboard",
-    detail:
-      "Each control uses the keyboard pattern that people expect. Focus moves in a logical order.",
+    detail: "Each control uses the keys that people expect.",
   },
   {
     term: "Screen readers",
     detail:
-      "Components set the correct roles, names, and states. Live regions announce status changes.",
+      "Each part has the correct role, name, and state. Live regions announce each change.",
   },
   {
     term: "Visible focus",
-    detail:
-      "A ring shows keyboard focus. A mouse click does not show the ring.",
+    detail: "The focus ring shows for the keyboard only.",
   },
   {
     term: "High contrast",
-    detail:
-      "Focus and selection stay visible when Windows high contrast mode is on.",
+    detail: "Focus and selection stay visible in high contrast mode.",
   },
   {
     term: "Pointer and touch",
-    detail: "Press events work the same with a mouse, a finger, or a pen.",
+    detail: "A mouse, a finger, and a pen work the same.",
   },
   {
     term: "Languages",
     detail:
-      "Dates and numbers use the format of each locale. Layouts work from right to left.",
+      "Dates and numbers follow the locale. Layouts work from right to left.",
   },
 ];
 
 const motionFacts = [
   {
     term: "Shared tokens",
-    detail:
-      "Four durations, three curves, and three springs. The motion guide lists each component with a tuned timing.",
+    detail: "One set of four durations, three curves, and three springs.",
   },
   {
     term: "Reduced motion",
-    detail:
-      "Components obey the reduced motion setting of the operating system.",
+    detail: "Components obey the reduced motion setting.",
   },
 ];
 
@@ -159,9 +152,8 @@ export default function Home() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-pretty text-muted-foreground sm:text-lg sm:leading-8">
-            Add the components to your project as source files. React Aria
-            controls keyboard, focus, and screen reader behavior. Motion shows
-            each change of state.
+            You own the source. React Aria controls the behavior. Motion shows
+            each change.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <ButtonLink as={Link} href="/components/installation" size="lg">
@@ -196,11 +188,16 @@ export default function Home() {
             <div className="grid content-start gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,28rem)] lg:grid-rows-[auto_1fr] lg:gap-x-16">
               <SectionHeading
                 id="accessibility"
-                title="Accessible behavior from React Aria"
+                title={
+                  <>
+                    Accessible by default.{" "}
+                    <span className="text-muted-foreground">
+                      No extra code.
+                    </span>
+                  </>
+                }
               >
-                React Aria controls the behavior of each interactive component.
-                You get keyboard, focus, and screen reader support without extra
-                code.
+                React Aria controls focus, keyboard, and screen reader behavior.
               </SectionHeading>
               <HomeReveal className="min-w-0 lg:col-start-2 lg:row-span-2 lg:row-start-1">
                 <KeyboardLab />
@@ -214,7 +211,12 @@ export default function Home() {
           <HomeSection id="motion">
             <SectionHeading
               id="motion"
-              title="One motion system for all components"
+              title={
+                <>
+                  Motion that explains,{" "}
+                  <span className="text-muted-foreground">not decorates.</span>
+                </>
+              }
               action={
                 <ButtonLink
                   as={Link}
@@ -225,8 +227,8 @@ export default function Home() {
                 </ButtonLink>
               }
             >
-              Motion shows what changed and where it went. All components use
-              the same durations, curves, and springs.
+              Each animation shows what changed. All components share the same
+              timings.
             </SectionHeading>
             <HomeReveal className="mt-12 grid min-w-0 gap-4 lg:grid-cols-[minmax(0,30rem)_minmax(0,1fr)]">
               <Card className="grid min-w-0 content-start gap-6 p-5 sm:p-6">
@@ -245,16 +247,22 @@ export default function Home() {
           <HomeSection id="theming">
             <SectionHeading
               id="theming"
-              title="Your theme controls every component"
+              title={
+                <>
+                  Your theme,{" "}
+                  <span className="text-muted-foreground">
+                    every component.
+                  </span>
+                </>
+              }
               action={
                 <ButtonLink as={Link} href="/themes" variant="outline">
-                  Open the themes
+                  Browse themes
                 </ButtonLink>
               }
             >
-              Components read the CSS variables of your shadcn theme. Change a
-              variable, and every component changes with it. Select a theme to
-              see the result.
+              Components read your shadcn CSS variables. Select a theme to see
+              the change.
             </SectionHeading>
             <HomeReveal className="mt-12 min-w-0">
               <ThemeSection />
@@ -267,10 +275,17 @@ export default function Home() {
             <div className="grid content-start gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:grid-rows-[auto_1fr] lg:gap-x-16">
               <SectionHeading
                 id="install"
-                title="Install the source, not a package"
+                title={
+                  <>
+                    Own the source.{" "}
+                    <span className="text-muted-foreground">
+                      Skip the package.
+                    </span>
+                  </>
+                }
               >
-                The shadcn CLI copies each component into your project. You own
-                the code, and you can change every line.
+                The shadcn CLI copies each component into your project. Change
+                any line.
               </SectionHeading>
               <HomeReveal className="grid min-w-0 content-start gap-8 lg:col-start-2 lg:row-span-2 lg:row-start-1">
                 <ol className="grid gap-8">
@@ -326,15 +341,21 @@ export default function Home() {
           <HomeSection id="catalog">
             <SectionHeading
               id="catalog"
-              title={`${componentCount} components in ${catalogGroups.length} groups`}
+              title={
+                <>
+                  {componentCount} components.{" "}
+                  <span className="text-muted-foreground">
+                    One command each.
+                  </span>
+                </>
+              }
               action={
                 <ButtonLink as={Link} href="/components" variant="outline">
                   Browse components
                 </ButtonLink>
               }
             >
-              Each component page has live examples, the source code, install
-              steps, and an API reference.
+              Each page has live examples, the source, and an API reference.
             </SectionHeading>
             <HomeReveal className="mt-12 min-w-0">
               <CatalogOverview />
@@ -345,17 +366,17 @@ export default function Home() {
         <div className="border-t border-border/70 bg-card/40">
           <section
             aria-labelledby="start-title"
-            className="mx-auto grid max-w-7xl justify-items-center gap-6 px-5 py-20 text-center sm:px-8 sm:py-28"
+            className="mx-auto grid max-w-7xl justify-items-center gap-6 px-5 pt-20 pb-6 text-center sm:px-8 sm:pt-28 sm:pb-10"
           >
             <h2
               id="start-title"
               className="max-w-2xl text-[clamp(1.875rem,3.6vw,2.75rem)] leading-[1.08] font-semibold tracking-[-0.05em] text-balance"
             >
-              Start with one component.
+              Start with one.{" "}
+              <span className="text-muted-foreground">Add more later.</span>
             </h2>
             <p className="max-w-lg text-base leading-7 text-pretty text-muted-foreground sm:text-lg sm:leading-8">
-              Add more components when you need them. vip/ui is open source
-              under the MIT license.
+              vip/ui is free and open source under the MIT license.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
               <ButtonLink as={Link} href="/components/installation" size="lg">
@@ -382,7 +403,7 @@ export default function Home() {
         </div>
       </main>
 
-      <SiteFooter />
+      <SiteFooter className="bg-card/40" />
     </div>
   );
 }
