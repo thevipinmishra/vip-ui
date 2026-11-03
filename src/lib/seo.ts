@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { siteUrl } from "./site-url";
+import { SITE_DOMAIN, siteUrl } from "./site-url";
 
 export const site = {
   name: "vip/ui",
-  domain: "vip-ui.dev",
+  domain: SITE_DOMAIN,
   title: "vip/ui — Accessible React components with motion",
   tagline: "Accessible React components with motion",
   description:
