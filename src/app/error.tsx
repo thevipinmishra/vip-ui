@@ -3,6 +3,7 @@
 import { ArrowClockwiseIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useEffect } from "react";
+import { pageTitleClass } from "@/components/docs/page-header";
 import { SiteFooter } from "@/components/docs/site-footer";
 import { SiteHeader } from "@/components/docs/site-header";
 import { Button } from "@/components/ui/button";
@@ -23,9 +24,7 @@ export default function ErrorPage({
     <div className="flex min-h-screen flex-col bg-background">
       <SiteHeader />
       <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col justify-center px-5 py-24 sm:px-8">
-        <h1 className="text-[clamp(2.25rem,4vw,3rem)] font-semibold leading-[1.08] tracking-[-0.055em]">
-          Something went wrong
-        </h1>
+        <h1 className={pageTitleClass}>Something went wrong</h1>
         <p className="mt-4 max-w-xl text-sm leading-7 text-muted-foreground">
           This page failed to render. Try again, or return to the component
           catalog.

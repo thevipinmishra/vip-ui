@@ -9,8 +9,7 @@ export default async function Image() {
   return renderOgCard({
     eyebrow: "Colors",
     title: "Ten scales. Twelve steps each.",
-    description:
-      "Light and dark values for every step. Every scale passes the same contrast checks.",
+    description: "For light and dark mode.",
     meta: "OKLCH / 12 steps",
     accent: ogColors.teal,
   });

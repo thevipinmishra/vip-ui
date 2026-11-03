@@ -4,7 +4,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Charts",
   description:
-    "Accessible charts with motion, built with TanStack Charts. Browse live examples, then copy the source and make the chart yours.",
+    "Chart examples built on TanStack Charts. Copy the source into your app.",
   path: "/charts",
   image: "file",
 });

@@ -1,6 +1,19 @@
 import type { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
 
+const pageTitleSize =
+  "text-[clamp(2rem,1.5rem+2vw,3rem)] leading-[1.1] tracking-[-0.04em] sm:tracking-[-0.05em]";
+
+export const pageTitleClass = `font-semibold text-balance ${pageTitleSize}`;
+
+export const sectionTitleClass =
+  "text-[1.375rem] font-semibold leading-8 tracking-[-0.035em] text-balance sm:text-[1.4375rem] sm:tracking-[-0.045em]";
+
+const headingSizes = {
+  default: pageTitleSize,
+  lg: "text-[clamp(2.25rem,1.5rem+3.5vw,4.25rem)] leading-[1.05] tracking-[-0.045em] sm:tracking-[-0.06em]",
+};
+
 export function PageHeader({ className, ...props }: ComponentProps<"header">) {
   return (
     <header
@@ -11,13 +24,15 @@ export function PageHeader({ className, ...props }: ComponentProps<"header">) {
 }
 
 export function PageHeaderHeading({
+  size = "default",
   className,
   ...props
-}: ComponentProps<"h1">) {
+}: ComponentProps<"h1"> & { size?: keyof typeof headingSizes }) {
   return (
     <h1
       className={cn(
-        "text-[clamp(2.5rem,5vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.06em] [text-wrap:balance]",
+        "font-semibold text-balance",
+        headingSizes[size],
         className,
       )}
       {...props}
@@ -32,7 +47,7 @@ export function PageHeaderDescription({
   return (
     <p
       className={cn(
-        "max-w-2xl text-base leading-7 text-muted-foreground",
+        "max-w-2xl text-base leading-7 text-pretty text-muted-foreground",
         className,
       )}
       {...props}

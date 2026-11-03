@@ -8,9 +8,8 @@ export const contentType = ogContentType;
 export default async function Image() {
   return renderOgCard({
     eyebrow: "Themes",
-    title: "Ten themes, one system",
-    description:
-      "Live previews on real product screens. Copy the CSS into any shadcn/ui project.",
+    title: "Ten themes",
+    description: "For vip/ui and shadcn/ui. Copy the CSS into your project.",
     meta: "10 themes",
     accent: ogColors.amber,
   });

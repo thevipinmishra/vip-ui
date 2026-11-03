@@ -612,7 +612,7 @@ function ScheduleScene({ className }: { className?: string }) {
         <CardTitle>Book a walkthrough</CardTitle>
         <CardDescription>30 minutes with our solutions team.</CardDescription>
       </CardHeader>
-      <CardContent className="grid flex-1 content-center justify-items-center gap-5 px-2 sm:px-5">
+      <CardContent className="grid flex-1 grid-cols-[minmax(0,1fr)] content-center justify-items-center gap-5 px-2 sm:px-5">
         <div className="flex w-full items-center gap-3 rounded-lg bg-muted/60 px-3 py-2.5">
           <Avatar name="Sam Rivera" className="size-9" />
           <div className="min-w-0 flex-1">

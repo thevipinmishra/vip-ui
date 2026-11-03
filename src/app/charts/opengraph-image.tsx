@@ -8,9 +8,8 @@ export const contentType = ogContentType;
 export default async function Image() {
   return renderOgCard({
     eyebrow: "Charts",
-    title: "Accessible charts, with motion built in",
-    description:
-      "Built with TanStack Charts. Copy the source, then make the chart yours.",
+    title: "Chart examples",
+    description: "Built on TanStack Charts. Copy the source into your app.",
     meta: "TanStack Charts",
     accent: ogColors.amber,
   });

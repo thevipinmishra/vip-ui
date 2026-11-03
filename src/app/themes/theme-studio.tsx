@@ -175,8 +175,7 @@ export function ThemeStudio({
       <PageHeader className="site-container">
         <PageHeaderHeading>Themes</PageHeaderHeading>
         <PageHeaderDescription>
-          Ten themes made from the vip/ui color scales, for vip/ui and any
-          shadcn/ui project. Select a theme to restyle this page.
+          Ten themes for vip/ui and shadcn/ui. Select one to preview it.
         </PageHeaderDescription>
         <PageActions>
           <a href="#install" className={buttonLinkStyles()}>

@@ -9,6 +9,7 @@ import {
 } from "@/lib/component-examples";
 import { allComponents } from "@/lib/navigation";
 import { registryUrl } from "@/lib/registry-docs";
+import { cn } from "@/lib/utils";
 import { ApiReference } from "./api-reference";
 import { ComponentComposition } from "./component-composition";
 import { compositions } from "./component-compositions";
@@ -16,6 +17,7 @@ import { DocsHeader, DocsPager, ExternalLink, TextLink } from "./guide";
 import { InstallTabs } from "./install-tabs";
 import { ManualInstall } from "./manual-install";
 import { PackageManagerCommand } from "./package-manager-command";
+import { sectionTitleClass } from "./page-header";
 import { PreviewPanel } from "./preview-panel";
 
 export interface ComponentExample extends ComponentExampleMetadata {
@@ -227,9 +229,5 @@ function ExampleUses({ slugs }: { slugs: readonly string[] }) {
 }
 
 function SectionHeading({ title }: { title: string }) {
-  return (
-    <h2 className="mb-5 text-[23px] font-semibold tracking-[-0.045em]">
-      {title}
-    </h2>
-  );
+  return <h2 className={cn("mb-5", sectionTitleClass)}>{title}</h2>;
 }

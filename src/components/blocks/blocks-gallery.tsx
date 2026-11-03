@@ -4,6 +4,7 @@ import { CategoryTabs } from "@/components/docs/category-tabs";
 import {
   PageActions,
   PageHeader,
+  PageHeaderDescription,
   PageHeaderHeading,
 } from "@/components/docs/page-header";
 import { SiteFooter } from "@/components/docs/site-footer";
@@ -64,10 +65,10 @@ export function BlocksGallery({ category }: { category: string | null }) {
               <span key={tile} className={`rounded-[3px] ${tile}`} />
             ))}
           </span>
-          <PageHeaderHeading className="max-w-3xl text-[clamp(2.5rem,5vw,4.25rem)]">
-            Screens ready to{" "}
-            <span className="text-muted-foreground">ship.</span>
-          </PageHeaderHeading>
+          <PageHeaderHeading size="lg">Blocks</PageHeaderHeading>
+          <PageHeaderDescription>
+            Full pages built with vip/ui components. Copy them into your app.
+          </PageHeaderDescription>
           <PageActions className="mt-2 justify-center">
             <ButtonLink href="#gallery">Browse blocks</ButtonLink>
           </PageActions>
@@ -104,7 +105,7 @@ function AllBlocks() {
     >
       <h2
         id="gallery-title"
-        className="text-center text-[clamp(1.5rem,2.4vw,1.875rem)] font-semibold tracking-[-0.045em] text-balance"
+        className="text-center text-[clamp(1.375rem,1.1rem+1vw,1.875rem)] leading-tight font-semibold tracking-[-0.035em] text-balance sm:tracking-[-0.045em]"
       >
         All blocks
       </h2>
@@ -149,7 +150,7 @@ function CategoryBlocks({ category }: { category: BlockCategory }) {
     >
       <h2
         id="gallery-title"
-        className="text-center text-[clamp(1.5rem,2.4vw,1.875rem)] font-semibold tracking-[-0.045em] text-balance"
+        className="text-center text-[clamp(1.375rem,1.1rem+1vw,1.875rem)] leading-tight font-semibold tracking-[-0.035em] text-balance sm:tracking-[-0.045em]"
       >
         {category.label} blocks
       </h2>

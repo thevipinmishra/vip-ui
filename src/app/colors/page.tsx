@@ -22,7 +22,7 @@ import { ColorScales } from "./color-scales";
 export const metadata = pageMetadata({
   title: "Colors",
   description:
-    "Ten OKLCH color scales with 12 steps each, for light and dark mode. Every scale passes the same contrast checks. Copy the CSS or Tailwind utilities.",
+    "Ten OKLCH color scales with 12 steps each, for light and dark mode.",
   path: "/colors",
   image: "file",
 });
@@ -40,8 +40,7 @@ export default async function ColorsPage() {
       <PageHeader className="site-container">
         <PageHeaderHeading>Colors</PageHeaderHeading>
         <PageHeaderDescription>
-          Ten color scales with 12 steps each, for light and dark mode. Each
-          step has one purpose, and every scale passes the same contrast checks.
+          Ten color scales with 12 steps each, for light and dark mode.
         </PageHeaderDescription>
         <PageActions>
           <a href="#install" className={buttonLinkStyles()}>

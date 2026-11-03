@@ -47,7 +47,7 @@ export function SectionHeading({
       <div className="grid max-w-2xl min-w-0 gap-4">
         <h2
           id={`${id}-title`}
-          className="text-[clamp(1.875rem,3.6vw,2.75rem)] leading-[1.08] font-semibold tracking-[-0.05em] text-balance"
+          className="text-[clamp(1.875rem,1.4rem+2vw,2.75rem)] leading-[1.1] font-semibold tracking-[-0.04em] text-balance sm:tracking-[-0.05em]"
         >
           {title}
         </h2>

@@ -11,7 +11,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Components",
   description:
-    "Browse the vip/ui catalog of accessible React components, with live examples, installation steps, source code, and an API reference for each.",
+    "Accessible React components with examples, source, and an API reference.",
   path: "/components",
   image: "file",
 });
@@ -22,7 +22,6 @@ export default function ComponentsPage() {
       <PageHeader>
         <PageHeaderHeading>Components</PageHeaderHeading>
         <PageHeaderDescription>
-          Accessible React components. Interactive components use React Aria.
           Before you add a component,{" "}
           <Link href="/components/installation" className={textLinkClass}>
             set up your project

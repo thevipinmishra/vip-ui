@@ -8,6 +8,7 @@ import { PackageManagerCommand } from "@/components/docs/package-manager-command
 import {
   PageActions,
   PageHeader,
+  PageHeaderDescription,
   PageHeaderHeading,
 } from "@/components/docs/page-header";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -73,9 +74,11 @@ export async function ChartGallery({
             />
           ))}
         </span>
-        <PageHeaderHeading className="max-w-3xl text-[clamp(2.5rem,5vw,4.25rem)]">
-          Charts that feel <span className="text-muted-foreground">alive.</span>
-        </PageHeaderHeading>
+        <PageHeaderHeading size="lg">Charts</PageHeaderHeading>
+        <PageHeaderDescription>
+          Chart examples built on TanStack Charts. Copy the source into your
+          app.
+        </PageHeaderDescription>
         <PageActions className="mt-2 justify-center">
           <ButtonLink href="#gallery">Browse charts</ButtonLink>
         </PageActions>
@@ -109,7 +112,7 @@ function ChartCategoryContent({ category }: { category: ChartCategory }) {
     >
       <h2
         id="category-title"
-        className="text-center text-[clamp(1.5rem,2.4vw,1.875rem)] font-semibold tracking-[-0.045em] text-balance"
+        className="text-center text-[clamp(1.375rem,1.1rem+1vw,1.875rem)] leading-tight font-semibold tracking-[-0.035em] text-balance sm:tracking-[-0.045em]"
       >
         {category.title}
       </h2>
