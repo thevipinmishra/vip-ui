@@ -1,56 +1,21 @@
 "use client";
 
-import { ArrowRightIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
+import { ArrowRightIcon } from "@phosphor-icons/react";
 import Link from "next/link";
-import {
-  memo,
-  useDeferredValue,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import { Button } from "@/components/ui/button";
-import {
-  EmptyState,
-  EmptyStateActions,
-  EmptyStateDescription,
-  EmptyStateIcon,
-  EmptyStateTitle,
-} from "@/components/ui/empty-state";
-import { Kbd } from "@/components/ui/kbd-code";
-import {
-  SearchField,
-  SearchFieldClear,
-  SearchFieldInput,
-} from "@/components/ui/search-field";
-import {
-  type CatalogComponent,
-  catalogComponents,
-  catalogGroups,
-} from "@/lib/catalog";
+import { memo, useState } from "react";
+import { type CatalogComponent, catalogGroups } from "@/lib/catalog";
 import { CatalogPreview } from "./catalog-preview";
-
-const searchText = new Map(
-  catalogComponents.map((component) => [
-    component.slug,
-    `${component.name} ${component.description}`.toLowerCase(),
-  ]),
-);
 
 const CatalogCard = memo(function CatalogCard({
   component,
-  hidden,
 }: {
   component: CatalogComponent;
-  hidden: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
 
   return (
     <li
-      hidden={hidden}
       className="group/card relative flex flex-col rounded-2xl bg-card p-1 text-card-foreground shadow-[var(--shadow-card)] ring-1 ring-border/60 transition-[box-shadow,scale] duration-200 ease-out-quint hover:shadow-[var(--shadow-float)] hover:ring-border motion-safe:has-[a:active]:scale-[0.985] forced-colors:border"
       onPointerEnter={(event) => {
         if (event.pointerType === "mouse") setHovered(true);
@@ -79,158 +44,45 @@ const CatalogCard = memo(function CatalogCard({
 });
 
 export function CatalogBrowser({ category }: { category?: string }) {
-  const [query, setQuery] = useState("");
-  const inputRef = useRef<HTMLInputElement>(null);
-  const normalized = useDeferredValue(query.trim().toLowerCase());
-
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== "/" || event.metaKey || event.ctrlKey || event.altKey)
-        return;
-      const target = event.target as HTMLElement | null;
-      if (
-        target?.isContentEditable ||
-        target?.closest("input, textarea, select, [role='dialog']")
-      )
-        return;
-      event.preventDefault();
-      inputRef.current?.focus();
-    };
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, []);
-
   const groups = category
     ? catalogGroups.filter((group) => group.title === category)
     : catalogGroups;
-  const total = groups.reduce((sum, group) => sum + group.components.length, 0);
-
-  const matches = useMemo(
-    () =>
-      new Set(
-        catalogComponents
-          .filter(
-            (component) =>
-              (!category || component.group === category) &&
-              (!normalized ||
-                searchText.get(component.slug)?.includes(normalized)),
-          )
-          .map((component) => component.slug),
-      ),
-    [normalized, category],
-  );
 
   return (
-    <section id="gallery" aria-label="Components" className="scroll-mt-32 pt-6">
-      <div className="flex flex-col items-center gap-2">
-        <SearchField
-          aria-label="Filter components"
-          value={query}
-          onChange={setQuery}
-          className="w-full sm:max-w-md"
-        >
-          {({ isEmpty }) => (
-            <div className="relative flex items-center">
-              <MagnifyingGlassIcon
-                size={17}
-                aria-hidden="true"
-                className="pointer-events-none absolute start-3.5 text-muted-foreground"
-              />
-              <SearchFieldInput
-                ref={inputRef}
-                aria-keyshortcuts="/"
-                placeholder="Filter by name or use"
-              />
-              {isEmpty ? (
-                <Kbd
-                  aria-hidden="true"
-                  className="pointer-events-none absolute end-3.5 group-focus-within:hidden pointer-coarse:hidden"
-                >
-                  /
-                </Kbd>
-              ) : (
-                <SearchFieldClear />
-              )}
-            </div>
-          )}
-        </SearchField>
-        <p
-          aria-live="polite"
-          className="text-sm tabular-nums text-muted-foreground"
-        >
-          {normalized
-            ? `${matches.size} of ${total} components`
-            : `${total} components`}
-        </p>
-      </div>
+    <section
+      id="gallery"
+      aria-label="Components"
+      className="grid scroll-mt-32 gap-14 pt-6"
+    >
+      {groups.map((group) => {
+        const headingId = group.title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
-      <div hidden={matches.size === 0} className="mt-12 grid gap-14">
-        {groups.map((group) => {
-          const headingId = group.title
-            .toLowerCase()
-            .replace(/[^a-z0-9]+/g, "-");
-          const count = group.components.filter((component) =>
-            matches.has(component.slug),
-          ).length;
-
-          return (
-            <section
-              key={group.title}
-              id={headingId}
-              hidden={count === 0}
-              aria-labelledby={`${headingId}-title`}
-              className="scroll-mt-28"
-            >
-              <div className="flex items-baseline gap-2.5">
-                <h2
-                  id={`${headingId}-title`}
-                  className="text-lg font-semibold tracking-[-0.03em]"
-                >
-                  {group.title}
-                </h2>
-                <span className="text-sm tabular-nums text-muted-foreground">
-                  {count}
-                </span>
-              </div>
-              <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 lg:gap-4 xl:grid-cols-4">
-                {group.components.map((component) => (
-                  <CatalogCard
-                    key={component.slug}
-                    component={component}
-                    hidden={!matches.has(component.slug)}
-                  />
-                ))}
-              </ul>
-            </section>
-          );
-        })}
-      </div>
-
-      {matches.size === 0 && (
-        <div className="mt-12">
-          <EmptyState>
-            <EmptyStateIcon>
-              <MagnifyingGlassIcon size={19} aria-hidden="true" />
-            </EmptyStateIcon>
-            <EmptyStateTitle>No matching components</EmptyStateTitle>
-            <EmptyStateDescription>
-              No component matches “{query.trim()}”. Try a different word.
-            </EmptyStateDescription>
-            <EmptyStateActions>
-              <Button
-                variant="outline"
-                size="sm"
-                onPress={() => {
-                  setQuery("");
-                  inputRef.current?.focus();
-                }}
+        return (
+          <section
+            key={group.title}
+            id={headingId}
+            aria-labelledby={`${headingId}-title`}
+            className="scroll-mt-28"
+          >
+            <div className="flex items-baseline gap-2.5">
+              <h2
+                id={`${headingId}-title`}
+                className="text-lg font-semibold tracking-[-0.03em]"
               >
-                Clear filter
-              </Button>
-            </EmptyStateActions>
-          </EmptyState>
-        </div>
-      )}
+                {group.title}
+              </h2>
+              <span className="text-sm tabular-nums text-muted-foreground">
+                {group.components.length}
+              </span>
+            </div>
+            <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 lg:gap-4 xl:grid-cols-4">
+              {group.components.map((component) => (
+                <CatalogCard key={component.slug} component={component} />
+              ))}
+            </ul>
+          </section>
+        );
+      })}
     </section>
   );
 }
