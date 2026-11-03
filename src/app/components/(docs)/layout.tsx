@@ -17,7 +17,7 @@ export default function ComponentsLayout({
       </a>
       <SiteHeader />
       <div className="site-container flex-1 pt-10 sm:pt-14 lg:grid lg:grid-cols-[224px_minmax(0,1fr)] lg:gap-14 xl:grid-cols-[224px_minmax(0,1fr)_160px] xl:gap-8">
-        <aside className="hidden border-r border-border/70 lg:block">
+        <aside className="hidden lg:block">
           <SidebarScrollArea>
             <DocsNav />
           </SidebarScrollArea>

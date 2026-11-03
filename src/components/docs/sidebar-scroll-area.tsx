@@ -15,7 +15,7 @@ export function SidebarScrollArea({ children }: { children: ReactNode }) {
           {...api.getViewportProps()}
           className="sidebar-scroll-viewport h-[calc(100dvh-1.5rem)]"
         >
-          <div {...api.getContentProps()} className="pb-10 pr-5">
+          <div {...api.getContentProps()} className="pb-10 pe-4">
             {children}
           </div>
         </div>

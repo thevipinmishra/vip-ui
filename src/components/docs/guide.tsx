@@ -103,7 +103,7 @@ export function DocsHeader({
         </nav>
       )}
       <h1 className={pageTitleClass}>{title}</h1>
-      <p className="mt-2 max-w-[670px] text-sm leading-7 text-muted-foreground">
+      <p className="mt-3 max-w-2xl text-base leading-7 text-pretty text-muted-foreground">
         {description}
       </p>
     </header>

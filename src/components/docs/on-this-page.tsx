@@ -135,11 +135,13 @@ export function OnThisPage() {
 
   return (
     <nav aria-label="On this page">
-      <p className="mb-3 text-xs font-semibold text-foreground">On this page</p>
+      <p className="mb-3 text-xs font-medium text-muted-foreground">
+        On this page
+      </p>
       <div ref={containerRef} className="relative">
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 left-0 w-px bg-border/70"
+          className="pointer-events-none absolute inset-y-0 start-0 w-px bg-border/60"
         />
         {lineSpan && (
           <motion.span
@@ -151,7 +153,7 @@ export function OnThisPage() {
                 ? { duration: 0 }
                 : { type: "spring", duration: 0.36, bounce: 0.16 }
             }
-            className="pointer-events-none absolute top-0 left-0 w-px bg-primary"
+            className="pointer-events-none absolute top-0 start-[-0.5px] w-0.5 rounded-full bg-foreground"
           />
         )}
         <ul className="grid gap-0.5">
@@ -169,10 +171,8 @@ export function OnThisPage() {
                   aria-current={isCurrent ? "location" : undefined}
                   onClick={() => setCurrentId(section.id)}
                   className={cn(
-                    "relative flex items-start rounded-sm py-1 pr-1 pl-4 text-[13px] leading-5 hover:text-foreground",
-                    isHighlighted
-                      ? "font-medium text-foreground"
-                      : "text-muted-foreground",
+                    "relative flex items-start rounded-sm py-1 ps-4 pe-1 text-[13px] leading-5 transition-[color] duration-150 ease-out-quint hover:text-foreground",
+                    isHighlighted ? "text-foreground" : "text-muted-foreground",
                   )}
                 >
                   {section.label}
