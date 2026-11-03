@@ -5,7 +5,7 @@ export const alt =
 export const size = ogSize;
 export const contentType = ogContentType;
 
-export default function Image() {
+export default async function Image() {
   return renderOgCard({
     eyebrow: "Colors",
     title: "Ten scales. Twelve steps each.",

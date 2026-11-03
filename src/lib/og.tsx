@@ -30,33 +30,41 @@ export const ogChips = [
   "vip-ui.dev",
 ] as const;
 
-const geistRegular = await readFile(
-  join(
-    process.cwd(),
-    "node_modules/geist/dist/fonts/geist-sans/Geist-Regular.ttf",
-  ),
-);
-const geistSemiBold = await readFile(
-  join(
-    process.cwd(),
-    "node_modules/geist/dist/fonts/geist-sans/Geist-SemiBold.ttf",
-  ),
-);
+const geistFontPath = (file: string) =>
+  join(process.cwd(), "node_modules/geist/dist/fonts/geist-sans", file);
 
-const ogFonts = [
-  {
-    name: "Geist",
-    data: geistRegular,
-    style: "normal" as const,
-    weight: 400 as const,
-  },
-  {
-    name: "Geist",
-    data: geistSemiBold,
-    style: "normal" as const,
-    weight: 600 as const,
-  },
-];
+/**
+ * Read the fonts only when a card is rendered. Next resolves the metadata of
+ * every `opengraph-image` route during a page render, which imports this module
+ * without rendering the image. Reading the fonts at import time made dynamic
+ * pages crash when the fonts were not part of that route's traced files.
+ */
+function loadOgFonts() {
+  return Promise.all([
+    readFile(geistFontPath("Geist-Regular.ttf")),
+    readFile(geistFontPath("Geist-SemiBold.ttf")),
+  ]).then(([geistRegular, geistSemiBold]) => [
+    {
+      name: "Geist",
+      data: geistRegular,
+      style: "normal" as const,
+      weight: 400 as const,
+    },
+    {
+      name: "Geist",
+      data: geistSemiBold,
+      style: "normal" as const,
+      weight: 600 as const,
+    },
+  ]);
+}
+
+let ogFonts: ReturnType<typeof loadOgFonts> | undefined;
+
+function getOgFonts() {
+  ogFonts ??= loadOgFonts();
+  return ogFonts;
+}
 
 const logoMark = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="64" height="64"><path fill="#eceeed" d="M7.71 32H7a7 7 0 0 1-7-7V7a7 7 0 0 1 7-7h13.51z"/><path fill="#eceeed" fill-opacity=".5" d="M24.29 0H25a7 7 0 0 1 7 7v18a7 7 0 0 1-7 7H11.49z"/></svg>`;
 const logoMarkSrc = `data:image/svg+xml;base64,${Buffer.from(logoMark).toString("base64")}`;
@@ -485,14 +493,16 @@ function OgCard({
   );
 }
 
-export function renderOgCard(options: OgCardOptions): ImageResponse {
+export async function renderOgCard(
+  options: OgCardOptions,
+): Promise<ImageResponse> {
   return new ImageResponse(<OgCard {...options} />, {
     ...ogSize,
-    fonts: ogFonts,
+    fonts: await getOgFonts(),
   });
 }
 
-export function componentOgCard(slug: string): ImageResponse {
+export async function componentOgCard(slug: string): Promise<ImageResponse> {
   const component = getComponent(slug);
   const name = component?.name ?? componentName(slug);
 

@@ -5,7 +5,7 @@ export const alt =
 export const size = ogSize;
 export const contentType = ogContentType;
 
-export default function Image() {
+export default async function Image() {
   return renderOgCard({
     eyebrow: "Themes",
     title: "Ten themes, one system",
