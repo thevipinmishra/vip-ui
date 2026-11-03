@@ -145,11 +145,12 @@ export default function Home() {
             id="hero-title"
             className="mx-auto mt-8 max-w-4xl text-[clamp(2.375rem,1.25rem+5vw,5rem)] leading-[1.04] font-semibold tracking-[-0.045em] text-balance sm:tracking-[-0.06em]"
           >
-            React Aria, set in motion
+            React components, set in motion
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-pretty text-muted-foreground sm:mt-6 sm:text-lg sm:leading-8">
-            Tailwind CSS v4 components, animated with Motion springs and shared
-            easing tokens. Install the source with the shadcn CLI.
+            Built on React Aria and Tailwind CSS v4, animated with Motion
+            springs and shared easing tokens. Install the source with the shadcn
+            CLI.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <ButtonLink as={Link} href="/components/installation" size="lg">
