@@ -7,6 +7,10 @@ import {
   type ChartProps as RendererChartProps,
 } from "@tanstack/charts/react/core";
 import {
+  RendererChart as TooltipRendererChart,
+  type RendererChartProps as TooltipRendererChartProps,
+} from "@tanstack/charts/react/tooltip";
+import {
   type CSSProperties,
   type HTMLAttributes,
   type LiHTMLAttributes,
@@ -52,6 +56,7 @@ export function ChartFrame({
         "flex min-w-0 flex-wrap items-start gap-x-4 rounded-xl bg-card p-4 text-card-foreground sm:p-5 *:min-w-0 *:basis-full *:data-[slot=chart-action]:ml-auto *:data-[slot=chart-action]:basis-auto *:data-[slot=chart-caption]:grow *:data-[slot=chart-caption]:basis-48",
         "[&_.ts-chart:is(:focus):not(:focus-visible)]:outline-none [&_.ts-chart:focus-visible]:outline-2 [&_.ts-chart:focus-visible]:outline-ring [&_.ts-chart:focus-visible]:outline-offset-2 [&_.ts-chart-tooltip]:w-max [&_.ts-chart-tooltip]:min-w-36 [&_.ts-chart-tooltip]:[overflow-wrap:normal]!",
         String.raw`[&_.ts-chart-tooltip\_\_title]:text-xs [&_.ts-chart-tooltip\_\_title]:text-muted-foreground [&_.ts-chart-tooltip\_\_rows]:grid [&_.ts-chart-tooltip\_\_rows]:gap-0.5 [&_.ts-chart-tooltip\_\_row]:-mx-1.5 [&_.ts-chart-tooltip\_\_row]:gap-x-3! [&_.ts-chart-tooltip\_\_row]:px-1.5 [&_.ts-chart-tooltip\_\_row]:py-0.5 [&_.ts-chart-tooltip\_\_row>span:nth-child(2)]:text-muted-foreground [&_.ts-chart-tooltip\_\_row>span:last-child]:font-semibold`,
+        String.raw`[&_.ts-chart\_\_interactive-legend_button]:rounded-md! [&_.ts-chart\_\_interactive-legend_button]:border-transparent! [&_.ts-chart\_\_interactive-legend_button]:bg-transparent! [&_.ts-chart\_\_interactive-legend_button]:px-2.5! [&_.ts-chart\_\_interactive-legend_button]:[font-family:inherit]! [&_.ts-chart\_\_interactive-legend_button]:text-xs! [&_.ts-chart\_\_interactive-legend_button]:leading-none! [&_.ts-chart\_\_interactive-legend_button]:font-medium! [&_.ts-chart\_\_interactive-legend_button]:text-muted-foreground! [&_.ts-chart\_\_interactive-legend_button]:transition-colors [&_.ts-chart\_\_interactive-legend_button]:duration-150 [&_.ts-chart\_\_interactive-legend_button[aria-pressed=true]]:text-foreground! [&_.ts-chart\_\_interactive-legend_button:hover]:bg-accent! [&_.ts-chart\_\_interactive-legend_button:focus-visible]:outline-2 [&_.ts-chart\_\_interactive-legend_button:focus-visible]:outline-solid [&_.ts-chart\_\_interactive-legend_button:focus-visible]:outline-offset-0 [&_.ts-chart\_\_interactive-legend_button:focus-visible]:outline-ring`,
         className,
       )}
       style={{ ...chartStyle, ...style }}
@@ -146,18 +151,24 @@ export type ChartProps<
   children?: ReactNode;
 };
 
-export function Chart<
+export type TooltipChartProps<
   TDatum,
   TXValue extends ChartAxisValue = ChartAxisValue,
   TYValue extends ChartAxisValue = ChartAxisValue,
->({
-  renderer = chartMotion,
+> = Omit<TooltipRendererChartProps<TDatum, TXValue, TYValue>, "renderer"> & {
+  renderer?: TooltipRendererChartProps<TDatum, TXValue, TYValue>["renderer"];
+  children?: ReactNode;
+};
+
+function ChartShell({
+  animated,
   children,
-  ...props
-}: ChartProps<TDatum, TXValue, TYValue>) {
+}: {
+  animated: boolean;
+  children: (entrance: ChartEntrance) => ReactNode;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const [entrance, setEntrance] = useState<ChartEntrance>("idle");
-  const animated = renderer.id === chartMotion.id;
 
   useEffect(() => {
     const element = ref.current;
@@ -197,13 +208,74 @@ export function Chart<
       data-entrance={animated ? entrance : "idle"}
       className="relative transition-opacity duration-250 ease-out-quint data-[entrance=waiting]:opacity-0 data-[entrance=waiting]:transition-none print:data-[entrance=waiting]:opacity-100"
     >
-      <RendererChart
-        key={entrance === "replay" ? "replay" : "initial"}
-        renderer={renderer}
-        {...props}
-      />
-      {children}
+      {children(entrance)}
     </div>
+  );
+}
+
+export function Chart<
+  TDatum,
+  TXValue extends ChartAxisValue = ChartAxisValue,
+  TYValue extends ChartAxisValue = ChartAxisValue,
+>({
+  renderer = chartMotion,
+  children,
+  ...props
+}: ChartProps<TDatum, TXValue, TYValue>) {
+  const animated = renderer.id === chartMotion.id;
+
+  return (
+    <ChartShell animated={animated}>
+      {(entrance) => (
+        <>
+          <RendererChart
+            key={entrance === "replay" ? "replay" : "initial"}
+            renderer={renderer}
+            {...props}
+          />
+          {children}
+        </>
+      )}
+    </ChartShell>
+  );
+}
+
+export function TooltipChart<
+  TDatum,
+  TXValue extends ChartAxisValue = ChartAxisValue,
+  TYValue extends ChartAxisValue = ChartAxisValue,
+>({
+  renderer = chartMotion,
+  renderTooltipBody,
+  children,
+  ...props
+}: TooltipChartProps<TDatum, TXValue, TYValue>) {
+  const animated = renderer.id === chartMotion.id;
+
+  return (
+    <ChartShell animated={animated}>
+      {(entrance) => (
+        <>
+          <TooltipRendererChart<TDatum, TXValue, TYValue>
+            key={entrance === "replay" ? "replay" : "initial"}
+            renderer={renderer}
+            renderTooltipBody={
+              renderTooltipBody &&
+              ((context) => (
+                <div
+                  data-slot="chart-tooltip"
+                  className="w-max max-w-(--ts-chart-tooltip-max-width) min-w-36 rounded-(--ts-chart-tooltip-border-radius) border border-border bg-(--ts-chart-tooltip-background) p-(--ts-chart-tooltip-padding) [font:var(--ts-chart-tooltip-font)] text-(--ts-chart-tooltip-color) shadow-(--ts-chart-tooltip-shadow)"
+                >
+                  {renderTooltipBody(context)}
+                </div>
+              ))
+            }
+            {...props}
+          />
+          {children}
+        </>
+      )}
+    </ChartShell>
   );
 }
 

@@ -36,6 +36,8 @@ const bars = [
 ];
 
 const typePackages: Record<string, string> = {
+  "d3-geo": "@types/d3-geo",
+  "d3-scale": "@types/d3-scale",
   "d3-shape": "@types/d3-shape",
 };
 

@@ -14,10 +14,12 @@ import type {
   ChartFrame,
   ChartLegendItem,
   ChartTable,
+  TooltipChart,
 } from "@/components/ui/chart";
 import { apiPart } from "@/lib/component-api";
 import { registryUrl } from "@/lib/registry-docs";
 import { cn } from "@/lib/utils";
+import { ChartCoverage } from "./chart-coverage";
 
 const usage = `"use client";
 
@@ -79,6 +81,57 @@ const motionOff = `import { svgChartRenderer } from "@tanstack/charts/svg/render
   renderer={svgChartRenderer}
   ariaLabel="Weekly revenue"
 />`;
+
+const canvas = `import { canvasChartRenderer } from "@tanstack/charts/canvas";
+
+<Chart
+  definition={definition}
+  renderer={canvasChartRenderer}
+  ariaLabel="Large scatterplot"
+/>`;
+
+const staticSvg = `import { createChartRuntime, renderChartSvg } from "@tanstack/charts";
+
+const runtime = createChartRuntime();
+const scene = runtime.render(definition, { width: 720, height: 320 });
+const svg = renderChartSvg(scene, { ariaLabel: "Weekly revenue" });
+runtime.destroy();`;
+
+const crosshair = `import { crosshair } from "@tanstack/charts/crosshair";
+
+const definition = defineChart({
+  marks: [
+    lineY(rows, { x: "date", y: "value" }),
+    crosshair({ x: { label: true }, y: false }),
+  ],
+  scales: {
+    x: { scale: scaleUtc },
+    y: { scale: scaleLinear },
+  },
+  focus: "group-x",
+});`;
+
+const timeScale = `import { scaleUtc } from "d3-scale";
+import { scaleLinear } from "@tanstack/charts/scales/linear";
+
+const definition = defineChart({
+  marks: [lineY(rows, { x: "date", y: "value" })],
+  scales: {
+    x: { scale: scaleUtc, nice: true },
+    y: { scale: scaleLinear, nice: true },
+  },
+});`;
+
+const tooltipBody = `import { TooltipChart } from "@/components/vip-ui/chart";
+
+<TooltipChart
+  definition={definition}
+  ariaLabel="Daily energy use"
+  renderTooltipBody={({ defaultBody, pinned, dismiss }) => (
+    <EnergyTooltip body={defaultBody} expanded={pinned} onClose={dismiss} />
+  )}
+/>`;
+
 const composition: CompositionPart[] = [
   {
     part: "ChartFrame",
@@ -178,6 +231,19 @@ const api = [
         name: "children",
         type: "ReactNode",
         description: "Content on top of the plot, such as ChartCenter.",
+      },
+    ],
+  }),
+  apiPart<typeof TooltipChart>({
+    name: "TooltipChart",
+    description:
+      "Chart with the TanStack React tooltip body bridge. Use renderTooltipBody for pinned React content. Accepts the same props as Chart.",
+    props: [
+      {
+        name: "renderTooltipBody",
+        type: "(context) => ReactNode",
+        description:
+          "Receives points, defaultBody, pinned, and dismiss. Keep controls visible only while pinned.",
       },
     ],
   }),
@@ -340,6 +406,70 @@ export async function ChartDocumentation() {
           </section>
 
           <section
+            id="rendering"
+            aria-labelledby="chart-rendering"
+            className="scroll-mt-8"
+          >
+            <VisibleSectionHeading id="chart-rendering">
+              Rendering
+            </VisibleSectionHeading>
+            <Note className="mb-4">
+              Chart uses the SVG renderer and the shared motion renderer. Pass
+              another TanStack renderer for Canvas or for a fixed SVG output.
+            </Note>
+            <CodeBlock code={canvas} filename="large-scatterplot.tsx" />
+            <Note className="mb-4 mt-6">
+              Use the TanStack runtime when SVG is generated without a browser.
+              The generated string is suitable for email, static pages, or image
+              export.
+            </Note>
+            <CodeBlock code={staticSvg} filename="static-chart.ts" />
+          </section>
+
+          <section
+            id="interaction"
+            aria-labelledby="chart-interaction"
+            className="scroll-mt-8"
+          >
+            <VisibleSectionHeading id="chart-interaction">
+              Interaction
+            </VisibleSectionHeading>
+            <Note className="mb-4">
+              Use a crosshair for a snapped guide. Use controlled controls for
+              zoom, brush, and selection. The gallery has live examples for
+              each.
+            </Note>
+            <CodeBlock code={crosshair} filename="crosshair-chart.tsx" />
+            <Note className="mb-4 mt-6">
+              Tooltip content can stay inside the chart definition. Use{" "}
+              <code>TooltipChart</code> when the pinned body needs React
+              controls, nested charts, or a portal.
+            </Note>
+            <CodeBlock code={tooltipBody} filename="energy-tooltip.tsx" />
+          </section>
+
+          <section
+            id="scales"
+            aria-labelledby="chart-scales"
+            className="scroll-mt-8"
+          >
+            <VisibleSectionHeading id="chart-scales">
+              Scales and data
+            </VisibleSectionHeading>
+            <Note className="mb-4">
+              Use compact scales for ordinary numbers and categories. Upgrade
+              only the mapping that needs D3 semantics, such as UTC time,
+              logarithmic values, or a sequential color ramp.
+            </Note>
+            <CodeBlock code={timeScale} filename="time-series.ts" />
+            <Note className="mb-4 mt-6">
+              TanStack transforms prepare rows before the marks. The gallery
+              uses bin, fold, group, rank, normalize, cumulative, rolling
+              window, mosaic, waterfall, tree, and force layouts.
+            </Note>
+          </section>
+
+          <section
             id="theming"
             aria-labelledby="chart-theming"
             className="scroll-mt-8"
@@ -382,6 +512,21 @@ export async function ChartDocumentation() {
             </ul>
           </section>
 
+          <section
+            id="coverage"
+            aria-labelledby="chart-coverage"
+            className="scroll-mt-8"
+          >
+            <VisibleSectionHeading id="chart-coverage">
+              Coverage
+            </VisibleSectionHeading>
+            <Note className="mb-6">
+              The gallery covers the TanStack Charts authoring surface below.
+              The linked example shows the API in a complete chart.
+            </Note>
+            <ChartCoverage />
+          </section>
+
           <section id="api" aria-labelledby="chart-api" className="scroll-mt-8">
             <div className="mb-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
               <h2
@@ -416,6 +561,20 @@ export async function ChartDocumentation() {
 function SectionHeading({ id, children }: { id: string; children: string }) {
   return (
     <h2 id={id} className="sr-only">
+      {children}
+    </h2>
+  );
+}
+
+function VisibleSectionHeading({
+  id,
+  children,
+}: {
+  id: string;
+  children: string;
+}) {
+  return (
+    <h2 id={id} className="mb-4 text-[23px] font-semibold tracking-[-0.045em]">
       {children}
     </h2>
   );

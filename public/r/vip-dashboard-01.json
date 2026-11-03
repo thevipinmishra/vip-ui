@@ -5,7 +5,7 @@
   "title": "Dashboard 01",
   "description": "A dashboard with a sidebar, key metrics, a revenue chart, and recent orders.",
   "categories": ["dashboard"],
-  "dependencies": ["@phosphor-icons/react@^2.1.10", "@tanstack/charts@^1.2.0"],
+  "dependencies": ["@phosphor-icons/react@^2.1.10", "@tanstack/charts@^1.2.1"],
   "registryDependencies": [
     "https://vip-ui.dev/r/vip-avatar.json",
     "https://vip-ui.dev/r/vip-badge.json",
