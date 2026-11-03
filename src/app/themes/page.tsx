@@ -1,15 +1,17 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { ThemeGallery } from "./theme-gallery";
 import { ThemeInstall } from "./theme-install";
 import { ThemeShowcase } from "./theme-showcase";
 import { ThemeStudio } from "./theme-studio";
 import { findTheme, pageThemeCss, specimenCss, themes } from "./themes";
 
-export const metadata: Metadata = {
-  title: "Themes | vip/ui",
+export const metadata = pageMetadata({
+  title: "Themes",
   description:
-    "Ten themes made from the vip/ui color scales, with a live preview on real product screens. Copy the CSS into any shadcn/ui project.",
-};
+    "Ten themes built from the vip/ui color scales, with a live preview on real product screens. Copy the CSS into any shadcn/ui project.",
+  path: "/themes",
+  image: "file",
+});
 
 const pageCss = Object.fromEntries(
   themes.map((theme) => [theme.slug, pageThemeCss(theme)]),

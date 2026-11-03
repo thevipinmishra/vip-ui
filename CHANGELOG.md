@@ -57,7 +57,7 @@ Concise, user-visible changes. Versions track site releases, not a published npm
 
 ### Registry
 
-- Each registry item contains only its own file. Items get shared files and other components through `registryDependencies`, with full URLs. See `docs/registry.md`.
+- Each registry item contains only its own file. Items get shared files and other components through `registryDependencies`, with full URLs.
 - New items `vip-utils` and `vip-motion` contain `utils.ts` and `motion.ts`. New item `vip-size` holds the shared size type and group context.
 - When you add a second component, the CLI does not write shared files again and does not replace them.
 - You can add the `@vip-ui` namespace to `components.json` and add items by name, for example `@vip-ui/vip-button`.

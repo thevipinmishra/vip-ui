@@ -1,80 +1,312 @@
 {
   "categories": [
-    { "slug": "dashboard", "label": "Dashboard" },
-    { "slug": "authentication", "label": "Authentication" },
-    { "slug": "settings", "label": "Settings" },
-    { "slug": "marketing", "label": "Marketing" },
-    { "slug": "application", "label": "Application" }
+    {
+      "slug": "dashboard",
+      "label": "Dashboard"
+    },
+    {
+      "slug": "data",
+      "label": "Data"
+    },
+    {
+      "slug": "ai",
+      "label": "AI"
+    },
+    {
+      "slug": "authentication",
+      "label": "Authentication"
+    },
+    {
+      "slug": "onboarding",
+      "label": "Onboarding"
+    },
+    {
+      "slug": "settings",
+      "label": "Settings"
+    },
+    {
+      "slug": "marketing",
+      "label": "Marketing"
+    },
+    {
+      "slug": "commerce",
+      "label": "Commerce"
+    },
+    {
+      "slug": "scheduling",
+      "label": "Scheduling"
+    },
+    {
+      "slug": "workspace",
+      "label": "Workspace"
+    }
   ],
   "blocks": [
     {
       "name": "dashboard-01",
+      "title": "Store dashboard",
       "description": "A dashboard with a sidebar, key metrics, a revenue chart, and recent orders.",
       "category": "dashboard",
-      "height": 940,
-      "featured": true
+      "height": 1200
     },
     {
       "name": "stats-01",
+      "title": "Metric cards",
       "description": "Metric cards that change with the selected period.",
       "category": "dashboard",
       "height": 410
     },
     {
+      "name": "dashboard-02",
+      "title": "SaaS analytics",
+      "description": "Analytics dashboard with date ranges, tabs, charts, and a target.",
+      "category": "dashboard",
+      "height": 1310
+    },
+    {
+      "name": "status-01",
+      "title": "Service status",
+      "description": "Public status page with uptime bars and incident updates.",
+      "category": "dashboard",
+      "height": 1545
+    },
+    {
+      "name": "orders-01",
+      "title": "Store orders",
+      "description": "Order list with filters, bulk actions, and details.",
+      "category": "data",
+      "height": 940
+    },
+    {
+      "name": "order-01",
+      "title": "Order detail",
+      "description": "Order with line items, fulfillment history, and a refund.",
+      "category": "data",
+      "height": 1160
+    },
+    {
+      "name": "chat-01",
+      "title": "Assistant chat",
+      "description": "Assistant chat that reads metrics and cites its sources.",
+      "category": "ai",
+      "height": 720
+    },
+    {
+      "name": "agent-01",
+      "title": "Agent run",
+      "description": "Live agent run with tool calls, progress, and a stop action.",
+      "category": "ai",
+      "height": 1365
+    },
+    {
+      "name": "ai-search-01",
+      "title": "Answer search",
+      "description": "Docs search that answers the question and lists sources.",
+      "category": "ai",
+      "height": 1250
+    },
+    {
       "name": "login-01",
+      "title": "Sign in",
       "description": "A sign-in form in a card.",
       "category": "authentication",
       "height": 690
     },
     {
       "name": "login-02",
+      "title": "Sign in with a link",
       "description": "A two-column sign-in page with an email link and a brand panel.",
       "category": "authentication",
-      "height": 700,
-      "featured": true
+      "height": 700
     },
     {
       "name": "signup-01",
+      "title": "Sign up",
       "description": "A sign-up form with a password strength meter.",
       "category": "authentication",
       "height": 820
     },
     {
+      "name": "verify-01",
+      "title": "Two-step code",
+      "description": "Two-step code check with a resend timer and recovery code.",
+      "category": "authentication",
+      "height": 589
+    },
+    {
+      "name": "reset-01",
+      "title": "Reset password",
+      "description": "Password reset form with a sent state and a resend option.",
+      "category": "authentication",
+      "height": 663
+    },
+    {
+      "name": "onboarding-01",
+      "title": "Workspace setup",
+      "description": "Three-step workspace setup with a live preview.",
+      "category": "onboarding",
+      "height": 870
+    },
+    {
+      "name": "checklist-01",
+      "title": "Getting started",
+      "description": "Six-task checklist that fills a progress ring.",
+      "category": "onboarding",
+      "height": 860
+    },
+    {
       "name": "settings-01",
+      "title": "Profile settings",
       "description": "A profile form with a save bar for unsaved changes.",
+      "category": "settings",
+      "height": 1088
+    },
+    {
+      "name": "settings-02",
+      "title": "Notification settings",
+      "description": "Notification settings for each event and channel.",
       "category": "settings",
       "height": 900
     },
     {
-      "name": "settings-02",
-      "description": "Notification settings for each event and channel.",
+      "name": "billing-01",
+      "title": "Billing",
+      "description": "A plan picker with usage meters and a payment method.",
+      "category": "settings",
+      "height": 890
+    },
+    {
+      "name": "security-01",
+      "title": "Security settings",
+      "description": "Password, two-step sign-in, and session settings.",
+      "category": "settings",
+      "height": 1210
+    },
+    {
+      "name": "appearance-01",
+      "title": "Appearance settings",
+      "description": "Theme, accent color, font, and motion settings.",
+      "category": "settings",
+      "height": 1250
+    },
+    {
+      "name": "api-keys-01",
+      "title": "API keys",
+      "description": "API key list with scopes, expiry dates, and revoke actions.",
       "category": "settings",
       "height": 760
     },
     {
-      "name": "billing-01",
-      "description": "A plan picker with usage meters and a payment method.",
+      "name": "integrations-01",
+      "title": "Connected apps",
+      "description": "App directory with categories, connections, and access review.",
       "category": "settings",
-      "height": 850
+      "height": 1105
+    },
+    {
+      "name": "landing-01",
+      "title": "Product landing page",
+      "description": "Product landing page with features, plans, and social proof.",
+      "category": "marketing",
+      "height": 3605
     },
     {
       "name": "pricing-01",
+      "title": "Pricing plans",
       "description": "Pricing plans with a monthly and yearly toggle.",
       "category": "marketing",
-      "height": 860,
-      "featured": true
+      "height": 972
+    },
+    {
+      "name": "pricing-02",
+      "title": "Plan comparison",
+      "description": "Plan comparison with a seat calculator and feature table.",
+      "category": "marketing",
+      "height": 3295
+    },
+    {
+      "name": "changelog-01",
+      "title": "Release notes",
+      "description": "Release notes with type filters, search, and a timeline.",
+      "category": "marketing",
+      "height": 1575
+    },
+    {
+      "name": "contact-01",
+      "title": "Contact sales",
+      "description": "Sales contact form with validation and a success state.",
+      "category": "marketing",
+      "height": 1195
+    },
+    {
+      "name": "not-found-01",
+      "title": "Page not found",
+      "description": "404 page with search, suggested pages, and articles.",
+      "category": "marketing",
+      "height": 960
+    },
+    {
+      "name": "product-01",
+      "title": "Product detail",
+      "description": "Product page with variants, reviews, and a cart.",
+      "category": "commerce",
+      "height": 1460
+    },
+    {
+      "name": "checkout-01",
+      "title": "Checkout",
+      "description": "Checkout with delivery options, promo code, and card payment.",
+      "category": "commerce",
+      "height": 860
+    },
+    {
+      "name": "booking-01",
+      "title": "Book a meeting",
+      "description": "Booking page with a calendar, time slots, and a time zone.",
+      "category": "scheduling",
+      "height": 820
+    },
+    {
+      "name": "availability-01",
+      "title": "Weekly availability",
+      "description": "Weekly hours editor with time off and a booking window.",
+      "category": "scheduling",
+      "height": 1400
     },
     {
       "name": "team-01",
+      "title": "Team members",
       "description": "A team list with invites, roles, and member actions.",
-      "category": "application",
+      "category": "workspace",
       "height": 680
     },
     {
       "name": "upload-01",
+      "title": "File upload",
       "description": "A file upload area with progress for each file.",
-      "category": "application",
+      "category": "workspace",
       "height": 680
+    },
+    {
+      "name": "files-01",
+      "title": "File manager",
+      "description": "File manager with folders, uploads, and file details.",
+      "category": "workspace",
+      "height": 890
+    },
+    {
+      "name": "issue-01",
+      "title": "Issue detail",
+      "description": "Issue with properties, comments, and keyboard shortcuts.",
+      "category": "workspace",
+      "height": 1615
+    },
+    {
+      "name": "inbox-01",
+      "title": "Support inbox",
+      "description": "Support inbox with queues, snooze, and replies.",
+      "category": "workspace",
+      "height": 850
     }
   ]
 }

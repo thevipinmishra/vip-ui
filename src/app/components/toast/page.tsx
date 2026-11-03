@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -9,11 +8,13 @@ import { ToastStackDemo } from "@/components/docs/toast-stack-demo";
 import { ToastStatusDemo } from "@/components/docs/toast-status-demo";
 import { ToastTimeoutDemo } from "@/components/docs/toast-timeout-demo";
 import { componentPageData } from "@/lib/component-examples";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Toast | vip/ui",
-  description: componentPageData.toast.description,
-};
+export const metadata = pageMetadata({
+  title: "Toast",
+  description: `${componentPageData.toast.description} Examples cover status variants, actions, stacking, timeouts, and screen reader announcements.`,
+  path: "/components/toast",
+});
 
 export default function ToastPage() {
   const page = componentPageData.toast;

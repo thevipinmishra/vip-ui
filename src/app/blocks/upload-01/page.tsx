@@ -1,9 +1,7 @@
-import type { Metadata } from "next";
+import { blockMetadata } from "@/lib/block-seo";
 import { FileUpload } from "./file-upload";
 
-export const metadata: Metadata = {
-  title: "Upload files",
-};
+export const metadata = blockMetadata("upload-01");
 
 export default function UploadPage() {
   return (

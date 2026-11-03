@@ -6,11 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Link } from "@/components/ui/link";
 import { Separator } from "@/components/ui/separator";
+import { Spinner } from "@/components/ui/spinner";
 import { TextField } from "@/components/ui/text-field";
 
 export function EmailLinkForm() {
   const [sentTo, setSentTo] = useState<string | null>(null);
   const [resends, setResends] = useState(0);
+  const [pending, setPending] = useState(false);
 
   if (sentTo) {
     return (
@@ -47,9 +49,13 @@ export function EmailLinkForm() {
     <Form
       onSubmit={(event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        setResends(0);
-        setSentTo(String(data.get("email")));
+        const email = String(new FormData(event.currentTarget).get("email"));
+        setPending(true);
+        window.setTimeout(() => {
+          setPending(false);
+          setResends(0);
+          setSentTo(email);
+        }, 800);
       }}
     >
       <div className="grid gap-2 text-center">
@@ -68,7 +74,8 @@ export function EmailLinkForm() {
         placeholder="you@company.com"
         isRequired
       />
-      <Button type="submit" className="w-full">
+      <Button type="submit" className="w-full" isPending={pending}>
+        {pending && <Spinner size="sm" decorative />}
         Email me a link
       </Button>
       <div className="flex items-center gap-3 text-xs text-muted-foreground">

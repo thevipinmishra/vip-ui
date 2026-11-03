@@ -1,37 +1,49 @@
 import type { MetadataRoute } from "next";
-import { blockCategories } from "@/lib/blocks";
 import { catalogComponents } from "@/lib/catalog";
 import { docsGuides } from "@/lib/navigation";
 import { siteUrl } from "@/lib/site-url";
 
-const staticRoutes = [
-  { path: "", priority: 1 },
-  { path: "/components", priority: 0.9 },
-  ...docsGuides.map((guide) => ({ path: guide.href, priority: 0.8 })),
-  { path: "/themes", priority: 0.8 },
-  { path: "/colors", priority: 0.8 },
-  { path: "/charts", priority: 0.8 },
-  { path: "/blocks", priority: 0.8 },
-  { path: "/license", priority: 0.3 },
+type ChangeFrequency = NonNullable<
+  MetadataRoute.Sitemap[number]["changeFrequency"]
+>;
+
+interface SitemapRoute {
+  path: string;
+  changeFrequency: ChangeFrequency;
+  priority: number;
+}
+
+const staticRoutes: SitemapRoute[] = [
+  { path: "", changeFrequency: "weekly", priority: 1 },
+  { path: "/components", changeFrequency: "weekly", priority: 0.9 },
+  ...docsGuides.map(
+    (guide): SitemapRoute => ({
+      path: guide.href,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    }),
+  ),
+  { path: "/themes", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/colors", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/charts", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/blocks", changeFrequency: "weekly", priority: 0.8 },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteUrl();
+  const absolute = (path: string) =>
+    path ? `${base}/${path.replace(/^\/+/, "")}` : base;
+
   return [
     ...staticRoutes.map((route) => ({
-      url: `${base}${route.path}`,
-      changeFrequency: "weekly" as const,
+      url: absolute(route.path),
+      changeFrequency: route.changeFrequency,
       priority: route.priority,
     })),
     ...catalogComponents.map((component) => ({
-      url: `${base}/components/${component.slug}`,
+      url: absolute(`/components/${component.slug}`),
       changeFrequency: "monthly" as const,
       priority: 0.7,
-    })),
-    ...blockCategories.map((category) => ({
-      url: `${base}/blocks/${category.slug}`,
-      changeFrequency: "monthly" as const,
-      priority: 0.6,
     })),
   ];
 }

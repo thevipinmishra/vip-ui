@@ -17,10 +17,20 @@ import { Form } from "../../../components/vip-ui/form";
 import { Link } from "../../../components/vip-ui/link";
 import { PasswordField } from "../../../components/vip-ui/password-field";
 import { Separator } from "../../../components/vip-ui/separator";
+import { Spinner } from "../../../components/vip-ui/spinner";
 import { TextField } from "../../../components/vip-ui/text-field";
 
 export function LoginForm() {
   const [account, setAccount] = useState<string | null>(null);
+  const [pending, setPending] = useState<string | null>(null);
+
+  function signIn(method: string, email: string) {
+    setPending(method);
+    window.setTimeout(() => {
+      setPending(null);
+      setAccount(email);
+    }, 800);
+  }
 
   return (
     <Card>
@@ -33,23 +43,43 @@ export function LoginForm() {
       <CardContent>
         {account ? (
           <Alert variant="success" title="You are signed in" role="status">
-            The account {account} is active on this device.
+            Account: {account}
           </Alert>
         ) : (
           <Form
             onSubmit={(event) => {
               event.preventDefault();
               const data = new FormData(event.currentTarget);
-              setAccount(String(data.get("email")));
+              signIn("email", String(data.get("email")));
             }}
           >
             <div className="grid grid-cols-2 gap-3">
-              <Button variant="outline" className="w-full">
-                <GithubLogoIcon size={16} aria-hidden="true" />
+              <Button
+                variant="outline"
+                className="w-full"
+                isPending={pending === "github"}
+                isDisabled={pending !== null && pending !== "github"}
+                onPress={() => signIn("github", "maya@northwind.com")}
+              >
+                {pending === "github" ? (
+                  <Spinner size="sm" decorative />
+                ) : (
+                  <GithubLogoIcon size={16} aria-hidden="true" />
+                )}
                 GitHub
               </Button>
-              <Button variant="outline" className="w-full">
-                <GoogleLogoIcon size={16} aria-hidden="true" />
+              <Button
+                variant="outline"
+                className="w-full"
+                isPending={pending === "google"}
+                isDisabled={pending !== null && pending !== "google"}
+                onPress={() => signIn("google", "maya@northwind.com")}
+              >
+                {pending === "google" ? (
+                  <Spinner size="sm" decorative />
+                ) : (
+                  <GoogleLogoIcon size={16} aria-hidden="true" />
+                )}
                 Google
               </Button>
             </div>
@@ -75,7 +105,13 @@ export function LoginForm() {
                 Forgot password?
               </Link>
             </div>
-            <Button type="submit" className="w-full">
+            <Button
+              type="submit"
+              className="w-full"
+              isPending={pending === "email"}
+              isDisabled={pending !== null && pending !== "email"}
+            >
+              {pending === "email" && <Spinner size="sm" decorative />}
               Sign in
             </Button>
           </Form>

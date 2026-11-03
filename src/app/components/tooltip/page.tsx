@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -7,11 +6,13 @@ import { TooltipActionsDemo } from "@/components/docs/tooltip-actions-demo";
 import { TooltipDemo } from "@/components/docs/tooltip-demo";
 import { TooltipPlacementDemo } from "@/components/docs/tooltip-placement-demo";
 import { componentPageData } from "@/lib/component-examples";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Tooltip | vip/ui",
-  description: componentPageData.tooltip.description,
-};
+export const metadata = pageMetadata({
+  title: "Tooltip",
+  description: `${componentPageData.tooltip.description} Examples cover placement, arrows, and tooltips on icon buttons.`,
+  path: "/components/tooltip",
+});
 
 export default function TooltipPage() {
   const page = componentPageData.tooltip;

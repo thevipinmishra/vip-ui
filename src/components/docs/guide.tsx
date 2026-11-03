@@ -8,6 +8,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { Breadcrumb, Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { type Guide, guideNeighbors, type NavLink } from "@/lib/navigation";
+import { pageMetadata } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
 export const textLinkClass =
@@ -150,12 +151,18 @@ export function DocsPager({
   );
 }
 
+const guideSeoDescriptions: Partial<Record<Guide["href"], string>> = {
+  "/components/installation":
+    "Set up your project, then add components with the shadcn CLI or copy the files. Tailwind CSS v4, React Aria, and Motion are configured for you.",
+};
+
 export function guideMetadata(href: Guide["href"]): Metadata {
   const { guide } = guideNeighbors(href);
-  return {
-    title: `${guide.label} | vip/ui`,
-    description: guide.description,
-  };
+  return pageMetadata({
+    title: guide.label,
+    description: guideSeoDescriptions[href] ?? guide.description,
+    path: href,
+  });
 }
 
 export function GuidePage({

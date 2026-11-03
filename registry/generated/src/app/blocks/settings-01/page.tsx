@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
 import { ProfileForm } from "./profile-form";
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Profile settings",
+  description: "A profile form with a save bar for unsaved changes.",
 };
 
 const sections = ["Profile", "Account", "Notifications", "Billing"];

@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
 import { BrandPanel } from "./brand-panel";
 import { EmailLinkForm } from "./email-link-form";
 
-export const metadata: Metadata = {
-  title: "Sign in",
+export const metadata = {
+  title: "Sign in with a link",
+  description: "A two-column sign-in page with an email link and a brand panel.",
 };
 
 export default function LoginPage() {

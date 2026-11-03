@@ -13,6 +13,7 @@
     "test:registry": "node --test scripts/generate-registry.test.mjs",
     "test:registry:cli": "node scripts/test-registry-cli.mjs",
     "test:dialog": "playwright test tests/dialog.spec.ts",
+    "seo:audit": "node scripts/seo-audit.mjs",
     "start": "next start",
     "lint": "biome check",
     "format": "biome format --write"
@@ -20,7 +21,7 @@
   "dependencies": {
     "@internationalized/date": "^3.12.4",
     "@phosphor-icons/react": "^2.1.10",
-    "@tanstack/charts": "^1.1.0",
+    "@tanstack/charts": "^1.2.0",
     "@tanstack/react-table": "^9.3.1",
     "@vercel/analytics": "^2.0.1",
     "@zag-js/react": "^1.47.0",
@@ -41,7 +42,7 @@
     "@playwright/test": "1.64.1",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/d3-shape": "^3.2.0",
-    "@types/node": "^24.19.2",
+    "@types/node": "^26.6.6",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "babel-plugin-react-compiler": "1.0.0",

@@ -1,9 +1,7 @@
-import type { Metadata } from "next";
+import { blockMetadata } from "@/lib/block-seo";
 import { ProfileForm } from "./profile-form";
 
-export const metadata: Metadata = {
-  title: "Profile settings",
-};
+export const metadata = blockMetadata("settings-01");
 
 const sections = ["Profile", "Account", "Notifications", "Billing"];
 

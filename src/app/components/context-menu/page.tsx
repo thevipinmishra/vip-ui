@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -6,11 +5,13 @@ import {
 import { ContextMenuDemo } from "@/components/docs/context-menu-demo";
 import { ContextMenuGroupedDemo } from "@/components/docs/context-menu-grouped-demo";
 import { componentPageData } from "@/lib/component-examples";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Context menu | vip/ui",
-  description: componentPageData["context-menu"].description,
-};
+export const metadata = pageMetadata({
+  title: "Context menu",
+  description: `${componentPageData["context-menu"].description} Examples cover grouped actions, with installation and the full API reference.`,
+  path: "/components/context-menu",
+});
 
 export default function ContextMenuPage() {
   const page = componentPageData["context-menu"];

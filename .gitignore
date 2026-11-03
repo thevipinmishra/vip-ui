@@ -24,9 +24,7 @@
 !/CONTRIBUTING.md
 !/SECURITY.md
 !/.github/**
-/docs/*
-!/docs/registry.md
-!/docs/styling.md
+/docs/
 
 /tests/
 /playwright.config.ts

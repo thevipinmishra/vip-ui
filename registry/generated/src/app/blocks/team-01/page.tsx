@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
 import { TeamMembers } from "./team-members";
 
-export const metadata: Metadata = {
-  title: "Team",
+export const metadata = {
+  title: "Team members",
+  description: "A team list with invites, roles, and member actions.",
 };
 
 export default function TeamPage() {

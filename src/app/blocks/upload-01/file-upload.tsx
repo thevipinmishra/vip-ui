@@ -20,6 +20,7 @@ import {
   DropZoneLabel,
 } from "@/components/ui/drop-zone";
 import { FileTrigger } from "@/components/ui/file-trigger";
+import { showToast } from "@/components/ui/toast";
 
 const acceptedTypes = ["image/png", "image/jpeg", "application/pdf"];
 const maxSize = 10 * 1024 * 1024;
@@ -168,7 +169,18 @@ export function FileUpload() {
         <p className="text-sm text-muted-foreground">
           {done} of {uploads.length} uploaded
         </p>
-        <Button isDisabled={uploading || uploads.length === 0}>Done</Button>
+        <Button
+          isDisabled={uploading || uploads.length === 0}
+          onPress={() => {
+            showToast({
+              title: `${uploads.length} ${uploads.length === 1 ? "file is" : "files are"} in Campaign`,
+              variant: "success",
+            });
+            setUploads([]);
+          }}
+        >
+          Done
+        </Button>
       </CardFooter>
     </Card>
   );

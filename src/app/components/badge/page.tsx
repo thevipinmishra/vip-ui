@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { BadgeBasicDemo } from "@/components/docs/badge-basic-demo";
 import { BadgeDemo } from "@/components/docs/badge-demo";
 import { BadgeVariantsDemo } from "@/components/docs/badge-variants-demo";
@@ -7,11 +6,13 @@ import {
   withExamplePreviews,
 } from "@/components/docs/component-page";
 import { componentPageData } from "@/lib/component-examples";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Badge | vip/ui",
-  description: componentPageData.badge.description,
-};
+export const metadata = pageMetadata({
+  title: "Badge",
+  description: `${componentPageData.badge.description} Live examples cover each variant and the dot indicator, plus installation and the API reference.`,
+  path: "/components/badge",
+});
 
 export default function BadgePage() {
   const page = componentPageData.badge;

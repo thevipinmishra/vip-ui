@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -6,11 +5,13 @@ import {
 import { MessageBasicDemo } from "@/components/docs/message-basic-demo";
 import { MessageDemo } from "@/components/docs/message-demo";
 import { componentPageData } from "@/lib/component-examples";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Message | vip/ui",
-  description: componentPageData.message.description,
-};
+export const metadata = pageMetadata({
+  title: "Message",
+  description: `${componentPageData.message.description} Examples cover both sides of a conversation and the system message that has no sender.`,
+  path: "/components/message",
+});
 
 export default function MessagePage() {
   const page = componentPageData.message;

@@ -1,9 +1,7 @@
-import type { Metadata } from "next";
+import { blockMetadata } from "@/lib/block-seo";
 import { BillingSettings } from "./billing-settings";
 
-export const metadata: Metadata = {
-  title: "Billing",
-};
+export const metadata = blockMetadata("billing-01");
 
 export default function BillingPage() {
   return (

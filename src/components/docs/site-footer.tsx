@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { repositoryUrl } from "./github-mark";
 
@@ -12,9 +11,7 @@ export function SiteFooter({ className }: { className?: string }) {
         <p className="flex items-center gap-1.5">
           vip/ui
           <span aria-hidden="true">·</span>
-          <Link href="/license" className={linkStyles}>
-            MIT License
-          </Link>
+          MIT License
         </p>
         <a
           href={repositoryUrl}

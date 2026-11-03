@@ -226,14 +226,22 @@ function relativeImport(from, target) {
   return relative.startsWith(".") ? relative : `./${relative}`;
 }
 
-function createRouteItem(routeDirectory, sources, routeFiles) {
+function createRouteItem(routeDirectory, sources, routeFiles, block) {
   const dependencies = new Set();
   const registryDependencies = new Set();
   const files = [];
   for (const [relative, source] of routeFiles) {
     const pathInApp = `${routeDirectory}/${relative}`;
     let content = source.replace(/\r\n/g, "\n");
-    for (const specifier of importsFrom(source)) {
+    if (relative === "page.tsx" && block) {
+      content = content
+        .replace('import { blockMetadata } from "@/lib/block-seo";\n', "")
+        .replace(
+          /export const metadata = blockMetadata\("[^"]+"\);/,
+          `export const metadata = {\n  title: ${JSON.stringify(block.title)},\n  description: ${JSON.stringify(block.description)},\n};`,
+        );
+    }
+    for (const specifier of importsFrom(content)) {
       const lib = specifier.replace(/^@\/lib\//, "");
       if (specifier.startsWith("@/components/ui/")) {
         const slug = specifier.slice("@/components/ui/".length);
@@ -305,7 +313,12 @@ export function createBlockItem(block, sources, blockFiles) {
       .join(" "),
     description: block.description,
     categories: [block.category],
-    ...createRouteItem(`src/app/blocks/${block.name}`, sources, blockFiles),
+    ...createRouteItem(
+      `src/app/blocks/${block.name}`,
+      sources,
+      blockFiles,
+      block,
+    ),
   };
 }
 

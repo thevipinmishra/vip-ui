@@ -32,7 +32,7 @@ export function EmptyStateTitle({
   as: Heading = "h3",
   className,
   ...props
-}: ComponentProps<"h3"> & { as?: "h2" | "h3" | "h4" }) {
+}: ComponentProps<"h3"> & { as?: "h1" | "h2" | "h3" | "h4" }) {
   return (
     <Heading
       data-slot="empty-state-title"

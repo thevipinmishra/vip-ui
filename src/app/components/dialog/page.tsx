@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -10,11 +9,13 @@ import { DialogFormDemo } from "@/components/docs/dialog-form-demo";
 import { DialogScrollableDemo } from "@/components/docs/dialog-scrollable-demo";
 import { DialogSizesDemo } from "@/components/docs/dialog-sizes-demo";
 import { componentPageData } from "@/lib/component-examples";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Dialog | vip/ui",
-  description: componentPageData.dialog.description,
-};
+export const metadata = pageMetadata({
+  title: "Dialog",
+  description: `${componentPageData.dialog.description} Examples cover sizes, alert dialogs, forms, scrolling, and controlled open state.`,
+  path: "/components/dialog",
+});
 
 export default function DialogPage() {
   const page = componentPageData.dialog;

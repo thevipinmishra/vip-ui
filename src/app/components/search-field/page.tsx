@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -8,11 +7,13 @@ import { SearchFieldDemo } from "@/components/docs/search-field-demo";
 import { SearchFieldDisabledDemo } from "@/components/docs/search-field-disabled-demo";
 import { SearchFieldSizesDemo } from "@/components/docs/search-field-sizes-demo";
 import { componentPageData } from "@/lib/component-examples";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Search field | vip/ui",
-  description: componentPageData["search-field"].description,
-};
+export const metadata = pageMetadata({
+  title: "Search field",
+  description: `${componentPageData["search-field"].description} Examples cover filtered results, sizes, and disabled fields, plus installation and the API reference.`,
+  path: "/components/search-field",
+});
 
 export default function SearchFieldPage() {
   const page = componentPageData["search-field"];

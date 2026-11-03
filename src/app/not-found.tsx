@@ -4,10 +4,13 @@ import Link from "next/link";
 import { SiteFooter } from "@/components/docs/site-footer";
 import { SiteHeader } from "@/components/docs/site-header";
 import { ButtonLink } from "@/components/ui/button-link";
+import { notFoundMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Page not found | vip/ui",
-};
+export const metadata: Metadata = notFoundMetadata({
+  title: "Page not found",
+  description:
+    "This address does not match a page on vip/ui. Browse the component catalog, or search with ⌘K from the header.",
+});
 
 export default function NotFound() {
   return (

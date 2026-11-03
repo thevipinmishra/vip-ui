@@ -1,5 +1,4 @@
 import { ArrowDownIcon } from "@phosphor-icons/react/dist/ssr";
-import type { Metadata } from "next";
 import Link from "next/link";
 import {
   inlineCode,
@@ -17,13 +16,16 @@ import {
 } from "@/components/docs/page-header";
 import { buttonLinkStyles } from "@/components/ui/button-styles";
 import { paletteCss, paletteTailwindCss } from "@/lib/palettes";
+import { pageMetadata } from "@/lib/seo";
 import { ColorScales } from "./color-scales";
 
-export const metadata: Metadata = {
-  title: "Colors | vip/ui",
+export const metadata = pageMetadata({
+  title: "Colors",
   description:
-    "Ten OKLCH color scales with 12 steps each, for light and dark mode. Every scale passes the same contrast checks.",
-};
+    "Ten OKLCH color scales with 12 steps each, for light and dark mode. Every scale passes the same contrast checks. Copy the CSS or Tailwind utilities.",
+  path: "/colors",
+  image: "file",
+});
 
 export default async function ColorsPage() {
   const css = paletteCss();

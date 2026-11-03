@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -9,11 +8,13 @@ import { SwitchDemo } from "@/components/docs/switch-demo";
 import { SwitchDescriptionDemo } from "@/components/docs/switch-description-demo";
 import { SwitchDisabledDemo } from "@/components/docs/switch-disabled-demo";
 import { componentPageData } from "@/lib/component-examples";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Switch | vip/ui",
-  description: componentPageData.switch.description,
-};
+export const metadata = pageMetadata({
+  title: "Switch",
+  description: `${componentPageData.switch.description} Examples cover descriptions, disabled and control-first layouts, and a custom layout.`,
+  path: "/components/switch",
+});
 
 export default function SwitchPage() {
   const page = componentPageData.switch;

@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -10,11 +9,13 @@ import { TabsOverflowDemo } from "@/components/docs/tabs-overflow-demo";
 import { TabsSizesDemo } from "@/components/docs/tabs-sizes-demo";
 import { TabsVerticalDemo } from "@/components/docs/tabs-vertical-demo";
 import { componentPageData } from "@/lib/component-examples";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Tabs | vip/ui",
-  description: componentPageData.tabs.description,
-};
+export const metadata = pageMetadata({
+  title: "Tabs",
+  description: `${componentPageData.tabs.description} Examples cover icons, disabled tabs, vertical and overflowing lists, and sizes.`,
+  path: "/components/tabs",
+});
 
 export default function TabsPage() {
   const page = componentPageData.tabs;

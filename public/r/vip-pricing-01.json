@@ -31,7 +31,7 @@
       "path": "src/app/blocks/pricing-01/page.tsx",
       "type": "registry:page",
       "target": "src/app/blocks/pricing-01/page.tsx",
-      "content": "import type { Metadata } from \"next\";\nimport { PricingPlans } from \"./pricing-plans\";\n\nexport const metadata: Metadata = {\n  title: \"Pricing\",\n};\n\nexport default function PricingPage() {\n  return (\n    <main className=\"min-h-svh bg-background px-5 py-14 sm:px-8 sm:py-20\">\n      <div className=\"mx-auto max-w-6xl\">\n        <PricingPlans />\n      </div>\n    </main>\n  );\n}\n"
+      "content": "import { PricingPlans } from \"./pricing-plans\";\n\nexport const metadata = {\n  title: \"Pricing plans\",\n  description: \"Pricing plans with a monthly and yearly toggle.\",\n};\n\nexport default function PricingPage() {\n  return (\n    <main className=\"min-h-svh bg-background px-5 py-14 sm:px-8 sm:py-20\">\n      <div className=\"mx-auto max-w-6xl\">\n        <PricingPlans />\n      </div>\n    </main>\n  );\n}\n"
     },
     {
       "path": "src/app/blocks/pricing-01/pricing-plans.tsx",

@@ -24,7 +24,7 @@
       "path": "src/app/blocks/settings-02/page.tsx",
       "type": "registry:page",
       "target": "src/app/blocks/settings-02/page.tsx",
-      "content": "import type { Metadata } from \"next\";\nimport { NotificationSettings } from \"./notification-settings\";\n\nexport const metadata: Metadata = {\n  title: \"Notification settings\",\n};\n\nexport default function NotificationsPage() {\n  return (\n    <main className=\"flex min-h-svh items-start justify-center bg-muted/40 p-6 md:p-10\">\n      <div className=\"w-full max-w-2xl\">\n        <NotificationSettings />\n      </div>\n    </main>\n  );\n}\n"
+      "content": "import { NotificationSettings } from \"./notification-settings\";\n\nexport const metadata = {\n  title: \"Notification settings\",\n  description: \"Notification settings for each event and channel.\",\n};\n\nexport default function NotificationsPage() {\n  return (\n    <main className=\"flex min-h-svh items-start justify-center bg-muted/40 p-6 md:p-10\">\n      <div className=\"w-full max-w-2xl\">\n        <NotificationSettings />\n      </div>\n    </main>\n  );\n}\n"
     }
   ]
 }

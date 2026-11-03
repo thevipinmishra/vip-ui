@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -10,11 +9,13 @@ import { RadioGroupDisabledDemo } from "@/components/docs/radio-group-disabled-d
 import { RadioGroupHorizontalDemo } from "@/components/docs/radio-group-horizontal-demo";
 import { RadioGroupRequiredDemo } from "@/components/docs/radio-group-required-demo";
 import { componentPageData } from "@/lib/component-examples";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Radio group | vip/ui",
-  description: componentPageData["radio-group"].description,
-};
+export const metadata = pageMetadata({
+  title: "Radio group",
+  description: `${componentPageData["radio-group"].description} Examples cover described options, horizontal layout, cards, and required or disabled options.`,
+  path: "/components/radio-group",
+});
 
 export default function RadioGroupPage() {
   const page = componentPageData["radio-group"];

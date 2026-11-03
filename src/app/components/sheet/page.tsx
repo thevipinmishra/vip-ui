@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -11,11 +10,13 @@ import { SheetNestedDemo } from "@/components/docs/sheet-nested-demo";
 import { SheetPlacementDemo } from "@/components/docs/sheet-placement-demo";
 import { SheetSizesDemo } from "@/components/docs/sheet-sizes-demo";
 import { componentPageData } from "@/lib/component-examples";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Sheet | vip/ui",
-  description: componentPageData.sheet.description,
-};
+export const metadata = pageMetadata({
+  title: "Sheet",
+  description: `${componentPageData.sheet.description} Examples cover sizes, inset panels, snap points, edge placement, and forms.`,
+  path: "/components/sheet",
+});
 
 export default function SheetPage() {
   const page = componentPageData.sheet;

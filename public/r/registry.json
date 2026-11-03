@@ -456,7 +456,7 @@
       "type": "registry:ui",
       "title": "Chart",
       "description": "Frames a TanStack chart with shadcn chart colors and tooltip styles.",
-      "dependencies": ["@tanstack/charts@^1.1.0"],
+      "dependencies": ["@tanstack/charts@^1.2.0"],
       "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "cssVars": {
         "theme": {
@@ -2900,7 +2900,7 @@
       "categories": ["dashboard"],
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "@tanstack/charts@^1.1.0"
+        "@tanstack/charts@^1.2.0"
       ],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-avatar.json",
@@ -2908,15 +2908,20 @@
         "https://vip-ui.dev/r/vip-button.json",
         "https://vip-ui.dev/r/vip-card.json",
         "https://vip-ui.dev/r/vip-chart.json",
+        "https://vip-ui.dev/r/vip-command-palette.json",
         "https://vip-ui.dev/r/vip-item-highlight.json",
+        "https://vip-ui.dev/r/vip-kbd-code.json",
         "https://vip-ui.dev/r/vip-menu.json",
+        "https://vip-ui.dev/r/vip-popover.json",
         "https://vip-ui.dev/r/vip-progress-bar.json",
-        "https://vip-ui.dev/r/vip-search-field.json",
         "https://vip-ui.dev/r/vip-sheet.json",
         "https://vip-ui.dev/r/vip-stat.json",
         "https://vip-ui.dev/r/vip-table.json",
+        "https://vip-ui.dev/r/vip-timeline.json",
+        "https://vip-ui.dev/r/vip-toast.json",
         "https://vip-ui.dev/r/vip-toggle-button.json",
         "https://vip-ui.dev/r/vip-toggle-button-group.json",
+        "https://vip-ui.dev/r/vip-tooltip.json",
         "https://vip-ui.dev/r/vip-utils.json"
       ],
       "cssVars": {
@@ -2949,6 +2954,11 @@
           "target": "src/app/blocks/dashboard-01/data.ts"
         },
         {
+          "path": "registry/generated/src/app/blocks/dashboard-01/notifications.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/dashboard-01/notifications.tsx"
+        },
+        {
           "path": "registry/generated/src/app/blocks/dashboard-01/page.tsx",
           "type": "registry:page",
           "target": "src/app/blocks/dashboard-01/page.tsx"
@@ -2962,6 +2972,11 @@
           "path": "registry/generated/src/app/blocks/dashboard-01/revenue-chart.tsx",
           "type": "registry:file",
           "target": "src/app/blocks/dashboard-01/revenue-chart.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/dashboard-01/search-command.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/dashboard-01/search-command.tsx"
         }
       ]
     },
@@ -2971,10 +2986,14 @@
       "title": "Stats 01",
       "description": "Metric cards that change with the selected period.",
       "categories": ["dashboard"],
-      "dependencies": ["@phosphor-icons/react@^2.1.10"],
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "@tanstack/charts@^1.2.0"
+      ],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-animated-number.json",
         "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-chart.json",
         "https://vip-ui.dev/r/vip-stat.json",
         "https://vip-ui.dev/r/vip-toggle-button.json",
         "https://vip-ui.dev/r/vip-toggle-button-group.json"
@@ -3001,6 +3020,402 @@
       ]
     },
     {
+      "name": "vip-dashboard-02",
+      "type": "registry:block",
+      "title": "Dashboard 02",
+      "description": "Analytics dashboard with date ranges, tabs, charts, and a target.",
+      "categories": ["dashboard"],
+      "dependencies": [
+        "@internationalized/date@^3.12.4",
+        "@phosphor-icons/react@^2.1.10",
+        "@tanstack/charts@^1.2.0",
+        "react-aria-components@^1.22.1"
+      ],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-animated-number.json",
+        "https://vip-ui.dev/r/vip-avatar.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-chart.json",
+        "https://vip-ui.dev/r/vip-date-range-picker.json",
+        "https://vip-ui.dev/r/vip-progress-ring.json",
+        "https://vip-ui.dev/r/vip-select.json",
+        "https://vip-ui.dev/r/vip-separator.json",
+        "https://vip-ui.dev/r/vip-skeleton.json",
+        "https://vip-ui.dev/r/vip-stat.json",
+        "https://vip-ui.dev/r/vip-tabs.json",
+        "https://vip-ui.dev/r/vip-toast.json"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/dashboard-02/analytics-charts.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/dashboard-02/analytics-charts.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/dashboard-02/dashboard.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/dashboard-02/dashboard.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/dashboard-02/data.ts",
+          "type": "registry:file",
+          "target": "src/app/blocks/dashboard-02/data.ts"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/dashboard-02/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/dashboard-02/page.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-status-01",
+      "type": "registry:block",
+      "title": "Status 01",
+      "description": "Public status page with uptime bars and incident updates.",
+      "categories": ["dashboard"],
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "@tanstack/charts@^1.2.0"
+      ],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-alert.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-chart.json",
+        "https://vip-ui.dev/r/vip-disclosure.json",
+        "https://vip-ui.dev/r/vip-form.json",
+        "https://vip-ui.dev/r/vip-text-field.json",
+        "https://vip-ui.dev/r/vip-timeline.json",
+        "https://vip-ui.dev/r/vip-toast.json",
+        "https://vip-ui.dev/r/vip-toggle-button.json",
+        "https://vip-ui.dev/r/vip-toggle-button-group.json"
+      ],
+      "cssVars": {
+        "light": {
+          "success": "oklch(0.43 0.12 155)",
+          "warning": "oklch(0.54 0.13 75)",
+          "warning-subtle": "oklch(0.965 0.045 85)",
+          "warning-foreground": "oklch(0.36 0.09 75)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)",
+          "warning": "oklch(0.78 0.11 75)",
+          "warning-subtle": "oklch(0.27 0.045 75)",
+          "warning-foreground": "oklch(0.89 0.07 75)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/status-01/data.ts",
+          "type": "registry:file",
+          "target": "src/app/blocks/status-01/data.ts"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/status-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/status-01/page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/status-01/status-page.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/status-01/status-page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/status-01/uptime-chart.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/status-01/uptime-chart.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-orders-01",
+      "type": "registry:block",
+      "title": "Orders 01",
+      "description": "Order list with filters, bulk actions, and details.",
+      "categories": ["data"],
+      "dependencies": [
+        "@internationalized/date@^3.12.4",
+        "@phosphor-icons/react@^2.1.10",
+        "react-aria-components@^1.22.1"
+      ],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-avatar.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-copy-button.json",
+        "https://vip-ui.dev/r/vip-data-table.json",
+        "https://vip-ui.dev/r/vip-date-range-picker.json",
+        "https://vip-ui.dev/r/vip-description-list.json",
+        "https://vip-ui.dev/r/vip-dialog.json",
+        "https://vip-ui.dev/r/vip-empty-state.json",
+        "https://vip-ui.dev/r/vip-link.json",
+        "https://vip-ui.dev/r/vip-menu.json",
+        "https://vip-ui.dev/r/vip-pagination.json",
+        "https://vip-ui.dev/r/vip-presence.json",
+        "https://vip-ui.dev/r/vip-search-field.json",
+        "https://vip-ui.dev/r/vip-select.json",
+        "https://vip-ui.dev/r/vip-sheet.json",
+        "https://vip-ui.dev/r/vip-tag-group.json",
+        "https://vip-ui.dev/r/vip-toast.json",
+        "https://vip-ui.dev/r/vip-toolbar.json"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/orders-01/data.ts",
+          "type": "registry:file",
+          "target": "src/app/blocks/orders-01/data.ts"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/orders-01/order-details-sheet.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/orders-01/order-details-sheet.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/orders-01/order-status.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/orders-01/order-status.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/orders-01/orders-page.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/orders-01/orders-page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/orders-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/orders-01/page.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-order-01",
+      "type": "registry:block",
+      "title": "Order 01",
+      "description": "Order with line items, fulfillment history, and a refund.",
+      "categories": ["data"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-alert.json",
+        "https://vip-ui.dev/r/vip-avatar.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-breadcrumbs.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-button-group.json",
+        "https://vip-ui.dev/r/vip-button-link.json",
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-copy-button.json",
+        "https://vip-ui.dev/r/vip-description-list.json",
+        "https://vip-ui.dev/r/vip-dialog.json",
+        "https://vip-ui.dev/r/vip-form.json",
+        "https://vip-ui.dev/r/vip-link.json",
+        "https://vip-ui.dev/r/vip-menu.json",
+        "https://vip-ui.dev/r/vip-number-field.json",
+        "https://vip-ui.dev/r/vip-select.json",
+        "https://vip-ui.dev/r/vip-separator.json",
+        "https://vip-ui.dev/r/vip-table.json",
+        "https://vip-ui.dev/r/vip-text-area.json",
+        "https://vip-ui.dev/r/vip-timeline.json",
+        "https://vip-ui.dev/r/vip-toast.json"
+      ],
+      "cssVars": {
+        "light": {
+          "success": "oklch(0.43 0.12 155)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/order-01/data.ts",
+          "type": "registry:file",
+          "target": "src/app/blocks/order-01/data.ts"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/order-01/order-detail.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/order-01/order-detail.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/order-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/order-01/page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/order-01/refund-dialog.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/order-01/refund-dialog.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-chat-01",
+      "type": "registry:block",
+      "title": "Chat 01",
+      "description": "Assistant chat that reads metrics and cites its sources.",
+      "categories": ["ai"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-agent-status.json",
+        "https://vip-ui.dev/r/vip-attachment.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-copy-button.json",
+        "https://vip-ui.dev/r/vip-kbd-code.json",
+        "https://vip-ui.dev/r/vip-message.json",
+        "https://vip-ui.dev/r/vip-prompt-input.json",
+        "https://vip-ui.dev/r/vip-reasoning.json",
+        "https://vip-ui.dev/r/vip-response.json",
+        "https://vip-ui.dev/r/vip-select.json",
+        "https://vip-ui.dev/r/vip-skeleton.json",
+        "https://vip-ui.dev/r/vip-source-link.json",
+        "https://vip-ui.dev/r/vip-toast.json",
+        "https://vip-ui.dev/r/vip-tool-call.json"
+      ],
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/chat-01/chat.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/chat-01/chat.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/chat-01/data.ts",
+          "type": "registry:file",
+          "target": "src/app/blocks/chat-01/data.ts"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/chat-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/chat-01/page.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-agent-01",
+      "type": "registry:block",
+      "title": "Agent 01",
+      "description": "Live agent run with tool calls, progress, and a stop action.",
+      "categories": ["ai"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-agent-status.json",
+        "https://vip-ui.dev/r/vip-alert.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-copy-button.json",
+        "https://vip-ui.dev/r/vip-description-list.json",
+        "https://vip-ui.dev/r/vip-disclosure.json",
+        "https://vip-ui.dev/r/vip-kbd-code.json",
+        "https://vip-ui.dev/r/vip-progress-ring.json",
+        "https://vip-ui.dev/r/vip-timeline.json",
+        "https://vip-ui.dev/r/vip-toast.json",
+        "https://vip-ui.dev/r/vip-tool-call.json"
+      ],
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/agent-01/agent-run.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/agent-01/agent-run.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/agent-01/data.ts",
+          "type": "registry:file",
+          "target": "src/app/blocks/agent-01/data.ts"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/agent-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/agent-01/page.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-ai-search-01",
+      "type": "registry:block",
+      "title": "Ai Search 01",
+      "description": "Docs search that answers the question and lists sources.",
+      "categories": ["ai"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-autocomplete.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-copy-button.json",
+        "https://vip-ui.dev/r/vip-list-box.json",
+        "https://vip-ui.dev/r/vip-response.json",
+        "https://vip-ui.dev/r/vip-search-field.json",
+        "https://vip-ui.dev/r/vip-skeleton.json",
+        "https://vip-ui.dev/r/vip-source-link.json",
+        "https://vip-ui.dev/r/vip-text-scramble.json"
+      ],
+      "cssVars": {
+        "light": {
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+        },
+        "dark": {
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/ai-search-01/ai-search.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/ai-search-01/ai-search.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/ai-search-01/data.ts",
+          "type": "registry:file",
+          "target": "src/app/blocks/ai-search-01/data.ts"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/ai-search-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/ai-search-01/page.tsx"
+        }
+      ]
+    },
+    {
       "name": "vip-login-01",
       "type": "registry:block",
       "title": "Login 01",
@@ -3016,6 +3431,7 @@
         "https://vip-ui.dev/r/vip-link.json",
         "https://vip-ui.dev/r/vip-password-field.json",
         "https://vip-ui.dev/r/vip-separator.json",
+        "https://vip-ui.dev/r/vip-spinner.json",
         "https://vip-ui.dev/r/vip-text-field.json"
       ],
       "files": [
@@ -3043,6 +3459,7 @@
         "https://vip-ui.dev/r/vip-form.json",
         "https://vip-ui.dev/r/vip-link.json",
         "https://vip-ui.dev/r/vip-separator.json",
+        "https://vip-ui.dev/r/vip-spinner.json",
         "https://vip-ui.dev/r/vip-text-field.json"
       ],
       "cssVars": {
@@ -3084,6 +3501,7 @@
         "https://vip-ui.dev/r/vip-password-field.json",
         "https://vip-ui.dev/r/vip-password-strength-meter.json",
         "https://vip-ui.dev/r/vip-select.json",
+        "https://vip-ui.dev/r/vip-spinner.json",
         "https://vip-ui.dev/r/vip-text-field.json"
       ],
       "cssVars": {
@@ -3108,6 +3526,212 @@
       ]
     },
     {
+      "name": "vip-verify-01",
+      "type": "registry:block",
+      "title": "Verify 01",
+      "description": "Two-step code check with a resend timer and recovery code.",
+      "categories": ["authentication"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-alert.json",
+        "https://vip-ui.dev/r/vip-avatar.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-form.json",
+        "https://vip-ui.dev/r/vip-link.json",
+        "https://vip-ui.dev/r/vip-separator.json",
+        "https://vip-ui.dev/r/vip-spinner.json",
+        "https://vip-ui.dev/r/vip-text-field.json",
+        "https://vip-ui.dev/r/vip-text-swap.json",
+        "https://vip-ui.dev/r/vip-toast.json"
+      ],
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        },
+        "light": {
+          "success": "oklch(0.43 0.12 155)",
+          "success-subtle": "oklch(0.955 0.035 155)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)",
+          "success-subtle": "oklch(0.24 0.045 155)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/verify-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/verify-01/page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/verify-01/verify-screen.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/verify-01/verify-screen.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-reset-01",
+      "type": "registry:block",
+      "title": "Reset 01",
+      "description": "Password reset form with a sent state and a resend option.",
+      "categories": ["authentication"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-alert.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-form.json",
+        "https://vip-ui.dev/r/vip-link.json",
+        "https://vip-ui.dev/r/vip-presence.json",
+        "https://vip-ui.dev/r/vip-spinner.json",
+        "https://vip-ui.dev/r/vip-text-field.json",
+        "https://vip-ui.dev/r/vip-toast.json"
+      ],
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        },
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/reset-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/reset-01/page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/reset-01/reset-screen.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/reset-01/reset-screen.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-onboarding-01",
+      "type": "registry:block",
+      "title": "Onboarding 01",
+      "description": "Three-step workspace setup with a live preview.",
+      "categories": ["onboarding"],
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "react-aria-components@^1.22.1"
+      ],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-button-link.json",
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-checkbox.json",
+        "https://vip-ui.dev/r/vip-checkbox-group.json",
+        "https://vip-ui.dev/r/vip-color-swatch-picker.json",
+        "https://vip-ui.dev/r/vip-form.json",
+        "https://vip-ui.dev/r/vip-input-group.json",
+        "https://vip-ui.dev/r/vip-layout-morph.json",
+        "https://vip-ui.dev/r/vip-stepper.json",
+        "https://vip-ui.dev/r/vip-text-field.json",
+        "https://vip-ui.dev/r/vip-toast.json",
+        "https://vip-ui.dev/r/vip-token-field.json",
+        "https://vip-ui.dev/r/vip-utils.json"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        },
+        "light": {
+          "success": "oklch(0.43 0.12 155)",
+          "success-subtle": "oklch(0.955 0.035 155)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)",
+          "success-subtle": "oklch(0.24 0.045 155)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/onboarding-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/onboarding-01/page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/onboarding-01/setup-flow.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/onboarding-01/setup-flow.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/onboarding-01/workspace-preview.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/onboarding-01/workspace-preview.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/onboarding-01/workspace.ts",
+          "type": "registry:file",
+          "target": "src/app/blocks/onboarding-01/workspace.ts"
+        }
+      ]
+    },
+    {
+      "name": "vip-checklist-01",
+      "type": "registry:block",
+      "title": "Checklist 01",
+      "description": "Six-task checklist that fills a progress ring.",
+      "categories": ["onboarding"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-alert.json",
+        "https://vip-ui.dev/r/vip-avatar.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-button-link.json",
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-checkbox.json",
+        "https://vip-ui.dev/r/vip-disclosure.json",
+        "https://vip-ui.dev/r/vip-link.json",
+        "https://vip-ui.dev/r/vip-progress-ring.json",
+        "https://vip-ui.dev/r/vip-spinner.json",
+        "https://vip-ui.dev/r/vip-stagger-group.json",
+        "https://vip-ui.dev/r/vip-text-field.json",
+        "https://vip-ui.dev/r/vip-toast.json",
+        "https://vip-ui.dev/r/vip-utils.json"
+      ],
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        },
+        "light": {
+          "success": "oklch(0.43 0.12 155)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/checklist-01/getting-started.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/checklist-01/getting-started.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/checklist-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/checklist-01/page.tsx"
+        }
+      ]
+    },
+    {
       "name": "vip-settings-01",
       "type": "registry:block",
       "title": "Settings 01",
@@ -3118,10 +3742,10 @@
         "https://vip-ui.dev/r/vip-avatar.json",
         "https://vip-ui.dev/r/vip-button.json",
         "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-combo-box.json",
         "https://vip-ui.dev/r/vip-file-trigger.json",
         "https://vip-ui.dev/r/vip-form.json",
         "https://vip-ui.dev/r/vip-input-group.json",
-        "https://vip-ui.dev/r/vip-select.json",
         "https://vip-ui.dev/r/vip-text-area.json",
         "https://vip-ui.dev/r/vip-text-field.json"
       ],
@@ -3184,11 +3808,17 @@
       "categories": ["settings"],
       "dependencies": ["@phosphor-icons/react@^2.1.10"],
       "registryDependencies": [
+        "https://vip-ui.dev/r/vip-alert.json",
         "https://vip-ui.dev/r/vip-badge.json",
         "https://vip-ui.dev/r/vip-button.json",
         "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-dialog.json",
+        "https://vip-ui.dev/r/vip-form.json",
         "https://vip-ui.dev/r/vip-meter.json",
-        "https://vip-ui.dev/r/vip-radio-group.json"
+        "https://vip-ui.dev/r/vip-radio-group.json",
+        "https://vip-ui.dev/r/vip-table.json",
+        "https://vip-ui.dev/r/vip-text-field.json",
+        "https://vip-ui.dev/r/vip-toast.json"
       ],
       "files": [
         {
@@ -3197,9 +3827,327 @@
           "target": "src/app/blocks/billing-01/billing-settings.tsx"
         },
         {
+          "path": "registry/generated/src/app/blocks/billing-01/confirm-plan-dialog.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/billing-01/confirm-plan-dialog.tsx"
+        },
+        {
           "path": "registry/generated/src/app/blocks/billing-01/page.tsx",
           "type": "registry:page",
           "target": "src/app/blocks/billing-01/page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/billing-01/payment-method-dialog.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/billing-01/payment-method-dialog.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-security-01",
+      "type": "registry:block",
+      "title": "Security 01",
+      "description": "Password, two-step sign-in, and session settings.",
+      "categories": ["settings"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-alert.json",
+        "https://vip-ui.dev/r/vip-avatar.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-copy-button.json",
+        "https://vip-ui.dev/r/vip-dialog.json",
+        "https://vip-ui.dev/r/vip-form.json",
+        "https://vip-ui.dev/r/vip-kbd-code.json",
+        "https://vip-ui.dev/r/vip-menu.json",
+        "https://vip-ui.dev/r/vip-password-field.json",
+        "https://vip-ui.dev/r/vip-password-strength-meter.json",
+        "https://vip-ui.dev/r/vip-spinner.json",
+        "https://vip-ui.dev/r/vip-switch.json",
+        "https://vip-ui.dev/r/vip-table.json",
+        "https://vip-ui.dev/r/vip-text-field.json",
+        "https://vip-ui.dev/r/vip-toast.json",
+        "https://vip-ui.dev/r/vip-utils.json"
+      ],
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        },
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/security-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/security-01/page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/security-01/security-settings.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/security-01/security-settings.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/security-01/settings-shell.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/security-01/settings-shell.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-appearance-01",
+      "type": "registry:block",
+      "title": "Appearance 01",
+      "description": "Theme, accent color, font, and motion settings.",
+      "categories": ["settings"],
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "react-aria-components@^1.22.1"
+      ],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-avatar.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-color-field.json",
+        "https://vip-ui.dev/r/vip-color-picker.json",
+        "https://vip-ui.dev/r/vip-color-swatch-picker.json",
+        "https://vip-ui.dev/r/vip-radio-group.json",
+        "https://vip-ui.dev/r/vip-size.json",
+        "https://vip-ui.dev/r/vip-slider.json",
+        "https://vip-ui.dev/r/vip-switch.json",
+        "https://vip-ui.dev/r/vip-toast.json",
+        "https://vip-ui.dev/r/vip-toggle-button.json",
+        "https://vip-ui.dev/r/vip-toggle-button-group.json",
+        "https://vip-ui.dev/r/vip-utils.json"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        },
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/appearance-01/appearance-settings.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/appearance-01/appearance-settings.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/appearance-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/appearance-01/page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/appearance-01/settings-shell.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/appearance-01/settings-shell.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/appearance-01/site-theme.ts",
+          "type": "registry:file",
+          "target": "src/app/blocks/appearance-01/site-theme.ts"
+        }
+      ]
+    },
+    {
+      "name": "vip-api-keys-01",
+      "type": "registry:block",
+      "title": "Api Keys 01",
+      "description": "API key list with scopes, expiry dates, and revoke actions.",
+      "categories": ["settings"],
+      "dependencies": [
+        "@internationalized/date@^3.12.4",
+        "@phosphor-icons/react@^2.1.10"
+      ],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-alert.json",
+        "https://vip-ui.dev/r/vip-avatar.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-checkbox.json",
+        "https://vip-ui.dev/r/vip-checkbox-group.json",
+        "https://vip-ui.dev/r/vip-copy-button.json",
+        "https://vip-ui.dev/r/vip-date-picker.json",
+        "https://vip-ui.dev/r/vip-dialog.json",
+        "https://vip-ui.dev/r/vip-empty-state.json",
+        "https://vip-ui.dev/r/vip-form.json",
+        "https://vip-ui.dev/r/vip-kbd-code.json",
+        "https://vip-ui.dev/r/vip-menu.json",
+        "https://vip-ui.dev/r/vip-search-field.json",
+        "https://vip-ui.dev/r/vip-select.json",
+        "https://vip-ui.dev/r/vip-spinner.json",
+        "https://vip-ui.dev/r/vip-table.json",
+        "https://vip-ui.dev/r/vip-text-field.json",
+        "https://vip-ui.dev/r/vip-toast.json",
+        "https://vip-ui.dev/r/vip-utils.json"
+      ],
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        },
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/api-keys-01/api-keys-settings.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/api-keys-01/api-keys-settings.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/api-keys-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/api-keys-01/page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/api-keys-01/settings-shell.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/api-keys-01/settings-shell.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-integrations-01",
+      "type": "registry:block",
+      "title": "Integrations 01",
+      "description": "App directory with categories, connections, and access review.",
+      "categories": ["settings"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-alert.json",
+        "https://vip-ui.dev/r/vip-avatar.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-description-list.json",
+        "https://vip-ui.dev/r/vip-empty-state.json",
+        "https://vip-ui.dev/r/vip-grid-list.json",
+        "https://vip-ui.dev/r/vip-search-field.json",
+        "https://vip-ui.dev/r/vip-sheet.json",
+        "https://vip-ui.dev/r/vip-switch.json",
+        "https://vip-ui.dev/r/vip-tabs.json",
+        "https://vip-ui.dev/r/vip-toast.json",
+        "https://vip-ui.dev/r/vip-utils.json"
+      ],
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        },
+        "light": {
+          "success": "oklch(0.43 0.12 155)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/integrations-01/integrations-settings.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/integrations-01/integrations-settings.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/integrations-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/integrations-01/page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/integrations-01/settings-shell.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/integrations-01/settings-shell.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-landing-01",
+      "type": "registry:block",
+      "title": "Landing 01",
+      "description": "Product landing page with features, plans, and social proof.",
+      "categories": ["marketing"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-accordion.json",
+        "https://vip-ui.dev/r/vip-avatar.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-button-link.json",
+        "https://vip-ui.dev/r/vip-form.json",
+        "https://vip-ui.dev/r/vip-link.json",
+        "https://vip-ui.dev/r/vip-marquee.json",
+        "https://vip-ui.dev/r/vip-menu.json",
+        "https://vip-ui.dev/r/vip-spinner.json",
+        "https://vip-ui.dev/r/vip-stagger-group.json",
+        "https://vip-ui.dev/r/vip-tabs.json",
+        "https://vip-ui.dev/r/vip-text-field.json",
+        "https://vip-ui.dev/r/vip-text-reveal.json",
+        "https://vip-ui.dev/r/vip-text-swap.json",
+        "https://vip-ui.dev/r/vip-toast.json",
+        "https://vip-ui.dev/r/vip-utils.json"
+      ],
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        },
+        "light": {
+          "success-subtle": "oklch(0.955 0.035 155)",
+          "success-foreground": "oklch(0.32 0.09 155)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "warning": "oklch(0.54 0.13 75)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+        },
+        "dark": {
+          "success-subtle": "oklch(0.24 0.045 155)",
+          "success-foreground": "oklch(0.86 0.085 155)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "warning": "oklch(0.78 0.11 75)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/landing-01/data.ts",
+          "type": "registry:file",
+          "target": "src/app/blocks/landing-01/data.ts"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/landing-01/feature-tabs.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/landing-01/feature-tabs.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/landing-01/landing-page.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/landing-01/landing-page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/landing-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/landing-01/page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/landing-01/site-chrome.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/landing-01/site-chrome.tsx"
         }
       ]
     },
@@ -3244,21 +4192,502 @@
       ]
     },
     {
+      "name": "vip-pricing-02",
+      "type": "registry:block",
+      "title": "Pricing 02",
+      "description": "Plan comparison with a seat calculator and feature table.",
+      "categories": ["marketing"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-accordion.json",
+        "https://vip-ui.dev/r/vip-animated-number.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-button-link.json",
+        "https://vip-ui.dev/r/vip-menu.json",
+        "https://vip-ui.dev/r/vip-separator.json",
+        "https://vip-ui.dev/r/vip-slider.json",
+        "https://vip-ui.dev/r/vip-table.json",
+        "https://vip-ui.dev/r/vip-toggle-button.json",
+        "https://vip-ui.dev/r/vip-toggle-button-group.json",
+        "https://vip-ui.dev/r/vip-utils.json"
+      ],
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        },
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "success-subtle": "oklch(0.955 0.035 155)",
+          "success-foreground": "oklch(0.32 0.09 155)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "success-subtle": "oklch(0.24 0.045 155)",
+          "success-foreground": "oklch(0.86 0.085 155)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/pricing-02/comparison-table.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/pricing-02/comparison-table.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/pricing-02/data.ts",
+          "type": "registry:file",
+          "target": "src/app/blocks/pricing-02/data.ts"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/pricing-02/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/pricing-02/page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/pricing-02/pricing-page.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/pricing-02/pricing-page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/pricing-02/site-chrome.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/pricing-02/site-chrome.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-changelog-01",
+      "type": "registry:block",
+      "title": "Changelog 01",
+      "description": "Release notes with type filters, search, and a timeline.",
+      "categories": ["marketing"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-button-link.json",
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-empty-state.json",
+        "https://vip-ui.dev/r/vip-menu.json",
+        "https://vip-ui.dev/r/vip-search-field.json",
+        "https://vip-ui.dev/r/vip-tag-group.json",
+        "https://vip-ui.dev/r/vip-timeline.json"
+      ],
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        },
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/changelog-01/changelog-page.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/changelog-01/changelog-page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/changelog-01/data.ts",
+          "type": "registry:file",
+          "target": "src/app/blocks/changelog-01/data.ts"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/changelog-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/changelog-01/page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/changelog-01/site-chrome.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/changelog-01/site-chrome.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-contact-01",
+      "type": "registry:block",
+      "title": "Contact 01",
+      "description": "Sales contact form with validation and a success state.",
+      "categories": ["marketing"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-alert.json",
+        "https://vip-ui.dev/r/vip-avatar.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-button-link.json",
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-checkbox.json",
+        "https://vip-ui.dev/r/vip-description-list.json",
+        "https://vip-ui.dev/r/vip-fieldset.json",
+        "https://vip-ui.dev/r/vip-form.json",
+        "https://vip-ui.dev/r/vip-native-select.json",
+        "https://vip-ui.dev/r/vip-radio-group.json",
+        "https://vip-ui.dev/r/vip-spinner.json",
+        "https://vip-ui.dev/r/vip-text-area.json",
+        "https://vip-ui.dev/r/vip-text-field.json",
+        "https://vip-ui.dev/r/vip-toast.json"
+      ],
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        },
+        "light": {
+          "success": "oklch(0.43 0.12 155)",
+          "success-subtle": "oklch(0.955 0.035 155)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)",
+          "success-subtle": "oklch(0.24 0.045 155)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/contact-01/contact-page.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/contact-01/contact-page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/contact-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/contact-01/page.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-not-found-01",
+      "type": "registry:block",
+      "title": "Not Found 01",
+      "description": "404 page with search, suggested pages, and articles.",
+      "categories": ["marketing"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-button-link.json",
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-dialog.json",
+        "https://vip-ui.dev/r/vip-empty-state.json",
+        "https://vip-ui.dev/r/vip-search-field.json",
+        "https://vip-ui.dev/r/vip-text-scramble.json",
+        "https://vip-ui.dev/r/vip-toast.json"
+      ],
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        },
+        "light": {
+          "success": "oklch(0.43 0.12 155)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/not-found-01/articles.ts",
+          "type": "registry:file",
+          "target": "src/app/blocks/not-found-01/articles.ts"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/not-found-01/not-found-page.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/not-found-01/not-found-page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/not-found-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/not-found-01/page.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-product-01",
+      "type": "registry:block",
+      "title": "Product 01",
+      "description": "Product page with variants, reviews, and a cart.",
+      "categories": ["commerce"],
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "react-aria-components@^1.22.1"
+      ],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-accordion.json",
+        "https://vip-ui.dev/r/vip-avatar.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-breadcrumbs.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-button-link.json",
+        "https://vip-ui.dev/r/vip-color-swatch-picker.json",
+        "https://vip-ui.dev/r/vip-description-list.json",
+        "https://vip-ui.dev/r/vip-empty-state.json",
+        "https://vip-ui.dev/r/vip-number-field.json",
+        "https://vip-ui.dev/r/vip-rating-input.json",
+        "https://vip-ui.dev/r/vip-sheet.json",
+        "https://vip-ui.dev/r/vip-tabs.json",
+        "https://vip-ui.dev/r/vip-toast.json",
+        "https://vip-ui.dev/r/vip-toggle-button.json",
+        "https://vip-ui.dev/r/vip-toggle-button-group.json",
+        "https://vip-ui.dev/r/vip-utils.json"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        },
+        "light": {
+          "success": "oklch(0.43 0.12 155)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/product-01/cart-sheet.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/product-01/cart-sheet.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/product-01/data.ts",
+          "type": "registry:file",
+          "target": "src/app/blocks/product-01/data.ts"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/product-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/product-01/page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/product-01/product-art.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/product-01/product-art.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/product-01/product-page.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/product-01/product-page.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-checkout-01",
+      "type": "registry:block",
+      "title": "Checkout 01",
+      "description": "Checkout with delivery options, promo code, and card payment.",
+      "categories": ["commerce"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-alert.json",
+        "https://vip-ui.dev/r/vip-breadcrumbs.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-button-link.json",
+        "https://vip-ui.dev/r/vip-checkbox.json",
+        "https://vip-ui.dev/r/vip-combo-box.json",
+        "https://vip-ui.dev/r/vip-copy-button.json",
+        "https://vip-ui.dev/r/vip-description-list.json",
+        "https://vip-ui.dev/r/vip-fieldset.json",
+        "https://vip-ui.dev/r/vip-form.json",
+        "https://vip-ui.dev/r/vip-input-group.json",
+        "https://vip-ui.dev/r/vip-radio-group.json",
+        "https://vip-ui.dev/r/vip-select.json",
+        "https://vip-ui.dev/r/vip-spinner.json",
+        "https://vip-ui.dev/r/vip-stepper.json",
+        "https://vip-ui.dev/r/vip-text-field.json",
+        "https://vip-ui.dev/r/vip-toast.json",
+        "https://vip-ui.dev/r/vip-utils.json"
+      ],
+      "cssVars": {
+        "light": {
+          "success": "oklch(0.43 0.12 155)",
+          "success-subtle": "oklch(0.955 0.035 155)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
+          "success-foreground": "oklch(0.32 0.09 155)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)",
+          "success-subtle": "oklch(0.24 0.045 155)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
+          "success-foreground": "oklch(0.86 0.085 155)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/checkout-01/checkout-page.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/checkout-01/checkout-page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/checkout-01/data.ts",
+          "type": "registry:file",
+          "target": "src/app/blocks/checkout-01/data.ts"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/checkout-01/line-mark.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/checkout-01/line-mark.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/checkout-01/order-summary.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/checkout-01/order-summary.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/checkout-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/checkout-01/page.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-booking-01",
+      "type": "registry:block",
+      "title": "Booking 01",
+      "description": "Booking page with a calendar, time slots, and a time zone.",
+      "categories": ["scheduling"],
+      "dependencies": [
+        "@internationalized/date@^3.12.4",
+        "@phosphor-icons/react@^2.1.10",
+        "react-aria-components@^1.22.1"
+      ],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-avatar.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-calendar.json",
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-combo-box.json",
+        "https://vip-ui.dev/r/vip-form.json",
+        "https://vip-ui.dev/r/vip-presence.json",
+        "https://vip-ui.dev/r/vip-separator.json",
+        "https://vip-ui.dev/r/vip-text-area.json",
+        "https://vip-ui.dev/r/vip-text-field.json",
+        "https://vip-ui.dev/r/vip-toast.json",
+        "https://vip-ui.dev/r/vip-toggle-button.json",
+        "https://vip-ui.dev/r/vip-toggle-button-group.json"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "success": "oklch(0.43 0.12 155)",
+          "success-subtle": "oklch(0.955 0.035 155)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)",
+          "success-subtle": "oklch(0.24 0.045 155)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/booking-01/booking-page.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/booking-01/booking-page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/booking-01/data.ts",
+          "type": "registry:file",
+          "target": "src/app/blocks/booking-01/data.ts"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/booking-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/booking-01/page.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-availability-01",
+      "type": "registry:block",
+      "title": "Availability 01",
+      "description": "Weekly hours editor with time off and a booking window.",
+      "categories": ["scheduling"],
+      "dependencies": [
+        "@internationalized/date@^3.12.4",
+        "@phosphor-icons/react@^2.1.10",
+        "react-aria-components@^1.22.1"
+      ],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-alert.json",
+        "https://vip-ui.dev/r/vip-avatar.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-date-field.json",
+        "https://vip-ui.dev/r/vip-empty-state.json",
+        "https://vip-ui.dev/r/vip-presence.json",
+        "https://vip-ui.dev/r/vip-presence-list.json",
+        "https://vip-ui.dev/r/vip-range-calendar.json",
+        "https://vip-ui.dev/r/vip-separator.json",
+        "https://vip-ui.dev/r/vip-switch.json",
+        "https://vip-ui.dev/r/vip-text-field.json",
+        "https://vip-ui.dev/r/vip-time-field.json",
+        "https://vip-ui.dev/r/vip-toast.json"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "success": "oklch(0.43 0.12 155)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/availability-01/availability-page.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/availability-01/availability-page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/availability-01/data.ts",
+          "type": "registry:file",
+          "target": "src/app/blocks/availability-01/data.ts"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/availability-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/availability-01/page.tsx"
+        }
+      ]
+    },
+    {
       "name": "vip-team-01",
       "type": "registry:block",
       "title": "Team 01",
       "description": "A team list with invites, roles, and member actions.",
-      "categories": ["application"],
+      "categories": ["workspace"],
       "dependencies": ["@phosphor-icons/react@^2.1.10"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-avatar.json",
         "https://vip-ui.dev/r/vip-badge.json",
         "https://vip-ui.dev/r/vip-button.json",
         "https://vip-ui.dev/r/vip-card.json",
-        "https://vip-ui.dev/r/vip-form.json",
+        "https://vip-ui.dev/r/vip-dialog.json",
         "https://vip-ui.dev/r/vip-menu.json",
+        "https://vip-ui.dev/r/vip-presence-list.json",
+        "https://vip-ui.dev/r/vip-search-field.json",
         "https://vip-ui.dev/r/vip-select.json",
-        "https://vip-ui.dev/r/vip-text-field.json"
+        "https://vip-ui.dev/r/vip-toast.json",
+        "https://vip-ui.dev/r/vip-token-field.json",
+        "https://vip-ui.dev/r/vip-utils.json"
       ],
       "files": [
         {
@@ -3278,7 +4707,7 @@
       "type": "registry:block",
       "title": "Upload 01",
       "description": "A file upload area with progress for each file.",
-      "categories": ["application"],
+      "categories": ["workspace"],
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
         "react-aria-components@^1.22.1"
@@ -3288,7 +4717,8 @@
         "https://vip-ui.dev/r/vip-button.json",
         "https://vip-ui.dev/r/vip-card.json",
         "https://vip-ui.dev/r/vip-drop-zone.json",
-        "https://vip-ui.dev/r/vip-file-trigger.json"
+        "https://vip-ui.dev/r/vip-file-trigger.json",
+        "https://vip-ui.dev/r/vip-toast.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
@@ -3304,6 +4734,211 @@
           "path": "registry/generated/src/app/blocks/upload-01/page.tsx",
           "type": "registry:page",
           "target": "src/app/blocks/upload-01/page.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-files-01",
+      "type": "registry:block",
+      "title": "Files 01",
+      "description": "File manager with folders, uploads, and file details.",
+      "categories": ["workspace"],
+      "dependencies": [
+        "@phosphor-icons/react@^2.1.10",
+        "react-aria-components@^1.22.1"
+      ],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-avatar.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-breadcrumbs.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-context-menu.json",
+        "https://vip-ui.dev/r/vip-description-list.json",
+        "https://vip-ui.dev/r/vip-dialog.json",
+        "https://vip-ui.dev/r/vip-drop-zone.json",
+        "https://vip-ui.dev/r/vip-empty-state.json",
+        "https://vip-ui.dev/r/vip-file-trigger.json",
+        "https://vip-ui.dev/r/vip-form.json",
+        "https://vip-ui.dev/r/vip-grid-list.json",
+        "https://vip-ui.dev/r/vip-menu.json",
+        "https://vip-ui.dev/r/vip-progress-bar.json",
+        "https://vip-ui.dev/r/vip-search-field.json",
+        "https://vip-ui.dev/r/vip-select.json",
+        "https://vip-ui.dev/r/vip-separator.json",
+        "https://vip-ui.dev/r/vip-sheet.json",
+        "https://vip-ui.dev/r/vip-text-field.json",
+        "https://vip-ui.dev/r/vip-toast.json",
+        "https://vip-ui.dev/r/vip-toggle-button.json",
+        "https://vip-ui.dev/r/vip-toggle-button-group.json",
+        "https://vip-ui.dev/r/vip-toolbar.json",
+        "https://vip-ui.dev/r/vip-tree.json",
+        "https://vip-ui.dev/r/vip-utils.json"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        },
+        "light": {
+          "success": "oklch(0.43 0.12 155)",
+          "warning-foreground": "oklch(0.36 0.09 75)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)",
+          "warning-foreground": "oklch(0.89 0.07 75)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/files-01/data.ts",
+          "type": "registry:file",
+          "target": "src/app/blocks/files-01/data.ts"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/files-01/file-details-sheet.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/files-01/file-details-sheet.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/files-01/file-glyph.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/files-01/file-glyph.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/files-01/file-manager.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/files-01/file-manager.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/files-01/name-dialog.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/files-01/name-dialog.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/files-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/files-01/page.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-issue-01",
+      "type": "registry:block",
+      "title": "Issue 01",
+      "description": "Issue with properties, comments, and keyboard shortcuts.",
+      "categories": ["workspace"],
+      "dependencies": [
+        "@internationalized/date@^3.12.4",
+        "@phosphor-icons/react@^2.1.10",
+        "react-aria-components@^1.22.1"
+      ],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-avatar.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-button-group.json",
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-combo-box.json",
+        "https://vip-ui.dev/r/vip-date-picker.json",
+        "https://vip-ui.dev/r/vip-dialog.json",
+        "https://vip-ui.dev/r/vip-inline-edit.json",
+        "https://vip-ui.dev/r/vip-kbd-code.json",
+        "https://vip-ui.dev/r/vip-menu.json",
+        "https://vip-ui.dev/r/vip-presence-list.json",
+        "https://vip-ui.dev/r/vip-select.json",
+        "https://vip-ui.dev/r/vip-text-area.json",
+        "https://vip-ui.dev/r/vip-timeline.json",
+        "https://vip-ui.dev/r/vip-toast.json",
+        "https://vip-ui.dev/r/vip-token-field.json",
+        "https://vip-ui.dev/r/vip-tooltip.json"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "light": {
+          "success-foreground": "oklch(0.32 0.09 155)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "success-foreground": "oklch(0.86 0.085 155)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/issue-01/data.ts",
+          "type": "registry:file",
+          "target": "src/app/blocks/issue-01/data.ts"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/issue-01/issue-detail.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/issue-01/issue-detail.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/issue-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/issue-01/page.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-inbox-01",
+      "type": "registry:block",
+      "title": "Inbox 01",
+      "description": "Support inbox with queues, snooze, and replies.",
+      "categories": ["workspace"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-avatar.json",
+        "https://vip-ui.dev/r/vip-badge.json",
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-empty-state.json",
+        "https://vip-ui.dev/r/vip-kbd-code.json",
+        "https://vip-ui.dev/r/vip-link.json",
+        "https://vip-ui.dev/r/vip-list-box.json",
+        "https://vip-ui.dev/r/vip-popover.json",
+        "https://vip-ui.dev/r/vip-search-field.json",
+        "https://vip-ui.dev/r/vip-skeleton.json",
+        "https://vip-ui.dev/r/vip-spinner.json",
+        "https://vip-ui.dev/r/vip-text-area.json",
+        "https://vip-ui.dev/r/vip-toast.json",
+        "https://vip-ui.dev/r/vip-toggle-button.json",
+        "https://vip-ui.dev/r/vip-toggle-button-group.json",
+        "https://vip-ui.dev/r/vip-toolbar.json",
+        "https://vip-ui.dev/r/vip-tooltip.json",
+        "https://vip-ui.dev/r/vip-utils.json"
+      ],
+      "cssVars": {
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/app/blocks/inbox-01/data.ts",
+          "type": "registry:file",
+          "target": "src/app/blocks/inbox-01/data.ts"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/inbox-01/page.tsx",
+          "type": "registry:page",
+          "target": "src/app/blocks/inbox-01/page.tsx"
+        },
+        {
+          "path": "registry/generated/src/app/blocks/inbox-01/support-inbox.tsx",
+          "type": "registry:file",
+          "target": "src/app/blocks/inbox-01/support-inbox.tsx"
         }
       ]
     }

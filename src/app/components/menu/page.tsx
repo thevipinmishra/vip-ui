@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -10,11 +9,13 @@ import { MenuPlacementDemo } from "@/components/docs/menu-placement-demo";
 import { MenuSectionsDemo } from "@/components/docs/menu-sections-demo";
 import { MenuSelectionDemo } from "@/components/docs/menu-selection-demo";
 import { componentPageData } from "@/lib/component-examples";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Menu | vip/ui",
-  description: componentPageData.menu.description,
-};
+export const metadata = pageMetadata({
+  title: "Menu",
+  description: `${componentPageData.menu.description} Examples cover icons and shortcuts, nested menus, selection, sections, and placement.`,
+  path: "/components/menu",
+});
 
 export default function MenuPage() {
   const page = componentPageData.menu;

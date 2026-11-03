@@ -1,5 +1,4 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
-import type { Metadata } from "next";
 import Link from "next/link";
 import { CodeBlock } from "@/components/docs/code-block";
 import { GitHubMark, repositoryUrl } from "@/components/docs/github-mark";
@@ -22,12 +21,15 @@ import { ButtonLink } from "@/components/ui/button-link";
 import { Card } from "@/components/ui/card";
 import { catalogComponents } from "@/lib/catalog";
 import { registryUrl } from "@/lib/registry-docs";
+import { pageMetadata, site } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "vip/ui | Accessible React components with motion",
-  description:
-    "Accessible React components with motion in every state. Built on React Aria, Tailwind CSS v4, and Motion. Add them to your project as source files with the shadcn CLI.",
-};
+export const metadata = pageMetadata({
+  title: site.title,
+  description: site.description,
+  path: "/",
+  absoluteTitle: true,
+  image: "file",
+});
 
 const componentCount = catalogComponents.length;
 const installArgs = `shadcn@latest add ${registryUrl("button") ?? "@vip-ui/button"}`;

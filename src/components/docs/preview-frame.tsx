@@ -12,12 +12,16 @@ export function PreviewFrame({
   title,
   height,
   className,
+  scrolling,
+  onLoad,
   ref,
 }: {
   src: string;
   title: string;
-  height: number;
+  height: number | string;
   className?: string;
+  scrolling?: "no";
+  onLoad?: () => void;
   ref?: Ref<PreviewFrameHandle>;
 }) {
   const frameRef = useRef<HTMLIFrameElement>(null);
@@ -54,6 +58,8 @@ export function PreviewFrame({
       src={src}
       title={title}
       loading="lazy"
+      scrolling={scrolling}
+      onLoad={onLoad}
       style={{ height }}
       className={cn("block w-full border-0 bg-background", className)}
     />

@@ -1,9 +1,15 @@
 "use client";
 
 import { TrendDownIcon, TrendUpIcon } from "@phosphor-icons/react";
-import { useState } from "react";
+import { areaY, defineChart, lineY } from "@tanstack/charts";
+import { decorative } from "@tanstack/charts/mark/decorative";
+import { scaleLinear } from "@tanstack/charts/scales/linear";
+import { scalePoint } from "@tanstack/charts/scales/point";
+import { tooltip } from "@tanstack/charts/tooltip";
+import { useMemo, useState } from "react";
 import { AnimatedNumber } from "../../../components/vip-ui/animated-number";
 import { Badge } from "../../../components/vip-ui/badge";
+import { Chart } from "../../../components/vip-ui/chart";
 import { Stat, StatDetail, StatLabel } from "../../../components/vip-ui/stat";
 import { ToggleButton } from "../../../components/vip-ui/toggle-button";
 import { ToggleButtonGroup } from "../../../components/vip-ui/toggle-button-group";
@@ -20,6 +26,7 @@ interface Metric {
   label: string;
   format: Intl.NumberFormatOptions;
   direction: 1 | -1;
+  points?: boolean;
   values: Record<Period, { value: number; change: number; trend: number[] }>;
 }
 
@@ -48,6 +55,7 @@ const metrics: Metric[] = [
     label: "Churn rate",
     format: { style: "percent", maximumFractionDigits: 1 },
     direction: -1,
+    points: true,
     values: {
       "7d": { value: 0.021, change: -0.2, trend: [9, 8, 8, 7, 7, 6, 6] },
       "30d": { value: 0.024, change: -0.6, trend: [10, 9, 9, 8, 8, 7, 7, 6] },
@@ -66,40 +74,96 @@ const metrics: Metric[] = [
   },
 ];
 
-function Sparkline({ points, good }: { points: number[]; good: boolean }) {
-  const max = Math.max(...points);
-  const min = Math.min(...points);
-  const range = max - min || 1;
-  const path = points
-    .map((point, index) => {
-      const x = (index / (points.length - 1)) * 100;
-      const y = 28 - ((point - min) / range) * 24;
-      return `${index === 0 ? "M" : "L"}${x.toFixed(1)},${y.toFixed(1)}`;
-    })
-    .join(" ");
+const periodDays: Record<Period, number> = { "7d": 7, "30d": 30, "90d": 90 };
+const periodEnd = Date.UTC(2026, 8, 30);
+const dayFormat = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+  timeZone: "UTC",
+});
+
+function previousValue(metric: Metric, period: Period) {
+  const { value, change } = metric.values[period];
+  return metric.points ? value - change / 100 : value / (1 + change / 100);
+}
+
+function seriesFor(metric: Metric, period: Period) {
+  const { value, trend } = metric.values[period];
+  const start = previousValue(metric, period);
+  const first = trend[0];
+  const last = trend[trend.length - 1];
+  const step = (periodDays[period] - 1) / (trend.length - 1);
+  return trend.map((point, index) => ({
+    day: dayFormat.format(
+      periodEnd - Math.round((trend.length - 1 - index) * step) * 86_400_000,
+    ),
+    value:
+      last === first
+        ? value
+        : start + ((value - start) * (point - first)) / (last - first),
+  }));
+}
+
+function Sparkline({
+  metric,
+  period,
+  good,
+}: {
+  metric: Metric;
+  period: Period;
+  good: boolean;
+}) {
+  const rows = useMemo(() => seriesFor(metric, period), [metric, period]);
+  const color = good ? "var(--success)" : "var(--destructive)";
+  const definition = useMemo(() => {
+    const format = new Intl.NumberFormat("en-US", metric.format);
+    const values = rows.map((row) => row.value);
+    const min = Math.min(...values);
+    const max = Math.max(...values);
+    const pad = (max - min) * 0.15 || max * 0.05;
+    return defineChart({
+      guides: false,
+      margin: { top: 6, right: 0, bottom: 0, left: 0 },
+      keyboard: false,
+      marks: [
+        decorative(
+          areaY(rows, {
+            x: "day",
+            y: "value",
+            y1: min - pad,
+            fill: color,
+            fillOpacity: 0.12,
+          }),
+        ),
+        lineY(rows, { x: "day", y: "value", stroke: color, strokeWidth: 2 }),
+      ],
+      scales: {
+        x: { scale: scalePoint },
+        y: { scale: scaleLinear().domain([min - pad, max + pad]) },
+      },
+      tooltip: {
+        use: tooltip,
+        content: ([point]) => ({
+          title: point.datum.day,
+          rows: [
+            {
+              label: metric.label,
+              value: format.format(point.datum.value),
+              color: point.color,
+            },
+          ],
+        }),
+      },
+    });
+  }, [rows, color, metric]);
 
   return (
-    <svg
-      viewBox="0 0 100 32"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-      className={`size-full ${good ? "text-success" : "text-destructive"}`}
-    >
-      <path
-        d={`${path} L100,32 L0,32 Z`}
-        fill="currentColor"
-        fillOpacity={0.12}
-      />
-      <path
-        d={path}
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        vectorEffect="non-scaling-stroke"
-      />
-    </svg>
+    <Chart
+      definition={definition}
+      height={56}
+      initialWidth={280}
+      ariaLabel={`${metric.label} from ${rows[0].day} to ${rows[rows.length - 1].day}`}
+    />
   );
 }
 
@@ -158,16 +222,19 @@ export function StatsCards() {
                   >
                     <TrendIcon size={13} weight="bold" aria-hidden="true" />
                     {current.change > 0 ? "+" : "−"}
-                    {Math.abs(current.change)}%
+                    {Math.abs(current.change)}
+                    {metric.points ? " pts" : "%"}
                   </Badge>
                 </p>
                 <StatDetail>
-                  {good ? "Better" : "Worse"} than the previous{" "}
-                  {periodLabels[period]}
+                  Previous:{" "}
+                  {new Intl.NumberFormat("en-US", metric.format).format(
+                    previousValue(metric, period),
+                  )}
                 </StatDetail>
               </div>
-              <div className="mt-3 h-14">
-                <Sparkline points={current.trend} good={good} />
+              <div className="mt-3">
+                <Sparkline metric={metric} period={period} good={good} />
               </div>
             </Stat>
           );

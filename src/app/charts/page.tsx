@@ -1,11 +1,13 @@
-import type { Metadata } from "next";
 import { ChartGallery } from "@/components/charts/chart-gallery";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Charts | vip/ui",
+export const metadata = pageMetadata({
+  title: "Charts",
   description:
-    "Accessible charts with motion, built with TanStack Charts. Copy the source, then make the chart yours.",
-};
+    "Accessible charts with motion, built with TanStack Charts. Browse live examples, then copy the source and make the chart yours.",
+  path: "/charts",
+  image: "file",
+});
 
 export default async function ChartsPage({
   searchParams,

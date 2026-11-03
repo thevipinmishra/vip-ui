@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
 import { SignupForm } from "./signup-form";
 
-export const metadata: Metadata = {
-  title: "Create an account",
+export const metadata = {
+  title: "Sign up",
+  description: "A sign-up form with a password strength meter.",
 };
 
 export default function SignupPage() {

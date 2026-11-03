@@ -1,10 +1,13 @@
 "use client";
 
 import {
-  BellIcon,
+  ArrowCounterClockwiseIcon,
+  ArrowUpIcon,
+  CreditCardIcon,
   DownloadSimpleIcon,
   GearSixIcon,
   ListIcon,
+  ShoppingCartIcon,
   SignOutIcon,
   TrendDownIcon,
   TrendUpIcon,
@@ -22,7 +25,6 @@ import {
   MenuSeparator,
   MenuTrigger,
 } from "../../../components/vip-ui/menu";
-import { SearchField } from "../../../components/vip-ui/search-field";
 import {
   Sheet,
   SheetBody,
@@ -32,10 +34,34 @@ import {
   SheetTrigger,
 } from "../../../components/vip-ui/sheet";
 import { Stat, StatDetail, StatLabel, StatValue } from "../../../components/vip-ui/stat";
+import {
+  Timeline,
+  TimelineItem,
+  TimelineTime,
+  TimelineTitle,
+} from "../../../components/vip-ui/timeline";
+import { showToast } from "../../../components/vip-ui/toast";
 import { AppSidebar } from "./app-sidebar";
 import { activity, metrics } from "./data";
+import { Notifications } from "./notifications";
 import { RecentOrders } from "./recent-orders";
 import { RevenueChart } from "./revenue-chart";
+import { SearchCommand } from "./search-command";
+
+const activityIcons = {
+  payment: CreditCardIcon,
+  checkout: ShoppingCartIcon,
+  refund: ArrowCounterClockwiseIcon,
+  upgrade: ArrowUpIcon,
+};
+
+function exportOrders() {
+  showToast({
+    title: "Export started",
+    description: "We email the CSV file to maya@acme.store.",
+    variant: "success",
+  });
+}
 
 export function Dashboard() {
   const [navOpen, setNavOpen] = useState(false);
@@ -63,15 +89,9 @@ export function Dashboard() {
               </Sheet>
             </SheetTrigger>
           </div>
-          <SearchField
-            aria-label="Search orders and customers"
-            placeholder="Search"
-            className="hidden max-w-xs sm:flex"
-          />
+          <SearchCommand onExport={exportOrders} />
           <div className="ms-auto flex items-center gap-1">
-            <Button variant="ghost" iconOnly aria-label="Notifications">
-              <BellIcon size={19} aria-hidden="true" />
-            </Button>
+            <Notifications />
             <MenuTrigger>
               <Button
                 variant="ghost"
@@ -111,7 +131,7 @@ export function Dashboard() {
                 Store activity for September 2026
               </p>
             </div>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" onPress={exportOrders}>
               <DownloadSimpleIcon size={16} aria-hidden="true" />
               Export
             </Button>
@@ -145,24 +165,25 @@ export function Dashboard() {
                 <CardTitle as="h2">Activity</CardTitle>
               </CardHeader>
               <CardContent>
-                <ol className="grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
-                  {activity.map((event) => (
-                    <li key={event.action} className="flex gap-3">
-                      <Avatar name={event.name} className="size-8" />
-                      <div className="min-w-0 text-sm">
-                        <p>
-                          <span className="font-medium">{event.name}</span>{" "}
-                          <span className="text-muted-foreground">
-                            {event.action}
-                          </span>
-                        </p>
-                        <p className="mt-0.5 text-xs text-muted-foreground">
+                <Timeline aria-label="Recent activity">
+                  {activity.map((event, index) => {
+                    const Icon = activityIcons[event.type];
+                    return (
+                      <TimelineItem
+                        key={event.id}
+                        status={index === 0 ? "latest" : "complete"}
+                        icon={index === 0 ? undefined : <Icon weight="bold" />}
+                      >
+                        <TimelineTitle className="text-sm font-medium">
+                          {event.title}
+                        </TimelineTitle>
+                        <TimelineTime dateTime={event.dateTime}>
                           {event.time}
-                        </p>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
+                        </TimelineTime>
+                      </TimelineItem>
+                    );
+                  })}
+                </Timeline>
               </CardContent>
             </Card>
           </div>

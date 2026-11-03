@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { ButtonBasicDemo } from "@/components/docs/button-basic-demo";
 import { ButtonIconDemo } from "@/components/docs/button-icon-demo";
 import { ButtonLinkDemo } from "@/components/docs/button-link-demo";
@@ -11,11 +10,13 @@ import {
   withExamplePreviews,
 } from "@/components/docs/component-page";
 import { componentPageData } from "@/lib/component-examples";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Button | vip/ui",
-  description: componentPageData.button.description,
-};
+export const metadata = pageMetadata({
+  title: "Button",
+  description: `${componentPageData.button.description} Examples cover sizes, icons, links, and loading states.`,
+  path: "/components/button",
+});
 
 export default function ButtonPage() {
   const page = componentPageData.button;

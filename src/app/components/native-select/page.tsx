@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -9,11 +8,13 @@ import { NativeSelectGroupsDemo } from "@/components/docs/native-select-groups-d
 import { NativeSelectInvalidDemo } from "@/components/docs/native-select-invalid-demo";
 import { NativeSelectSizesDemo } from "@/components/docs/native-select-sizes-demo";
 import { componentPageData } from "@/lib/component-examples";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Native select | vip/ui",
-  description: componentPageData["native-select"].description,
-};
+export const metadata = pageMetadata({
+  title: "Native select",
+  description: `${componentPageData["native-select"].description} Examples cover groups, sizes, and disabled or invalid fields, with the API reference.`,
+  path: "/components/native-select",
+});
 
 export default function NativeSelectPage() {
   const page = componentPageData["native-select"];
