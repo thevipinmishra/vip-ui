@@ -9,7 +9,6 @@ import {
   MagnifyingGlassIcon,
   PaintBrushIcon,
   PaletteIcon,
-  ScalesIcon,
   SquaresFourIcon,
   SwatchesIcon,
   TerminalWindowIcon,
@@ -48,7 +47,6 @@ const pages = [
   { href: "/charts", label: "Charts", icon: ChartBarIcon },
   { href: "/themes", label: "Themes", icon: PaletteIcon },
   { href: "/colors", label: "Colors", icon: SwatchesIcon },
-  { href: "/license", label: "License", icon: ScalesIcon },
 ];
 
 export function DocsSearch() {

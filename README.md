@@ -108,16 +108,17 @@ pnpm dev
 
 Open <http://localhost:3000/components>.
 
-| Script                | Action                                                                                |
-| --------------------- | ------------------------------------------------------------------------------------- |
-| `pnpm dev`            | Generates the registry, then starts the development server.                           |
-| `pnpm build`          | Generates the registry, then makes a production build.                                |
-| `pnpm lint`           | Checks the code with Biome.                                                           |
-| `pnpm format`         | Formats the code with Biome.                                                          |
-| `pnpm registry:build` | Writes the registry files to `public/r/`, `registry.json`, and `registry/generated/`. |
-| `pnpm palette:build`  | Generates the color scales.                                                           |
+| Script                | Action                                                                                      |
+| --------------------- | ------------------------------------------------------------------------------------------- |
+| `pnpm dev`            | Generates the registry, then starts the development server.                                 |
+| `pnpm build`          | Generates the registry, then makes a production build.                                      |
+| `pnpm lint`           | Checks the code with Biome.                                                                 |
+| `pnpm format`         | Formats the code with Biome.                                                                |
+| `pnpm registry:build` | Writes the registry files to `public/r/`, `registry.json`, and `registry/generated/`.       |
+| `pnpm seo:audit`      | Checks titles, descriptions, canonicals, robots, sitemaps, and OG images on a running site. |
+| `pnpm palette:build`  | Generates the color scales.                                                                 |
 
-Before a production build, set `NEXT_PUBLIC_REGISTRY_URL` to the public HTTPS origin.
+Before a production build, set `NEXT_PUBLIC_SITE_URL` to the public HTTPS origin. It is used for canonical URLs, Open Graph URLs, the sitemap, and the manifest. Set `NEXT_PUBLIC_REGISTRY_URL` if the registry is served from a different origin.
 
 ## Contributing
 
@@ -140,4 +141,4 @@ vip/ui uses these projects:
 
 ## License
 
-[MIT](LICENSE)
+vip/ui uses the [MIT License](LICENSE).

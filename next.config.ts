@@ -43,6 +43,12 @@ const nextConfig: NextConfig = {
         destination: "/r/vip-sheet.json",
         permanent: true,
       },
+      {
+        source: "/license",
+        destination:
+          "https://github.com/thevipinmishra/vip-ui/blob/main/LICENSE",
+        permanent: true,
+      },
     ];
   },
   async rewrites() {
