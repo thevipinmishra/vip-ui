@@ -15,9 +15,12 @@ import {
   PageHeaderHeading,
 } from "@/components/docs/page-header";
 import { buttonLinkStyles } from "@/components/ui/button-styles";
-import { paletteCss, paletteTailwindCss } from "@/lib/palettes";
+import { findPalette, paletteCss, paletteTailwindCss } from "@/lib/palettes";
 import { pageMetadata } from "@/lib/seo";
 import { ColorScales } from "./color-scales";
+
+const blue = findPalette("blue").light;
+const ramp = [2, 4, 6, 8, 9, 10].map((index) => blue[index]);
 
 export const metadata = pageMetadata({
   title: "Colors",
@@ -37,12 +40,30 @@ export default async function ColorsPage() {
 
   return (
     <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-14">
-      <PageHeader className="site-container">
-        <PageHeaderHeading>Colors</PageHeaderHeading>
+      <PageHeader className="site-container relative isolate items-center pt-12 text-center sm:pt-20">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 -top-28 -z-10 mx-auto h-96 max-w-5xl rounded-full opacity-70 blur-3xl"
+          style={{
+            background: `radial-gradient(50% 50% at 50% 50%, color-mix(in oklab, ${blue[8]} 18%, transparent) 0%, transparent 70%)`,
+          }}
+        />
+        <span aria-hidden="true" className="flex h-7 items-center opacity-90">
+          <span className="flex h-4 overflow-clip rounded-full ring-1 ring-foreground/10">
+            {ramp.map((color) => (
+              <span
+                key={color}
+                className="w-2.5"
+                style={{ background: color }}
+              />
+            ))}
+          </span>
+        </span>
+        <PageHeaderHeading size="lg">Colors</PageHeaderHeading>
         <PageHeaderDescription>
           Ten color scales with 12 steps each, for light and dark mode.
         </PageHeaderDescription>
-        <PageActions>
+        <PageActions className="mt-2 justify-center">
           <a href="#install" className={buttonLinkStyles()}>
             Install
             <ArrowDownIcon size={16} aria-hidden="true" />

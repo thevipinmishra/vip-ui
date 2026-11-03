@@ -108,12 +108,12 @@ function ThemeOption({ theme }: { theme: Theme }) {
   return (
     <AriaRadio
       value={theme.slug}
-      className="inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-md border border-transparent px-3 text-sm font-medium text-muted-foreground outline-offset-4 outline-transparent transition-[outline-color,outline-offset] duration-150 ease-out-quint hover:text-foreground selected:border-border selected:bg-card selected:text-foreground selected:shadow-[var(--shadow-card)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 sm:min-h-9"
+      className="relative inline-flex min-h-9 shrink-0 cursor-pointer items-center rounded-full ps-2 pe-3 text-[13px] font-medium whitespace-nowrap text-muted-foreground transition-[color,background-color,box-shadow] duration-200 ease-out-quint outline-transparent hover:text-foreground selected:bg-background selected:text-foreground selected:shadow-[0_1px_2px_oklch(0_0_0/0.06)] selected:ring-1 selected:ring-border/60 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
     >
       <span data-specimen={theme.slug} className="flex items-center gap-2">
         <span
           aria-hidden="true"
-          className="size-3.5 rounded-full bg-[var(--primary)] ring-1 ring-foreground/15"
+          className="size-4 rounded-full bg-[var(--primary)] shadow-[inset_0_0_0_1px_oklch(0_0_0/0.12),inset_0_1px_1px_oklch(1_0_0/0.25)]"
         />
         {theme.name}
       </span>
@@ -217,10 +217,10 @@ export function ThemeStudio({
       </PageHeader>
 
       <div
-        className="sticky top-0 z-30 border-y border-border/70 bg-background/85 py-3 backdrop-blur-md"
+        className="sticky top-0 z-30 bg-linear-to-b from-background from-70% to-transparent pt-3 pb-4"
         onPointerDownCapture={origin.onPointerDown}
       >
-        <div className="site-container flex items-center gap-3">
+        <div className="site-container flex items-center justify-center gap-2">
           <AriaRadioGroup
             ref={pickerRef}
             aria-label="Theme"
@@ -230,9 +230,9 @@ export function ThemeStudio({
             render={withItemHighlight(undefined, {
               placement: "under",
               items: "label",
-              className: "bg-card/70",
+              className: "rounded-full bg-muted/70",
             })}
-            className="flex min-w-0 gap-1 overflow-x-auto rounded-lg border border-border bg-secondary p-1 [scrollbar-width:none]"
+            className="flex w-fit max-w-full min-w-0 items-center gap-0.5 overflow-x-auto rounded-full bg-card/60 p-1 shadow-[var(--shadow-card)] ring-1 ring-border/60 backdrop-blur-xl max-[880px]:px-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-[880px]:[mask-image:linear-gradient(to_right,transparent,black_12px,black_calc(100%-12px),transparent)]"
           >
             {themes.map((option) => (
               <ThemeOption key={option.slug} theme={option} />
@@ -241,7 +241,8 @@ export function ThemeStudio({
           <ModeSwitch
             mode={mode}
             onChange={selectMode}
-            className="ml-auto shrink-0"
+            pill
+            className="shrink-0"
           />
         </div>
       </div>
