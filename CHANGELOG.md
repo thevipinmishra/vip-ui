@@ -6,6 +6,8 @@ Concise, user-visible changes. Versions track site releases, not a published npm
 
 ### Components
 
+- `TooltipChart` renders a React body in the chart tooltip. Pass `renderTooltipBody` to replace the default rows, for example with a close button on a pinned tooltip. The body uses the chart tooltip surface, border, and shadow.
+- The chart frame styles TanStack `interactiveColorLegend` buttons like the other kit controls.
 - Response shows a streaming answer with status states. The content shows a caret and `aria-busy` while `status="streaming"`, screen readers hear one announcement when the run ends, `ResponseNotice` marks stopped and error runs, and `ResponseActions` and `ResponseFooter` hold buttons and sources.
 - Reasoning reveals an agent's thinking in a disclosure. While a run is live, the trigger reads "Thinking for 3s" and counts each second. When the run ends, it reads "Thought for 12s". The time comes from `duration` or the last count. `autoCollapse` closes the panel at the end and reopens it on the next run, and `scrollable` caps the body at 16rem with keyboard scrolling.
 - Prompt input sends with Enter and adds a line with Shift+Enter by default, or the reverse with `submitKey="mod+enter"`. While `isPending` is true and `onStop` is set, the submit button becomes Stop. Files dropped on the frame call `onFilesDropped`, and the textarea grows from `minRows` to `maxRows` before scrolling.
@@ -36,6 +38,7 @@ Concise, user-visible changes. Versions track site releases, not a published npm
 
 ### Documentation
 
+- The charts page has 27 new examples for the TanStack Charts API, and two new tabs: Spatial and Interactive. They show violin, ridgeline, ECDF, hexbin, density, Voronoi, geo, mosaic, streamgraph, tree, force, facet, error bars, Bollinger bands, gauge, difference, rank, crosshair, zoom, brush, selection, custom tooltips, interactive legends, annotations, 2D bins, and the Canvas renderer. A coverage table links each API area to its examples.
 - New Colors page at `/colors` with ten color scales: Gray, Red, Orange, Yellow, Green, Teal, Cyan, Blue, Violet, and Pink. Each scale has 12 OKLCH steps for light and dark mode. The page shows the purpose of each step and the contrast of the text steps. It copies the CSS for one scale or all scales, and a Tailwind `@theme` block that adds classes such as `bg-blue-3`.
 - The Themes page has ten themes made from the color scales: Gray, and one theme for each hue on Gray neutrals. The six earlier themes are removed: Atelier, Signal, Canopy, Vesper, Marigold, and Graphite. A theme sets colors only, not fonts, radius, or shadows. The Tokens tab shows the scale step of each token. Each color pair passes 4.5:1 in light and dark mode.
 - The Installation guide has an Add a theme section. The Styling guide has a Color scales section with the purpose of each step, the contrast checks, and how to map the shadcn tokens to steps.

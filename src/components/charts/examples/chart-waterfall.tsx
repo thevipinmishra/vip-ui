@@ -5,6 +5,7 @@ import { decorative } from "@tanstack/charts/mark/decorative";
 import { scaleBand } from "@tanstack/charts/scales/band";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { tooltip } from "@tanstack/charts/tooltip";
+import { waterfall } from "@tanstack/charts/transform/waterfall";
 import {
   Chart,
   ChartCaption,
@@ -24,27 +25,13 @@ const changes = [
   { item: "Interest", amount: 8000 },
 ];
 
-const profit = changes.reduce((sum, row) => sum + row.amount, 0);
-
-const rows = [
-  ...changes.map((row, index) => {
-    const start = changes
-      .slice(0, index)
-      .reduce((sum, previous) => sum + previous.amount, 0);
-    return {
-      ...row,
-      start,
-      end: start + row.amount,
-      kind: row.amount >= 0 ? "Increase" : "Decrease",
-    };
-  }),
-  { item: "Net profit", amount: profit, start: 0, end: profit, kind: "Total" },
-];
+const rows = waterfall(changes, { value: "amount", total: true });
+const profit = rows.at(-1)?.end ?? 0;
 
 const series = [
-  { label: "Increase", color: "var(--ts-chart-2)" },
-  { label: "Decrease", color: "var(--ts-chart-5)" },
-  { label: "Total", color: "var(--ts-chart-1)" },
+  { key: "increase", label: "Increase", color: "var(--ts-chart-2)" },
+  { key: "decrease", label: "Decrease", color: "var(--ts-chart-5)" },
+  { key: "total", label: "Total", color: "var(--ts-chart-1)" },
 ];
 
 const money = new Intl.NumberFormat("en-US", {
@@ -61,7 +48,7 @@ const compactMoney = new Intl.NumberFormat("en-US", {
 const definition = defineChart({
   marks: [
     barY(rows, {
-      x: "item",
+      x: (row) => (row.kind === "total" ? "Net profit" : row.item),
       y1: "start",
       y2: "end",
       color: "kind",
@@ -79,17 +66,17 @@ const definition = defineChart({
     },
   },
   color: {
-    domain: series.map((item) => item.label),
+    domain: series.map((item) => item.key),
     range: series.map((item) => item.color),
   },
   tooltip: {
     use: tooltip,
     content: ([point]) => ({
-      title: point.datum.item,
+      title: point.datum.kind === "total" ? "Net profit" : point.datum.item,
       rows: [
         {
-          label: point.datum.kind,
-          value: money(point.datum.amount),
+          label: point.datum.kind === "total" ? "Total" : point.datum.kind,
+          value: money(point.datum.delta),
           color: point.color,
         },
         { label: "Running total", value: money(point.datum.end) },
@@ -112,7 +99,7 @@ export function ChartWaterfall() {
       />
       <ChartLegend>
         {series.map((item) => (
-          <ChartLegendItem key={item.label} color={item.color}>
+          <ChartLegendItem key={item.key} color={item.color}>
             {item.label}
           </ChartLegendItem>
         ))}
@@ -120,7 +107,11 @@ export function ChartWaterfall() {
       <ChartTable
         caption="Revenue to net profit, third quarter of 2026"
         columns={["Item", "Change", "Running total"]}
-        rows={rows.map((row) => [row.item, money(row.amount), money(row.end)])}
+        rows={rows.map((row) => [
+          row.kind === "total" ? "Net profit" : row.item,
+          money(row.delta),
+          money(row.end),
+        ])}
       />
     </ChartFrame>
   );

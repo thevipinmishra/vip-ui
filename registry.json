@@ -456,7 +456,7 @@
       "type": "registry:ui",
       "title": "Chart",
       "description": "Frames a TanStack chart with shadcn chart colors and tooltip styles.",
-      "dependencies": ["@tanstack/charts@^1.2.0"],
+      "dependencies": ["@tanstack/charts@^1.2.1"],
       "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "cssVars": {
         "theme": {
@@ -2900,7 +2900,7 @@
       "categories": ["dashboard"],
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "@tanstack/charts@^1.2.0"
+        "@tanstack/charts@^1.2.1"
       ],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-avatar.json",
@@ -2988,7 +2988,7 @@
       "categories": ["dashboard"],
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "@tanstack/charts@^1.2.0"
+        "@tanstack/charts@^1.2.1"
       ],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-animated-number.json",
@@ -3028,7 +3028,7 @@
       "dependencies": [
         "@internationalized/date@^3.12.4",
         "@phosphor-icons/react@^2.1.10",
-        "@tanstack/charts@^1.2.0",
+        "@tanstack/charts@^1.2.1",
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
@@ -3090,7 +3090,7 @@
       "categories": ["dashboard"],
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "@tanstack/charts@^1.2.0"
+        "@tanstack/charts@^1.2.1"
       ],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-alert.json",
