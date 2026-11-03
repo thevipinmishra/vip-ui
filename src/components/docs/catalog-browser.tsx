@@ -51,7 +51,7 @@ const CatalogCard = memo(function CatalogCard({
   return (
     <li
       hidden={hidden}
-      className="group/card relative flex flex-col rounded-xl bg-card p-1.5 text-card-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70 transition-[box-shadow,scale] duration-200 ease-out-quint hover:shadow-[var(--shadow-float)] hover:ring-foreground/20 motion-safe:has-[a:active]:scale-[0.985] forced-colors:border"
+      className="group/card relative flex flex-col rounded-2xl bg-card p-1 text-card-foreground shadow-[var(--shadow-card)] ring-1 ring-border/60 transition-[box-shadow,scale] duration-200 ease-out-quint hover:shadow-[var(--shadow-float)] hover:ring-border motion-safe:has-[a:active]:scale-[0.985] forced-colors:border"
       onPointerEnter={(event) => {
         if (event.pointerType === "mouse") setHovered(true);
       }}
@@ -62,27 +62,23 @@ const CatalogCard = memo(function CatalogCard({
         href={`/components/${component.slug}`}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
-        className="group/link flex flex-1 flex-col px-2.5 pb-2 pt-3 outline-none after:absolute after:inset-0 after:rounded-xl after:outline-offset-4 after:outline-transparent after:transition-[outline-color,outline-offset] after:duration-200 after:ease-out-quint focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-ring motion-reduce:after:outline-offset-2"
+        className="group/link flex items-center gap-2 px-3 py-2.5 outline-none after:absolute after:inset-0 after:rounded-2xl after:outline-offset-4 after:outline-transparent after:transition-[outline-color,outline-offset] after:duration-200 after:ease-out-quint focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-ring motion-reduce:after:outline-offset-2"
       >
-        <span className="flex items-center gap-2">
-          <span className="min-w-0 text-[15px] font-medium tracking-[-0.02em]">
-            {component.name}
-          </span>
-          <ArrowRightIcon
-            size={14}
-            aria-hidden="true"
-            className="ms-auto shrink-0 text-muted-foreground opacity-0 transition-[opacity,translate] duration-200 ease-out-quint group-hover/card:opacity-100 group-focus-visible/link:opacity-100 motion-safe:-translate-x-1 motion-safe:group-hover/card:translate-x-0 motion-safe:group-focus-visible/link:translate-x-0 rtl:-scale-x-100"
-          />
+        <span className="min-w-0 truncate text-sm font-medium tracking-[-0.01em]">
+          {component.name}
         </span>
-        <span className="mt-1 text-[13px] leading-5 text-muted-foreground">
-          {component.description}
-        </span>
+        <span className="sr-only">. {component.description}</span>
+        <ArrowRightIcon
+          size={14}
+          aria-hidden="true"
+          className="ms-auto shrink-0 text-muted-foreground opacity-0 transition-[opacity,translate] duration-200 ease-out-quint group-hover/card:opacity-100 group-focus-visible/link:opacity-100 motion-safe:-translate-x-1 motion-safe:group-hover/card:translate-x-0 motion-safe:group-focus-visible/link:translate-x-0 rtl:-scale-x-100"
+        />
       </Link>
     </li>
   );
 });
 
-export function CatalogBrowser() {
+export function CatalogBrowser({ category }: { category?: string }) {
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const normalized = useDeferredValue(query.trim().toLowerCase());
@@ -104,28 +100,34 @@ export function CatalogBrowser() {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, []);
 
+  const groups = category
+    ? catalogGroups.filter((group) => group.title === category)
+    : catalogGroups;
+  const total = groups.reduce((sum, group) => sum + group.components.length, 0);
+
   const matches = useMemo(
     () =>
       new Set(
         catalogComponents
           .filter(
             (component) =>
-              !normalized ||
-              searchText.get(component.slug)?.includes(normalized),
+              (!category || component.group === category) &&
+              (!normalized ||
+                searchText.get(component.slug)?.includes(normalized)),
           )
           .map((component) => component.slug),
       ),
-    [normalized],
+    [normalized, category],
   );
 
   return (
-    <>
-      <div className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-2">
+    <section id="gallery" aria-label="Components" className="scroll-mt-32 pt-6">
+      <div className="flex flex-col items-center gap-2">
         <SearchField
           aria-label="Filter components"
           value={query}
           onChange={setQuery}
-          className="w-full sm:max-w-sm"
+          className="w-full sm:max-w-md"
         >
           {({ isEmpty }) => (
             <div className="relative flex items-center">
@@ -157,13 +159,13 @@ export function CatalogBrowser() {
           className="text-sm tabular-nums text-muted-foreground"
         >
           {normalized
-            ? `${matches.size} of ${catalogComponents.length} components`
-            : `${catalogComponents.length} components`}
+            ? `${matches.size} of ${total} components`
+            : `${total} components`}
         </p>
       </div>
 
       <div hidden={matches.size === 0} className="mt-12 grid gap-14">
-        {catalogGroups.map((group) => {
+        {groups.map((group) => {
           const headingId = group.title
             .toLowerCase()
             .replace(/[^a-z0-9]+/g, "-");
@@ -177,12 +179,12 @@ export function CatalogBrowser() {
               id={headingId}
               hidden={count === 0}
               aria-labelledby={`${headingId}-title`}
-              className="scroll-mt-6"
+              className="scroll-mt-28"
             >
               <div className="flex items-baseline gap-2.5">
                 <h2
                   id={`${headingId}-title`}
-                  className="text-xl font-semibold tracking-[-0.04em]"
+                  className="text-lg font-semibold tracking-[-0.03em]"
                 >
                   {group.title}
                 </h2>
@@ -190,10 +192,7 @@ export function CatalogBrowser() {
                   {count}
                 </span>
               </div>
-              <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                {group.description}
-              </p>
-              <ul className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+              <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 lg:gap-4 xl:grid-cols-4">
                 {group.components.map((component) => (
                   <CatalogCard
                     key={component.slug}
@@ -232,6 +231,6 @@ export function CatalogBrowser() {
           </EmptyState>
         </div>
       )}
-    </>
+    </section>
   );
 }
