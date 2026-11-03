@@ -6,7 +6,7 @@ export const alt =
 export const size = ogSize;
 export const contentType = ogContentType;
 
-export default function Image() {
+export default async function Image() {
   return renderOgCard({
     eyebrow: "Components",
     title: "Accessible components for every state",

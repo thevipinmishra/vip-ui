@@ -18,7 +18,7 @@ export async function GET(request: Request) {
   const params = new URL(request.url).searchParams;
   const accent = params.get("accent");
 
-  const image = renderOgCard({
+  const image = await renderOgCard({
     eyebrow: text(params.get("eyebrow")?.slice(0, 80), "vip/ui", 42),
     title: text(params.get("title")?.slice(0, 240), site.tagline, 82),
     description: text(
