@@ -1,10 +1,8 @@
-import type { Metadata } from "next";
+import { blockMetadata } from "@/lib/block-seo";
 import { BrandPanel } from "./brand-panel";
 import { EmailLinkForm } from "./email-link-form";
 
-export const metadata: Metadata = {
-  title: "Sign in",
-};
+export const metadata = blockMetadata("login-02");
 
 export default function LoginPage() {
   return (

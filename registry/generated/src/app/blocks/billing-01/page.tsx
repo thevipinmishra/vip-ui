@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
 import { BillingSettings } from "./billing-settings";
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Billing",
+  description: "A plan picker with usage meters and a payment method.",
 };
 
 export default function BillingPage() {

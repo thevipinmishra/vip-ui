@@ -1,9 +1,7 @@
-import type { Metadata } from "next";
+import { blockMetadata } from "@/lib/block-seo";
 import { TeamMembers } from "./team-members";
 
-export const metadata: Metadata = {
-  title: "Team",
-};
+export const metadata = blockMetadata("team-01");
 
 export default function TeamPage() {
   return (

@@ -101,11 +101,35 @@ export const orders: Order[] = [
 ];
 
 export const activity = [
-  { name: "Olivia Martin", action: "paid invoice #3210", time: "2 min ago" },
-  { name: "Jackson Lee", action: "started a checkout", time: "18 min ago" },
-  { name: "William Kim", action: "got a refund for #3207", time: "1 h ago" },
-  { name: "Sofia Davis", action: "upgraded to Business", time: "3 h ago" },
-];
+  {
+    id: "a1",
+    type: "payment",
+    title: "Olivia Martin paid invoice #3210",
+    time: "2 min ago",
+    dateTime: "2026-09-30T14:58:00Z",
+  },
+  {
+    id: "a2",
+    type: "checkout",
+    title: "Jackson Lee started a checkout",
+    time: "18 min ago",
+    dateTime: "2026-09-30T14:42:00Z",
+  },
+  {
+    id: "a3",
+    type: "refund",
+    title: "William Kim got a refund for #3207",
+    time: "1 h ago",
+    dateTime: "2026-09-30T14:00:00Z",
+  },
+  {
+    id: "a4",
+    type: "upgrade",
+    title: "Sofia Davis upgraded to Business",
+    time: "3 h ago",
+    dateTime: "2026-09-30T12:00:00Z",
+  },
+] as const;
 
 export function formatMoney(amount: number) {
   return new Intl.NumberFormat("en-US", {

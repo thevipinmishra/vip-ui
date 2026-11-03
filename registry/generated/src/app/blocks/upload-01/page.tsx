@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
 import { FileUpload } from "./file-upload";
 
-export const metadata: Metadata = {
-  title: "Upload files",
+export const metadata = {
+  title: "File upload",
+  description: "A file upload area with progress for each file.",
 };
 
 export default function UploadPage() {

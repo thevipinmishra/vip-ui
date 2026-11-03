@@ -1,12 +1,19 @@
-import type { Metadata } from "next";
 import { BlocksGallery } from "@/components/blocks/blocks-gallery";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Blocks | vip/ui",
+export const metadata = pageMetadata({
+  title: "Blocks",
   description:
-    "Complete page sections, built with vip/ui. Add a block to your app. Change it to suit your product.",
-};
+    "Complete page sections built with vip/ui. Preview each block, copy the install command or source, and open it live in a new tab.",
+  path: "/blocks",
+  image: "file",
+});
 
-export default function BlocksPage() {
-  return <BlocksGallery category={null} />;
+export default async function BlocksPage({
+  searchParams,
+}: PageProps<"/blocks">) {
+  const { category } = await searchParams;
+  return (
+    <BlocksGallery category={typeof category === "string" ? category : null} />
+  );
 }

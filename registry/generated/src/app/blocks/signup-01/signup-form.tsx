@@ -17,6 +17,7 @@ import { Link } from "../../../components/vip-ui/link";
 import { PasswordField } from "../../../components/vip-ui/password-field";
 import { PasswordStrengthMeter } from "../../../components/vip-ui/password-strength-meter";
 import { Select } from "../../../components/vip-ui/select";
+import { Spinner } from "../../../components/vip-ui/spinner";
 import { TextField } from "../../../components/vip-ui/text-field";
 
 const teamSizes = [
@@ -29,6 +30,7 @@ const teamSizes = [
 export function SignupForm() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState<string | null>(null);
+  const [pending, setPending] = useState(false);
 
   if (name) {
     return (
@@ -76,8 +78,14 @@ export function SignupForm() {
         <Form
           onSubmit={(event) => {
             event.preventDefault();
-            const data = new FormData(event.currentTarget);
-            setName(String(data.get("name")).split(" ")[0]);
+            const first = String(
+              new FormData(event.currentTarget).get("name"),
+            ).split(" ")[0];
+            setPending(true);
+            window.setTimeout(() => {
+              setPending(false);
+              setName(first);
+            }, 900);
           }}
         >
           <TextField
@@ -121,7 +129,8 @@ export function SignupForm() {
           >
             I agree to the terms of service
           </Checkbox>
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full" isPending={pending}>
+            {pending && <Spinner size="sm" decorative />}
             Create account
           </Button>
         </Form>

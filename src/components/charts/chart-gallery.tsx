@@ -84,7 +84,6 @@ export async function ChartGallery({
           label="Chart categories"
           tabs={tabs}
           active={tabs[chartCategories.indexOf(category)].href}
-          variant="pill"
         />
         <div className="site-container">
           <ChartCategoryContent category={category} />

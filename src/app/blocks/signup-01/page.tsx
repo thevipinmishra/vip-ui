@@ -1,9 +1,7 @@
-import type { Metadata } from "next";
+import { blockMetadata } from "@/lib/block-seo";
 import { SignupForm } from "./signup-form";
 
-export const metadata: Metadata = {
-  title: "Create an account",
-};
+export const metadata = blockMetadata("signup-01");
 
 export default function SignupPage() {
   return (

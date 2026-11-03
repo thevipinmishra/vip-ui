@@ -61,6 +61,16 @@ export interface DataTableColumn<T> {
     | { type: "select"; options: readonly SelectOption[] };
 }
 
+export interface DataTableFooterState {
+  firstRow: number;
+  lastRow: number;
+  filteredCount: number;
+  totalCount: number;
+  pageIndex: number;
+  pageCount: number;
+  setPageIndex: (index: number) => void;
+}
+
 export interface DataTableProps<T> {
   label: string;
   rows: readonly T[];
@@ -75,6 +85,8 @@ export interface DataTableProps<T> {
   disabledKeys?: Iterable<Key>;
   onRowAction?: (key: Key) => void;
   resizable?: boolean;
+  showClearSelection?: boolean;
+  renderFooter?: (state: DataTableFooterState) => ReactNode;
   className?: string;
 }
 
@@ -92,6 +104,8 @@ export function DataTable<T extends RowData>({
   disabledKeys,
   onRowAction,
   resizable = false,
+  showClearSelection = true,
+  renderFooter,
   className,
 }: DataTableProps<T>) {
   const { locale } = useLocale();
@@ -216,7 +230,7 @@ export function DataTable<T extends RowData>({
         <p className="min-w-0 text-base font-semibold tracking-tight text-foreground [overflow-wrap:anywhere]">
           {label}
         </p>
-        {selectable && selectedCount > 0 && (
+        {selectable && showClearSelection && selectedCount > 0 && (
           <Button
             variant="minimal"
             size="sm"
@@ -359,43 +373,62 @@ export function DataTable<T extends RowData>({
         </Table>
       </TableContainer>
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border bg-muted/20 px-4 py-3 text-sm text-muted-foreground sm:px-5">
-        <output aria-live="polite" aria-atomic="true" className="tabular-nums">
-          {filteredCount === 0
-            ? "No rows"
-            : `Showing ${numberFormat.format(firstRow)}–${numberFormat.format(lastRow)} of ${numberFormat.format(filteredCount)} ${filteredCount === 1 ? "row" : "rows"}`}
-          {hasFilters && ` (${numberFormat.format(rows.length)} total)`}
-          {selectable &&
-            selectedCount > 0 &&
-            ` · ${numberFormat.format(selectedCount)} selected`}
-        </output>
-        {pageCount > 1 && (
-          <nav
-            aria-label={`${label} pages`}
-            className="flex flex-wrap items-center gap-x-3 gap-y-2"
-          >
-            <span className="whitespace-nowrap tabular-nums">
-              Page {numberFormat.format(Math.min(pageIndex + 1, pageCount))} of{" "}
-              {numberFormat.format(pageCount)}
-            </span>
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                isDisabled={pageIndex === 0}
-                onPress={() => setPageIndex(pageIndex - 1)}
+        {renderFooter ? (
+          renderFooter({
+            firstRow,
+            lastRow,
+            filteredCount,
+            totalCount: rows.length,
+            pageIndex,
+            pageCount,
+            setPageIndex: (index) =>
+              setPageIndex(Math.min(Math.max(index, 0), pageCount - 1)),
+          })
+        ) : (
+          <>
+            <output
+              aria-live="polite"
+              aria-atomic="true"
+              className="tabular-nums"
+            >
+              {filteredCount === 0
+                ? "No rows"
+                : `Showing ${numberFormat.format(firstRow)}–${numberFormat.format(lastRow)} of ${numberFormat.format(filteredCount)} ${filteredCount === 1 ? "row" : "rows"}`}
+              {hasFilters && ` (${numberFormat.format(rows.length)} total)`}
+              {selectable &&
+                selectedCount > 0 &&
+                ` · ${numberFormat.format(selectedCount)} selected`}
+            </output>
+            {pageCount > 1 && (
+              <nav
+                aria-label={`${label} pages`}
+                className="flex flex-wrap items-center gap-x-3 gap-y-2"
               >
-                Previous
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                isDisabled={!table.getCanNextPage()}
-                onPress={() => setPageIndex(pageIndex + 1)}
-              >
-                Next
-              </Button>
-            </div>
-          </nav>
+                <span className="whitespace-nowrap tabular-nums">
+                  Page {numberFormat.format(Math.min(pageIndex + 1, pageCount))}{" "}
+                  of {numberFormat.format(pageCount)}
+                </span>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    isDisabled={pageIndex === 0}
+                    onPress={() => setPageIndex(pageIndex - 1)}
+                  >
+                    Previous
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    isDisabled={!table.getCanNextPage()}
+                    onPress={() => setPageIndex(pageIndex + 1)}
+                  >
+                    Next
+                  </Button>
+                </div>
+              </nav>
+            )}
+          </>
         )}
       </div>
     </div>

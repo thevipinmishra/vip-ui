@@ -1,9 +1,7 @@
-import type { Metadata } from "next";
+import { blockMetadata } from "@/lib/block-seo";
 import { StatsCards } from "./stats-cards";
 
-export const metadata: Metadata = {
-  title: "Metrics",
-};
+export const metadata = blockMetadata("stats-01");
 
 export default function StatsPage() {
   return (

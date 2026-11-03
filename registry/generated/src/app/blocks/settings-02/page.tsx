@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
 import { NotificationSettings } from "./notification-settings";
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Notification settings",
+  description: "Notification settings for each event and channel.",
 };
 
 export default function NotificationsPage() {

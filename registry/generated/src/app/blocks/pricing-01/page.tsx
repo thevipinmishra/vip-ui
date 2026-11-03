@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
 import { PricingPlans } from "./pricing-plans";
 
-export const metadata: Metadata = {
-  title: "Pricing",
+export const metadata = {
+  title: "Pricing plans",
+  description: "Pricing plans with a monthly and yearly toggle.",
 };
 
 export default function PricingPage() {

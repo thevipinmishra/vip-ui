@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
 import { StatsCards } from "./stats-cards";
 
-export const metadata: Metadata = {
-  title: "Metrics",
+export const metadata = {
+  title: "Metric cards",
+  description: "Metric cards that change with the selected period.",
 };
 
 export default function StatsPage() {

@@ -1,9 +1,7 @@
-import type { Metadata } from "next";
+import { blockMetadata } from "@/lib/block-seo";
 import { NotificationSettings } from "./notification-settings";
 
-export const metadata: Metadata = {
-  title: "Notification settings",
-};
+export const metadata = blockMetadata("settings-02");
 
 export default function NotificationsPage() {
   return (

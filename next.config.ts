@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import blocksCatalog from "./src/lib/blocks.json";
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
@@ -11,6 +12,11 @@ const nextConfig: NextConfig = {
   compress: process.env.NODE_ENV !== "development",
   async redirects() {
     return [
+      ...blocksCatalog.categories.map((category) => ({
+        source: `/blocks/${category.slug}`,
+        destination: `/blocks?category=${category.slug}`,
+        permanent: true,
+      })),
       {
         source: "/components/chart",
         destination: "/charts#documentation",

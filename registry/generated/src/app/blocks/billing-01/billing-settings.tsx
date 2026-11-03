@@ -2,6 +2,7 @@
 
 import { CreditCardIcon, DownloadSimpleIcon } from "@phosphor-icons/react";
 import { useState } from "react";
+import { Alert } from "../../../components/vip-ui/alert";
 import { Badge } from "../../../components/vip-ui/badge";
 import { Button } from "../../../components/vip-ui/button";
 import {
@@ -21,45 +22,77 @@ import {
   RadioIndicator,
   RadioLabel,
 } from "../../../components/vip-ui/radio-group";
+import {
+  Cell,
+  Column,
+  Row,
+  Table,
+  TableBody,
+  TableHeader,
+} from "../../../components/vip-ui/table";
+import { showToast } from "../../../components/vip-ui/toast";
+import { ConfirmPlanDialog } from "./confirm-plan-dialog";
+import { type PaymentCard, PaymentMethodDialog } from "./payment-method-dialog";
 
-const plans = [
+export const plans = [
   {
     id: "starter",
     name: "Starter",
     price: 0,
+    seats: 3,
     description: "3 seats and 10 GB of storage",
   },
   {
     id: "pro",
     name: "Pro",
     price: 24,
+    seats: 10,
     description: "10 seats and 100 GB of storage",
   },
   {
     id: "business",
     name: "Business",
     price: 59,
+    seats: 50,
     description: "50 seats, 1 TB of storage, and SSO",
   },
 ];
 
+export type Plan = (typeof plans)[number];
+
+const seatsUsed = 8;
+
 const usage = [
-  { label: "Seats", value: 8, max: 10, unit: "seats" },
+  { label: "Seats", value: seatsUsed, max: 10, unit: "seats" },
   { label: "Storage", value: 42, max: 100, unit: "GB" },
   { label: "API requests", value: 74, max: 100, unit: "thousand" },
 ];
 
 const invoices = [
-  { id: "INV-0042", date: "Oct 1, 2026", amount: "$24.00" },
-  { id: "INV-0037", date: "Sep 1, 2026", amount: "$24.00" },
-  { id: "INV-0031", date: "Aug 1, 2026", amount: "$24.00" },
+  { id: "INV-0042", date: "Oct 1, 2026", dateTime: "2026-10-01", amount: 24 },
+  { id: "INV-0037", date: "Sep 1, 2026", dateTime: "2026-09-01", amount: 24 },
+  { id: "INV-0031", date: "Aug 1, 2026", dateTime: "2026-08-01", amount: 24 },
+  { id: "INV-0026", date: "Jul 1, 2026", dateTime: "2026-07-01", amount: 24 },
 ];
+
+const money = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+});
 
 export function BillingSettings() {
   const [current, setCurrent] = useState("pro");
   const [selected, setSelected] = useState("pro");
+  const [confirming, setConfirming] = useState(false);
+  const [card, setCard] = useState<PaymentCard>({
+    brand: "Visa",
+    last4: "4242",
+    expiry: "08/28",
+  });
   const plan = plans.find((item) => item.id === current) ?? plans[0];
+  const next = plans.find((item) => item.id === selected) ?? plans[0];
   const changed = selected !== current;
+  const tooSmall = next.seats < seatsUsed;
 
   return (
     <div className="grid gap-6">
@@ -77,7 +110,7 @@ export function BillingSettings() {
               You use the {plan.name} plan. It renews on November 1.
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="grid gap-4">
             <RadioGroup
               aria-label="Plan"
               value={selected}
@@ -111,6 +144,15 @@ export function BillingSettings() {
                 </RadioField>
               ))}
             </RadioGroup>
+            {changed && tooSmall && (
+              <Alert
+                variant="warning"
+                title={`${next.name} has ${next.seats} seats. You use ${seatsUsed}.`}
+              >
+                Remove {seatsUsed - next.seats} members before you change to
+                this plan.
+              </Alert>
+            )}
           </CardContent>
           <CardFooter className="justify-end border-t border-border/70 pt-5">
             <Button
@@ -120,7 +162,10 @@ export function BillingSettings() {
             >
               Cancel
             </Button>
-            <Button isDisabled={!changed} onPress={() => setCurrent(selected)}>
+            <Button
+              isDisabled={!changed || tooSmall}
+              onPress={() => setConfirming(true)}
+            >
               Change plan
             </Button>
           </CardFooter>
@@ -129,7 +174,7 @@ export function BillingSettings() {
           <Card>
             <CardHeader>
               <CardTitle as="h2">Usage</CardTitle>
-              <CardDescription>This billing period</CardDescription>
+              <CardDescription>Oct 1 to Oct 31</CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4">
               {usage.map((item) => (
@@ -149,52 +194,95 @@ export function BillingSettings() {
               <CardTitle as="h2">Payment method</CardTitle>
             </CardHeader>
             <CardContent className="flex items-center gap-3">
-              <span className="grid size-10 place-items-center rounded-md bg-muted ring-1 ring-border/70">
+              <span className="grid size-10 shrink-0 place-items-center rounded-md bg-muted ring-1 ring-border/70">
                 <CreditCardIcon size={20} aria-hidden="true" />
               </span>
               <div className="min-w-0 flex-1 text-sm">
-                <p className="font-medium">Visa ending in 4242</p>
-                <p className="text-xs text-muted-foreground">Expires 08/2028</p>
+                <p className="truncate font-medium">
+                  {card.brand} ending in {card.last4}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Expires {card.expiry}
+                </p>
               </div>
-              <Button variant="outline" size="sm">
-                Update
-              </Button>
+              <PaymentMethodDialog
+                onSave={(nextCard) => {
+                  setCard(nextCard);
+                  showToast({
+                    title: "Card updated",
+                    description: `We charge ${nextCard.brand} ending in ${nextCard.last4} from Nov 1.`,
+                    variant: "success",
+                  });
+                }}
+              />
             </CardContent>
           </Card>
         </div>
       </div>
-      <Card>
+      <Card className="overflow-hidden">
         <CardHeader>
           <CardTitle as="h2">Invoices</CardTitle>
         </CardHeader>
-        <CardContent className="pt-3">
-          <ul className="divide-y divide-border/70">
-            {invoices.map((invoice) => (
-              <li
-                key={invoice.id}
-                className="flex flex-wrap items-center gap-x-4 gap-y-1 py-3 text-sm"
-              >
-                <span className="font-mono text-xs text-muted-foreground">
-                  {invoice.id}
-                </span>
-                <span className="flex-1">{invoice.date}</span>
-                <Badge variant="success">Paid</Badge>
-                <span className="w-16 text-end font-medium tabular-nums">
-                  {invoice.amount}
-                </span>
-                <Button
-                  variant="ghost"
-                  iconOnly
-                  aria-label={`Download ${invoice.id}`}
-                  className="size-9"
-                >
-                  <DownloadSimpleIcon size={17} aria-hidden="true" />
-                </Button>
-              </li>
-            ))}
-          </ul>
-        </CardContent>
+        <div className="overflow-x-auto">
+          <Table aria-label="Invoices" className="min-w-[480px]">
+            <TableHeader>
+              <Column isRowHeader className="ps-5">
+                Invoice
+              </Column>
+              <Column>Date</Column>
+              <Column>Status</Column>
+              <Column className="text-end">Amount</Column>
+              <Column className="w-14 pe-3">
+                <span className="sr-only">Download</span>
+              </Column>
+            </TableHeader>
+            <TableBody items={invoices}>
+              {(invoice) => (
+                <Row id={invoice.id}>
+                  <Cell className="ps-5 font-mono text-xs">{invoice.id}</Cell>
+                  <Cell className="text-muted-foreground">
+                    <time dateTime={invoice.dateTime}>{invoice.date}</time>
+                  </Cell>
+                  <Cell>
+                    <Badge variant="success">Paid</Badge>
+                  </Cell>
+                  <Cell className="text-end font-medium tabular-nums">
+                    {money.format(invoice.amount)}
+                  </Cell>
+                  <Cell className="pe-3">
+                    <Button
+                      variant="ghost"
+                      iconOnly
+                      aria-label={`Download ${invoice.id}`}
+                      className="size-9"
+                      onPress={() =>
+                        showToast({
+                          title: `${invoice.id}.pdf is downloading`,
+                        })
+                      }
+                    >
+                      <DownloadSimpleIcon size={17} aria-hidden="true" />
+                    </Button>
+                  </Cell>
+                </Row>
+              )}
+            </TableBody>
+          </Table>
+        </div>
       </Card>
+      <ConfirmPlanDialog
+        isOpen={confirming}
+        onOpenChange={setConfirming}
+        from={plan}
+        to={next}
+        onConfirm={() => {
+          setCurrent(next.id);
+          showToast({
+            title: `You now use the ${next.name} plan`,
+            variant: "success",
+          });
+        }}
+      />
     </div>
   );
 }
