@@ -118,7 +118,7 @@ Open <http://localhost:3000/components>.
 | `pnpm seo:audit`      | Checks titles, descriptions, canonicals, robots, sitemaps, and OG images on a running site. |
 | `pnpm palette:build`  | Generates the color scales.                                                                 |
 
-Before a production build, set `NEXT_PUBLIC_SITE_URL` to the public HTTPS origin. It is used for canonical URLs, Open Graph URLs, the sitemap, and the manifest. Set `NEXT_PUBLIC_REGISTRY_URL` if the registry is served from a different origin.
+Canonical URLs, Open Graph URLs, `robots.txt`, the sitemap, and the manifest all resolve to `https://vip-ui.dev` from the `SITE_DOMAIN` constant in `src/lib/site-url.ts`. Set `NEXT_PUBLIC_SITE_URL` only when serving the site from a different HTTPS origin, for example a self-hosted copy; a `*.vercel.app` deployment host is ignored. Set `NEXT_PUBLIC_REGISTRY_URL` if the registry is served from a different origin.
 
 ## Contributing
 
