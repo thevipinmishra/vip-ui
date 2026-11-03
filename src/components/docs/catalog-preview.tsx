@@ -122,7 +122,7 @@ export function CatalogPreview({
       inert
       data-catalog-preview={slug}
       data-mounted={Preview ? "" : undefined}
-      className="pointer-events-none relative h-36 overflow-clip rounded-lg bg-background inset-ring inset-ring-border/50 select-none"
+      className="pointer-events-none relative h-40 overflow-clip rounded-xl bg-muted/50 select-none dark:bg-background/60"
     >
       {Preview && (
         <PreviewBoundary>

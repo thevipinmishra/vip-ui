@@ -137,7 +137,7 @@ export const catalogPreviews: Record<string, CatalogPreviewEntry> = {
       })),
   },
   autocomplete: {
-    scale: 0.6,
+    scale: 0.52,
     load: () =>
       import("./autocomplete-demo").then((m) => ({
         default: m.AutocompleteDemo,
@@ -372,7 +372,7 @@ export const catalogPreviews: Record<string, CatalogPreviewEntry> = {
       })),
   },
   spinner: {
-    scale: 1.1,
+    scale: 1,
     load: () =>
       import("./spinner-sizes-demo").then((m) => ({
         default: m.SpinnerSizesDemo,
@@ -396,11 +396,12 @@ export const catalogPreviews: Record<string, CatalogPreviewEntry> = {
       import("./card-basic-demo").then((m) => ({ default: m.CardBasicDemo })),
   },
   accordion: {
-    scale: 0.68,
+    scale: 0.6,
     load: () =>
       import("./accordion-demo").then((m) => ({ default: m.AccordionDemo })),
   },
   disclosure: {
+    scale: 0.72,
     load: () =>
       import("./disclosure-demo").then((m) => ({ default: m.DisclosureDemo })),
   },
@@ -425,7 +426,7 @@ export const catalogPreviews: Record<string, CatalogPreviewEntry> = {
     load: () => import("./stat-demo").then((m) => ({ default: m.StatDemo })),
   },
   timeline: {
-    scale: 0.56,
+    scale: 0.46,
     load: () =>
       import("./timeline-demo").then((m) => ({ default: m.TimelineDemo })),
   },
@@ -462,7 +463,7 @@ export const catalogPreviews: Record<string, CatalogPreviewEntry> = {
       })),
   },
   reasoning: {
-    scale: 0.52,
+    scale: 0.44,
     load: () =>
       import("./reasoning-demo").then((m) => ({ default: m.ReasoningDemo })),
   },

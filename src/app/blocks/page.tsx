@@ -4,7 +4,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Blocks",
   description:
-    "Complete page sections built with vip/ui. Preview each block, copy the install command or source, and open it live in a new tab.",
+    "Full pages built with vip/ui components. Copy them into your app.",
   path: "/blocks",
   image: "file",
 });

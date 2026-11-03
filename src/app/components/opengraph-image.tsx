@@ -9,9 +9,8 @@ export const contentType = ogContentType;
 export default async function Image() {
   return renderOgCard({
     eyebrow: "Components",
-    title: "Accessible components for every state",
-    description:
-      "Live examples, installation steps, and API reference. Built on React Aria and styled with Tailwind CSS v4.",
+    title: "Accessible React components",
+    description: "Examples, source, and an API reference for each.",
     meta: `${catalogComponents.length} components`,
     accent: ogColors.teal,
   });

@@ -280,7 +280,7 @@
   display: none;
 }
 .sidebar-scrollbar {
-  width: 10px;
+  width: 8px;
   padding-inline: 2px;
   cursor: pointer;
 }
@@ -292,6 +292,13 @@
   cursor: grab;
   border-radius: 999px;
   background: var(--scrollbar-thumb);
+  opacity: 0;
+  transition: opacity 200ms var(--ease-out-quint);
+}
+.sidebar-scroll-area:hover .sidebar-scroll-thumb,
+.sidebar-scroll-area:focus-within .sidebar-scroll-thumb,
+.sidebar-scrollbar[data-dragging] .sidebar-scroll-thumb {
+  opacity: 1;
 }
 .sidebar-scrollbar:hover .sidebar-scroll-thumb,
 .sidebar-scrollbar[data-dragging] .sidebar-scroll-thumb {

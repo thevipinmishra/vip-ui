@@ -4,10 +4,10 @@ import { SITE_DOMAIN, siteUrl } from "./site-url";
 export const site = {
   name: "vip/ui",
   domain: SITE_DOMAIN,
-  title: "vip/ui — Accessible React components with motion",
-  tagline: "Accessible React components with motion",
+  title: "vip/ui — Accessible React components",
+  tagline: "Accessible React components",
   description:
-    "Accessible React components with motion in every state. Built on React Aria, Tailwind CSS v4, and Motion. Add them with the shadcn CLI.",
+    "Accessible React components built on React Aria, Tailwind CSS, and Motion. Copy them into your app with the shadcn CLI.",
   url: siteUrl(),
   repository: "https://github.com/thevipinmishra/vip-ui",
   author: {

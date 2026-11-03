@@ -10,6 +10,7 @@ import { Breadcrumb, Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { type Guide, guideNeighbors, type NavLink } from "@/lib/navigation";
 import { pageMetadata } from "@/lib/seo";
 import { cn } from "@/lib/utils";
+import { pageTitleClass, sectionTitleClass } from "./page-header";
 
 export const textLinkClass =
   "rounded-sm font-medium text-primary underline decoration-primary/40 underline-offset-4 transition-[color,background-color,box-shadow] duration-150 ease-out-quint hover:decoration-primary focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:decoration-primary-foreground/40 focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-transparent";
@@ -74,7 +75,7 @@ export function GuideSection({
 }) {
   return (
     <section id={id} className="mt-14 scroll-mt-28">
-      <h2 className="text-[23px] font-semibold tracking-[-0.045em]">{title}</h2>
+      <h2 className={sectionTitleClass}>{title}</h2>
       <div className="mt-4 grid gap-4 text-sm leading-7 text-muted-foreground">
         {children}
       </div>
@@ -101,10 +102,8 @@ export function DocsHeader({
           </Breadcrumbs>
         </nav>
       )}
-      <h1 className="text-[clamp(2.25rem,4vw,3.5rem)] font-semibold leading-[1.08] tracking-[-0.055em] [text-wrap:balance]">
-        {title}
-      </h1>
-      <p className="mt-2 max-w-[670px] text-sm leading-7 text-muted-foreground">
+      <h1 className={pageTitleClass}>{title}</h1>
+      <p className="mt-3 max-w-2xl text-base leading-7 text-pretty text-muted-foreground">
         {description}
       </p>
     </header>

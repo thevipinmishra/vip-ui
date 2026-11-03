@@ -29,6 +29,14 @@ import { updateSiteTheme } from "@/lib/update-site-theme";
 import { ThemeTokens } from "./theme-tokens";
 import { findTheme, type Theme, themeCss, themes } from "./themes";
 
+const swatches = [
+  "var(--primary)",
+  "var(--chart-2)",
+  "var(--chart-3)",
+  "var(--chart-4)",
+  "var(--chart-5)",
+];
+
 type Point = { x: number; y: number };
 
 const panelClass =
@@ -100,12 +108,12 @@ function ThemeOption({ theme }: { theme: Theme }) {
   return (
     <AriaRadio
       value={theme.slug}
-      className="inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-md border border-transparent px-3 text-sm font-medium text-muted-foreground outline-offset-4 outline-transparent transition-[outline-color,outline-offset] duration-150 ease-out-quint hover:text-foreground selected:border-border selected:bg-card selected:text-foreground selected:shadow-[var(--shadow-card)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 sm:min-h-9"
+      className="relative inline-flex min-h-9 shrink-0 cursor-pointer items-center rounded-full ps-2 pe-3 text-[13px] font-medium whitespace-nowrap text-muted-foreground transition-[color,background-color,box-shadow] duration-200 ease-out-quint outline-transparent hover:text-foreground selected:bg-background selected:text-foreground selected:shadow-[0_1px_2px_oklch(0_0_0/0.06)] selected:ring-1 selected:ring-border/60 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
     >
       <span data-specimen={theme.slug} className="flex items-center gap-2">
         <span
           aria-hidden="true"
-          className="size-3.5 rounded-full bg-[var(--primary)] ring-1 ring-foreground/15"
+          className="size-4 rounded-full bg-[var(--primary)] shadow-[inset_0_0_0_1px_oklch(0_0_0/0.12),inset_0_1px_1px_oklch(1_0_0/0.25)]"
         />
         {theme.name}
       </span>
@@ -172,13 +180,29 @@ export function ThemeStudio({
         dangerouslySetInnerHTML={{ __html: specimenCss + revealCss }}
       />
 
-      <PageHeader className="site-container">
-        <PageHeaderHeading>Themes</PageHeaderHeading>
+      <PageHeader className="site-container relative isolate items-center pb-2 pt-12 text-center sm:pb-6 sm:pt-20">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 -top-28 -z-10 mx-auto h-96 max-w-5xl rounded-full opacity-70 blur-3xl"
+          style={{
+            background:
+              "radial-gradient(50% 50% at 50% 50%, color-mix(in oklab, var(--primary) 18%, transparent) 0%, transparent 70%)",
+          }}
+        />
+        <span aria-hidden="true" className="flex h-7 items-center opacity-90">
+          {swatches.map((swatch) => (
+            <span
+              key={swatch}
+              className="-ms-1.5 size-5 rounded-full ring-2 ring-background first:ms-0"
+              style={{ background: swatch }}
+            />
+          ))}
+        </span>
+        <PageHeaderHeading size="lg">Themes</PageHeaderHeading>
         <PageHeaderDescription>
-          Ten themes made from the vip/ui color scales, for vip/ui and any
-          shadcn/ui project. Select a theme to restyle this page.
+          Ten themes for vip/ui and shadcn/ui. Select one to preview it.
         </PageHeaderDescription>
-        <PageActions>
+        <PageActions className="mt-2 justify-center">
           <a href="#install" className={buttonLinkStyles()}>
             Install {theme.name}
             <ArrowDownIcon size={16} aria-hidden="true" />
@@ -193,10 +217,10 @@ export function ThemeStudio({
       </PageHeader>
 
       <div
-        className="sticky top-0 z-30 border-y border-border/70 bg-background/85 py-3 backdrop-blur-md"
+        className="sticky top-0 z-30 bg-linear-to-b from-background from-70% to-transparent pt-3 pb-4"
         onPointerDownCapture={origin.onPointerDown}
       >
-        <div className="site-container flex items-center gap-3">
+        <div className="site-container flex items-center justify-center gap-2">
           <AriaRadioGroup
             ref={pickerRef}
             aria-label="Theme"
@@ -206,9 +230,9 @@ export function ThemeStudio({
             render={withItemHighlight(undefined, {
               placement: "under",
               items: "label",
-              className: "bg-card/70",
+              className: "rounded-full bg-muted/70",
             })}
-            className="flex min-w-0 gap-1 overflow-x-auto rounded-lg border border-border bg-secondary p-1 [scrollbar-width:none]"
+            className="flex w-fit max-w-full min-w-0 items-center gap-0.5 overflow-x-auto rounded-full bg-card/60 p-1 shadow-[var(--shadow-card)] ring-1 ring-border/60 backdrop-blur-xl max-[880px]:px-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-[880px]:[mask-image:linear-gradient(to_right,transparent,black_12px,black_calc(100%-12px),transparent)]"
           >
             {themes.map((option) => (
               <ThemeOption key={option.slug} theme={option} />
@@ -217,7 +241,8 @@ export function ThemeStudio({
           <ModeSwitch
             mode={mode}
             onChange={selectMode}
-            className="ml-auto shrink-0"
+            pill
+            className="shrink-0"
           />
         </div>
       </div>

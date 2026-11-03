@@ -45,64 +45,61 @@ const cliFacts = [
     term: "Source files",
     detail: (
       <>
-        The CLI writes each file to{" "}
+        Files go to{" "}
         <code className="font-mono text-foreground">components/vip-ui</code>.
-        Your shadcn components do not change.
+        Your shadcn components stay as they are.
       </>
     ),
   },
   {
     term: "Dependencies",
-    detail:
-      "The CLI installs the packages, the Tailwind plugin, and the theme variables.",
+    detail: "The CLI installs the packages and theme variables.",
   },
   {
     term: "Any React app",
-    detail: "Components do not import from Next.js. They work in Vite too.",
+    detail: "No Next.js imports. Works with Vite.",
   },
   {
     term: "Manual install",
-    detail: "Copy the files from the component page. You do not need the CLI.",
+    detail: "Copy the files from each component page.",
   },
 ];
 
 const accessibilityFacts = [
   {
     term: "Keyboard",
-    detail: "Each control uses the keys that people expect.",
+    detail: "Standard key bindings for each control.",
   },
   {
     term: "Screen readers",
-    detail:
-      "Each part has the correct role, name, and state. Live regions announce each change.",
+    detail: "Correct roles, names, and states.",
   },
   {
     term: "Visible focus",
-    detail: "The focus ring shows for the keyboard only.",
+    detail: "Focus rings show for the keyboard only.",
   },
   {
     term: "High contrast",
-    detail: "Focus and selection stay visible in high contrast mode.",
+    detail: "Works in forced colors mode.",
   },
   {
     term: "Pointer and touch",
-    detail: "A mouse, a finger, and a pen work the same.",
+    detail: "Mouse, touch, and pen input.",
   },
   {
     term: "Languages",
-    detail:
-      "Dates and numbers follow the locale. Layouts work from right to left.",
+    detail: "Locale-aware dates and numbers. RTL layouts.",
   },
 ];
 
 const motionFacts = [
   {
     term: "Shared tokens",
-    detail: "One set of four durations, three curves, and three springs.",
+    detail: "Four durations, three curves, three springs.",
   },
   {
     term: "Reduced motion",
-    detail: "Components obey the reduced motion setting.",
+    detail: "Respects the reduced motion setting.",
   },
 ];
 
@@ -146,16 +143,14 @@ export default function Home() {
           </Link>
           <h1
             id="hero-title"
-            className="mx-auto mt-8 max-w-5xl text-[clamp(2.75rem,6.6vw,5.75rem)] leading-[1.02] font-semibold tracking-[-0.07em] text-balance"
+            className="mx-auto mt-8 max-w-4xl text-[clamp(2.375rem,1.25rem+5vw,5rem)] leading-[1.04] font-semibold tracking-[-0.045em] text-balance sm:tracking-[-0.06em]"
           >
-            Accessible React components,{" "}
-            <span className="text-muted-foreground">
-              with motion in every state.
-            </span>
+            React components, set in motion
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-pretty text-muted-foreground sm:text-lg sm:leading-8">
-            You own the source. React Aria controls the behavior. Motion shows
-            each change.
+          <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-pretty text-muted-foreground sm:mt-6 sm:text-lg sm:leading-8">
+            Built on React Aria and Tailwind CSS v4, animated with Motion
+            springs and shared easing tokens. Install the source with the shadcn
+            CLI.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <ButtonLink as={Link} href="/components/installation" size="lg">
@@ -188,18 +183,8 @@ export default function Home() {
         <div className="border-t border-border/70">
           <HomeSection id="accessibility">
             <div className="grid content-start gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,28rem)] lg:grid-rows-[auto_1fr] lg:gap-x-16">
-              <SectionHeading
-                id="accessibility"
-                title={
-                  <>
-                    Accessible by default.{" "}
-                    <span className="text-muted-foreground">
-                      No extra code.
-                    </span>
-                  </>
-                }
-              >
-                React Aria controls focus, keyboard, and screen reader behavior.
+              <SectionHeading id="accessibility" title="Accessibility">
+                React Aria handles focus, keyboard, and screen readers.
               </SectionHeading>
               <HomeReveal className="min-w-0 lg:col-start-2 lg:row-span-2 lg:row-start-1">
                 <KeyboardLab />
@@ -213,24 +198,19 @@ export default function Home() {
           <HomeSection id="motion">
             <SectionHeading
               id="motion"
-              title={
-                <>
-                  Motion that explains,{" "}
-                  <span className="text-muted-foreground">not decorates.</span>
-                </>
-              }
+              title="Motion"
               action={
                 <ButtonLink
                   as={Link}
                   href="/components/motion"
                   variant="outline"
                 >
-                  Read the motion guide
+                  Motion guide
                 </ButtonLink>
               }
             >
-              Each animation shows what changed. All components share the same
-              timings.
+              Animations show state changes. All components share one set of
+              tokens.
             </SectionHeading>
             <HomeReveal className="mt-12 grid min-w-0 gap-4 lg:grid-cols-[minmax(0,30rem)_minmax(0,1fr)]">
               <Card className="grid min-w-0 content-start gap-6 p-5 sm:p-6">
@@ -249,22 +229,14 @@ export default function Home() {
           <HomeSection id="theming">
             <SectionHeading
               id="theming"
-              title={
-                <>
-                  Your theme,{" "}
-                  <span className="text-muted-foreground">
-                    every component.
-                  </span>
-                </>
-              }
+              title="Theming"
               action={
                 <ButtonLink as={Link} href="/themes" variant="outline">
-                  Browse themes
+                  Themes
                 </ButtonLink>
               }
             >
-              Components read your shadcn CSS variables. Select a theme to see
-              the change.
+              Components use your shadcn CSS variables.
             </SectionHeading>
             <HomeReveal className="mt-12 min-w-0">
               <ThemeSection />
@@ -275,19 +247,8 @@ export default function Home() {
         <div className="border-t border-border/70 bg-card/40">
           <HomeSection id="install">
             <div className="grid content-start gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:grid-rows-[auto_1fr] lg:gap-x-16">
-              <SectionHeading
-                id="install"
-                title={
-                  <>
-                    Own the source.{" "}
-                    <span className="text-muted-foreground">
-                      Skip the package.
-                    </span>
-                  </>
-                }
-              >
-                The shadcn CLI copies each component into your project. Change
-                any line.
+              <SectionHeading id="install" title="Installation">
+                The shadcn CLI copies each component into your project.
               </SectionHeading>
               <HomeReveal className="grid min-w-0 content-start gap-8 lg:col-start-2 lg:row-span-2 lg:row-start-1">
                 <ol className="grid gap-8">
@@ -296,16 +257,15 @@ export default function Home() {
                       <span className="grid size-6 shrink-0 place-items-center rounded-full bg-primary font-mono text-xs text-primary-foreground">
                         1
                       </span>
-                      Set up your project
+                      Set up
                     </h3>
                     <p className="ps-9 text-sm leading-6 text-muted-foreground">
-                      Use React 19, TypeScript, Tailwind CSS v4, and a shadcn
-                      theme with CSS variables.{" "}
+                      React 19, TypeScript, Tailwind CSS v4, and a shadcn theme.{" "}
                       <Link
                         href="/components/installation#setup"
                         className="font-medium text-foreground underline decoration-border underline-offset-4 transition-[text-decoration-color] duration-150 ease-out-quint hover:decoration-foreground"
                       >
-                        Read the setup steps
+                        Setup steps
                       </Link>
                       .
                     </p>
@@ -326,7 +286,7 @@ export default function Home() {
                       <span className="grid size-6 shrink-0 place-items-center rounded-full bg-primary font-mono text-xs text-primary-foreground">
                         3
                       </span>
-                      Import it
+                      Use it
                     </h3>
                     <div className="min-w-0">
                       <CodeBlock code={usage} filename="save-button.tsx" />
@@ -343,21 +303,14 @@ export default function Home() {
           <HomeSection id="catalog">
             <SectionHeading
               id="catalog"
-              title={
-                <>
-                  {componentCount} components.{" "}
-                  <span className="text-muted-foreground">
-                    One command each.
-                  </span>
-                </>
-              }
+              title={`${componentCount} components`}
               action={
                 <ButtonLink as={Link} href="/components" variant="outline">
                   Browse components
                 </ButtonLink>
               }
             >
-              Each page has live examples, the source, and an API reference.
+              Each page has examples, source, and an API reference.
             </SectionHeading>
             <HomeReveal className="mt-12 min-w-0">
               <CatalogOverview />
@@ -372,13 +325,12 @@ export default function Home() {
           >
             <h2
               id="start-title"
-              className="max-w-2xl text-[clamp(1.875rem,3.6vw,2.75rem)] leading-[1.08] font-semibold tracking-[-0.05em] text-balance"
+              className="max-w-2xl text-[clamp(1.875rem,1.4rem+2vw,2.75rem)] leading-[1.1] font-semibold tracking-[-0.04em] text-balance sm:tracking-[-0.05em]"
             >
-              Start with one.{" "}
-              <span className="text-muted-foreground">Add more later.</span>
+              Free and open source
             </h2>
             <p className="max-w-lg text-base leading-7 text-pretty text-muted-foreground sm:text-lg sm:leading-8">
-              vip/ui is free and open source under the MIT license.
+              MIT licensed.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
               <ButtonLink as={Link} href="/components/installation" size="lg">

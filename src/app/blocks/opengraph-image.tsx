@@ -9,9 +9,8 @@ export const contentType = ogContentType;
 export default async function Image() {
   return renderOgCard({
     eyebrow: "Blocks",
-    title: "Complete page sections, ready to adapt",
-    description:
-      "Full product screens built with vip/ui. Add a block to your app, then change it to suit your product.",
+    title: "Full pages built with vip/ui",
+    description: "Copy them into your app.",
     meta: `${blocks.length} blocks / ${blockCategories.length} categories`,
     accent: ogColors.amber,
   });
