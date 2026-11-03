@@ -16,17 +16,20 @@ export default function ComponentsLayout({
         Skip to content
       </a>
       <SiteHeader />
-      <div className="site-container flex-1 pt-10 sm:pt-14 lg:grid lg:grid-cols-[224px_minmax(0,1fr)] lg:gap-14 xl:grid-cols-[224px_minmax(0,1fr)_160px] xl:gap-8">
-        <aside className="hidden lg:block">
+      <div className="site-container flex-1 lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] xl:grid-cols-[15rem_minmax(0,1fr)_13rem]">
+        <aside className="hidden border-e border-border/60 lg:block">
           <SidebarScrollArea>
             <DocsNav />
           </SidebarScrollArea>
         </aside>
-        <main id="main" className="min-w-0 pb-28">
+        <main
+          id="main"
+          className="min-w-0 pt-10 pb-28 sm:pt-14 lg:ps-12 xl:pe-12"
+        >
           {children}
         </main>
-        <div className="hidden xl:block">
-          <div className="sticky top-6 max-h-[calc(100dvh-1.5rem)] overflow-y-auto pb-10">
+        <div className="hidden border-s border-border/60 xl:block">
+          <div className="sticky top-0 -ms-px max-h-dvh overflow-y-auto pt-14 pb-10">
             <OnThisPage />
           </div>
         </div>

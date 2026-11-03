@@ -54,7 +54,7 @@ export function DocsNav({
         }}
         aria-current={pathname === link.href ? "page" : undefined}
         className={cn(
-          "group/nav-link relative isolate inline-flex items-center rounded-full px-3 text-[13px] font-medium whitespace-nowrap transition-[color,background-color] duration-150 ease-out-quint hover:text-foreground focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-transparent",
+          "group/nav-link relative isolate flex min-w-0 items-center rounded-full px-3 text-[13px] font-medium whitespace-nowrap transition-[color,background-color] duration-150 ease-out-quint hover:text-foreground focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-transparent",
           mobile ? "min-h-10" : "min-h-8",
           isActive ? "text-foreground" : "text-muted-foreground",
         )}
@@ -62,7 +62,7 @@ export function DocsNav({
         {isActive && (
           <motion.span
             layoutId={mobile ? "mobile-nav-selection" : "desktop-nav-selection"}
-            className="pointer-events-none absolute inset-0 -z-10 rounded-full bg-card shadow-[0_1px_2px_oklch(0_0_0/0.06)] ring-1 ring-border/60 transition-[background-color] duration-150 ease-out-quint group-focus-visible/nav-link:bg-primary group-focus-visible/nav-link:ring-transparent"
+            className="pointer-events-none absolute inset-0 -z-10 rounded-full bg-card inset-ring inset-ring-border/70 transition-[background-color] duration-150 ease-out-quint group-focus-visible/nav-link:bg-primary group-focus-visible/nav-link:inset-ring-transparent"
             transition={reduceMotion ? { duration: 0 } : springLayout}
           />
         )}
