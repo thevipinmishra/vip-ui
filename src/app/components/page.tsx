@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { CatalogBrowser } from "@/components/docs/catalog-browser";
 import { textLinkClass } from "@/components/docs/guide";
@@ -7,12 +6,15 @@ import {
   PageHeaderDescription,
   PageHeaderHeading,
 } from "@/components/docs/page-header";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Components | vip/ui",
+export const metadata = pageMetadata({
+  title: "Components",
   description:
-    "Accessible React components with live examples, installation steps, and API reference.",
-};
+    "Browse the vip/ui catalog of accessible React components, with live examples, installation steps, source code, and an API reference for each.",
+  path: "/components",
+  image: "file",
+});
 
 export default function ComponentsPage() {
   return (

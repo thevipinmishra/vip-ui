@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -11,11 +10,13 @@ import { InputGroupInvalidDemo } from "@/components/docs/input-group-invalid-dem
 import { InputGroupNotesDemo } from "@/components/docs/input-group-notes-demo";
 import { InputGroupSizesDemo } from "@/components/docs/input-group-sizes-demo";
 import { componentPageData } from "@/lib/component-examples";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Input group | vip/ui",
-  description: componentPageData["input-group"].description,
-};
+export const metadata = pageMetadata({
+  title: "Input group",
+  description: `${componentPageData["input-group"].description} Examples cover icons, buttons, notes, sizes, and disabled or invalid states.`,
+  path: "/components/input-group",
+});
 
 export default function InputGroupPage() {
   const page = componentPageData["input-group"];

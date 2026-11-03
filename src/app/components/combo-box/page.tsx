@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { ComboBoxAsyncDemo } from "@/components/docs/combo-box-async-demo";
 import { ComboBoxBasicDemo } from "@/components/docs/combo-box-basic-demo";
 import { ComboBoxDemo } from "@/components/docs/combo-box-demo";
@@ -11,11 +10,13 @@ import {
   withExamplePreviews,
 } from "@/components/docs/component-page";
 import { componentPageData } from "@/lib/component-examples";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Combo box | vip/ui",
-  description: componentPageData["combo-box"].description,
-};
+export const metadata = pageMetadata({
+  title: "Combo box",
+  description: `${componentPageData["combo-box"].description} Examples cover async results, multiple selection, icons, sizes, and disabled fields.`,
+  path: "/components/combo-box",
+});
 
 export default function ComboBoxPage() {
   const page = componentPageData["combo-box"];

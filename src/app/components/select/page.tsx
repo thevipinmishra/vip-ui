@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -10,11 +9,13 @@ import { SelectInvalidDemo } from "@/components/docs/select-invalid-demo";
 import { SelectSectionsDemo } from "@/components/docs/select-sections-demo";
 import { SelectSizesDemo } from "@/components/docs/select-sizes-demo";
 import { componentPageData } from "@/lib/component-examples";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Select | vip/ui",
-  description: componentPageData.select.description,
-};
+export const metadata = pageMetadata({
+  title: "Select",
+  description: `${componentPageData.select.description} Examples cover descriptions, sections, sizes, and invalid or disabled fields.`,
+  path: "/components/select",
+});
 
 export default function SelectPage() {
   const page = componentPageData.select;

@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { AttachmentBasicDemo } from "@/components/docs/attachment-basic-demo";
 import { AttachmentDemo } from "@/components/docs/attachment-demo";
 import { AttachmentUploadDemo } from "@/components/docs/attachment-upload-demo";
@@ -7,11 +6,13 @@ import {
   withExamplePreviews,
 } from "@/components/docs/component-page";
 import { componentPageData } from "@/lib/component-examples";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Attachment | vip/ui",
-  description: componentPageData.attachment.description,
-};
+export const metadata = pageMetadata({
+  title: "Attachment",
+  description: `${componentPageData.attachment.description} Examples cover adding and removing files and each upload state.`,
+  path: "/components/attachment",
+});
 
 export default function AttachmentPage() {
   const page = componentPageData.attachment;

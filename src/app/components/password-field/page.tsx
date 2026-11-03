@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -7,11 +6,13 @@ import { PasswordFieldBasicDemo } from "@/components/docs/password-field-basic-d
 import { PasswordFieldDemo } from "@/components/docs/password-field-demo";
 import { PasswordFieldDisabledDemo } from "@/components/docs/password-field-disabled-demo";
 import { componentPageData } from "@/lib/component-examples";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Password field | vip/ui",
-  description: componentPageData["password-field"].description,
-};
+export const metadata = pageMetadata({
+  title: "Password field",
+  description: `${componentPageData["password-field"].description} Examples cover disabled fields and a new password, with installation and the API reference.`,
+  path: "/components/password-field",
+});
 
 export default function PasswordFieldPage() {
   const page = componentPageData["password-field"];

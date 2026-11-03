@@ -22,7 +22,6 @@ export function GET() {
     `- [Colors](${site}/colors): ten OKLCH color scales with 12 steps each, for light and dark mode, with copyable CSS and Tailwind colors.`,
     `- [Charts](${site}/charts): chart examples built on TanStack Charts.`,
     `- [Blocks](${site}/blocks): complete page sections, such as dashboards, sign-in forms, and settings, that install as Next.js routes.`,
-    `- [License](${site}/license): MIT.`,
     "",
   ];
 
@@ -37,6 +36,9 @@ export function GET() {
   }
 
   return new Response(`${lines.join("\n").trimEnd()}\n`, {
-    headers: { "Content-Type": "text/plain; charset=utf-8" },
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+      "Cache-Control": "public, max-age=3600, s-maxage=86400",
+    },
   });
 }

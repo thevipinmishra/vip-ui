@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { AlertActionDemo } from "@/components/docs/alert-action-demo";
 import { AlertBasicDemo } from "@/components/docs/alert-basic-demo";
 import { AlertDemo } from "@/components/docs/alert-demo";
@@ -8,11 +7,13 @@ import {
   withExamplePreviews,
 } from "@/components/docs/component-page";
 import { componentPageData } from "@/lib/component-examples";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Alert | vip/ui",
-  description: componentPageData.alert.description,
-};
+export const metadata = pageMetadata({
+  title: "Alert",
+  description: `${componentPageData.alert.description} Examples cover variants, an action, and dismissal, with focus handled as the alert leaves.`,
+  path: "/components/alert",
+});
 
 export default function AlertPage() {
   const page = componentPageData.alert;

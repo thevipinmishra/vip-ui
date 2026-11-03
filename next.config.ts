@@ -10,6 +10,12 @@ const nextConfig: NextConfig = {
     ],
   },
   compress: process.env.NODE_ENV !== "development",
+  outputFileTracingIncludes: {
+    "/og": [
+      "./node_modules/geist/dist/fonts/geist-sans/Geist-Regular.ttf",
+      "./node_modules/geist/dist/fonts/geist-sans/Geist-SemiBold.ttf",
+    ],
+  },
   async redirects() {
     return [
       ...blocksCatalog.categories.map((category) => ({
@@ -44,6 +50,31 @@ const nextConfig: NextConfig = {
       {
         source: "/components/:slug.md",
         destination: "/components/:slug/markdown",
+      },
+    ];
+  },
+  async headers() {
+    const robotsTag = (value: string) => [{ key: "X-Robots-Tag", value }];
+    return [
+      {
+        source: "/r/:path*",
+        headers: robotsTag("noindex, nofollow"),
+      },
+      {
+        source: "/components/:slug/markdown",
+        headers: robotsTag("noindex, nofollow"),
+      },
+      {
+        source: "/components/:slug.md",
+        headers: robotsTag("noindex, nofollow"),
+      },
+      {
+        source: "/llms.txt",
+        headers: robotsTag("noindex"),
+      },
+      {
+        source: "/og",
+        headers: robotsTag("noindex"),
       },
     ];
   },

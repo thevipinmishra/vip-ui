@@ -232,6 +232,7 @@ import { TreeSectionsDemo } from "@/components/docs/tree-sections-demo";
 import { TreeSelectionDemo } from "@/components/docs/tree-selection-demo";
 import { componentDescription } from "@/lib/catalog";
 import { getComponentPageData } from "@/lib/component-examples";
+import { notFoundMetadata, pageMetadata } from "@/lib/seo";
 
 const entries: {
   slug: string;
@@ -889,12 +890,19 @@ export async function generateMetadata({
 }: PageProps<"/components/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const entry = entries.find((item) => item.slug === slug);
-  return entry
-    ? {
-        title: `${entry.name} | vip/ui`,
-        description: componentDescription(slug),
-      }
-    : {};
+  if (!entry) {
+    return notFoundMetadata({
+      title: "Component not found",
+      description:
+        "This address does not match a component in the vip/ui catalog. Browse the catalog to find the right component.",
+    });
+  }
+  return pageMetadata({
+    title: entry.name,
+    description: `${componentDescription(slug)} See live examples, copy the source, and add it to your project with the shadcn CLI.`,
+    path: `/components/${slug}`,
+    image: "file",
+  });
 }
 
 export default async function NewComponentPage({

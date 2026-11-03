@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -10,11 +9,13 @@ import { TextAreaInvalidDemo } from "@/components/docs/text-area-invalid-demo";
 import { TextAreaReadOnlyDemo } from "@/components/docs/text-area-read-only-demo";
 import { TextAreaSizesDemo } from "@/components/docs/text-area-sizes-demo";
 import { componentPageData } from "@/lib/component-examples";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Text area | vip/ui",
-  description: componentPageData["text-area"].description,
-};
+export const metadata = pageMetadata({
+  title: "Text area",
+  description: `${componentPageData["text-area"].description} Examples cover descriptions, sizes, read-only, disabled, and invalid states, with the API reference.`,
+  path: "/components/text-area",
+});
 
 export default function TextAreaPage() {
   const page = componentPageData["text-area"];

@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { CheckboxBasicDemo } from "@/components/docs/checkbox-basic-demo";
 import { CheckboxCardDemo } from "@/components/docs/checkbox-card-demo";
 import { CheckboxDemo } from "@/components/docs/checkbox-demo";
@@ -10,11 +9,13 @@ import {
   withExamplePreviews,
 } from "@/components/docs/component-page";
 import { componentPageData } from "@/lib/component-examples";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Checkbox | vip/ui",
-  description: componentPageData.checkbox.description,
-};
+export const metadata = pageMetadata({
+  title: "Checkbox",
+  description: `${componentPageData.checkbox.description} Examples cover descriptions, required and disabled states, indeterminate state, and a card.`,
+  path: "/components/checkbox",
+});
 
 export default function CheckboxPage() {
   const page = componentPageData.checkbox;

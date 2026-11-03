@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -10,11 +9,13 @@ import { TextFieldInvalidDemo } from "@/components/docs/text-field-invalid-demo"
 import { TextFieldReadOnlyDemo } from "@/components/docs/text-field-read-only-demo";
 import { TextFieldSizesDemo } from "@/components/docs/text-field-sizes-demo";
 import { componentPageData } from "@/lib/component-examples";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Text field | vip/ui",
-  description: componentPageData["text-field"].description,
-};
+export const metadata = pageMetadata({
+  title: "Text field",
+  description: `${componentPageData["text-field"].description} Examples cover sizes, descriptions, read-only, disabled, and invalid states.`,
+  path: "/components/text-field",
+});
 
 export default function TextFieldPage() {
   const page = componentPageData["text-field"];

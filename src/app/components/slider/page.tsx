@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   ComponentPage,
   withExamplePreviews,
@@ -10,11 +9,13 @@ import { SliderRangeDemo } from "@/components/docs/slider-range-demo";
 import { SliderStepDemo } from "@/components/docs/slider-step-demo";
 import { SliderVerticalDemo } from "@/components/docs/slider-vertical-demo";
 import { componentPageData } from "@/lib/component-examples";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Slider | vip/ui",
-  description: componentPageData.slider.description,
-};
+export const metadata = pageMetadata({
+  title: "Slider",
+  description: `${componentPageData.slider.description} Examples cover ranges, marks, vertical layout, custom layouts, and disabled state.`,
+  path: "/components/slider",
+});
 
 export default function SliderPage() {
   const page = componentPageData.slider;
