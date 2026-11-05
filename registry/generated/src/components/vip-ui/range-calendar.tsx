@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useContext, useLayoutEffect, useRef, useState } from "react";
 import {
   RangeCalendar as AriaRangeCalendar,
   CalendarCell,
@@ -11,8 +11,9 @@ import {
   composeRenderProps,
   type DateValue,
   type RangeCalendarProps,
+  RangeCalendarStateContext,
 } from "react-aria-components";
-import { springLayout, transitionFor } from "./motion";
+import { duration, easeOut, springLayout, transitionFor } from "./motion";
 import { cn } from "./utils";
 import {
   CalendarGridBody,
@@ -68,7 +69,11 @@ export function RangeCalendar<T extends DateValue>({
                 </CalendarGridHeader>
                 <CalendarGridBody>
                   {(date) => (
-                    <CalendarCell date={date} className={rangeCellClass} />
+                    <CalendarCell
+                      date={date}
+                      data-date={date.toString()}
+                      className={rangeCellClass}
+                    />
                   )}
                 </CalendarGridBody>
               </CalendarGrid>
@@ -82,6 +87,7 @@ export function RangeCalendar<T extends DateValue>({
 }
 
 type RangeCell = {
+  date: string;
   left: number;
   right: number;
   top: number;
@@ -91,8 +97,11 @@ type RangeCell = {
   invalid: boolean;
 };
 
+type RangePart = "trail" | "anchor" | "edge" | "start" | "end" | "single";
+
 type RangeBox = {
   key: string;
+  part: RangePart;
   kind: "trail" | "start" | "end";
   invalid: boolean;
   x: number;
@@ -118,7 +127,11 @@ function roundCorners(left: boolean, right: boolean) {
   };
 }
 
-function measureRange(container: HTMLElement): RangeBox[] {
+function measureRange(
+  container: HTMLElement,
+  session: string,
+  anchor: string | null,
+): RangeBox[] {
   const table = container.querySelector("table");
   if (!table) return [];
   const origin = container.getBoundingClientRect();
@@ -134,6 +147,12 @@ function measureRange(container: HTMLElement): RangeBox[] {
     ? origin.height / container.offsetHeight
     : 1;
   const multiMonth = container.closest("[data-months]") !== null;
+  const gridKey =
+    container.querySelector<HTMLElement>("[role=gridcell] [data-date]")?.dataset
+      .date ??
+    table.getAttribute("aria-label") ??
+    "";
+  const prefix = `${session}|${gridKey}|`;
 
   const rows = new Map<HTMLTableRowElement, RangeCell[]>();
   for (const cell of container.querySelectorAll<HTMLElement>(
@@ -144,6 +163,7 @@ function measureRange(container: HTMLElement): RangeBox[] {
     if (!row) continue;
     const rect = cell.getBoundingClientRect();
     const box: RangeCell = {
+      date: cell.dataset.date ?? "",
       left: (rect.left - origin.left) / scaleX,
       right: (rect.right - origin.left) / scaleX,
       top: (rect.top - origin.top) / scaleY,
@@ -156,6 +176,52 @@ function measureRange(container: HTMLElement): RangeBox[] {
     if (cells) cells.push(box);
     else rows.set(row, [box]);
   }
+
+  let startDate: string | null = null;
+  let endDate: string | null = null;
+  for (const cells of rows.values()) {
+    for (const cell of cells) {
+      if (cell.start) startDate = cell.date;
+      if (cell.end) endDate = cell.date;
+    }
+  }
+
+  const preview = anchor !== null;
+  const edgeDate =
+    preview && startDate && endDate && startDate !== endDate
+      ? anchor === startDate
+        ? endDate
+        : anchor === endDate
+          ? startDate
+          : null
+      : null;
+  const direction = preview
+    ? startDate && endDate && startDate === endDate
+      ? "single"
+      : anchor === startDate
+        ? "forward"
+        : anchor === endDate
+          ? "backward"
+          : "partial"
+    : "range";
+
+  const capPart = (cell: RangeCell) => {
+    if (!preview) {
+      if (cell.start && cell.end)
+        return { part: "single", key: "single" } as const;
+      return cell.start
+        ? ({ part: "start", key: "start" } as const)
+        : ({ part: "end", key: "end" } as const);
+    }
+    if (cell.date === anchor) return { part: "anchor", key: "anchor" } as const;
+    if (edgeDate && cell.date === edgeDate)
+      return { part: "edge", key: "edge" } as const;
+    if (cell.start && cell.end)
+      return { part: "single", key: "single" } as const;
+    return cell.start
+      ? ({ part: "start", key: "start" } as const)
+      : ({ part: "end", key: "end" } as const);
+  };
 
   const gridLeft = (grid.left - origin.left) / scaleX;
   const gridRight = (grid.right - origin.left) / scaleX;
@@ -189,7 +255,8 @@ function measureRange(container: HTMLElement): RangeBox[] {
         const top = Math.min(...trail.map((cell) => cell.top));
         const bottom = Math.max(...trail.map((cell) => cell.bottom));
         boxes.push({
-          key: `trail-${row.rowIndex}-${runIndex}`,
+          key: `${prefix}${direction}|trail-${row.rowIndex}-${runIndex}`,
+          part: "trail",
           kind: "trail",
           invalid: run[0].invalid,
           x: left,
@@ -202,8 +269,10 @@ function measureRange(container: HTMLElement): RangeBox[] {
 
       for (const cell of run) {
         if (!cell.start && !cell.end) continue;
+        const cap = capPart(cell);
         boxes.push({
-          key: cell.start && cell.end ? "single" : cell.start ? "start" : "end",
+          key: `${prefix}${cap.key}`,
+          part: cap.part,
           kind: cell.start ? "start" : "end",
           invalid: cell.invalid,
           x: cell.left,
@@ -225,7 +294,16 @@ function measureRange(container: HTMLElement): RangeBox[] {
 function RangeHighlight() {
   const ref = useRef<HTMLSpanElement>(null);
   const reduceMotion = useReducedMotion();
+  const state = useContext(RangeCalendarStateContext);
   const [boxes, setBoxes] = useState<RangeBox[]>([]);
+
+  const anchor = state?.anchorDate ? state.anchorDate.toString() : null;
+  const value = state?.value;
+  const session = anchor
+    ? `preview:${anchor}`
+    : value
+      ? `range:${value.start.toString()}:${value.end.toString()}`
+      : "empty";
 
   useLayoutEffect(() => {
     const layer = ref.current;
@@ -234,7 +312,7 @@ function RangeHighlight() {
 
     let painted = "";
     const sync = () => {
-      const next = measureRange(container);
+      const next = measureRange(container, session, anchor);
       const signature = JSON.stringify(next);
       if (signature === painted) return;
       painted = signature;
@@ -253,6 +331,7 @@ function RangeHighlight() {
         "data-selection-end",
         "data-invalid",
         "data-outside-month",
+        "data-date",
       ],
       childList: true,
       subtree: true,
@@ -265,7 +344,7 @@ function RangeHighlight() {
       resize.disconnect();
       container.removeAttribute("data-range-highlight");
     };
-  }, []);
+  }, [anchor, session]);
 
   return (
     <span
@@ -282,10 +361,16 @@ function RangeHighlight() {
             initial={false}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={transitionFor(reduceMotion, springLayout)}
+            transition={transitionFor(reduceMotion, {
+              duration: duration.fast,
+              ease: easeOut,
+              layout: springLayout,
+            })}
             data-kind={box.kind}
+            data-part={box.part}
             className={cn(
               "absolute top-0 left-0",
+              box.part !== "trail" && "z-10",
               box.kind === "trail"
                 ? box.invalid
                   ? "bg-destructive/15"
