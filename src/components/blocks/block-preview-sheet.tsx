@@ -66,6 +66,9 @@ function PreviewContent({
 }) {
   const [view, setView] = useState<BlockPreviewView>(initialView);
   const [viewport, setViewport] = useState<Viewport>("desktop");
+  // Skip the preview iframe until Preview is shown, then keep it mounted so
+  // switching tabs never reloads the block.
+  const [hasPreview, setHasPreview] = useState(initialView === "preview");
   const frameRef = useRef<PreviewFrameHandle>(null);
   const current =
     viewports.find((item) => item.id === viewport) ?? viewports[0];
@@ -74,76 +77,85 @@ function PreviewContent({
   return (
     <Tabs
       value={view}
-      onValueChange={(value) => setView(value === "code" ? "code" : "preview")}
+      onValueChange={(value) => {
+        const next = value === "code" ? "code" : "preview";
+        if (next === "preview") setHasPreview(true);
+        setView(next);
+      }}
       className="flex min-h-0 flex-1 flex-col"
     >
-      <header className="shrink-0 border-b border-border/70">
-        <div className="flex items-center gap-2 px-3 pb-2 pt-[max(0.5rem,env(safe-area-inset-top))] sm:px-4">
-          <div className="min-w-0 flex-1">
-            <SheetTitle className="truncate text-base font-semibold tracking-[-0.03em]">
-              {block.title}
-            </SheetTitle>
-            <p className="truncate font-mono text-[11px] text-muted-foreground">
-              {block.name}
-            </p>
-          </div>
-          <SheetClose size="sm" />
+      <header className="flex shrink-0 items-center gap-1.5 border-b border-border/70 px-3 pb-2 pt-[max(0.5rem,env(safe-area-inset-top))] sm:gap-2 sm:px-4">
+        <div className="flex min-w-0 items-baseline gap-2">
+          <SheetTitle className="truncate text-base font-semibold tracking-[-0.03em]">
+            {block.title}
+          </SheetTitle>
+          <span className="hidden min-w-0 truncate font-mono text-[11px] text-muted-foreground md:inline">
+            {block.name}
+          </span>
         </div>
-        <div className="flex items-center justify-between gap-2 px-3 pb-2 sm:px-4">
-          <TabList aria-label={`${block.title} view`} size="sm">
-            <Tab id="preview">Preview</Tab>
-            <Tab id="code">Code</Tab>
-          </TabList>
-          <div className="flex shrink-0 items-center gap-1">
-            {view === "preview" && (
-              <>
-                <ToggleButtonGroup
-                  aria-label="Preview width"
-                  selectionMode="single"
-                  selectedKeys={[viewport]}
-                  onSelectionChange={(keys) => {
-                    const [next] = keys;
-                    const match = viewports.find((item) => item.id === next);
-                    if (match) setViewport(match.id);
-                  }}
-                  size="sm"
-                  className="hidden sm:inline-flex"
-                >
-                  {viewports.map((item) => (
-                    <ToggleButton
-                      key={item.id}
-                      id={item.id}
-                      variant="segmented"
-                      iconOnly
-                      aria-label={`${item.label} width`}
-                    >
-                      <item.icon size={16} aria-hidden="true" />
-                    </ToggleButton>
-                  ))}
-                </ToggleButtonGroup>
-                <Button
-                  variant="minimal"
-                  size="sm"
-                  iconOnly
-                  aria-label="Reload preview"
-                  onPress={() => frameRef.current?.reload()}
-                >
-                  <ArrowClockwiseIcon size={16} aria-hidden="true" />
-                </Button>
-              </>
-            )}
-            <ButtonLink
-              href={src}
-              target="_blank"
-              rel="noopener"
-              variant="minimal"
-              size="sm"
-              iconOnly
-              aria-label={`Open ${block.title} in a new tab`}
-            >
-              <ArrowSquareOutIcon size={16} aria-hidden="true" />
-            </ButtonLink>
-          </div>
+        <div aria-hidden="true" className="h-5 w-px shrink-0 bg-border" />
+        <TabList
+          aria-label={`${block.title} view`}
+          size="xs"
+          className="shrink-0"
+        >
+          <Tab id="preview">Preview</Tab>
+          <Tab id="code">Code</Tab>
+        </TabList>
+        <div className="ms-auto flex shrink-0 items-center gap-1">
+          {view === "preview" && (
+            <>
+              <ToggleButtonGroup
+                aria-label="Preview width"
+                selectionMode="single"
+                selectedKeys={[viewport]}
+                onSelectionChange={(keys) => {
+                  const [next] = keys;
+                  const match = viewports.find((item) => item.id === next);
+                  if (match) setViewport(match.id);
+                }}
+                size="xs"
+                className="hidden sm:inline-flex"
+              >
+                {viewports.map((item) => (
+                  <ToggleButton
+                    key={item.id}
+                    id={item.id}
+                    variant="segmented"
+                    iconOnly
+                    aria-label={`${item.label} width`}
+                  >
+                    <item.icon size={14} aria-hidden="true" />
+                  </ToggleButton>
+                ))}
+              </ToggleButtonGroup>
+              <Button
+                variant="minimal"
+                size="xs"
+                iconOnly
+                aria-label="Reload preview"
+                onPress={() => frameRef.current?.reload()}
+              >
+                <ArrowClockwiseIcon size={14} aria-hidden="true" />
+              </Button>
+            </>
+          )}
+          <ButtonLink
+            href={src}
+            target="_blank"
+            rel="noopener"
+            variant="minimal"
+            size="xs"
+            iconOnly
+            aria-label={`Open ${block.title} in a new tab`}
+          >
+            <ArrowSquareOutIcon size={14} aria-hidden="true" />
+          </ButtonLink>
+          <div
+            aria-hidden="true"
+            className="mx-0.5 hidden h-5 w-px shrink-0 bg-border sm:block"
+          />
+          <SheetClose size="xs" />
         </div>
       </header>
       <TabPanel
@@ -151,23 +163,25 @@ function PreviewContent({
         shouldForceMount
         className="mt-0 flex min-h-0 flex-1 flex-col overflow-hidden rounded-none bg-muted/40 p-0 shadow-none ring-0 [&[inert]]:hidden"
       >
-        <div className="flex min-h-0 flex-1 justify-center overflow-hidden">
-          <div
-            className={cn(
-              "relative h-full min-h-0 bg-background ring-1 ring-border/70 motion-safe:transition-[width] motion-safe:duration-300 motion-safe:ease-out-quint",
-              viewport !== "desktop" && "shadow-[var(--shadow-float)]",
-            )}
-            style={{ width: current.width ?? "100%", maxWidth: "100%" }}
-          >
-            <PreviewFrame
-              ref={frameRef}
-              src={src}
-              title={`${block.title} preview`}
-              height="100%"
-              className="h-full"
-            />
+        {hasPreview && (
+          <div className="flex min-h-0 flex-1 justify-center overflow-hidden">
+            <div
+              className={cn(
+                "relative h-full min-h-0 bg-background ring-1 ring-border/70 motion-safe:transition-[width] motion-safe:duration-300 motion-safe:ease-out-quint",
+                viewport !== "desktop" && "shadow-[var(--shadow-float)]",
+              )}
+              style={{ width: current.width ?? "100%", maxWidth: "100%" }}
+            >
+              <PreviewFrame
+                ref={frameRef}
+                src={src}
+                title={`${block.title} preview`}
+                height="100%"
+                className="h-full"
+              />
+            </div>
           </div>
-        </div>
+        )}
       </TabPanel>
       <TabPanel
         id="code"

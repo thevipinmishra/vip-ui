@@ -4,7 +4,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Blocks",
   description:
-    "Full pages built with vip/ui components. Copy them into your app.",
+    "Carefully composed React UI blocks for dashboards, AI interfaces, authentication, onboarding, and commerce. Ready to customize.",
   path: "/blocks",
   image: "file",
 });
