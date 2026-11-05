@@ -4,23 +4,25 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { TextScramble } from "@/components/ui/text-scramble";
 
+const stages = ["Draft", "In review", "Published"] as const;
+
 export function TextScrambleBasicDemo() {
-  const [alternate, setAlternate] = useState(false);
+  const [stage, setStage] = useState(0);
 
   return (
-    <div className="grid w-full max-w-md justify-items-start gap-4">
-      <p className="text-3xl font-semibold tracking-tight">
-        <TextScramble
-          value={alternate ? "FIELD NOTES" : "STUDIO NOTES"}
-          aria-live="polite"
-        />
-      </p>
+    <div className="grid w-full max-w-sm justify-items-start gap-4">
+      <div>
+        <p className="text-sm text-muted-foreground">Release status</p>
+        <p className="mt-1 text-3xl font-semibold tracking-tight">
+          <TextScramble value={stages[stage]} aria-live="polite" />
+        </p>
+      </div>
       <Button
         size="sm"
         variant="secondary"
-        onPress={() => setAlternate((value) => !value)}
+        onPress={() => setStage((current) => (current + 1) % stages.length)}
       >
-        Change title
+        Advance release
       </Button>
     </div>
   );

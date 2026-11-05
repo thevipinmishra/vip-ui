@@ -8,12 +8,13 @@ import { MenuNestedDemo } from "@/components/docs/menu-nested-demo";
 import { MenuPlacementDemo } from "@/components/docs/menu-placement-demo";
 import { MenuSectionsDemo } from "@/components/docs/menu-sections-demo";
 import { MenuSelectionDemo } from "@/components/docs/menu-selection-demo";
-import { componentPageData } from "@/lib/component-examples";
+import { componentPageData, getComponentUsage } from "@/lib/component-examples";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
   title: "Menu",
-  description: `${componentPageData.menu.description} Examples cover icons and shortcuts, nested menus, selection, sections, and placement.`,
+  description:
+    "Opens a list of actions from a trigger. Examples cover icons, selection, sections, nested menus, and placement.",
   path: "/components/menu",
 });
 
@@ -25,11 +26,12 @@ export default function MenuPage() {
       description={page.description}
       preview={<MenuBasicDemo />}
       previewSourcePath={page.usage}
+      usage={getComponentUsage("menu")}
       examples={withExamplePreviews(page.examples, [
         <MenuDemo key="example-1" />,
-        <MenuNestedDemo key="example-2" />,
-        <MenuSelectionDemo key="example-3" />,
-        <MenuSectionsDemo key="example-4" />,
+        <MenuSelectionDemo key="example-2" />,
+        <MenuSectionsDemo key="example-3" />,
+        <MenuNestedDemo key="example-4" />,
         <MenuPlacementDemo key="example-5" />,
       ])}
       sourcePath="src/components/ui/menu.tsx"

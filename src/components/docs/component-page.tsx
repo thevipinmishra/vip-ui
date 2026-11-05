@@ -11,9 +11,10 @@ import { allComponents } from "@/lib/navigation";
 import { registryUrl } from "@/lib/registry-docs";
 import { cn } from "@/lib/utils";
 import { ApiReference } from "./api-reference";
+import { CodeBlock } from "./code-block";
 import { ComponentComposition } from "./component-composition";
 import { compositions } from "./component-compositions";
-import { DocsHeader, DocsPager, ExternalLink, TextLink } from "./guide";
+import { Code, DocsHeader, DocsPager, ExternalLink, TextLink } from "./guide";
 import { InstallTabs } from "./install-tabs";
 import { ManualInstall } from "./manual-install";
 import { PackageManagerCommand } from "./package-manager-command";
@@ -49,6 +50,12 @@ interface ComponentPageProps {
   previewSourcePath: string;
   examples?: ComponentExample[];
   sourcePath: string;
+  usage?: {
+    code: string;
+    filename?: string;
+    note?: ReactNode;
+  };
+  accessibility?: ReactNode;
 }
 
 export async function ComponentPage({
@@ -58,6 +65,8 @@ export async function ComponentPage({
   previewSourcePath,
   examples = [],
   sourcePath,
+  usage,
+  accessibility,
 }: ComponentPageProps) {
   const componentSlug = path.basename(sourcePath, ".tsx");
   const { previous, next } = getNeighbors(componentSlug);
@@ -140,6 +149,20 @@ export async function ComponentPage({
         />
       </section>
 
+      {usage && (
+        <section id="usage" className="mt-14 scroll-mt-24">
+          <SectionHeading title="Usage" />
+          <div className="grid max-w-[670px] gap-5">
+            {usage.note && (
+              <p className="text-sm leading-6 text-muted-foreground">
+                {usage.note}
+              </p>
+            )}
+            <CodeBlock code={usage.code} filename={usage.filename} />
+          </div>
+        </section>
+      )}
+
       {compositions[componentSlug] && (
         <section id="composition" className="mt-14 scroll-mt-24">
           <SectionHeading title="Composition" />
@@ -156,7 +179,9 @@ export async function ComponentPage({
           <SectionHeading title={example.title} />
           {(example.description || example.uses) && (
             <p className="-mt-2 mb-5 max-w-[670px] text-sm leading-6 text-muted-foreground">
-              {example.description}
+              {example.description && (
+                <ExampleDescription>{example.description}</ExampleDescription>
+              )}
               {example.description && example.uses && " "}
               {example.uses && <ExampleUses slugs={example.uses} />}
             </p>
@@ -169,6 +194,15 @@ export async function ComponentPage({
           </PreviewPanel>
         </section>
       ))}
+
+      {accessibility && (
+        <section id="accessibility" className="mt-14 scroll-mt-24">
+          <SectionHeading title="Accessibility" />
+          <div className="grid max-w-[670px] gap-4 text-sm leading-7 text-muted-foreground">
+            {accessibility}
+          </div>
+        </section>
+      )}
 
       {(apiParts.length > 0 || reactAria) && (
         <section id="api" className="mt-14 scroll-mt-24">
@@ -206,6 +240,25 @@ export async function ComponentPage({
   );
 }
 
+function ExampleDescription({ children }: { children: string }) {
+  const parts: ReactNode[] = [];
+  const regex = /`([^`]+)`/g;
+  let lastIndex = 0;
+  let match = regex.exec(children);
+  while (match) {
+    if (match.index > lastIndex) {
+      parts.push(children.slice(lastIndex, match.index));
+    }
+    parts.push(<Code key={match.index}>{match[1]}</Code>);
+    lastIndex = regex.lastIndex;
+    match = regex.exec(children);
+  }
+  if (lastIndex < children.length) {
+    parts.push(children.slice(lastIndex));
+  }
+  return parts;
+}
+
 function ExampleUses({ slugs }: { slugs: readonly string[] }) {
   return (
     <>
@@ -223,7 +276,7 @@ function ExampleUses({ slugs }: { slugs: readonly string[] }) {
           </Fragment>
         );
       })}
-      .
+      {"."}
     </>
   );
 }

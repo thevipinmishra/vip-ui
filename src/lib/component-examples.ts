@@ -13,6 +13,12 @@ export interface ComponentPageData {
   examples: readonly ComponentExampleMetadata[];
 }
 
+export interface ComponentUsage {
+  code: string;
+  filename?: string;
+  note?: string;
+}
+
 type ComponentPageSource = Omit<ComponentPageData, "description">;
 
 const pageSources = {
@@ -21,36 +27,44 @@ const pageSources = {
     examples: [
       {
         title: "Variants",
+        description: "Set `variant` to change the visual emphasis.",
         sourcePath: "button-variants-demo.tsx",
       },
       {
         title: "Sizes",
         description:
-          "Use xs in table rows, sm in toolbars, md for most actions, and xl for a main call to action.",
+          "Set `size` to change the height, padding, and icon size; small sizes expand the hit area on touch screens.",
         sourcePath: "button-sizes-demo.tsx",
       },
       {
         title: "With icon",
         description:
-          "Set aria-hidden on the icon so the label stays the accessible name.",
+          "Mark the icon `aria-hidden` so the label stays the accessible name.",
         sourcePath: "button-with-icon-demo.tsx",
       },
       {
         title: "Icon buttons",
-        description: "Set iconOnly and give each button an aria-label.",
+        description:
+          "Set `iconOnly` for one icon; give the button an `aria-label` and mark the icon `aria-hidden`.",
         sourcePath: "button-icon-demo.tsx",
+      },
+      {
+        title: "Disabled",
+        description:
+          "Set `isDisabled` to remove the button from the tab order and block presses.",
+        sourcePath: "button-disabled-demo.tsx",
       },
       {
         title: "Loading",
         description:
-          "Set isPending while a task runs. The button keeps focus and ignores presses.",
+          "While `isPending` is true, the button stays focusable, ignores presses, and announces the pending state.",
         sourcePath: "button-loading-demo.tsx",
         uses: ["spinner"],
       },
       {
         title: "Link",
         description:
-          "To use your router, pass its link component to the as prop.",
+          "Use `ButtonLink` for navigation; it renders an anchor, and `as` accepts your router link.",
         sourcePath: "button-link-demo.tsx",
         uses: ["button-link"],
       },
@@ -125,17 +139,18 @@ const pageSources = {
       {
         title: "Divided",
         description:
-          'Use variant="divided" inside a container that already has a surface.',
+          'Use `variant="divided"` inside a container that already has a surface.',
         sourcePath: "accordion-billing-demo.tsx",
       },
       {
         title: "Multiple open sections",
         description:
-          "Set allowsMultipleExpanded to keep more than one section open.",
+          "Set `allowsMultipleExpanded` to keep more than one section open.",
         sourcePath: "accordion-multiple-demo.tsx",
       },
       {
         title: "Disabled section",
+        description: "A disabled section cannot be expanded or focused.",
         sourcePath: "accordion-disabled-demo.tsx",
       },
     ],
@@ -149,14 +164,14 @@ const pageSources = {
       },
       {
         title: "Action",
-        description: "The action moves below the text in a narrow alert.",
+        description: "In a narrow alert, the action moves below the text.",
         sourcePath: "alert-action-demo.tsx",
         uses: ["button-link"],
       },
       {
         title: "Dismiss",
         description:
-          "Move focus to a nearby control before the alert leaves, so focus is not lost.",
+          "Move focus to a nearby control before the alert leaves; otherwise focus is lost.",
         sourcePath: "alert-dismiss-demo.tsx",
         uses: ["presence"],
       },
@@ -167,14 +182,15 @@ const pageSources = {
     examples: [
       {
         title: "Digit slide",
-        description: 'Set variant="slide" to move only the digits that change.',
         sourcePath: "animated-number-slide-demo.tsx",
+        uses: ["button"],
       },
       {
         title: "Number format",
         description:
-          "Set locale and formatOptions. Screen readers hear the same format.",
+          "Screen readers get the same currency format, not the raw number.",
         sourcePath: "animated-number-format-demo.tsx",
+        uses: ["button"],
       },
     ],
   },
@@ -207,13 +223,13 @@ const pageSources = {
       {
         title: "Fallback",
         description:
-          'Initials show until the image loads, and if it fails. Set initials="" to show a person icon.',
+          'Initials show until the image loads or if it fails; set `initials=""` to show a person icon.',
         sourcePath: "avatar-fallback-demo.tsx",
       },
       {
         title: "Group",
         description:
-          "Give AvatarGroup an aria-label. Show the people not shown as a count, such as +2.",
+          "Give `AvatarGroup` an `aria-label`; show the people not shown as a count, such as +2.",
         sourcePath: "avatar-demo.tsx",
       },
     ],
@@ -239,14 +255,14 @@ const pageSources = {
       {
         title: "Folder path",
         description:
-          "Pass items for a path that changes. onAction gets the id of the pressed breadcrumb.",
+          "Pass `items` for a path that changes; `onAction` receives the pressed breadcrumb's id.",
         sourcePath: "breadcrumbs-folders-demo.tsx",
         uses: ["button"],
       },
       {
         title: "Collapsed path",
         description:
-          "Use BreadcrumbItem for a breadcrumb that is not a link, such as a menu of hidden pages.",
+          "Use `BreadcrumbItem` for a crumb that is not a link, such as a menu of hidden pages.",
         sourcePath: "breadcrumbs-collapsed-demo.tsx",
         uses: ["menu", "button"],
       },
@@ -261,13 +277,14 @@ const pageSources = {
       },
       {
         title: "Split button",
-        description: "Give the icon button an aria-label.",
+        description: "Give the icon button an `aria-label`.",
         sourcePath: "button-group-demo.tsx",
         uses: ["menu"],
       },
       {
         title: "Sizes",
-        description: "Set size on the group, not on each button.",
+        description:
+          "Set `size` on the group; a size on a button overrides it.",
         sourcePath: "button-group-sizes-demo.tsx",
       },
     ],
@@ -293,28 +310,28 @@ const pageSources = {
       {
         title: "Action",
         description:
-          "CardAction sits beside the title and uses up to half the header width.",
+          "`CardAction` sits beside the title and takes up to half of the header width.",
         sourcePath: "card-action-demo.tsx",
-      },
-      {
-        title: "Form",
-        description:
-          "Wrap the content and footer in a Form so the footer button submits.",
-        sourcePath: "card-demo.tsx",
-        uses: ["form", "text-field"],
       },
       {
         title: "Media",
         description:
-          "Put CardMedia first or last. It follows the card corners.",
+          "Put `CardMedia` before the header or after the footer so it follows the card corners.",
         sourcePath: "card-media-demo.tsx",
         uses: ["badge"],
       },
       {
         title: "Linked card",
         description:
-          "Put CardLink in the title. The whole card opens the link. Give other buttons in the card relative z-10 so they stay clickable.",
+          "Put `CardLink` in the title to make the whole card a link; give other buttons `relative z-10`.",
         sourcePath: "card-link-demo.tsx",
+      },
+      {
+        title: "Form",
+        description:
+          "Wrap the content and footer in a `Form` so the footer button submits.",
+        sourcePath: "card-demo.tsx",
+        uses: ["form", "text-field"],
       },
     ],
   },
@@ -476,8 +493,9 @@ const pageSources = {
       {
         title: "Sections, icons, and shortcuts",
         description:
-          "When an item has an icon, set textValue so search can find it.",
+          "When an item has an icon, set `textValue` so search can find it.",
         sourcePath: "command-palette-demo.tsx",
+        uses: ["button"],
       },
     ],
   },
@@ -486,7 +504,9 @@ const pageSources = {
     examples: [
       {
         title: "Grouped actions",
+        description: "A disabled item is skipped by the arrow keys.",
         sourcePath: "context-menu-grouped-demo.tsx",
+        uses: ["button"],
       },
     ],
   },
@@ -496,7 +516,7 @@ const pageSources = {
       {
         title: "Custom label and icon button",
         description:
-          "Pass a function as children to show a label for each status.",
+          "Pass a function as `children` to show a label for each status.",
         sourcePath: "copy-button-share-demo.tsx",
       },
     ],
@@ -580,8 +600,7 @@ const pageSources = {
     usage: "description-list-demo.tsx",
     examples: [
       {
-        title: "Inline components",
-        description: "Long values wrap inside the detail column.",
+        title: "Rich values",
         sourcePath: "description-list-components-demo.tsx",
         uses: ["badge", "link"],
       },
@@ -592,10 +611,12 @@ const pageSources = {
     examples: [
       {
         title: "Expanded by default",
+        description: "Set `defaultExpanded` to show the panel on first render.",
         sourcePath: "disclosure-expanded-demo.tsx",
       },
       {
         title: "Disabled",
+        description: "A disabled disclosure cannot be expanded or focused.",
         sourcePath: "disclosure-disabled-demo.tsx",
       },
     ],
@@ -676,7 +697,7 @@ const pageSources = {
       {
         title: "Multiple images",
         description:
-          "acceptedFileTypes only filters the picker. Check each file in onSelect.",
+          "`acceptedFileTypes` only filters the picker. Check each file in `onSelect`.",
         sourcePath: "file-trigger-demo.tsx",
       },
     ],
@@ -702,8 +723,15 @@ const pageSources = {
     usage: "grid-list-demo.tsx",
     examples: [
       {
+        title: "Multiple selection",
+        description:
+          'Set `selectionMode="multiple"` to select more than one row.',
+        sourcePath: "grid-list-selection-demo.tsx",
+      },
+      {
         title: "Unavailable row",
-        description: "Set isDisabled on the row and show the reason in it.",
+        description:
+          "Set `isDisabled` on a row and show the reason in it. A disabled row cannot be selected.",
         sourcePath: "grid-list-disabled-demo.tsx",
       },
     ],
@@ -750,13 +778,13 @@ const pageSources = {
     examples: [
       {
         title: "Key combination",
-        description: "Put the keys of one shortcut in KbdGroup.",
+        description: "Put the keys of one shortcut in `KbdGroup`.",
         sourcePath: "kbd-code-group-demo.tsx",
       },
       {
         title: "Long code",
         description:
-          "InlineCode wraps a long value and keeps its padding on each line.",
+          "`InlineCode` wraps a long value and keeps its padding on each line.",
         sourcePath: "kbd-code-wrap-demo.tsx",
       },
     ],
@@ -766,8 +794,7 @@ const pageSources = {
     examples: [
       {
         title: "External link",
-        description:
-          "Add hidden text that tells screen reader users about the new tab.",
+        description: "Add hidden text that says the link opens in a new tab.",
         sourcePath: "link-external-demo.tsx",
       },
     ],
@@ -777,7 +804,15 @@ const pageSources = {
     examples: [
       {
         title: "Multiple selection",
+        description:
+          'Set `selectionMode="multiple"` to select more than one option.',
         sourcePath: "list-box-multiple-demo.tsx",
+      },
+      {
+        title: "Disabled option",
+        description:
+          "Set `isDisabled` on an option and show the reason in it. A disabled option cannot be selected.",
+        sourcePath: "list-box-disabled-demo.tsx",
       },
     ],
   },
@@ -787,13 +822,9 @@ const pageSources = {
       {
         title: "Icons and shortcuts",
         description:
-          "Kbd only shows the shortcut. Add the key handler yourself.",
+          "`Kbd` shows the shortcut only. Add the key handler yourself.",
         sourcePath: "menu-demo.tsx",
-      },
-      {
-        title: "Nested menu",
-        description: "On small screens, the submenu opens below the item.",
-        sourcePath: "menu-nested-demo.tsx",
+        uses: ["button", "kbd-code"],
       },
       {
         title: "Selection",
@@ -801,13 +832,18 @@ const pageSources = {
       },
       {
         title: "Sections",
-        description: "Each MenuSection can have its own selectionMode.",
+        description: "Each `MenuSection` can have its own `selectionMode`.",
         sourcePath: "menu-sections-demo.tsx",
+      },
+      {
+        title: "Nested menu",
+        description: "On small screens, the submenu opens below the item.",
+        sourcePath: "menu-nested-demo.tsx",
       },
       {
         title: "Placement and arrow",
         description:
-          "Use MenuPopover and MenuContent instead of Menu to set placement.",
+          "Use `MenuPopover` and `MenuContent` instead of `Menu` to set placement.",
         sourcePath: "menu-placement-demo.tsx",
       },
     ],
@@ -837,7 +873,8 @@ const pageSources = {
     examples: [
       {
         title: "Value label",
-        description: "Screen readers read valueLabel as the value.",
+        description:
+          "Set `valueLabel` to show units; screen readers read the same text.",
         sourcePath: "meter-demo.tsx",
       },
     ],
@@ -907,13 +944,20 @@ const pageSources = {
       {
         title: "URL-synced pages",
         description:
-          "Keep the page in the URL, so the Back button and shared links work. RouterProvider sends link presses to your router.",
+          "Keep the page in the URL so Back and shared links work; `RouterProvider` sends link presses to your router.",
         sourcePath: "pagination-demo.tsx",
       },
       {
         title: "Sizes",
-        description: "Use sm or xs below a dense table.",
+        description:
+          "`xs` and `sm` expand the hit area to 44px on touch screens.",
         sourcePath: "pagination-sizes-demo.tsx",
+      },
+      {
+        title: "Skipped pages",
+        description:
+          'Use `PaginationEllipsis` for skipped pages; screen readers hear "More pages".',
+        sourcePath: "pagination-ellipsis-demo.tsx",
       },
     ],
   },
@@ -990,10 +1034,18 @@ const pageSources = {
     usage: "presence-list-basic-demo.tsx",
     examples: [
       {
-        title: "Adding and reordering",
+        title: "Removing a row",
         description:
-          "Pass getKey so rows keep their identity when they enter, leave, or move.",
+          "Move focus to a neighbor before removing; the exiting row is inert and `aria-hidden`.",
+        sourcePath: "presence-list-remove-demo.tsx",
+        uses: ["button"],
+      },
+      {
+        title: "Reordering",
+        description:
+          "At either end the control is disabled; move focus to the button that remains.",
         sourcePath: "presence-list-demo.tsx",
+        uses: ["button"],
       },
     ],
   },
@@ -1002,6 +1054,8 @@ const pageSources = {
     examples: [
       {
         title: "Known and unknown progress",
+        description:
+          "Set `isIndeterminate` when the task has no known end; the bar sweeps without a percentage.",
         sourcePath: "progress-bar-demo.tsx",
       },
     ],
@@ -1011,7 +1065,8 @@ const pageSources = {
     examples: [
       {
         title: "Known and unknown progress",
-        description: "Set showValue={false} to hide the value in the center.",
+        description:
+          "Set `isIndeterminate` for a wait with no end, and `showValue={false}` to hide the center.",
         sourcePath: "progress-ring-demo.tsx",
       },
       {
@@ -1021,7 +1076,7 @@ const pageSources = {
       {
         title: "Value label",
         description:
-          "Set valueLabel to replace the percentage. Screen readers hear the same text.",
+          "Set `valueLabel` to replace the percentage. Screen readers hear the same text.",
         sourcePath: "progress-ring-label-demo.tsx",
       },
     ],
@@ -1213,7 +1268,7 @@ const pageSources = {
       {
         title: "Vertical",
         description:
-          "Use it inside a flex row. The line takes the height of the row.",
+          "Use it inside a flex row; the line takes the height of the row.",
         sourcePath: "separator-vertical-demo.tsx",
       },
     ],
@@ -1224,12 +1279,13 @@ const pageSources = {
       {
         title: "Card",
         description:
-          "Skeleton is hidden from screen readers, so put a loading message in an output.",
+          "Each `Skeleton` is hidden from screen readers, so put a loading message in an `output`.",
         sourcePath: "skeleton-demo.tsx",
       },
       {
         title: "Loading state",
-        description: "Keep the same size so the layout does not move.",
+        description:
+          "Keep the same size so the layout does not move when the content arrives.",
         sourcePath: "skeleton-loading-demo.tsx",
         uses: ["avatar"],
       },
@@ -1270,7 +1326,7 @@ const pageSources = {
       {
         title: "Variants",
         description:
-          "Each variant animates only transform and opacity, so it stays smooth when the page is busy. With reduced motion, it stops.",
+          "Each variant animates transform and opacity only, and stops with reduced motion.",
         sourcePath: "spinner-demo.tsx",
       },
       {
@@ -1279,20 +1335,21 @@ const pageSources = {
       },
       {
         title: "Color",
-        description: "The spinner uses the current text color.",
+        description:
+          "Set the text color on the parent; the spinner inherits it.",
         sourcePath: "spinner-color-demo.tsx",
       },
       {
         title: "In a button",
         description:
-          "Set decorative when text next to the spinner names the wait. isPending keeps focus on the button and ignores presses.",
+          "Set `decorative` when adjacent text names the wait. `isPending` keeps focus and ignores presses.",
         sourcePath: "spinner-usage-demo.tsx",
         uses: ["button"],
       },
       {
         title: "Loading overlay",
         description:
-          "Set aria-busy on the region while it loads, and keep the old content in place.",
+          "Set `aria-busy` on the region while it loads, and keep the old content in place.",
         sourcePath: "spinner-overlay-demo.tsx",
         uses: ["button"],
       },
@@ -1304,17 +1361,19 @@ const pageSources = {
       {
         title: "Trend",
         description:
-          "Include a plus or minus sign so the direction does not depend on color. Set invert when a lower value is better.",
+          "Include a plus or minus sign so direction does not depend on color. Set `invert` when a lower value is better.",
         sourcePath: "stat-trend-demo.tsx",
       },
       {
         title: "Group",
         description:
-          "StatGroup joins stats in one surface. The columns wrap on narrow screens.",
+          "`StatGroup` joins stats in one surface; the columns wrap on narrow screens.",
         sourcePath: "stat-group-demo.tsx",
       },
       {
         title: "Live value",
+        description:
+          "`AnimatedNumber` does not announce updates; wrap the value in a live region when the change matters.",
         sourcePath: "stat-live-demo.tsx",
         uses: ["animated-number"],
       },
@@ -1325,6 +1384,8 @@ const pageSources = {
     examples: [
       {
         title: "Controlled step",
+        description:
+          "Set `currentStep` to a zero-based index; earlier steps show as complete.",
         sourcePath: "stepper-demo.tsx",
       },
     ],
@@ -1359,14 +1420,23 @@ const pageSources = {
     examples: [
       {
         title: "Column filters",
-        description: "A filtered column also needs sortValue.",
+        description:
+          "Add `filter` to a column to show a filter control. The column also needs `sortValue`.",
         sourcePath: "data-table-column-filters-demo.tsx",
+        uses: ["badge"],
       },
       {
         title: "Resizable columns and row actions",
         description:
-          "Set width on a column to set its starting width. onRowAction runs when a user clicks a row or presses Enter on it.",
+          "Set `width` and `minWidth` for the starting widths, and `resizable` for the column handles. `onRowAction` runs when a user clicks a row or presses Enter on it.",
         sourcePath: "data-table-resizable-demo.tsx",
+      },
+      {
+        title: "Footer summary",
+        description:
+          "`renderFooter` replaces the row count and page controls with your own summary.",
+        sourcePath: "data-table-footer-demo.tsx",
+        uses: ["button"],
       },
     ],
   },
@@ -1376,48 +1446,51 @@ const pageSources = {
       {
         title: "Multiple selection",
         description:
-          'selectionMode="multiple" adds a checkbox column. A disabled row cannot be selected.',
+          'Set `selectionMode="multiple"` to add a checkbox column. A disabled row cannot be selected.',
         sourcePath: "table-demo.tsx",
         uses: ["checkbox", "badge"],
       },
       {
         title: "Sortable columns",
-        description: "Table does not sort the rows. Sort them in onSortChange.",
+        description:
+          "Set `allowsSorting` on a column, then sort the rows in `onSortChange`. The table reports the descriptor and does not reorder the rows.",
         sourcePath: "table-sorting-demo.tsx",
       },
       {
-        title: "Filter invoices",
-        description: "renderEmptyState shows a message when no rows match.",
+        title: "Filtering",
+        description: "`renderEmptyState` shows the message when no rows match.",
         sourcePath: "table-filter-demo.tsx",
+        uses: ["search-field", "select", "badge"],
       },
       {
         title: "Resizable columns",
         description:
-          "Put the table in TableContainer. Drag a column edge, or focus it and use the arrow keys.",
+          "Set `allowsResizing` on a column and wrap the table in `TableContainer`. Drag a column edge, or focus the handle and use the arrow keys.",
         sourcePath: "table-resizable-demo.tsx",
       },
       {
         title: "Expandable rows",
         description:
-          "Put child rows after the cells of a row, and set treeColumn to the column that shows the expand button.",
+          "Put child rows inside their parent row, and set `treeColumn` to the column that shows the expand button.",
         sourcePath: "table-expandable-demo.tsx",
       },
       {
         title: "Reorder rows",
         description:
-          "Pass dragAndDropHooks to add a drag handle column. To move a row with the keyboard, press Right Arrow to go to the handle, press Enter, then use the arrow keys.",
+          "Pass `dragAndDropHooks` to add a drag handle column. To move a row with the keyboard, press Right Arrow to reach the handle, press Enter, then use the arrow keys.",
         sourcePath: "table-reorder-demo.tsx",
         uses: ["checkbox"],
       },
       {
         title: "Load more",
         description:
-          "TableLoadMoreItem calls onLoadMore when it scrolls into view. The header stays at the top.",
+          "`TableLoadMoreItem` calls `onLoadMore` when it scrolls into view. The header stays at the top of the container.",
         sourcePath: "table-load-more-demo.tsx",
         uses: ["spinner"],
       },
       {
         title: "Footer",
+        description: "`TableFooter` adds a summary row after the rows.",
         sourcePath: "table-footer-demo.tsx",
       },
     ],
@@ -1445,7 +1518,15 @@ const pageSources = {
         sourcePath: "tabs-overflow-demo.tsx",
       },
       {
+        title: "Controlled selection",
+        description:
+          "Use `value` and `onValueChange` when the selected tab lives in a parent.",
+        sourcePath: "tabs-controlled-demo.tsx",
+      },
+      {
         title: "Sizes",
+        description:
+          "`xs` and `sm` shrink the tab below the 44px touch target.",
         sourcePath: "tabs-sizes-demo.tsx",
       },
     ],
@@ -1456,15 +1537,18 @@ const pageSources = {
       {
         title: "Selection",
         description:
-          'Set selectionMode="multiple" to use tags as filters. A disabled tag cannot be selected.',
+          'Set `selectionMode="multiple"` to use tags as filters; `disabledKeys` blocks a tag.',
         sourcePath: "tag-group-selection-demo.tsx",
       },
       {
         title: "Links",
+        description:
+          "Set `href` on a tag to render a link with the tag styles.",
         sourcePath: "tag-group-links-demo.tsx",
       },
       {
         title: "Sizes",
+        description: "Set `size` on the group; a size on a tag overrides it.",
         sourcePath: "tag-group-sizes-demo.tsx",
       },
     ],
@@ -1530,11 +1614,14 @@ const pageSources = {
         description:
           "A word stays on one line unless it is wider than its container.",
         sourcePath: "text-reveal-characters-demo.tsx",
+        uses: ["button"],
       },
       {
         title: "Sequence",
-        description: "Set delay to start one reveal after another.",
+        description:
+          "`delay` counts from the start, so the title begins before the label finishes.",
         sourcePath: "text-reveal-demo.tsx",
+        uses: ["button"],
       },
     ],
   },
@@ -1542,14 +1629,16 @@ const pageSources = {
     usage: "text-scramble-basic-demo.tsx",
     examples: [
       {
-        title: "Glyphs",
-        description: "Use characters that have the same width in your font.",
-        sourcePath: "text-scramble-demo.tsx",
+        title: "Duration",
+        sourcePath: "text-scramble-duration-demo.tsx",
+        uses: ["button"],
       },
       {
-        title: "Duration",
-        description: "Use a short duration for status labels.",
-        sourcePath: "text-scramble-duration-demo.tsx",
+        title: "Glyphs",
+        description:
+          "Use characters of equal width; a wide glyph shifts the line while the text resolves.",
+        sourcePath: "text-scramble-demo.tsx",
+        uses: ["button"],
       },
     ],
   },
@@ -1559,8 +1648,16 @@ const pageSources = {
       {
         title: "Inline status",
         description:
-          "Keep the output element outside Presence, so screen readers announce the change.",
+          "Keep the live region outside `Presence`; a region that mounts with its text is often missed.",
         sourcePath: "presence-inline-demo.tsx",
+        uses: ["button"],
+      },
+      {
+        title: "Hiding focused content",
+        description:
+          "Move focus to the trigger first; the exiting panel is inert and hidden from assistive technology.",
+        sourcePath: "presence-focus-demo.tsx",
+        uses: ["button"],
       },
     ],
   },
@@ -1578,13 +1675,16 @@ const pageSources = {
     usage: "stagger-group-basic-demo.tsx",
     examples: [
       {
-        title: "List",
+        title: "Replay on change",
+        description:
+          'Set `trigger="mount"` with a new `key` so filtering replays the sequence.',
         sourcePath: "stagger-group-demo.tsx",
+        uses: ["toggle-button-group"],
       },
       {
-        title: "Timing",
+        title: "Long groups",
         description:
-          "In a long group the delay gets shorter, so the last item starts within 0.6 seconds.",
+          "Leave `stagger` at its default; a long group compresses the delay so the last item starts within 0.6 seconds.",
         sourcePath: "stagger-group-timing-demo.tsx",
       },
     ],
@@ -1595,13 +1695,13 @@ const pageSources = {
       {
         title: "Switching views",
         description:
-          "Keep the control outside LayoutMorph, so focus stays on the control.",
+          "Keep the control outside `LayoutMorph`, so focus stays on the control.",
         sourcePath: "layout-morph-views-demo.tsx",
         uses: ["toggle-button-group"],
       },
       {
         title: "Width",
-        description: "Set w-fit on LayoutMorph to animate the width.",
+        description: "Set `w-fit` on `LayoutMorph` to animate the width.",
         sourcePath: "layout-morph-width-demo.tsx",
         uses: ["toggle-button-group", "spinner"],
       },
@@ -1617,9 +1717,13 @@ const pageSources = {
       },
       {
         title: "Speed and spacing",
-        description:
-          "Set speed in pixels per second and --marquee-gap for the space between items.",
         sourcePath: "marquee-speed-demo.tsx",
+      },
+      {
+        title: "Static row",
+        description:
+          "Use `speed={0}` for a short set that should wrap instead of loop.",
+        sourcePath: "marquee-static-demo.tsx",
       },
     ],
   },
@@ -1630,6 +1734,12 @@ const pageSources = {
         title: "Button label",
         description: "Set a minimum width so the button keeps its size.",
         sourcePath: "text-swap-button-demo.tsx",
+        uses: ["button"],
+      },
+      {
+        title: "Inline phrase",
+        sourcePath: "text-swap-inline-demo.tsx",
+        uses: ["button"],
       },
     ],
   },
@@ -1676,7 +1786,7 @@ const pageSources = {
       {
         title: "Process",
         description:
-          'Mark steps that have not happened with status="upcoming". The line to an upcoming step is dashed.',
+          'Set `status="upcoming"`; the connector is dashed and screen readers read the status first.',
         sourcePath: "timeline-process-demo.tsx",
       },
       {
@@ -1722,7 +1832,7 @@ const pageSources = {
       {
         title: "Sizes",
         description:
-          "Set iconOnly for a square toggle, and give it an aria-label.",
+          "Set `iconOnly` for a square toggle, and give it an `aria-label`.",
         sourcePath: "toggle-button-sizes-demo.tsx",
       },
     ],
@@ -1736,6 +1846,8 @@ const pageSources = {
       },
       {
         title: "Sizes",
+        description:
+          "Set `size` on the group; a size on a toggle overrides it.",
         sourcePath: "toggle-button-group-sizes-demo.tsx",
       },
     ],
@@ -1764,7 +1876,10 @@ const pageSources = {
     examples: [
       {
         title: "Formatting toolbar",
+        description:
+          "The toolbar is one tab stop; the arrow keys move focus between controls.",
         sourcePath: "toolbar-demo.tsx",
+        uses: ["button", "separator"],
       },
       {
         title: "Vertical toolbar",
@@ -1776,6 +1891,7 @@ const pageSources = {
         description:
           "Popovers that open from the toolbar keep the default size.",
         sourcePath: "toolbar-sizes-demo.tsx",
+        uses: ["button", "separator"],
       },
     ],
   },
@@ -1799,30 +1915,843 @@ const pageSources = {
     usage: "tree-basic-demo.tsx",
     examples: [
       {
-        title: "Custom row content",
-        description: "Typeahead still uses title.",
+        title: "Custom content",
+        description:
+          "Set `content` to show more than the label, such as a file size. Typeahead still matches `title`.",
         sourcePath: "tree-demo.tsx",
       },
       {
         title: "Checkbox selection",
         description:
-          'selectionMode="multiple" adds a checkbox to each row. A disabled row cannot be selected.',
+          'Set `selectionMode="multiple"` to add a checkbox to each row; a disabled row cannot be selected.',
         sourcePath: "tree-selection-demo.tsx",
         uses: ["checkbox"],
       },
       {
         title: "Sections",
+        description: "`TreeSection` groups rows under a `TreeHeader`.",
         sourcePath: "tree-sections-demo.tsx",
       },
       {
         title: "Drag and drop",
         description:
-          "Drop a row on a folder to move it into the folder. To move a row with the keyboard, press Right Arrow to go to the handle, press Enter, then use the arrow keys.",
+          "Pass `dragAndDropHooks` to move rows; drop a row on a folder to move it inside. To move a row with the keyboard, press Right Arrow to reach the handle, press Enter, then use the arrow keys.",
         sourcePath: "tree-drag-demo.tsx",
       },
     ],
   },
 } as const satisfies Record<string, ComponentPageSource>;
+
+const usageSources = {
+  alert: {
+    code: `import { Alert } from "@/components/vip-ui/alert";
+
+export function PreviewNotice() {
+  return (
+    <Alert title="Preview mode">
+      Changes stay in this workspace until you publish.
+    </Alert>
+  );
+}`,
+    filename: "preview-notice.tsx",
+  },
+  badge: {
+    code: `import { Badge } from "@/components/vip-ui/badge";
+
+export function DraftBadge() {
+  return <Badge>Draft</Badge>;
+}`,
+    filename: "draft-badge.tsx",
+  },
+  "progress-bar": {
+    code: `import { ProgressBar } from "@/components/vip-ui/progress-bar";
+
+export function UploadProgress() {
+  return <ProgressBar label="Uploading assets" value={40} />;
+}`,
+    filename: "upload-progress.tsx",
+  },
+  "progress-ring": {
+    code: `import { ProgressRing } from "@/components/vip-ui/progress-ring";
+
+export function UploadRing() {
+  return <ProgressRing label="Uploading assets" value={65} />;
+}`,
+    filename: "upload-ring.tsx",
+  },
+  meter: {
+    code: `import { Meter } from "@/components/vip-ui/meter";
+
+export function StorageMeter() {
+  return (
+    <Meter label="Storage used" value={65} valueLabel="65 GB of 100 GB" />
+  );
+}`,
+    filename: "storage-meter.tsx",
+  },
+  stepper: {
+    code: `import { Stepper } from "@/components/vip-ui/stepper";
+
+const steps = [
+  { label: "Details" },
+  { label: "Review" },
+  { label: "Complete" },
+];
+
+export function SetupProgress() {
+  return (
+    <Stepper
+      steps={steps}
+      currentStep={1}
+      aria-label="Project setup progress"
+    />
+  );
+}`,
+    filename: "setup-progress.tsx",
+  },
+  spinner: {
+    code: `import { Spinner } from "@/components/vip-ui/spinner";
+
+export function WorkspaceLoader() {
+  return <Spinner aria-label="Loading workspace" />;
+}`,
+    filename: "workspace-loader.tsx",
+  },
+  skeleton: {
+    code: `import { Skeleton } from "@/components/vip-ui/skeleton";
+
+export function ProfilePlaceholder() {
+  return (
+    <output className="flex items-center gap-3">
+      <span className="sr-only">Loading profile</span>
+      <Skeleton className="size-10 rounded-full" />
+      <div className="grid gap-2">
+        <Skeleton className="h-3 w-32" />
+        <Skeleton className="h-3 w-20" />
+      </div>
+    </output>
+  );
+}`,
+    filename: "profile-placeholder.tsx",
+  },
+  "empty-state": {
+    code: `import {
+  EmptyState,
+  EmptyStateDescription,
+  EmptyStateTitle,
+} from "@/components/vip-ui/empty-state";
+
+export function NoProjects() {
+  return (
+    <EmptyState>
+      <EmptyStateTitle>No projects yet</EmptyStateTitle>
+      <EmptyStateDescription>
+        Create a project to start a draft.
+      </EmptyStateDescription>
+    </EmptyState>
+  );
+}`,
+    filename: "no-projects.tsx",
+  },
+  button: {
+    code: `import { Button } from "@/components/vip-ui/button";
+
+export function SaveButton() {
+  return <Button>Save changes</Button>;
+}`,
+    filename: "save-button.tsx",
+  },
+  "button-group": {
+    code: `import { Button } from "@/components/vip-ui/button";
+import { ButtonGroup } from "@/components/vip-ui/button-group";
+
+export function MessageActions() {
+  return (
+    <ButtonGroup aria-label="Message actions">
+      <Button variant="ghost">Archive</Button>
+      <Button variant="ghost">Snooze</Button>
+    </ButtonGroup>
+  );
+}`,
+    filename: "message-actions.tsx",
+  },
+  menu: {
+    code: `import { Button } from "@/components/vip-ui/button";
+import { Menu, MenuItem, MenuTrigger } from "@/components/vip-ui/menu";
+
+export function ProjectMenu() {
+  return (
+    <MenuTrigger>
+      <Button variant="outline">Project actions</Button>
+      <Menu aria-label="Project actions">
+        <MenuItem>Rename</MenuItem>
+        <MenuItem>Duplicate</MenuItem>
+      </Menu>
+    </MenuTrigger>
+  );
+}`,
+    filename: "project-menu.tsx",
+  },
+  "context-menu": {
+    code: `import { Button } from "@/components/vip-ui/button";
+import {
+  ContextMenu,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@/components/vip-ui/context-menu";
+
+export function FileActions() {
+  return (
+    <ContextMenuTrigger>
+      <Button variant="outline">brief.pdf</Button>
+      <ContextMenu aria-label="File actions">
+        <ContextMenuItem>Rename</ContextMenuItem>
+        <ContextMenuItem>Copy filename</ContextMenuItem>
+      </ContextMenu>
+    </ContextMenuTrigger>
+  );
+}`,
+    filename: "file-actions.tsx",
+  },
+  "toggle-button": {
+    code: `import { PushPinIcon } from "@phosphor-icons/react";
+import { ToggleButton } from "@/components/vip-ui/toggle-button";
+
+export function PinButton() {
+  return (
+    <ToggleButton>
+      <PushPinIcon aria-hidden="true" />
+      Pin to favorites
+    </ToggleButton>
+  );
+}`,
+    filename: "pin-button.tsx",
+  },
+  "toggle-button-group": {
+    code: `import { ToggleButton } from "@/components/vip-ui/toggle-button";
+import { ToggleButtonGroup } from "@/components/vip-ui/toggle-button-group";
+
+export function CalendarView() {
+  return (
+    <ToggleButtonGroup
+      aria-label="Calendar view"
+      selectionMode="single"
+      defaultSelectedKeys={["week"]}
+      disallowEmptySelection
+    >
+      <ToggleButton id="day" variant="segmented">
+        Day
+      </ToggleButton>
+      <ToggleButton id="week" variant="segmented">
+        Week
+      </ToggleButton>
+    </ToggleButtonGroup>
+  );
+}`,
+    filename: "calendar-view.tsx",
+  },
+  toolbar: {
+    code: `import { ToggleButton } from "@/components/vip-ui/toggle-button";
+import { ToggleButtonGroup } from "@/components/vip-ui/toggle-button-group";
+import { Toolbar } from "@/components/vip-ui/toolbar";
+
+export function AlignmentToolbar() {
+  return (
+    <Toolbar aria-label="Text alignment">
+      <ToggleButtonGroup
+        aria-label="Alignment"
+        selectionMode="single"
+        defaultSelectedKeys={["left"]}
+        disallowEmptySelection
+      >
+        <ToggleButton id="left" variant="segmented">
+          Left
+        </ToggleButton>
+        <ToggleButton id="center" variant="segmented">
+          Center
+        </ToggleButton>
+      </ToggleButtonGroup>
+    </Toolbar>
+  );
+}`,
+    filename: "alignment-toolbar.tsx",
+  },
+  "file-trigger": {
+    code: `import { Button } from "@/components/vip-ui/button";
+import { FileTrigger } from "@/components/vip-ui/file-trigger";
+
+export function UploadButton() {
+  return (
+    <FileTrigger>
+      <Button variant="outline">Choose files</Button>
+    </FileTrigger>
+  );
+}`,
+    filename: "upload-button.tsx",
+  },
+  "copy-button": {
+    code: `import { CopyButton } from "@/components/vip-ui/copy-button";
+
+export function CopyReference() {
+  return (
+    <CopyButton value="REF-2026-0472" aria-label="Copy reference ID" />
+  );
+}`,
+    filename: "copy-reference.tsx",
+  },
+  "command-palette": {
+    code: `"use client";
+
+import { useState } from "react";
+import { Button } from "@/components/vip-ui/button";
+import {
+  CommandPalette,
+  CommandPaletteItem,
+} from "@/components/vip-ui/command-palette";
+
+export function CommandMenu() {
+  const [isOpen, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button onPress={() => setOpen(true)}>Open commands</Button>
+      <CommandPalette isOpen={isOpen} onOpenChange={setOpen}>
+        <CommandPaletteItem>New project</CommandPaletteItem>
+        <CommandPaletteItem>Settings</CommandPaletteItem>
+      </CommandPalette>
+    </>
+  );
+}`,
+    filename: "command-menu.tsx",
+  },
+  card: {
+    code: `import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/vip-ui/card";
+
+export function ProjectCard() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Website refresh</CardTitle>
+        <CardDescription>Due October 18</CardDescription>
+      </CardHeader>
+    </Card>
+  );
+}`,
+    filename: "project-card.tsx",
+  },
+  accordion: {
+    code: `import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/vip-ui/accordion";
+
+export function Faq() {
+  return (
+    <Accordion>
+      <AccordionItem id="invite">
+        <AccordionTrigger>How do I invite teammates?</AccordionTrigger>
+        <AccordionContent>
+          Open project settings and send an invitation by email.
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem id="private">
+        <AccordionTrigger>Can I keep a project private?</AccordionTrigger>
+        <AccordionContent>
+          New projects are private until you change access in settings.
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  );
+}`,
+    filename: "faq.tsx",
+  },
+  disclosure: {
+    code: `import {
+  Disclosure,
+  DisclosureHeader,
+  DisclosurePanel,
+} from "@/components/vip-ui/disclosure";
+
+export function PlanDetails() {
+  return (
+    <Disclosure>
+      <DisclosureHeader>What is included?</DisclosureHeader>
+      <DisclosurePanel>
+        Every plan includes project history and team access.
+      </DisclosurePanel>
+    </Disclosure>
+  );
+}`,
+    filename: "plan-details.tsx",
+  },
+  separator: {
+    code: `import { Separator } from "@/components/vip-ui/separator";
+
+export function AccountSections() {
+  return (
+    <div>
+      <p>Profile and security settings</p>
+      <Separator className="my-3" />
+      <p>Notification preferences</p>
+    </div>
+  );
+}`,
+    filename: "account-sections.tsx",
+  },
+  avatar: {
+    code: `import { Avatar } from "@/components/vip-ui/avatar";
+
+export function MayaAvatar() {
+  return (
+    <Avatar
+      name="Maya Chen"
+      src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=96&h=96&fit=crop"
+    />
+  );
+}`,
+    filename: "maya-avatar.tsx",
+  },
+  "description-list": {
+    code: `import {
+  DescriptionDetail,
+  DescriptionList,
+  DescriptionTerm,
+} from "@/components/vip-ui/description-list";
+
+export function WorkspaceDetails() {
+  return (
+    <DescriptionList>
+      <DescriptionTerm>Workspace</DescriptionTerm>
+      <DescriptionDetail>Studio North</DescriptionDetail>
+      <DescriptionTerm>Owner</DescriptionTerm>
+      <DescriptionDetail>Amina Shah</DescriptionDetail>
+    </DescriptionList>
+  );
+}`,
+    filename: "workspace-details.tsx",
+  },
+  stat: {
+    code: `import {
+  Stat,
+  StatDetail,
+  StatLabel,
+  StatValue,
+} from "@/components/vip-ui/stat";
+
+export function ActiveProjects() {
+  return (
+    <Stat>
+      <StatLabel>Active projects</StatLabel>
+      <StatValue>24</StatValue>
+      <StatDetail>Up 3 from last month</StatDetail>
+    </Stat>
+  );
+}`,
+    filename: "active-projects.tsx",
+  },
+  timeline: {
+    code: `import {
+  Timeline,
+  TimelineItem,
+  TimelineTime,
+  TimelineTitle,
+} from "@/components/vip-ui/timeline";
+
+export function ProjectActivity() {
+  return (
+    <Timeline aria-label="Project activity">
+      <TimelineItem status="latest">
+        <TimelineTitle>Design approved</TimelineTitle>
+        <TimelineTime dateTime="2025-10-18T14:30:00Z">
+          October 18, 2:30 PM UTC
+        </TimelineTime>
+      </TimelineItem>
+      <TimelineItem>
+        <TimelineTitle>Feedback addressed</TimelineTitle>
+      </TimelineItem>
+    </Timeline>
+  );
+}`,
+    filename: "project-activity.tsx",
+  },
+  "kbd-code": {
+    code: `import { InlineCode, Kbd } from "@/components/vip-ui/kbd-code";
+
+export function ShortcutHint() {
+  return (
+    <p>
+      Press <Kbd>Esc</Kbd> to close the dialog. Set{" "}
+      <InlineCode>aria-label</InlineCode> on icon-only controls.
+    </p>
+  );
+}`,
+    filename: "shortcut-hint.tsx",
+  },
+  link: {
+    code: `import { Link } from "@/components/vip-ui/link";
+
+export function SetupLink() {
+  return <Link href="/components/installation">Read the setup guide</Link>;
+}`,
+    filename: "setup-link.tsx",
+  },
+  breadcrumbs: {
+    code: `import { Breadcrumb, Breadcrumbs } from "@/components/vip-ui/breadcrumbs";
+
+export function ProjectBreadcrumbs() {
+  return (
+    <nav aria-label="Breadcrumbs">
+      <Breadcrumbs>
+        <Breadcrumb href="/">Home</Breadcrumb>
+        <Breadcrumb href="/projects">Projects</Breadcrumb>
+        <Breadcrumb>Website redesign</Breadcrumb>
+      </Breadcrumbs>
+    </nav>
+  );
+}`,
+    filename: "project-breadcrumbs.tsx",
+  },
+  pagination: {
+    code: `import {
+  Pagination,
+  PaginationItem,
+  PaginationLink,
+  PaginationList,
+} from "@/components/vip-ui/pagination";
+
+export function ResultsPagination() {
+  return (
+    <Pagination>
+      <PaginationList>
+        <PaginationItem>
+          <PaginationLink href="?page=1" isCurrent aria-label="Page 1">
+            1
+          </PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="?page=2" aria-label="Page 2">
+            2
+          </PaginationLink>
+        </PaginationItem>
+      </PaginationList>
+    </Pagination>
+  );
+}`,
+    filename: "results-pagination.tsx",
+  },
+  tabs: {
+    code: `import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/vip-ui/tabs";
+
+export function ProjectTabs() {
+  return (
+    <Tabs defaultValue="details">
+      <TabsList aria-label="Project">
+        <TabsTrigger value="details">Details</TabsTrigger>
+        <TabsTrigger value="activity">Activity</TabsTrigger>
+      </TabsList>
+      <TabsContent value="details">Studio North is due October 18.</TabsContent>
+      <TabsContent value="activity">No changes yet.</TabsContent>
+    </Tabs>
+  );
+}`,
+    filename: "project-tabs.tsx",
+  },
+  "text-swap": {
+    code: `import { TextSwap } from "@/components/vip-ui/text-swap";
+
+export function PublishStatus({ status }: { status: string }) {
+  return <TextSwap value={status} aria-live="polite" />;
+}`,
+    filename: "publish-status.tsx",
+  },
+  "animated-number": {
+    code: `import { AnimatedNumber } from "@/components/vip-ui/animated-number";
+
+export function GuestCount({ count }: { count: number }) {
+  return <AnimatedNumber value={count} aria-live="polite" />;
+}`,
+    filename: "guest-count.tsx",
+  },
+  "text-reveal": {
+    code: `import { TextReveal } from "@/components/vip-ui/text-reveal";
+
+export function Intro() {
+  return <TextReveal text="A studio for type, print, and motion." />;
+}`,
+    filename: "studio-intro.tsx",
+  },
+  "text-scramble": {
+    code: `import { TextScramble } from "@/components/vip-ui/text-scramble";
+
+export function PublishStatus({ status }: { status: string }) {
+  return <TextScramble value={status} aria-live="polite" />;
+}`,
+    filename: "publish-status.tsx",
+  },
+  presence: {
+    code: `import { Presence } from "@/components/vip-ui/presence";
+
+export function SaveStatus({ saved }: { saved: boolean }) {
+  return (
+    <div role="status">
+      <Presence show={saved}>Draft saved</Presence>
+    </div>
+  );
+}`,
+    filename: "save-status.tsx",
+  },
+  "presence-list": {
+    code: `import { PresenceList } from "@/components/vip-ui/presence-list";
+
+const steps = [
+  { id: "brief", title: "Write the brief" },
+  { id: "type", title: "Choose the typefaces" },
+];
+
+export function ProjectSteps() {
+  return (
+    <PresenceList items={steps} getKey={(step) => step.id}>
+      {(step) => <span>{step.title}</span>}
+    </PresenceList>
+  );
+}`,
+    filename: "project-steps.tsx",
+  },
+  "stagger-group": {
+    code: `import { StaggerGroup, StaggerItem } from "@/components/vip-ui/stagger-group";
+
+const tasks = ["Write the brief", "Choose the typefaces", "Send the proofs"];
+
+export function ProjectTasks() {
+  return (
+    <StaggerGroup as="ol">
+      {tasks.map((task) => (
+        <StaggerItem as="li" key={task}>
+          {task}
+        </StaggerItem>
+      ))}
+    </StaggerGroup>
+  );
+}`,
+    filename: "project-tasks.tsx",
+  },
+  "layout-morph": {
+    code: `import { LayoutMorph } from "@/components/vip-ui/layout-morph";
+
+export function PublishStatus({ published }: { published: boolean }) {
+  return (
+    <LayoutMorph aria-live="polite" contentKey={published ? "live" : "draft"}>
+      {published
+        ? "Published. Subscribers get it in the next digest."
+        : "Draft saved. Only you can see it."}
+    </LayoutMorph>
+  );
+}`,
+    filename: "publish-status.tsx",
+  },
+  marquee: {
+    code: `import { Marquee } from "@/components/vip-ui/marquee";
+
+const clients = ["Atlas", "Beacon", "Cascade", "Drift", "Ember"];
+
+export function ClientStrip() {
+  return (
+    <Marquee>
+      {clients.map((client) => (
+        <span key={client} className="whitespace-nowrap">
+          {client}
+        </span>
+      ))}
+    </Marquee>
+  );
+}`,
+    filename: "client-strip.tsx",
+  },
+  "list-box": {
+    code: `import { ListBox, ListBoxItem } from "@/components/vip-ui/list-box";
+
+const teams = [
+  { id: "design", name: "Design" },
+  { id: "engineering", name: "Engineering" },
+  { id: "research", name: "Research" },
+];
+
+export function TeamPicker() {
+  return (
+    <ListBox aria-label="Team" items={teams}>
+      {(team) => <ListBoxItem id={team.id}>{team.name}</ListBoxItem>}
+    </ListBox>
+  );
+}`,
+    filename: "team-picker.tsx",
+  },
+  "grid-list": {
+    code: `import { GridList, GridListItem } from "@/components/vip-ui/grid-list";
+
+const files = [
+  { id: "brief", name: "Project brief", type: "PDF" },
+  { id: "assets", name: "Brand assets", type: "Folder" },
+  { id: "notes", name: "Meeting notes", type: "Text" },
+];
+
+export function FileList() {
+  return (
+    <GridList
+      aria-label="Project files"
+      items={files}
+      selectionMode="single"
+    >
+      {(file) => (
+        <GridListItem id={file.id} textValue={file.name}>
+          {file.name}
+          <span className="ms-auto text-xs text-muted-foreground">
+            {file.type}
+          </span>
+        </GridListItem>
+      )}
+    </GridList>
+  );
+}`,
+    filename: "file-list.tsx",
+  },
+  tree: {
+    code: `import { Tree, TreeItem } from "@/components/vip-ui/tree";
+
+export function FileTree() {
+  return (
+    <Tree aria-label="Project files" defaultExpandedKeys={["design"]}>
+      <TreeItem id="design" title="Design">
+        <TreeItem id="wireframes" title="Wireframes.fig" />
+        <TreeItem id="palette" title="Palette.pdf" />
+      </TreeItem>
+      <TreeItem id="notes" title="Notes.md" />
+    </Tree>
+  );
+}`,
+    filename: "file-tree.tsx",
+  },
+  "tag-group": {
+    code: `import {
+  Tag,
+  TagGroup,
+  TagGroupLabel,
+  TagListView,
+} from "@/components/vip-ui/tag-group";
+
+const topics = [
+  { id: "design", name: "Design" },
+  { id: "engineering", name: "Engineering" },
+  { id: "research", name: "Research" },
+];
+
+export function TopicTags() {
+  return (
+    <TagGroup>
+      <TagGroupLabel>Topics</TagGroupLabel>
+      <TagListView items={topics}>
+        {(topic) => <Tag id={topic.id}>{topic.name}</Tag>}
+      </TagListView>
+    </TagGroup>
+  );
+}`,
+    filename: "topic-tags.tsx",
+  },
+  table: {
+    code: `import {
+  Cell,
+  Column,
+  Row,
+  Table,
+  TableBody,
+  TableHeader,
+} from "@/components/vip-ui/table";
+
+const projects = [
+  { id: "north", name: "Studio North", owner: "Maya Chen" },
+  { id: "atlas", name: "Atlas", owner: "Sam Rivera" },
+];
+
+export function ProjectTable() {
+  return (
+    <Table aria-label="Projects">
+      <TableHeader>
+        <Column isRowHeader>Project</Column>
+        <Column>Owner</Column>
+      </TableHeader>
+      <TableBody items={projects}>
+        {(project) => (
+          <Row id={project.id}>
+            <Cell>{project.name}</Cell>
+            <Cell>{project.owner}</Cell>
+          </Row>
+        )}
+      </TableBody>
+    </Table>
+  );
+}`,
+    filename: "project-table.tsx",
+  },
+  "data-table": {
+    code: `import {
+  DataTable,
+  type DataTableColumn,
+} from "@/components/vip-ui/data-table";
+
+type Project = {
+  id: string;
+  name: string;
+  owner: string;
+};
+
+const projects: Project[] = [
+  { id: "north", name: "Studio North", owner: "Maya Chen" },
+  { id: "atlas", name: "Atlas", owner: "Sam Rivera" },
+];
+
+const columns: DataTableColumn<Project>[] = [
+  {
+    id: "name",
+    header: "Project",
+    cell: (project) => project.name,
+    sortValue: (project) => project.name,
+  },
+  {
+    id: "owner",
+    header: "Owner",
+    cell: (project) => project.owner,
+    sortValue: (project) => project.owner,
+  },
+];
+
+export function ProjectTable() {
+  return (
+    <DataTable
+      label="Projects"
+      rows={projects}
+      columns={columns}
+      getRowId={(project) => project.id}
+    />
+  );
+}`,
+    filename: "project-table.tsx",
+  },
+} as const satisfies Record<string, ComponentUsage>;
+
+export function getComponentUsage(slug: string): ComponentUsage | undefined {
+  return (usageSources as Record<string, ComponentUsage | undefined>)[slug];
+}
 
 function withDescriptions<T extends Record<string, ComponentPageSource>>(
   sources: T,

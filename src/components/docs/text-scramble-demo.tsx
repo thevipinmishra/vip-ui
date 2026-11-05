@@ -4,29 +4,30 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { TextScramble } from "@/components/ui/text-scramble";
 
+const codes = ["482 109", "735 284", "196 803"];
+
 export function TextScrambleDemo() {
-  const [alternate, setAlternate] = useState(false);
+  const [code, setCode] = useState(0);
 
   return (
-    <div className="grid w-full max-w-md gap-4">
-      <div className="min-w-0 rounded-2xl bg-foreground p-5 text-background">
-        <p className="text-3xl leading-tight font-bold tracking-[-0.06em] [overflow-wrap:anywhere] sm:text-4xl">
+    <div className="grid w-full max-w-sm justify-items-start gap-4">
+      <div>
+        <p className="text-sm text-muted-foreground">Verification code</p>
+        <p className="mt-1 text-4xl font-semibold tracking-[0.16em]">
           <TextScramble
-            value={alternate ? "FIELD NOTES" : "STUDIO NOTES"}
-            glyphs="01"
+            value={codes[code]}
+            glyphs="0123456789"
             aria-live="polite"
           />
         </p>
       </div>
-      <div>
-        <Button
-          size="sm"
-          variant="secondary"
-          onPress={() => setAlternate((value) => !value)}
-        >
-          Change title
-        </Button>
-      </div>
+      <Button
+        size="sm"
+        variant="secondary"
+        onPress={() => setCode((current) => (current + 1) % codes.length)}
+      >
+        Send new code
+      </Button>
     </div>
   );
 }

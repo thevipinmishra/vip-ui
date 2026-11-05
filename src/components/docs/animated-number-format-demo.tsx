@@ -7,14 +7,14 @@ import { Button } from "@/components/ui/button";
 const euro: Intl.NumberFormatOptions = { style: "currency", currency: "EUR" };
 
 export function AnimatedNumberFormatDemo() {
-  const [budget, setBudget] = useState(1249.5);
+  const [balance, setBalance] = useState(1249.5);
 
   return (
     <div className="grid justify-items-center gap-4 text-center">
       <div>
-        <p className="text-sm text-muted-foreground">Monthly budget</p>
+        <p className="text-sm text-muted-foreground">Account balance</p>
         <AnimatedNumber
-          value={budget}
+          value={balance}
           locale="de-DE"
           formatOptions={euro}
           aria-live="polite"
@@ -24,9 +24,9 @@ export function AnimatedNumberFormatDemo() {
       <Button
         variant="secondary"
         size="sm"
-        onPress={() => setBudget((value) => value + 250.75)}
+        onPress={() => setBalance((value) => value + 250.75)}
       >
-        Increase budget
+        Add funds
       </Button>
     </div>
   );

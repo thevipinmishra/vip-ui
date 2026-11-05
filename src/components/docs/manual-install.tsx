@@ -57,7 +57,7 @@ export async function ManualInstall({
               <p className="text-xs font-medium text-muted-foreground">
                 {group.label}
               </p>
-              <ul className="divide-y divide-border/70 rounded-xl border border-border/70 bg-card/50">
+              <ul className="min-w-0 divide-y divide-border/70 rounded-xl border border-border/70 bg-card/50">
                 {group.files.map((file) => (
                   <RequiredFileRow key={file.slug} file={file} />
                 ))}

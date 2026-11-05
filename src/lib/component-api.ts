@@ -8,6 +8,7 @@ import type { Avatar } from "@/components/ui/avatar";
 import type { Badge } from "@/components/ui/badge";
 import type { Button } from "@/components/ui/button";
 import type { ButtonGroup } from "@/components/ui/button-group";
+import type { ButtonLink } from "@/components/ui/button-link";
 import type { CardTitle } from "@/components/ui/card";
 import type { Checkbox } from "@/components/ui/checkbox";
 import type { CheckboxGroup } from "@/components/ui/checkbox-group";
@@ -63,7 +64,7 @@ import type { StaggerGroup, StaggerItem } from "@/components/ui/stagger-group";
 import type { StatTrend } from "@/components/ui/stat";
 import type { Stepper } from "@/components/ui/stepper";
 import type { Switch } from "@/components/ui/switch";
-import type { Column } from "@/components/ui/table";
+import type { Column, TableLoadMoreItem } from "@/components/ui/table";
 import type {
   Tabs,
   TabsContent,
@@ -153,7 +154,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: "string",
           required: true,
           description:
-            "The text to show. Screen readers read it once, as plain text.",
+            "Sets the text to reveal. Screen readers read it once, as plain text.",
         },
         {
           name: "split",
@@ -194,20 +195,21 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: "string",
           required: true,
           description:
-            "The text to show. A change starts a scramble. The first value shows without a scramble. Screen readers get the final text at once.",
+            "Sets the text to show. A change starts a scramble; the first value shows without one. Add `aria-live` to announce the final text.",
         },
         {
           name: "duration",
           type: "number",
           default: "0.7",
           description:
-            "Time in seconds to resolve the text. Set 0 to change the text without a scramble.",
+            "Sets the time in seconds to resolve the text. Set 0 to change the text without a scramble.",
         },
         {
           name: "glyphs",
           type: "string",
+          default: '"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"',
           description:
-            "Characters that show during the scramble. Without it, the scramble uses the letters A to Z and the digits 0 to 9. The default monospace font keeps the width the same.",
+            "Sets the characters that show during the scramble. The default monospace font keeps the width the same.",
         },
       ],
     }),
@@ -1090,7 +1092,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: "string",
           required: true,
           description:
-            "The text to show. A change animates. The first value shows without animation. Where text cannot wrap, such as in a button, a long value truncates.",
+            "Sets the text to show. A change animates; the first value shows without animation. Add `aria-live` to announce changes. A long value truncates where text cannot wrap, such as in a button.",
         },
       ],
     }),
@@ -1104,14 +1106,14 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: "readonly { label: string; description?: string }[]",
           required: true,
           description:
-            "Steps in display order. Keep labels short. If the steps do not fit, the list scrolls and keeps the current step in view.",
+            "Steps in display order. Keep labels short; if the list overflows, it scrolls and keeps the current step in view.",
         },
         {
           name: "currentStep",
           type: "number (zero-based)",
           required: true,
           description:
-            "Index of the current step. Earlier steps show as complete. Set it to steps.length to show all steps as complete.",
+            "Sets the current step by zero-based index. Earlier steps show as complete; set it to steps.length to complete them all.",
         },
       ],
     }),
@@ -1125,7 +1127,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: "number",
           required: true,
           description:
-            "The number to show. A change animates. Screen readers get the new value at once. A number wider than its container wraps.",
+            "Sets the number to show. A change animates. Add `aria-live` to announce the formatted value; a number wider than its container wraps.",
         },
         {
           name: "variant",
@@ -1158,7 +1160,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           name: "label",
           type: "string",
           required: true,
-          description: "Shows a visible label below the ring.",
+          description: "Shows a label below the ring.",
         },
         {
           name: "size",
@@ -1171,7 +1173,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: "boolean",
           default: "true",
           description:
-            "Shows the value in the center of the ring. Keep valueLabel short so it fits.",
+            "Shows the value in the center. Keep valueLabel short so it fits.",
         },
       ],
     }),
@@ -1318,14 +1320,14 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: '"default" | "secondary" | "outline" | "ghost" | "minimal" | "destructive"',
           default: '"default"',
           description:
-            "Choose the action's visual priority. Minimal is for a quiet icon action.",
+            "Sets the visual emphasis. Minimal is for a quiet icon action.",
         },
         {
           name: "size",
           type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"md"',
           description:
-            "Heights are 28, 36, 44, 48, and 56 pixels. Inside a sized Toolbar, ButtonGroup, or ToggleButtonGroup, the group size applies. On touch screens, the touch area is at least 44 pixels high.",
+            "Sets the height from 28px (xs) to 56px (xl). A size on the button overrides the group; otherwise the group size applies.",
         },
         {
           name: "iconOnly",
@@ -1339,13 +1341,51 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: "boolean",
           default: "false",
           description:
-            "Disable press scaling while keeping the button interactive.",
+            "Disables press scaling while keeping the button interactive.",
         },
         {
           name: "layout",
           type: 'MotionProps["layout"]',
           description:
             "Animate position or size changes when the button moves in the layout. Ignored when reduced motion is requested.",
+        },
+      ],
+    }),
+    apiPart<typeof ButtonLink>({
+      name: "ButtonLink",
+      description:
+        "Renders an anchor with the button styles. It accepts anchor attributes instead of React Aria Button props.",
+      props: [
+        {
+          name: "href",
+          type: "string",
+          required: true,
+          description: "Sets the destination.",
+        },
+        {
+          name: "as",
+          type: "ElementType",
+          default: '"a"',
+          description: "Renders a router link component, such as Next.js Link.",
+        },
+        {
+          name: "variant",
+          type: '"default" | "secondary" | "outline" | "ghost" | "minimal" | "destructive"',
+          default: '"default"',
+          description: "Uses the Button variants.",
+        },
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"md"',
+          description: "Uses the Button sizes.",
+        },
+        {
+          name: "iconOnly",
+          type: "boolean",
+          default: "false",
+          description:
+            "Makes the link a square for one icon. Give the link an aria-label.",
         },
       ],
     }),
@@ -1421,9 +1461,10 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "as",
-          type: '"h2" | "h3" | "h4"',
+          type: '"h1" | "h2" | "h3" | "h4"',
           default: '"h3"',
-          description: "Heading level for the empty state title.",
+          description:
+            "Sets the heading level. Match the level to the page outline.",
         },
       ],
     }),
@@ -1436,7 +1477,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           name: "variant",
           type: '"ring" | "dots" | "segments"',
           default: '"ring"',
-          description: "Sets the animation style.",
+          description: "Sets the indicator style.",
         },
         {
           name: "size",
@@ -1449,7 +1490,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: "boolean",
           default: "false",
           description:
-            "Hides the spinner from screen readers. Use it when text next to the spinner names the wait.",
+            "Hides the spinner from screen readers. Use it when nearby text names the wait.",
         },
         {
           name: "aria-label",
@@ -1514,6 +1555,24 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           default: "false",
           description:
             "Adds a resize handle at the end of the column. The table must be in TableContainer.",
+        },
+      ],
+    }),
+    apiPart<typeof TableLoadMoreItem>({
+      name: "TableLoadMoreItem",
+      props: [
+        {
+          name: "onLoadMore",
+          type: "() => void",
+          description:
+            "Loads the next page. Called when the row scrolls into view.",
+        },
+        {
+          name: "isLoading",
+          type: "boolean",
+          default: "false",
+          description:
+            "Shows a spinner and loading text until the next page arrives.",
         },
       ],
     }),
@@ -1639,6 +1698,19 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: "boolean",
           default: "false",
           description: "Adds a resize handle to each column header.",
+        },
+        {
+          name: "showClearSelection",
+          type: "boolean",
+          default: "true",
+          description:
+            "Shows the Clear selection button in the header while rows are selected.",
+        },
+        {
+          name: "renderFooter",
+          type: "(state: DataTableFooterState) => ReactNode",
+          description:
+            "Replaces the row count and page controls below the table. The state has the visible row range, the filtered and total counts, the page index and count, and setPageIndex.",
         },
       ],
     }),
@@ -1817,43 +1889,43 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           name: "title",
           type: "string",
           description:
-            "Shows the variant icon and a heading, with children as the description. Leave it out to build the alert from its parts.",
+            "Shows the variant icon and a heading, and moves the children into the description. Without it, compose the parts yourself.",
         },
         {
           name: "variant",
           type: '"info" | "success" | "warning" | "error" | "neutral"',
           default: '"info"',
-          description: "Sets the colors and the icon.",
+          description: "Sets the color and icon for the message.",
         },
         {
           name: "action",
           type: "ReactNode",
           description:
-            "Controls after the text, such as a button. Works with title.",
+            "Adds controls after the text, such as a button. Requires title.",
         },
         {
           name: "onDismiss",
           type: "() => void",
           description:
-            "Shows a close button. Remove the alert in this function.",
+            "Shows a close button and calls this function on press. Remove the alert here.",
         },
         {
           name: "dismissLabel",
           type: "string",
           default: '"Dismiss"',
-          description: "Accessible name of the close button.",
+          description: "Names the close button for screen readers.",
         },
         {
           name: "children",
           type: "ReactNode",
           description:
-            "The alert content. When title is set, children become the description.",
+            "The message. With title, it renders as the description.",
         },
         {
           name: "role",
           type: '"status" | "alert"',
           description:
-            'Screen readers do not announce an alert by default. For a message that appears after an action, set "status". For an urgent error, set "alert".',
+            'Adds a live region role. Use "status" after an action and "alert" for an urgent error; without a role, a new alert is not announced.',
         },
       ],
     }),
@@ -2094,19 +2166,20 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           name: "variant",
           type: '"neutral" | "accent" | "success" | "warning" | "error" | "outline"',
           default: '"neutral"',
-          description: "Sets the colors.",
+          description: "Sets the color and emphasis.",
         },
         {
           name: "dot",
           type: "boolean",
           default: "false",
-          description: "Shows a BadgeDot before the label.",
+          description:
+            "Shows a dot before the label. The dot is hidden from screen readers.",
         },
         {
           name: "children",
           type: "ReactNode",
           description:
-            "The badge content. Text stays on one line and truncates if space is short.",
+            "The label. It stays on one line and truncates when space is short.",
         },
       ],
     }),
@@ -2155,7 +2228,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: '"default" | "card"',
           default: '"default"',
           description:
-            "Selects the plain or card appearance. A card toggles the checkbox from anywhere inside it. CheckboxField takes the same prop.",
+            "Selects the plain or card appearance. A card toggles the checkbox from anywhere inside it, so keep its description plain text. CheckboxField takes the same prop.",
         },
       ],
     }),
@@ -2481,7 +2554,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           name: "label",
           type: "string",
           description:
-            "Shows a visible label above the meter. Without label, pass aria-label.",
+            "Shows a label above the meter. Without it, pass aria-label.",
         },
       ],
     }),
@@ -2494,7 +2567,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           name: "label",
           type: "string",
           description:
-            "Shows a visible label above the bar. Without label, pass aria-label.",
+            "Shows a label above the bar. Without it, pass aria-label.",
         },
       ],
     }),
@@ -2731,7 +2804,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: '"default" | "card"',
           default: '"default"',
           description:
-            "Selects the plain or card appearance. A card selects the option from anywhere inside it. RadioField takes the same prop.",
+            "Selects the plain or card appearance. A card selects the option from anywhere inside it, so keep its description plain text. RadioField takes the same prop.",
         },
       ],
     }),

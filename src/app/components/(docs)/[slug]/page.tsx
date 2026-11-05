@@ -52,6 +52,7 @@ import {
 } from "@/components/docs/component-page";
 import { DataTableColumnFiltersDemo } from "@/components/docs/data-table-column-filters-demo";
 import { DataTableDemo } from "@/components/docs/data-table-demo";
+import { DataTableFooterDemo } from "@/components/docs/data-table-footer-demo";
 import { DataTableResizableDemo } from "@/components/docs/data-table-resizable-demo";
 import { DateFieldDemo } from "@/components/docs/date-field-demo";
 import { DateFieldDisabledDemo } from "@/components/docs/date-field-disabled-demo";
@@ -87,6 +88,7 @@ import { FormServerErrorsDemo } from "@/components/docs/form-server-errors-demo"
 import { FormValidationDemo } from "@/components/docs/form-validation-demo";
 import { GridListDemo } from "@/components/docs/grid-list-demo";
 import { GridListDisabledDemo } from "@/components/docs/grid-list-disabled-demo";
+import { GridListSelectionDemo } from "@/components/docs/grid-list-selection-demo";
 import { InlineEditBasicDemo } from "@/components/docs/inline-edit-basic-demo";
 import { InlineEditDemo } from "@/components/docs/inline-edit-demo";
 import { InlineEditDisabledDemo } from "@/components/docs/inline-edit-disabled-demo";
@@ -100,10 +102,12 @@ import { LayoutMorphWidthDemo } from "@/components/docs/layout-morph-width-demo"
 import { LinkDemo } from "@/components/docs/link-demo";
 import { LinkExternalDemo } from "@/components/docs/link-external-demo";
 import { ListBoxDemo } from "@/components/docs/list-box-demo";
+import { ListBoxDisabledDemo } from "@/components/docs/list-box-disabled-demo";
 import { ListBoxMultipleDemo } from "@/components/docs/list-box-multiple-demo";
 import { MarqueeDemo } from "@/components/docs/marquee-demo";
 import { MarqueeReverseDemo } from "@/components/docs/marquee-reverse-demo";
 import { MarqueeSpeedDemo } from "@/components/docs/marquee-speed-demo";
+import { MarqueeStaticDemo } from "@/components/docs/marquee-static-demo";
 import { MeterBasicDemo } from "@/components/docs/meter-basic-demo";
 import { MeterDemo } from "@/components/docs/meter-demo";
 import { NumberFieldBasicDemo } from "@/components/docs/number-field-basic-demo";
@@ -116,6 +120,7 @@ import { NumberFieldSizesDemo } from "@/components/docs/number-field-sizes-demo"
 import { NumberFieldStackedDemo } from "@/components/docs/number-field-stacked-demo";
 import { PaginationBasicDemo } from "@/components/docs/pagination-basic-demo";
 import { PaginationDemo } from "@/components/docs/pagination-demo";
+import { PaginationEllipsisDemo } from "@/components/docs/pagination-ellipsis-demo";
 import { PaginationSizesDemo } from "@/components/docs/pagination-sizes-demo";
 import { PasswordStrengthMeterDemo } from "@/components/docs/password-strength-meter-demo";
 import { PasswordStrengthMeterFieldDemo } from "@/components/docs/password-strength-meter-field-demo";
@@ -124,9 +129,11 @@ import { PopoverFormDemo } from "@/components/docs/popover-form-demo";
 import { PopoverPlacementDemo } from "@/components/docs/popover-placement-demo";
 import { PopoverPreviewDemo } from "@/components/docs/popover-preview-demo";
 import { PresenceDemo } from "@/components/docs/presence-demo";
+import { PresenceFocusDemo } from "@/components/docs/presence-focus-demo";
 import { PresenceInlineDemo } from "@/components/docs/presence-inline-demo";
 import { PresenceListBasicDemo } from "@/components/docs/presence-list-basic-demo";
 import { PresenceListDemo } from "@/components/docs/presence-list-demo";
+import { PresenceListRemoveDemo } from "@/components/docs/presence-list-remove-demo";
 import { ProgressBarBasicDemo } from "@/components/docs/progress-bar-basic-demo";
 import { ProgressBarDemo } from "@/components/docs/progress-bar-demo";
 import { ProgressRingBasicDemo } from "@/components/docs/progress-ring-basic-demo";
@@ -200,6 +207,7 @@ import { TextScrambleDemo } from "@/components/docs/text-scramble-demo";
 import { TextScrambleDurationDemo } from "@/components/docs/text-scramble-duration-demo";
 import { TextSwapButtonDemo } from "@/components/docs/text-swap-button-demo";
 import { TextSwapDemo } from "@/components/docs/text-swap-demo";
+import { TextSwapInlineDemo } from "@/components/docs/text-swap-inline-demo";
 import { TimeField24HourDemo } from "@/components/docs/time-field-24-hour-demo";
 import { TimeFieldDemo } from "@/components/docs/time-field-demo";
 import { TimeFieldDisabledDemo } from "@/components/docs/time-field-disabled-demo";
@@ -231,7 +239,10 @@ import { TreeDragDemo } from "@/components/docs/tree-drag-demo";
 import { TreeSectionsDemo } from "@/components/docs/tree-sections-demo";
 import { TreeSelectionDemo } from "@/components/docs/tree-selection-demo";
 import { componentDescription } from "@/lib/catalog";
-import { getComponentPageData } from "@/lib/component-examples";
+import {
+  getComponentPageData,
+  getComponentUsage,
+} from "@/lib/component-examples";
 import { notFoundMetadata, pageMetadata } from "@/lib/seo";
 
 const entries: {
@@ -652,9 +663,9 @@ const examplePreviews: Record<string, ReactNode[]> = {
   ],
   card: [
     <CardActionDemo key="preview-1" />,
-    <CardDemo key="preview-2" />,
-    <CardMediaDemo key="preview-3" />,
-    <CardLinkDemo key="preview-4" />,
+    <CardMediaDemo key="preview-2" />,
+    <CardLinkDemo key="preview-3" />,
+    <CardDemo key="preview-4" />,
   ],
   "description-list": [<DescriptionListComponentsDemo key="preview-1" />],
   "kbd-code": [
@@ -671,16 +682,22 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <StatGroupDemo key="preview-2" />,
     <StatLiveDemo key="preview-3" />,
   ],
-  "text-swap": [<TextSwapButtonDemo key="preview-1" />],
+  "text-swap": [
+    <TextSwapButtonDemo key="preview-1" />,
+    <TextSwapInlineDemo key="preview-2" />,
+  ],
   "text-reveal": [
     <TextRevealCharactersDemo key="preview-1" />,
     <TextRevealDemo key="preview-2" />,
   ],
   "text-scramble": [
-    <TextScrambleDemo key="preview-1" />,
-    <TextScrambleDurationDemo key="preview-2" />,
+    <TextScrambleDurationDemo key="preview-1" />,
+    <TextScrambleDemo key="preview-2" />,
   ],
-  presence: [<PresenceInlineDemo key="preview-1" />],
+  presence: [
+    <PresenceInlineDemo key="preview-1" />,
+    <PresenceFocusDemo key="preview-2" />,
+  ],
   "stagger-group": [
     <StaggerGroupDemo key="preview-1" />,
     <StaggerGroupTimingDemo key="preview-2" />,
@@ -692,6 +709,7 @@ const examplePreviews: Record<string, ReactNode[]> = {
   marquee: [
     <MarqueeReverseDemo key="preview-1" />,
     <MarqueeSpeedDemo key="preview-2" />,
+    <MarqueeStaticDemo key="preview-3" />,
   ],
   "button-group": [
     <ButtonGroupOrientationsDemo key="preview-1" />,
@@ -740,6 +758,7 @@ const examplePreviews: Record<string, ReactNode[]> = {
   "data-table": [
     <DataTableColumnFiltersDemo key="preview-1" />,
     <DataTableResizableDemo key="preview-2" />,
+    <DataTableFooterDemo key="preview-3" />,
   ],
   "password-strength-meter": [
     <PasswordStrengthMeterFieldDemo key="preview-1" />,
@@ -764,9 +783,15 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <FormValidationDemo key="preview-1" />,
     <FormServerErrorsDemo key="preview-2" />,
   ],
-  "grid-list": [<GridListDisabledDemo key="preview-1" />],
+  "grid-list": [
+    <GridListSelectionDemo key="preview-1" />,
+    <GridListDisabledDemo key="preview-2" />,
+  ],
   link: [<LinkExternalDemo key="preview-1" />],
-  "list-box": [<ListBoxMultipleDemo key="preview-1" />],
+  "list-box": [
+    <ListBoxMultipleDemo key="preview-1" />,
+    <ListBoxDisabledDemo key="preview-2" />,
+  ],
   meter: [<MeterDemo key="preview-1" />],
   "number-field": [
     <NumberFieldLimitsDemo key="preview-1" />,
@@ -789,6 +814,7 @@ const examplePreviews: Record<string, ReactNode[]> = {
   pagination: [
     <PaginationDemo key="preview-1" />,
     <PaginationSizesDemo key="preview-2" />,
+    <PaginationEllipsisDemo key="preview-3" />,
   ],
   "tag-group": [
     <TagGroupSelectionDemo key="preview-1" />,
@@ -819,7 +845,10 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <ResponseErrorDemo key="preview-3" />,
     <ResponseSourcesDemo key="preview-4" />,
   ],
-  "presence-list": [<PresenceListDemo key="preview-1" />],
+  "presence-list": [
+    <PresenceListRemoveDemo key="preview-1" />,
+    <PresenceListDemo key="preview-2" />,
+  ],
   "progress-bar": [<ProgressBarDemo key="preview-1" />],
   "progress-ring": [
     <ProgressRingDemo key="preview-1" />,
@@ -912,6 +941,7 @@ export default async function NewComponentPage({
   const entry = entries.find((item) => item.slug === slug);
   if (!entry) notFound();
   const pageData = getComponentPageData(slug);
+  const usage = getComponentUsage(slug);
   const basic = basicPreviews[slug];
   return (
     <ComponentPage
@@ -919,6 +949,7 @@ export default async function NewComponentPage({
       description={componentDescription(slug)}
       preview={basic?.demo ?? entry.demo}
       previewSourcePath={`src/components/docs/${basic?.source ?? `${slug}-demo.tsx`}`}
+      usage={usage}
       examples={withExamplePreviews(
         pageData?.examples ?? [],
         examplePreviews[slug] ?? [],

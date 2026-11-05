@@ -4,13 +4,9 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LayoutMorph } from "@/components/ui/layout-morph";
 
-const captions = [
-  { title: "First light", detail: "The wall before the room wakes up." },
-  {
-    title: "After the rain",
-    detail:
-      "A longer note about what happens when color returns to the street after the storm passes through.",
-  },
+const updates = [
+  "Draft saved. Only you can see it.",
+  "Published. Subscribers get it in the next digest, and search engines index it within a day.",
 ];
 
 export function LayoutMorphDemo() {
@@ -19,23 +15,19 @@ export function LayoutMorphDemo() {
   return (
     <div className="grid w-full max-w-sm gap-3">
       <LayoutMorph
+        aria-live="polite"
         contentKey={index}
-        className="rounded-xl border border-border bg-card px-5 py-4 shadow-[var(--shadow-card)]"
+        className="rounded-xl border border-border bg-card px-5 py-4 text-sm leading-6 shadow-[var(--shadow-card)]"
       >
-        <p className="text-xl font-semibold tracking-tight">
-          {captions[index].title}
-        </p>
-        <p className="mt-2 text-sm leading-6 text-muted-foreground">
-          {captions[index].detail}
-        </p>
+        {updates[index]}
       </LayoutMorph>
       <div>
         <Button
           size="sm"
           variant="secondary"
-          onPress={() => setIndex((value) => (value + 1) % captions.length)}
+          onPress={() => setIndex((value) => (value + 1) % updates.length)}
         >
-          Next caption
+          {index === 0 ? "Publish" : "Edit draft"}
         </Button>
       </div>
     </div>

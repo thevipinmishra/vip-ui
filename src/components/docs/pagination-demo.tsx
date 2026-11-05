@@ -10,7 +10,17 @@ import {
   PaginationList,
 } from "@/components/ui/pagination";
 
-const items = Array.from({ length: 9 }, (_, index) => `Item ${index + 1}`);
+const projects = [
+  "Atlas brand refresh",
+  "Beacon onboarding",
+  "Cascade campaign",
+  "Drift design system",
+  "Ember editorial",
+  "Field notes",
+  "Glacier microsite",
+  "Harbor handbook",
+  "Iris identity",
+];
 
 function subscribe(callback: () => void) {
   window.addEventListener("popstate", callback);
@@ -39,9 +49,9 @@ export function PaginationDemo() {
     <RouterProvider navigate={navigate}>
       <div className="grid w-full max-w-md gap-5">
         <ul className="divide-y divide-border rounded-lg border border-border bg-card px-4 text-sm shadow-[var(--shadow-card)]">
-          {items.slice((page - 1) * 3, page * 3).map((item) => (
-            <li className="flex min-h-12 items-center" key={item}>
-              {item}
+          {projects.slice((page - 1) * 3, page * 3).map((project) => (
+            <li className="flex min-h-12 items-center" key={project}>
+              {project}
             </li>
           ))}
         </ul>

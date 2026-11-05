@@ -1,27 +1,25 @@
-"use client";
-
 import { Marquee } from "@/components/ui/marquee";
 
-const disciplines = [
-  "Typography",
-  "Photography",
-  "Editorial",
-  "Illustration",
-  "Motion",
+const updates = [
+  "Faster exports are live",
+  "New usage dashboard",
+  "Team roles shipped",
+  "Search now covers comments",
 ];
 
 export function MarqueeReverseDemo() {
   return (
-    <Marquee reverse speed={60} className="w-full">
-      {disciplines.map((discipline, index) => (
+    <Marquee reverse speed={40} className="w-full">
+      {updates.map((update) => (
         <span
-          key={discipline}
-          className="inline-flex items-center gap-3 whitespace-nowrap rounded-xl border border-border bg-card px-4 py-3 text-sm font-medium shadow-[var(--shadow-card)]"
+          key={update}
+          className="inline-flex items-center gap-2 whitespace-nowrap text-sm text-muted-foreground"
         >
-          <span aria-hidden="true" className="font-mono text-xs text-primary">
-            0{index + 1}
-          </span>
-          {discipline}
+          <span
+            aria-hidden="true"
+            className="size-1.5 rounded-full bg-primary"
+          />
+          {update}
         </span>
       ))}
     </Marquee>

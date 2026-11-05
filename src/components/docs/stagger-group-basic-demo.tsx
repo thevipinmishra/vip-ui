@@ -1,41 +1,29 @@
-"use client";
-
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { StaggerGroup, StaggerItem } from "@/components/ui/stagger-group";
 
-const words = ["Type", "Form", "Light"];
+const tasks = ["Write the brief", "Choose the typefaces", "Send the proofs"];
 
 export function StaggerGroupBasicDemo() {
-  const [replay, setReplay] = useState(0);
-
   return (
-    <div className="grid w-full max-w-md gap-4">
-      <StaggerGroup key={replay} className="grid grid-cols-3 gap-2">
-        {words.map((word) => (
-          <StaggerItem
-            key={word}
-            className="grid min-h-32 min-w-0 content-between rounded-xl border border-border bg-card p-3 shadow-[var(--shadow-card)] sm:p-4"
-          >
-            <span
-              aria-hidden="true"
-              className="h-1 w-7 rounded-full bg-primary"
-            />
-            <span className="text-lg font-semibold tracking-tight [overflow-wrap:anywhere] sm:text-xl">
-              {word}
-            </span>
-          </StaggerItem>
-        ))}
-      </StaggerGroup>
-      <div>
-        <Button
-          size="sm"
-          variant="secondary"
-          onPress={() => setReplay((value) => value + 1)}
+    <StaggerGroup
+      as="ol"
+      aria-label="Project tasks"
+      className="w-full max-w-sm divide-y divide-border rounded-xl border border-border bg-card shadow-[var(--shadow-card)]"
+    >
+      {tasks.map((task, index) => (
+        <StaggerItem
+          as="li"
+          key={task}
+          className="flex min-w-0 items-center gap-3 px-4 py-3 text-sm"
         >
-          Replay
-        </Button>
-      </div>
-    </div>
+          <span
+            aria-hidden="true"
+            className="font-mono text-xs text-muted-foreground"
+          >
+            0{index + 1}
+          </span>
+          <span className="min-w-0 [overflow-wrap:anywhere]">{task}</span>
+        </StaggerItem>
+      ))}
+    </StaggerGroup>
   );
 }

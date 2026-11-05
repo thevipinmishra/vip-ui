@@ -1,5 +1,3 @@
-"use client";
-
 import { Marquee } from "@/components/ui/marquee";
 
 const tags = ["Serif", "Grotesk", "Mono", "Display", "Script", "Slab"];

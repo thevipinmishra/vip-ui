@@ -1,47 +1,41 @@
 "use client";
 
-import { ArrowCounterClockwiseIcon, CheckIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { PresenceList } from "@/components/ui/presence-list";
 
 const tasks = [
-  { id: "copy", title: "Review copy" },
-  { id: "icons", title: "Check icons" },
+  "Review the onboarding copy",
+  "Check the empty-state icons",
+  "Publish the release note",
 ];
 
 export function PresenceListBasicDemo() {
   const [items, setItems] = useState(tasks);
 
+  const advance = () =>
+    setItems((current) => (current.length ? current.slice(1) : tasks));
+
   return (
-    <div className="grid w-full max-w-sm gap-2">
-      <PresenceList items={items} getKey={(item) => item.id} aria-label="Tasks">
-        {(item) => (
-          <span className="flex items-center gap-3 rounded-xl border border-border bg-card px-3 py-2.5 text-sm shadow-[var(--shadow-card)]">
-            <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-accent font-mono text-xs font-semibold text-accent-foreground">
-              {String(tasks.indexOf(item) + 1).padStart(2, "0")}
-            </span>
-            <span className="min-w-0 font-medium [overflow-wrap:anywhere]">
-              {item.title}
-            </span>
+    <div className="flex w-full max-w-sm flex-col items-start gap-3">
+      <PresenceList
+        items={items}
+        getKey={(task) => task}
+        aria-label="Release checklist"
+        className="w-full"
+      >
+        {(task) => (
+          <span className="block rounded-lg border border-border bg-card px-3 py-2.5 text-sm">
+            {task}
           </span>
         )}
       </PresenceList>
-      <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="flex w-full items-center justify-between gap-3">
         <output aria-live="polite" className="text-sm text-muted-foreground">
           {items.length ? `${items.length} remaining` : "All done"}
         </output>
-        <Button
-          variant="secondary"
-          size="sm"
-          onPress={() => setItems((current) => (current.length ? [] : tasks))}
-        >
-          {items.length ? (
-            <CheckIcon aria-hidden="true" />
-          ) : (
-            <ArrowCounterClockwiseIcon aria-hidden="true" />
-          )}
-          {items.length ? "Complete tasks" : "Restore tasks"}
+        <Button size="sm" variant="secondary" onPress={advance}>
+          {items.length ? "Complete next" : "Restore checklist"}
         </Button>
       </div>
     </div>

@@ -4,12 +4,13 @@ import {
 } from "@/components/docs/component-page";
 import { ContextMenuDemo } from "@/components/docs/context-menu-demo";
 import { ContextMenuGroupedDemo } from "@/components/docs/context-menu-grouped-demo";
-import { componentPageData } from "@/lib/component-examples";
+import { componentPageData, getComponentUsage } from "@/lib/component-examples";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
   title: "Context menu",
-  description: `${componentPageData["context-menu"].description} Examples cover grouped actions, with installation and the full API reference.`,
+  description:
+    "Opens actions for an item on right-click, long press, or keyboard. Examples cover grouped actions.",
   path: "/components/context-menu",
 });
 
@@ -21,6 +22,7 @@ export default function ContextMenuPage() {
       description={page.description}
       preview={<ContextMenuDemo />}
       previewSourcePath={page.usage}
+      usage={getComponentUsage("context-menu")}
       examples={withExamplePreviews(page.examples, [
         <ContextMenuGroupedDemo key="example-1" />,
       ])}

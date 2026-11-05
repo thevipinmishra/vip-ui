@@ -45,6 +45,7 @@ export function LayoutMorphViewsDemo() {
         </ToggleButton>
       </ToggleButtonGroup>
       <LayoutMorph
+        aria-live="polite"
         contentKey={plan}
         className="rounded-xl border border-border bg-card px-4 py-3 shadow-[var(--shadow-card)]"
       >

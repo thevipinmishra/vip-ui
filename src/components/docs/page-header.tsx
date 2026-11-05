@@ -2,7 +2,7 @@ import type { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
 
 const pageTitleSize =
-  "text-[clamp(2rem,1.5rem+2vw,3rem)] leading-[1.1] tracking-[-0.04em] sm:tracking-[-0.05em]";
+  "text-[clamp(1.75rem,1.35rem+1.35vw,2.5rem)] leading-[1.15] tracking-[-0.035em] sm:tracking-[-0.045em]";
 
 export const pageTitleClass = `font-semibold text-balance ${pageTitleSize}`;
 
@@ -11,7 +11,7 @@ export const sectionTitleClass =
 
 const headingSizes = {
   default: pageTitleSize,
-  lg: "text-[clamp(2.25rem,1.5rem+3.5vw,4.25rem)] leading-[1.05] tracking-[-0.045em] sm:tracking-[-0.06em]",
+  lg: "text-[clamp(2.125rem,1.4rem+2.35vw,3.25rem)] leading-[1.08] tracking-[-0.04em] sm:tracking-[-0.05em]",
 };
 
 export function PageHeader({ className, ...props }: ComponentProps<"header">) {

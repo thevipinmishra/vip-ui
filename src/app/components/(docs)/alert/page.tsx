@@ -6,12 +6,12 @@ import {
   ComponentPage,
   withExamplePreviews,
 } from "@/components/docs/component-page";
-import { componentPageData } from "@/lib/component-examples";
+import { componentPageData, getComponentUsage } from "@/lib/component-examples";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
   title: "Alert",
-  description: `${componentPageData.alert.description} Examples cover variants, an action, and dismissal, with focus handled as the alert leaves.`,
+  description: `${componentPageData.alert.description} Examples show every variant, an action, and dismissal that restores focus to the trigger.`,
   path: "/components/alert",
 });
 
@@ -23,6 +23,7 @@ export default function AlertPage() {
       description={page.description}
       preview={<AlertBasicDemo />}
       previewSourcePath={page.usage}
+      usage={getComponentUsage("alert")}
       examples={withExamplePreviews(page.examples, [
         <AlertDemo key="variants" />,
         <AlertActionDemo key="action" />,

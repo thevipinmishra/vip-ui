@@ -5,6 +5,7 @@ import { componentApi } from "@/lib/component-api";
 import {
   type ComponentPageData,
   getComponentPageData,
+  getComponentUsage,
 } from "@/lib/component-examples";
 import { buildComponentMarkdown } from "@/lib/component-markdown";
 import {
@@ -60,13 +61,19 @@ export async function GET(
 
   const registryItem = await readRegistryItem(slug);
   const pageData = getComponentPageData(slug);
+  const pageUsage = getComponentUsage(slug);
   const usageFilename = pageData?.usage ?? (await findUsageFile(slug));
-  const usage = usageFilename
+  const usage = pageUsage
     ? {
-        code: await readDemoSource(usageFilename),
-        filename: path.basename(usageFilename),
+        code: pageUsage.code,
+        filename: pageUsage.filename ?? `${slug}-usage.tsx`,
       }
-    : undefined;
+    : usageFilename
+      ? {
+          code: await readDemoSource(usageFilename),
+          filename: path.basename(usageFilename),
+        }
+      : undefined;
 
   const markdown = buildComponentMarkdown({
     slug,
