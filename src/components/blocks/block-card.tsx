@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { PreviewFrame } from "@/components/docs/preview-frame";
 import { Button } from "@/components/ui/button";
 import { ButtonLink } from "@/components/ui/button-link";
+import { Spinner } from "@/components/ui/spinner";
 import type { Block } from "@/lib/blocks";
 import { cn } from "@/lib/utils";
 import { useBlockPreview } from "./block-preview";
@@ -16,11 +17,42 @@ import { useBlockPreview } from "./block-preview";
 const frameWidth = 1024;
 const frameHeight = 640;
 
+// Mounting several preview documents at once competes with the gallery for
+// main-thread time. Queue them during idle periods so the page stays smooth.
+const mounts: { run: () => void; cancelled: boolean }[] = [];
+let flushing = false;
+
+function whenIdle(callback: () => void) {
+  if (typeof window.requestIdleCallback === "function")
+    window.requestIdleCallback(callback, { timeout: 300 });
+  else window.setTimeout(callback, 16);
+}
+
+function flushMounts() {
+  const entry = mounts.shift();
+  if (entry && !entry.cancelled) entry.run();
+  if (mounts.length) whenIdle(flushMounts);
+  else flushing = false;
+}
+
+function queueMount(run: () => void) {
+  const entry = { run, cancelled: false };
+  mounts.push(entry);
+  if (!flushing) {
+    flushing = true;
+    whenIdle(flushMounts);
+  }
+  return () => {
+    entry.cancelled = true;
+  };
+}
+
 export function BlockCard({ block }: { block: Block }) {
   const preview = useBlockPreview();
   const stageRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0);
-  const [near, setNear] = useState(false);
+  const [inRange, setInRange] = useState(false);
+  const [shouldMount, setShouldMount] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const src = `/blocks/${block.name}`;
 
@@ -30,21 +62,26 @@ export function BlockCard({ block }: { block: Block }) {
     const resize = new ResizeObserver(([entry]) =>
       setScale(entry.contentRect.width / frameWidth),
     );
-    const reveal = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        setNear(true);
-        reveal.disconnect();
-      },
-      { rootMargin: "320px 0px" },
+    const range = new IntersectionObserver(
+      ([entry]) => setInRange(entry.isIntersecting),
+      { rootMargin: "800px 0px" },
     );
     resize.observe(stage);
-    reveal.observe(stage);
+    range.observe(stage);
     return () => {
       resize.disconnect();
-      reveal.disconnect();
+      range.disconnect();
     };
   }, []);
+
+  useEffect(() => {
+    if (!inRange) {
+      setShouldMount(false);
+      setLoaded(false);
+      return;
+    }
+    return queueMount(() => setShouldMount(true));
+  }, [inRange]);
 
   return (
     <article className="group relative isolate flex w-full min-w-0 flex-col rounded-2xl bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70 outline-offset-2 outline-transparent transition-[box-shadow,outline-color] duration-300 ease-out-quint hover:shadow-[var(--shadow-float)] has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-ring has-[button:focus-visible]:outline-2 has-[button:focus-visible]:outline-ring">
@@ -54,9 +91,17 @@ export function BlockCard({ block }: { block: Block }) {
       >
         <div inert aria-hidden="true" className="absolute inset-0">
           {!loaded && (
-            <div className="absolute inset-0 animate-pulse bg-muted/60 motion-reduce:animate-none" />
+            <div className="absolute inset-0 grid place-items-center bg-muted/50">
+              {shouldMount && (
+                <Spinner
+                  size="sm"
+                  decorative
+                  className="text-muted-foreground"
+                />
+              )}
+            </div>
           )}
-          {near && scale > 0 && (
+          {shouldMount && scale > 0 && (
             <div
               className={cn(
                 "absolute start-0 top-0 origin-top-left transition-opacity duration-500 ease-out-quint rtl:origin-top-right",

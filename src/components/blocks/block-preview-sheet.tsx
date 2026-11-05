@@ -15,6 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Sheet, SheetClose, SheetTitle } from "@/components/ui/sheet";
+import { Spinner } from "@/components/ui/spinner";
 import { Tab, TabList, TabPanel, Tabs } from "@/components/ui/tabs";
 import { ToggleButton } from "@/components/ui/toggle-button";
 import { ToggleButtonGroup } from "@/components/ui/toggle-button-group";
@@ -69,6 +70,7 @@ function PreviewContent({
   // Skip the preview iframe until Preview is shown, then keep it mounted so
   // switching tabs never reloads the block.
   const [hasPreview, setHasPreview] = useState(initialView === "preview");
+  const [frameLoaded, setFrameLoaded] = useState(false);
   const frameRef = useRef<PreviewFrameHandle>(null);
   const current =
     viewports.find((item) => item.id === viewport) ?? viewports[0];
@@ -134,7 +136,10 @@ function PreviewContent({
                 size="xs"
                 iconOnly
                 aria-label="Reload preview"
-                onPress={() => frameRef.current?.reload()}
+                onPress={() => {
+                  setFrameLoaded(false);
+                  frameRef.current?.reload();
+                }}
               >
                 <ArrowClockwiseIcon size={14} aria-hidden="true" />
               </Button>
@@ -172,12 +177,24 @@ function PreviewContent({
               )}
               style={{ width: current.width ?? "100%", maxWidth: "100%" }}
             >
+              {!frameLoaded && (
+                <div
+                  role="status"
+                  className="pointer-events-none absolute inset-0 z-10 grid place-items-center bg-background"
+                >
+                  <span className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Spinner size="sm" decorative />
+                    Loading preview
+                  </span>
+                </div>
+              )}
               <PreviewFrame
                 ref={frameRef}
                 src={src}
                 title={`${block.title} preview`}
                 height="100%"
                 className="h-full"
+                onLoad={() => setFrameLoaded(true)}
               />
             </div>
           </div>

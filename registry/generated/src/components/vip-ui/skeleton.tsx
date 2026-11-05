@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import type { ComponentProps } from "react";
+import { type ComponentProps, useEffect, useState } from "react";
 import { loop } from "./motion";
 import { cn } from "./utils";
 
@@ -11,6 +11,8 @@ export function Skeleton({
   ...props
 }: ComponentProps<"div">) {
   const reduceMotion = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   return (
     <div
       {...props}
@@ -22,7 +24,7 @@ export function Skeleton({
       )}
     >
       {children}
-      {!reduceMotion && (
+      {mounted && !reduceMotion && (
         <motion.div
           className="pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-card/60 to-transparent rtl:-scale-x-100 dark:via-foreground/[0.06]"
           initial={{ transform: "translateX(-100%)" }}
