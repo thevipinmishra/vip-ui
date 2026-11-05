@@ -348,7 +348,7 @@ export async function GroupedComponentPage({
         parent={{ href: "/components", label: "Components" }}
       />
       {members.map((member, index) => {
-        const hideFirstHeading = index === 0 && member.name === name;
+        const hideFirstHeading = index === 0;
         return (
           <section
             key={member.slug}

@@ -77,7 +77,50 @@ export interface DocGroup {
   members: readonly string[];
 }
 
-export const docGroups = docGroupsJson.groups as readonly DocGroup[];
+const catalogItemsBySlug = new Map<
+  string,
+  { slug: string; name: string; description: string }
+>();
+const catalogCategoryBySlug = new Map<string, string>();
+for (const group of catalog.groups) {
+  for (const item of group.items) {
+    catalogItemsBySlug.set(item.slug, item);
+    catalogCategoryBySlug.set(item.slug, group.title);
+  }
+}
+
+export const docGroups: readonly DocGroup[] = docGroupsJson.groups.map(
+  (group) => {
+    const primary = catalogItemsBySlug.get(group.slug);
+    if (!primary) {
+      throw new Error(`src/lib/doc-groups.json has an unknown ${group.slug}`);
+    }
+    if (group.members[0] !== group.slug) {
+      throw new Error(
+        `src/lib/doc-groups.json must list ${group.slug} first in its own members`,
+      );
+    }
+    if (new Set(group.members).size !== group.members.length) {
+      throw new Error(
+        `src/lib/doc-groups.json repeats a member in ${group.slug}`,
+      );
+    }
+    const category = catalogCategoryBySlug.get(group.slug);
+    for (const member of group.members) {
+      if (!catalogItemsBySlug.has(member)) {
+        throw new Error(
+          `src/lib/doc-groups.json has an unknown ${member} in ${group.slug}`,
+        );
+      }
+      if (catalogCategoryBySlug.get(member) !== category) {
+        throw new Error(
+          `src/lib/doc-groups.json groups ${member} outside the ${category} category`,
+        );
+      }
+    }
+    return { ...group, name: primary.name };
+  },
+);
 
 const docGroupByMember = new Map<string, DocGroup>();
 for (const group of docGroups) {
@@ -153,19 +196,6 @@ export const catalogDocComponents: CatalogComponent[] =
 const componentsBySlug = new Map(
   catalogComponents.map((component) => [component.slug, component]),
 );
-
-for (const group of docGroups) {
-  if (!componentsBySlug.has(group.slug)) {
-    throw new Error(`src/lib/doc-groups.json has an unknown ${group.slug}`);
-  }
-  for (const member of group.members) {
-    if (!componentsBySlug.has(member)) {
-      throw new Error(
-        `src/lib/doc-groups.json has an unknown ${member} in ${group.slug}`,
-      );
-    }
-  }
-}
 
 export function getComponent(slug: string): CatalogComponent | undefined {
   return componentsBySlug.get(slug);

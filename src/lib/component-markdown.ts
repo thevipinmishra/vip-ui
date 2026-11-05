@@ -227,13 +227,16 @@ export function buildGroupedComponentMarkdown({
     );
   }
 
-  for (const member of members) {
-    lines.push("", `## ${member.name}`, "", member.description.trim());
+  members.forEach((member, index) => {
+    if (index > 0) {
+      lines.push("", `## ${member.name}`, "", member.description.trim());
+    }
+    const level = index === 0 ? 2 : 3;
     pushUsage(lines, member.usage);
-    pushInstallation(lines, site, member, 3);
-    pushExamples(lines, member.examples, 3);
-    pushApi(lines, member, 3);
-  }
+    pushInstallation(lines, site, member, level);
+    pushExamples(lines, member.examples, level);
+    pushApi(lines, member, level);
+  });
 
   return `${lines.join("\n").trimEnd()}\n`;
 }
