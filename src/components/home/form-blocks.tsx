@@ -4,21 +4,15 @@ import {
   type CalendarDate,
   getDayOfWeek,
   parseDate,
-  Time,
 } from "@internationalized/date";
 import { useState } from "react";
 import { Avatar, AvatarGroup } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { ComboBox } from "@/components/ui/combo-box";
 import { CopyButton } from "@/components/ui/copy-button";
-import {
-  Fieldset,
-  FieldsetDescription,
-  FieldsetLegend,
-} from "@/components/ui/fieldset";
 import { Form } from "@/components/ui/form";
 import { RangeCalendar } from "@/components/ui/range-calendar";
 import { RatingInput } from "@/components/ui/rating-input";
-import { Select } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import {
   Tag,
@@ -27,7 +21,6 @@ import {
   TagListView,
 } from "@/components/ui/tag-group";
 import { TextArea } from "@/components/ui/text-area";
-import { TimeField } from "@/components/ui/time-field";
 import { showToast } from "@/components/ui/toast";
 import {
   TagFieldValue,
@@ -74,29 +67,6 @@ export function NotificationsBlock() {
           </Switch>
         ))}
       </BlockBody>
-      <BlockFooter className="block border-t border-border/70 pt-4">
-        <Fieldset
-          aria-describedby="quiet-hours-help"
-          className="rounded-none bg-transparent p-0 shadow-none ring-0"
-        >
-          <FieldsetLegend className="px-0">Quiet hours</FieldsetLegend>
-          <FieldsetDescription id="quiet-hours-help" className="mb-3">
-            We keep messages until this period ends.
-          </FieldsetDescription>
-          <div className="grid grid-cols-2 gap-3">
-            <TimeField
-              label="Start"
-              hourCycle={24}
-              defaultValue={new Time(22, 0)}
-            />
-            <TimeField
-              label="End"
-              hourCycle={24}
-              defaultValue={new Time(7, 0)}
-            />
-          </div>
-        </Fieldset>
-      </BlockFooter>
     </Block>
   );
 }
@@ -234,7 +204,12 @@ export function TeamBlock() {
             Push Enter or type a comma after each address.
           </TokenFieldDescription>
         </TokenField>
-        <Select label="Role" defaultValue="editor" options={roles} />
+        <ComboBox
+          label="Role"
+          defaultValue="editor"
+          options={roles}
+          description="Choose what this person can change."
+        />
         <Button
           isDisabled={count === 0}
           onPress={() => {
@@ -248,7 +223,7 @@ export function TeamBlock() {
           Send {count === 1 ? "invite" : `${count} invites`}
         </Button>
       </BlockBody>
-      <BlockFooter className="flex-nowrap justify-between gap-3 border-t border-border/70 pt-4">
+      <BlockFooter className="flex-wrap justify-between gap-3 border-t border-border/70 pt-4">
         <div className="flex min-w-0 items-center gap-3">
           <AvatarGroup
             aria-label="Members"
@@ -258,7 +233,7 @@ export function TeamBlock() {
               <Avatar key={name} name={name} className="size-8 text-xs" />
             ))}
           </AvatarGroup>
-          <span className="truncate text-sm text-muted-foreground">
+          <span className="truncate text-xs text-muted-foreground">
             12 members
           </span>
         </div>

@@ -3,16 +3,14 @@
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 
+const hiddenOpacity = 0.8;
+
 export function HomeReveal({
   children,
   className,
-  delay = 0,
-  x = 0,
 }: {
   children: ReactNode;
   className?: string;
-  delay?: number;
-  x?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, {
@@ -39,15 +37,11 @@ export function HomeReveal({
       ref={ref}
       className={className}
       initial={false}
-      animate={{
-        opacity: waiting ? 0 : 1,
-        x: waiting ? x : 0,
-        y: waiting ? 16 : 0,
-      }}
+      animate={{ opacity: waiting ? hiddenOpacity : 1 }}
       transition={
         waiting || focused || reduceMotion
           ? { duration: 0 }
-          : { duration: 0.55, delay, ease: [0.23, 1, 0.32, 1] }
+          : { duration: 0.4, ease: [0.23, 1, 0.32, 1] }
       }
       onFocusCapture={() => setFocused(true)}
     >

@@ -78,7 +78,7 @@ export function FilesCard() {
 
   return (
     <Block
-      title="Files"
+      title="Project files"
       action={
         <Button
           variant="outline"

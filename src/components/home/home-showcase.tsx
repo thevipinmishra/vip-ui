@@ -1,5 +1,13 @@
 import { HomeReveal } from "@/components/docs/home-page-motion";
-import { ChatCard, DeployCard, UploadCard } from "./assistant-cards";
+import { ChatCard, UploadCard } from "./assistant-cards";
+import {
+  CreateProjectCard,
+  OrderCard,
+  ProjectCard,
+  SearchCard,
+  ShortcutsCard,
+  VisibilityCard,
+} from "./component-preview";
 import { InvoicesCard, RevenueCard } from "./data-cards";
 import {
   FeedbackBlock,
@@ -7,40 +15,68 @@ import {
   TeamBlock,
   TimeOffBlock,
 } from "./form-blocks";
-import { PlanCard } from "./plan-card";
-import {
-  ActivityCard,
-  ChecklistCard,
-  EditorCard,
-  FilesCard,
-} from "./project-cards";
+import { ChecklistCard } from "./project-cards";
+
+const columns = [
+  {
+    key: "one",
+    cards: [
+      { key: "visibility", node: <VisibilityCard /> },
+      { key: "project", node: <ProjectCard /> },
+      { key: "team", node: <TeamBlock /> },
+      { key: "invoices", node: <InvoicesCard /> },
+    ],
+  },
+  {
+    key: "two",
+    cards: [
+      { key: "checklist", node: <ChecklistCard /> },
+      { key: "search", node: <SearchCard /> },
+      { key: "create-project", node: <CreateProjectCard /> },
+      { key: "uploads", node: <UploadCard /> },
+    ],
+  },
+  {
+    key: "three",
+    cards: [
+      { key: "shortcuts", node: <ShortcutsCard /> },
+      { key: "notifications", node: <NotificationsBlock /> },
+      { key: "feedback", node: <FeedbackBlock /> },
+      { key: "revenue", node: <RevenueCard /> },
+    ],
+  },
+  {
+    key: "four",
+    cards: [
+      { key: "order", node: <OrderCard /> },
+      { key: "time-off", node: <TimeOffBlock /> },
+      { key: "chat", node: <ChatCard /> },
+    ],
+  },
+];
 
 export function HomeShowcase() {
   return (
-    <div className="grid min-w-0 items-start gap-4 md:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)_minmax(0,1fr)]">
-      <HomeReveal className="grid min-w-0 gap-4">
-        <ChatCard />
-        <NotificationsBlock />
-        <PlanCard />
-        <FeedbackBlock />
-      </HomeReveal>
-      <HomeReveal className="grid min-w-0 gap-4" delay={0.06}>
-        <RevenueCard />
-        <InvoicesCard />
-        <EditorCard />
-        <TimeOffBlock />
-        <ChecklistCard />
-      </HomeReveal>
-      <HomeReveal
-        className="grid min-w-0 items-start gap-4 md:col-span-2 md:max-lg:grid-cols-2 lg:col-span-1"
-        delay={0.12}
-      >
-        <DeployCard />
-        <FilesCard />
-        <UploadCard />
-        <TeamBlock />
-        <ActivityCard />
-      </HomeReveal>
+    <div
+      data-slot="home-showcase"
+      className="columns-1 gap-6 md:columns-2 xl:grid xl:grid-cols-4 xl:items-start"
+    >
+      {columns.map((column) => (
+        <div
+          key={column.key}
+          data-slot="home-showcase-column"
+          className="contents xl:grid xl:min-w-0 xl:content-start xl:gap-6"
+        >
+          {column.cards.map((card) => (
+            <HomeReveal
+              key={card.key}
+              className="mb-6 break-inside-avoid xl:mb-0"
+            >
+              {card.node}
+            </HomeReveal>
+          ))}
+        </div>
+      ))}
     </div>
   );
 }
