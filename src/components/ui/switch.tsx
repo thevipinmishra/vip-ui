@@ -71,7 +71,7 @@ export function SwitchField({
       data-slot="switch"
       className={composeRenderProps(className, (className) =>
         cn(
-          "group/switch-field relative inline-grid min-h-11 min-w-0 max-w-full grid-cols-[minmax(0,1fr)_auto] content-center items-center py-1 text-sm text-foreground disabled:opacity-50 has-[[data-slot=switch-control]~[data-slot=switch-label]]:grid-cols-[auto_minmax(0,1fr)]",
+          "group/switch-field relative inline-grid min-w-0 max-w-full grid-cols-[minmax(0,1fr)_auto] content-center items-center py-1 text-sm text-foreground disabled:opacity-50 has-[[data-slot=switch-control]~[data-slot=switch-label]]:grid-cols-[auto_minmax(0,1fr)]",
           className,
         ),
       )}
@@ -90,8 +90,9 @@ export function SwitchButton({
       className={composeRenderProps(className, (className) =>
         cn(
           // Spans the label and description rows so the control centers on
-          // both. The description stays outside the clickable area.
-          "group/switch col-span-full row-[1/span_2] grid min-h-11 cursor-pointer grid-cols-subgrid grid-rows-subgrid items-center disabled:cursor-default read-only:cursor-default",
+          // both. The description stays outside the clickable area, and the
+          // label row keeps a 44px hit area on touch screens.
+          "group/switch col-span-full row-[1/span_2] grid cursor-pointer grid-cols-subgrid grid-rows-subgrid items-center pointer-coarse:min-h-11 disabled:cursor-default read-only:cursor-default",
           className,
         ),
       )}

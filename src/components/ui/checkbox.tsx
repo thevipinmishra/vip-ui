@@ -20,7 +20,7 @@ import {
 } from "./field-styles";
 
 const checkboxFieldStyles = tv({
-  base: "relative inline-flex min-h-11 min-w-0 max-w-full flex-col justify-center gap-1 py-1 text-sm text-foreground disabled:opacity-50",
+  base: "relative inline-flex min-w-0 max-w-full flex-col justify-center gap-1 py-1 text-sm text-foreground disabled:opacity-50",
   variants: {
     variant: {
       default: "",
@@ -127,8 +127,9 @@ export function CheckboxButton({
       data-slot="checkbox-button"
       className={composeRenderProps(className, (className) =>
         cn(
-          // The label row keeps a 44px hit area. Descriptions stay outside it.
-          "group/checkbox flex min-h-11 min-w-0 cursor-pointer items-center gap-3 disabled:cursor-default read-only:cursor-default",
+          // The label row keeps a 44px hit area on touch screens. Descriptions
+          // stay outside it.
+          "group/checkbox flex min-w-0 cursor-pointer items-center gap-3 pointer-coarse:min-h-11 disabled:cursor-default read-only:cursor-default",
           // Card only: the card itself is the target, so include the padding
           // and description. Keep descriptions plain text in this variant.
           variant === "card" && "items-start after:absolute after:inset-0",
