@@ -198,9 +198,13 @@ export function ThemeStudio({
             />
           ))}
         </span>
-        <PageHeaderHeading size="lg">Themes</PageHeaderHeading>
+        <PageHeaderHeading size="lg">
+          A visual language of your own.
+        </PageHeaderHeading>
         <PageHeaderDescription>
-          Ten themes for vip/ui and shadcn/ui. Select one to preview it.
+          Explore thoughtfully curated themes for vip/ui and shadcn/ui. Preview
+          complete interfaces, find your visual direction, and bring a cohesive
+          design language to your application with a single installation.
         </PageHeaderDescription>
         <PageActions className="mt-2 justify-center">
           <a href="#install" className={buttonLinkStyles()}>

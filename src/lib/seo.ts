@@ -7,7 +7,7 @@ export const site = {
   title: "vip/ui — Accessible React components",
   tagline: "Accessible React components",
   description:
-    "Accessible React components built on React Aria, Tailwind CSS, and Motion. Copy them into your app with the shadcn CLI.",
+    "92 accessible React components built on Tailwind CSS v4, with React Aria for interaction. Add the source with the shadcn CLI, then edit it like your own code.",
   url: siteUrl(),
   repository: "https://github.com/thevipinmishra/vip-ui",
   author: {
