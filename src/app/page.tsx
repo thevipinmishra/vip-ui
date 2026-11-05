@@ -27,33 +27,43 @@ export default function Home() {
       <main id="main">
         <section
           aria-labelledby="hero-title"
-          className="site-container relative isolate pt-16 pb-10 sm:pt-24 sm:pb-14"
+          className="relative isolate pt-16 pb-10 sm:pt-24 sm:pb-14"
         >
-          <div className="max-w-4xl">
-            <h1
-              id="hero-title"
-              className="text-[clamp(2.25rem,1.5rem+3vw,3.75rem)] leading-[1.08] font-semibold tracking-[-0.035em] text-balance sm:tracking-[-0.045em]"
-            >
-              A better foundation for beautiful interfaces.
-            </h1>
-            <p className="mt-6 max-w-2xl text-base leading-7 text-pretty text-muted-foreground sm:text-lg sm:leading-8">
-              A thoughtfully engineered React component collection featuring
-              accessible interactions from React Aria, fluid animations with
-              Motion, and a flexible design system. Open, customizable, and made
-              to work your way.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <ButtonLink as={Link} href="/components/installation" size="md">
-                Get Started
-              </ButtonLink>
-              <ButtonLink
-                as={Link}
-                href="/components"
-                variant="outline"
-                size="md"
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 -top-24 -z-10 h-64 opacity-90 sm:h-80 dark:opacity-100"
+            style={{
+              background:
+                "radial-gradient(70% 130% at 18% 8%, color-mix(in oklab, var(--chart-2) 18%, transparent) 0%, transparent 72%), radial-gradient(58% 120% at 82% 16%, color-mix(in oklab, var(--chart-3) 8%, transparent) 0%, transparent 70%)",
+            }}
+          />
+          <div className="site-container">
+            <div className="max-w-4xl">
+              <h1
+                id="hero-title"
+                className="text-[clamp(2.25rem,1.5rem+3vw,3.75rem)] leading-[1.08] font-semibold tracking-[-0.035em] text-balance sm:tracking-[-0.045em]"
               >
-                View Components
-              </ButtonLink>
+                A better foundation for beautiful interfaces.
+              </h1>
+              <p className="mt-6 max-w-2xl text-base leading-7 text-pretty text-muted-foreground sm:text-lg sm:leading-8">
+                A thoughtfully engineered React component collection featuring
+                accessible interactions from React Aria, fluid animations with
+                Motion, and a flexible design system. Open, customizable, and
+                made to work your way.
+              </p>
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <ButtonLink as={Link} href="/components/installation" size="md">
+                  Get Started
+                </ButtonLink>
+                <ButtonLink
+                  as={Link}
+                  href="/components"
+                  variant="outline"
+                  size="md"
+                >
+                  View Components
+                </ButtonLink>
+              </div>
             </div>
           </div>
         </section>
