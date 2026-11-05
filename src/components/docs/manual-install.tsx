@@ -1,6 +1,5 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { componentInstallHref } from "@/lib/catalog";
 import {
   displayPath,
   fileName,
@@ -106,7 +105,10 @@ function RequiredFileRow({ file }: { file: RequiredFile }) {
       <div className="min-w-0 flex-1">
         {file.kind === "component" ? (
           <>
-            <Link href={componentInstallHref(file.slug)} className={linkClass}>
+            <Link
+              href={`/components/${file.slug}#installation`}
+              className={linkClass}
+            >
               {file.name}
             </Link>
             <p className="truncate font-mono text-xs text-muted-foreground">

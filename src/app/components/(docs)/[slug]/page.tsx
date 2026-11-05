@@ -51,7 +51,6 @@ import { CommandPaletteBasicDemo } from "@/components/docs/command-palette-basic
 import { CommandPaletteDemo } from "@/components/docs/command-palette-demo";
 import {
   ComponentPage,
-  GroupedComponentPage,
   withExamplePreviews,
 } from "@/components/docs/component-page";
 import { DataTableColumnFiltersDemo } from "@/components/docs/data-table-column-filters-demo";
@@ -250,11 +249,7 @@ import { TreeDemo } from "@/components/docs/tree-demo";
 import { TreeDragDemo } from "@/components/docs/tree-drag-demo";
 import { TreeSectionsDemo } from "@/components/docs/tree-sections-demo";
 import { TreeSelectionDemo } from "@/components/docs/tree-selection-demo";
-import {
-  canonicalDocSlug,
-  componentDescription,
-  getDocGroup,
-} from "@/lib/catalog";
+import { componentDescription } from "@/lib/catalog";
 import {
   getComponentPageData,
   getComponentUsage,
@@ -937,9 +932,7 @@ const examplePreviews: Record<string, ReactNode[]> = {
 };
 
 export function generateStaticParams() {
-  return entries
-    .filter(({ slug }) => canonicalDocSlug(slug) === slug)
-    .map(({ slug }) => ({ slug }));
+  return entries.map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -954,12 +947,9 @@ export async function generateMetadata({
         "This address does not match a component in the vip/ui catalog. Browse the catalog to find the right component.",
     });
   }
-  const group = getDocGroup(slug);
   return pageMetadata({
-    title: group?.name ?? entry.name,
-    description:
-      group?.description ??
-      `${componentDescription(slug)} See live examples, copy the source, and add it to your project with the shadcn CLI.`,
+    title: entry.name,
+    description: `${componentDescription(slug)} See live examples, copy the source, and add it to your project with the shadcn CLI.`,
     path: `/components/${slug}`,
     image: "file",
   });
@@ -971,40 +961,6 @@ export default async function NewComponentPage({
   const { slug } = await params;
   const entry = entries.find((item) => item.slug === slug);
   if (!entry) notFound();
-
-  const group = getDocGroup(slug);
-  if (group) {
-    const members = group.members.map((memberSlug) => {
-      const member = entries.find((item) => item.slug === memberSlug);
-      if (!member) {
-        throw new Error(
-          `The ${group.slug} docs group includes ${memberSlug}, but the page has no entry for it.`,
-        );
-      }
-      const pageData = getComponentPageData(memberSlug);
-      const basic = basicPreviews[memberSlug];
-      return {
-        slug: memberSlug,
-        name: member.name,
-        description: componentDescription(memberSlug),
-        preview: basic?.demo ?? member.demo,
-        previewSourcePath: `src/components/docs/${basic?.source ?? `${memberSlug}-demo.tsx`}`,
-        usage: getComponentUsage(memberSlug),
-        examples: withExamplePreviews(
-          pageData?.examples ?? [],
-          examplePreviews[memberSlug] ?? [],
-        ),
-      };
-    });
-    return (
-      <GroupedComponentPage
-        name={group.name}
-        description={group.description}
-        members={members}
-      />
-    );
-  }
-
   const pageData = getComponentPageData(slug);
   const usage = getComponentUsage(slug);
   const basic = basicPreviews[slug];

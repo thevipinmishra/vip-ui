@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
-import { componentName, getComponent, getDocGroup } from "./catalog";
+import { componentName, getComponent } from "./catalog";
 import { site } from "./seo";
 
 export const ogContentType = "image/png";
@@ -503,15 +503,13 @@ export async function renderOgCard(
 }
 
 export async function componentOgCard(slug: string): Promise<ImageResponse> {
-  const group = getDocGroup(slug);
   const component = getComponent(slug);
-  const name = group?.name ?? component?.name ?? componentName(slug);
+  const name = component?.name ?? componentName(slug);
 
   return renderOgCard({
     eyebrow: component?.group ?? "Component",
     title: name,
     description:
-      group?.description ??
       component?.description ??
       "An accessible React component built with React Aria, Tailwind CSS v4, and Motion.",
     snippet: `<${pascalCase(slug)} />`,

@@ -23,7 +23,7 @@ import {
   CommandPaletteSection,
 } from "@/components/ui/command-palette";
 import { Kbd, KbdGroup } from "@/components/ui/kbd-code";
-import { catalogComponents, componentHref } from "@/lib/catalog";
+import { catalogComponents } from "@/lib/catalog";
 import { docsGuides, type Guide } from "@/lib/navigation";
 
 const shortcutTakenByDemo = new Set(["/components/command-palette"]);
@@ -125,7 +125,7 @@ export function DocsSearch() {
             <CommandPaletteItem
               key={component.slug}
               textValue={`${component.name} ${component.group} ${component.description}`}
-              onAction={() => router.push(componentHref(component.slug))}
+              onAction={() => router.push(`/components/${component.slug}`)}
             >
               <span className="min-w-0 flex-1 truncate">{component.name}</span>
               <span className="shrink-0 text-xs text-muted-foreground">

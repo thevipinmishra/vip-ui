@@ -1,28 +1,5 @@
 import type { NextConfig } from "next";
 import blocksCatalog from "./src/lib/blocks.json";
-import docGroups from "./src/lib/doc-groups.json";
-
-const docAliasRedirects = docGroups.groups.flatMap((group) =>
-  group.members
-    .filter((member) => member !== group.slug)
-    .flatMap((member) => [
-      {
-        source: `/components/${member}`,
-        destination: `/components/${group.slug}#${member}`,
-        permanent: true,
-      },
-      {
-        source: `/components/${member}.md`,
-        destination: `/components/${group.slug}.md`,
-        permanent: true,
-      },
-      {
-        source: `/components/${member}/markdown`,
-        destination: `/components/${group.slug}/markdown`,
-        permanent: true,
-      },
-    ]),
-);
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
@@ -41,7 +18,6 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      ...docAliasRedirects,
       ...blocksCatalog.categories.map((category) => ({
         source: `/blocks/${category.slug}`,
         destination: `/blocks?category=${category.slug}`,

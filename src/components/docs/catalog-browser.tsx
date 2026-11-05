@@ -3,11 +3,7 @@
 import { ArrowRightIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 import { memo, useState } from "react";
-import {
-  type CatalogComponent,
-  catalogGroups,
-  componentHref,
-} from "@/lib/catalog";
+import { type CatalogComponent, catalogGroups } from "@/lib/catalog";
 import { CatalogPreview } from "./catalog-preview";
 
 const CatalogCard = memo(function CatalogCard({
@@ -28,7 +24,7 @@ const CatalogCard = memo(function CatalogCard({
     >
       <CatalogPreview slug={component.slug} active={hovered || focused} />
       <Link
-        href={componentHref(component.slug)}
+        href={`/components/${component.slug}`}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         className="group/link flex items-center gap-2 px-3 py-2.5 outline-none after:absolute after:inset-0 after:rounded-2xl after:outline-offset-4 after:outline-transparent after:transition-[outline-color,outline-offset] after:duration-200 after:ease-out-quint focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-ring motion-reduce:after:outline-offset-2"

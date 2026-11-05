@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { catalogDocComponents } from "@/lib/catalog";
+import { catalogComponents } from "@/lib/catalog";
 import { docsGuides } from "@/lib/navigation";
 import { siteUrl } from "@/lib/site-url";
 
@@ -40,7 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: route.changeFrequency,
       priority: route.priority,
     })),
-    ...catalogDocComponents.map((component) => ({
+    ...catalogComponents.map((component) => ({
       url: absolute(`/components/${component.slug}`),
       changeFrequency: "monthly" as const,
       priority: 0.7,

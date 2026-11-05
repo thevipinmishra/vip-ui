@@ -1,21 +1,13 @@
 import { access, readFile } from "node:fs/promises";
 import path from "node:path";
-import {
-  catalogDocComponents,
-  componentName,
-  getComponent,
-  getDocGroup,
-} from "@/lib/catalog";
+import { catalogComponents, componentName, getComponent } from "@/lib/catalog";
 import { componentApi } from "@/lib/component-api";
 import {
   type ComponentPageData,
   getComponentPageData,
   getComponentUsage,
 } from "@/lib/component-examples";
-import {
-  buildComponentMarkdown,
-  buildGroupedComponentMarkdown,
-} from "@/lib/component-markdown";
+import { buildComponentMarkdown } from "@/lib/component-markdown";
 import {
   manualInstallPlan,
   readRegistryItem,
@@ -28,7 +20,7 @@ export const dynamic = "force-static";
 const demoDirectory = path.join(process.cwd(), "src/components/docs");
 
 export function generateStaticParams() {
-  return catalogDocComponents.map((component) => ({ slug: component.slug }));
+  return catalogComponents.map((component) => ({ slug: component.slug }));
 }
 
 async function findUsageFile(slug: string): Promise<string | null> {
@@ -59,13 +51,19 @@ async function buildExamples(pageData: ComponentPageData) {
   );
 }
 
-async function buildUsage(
-  slug: string,
-  pageData: ComponentPageData | undefined,
+export async function GET(
+  _request: Request,
+  { params }: { params: Promise<{ slug: string }> },
 ) {
+  const { slug } = await params;
+  const component = getComponent(slug);
+  if (!component) return new Response("Not found", { status: 404 });
+
+  const registryItem = await readRegistryItem(slug);
+  const pageData = getComponentPageData(slug);
   const pageUsage = getComponentUsage(slug);
   const usageFilename = pageData?.usage ?? (await findUsageFile(slug));
-  return pageUsage
+  const usage = pageUsage
     ? {
         code: pageUsage.code,
         filename: pageUsage.filename ?? `${slug}-usage.tsx`,
@@ -76,56 +74,6 @@ async function buildUsage(
           filename: path.basename(usageFilename),
         }
       : undefined;
-}
-
-export async function GET(
-  _request: Request,
-  { params }: { params: Promise<{ slug: string }> },
-) {
-  const { slug } = await params;
-  const component = getComponent(slug);
-  if (!component) return new Response("Not found", { status: 404 });
-
-  const group = getDocGroup(slug);
-  if (group) {
-    const members = await Promise.all(
-      group.members.map(async (memberSlug) => {
-        const member = getComponent(memberSlug);
-        if (!member) {
-          throw new Error(
-            `The ${group.slug} docs group includes ${memberSlug}, but the catalog has no entry for it.`,
-          );
-        }
-        const pageData = getComponentPageData(memberSlug);
-        const registryItem = await readRegistryItem(memberSlug);
-        return {
-          slug: memberSlug,
-          name: member.name,
-          description: member.description,
-          manual: manualInstallPlan(registryItem, memberSlug),
-          cliUrl: registryUrl(memberSlug),
-          usage: await buildUsage(memberSlug, pageData),
-          api: componentApi[memberSlug],
-          examples: pageData ? await buildExamples(pageData) : undefined,
-          reactAria: member.reactAria,
-        };
-      }),
-    );
-    const markdown = buildGroupedComponentMarkdown({
-      slug,
-      name: group.name,
-      description: group.description,
-      site: siteUrl(),
-      members,
-    });
-    return new Response(markdown, {
-      headers: { "Content-Type": "text/markdown; charset=utf-8" },
-    });
-  }
-
-  const registryItem = await readRegistryItem(slug);
-  const pageData = getComponentPageData(slug);
-  const usage = await buildUsage(slug, pageData);
 
   const markdown = buildComponentMarkdown({
     slug,
