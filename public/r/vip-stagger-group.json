@@ -3,7 +3,7 @@
   "name": "vip-stagger-group",
   "type": "registry:ui",
   "title": "Stagger Group",
-  "description": "Animates a group of items into view one after another.",
+  "description": "Reveals a group of items one after another when it enters the viewport.",
   "dependencies": ["motion@^14.9.0"],
   "registryDependencies": [
     "https://vip-ui.dev/r/vip-motion.json",

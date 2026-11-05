@@ -3,7 +3,7 @@
   "name": "vip-progress-ring",
   "type": "registry:ui",
   "title": "Progress Ring",
-  "description": "Shows the progress of a task in a circular indicator.",
+  "description": "Shows how much of a task is complete in a ring.",
   "dependencies": [
     "motion@^14.9.0",
     "react-aria@^3.53.1",

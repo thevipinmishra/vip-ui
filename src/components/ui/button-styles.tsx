@@ -34,7 +34,7 @@ export const touchTarget =
   "relative pointer-coarse:after:absolute pointer-coarse:after:inset-x-0 pointer-coarse:after:top-1/2 pointer-coarse:after:h-[max(100%,var(--touch-target,2.75rem))] pointer-coarse:after:-translate-y-1/2";
 
 export const buttonStyles = tv({
-  base: "inline-flex min-w-0 max-w-full shrink-0 cursor-default items-center justify-center whitespace-nowrap rounded-md font-medium tracking-[-0.01em] outline-offset-4 outline-transparent transition-[color,background-color,border-color,box-shadow,scale,outline-color,outline-offset] duration-150 ease-out-quint disabled:cursor-default disabled:opacity-50 disabled:shadow-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  base: "inline-flex min-w-0 max-w-full shrink-0 cursor-default items-center justify-center whitespace-nowrap rounded-md font-medium tracking-[-0.01em] outline-offset-4 outline-transparent transition-[color,background-color,border-color,box-shadow,scale,outline-color,outline-offset] duration-150 ease-out-quint disabled:cursor-default disabled:opacity-50 disabled:shadow-none pending:cursor-default pending:opacity-50 pending:shadow-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 [&_svg]:pointer-events-none [&_svg]:shrink-0",
   variants: {
     variant: {
       default:

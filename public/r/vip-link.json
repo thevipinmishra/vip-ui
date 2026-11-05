@@ -3,7 +3,7 @@
   "name": "vip-link",
   "type": "registry:ui",
   "title": "Link",
-  "description": "Shows a link to another page or location.",
+  "description": "Navigates to another page or location.",
   "dependencies": ["react-aria-components@^1.22.1"],
   "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
   "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],

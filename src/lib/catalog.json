@@ -271,7 +271,7 @@
         {
           "slug": "link",
           "name": "Link",
-          "description": "Shows a link to another page or location."
+          "description": "Navigates to another page or location."
         },
         {
           "slug": "tabs",
@@ -317,7 +317,7 @@
         {
           "slug": "table",
           "name": "Table",
-          "description": "Shows data in rows and columns, with sortable headers."
+          "description": "Shows data in rows and columns, with sorting and resizing."
         },
         {
           "slug": "data-table",
@@ -328,7 +328,7 @@
     },
     {
       "title": "Feedback",
-      "description": "Status, progress, and loading states.",
+      "description": "Messages, status, progress, and loading states.",
       "items": [
         {
           "slug": "alert",
@@ -338,17 +338,17 @@
         {
           "slug": "badge",
           "name": "Badge",
-          "description": "Shows a short label, status, or count."
+          "description": "Labels an item with a short status or count."
         },
         {
           "slug": "progress-bar",
           "name": "Progress bar",
-          "description": "Shows the progress of a task in a horizontal bar."
+          "description": "Shows how much of a task is complete in a horizontal bar."
         },
         {
           "slug": "progress-ring",
           "name": "Progress ring",
-          "description": "Shows the progress of a task in a circular indicator."
+          "description": "Shows how much of a task is complete in a ring."
         },
         {
           "slug": "meter",
@@ -358,7 +358,7 @@
         {
           "slug": "stepper",
           "name": "Stepper",
-          "description": "Shows the current and completed steps in a sequence."
+          "description": "Shows the current step and the steps already complete."
         },
         {
           "slug": "spinner",
@@ -476,27 +476,27 @@
         {
           "slug": "text-swap",
           "name": "Text swap",
-          "description": "Animates text when its value changes."
+          "description": "Swaps text with a short fade when its value changes."
         },
         {
           "slug": "animated-number",
           "name": "Animated number",
-          "description": "Animates a number when its value changes."
+          "description": "Counts to a new number or slides the digits that change."
         },
         {
           "slug": "text-reveal",
           "name": "Text reveal",
-          "description": "Reveals text one word or one character at a time."
+          "description": "Reveals text word by word or character by character."
         },
         {
           "slug": "text-scramble",
           "name": "Text scramble",
-          "description": "Resolves text from scrambled characters when its value changes."
+          "description": "Scrambles characters and resolves them into new text when its value changes."
         },
         {
           "slug": "presence",
           "name": "Presence",
-          "description": "Animates content when it is shown or hidden."
+          "description": "Animates content in when it appears and out before it unmounts."
         },
         {
           "slug": "presence-list",
@@ -506,17 +506,17 @@
         {
           "slug": "stagger-group",
           "name": "Stagger group",
-          "description": "Animates a group of items into view one after another."
+          "description": "Reveals a group of items one after another when it enters the viewport."
         },
         {
           "slug": "layout-morph",
           "name": "Layout morph",
-          "description": "Animates the height of a container when its content changes."
+          "description": "Crossfades new content and animates the container to its new size."
         },
         {
           "slug": "marquee",
           "name": "Marquee",
-          "description": "Loops a strip of content, with a control to pause it."
+          "description": "Loops a row of content with a built-in pause control."
         }
       ]
     }

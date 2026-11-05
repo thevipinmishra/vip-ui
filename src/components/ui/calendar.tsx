@@ -9,7 +9,6 @@ import {
   useRef,
   useSyncExternalStore,
 } from "react";
-import { mergeRefs } from "react-aria/mergeRefs";
 import {
   Calendar as AriaCalendar,
   CalendarGridBody as AriaCalendarGridBody,
@@ -66,24 +65,26 @@ export function Calendar<T extends DateValue>({
       {children ?? (
         <CalendarMonths count={months}>
           {(offset) => (
-            <CalendarGrid
-              offset={offset ? { months: offset } : undefined}
-              className={calendarGridStyles}
-              weekdayStyle="short"
-            >
-              <CalendarGridHeader>
-                {(day) => (
-                  <CalendarHeaderCell className={calendarHeaderCellStyles}>
-                    {day}
-                  </CalendarHeaderCell>
-                )}
-              </CalendarGridHeader>
-              <CalendarGridBody>
-                {(date) => (
-                  <CalendarCell date={date} className={calendarCellClass} />
-                )}
-              </CalendarGridBody>
-            </CalendarGrid>
+            <CalendarGridFrame>
+              <CalendarGrid
+                offset={offset ? { months: offset } : undefined}
+                className={calendarGridStyles}
+                weekdayStyle="short"
+              >
+                <CalendarGridHeader>
+                  {(day) => (
+                    <CalendarHeaderCell className={calendarHeaderCellStyles}>
+                      {day}
+                    </CalendarHeaderCell>
+                  )}
+                </CalendarGridHeader>
+                <CalendarGridBody>
+                  {(date) => (
+                    <CalendarCell date={date} className={calendarCellClass} />
+                  )}
+                </CalendarGridBody>
+              </CalendarGrid>
+            </CalendarGridFrame>
           )}
         </CalendarMonths>
       )}
@@ -118,6 +119,16 @@ export function CalendarMonths({
           {children(offset)}
         </div>
       ))}
+    </div>
+  );
+}
+
+export function CalendarGridFrame({ children }: { children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useMonthSlide(ref, 0.75);
+  return (
+    <div ref={ref} data-slot="calendar-grid-frame" className="relative isolate">
+      {children}
     </div>
   );
 }
@@ -198,9 +209,7 @@ export function CalendarHeader({
 export function CalendarGridBody(
   props: CalendarGridBodyProps & React.RefAttributes<HTMLTableSectionElement>,
 ) {
-  const ref = useRef<HTMLTableSectionElement>(null);
-  useMonthSlide(ref, 0.75);
-  return <AriaCalendarGridBody {...props} ref={mergeRefs(ref, props.ref)} />;
+  return <AriaCalendarGridBody {...props} />;
 }
 
 const narrowQuery = "(max-width: 639px)";

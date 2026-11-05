@@ -200,15 +200,18 @@ export function RadioButton({
   className,
   ...props
 }: AriaRadioButtonProps & React.RefAttributes<HTMLLabelElement>) {
+  const variant = useContext(RadioVariantContext);
   return (
     <AriaRadioButton
       {...props}
       data-slot="radio-button"
       className={composeRenderProps(className, (className) =>
         cn(
-          // The ::after layer stretches the hit area over the whole field,
-          // so the description and card padding select the option too.
-          "group/radio flex min-w-0 cursor-pointer items-start gap-3 after:absolute after:inset-0 disabled:cursor-default read-only:cursor-default",
+          // The label row keeps a 44px hit area. Descriptions stay outside it.
+          "group/radio flex min-h-11 min-w-0 cursor-pointer items-center gap-3 disabled:cursor-default read-only:cursor-default",
+          // Card only: the card itself is the target, so include the padding
+          // and description. Keep descriptions plain text in this variant.
+          variant === "card" && "items-start after:absolute after:inset-0",
           className,
         ),
       )}

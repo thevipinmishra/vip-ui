@@ -3,7 +3,7 @@
   "name": "vip-badge",
   "type": "registry:ui",
   "title": "Badge",
-  "description": "Shows a short label, status, or count.",
+  "description": "Labels an item with a short status or count.",
   "dependencies": ["tailwind-variants@^4.0.1"],
   "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
   "cssVars": {

@@ -3,7 +3,7 @@
   "name": "vip-text-scramble",
   "type": "registry:ui",
   "title": "Text Scramble",
-  "description": "Resolves text from scrambled characters when its value changes.",
+  "description": "Scrambles characters and resolves them into new text when its value changes.",
   "dependencies": ["motion@^14.9.0"],
   "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
   "files": [
