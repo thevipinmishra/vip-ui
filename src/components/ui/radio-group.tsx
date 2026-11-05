@@ -28,7 +28,7 @@ import {
 } from "./field-styles";
 
 const radioFieldStyles = tv({
-  base: "relative flex min-h-11 min-w-0 flex-col justify-center gap-1 py-1 text-sm text-foreground disabled:opacity-50",
+  base: "relative flex min-w-0 flex-col justify-center gap-1 py-1 text-sm text-foreground disabled:opacity-50",
   variants: {
     variant: {
       default: "",
@@ -207,8 +207,9 @@ export function RadioButton({
       data-slot="radio-button"
       className={composeRenderProps(className, (className) =>
         cn(
-          // The label row keeps a 44px hit area. Descriptions stay outside it.
-          "group/radio flex min-h-11 min-w-0 cursor-pointer items-center gap-3 disabled:cursor-default read-only:cursor-default",
+          // The label row keeps a 44px hit area on touch screens. Descriptions
+          // stay outside it.
+          "group/radio flex min-w-0 cursor-pointer items-center gap-3 pointer-coarse:min-h-11 disabled:cursor-default read-only:cursor-default",
           // Card only: the card itself is the target, so include the padding
           // and description. Keep descriptions plain text in this variant.
           variant === "card" && "items-start after:absolute after:inset-0",
