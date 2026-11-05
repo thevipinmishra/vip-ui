@@ -22,6 +22,7 @@ export interface RegistryItem {
 const sharedFileSlugs = [
   "utils",
   "motion",
+  "effect-color",
   "size",
   "button-styles",
   "field-styles",

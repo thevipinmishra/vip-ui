@@ -44,6 +44,26 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/components/password-strength-meter",
+        destination: "/components/password-field",
+        permanent: true,
+      },
+      {
+        source: "/components/password-strength-meter.md",
+        destination: "/components/password-field.md",
+        permanent: true,
+      },
+      {
+        source: "/components/password-strength-meter/markdown",
+        destination: "/components/password-field/markdown",
+        permanent: true,
+      },
+      {
+        source: "/r/vip-password-strength-meter.json",
+        destination: "/r/vip-password-field.json",
+        permanent: true,
+      },
+      {
         source: "/license",
         destination:
           "https://github.com/thevipinmishra/vip-ui/blob/main/LICENSE",

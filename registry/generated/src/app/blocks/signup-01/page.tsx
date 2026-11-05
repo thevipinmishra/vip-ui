@@ -2,7 +2,7 @@ import { SignupForm } from "./signup-form";
 
 export const metadata = {
   title: "Sign up",
-  description: "A sign-up form with a password strength meter.",
+  description: "A sign-up form with account and team details.",
 };
 
 export default function SignupPage() {

@@ -13,7 +13,7 @@ const outputDirectory = path.join(root, "public/r");
 const sourceDirectory = path.join(root, "registry/generated");
 const libSources = new Map(
   await Promise.all(
-    ["utils", "motion"].map(async (name) => [
+    ["utils", "motion", "effect-color"].map(async (name) => [
       name,
       await readFile(path.join(root, `src/lib/${name}.ts`), "utf8"),
     ]),
@@ -66,7 +66,7 @@ const groupItems = {
 export function portableSource(source) {
   return source
     .replace(/\r\n/g, "\n")
-    .replace(/from "@\/lib\/(utils|motion)"/g, 'from "./$1"');
+    .replace(/from "@\/lib\/(utils|motion|effect-color)"/g, 'from "./$1"');
 }
 
 export function importsFrom(source) {

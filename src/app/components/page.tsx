@@ -75,8 +75,7 @@ export default async function ComponentsPage({
           <PageHeaderDescription>
             A thoughtfully designed collection of customizable React components,
             combining accessible interactions powered by React Aria with
-            purposeful motion. Explore examples, implementation details, and
-            APIs built for modern interfaces.
+            purposeful motion.
           </PageHeaderDescription>
           <PageActions className="mt-2 justify-center">
             <ButtonLink as={Link} href="/components/installation">

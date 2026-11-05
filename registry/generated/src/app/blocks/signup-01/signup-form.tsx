@@ -15,7 +15,6 @@ import { Checkbox } from "../../../components/vip-ui/checkbox";
 import { Form } from "../../../components/vip-ui/form";
 import { Link } from "../../../components/vip-ui/link";
 import { PasswordField } from "../../../components/vip-ui/password-field";
-import { PasswordStrengthMeter } from "../../../components/vip-ui/password-strength-meter";
 import { Select } from "../../../components/vip-ui/select";
 import { Spinner } from "../../../components/vip-ui/spinner";
 import { TextField } from "../../../components/vip-ui/text-field";
@@ -103,19 +102,16 @@ export function SignupForm() {
             placeholder="ada@company.com"
             isRequired
           />
-          <div className="grid gap-3">
-            <PasswordField
-              label="Password"
-              name="password"
-              autoComplete="new-password"
-              description="Use 12 or more characters. Mix letters with numbers or symbols."
-              value={password}
-              onChange={setPassword}
-              minLength={8}
-              isRequired
-            />
-            <PasswordStrengthMeter password={password} />
-          </div>
+          <PasswordField
+            label="Password"
+            name="password"
+            autoComplete="new-password"
+            description="Use 12 or more characters. Mix letters with numbers or symbols."
+            value={password}
+            onChange={setPassword}
+            minLength={12}
+            isRequired
+          />
           <Select
             label="Team size"
             name="team"

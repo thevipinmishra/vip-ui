@@ -15,7 +15,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Form } from "@/components/ui/form";
 import { Link } from "@/components/ui/link";
 import { PasswordField } from "@/components/ui/password-field";
-import { PasswordStrengthMeter } from "@/components/ui/password-strength-meter";
 import { Select } from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
 import { TextField } from "@/components/ui/text-field";
@@ -103,19 +102,16 @@ export function SignupForm() {
             placeholder="ada@company.com"
             isRequired
           />
-          <div className="grid gap-3">
-            <PasswordField
-              label="Password"
-              name="password"
-              autoComplete="new-password"
-              description="Use 12 or more characters. Mix letters with numbers or symbols."
-              value={password}
-              onChange={setPassword}
-              minLength={8}
-              isRequired
-            />
-            <PasswordStrengthMeter password={password} />
-          </div>
+          <PasswordField
+            label="Password"
+            name="password"
+            autoComplete="new-password"
+            description="Use 12 or more characters. Mix letters with numbers or symbols."
+            value={password}
+            onChange={setPassword}
+            minLength={12}
+            isRequired
+          />
           <Select
             label="Team size"
             name="team"

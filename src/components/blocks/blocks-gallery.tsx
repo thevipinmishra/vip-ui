@@ -18,7 +18,6 @@ import {
 } from "@/lib/blocks";
 import { BlockCard } from "./block-card";
 import { BlockPreviewProvider } from "./block-preview";
-import { BlocksNextSteps } from "./blocks-next-steps";
 
 const tabs = [
   { href: "/blocks", label: "All" },
@@ -70,8 +69,7 @@ export function BlocksGallery({ category }: { category: string | null }) {
           </PageHeaderHeading>
           <PageHeaderDescription>
             Carefully composed React UI blocks for dashboards, AI interfaces,
-            authentication, onboarding, commerce, and more. Ready to customize,
-            compose, and make your own.
+            authentication, onboarding, commerce, and more.
           </PageHeaderDescription>
           <PageActions className="mt-2 justify-center">
             <ButtonLink href="#gallery">Browse blocks</ButtonLink>
@@ -89,10 +87,6 @@ export function BlocksGallery({ category }: { category: string | null }) {
               {current ? <CategoryBlocks category={current} /> : <AllBlocks />}
             </BlockPreviewProvider>
           </div>
-        </div>
-
-        <div className="site-container pb-14">
-          <BlocksNextSteps />
         </div>
       </main>
       <SiteFooter />
