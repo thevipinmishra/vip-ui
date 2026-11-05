@@ -1,4 +1,5 @@
 import catalog from "./catalog.json";
+import docGroupsJson from "./doc-groups.json";
 
 const reactAriaDocs: Record<string, string> = {
   button: "https://react-aria.adobe.com/Button",
@@ -13,7 +14,6 @@ const reactAriaDocs: Record<string, string> = {
   "command-palette": "https://react-aria.adobe.com/Menu",
   "text-field": "https://react-aria.adobe.com/TextField",
   "password-field": "https://react-aria.adobe.com/TextField",
-  "password-strength-meter": "https://react-aria.adobe.com/Meter",
   "inline-edit": "https://react-aria.adobe.com/TextField",
   "input-group": "https://react-aria.adobe.com/Group",
   "text-area": "https://react-aria.adobe.com/TextField#textarea",
@@ -70,12 +70,45 @@ function reactAriaLink(href: string | undefined) {
   return href ? { name: new URL(href).pathname.slice(1), href } : undefined;
 }
 
+export interface DocGroup {
+  slug: string;
+  name: string;
+  description: string;
+  members: readonly string[];
+}
+
+export const docGroups = docGroupsJson.groups as readonly DocGroup[];
+
+const docGroupByMember = new Map<string, DocGroup>();
+for (const group of docGroups) {
+  for (const member of group.members) {
+    const existing = docGroupByMember.get(member);
+    if (existing) {
+      throw new Error(
+        `${member} belongs to both ${existing.slug} and ${group.slug}`,
+      );
+    }
+    docGroupByMember.set(member, group);
+  }
+}
+
+export function getDocGroup(slug: string): DocGroup | undefined {
+  return docGroupByMember.get(slug);
+}
+
+export function canonicalDocSlug(slug: string): string {
+  return getDocGroup(slug)?.slug ?? slug;
+}
+
 export interface CatalogComponent {
   slug: string;
   name: string;
   group: string;
   description: string;
   reactAria?: { name: string; href: string };
+  docSlug: string;
+  docName: string;
+  docAnchor?: string;
 }
 
 export interface CatalogGroup {
@@ -87,23 +120,76 @@ export interface CatalogGroup {
 export const catalogGroups: CatalogGroup[] = catalog.groups.map((group) => ({
   title: group.title,
   description: group.description,
-  components: group.items.map((item) => ({
-    ...item,
-    group: group.title,
-    reactAria: reactAriaLink(reactAriaDocs[item.slug]),
-  })),
+  components: group.items.map((item) => {
+    const docGroup = getDocGroup(item.slug);
+    const isCanonical = !docGroup || docGroup.slug === item.slug;
+    return {
+      ...item,
+      group: group.title,
+      reactAria: reactAriaLink(reactAriaDocs[item.slug]),
+      docSlug: docGroup?.slug ?? item.slug,
+      docName: docGroup?.name ?? item.name,
+      docAnchor: isCanonical ? undefined : item.slug,
+    };
+  }),
 }));
 
 export const catalogComponents: CatalogComponent[] = catalogGroups.flatMap(
   (group) => group.components,
 );
 
+export const catalogDocGroups: CatalogGroup[] = catalogGroups
+  .map((group) => ({
+    ...group,
+    components: group.components.filter(
+      (component) => component.docSlug === component.slug,
+    ),
+  }))
+  .filter((group) => group.components.length > 0);
+
+export const catalogDocComponents: CatalogComponent[] =
+  catalogDocGroups.flatMap((group) => group.components);
+
 const componentsBySlug = new Map(
   catalogComponents.map((component) => [component.slug, component]),
 );
 
+for (const group of docGroups) {
+  if (!componentsBySlug.has(group.slug)) {
+    throw new Error(`src/lib/doc-groups.json has an unknown ${group.slug}`);
+  }
+  for (const member of group.members) {
+    if (!componentsBySlug.has(member)) {
+      throw new Error(
+        `src/lib/doc-groups.json has an unknown ${member} in ${group.slug}`,
+      );
+    }
+  }
+}
+
 export function getComponent(slug: string): CatalogComponent | undefined {
   return componentsBySlug.get(slug);
+}
+
+export function componentHref(slug: string): string {
+  const component = componentsBySlug.get(slug);
+  if (!component) return `/components/${slug}`;
+  return component.docAnchor
+    ? `/components/${component.docSlug}#${component.docAnchor}`
+    : `/components/${component.docSlug}`;
+}
+
+export function componentInstallHref(slug: string): string {
+  const component = componentsBySlug.get(slug);
+  if (!component) return `/components/${slug}#installation`;
+  return getDocGroup(slug)
+    ? `/components/${component.docSlug}#${slug}-installation`
+    : `/components/${component.docSlug}#installation`;
+}
+
+export function componentMarkdownHref(slug: string): string {
+  const component = componentsBySlug.get(slug);
+  return `/components/${component?.docSlug ?? slug}.md`;
 }
 
 export function componentName(slug: string): string {
@@ -123,12 +209,13 @@ export function getNeighbors(slug: string): {
   previous?: CatalogComponent;
   next?: CatalogComponent;
 } {
-  const index = catalogComponents.findIndex(
-    (component) => component.slug === slug,
+  const canonical = canonicalDocSlug(slug);
+  const index = catalogDocComponents.findIndex(
+    (component) => component.slug === canonical,
   );
   if (index < 0) return {};
   return {
-    previous: catalogComponents[index - 1],
-    next: catalogComponents[index + 1],
+    previous: catalogDocComponents[index - 1],
+    next: catalogDocComponents[index + 1],
   };
 }

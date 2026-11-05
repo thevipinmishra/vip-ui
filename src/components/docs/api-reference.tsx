@@ -33,19 +33,22 @@ function TypeSignature({ type }: { type: string }) {
 export function ApiReference({
   parts,
   slug,
+  headingLevel = 3,
 }: {
   parts: readonly ApiPart[];
   slug: string;
+  headingLevel?: 3 | 4;
 }) {
   const headings = showsPartHeadings(parts, slug);
+  const Heading = headingLevel === 4 ? "h4" : "h3";
   return (
     <div className="space-y-8">
       {parts.map((part) => (
         <div key={part.name}>
           {headings && (
-            <h3 className="mb-3 font-mono text-sm font-semibold text-foreground">
+            <Heading className="mb-3 font-mono text-sm font-semibold text-foreground">
               {part.name}
-            </h3>
+            </Heading>
           )}
           {part.description && (
             <p className="mb-3 text-[13px] leading-5 text-muted-foreground">

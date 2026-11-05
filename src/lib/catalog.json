@@ -71,11 +71,6 @@
           "description": "Accepts a password, with a button to show or hide it."
         },
         {
-          "slug": "password-strength-meter",
-          "name": "Password strength meter",
-          "description": "Rates a password by its length and character mix."
-        },
-        {
           "slug": "inline-edit",
           "name": "Inline edit",
           "description": "Edits text in place and keeps the draft when the save fails."
@@ -517,6 +512,32 @@
           "slug": "marquee",
           "name": "Marquee",
           "description": "Loops a row of content with a built-in pause control."
+        }
+      ]
+    },
+    {
+      "title": "Backgrounds & effects",
+      "description": "Ambient backgrounds and visual effects for product UI.",
+      "items": [
+        {
+          "slug": "aurora",
+          "name": "Aurora",
+          "description": "Layers a soft, drifting gradient behind a hero, card, or section."
+        },
+        {
+          "slug": "dot-field",
+          "name": "Dot field",
+          "description": "Draws a dot grid that brightens around the pointer."
+        },
+        {
+          "slug": "orb",
+          "name": "Orb",
+          "description": "Shows a glowing orb for an AI agent's idle or thinking state."
+        },
+        {
+          "slug": "dither",
+          "name": "Dither",
+          "description": "Dithers a shape into a textured accent for panels and data."
         }
       ]
     }

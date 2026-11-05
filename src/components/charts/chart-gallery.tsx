@@ -19,7 +19,6 @@ import {
   chartCategories,
 } from "./catalog";
 import { ChartDocumentation } from "./chart-documentation";
-import { ChartNextSteps } from "./chart-next-steps";
 import { ChartSourceSheet } from "./chart-source-sheet";
 
 const tabs = chartCategories.map((category, index) => ({
@@ -100,7 +99,6 @@ export async function ChartGallery({
       </div>
 
       <div className="site-container">
-        <ChartNextSteps />
         <ChartDocumentation />
       </div>
     </>

@@ -83,12 +83,6 @@ export const catalogPreviews: Record<string, CatalogPreviewEntry> = {
         default: m.PasswordFieldBasicDemo,
       })),
   },
-  "password-strength-meter": {
-    load: () =>
-      import("./password-strength-meter-demo").then((m) => ({
-        default: m.PasswordStrengthMeterDemo,
-      })),
-  },
   "inline-edit": {
     load: () =>
       import("./inline-edit-basic-demo").then((m) => ({

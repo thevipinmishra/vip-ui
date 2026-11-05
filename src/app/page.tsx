@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SiteFooter } from "@/components/docs/site-footer";
 import { SiteHeader } from "@/components/docs/site-header";
 import { HomeShowcase } from "@/components/home/home-showcase";
+import { Aurora } from "@/components/ui/aurora";
 import { ButtonLink } from "@/components/ui/button-link";
 import { pageMetadata, site } from "@/lib/seo";
 
@@ -12,6 +13,9 @@ export const metadata = pageMetadata({
   absoluteTitle: true,
   image: "file",
 });
+
+const heroAuroraMask =
+  "linear-gradient(to bottom, black 12%, black 55%, transparent 94%)";
 
 export default function Home() {
   return (
@@ -31,12 +35,21 @@ export default function Home() {
         >
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 -top-24 -z-10 h-64 opacity-90 sm:h-80 dark:opacity-100"
-            style={{
-              background:
-                "radial-gradient(70% 130% at 18% 8%, color-mix(in oklab, var(--chart-2) 18%, transparent) 0%, transparent 72%), radial-gradient(58% 120% at 82% 16%, color-mix(in oklab, var(--chart-3) 8%, transparent) 0%, transparent 70%)",
-            }}
-          />
+            className="pointer-events-none absolute inset-x-0 -top-24 -z-10 h-64 sm:h-80"
+          >
+            <Aurora
+              tone="sage"
+              speed={0}
+              grain={0.05}
+              intensity={0.32}
+              fade="none"
+              style={{
+                maskImage: heroAuroraMask,
+                WebkitMaskImage: heroAuroraMask,
+              }}
+              className="h-full w-full opacity-85 dark:opacity-100"
+            />
+          </div>
           <div className="site-container">
             <div className="max-w-4xl">
               <h1
@@ -48,8 +61,7 @@ export default function Home() {
               <p className="mt-6 max-w-2xl text-base leading-7 text-pretty text-muted-foreground sm:text-lg sm:leading-8">
                 A thoughtfully engineered React component collection featuring
                 accessible interactions from React Aria, fluid animations with
-                Motion, and a flexible design system. Open, customizable, and
-                made to work your way.
+                Motion, and a flexible design system.
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-3">
                 <ButtonLink as={Link} href="/components/installation" size="md">

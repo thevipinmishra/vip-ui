@@ -1,7 +1,12 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { Fragment, type ReactNode } from "react";
-import { componentName, getComponent, getNeighbors } from "@/lib/catalog";
+import {
+  componentHref,
+  componentName,
+  getComponent,
+  getNeighbors,
+} from "@/lib/catalog";
 import { componentApi } from "@/lib/component-api";
 import {
   type ComponentExampleMetadata,
@@ -43,33 +48,52 @@ export function withExamplePreviews(
   });
 }
 
-interface ComponentPageProps {
+interface ComponentUsage {
+  code: string;
+  filename?: string;
+  note?: ReactNode;
+}
+
+export interface ComponentDocMember {
+  slug: string;
   name: string;
-  description: string;
+  description?: string;
   preview: ReactNode;
   previewSourcePath: string;
   examples?: ComponentExample[];
-  sourcePath: string;
-  usage?: {
-    code: string;
-    filename?: string;
-    note?: ReactNode;
-  };
+  usage?: ComponentUsage;
   accessibility?: ReactNode;
 }
 
-export async function ComponentPage({
+interface ComponentDocSectionProps extends ComponentDocMember {
+  heading?: "none" | "h2";
+  sectionHeadingLevel?: 2 | 3;
+  idPrefix?: string;
+  skipInnerToc?: boolean;
+}
+
+interface ComponentPageProps
+  extends Omit<
+    ComponentDocSectionProps,
+    "slug" | "heading" | "sectionHeadingLevel" | "idPrefix" | "skipInnerToc"
+  > {
+  sourcePath: string;
+}
+
+export async function ComponentDocSection({
+  slug,
   name,
   description,
   preview,
   previewSourcePath,
   examples = [],
-  sourcePath,
   usage,
   accessibility,
-}: ComponentPageProps) {
-  const componentSlug = path.basename(sourcePath, ".tsx");
-  const { previous, next } = getNeighbors(componentSlug);
+  heading = "none",
+  sectionHeadingLevel = 2,
+  idPrefix,
+  skipInnerToc = false,
+}: ComponentDocSectionProps) {
   const previewSource = (
     await readFile(
       path.join(
@@ -94,19 +118,29 @@ export async function ComponentPage({
       ).replaceAll("@/components/ui/", "@/components/vip-ui/"),
     ),
   );
-  const cliUrl = registryUrl(componentSlug);
-  const apiParts = componentApi[componentSlug] ?? [];
-  const reactAria = getComponent(componentSlug)?.reactAria;
+  const cliUrl = registryUrl(slug);
+  const apiParts = componentApi[slug] ?? [];
+  const reactAria = getComponent(slug)?.reactAria;
+  const sectionId = (id: string) => (idPrefix ? `${idPrefix}-${id}` : id);
+  const tocSkip = skipInnerToc ? "" : undefined;
+
   return (
-    <article>
-      <DocsHeader
-        title={name}
-        description={description}
-        parent={{ href: "/components", label: "Components" }}
-      />
+    <>
+      {heading === "h2" && (
+        <>
+          <h2 className={cn("scroll-mt-24", sectionTitleClass)}>{name}</h2>
+          {description && (
+            <p className="mt-3 max-w-[670px] text-sm leading-6 text-muted-foreground">
+              {description}
+            </p>
+          )}
+        </>
+      )}
+
       <section
-        id="preview"
-        data-toc-label="Preview"
+        id={sectionId("preview")}
+        data-toc-label={skipInnerToc ? undefined : "Preview"}
+        data-toc-skip={tocSkip}
         aria-label={`${name} preview`}
         className="mt-6 scroll-mt-24"
       >
@@ -118,8 +152,12 @@ export async function ComponentPage({
         </PreviewPanel>
       </section>
 
-      <section id="installation" className="mt-14 scroll-mt-24">
-        <SectionHeading title="Installation" />
+      <section
+        id={sectionId("installation")}
+        data-toc-skip={tocSkip}
+        className="mt-14 scroll-mt-24"
+      >
+        <SectionHeading title="Installation" level={sectionHeadingLevel} />
         <InstallTabs
           cliAvailable={Boolean(cliUrl)}
           cli={
@@ -145,13 +183,17 @@ export async function ComponentPage({
               )}
             </div>
           }
-          custom={<ManualInstall slug={componentSlug} name={name} />}
+          custom={<ManualInstall slug={slug} name={name} />}
         />
       </section>
 
       {usage && (
-        <section id="usage" className="mt-14 scroll-mt-24">
-          <SectionHeading title="Usage" />
+        <section
+          id={sectionId("usage")}
+          data-toc-skip={tocSkip}
+          className="mt-14 scroll-mt-24"
+        >
+          <SectionHeading title="Usage" level={sectionHeadingLevel} />
           <div className="grid max-w-[670px] gap-5">
             {usage.note && (
               <p className="text-sm leading-6 text-muted-foreground">
@@ -163,20 +205,25 @@ export async function ComponentPage({
         </section>
       )}
 
-      {compositions[componentSlug] && (
-        <section id="composition" className="mt-14 scroll-mt-24">
-          <SectionHeading title="Composition" />
-          <ComponentComposition {...compositions[componentSlug]} />
+      {compositions[slug] && (
+        <section
+          id={sectionId("composition")}
+          data-toc-skip={tocSkip}
+          className="mt-14 scroll-mt-24"
+        >
+          <SectionHeading title="Composition" level={sectionHeadingLevel} />
+          <ComponentComposition {...compositions[slug]} />
         </section>
       )}
 
       {examples.map((example, index) => (
         <section
           key={example.sourcePath}
-          id={exampleAnchor(example.title)}
+          id={sectionId(exampleAnchor(example.title))}
+          data-toc-skip={tocSkip}
           className="mt-14 scroll-mt-24"
         >
-          <SectionHeading title={example.title} />
+          <SectionHeading title={example.title} level={sectionHeadingLevel} />
           {(example.description || example.uses) && (
             <p className="-mt-2 mb-5 max-w-[670px] text-sm leading-6 text-muted-foreground">
               {example.description && (
@@ -196,8 +243,12 @@ export async function ComponentPage({
       ))}
 
       {accessibility && (
-        <section id="accessibility" className="mt-14 scroll-mt-24">
-          <SectionHeading title="Accessibility" />
+        <section
+          id={sectionId("accessibility")}
+          data-toc-skip={tocSkip}
+          className="mt-14 scroll-mt-24"
+        >
+          <SectionHeading title="Accessibility" level={sectionHeadingLevel} />
           <div className="grid max-w-[670px] gap-4 text-sm leading-7 text-muted-foreground">
             {accessibility}
           </div>
@@ -205,8 +256,12 @@ export async function ComponentPage({
       )}
 
       {(apiParts.length > 0 || reactAria) && (
-        <section id="api" className="mt-14 scroll-mt-24">
-          <SectionHeading title="API reference" />
+        <section
+          id={sectionId("api")}
+          data-toc-skip={tocSkip}
+          className="mt-14 scroll-mt-24"
+        >
+          <SectionHeading title="API reference" level={sectionHeadingLevel} />
           {reactAria && (
             <p className="mb-5 max-w-[670px] text-sm leading-7 text-muted-foreground">
               {apiParts.length > 0
@@ -219,20 +274,111 @@ export async function ComponentPage({
             </p>
           )}
           {apiParts.length > 0 && (
-            <ApiReference parts={apiParts} slug={componentSlug} />
+            <ApiReference
+              parts={apiParts}
+              slug={slug}
+              headingLevel={sectionHeadingLevel === 3 ? 4 : 3}
+            />
           )}
         </section>
       )}
+    </>
+  );
+}
 
+export async function ComponentPage({
+  name,
+  description,
+  preview,
+  previewSourcePath,
+  examples = [],
+  sourcePath,
+  usage,
+  accessibility,
+}: ComponentPageProps) {
+  const componentSlug = path.basename(sourcePath, ".tsx");
+  const { previous, next } = getNeighbors(componentSlug);
+  return (
+    <article>
+      <DocsHeader
+        title={name}
+        description={description}
+        parent={{ href: "/components", label: "Components" }}
+      />
+      <ComponentDocSection
+        slug={componentSlug}
+        name={name}
+        preview={preview}
+        previewSourcePath={previewSourcePath}
+        examples={examples}
+        usage={usage}
+        accessibility={accessibility}
+      />
       <DocsPager
         previous={
           previous
-            ? { href: `/components/${previous.slug}`, label: previous.name }
+            ? { href: `/components/${previous.slug}`, label: previous.docName }
             : allComponents
         }
         next={
           next
-            ? { href: `/components/${next.slug}`, label: next.name }
+            ? { href: `/components/${next.slug}`, label: next.docName }
+            : allComponents
+        }
+      />
+    </article>
+  );
+}
+
+export async function GroupedComponentPage({
+  name,
+  description,
+  members,
+}: {
+  name: string;
+  description: string;
+  members: readonly ComponentDocMember[];
+}) {
+  const { previous, next } = getNeighbors(members[0]?.slug ?? "");
+  return (
+    <article>
+      <DocsHeader
+        title={name}
+        description={description}
+        parent={{ href: "/components", label: "Components" }}
+      />
+      {members.map((member, index) => {
+        const hideFirstHeading = index === 0 && member.name === name;
+        return (
+          <section
+            key={member.slug}
+            id={member.slug}
+            data-toc-label={member.name}
+            className={cn(
+              "scroll-mt-24",
+              index === 0 ? "mt-10" : "mt-20 border-t border-border/60 pt-12",
+            )}
+          >
+            <ComponentDocSection
+              {...member}
+              description={hideFirstHeading ? undefined : member.description}
+              heading={hideFirstHeading ? "none" : "h2"}
+              sectionHeadingLevel={hideFirstHeading ? 2 : 3}
+              idPrefix={member.slug}
+              skipInnerToc
+            />
+          </section>
+        );
+      })}
+      <DocsPager
+        previous={
+          previous
+            ? { href: `/components/${previous.slug}`, label: previous.docName }
+            : allComponents
+        }
+        next={
+          next
+            ? { href: `/components/${next.slug}`, label: next.docName }
             : allComponents
         }
       />
@@ -269,7 +415,7 @@ function ExampleUses({ slugs }: { slugs: readonly string[] }) {
           <Fragment key={slug}>
             {index > 0 && (index === slugs.length - 1 ? " and " : ", ")}
             {component ? (
-              <TextLink href={`/components/${slug}`}>{component.name}</TextLink>
+              <TextLink href={componentHref(slug)}>{component.name}</TextLink>
             ) : (
               componentName(slug)
             )}
@@ -281,6 +427,24 @@ function ExampleUses({ slugs }: { slugs: readonly string[] }) {
   );
 }
 
-function SectionHeading({ title }: { title: string }) {
-  return <h2 className={cn("mb-5", sectionTitleClass)}>{title}</h2>;
+function SectionHeading({
+  title,
+  level = 2,
+}: {
+  title: string;
+  level?: 2 | 3;
+}) {
+  const Tag = level === 3 ? "h3" : "h2";
+  return (
+    <Tag
+      className={cn(
+        "mb-5",
+        level === 3
+          ? "text-lg font-semibold leading-7 tracking-[-0.03em] text-balance"
+          : sectionTitleClass,
+      )}
+    >
+      {title}
+    </Tag>
+  );
 }

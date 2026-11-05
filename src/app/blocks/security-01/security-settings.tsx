@@ -40,7 +40,6 @@ import {
   MenuTrigger,
 } from "@/components/ui/menu";
 import { PasswordField } from "@/components/ui/password-field";
-import { PasswordStrengthMeter } from "@/components/ui/password-strength-meter";
 import { Spinner } from "@/components/ui/spinner";
 import { Switch } from "@/components/ui/switch";
 import {
@@ -399,7 +398,6 @@ export function SecuritySettings() {
                 }}
               />
             </div>
-            {newPassword && <PasswordStrengthMeter password={newPassword} />}
             {passwordError && (
               <p role="alert" className="text-xs leading-5 text-destructive">
                 {passwordError}

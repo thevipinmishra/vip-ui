@@ -3,6 +3,7 @@ import type { AgentStatus } from "@/components/ui/agent-status";
 import type { Alert } from "@/components/ui/alert";
 import type { AnimatedNumber } from "@/components/ui/animated-number";
 import type { Attachment, AttachmentList } from "@/components/ui/attachment";
+import type { Aurora } from "@/components/ui/aurora";
 import type { Autocomplete } from "@/components/ui/autocomplete";
 import type { Avatar } from "@/components/ui/avatar";
 import type { Badge } from "@/components/ui/badge";
@@ -26,6 +27,8 @@ import type { DateField } from "@/components/ui/date-field";
 import type { DatePicker } from "@/components/ui/date-picker";
 import type { DateRangePicker } from "@/components/ui/date-range-picker";
 import type { DialogClose, DialogContent } from "@/components/ui/dialog";
+import type { Dither } from "@/components/ui/dither";
+import type { DotField } from "@/components/ui/dot-field";
 import type { EmptyStateTitle } from "@/components/ui/empty-state";
 import type { FileTrigger } from "@/components/ui/file-trigger";
 import type { InlineEdit } from "@/components/ui/inline-edit";
@@ -37,9 +40,9 @@ import type { Message } from "@/components/ui/message";
 import type { Meter } from "@/components/ui/meter";
 import type { NativeSelect } from "@/components/ui/native-select";
 import type { NumberField } from "@/components/ui/number-field";
+import type { Orb } from "@/components/ui/orb";
 import type { Pagination, PaginationLink } from "@/components/ui/pagination";
 import type { PasswordField } from "@/components/ui/password-field";
-import type { PasswordStrengthMeter } from "@/components/ui/password-strength-meter";
 import type { Popover, PopoverDialog } from "@/components/ui/popover";
 import type { Presence } from "@/components/ui/presence";
 import type { PresenceList } from "@/components/ui/presence-list";
@@ -968,20 +971,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: "boolean",
           default: "false",
           description: "Prevents opening the editor.",
-        },
-      ],
-    }),
-  ],
-  "password-strength-meter": [
-    apiPart<typeof PasswordStrengthMeter>({
-      name: "PasswordStrengthMeter",
-      props: [
-        {
-          name: "password",
-          type: "string",
-          required: true,
-          description:
-            "The password to rate. The score uses only length and the mix of letters and other characters. It does not measure how easy the password is to guess.",
         },
       ],
     }),
@@ -2996,6 +2985,246 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           default: '"md"',
           description:
             "Sets the size of each tag and its remove button. A size on a tag overrides it.",
+        },
+      ],
+    }),
+  ],
+  aurora: [
+    apiPart<typeof Aurora>({
+      name: "Aurora",
+      props: [
+        {
+          name: "tone",
+          type: '"mist" | "sage" | "sunset" | "mono"',
+          default: '"mist"',
+          description:
+            "Picks a tuned palette that follows the theme. Use `colors` instead for a custom palette.",
+        },
+        {
+          name: "colors",
+          type: "[string, string, string]",
+          description:
+            "Sets three ribbon colors. It accepts theme variables, hex, and other CSS colors.",
+        },
+        {
+          name: "speed",
+          type: "number",
+          default: "1",
+          description: "Sets the drift speed. Set 0 to freeze the gradient.",
+        },
+        {
+          name: "grain",
+          type: "number",
+          default: "0.08",
+          description: "Adds fine film grain over the gradient.",
+        },
+        {
+          name: "intensity",
+          type: "number",
+          default: "1",
+          description: "Sets the opacity of the effect without fading content.",
+        },
+        {
+          name: "fade",
+          type: '"edges" | "bottom" | "none"',
+          default: '"edges"',
+          description:
+            "Fades the effect into the surface so it never ends on a hard edge.",
+        },
+        {
+          name: "paused",
+          type: "boolean",
+          default: "false",
+          description: "Freezes the gradient on its current frame.",
+        },
+        {
+          name: "children",
+          type: "ReactNode",
+          description:
+            "Adds content on top of the effect and turns the component into a surface.",
+        },
+      ],
+    }),
+  ],
+  "dot-field": [
+    apiPart<typeof DotField>({
+      name: "DotField",
+      props: [
+        {
+          name: "size",
+          type: "number",
+          default: "1.5",
+          description: "Sets the dot radius or grid line width in pixels.",
+        },
+        {
+          name: "gap",
+          type: "number",
+          default: "20",
+          description: "Sets the distance between dots or lines in pixels.",
+        },
+        {
+          name: "color",
+          type: "string",
+          default: '"var(--muted-foreground)"',
+          description: "Sets the dot color. It accepts a theme variable.",
+        },
+        {
+          name: "variant",
+          type: '"dots" | "grid"',
+          default: '"dots"',
+          description: "Draws dots or a line grid.",
+        },
+        {
+          name: "interactive",
+          type: "boolean",
+          default: "true",
+          description:
+            "Brightens the dots around the pointer. Touch input is ignored.",
+        },
+        {
+          name: "spotlight",
+          type: "number",
+          default: "220",
+          description: "Sets the width of the pointer spotlight in pixels.",
+        },
+        {
+          name: "intensity",
+          type: "number",
+          default: "1",
+          description: "Sets the opacity of the field without fading content.",
+        },
+        {
+          name: "fade",
+          type: '"edges" | "bottom" | "none"',
+          default: '"edges"',
+          description:
+            "Fades the field into the surface so it never ends on a hard edge.",
+        },
+        {
+          name: "children",
+          type: "ReactNode",
+          description:
+            "Adds content on top of the field and turns the component into a surface.",
+        },
+      ],
+    }),
+  ],
+  orb: [
+    apiPart<typeof Orb>({
+      name: "Orb",
+      props: [
+        {
+          name: "size",
+          type: "number",
+          default: "96",
+          description: "Sets the width and height in pixels.",
+        },
+        {
+          name: "state",
+          type: '"idle" | "thinking"',
+          default: '"idle"',
+          description: "Changes the spin speed and adds a pulse when thinking.",
+        },
+        {
+          name: "colors",
+          type: "string[]",
+          default: '["var(--chart-2)", "var(--chart-6)"]',
+          description:
+            "Sets the orb colors. It accepts theme variables, hex, and other CSS colors.",
+        },
+        {
+          name: "speed",
+          type: "number",
+          default: "1",
+          description: "Sets the animation speed. Set 0 to freeze the orb.",
+        },
+        {
+          name: "label",
+          type: "string",
+          description:
+            "Sets the accessible name. Without it, the orb is decorative.",
+        },
+        {
+          name: "paused",
+          type: "boolean",
+          default: "false",
+          description: "Freezes the orb on its current frame.",
+        },
+      ],
+    }),
+  ],
+  dither: [
+    apiPart<typeof Dither>({
+      name: "Dither",
+      props: [
+        {
+          name: "color",
+          type: "string",
+          default: '"var(--foreground)"',
+          description: "Sets the dot color of the pattern.",
+        },
+        {
+          name: "background",
+          type: "string",
+          default: '"transparent"',
+          description:
+            "Sets the gaps between dots. Keep it transparent to show the surface color.",
+        },
+        {
+          name: "shape",
+          type: '"halo" | "wave" | "ripple" | "swirl"',
+          default: '"wave"',
+          description: "Sets the pattern that the dither reveals.",
+        },
+        {
+          name: "size",
+          type: "number",
+          default: "3",
+          description: "Sets the width of one dither cell in pixels.",
+        },
+        {
+          name: "scale",
+          type: "number",
+          default: "1",
+          description: "Zooms the pattern in or out.",
+        },
+        {
+          name: "speed",
+          type: "number",
+          default: "1",
+          description: "Sets the animation speed. Set 0 to freeze the pattern.",
+        },
+        {
+          name: "interactive",
+          type: "boolean",
+          default: "true",
+          description:
+            "Moves the pattern toward the pointer. Touch input is ignored.",
+        },
+        {
+          name: "intensity",
+          type: "number",
+          default: "0.6",
+          description: "Sets the opacity of the effect without fading content.",
+        },
+        {
+          name: "fade",
+          type: '"edges" | "bottom" | "none"',
+          default: '"edges"',
+          description:
+            "Fades the pattern into the surface so it never ends on a hard edge.",
+        },
+        {
+          name: "paused",
+          type: "boolean",
+          default: "false",
+          description: "Freezes the pattern on its current frame.",
+        },
+        {
+          name: "children",
+          type: "ReactNode",
+          description:
+            "Adds content on top of the pattern and turns the component into a surface.",
         },
       ],
     }),

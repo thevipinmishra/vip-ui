@@ -6,6 +6,9 @@ import { AgentStatusStatesDemo } from "@/components/docs/agent-status-states-dem
 import { AnimatedNumberBasicDemo } from "@/components/docs/animated-number-basic-demo";
 import { AnimatedNumberFormatDemo } from "@/components/docs/animated-number-format-demo";
 import { AnimatedNumberSlideDemo } from "@/components/docs/animated-number-slide-demo";
+import { AuroraDemo } from "@/components/docs/aurora-demo";
+import { AuroraPaletteDemo } from "@/components/docs/aurora-palette-demo";
+import { AuroraStillDemo } from "@/components/docs/aurora-still-demo";
 import { AutocompleteDemo } from "@/components/docs/autocomplete-demo";
 import { AvatarBasicDemo } from "@/components/docs/avatar-basic-demo";
 import { AvatarDemo } from "@/components/docs/avatar-demo";
@@ -48,6 +51,7 @@ import { CommandPaletteBasicDemo } from "@/components/docs/command-palette-basic
 import { CommandPaletteDemo } from "@/components/docs/command-palette-demo";
 import {
   ComponentPage,
+  GroupedComponentPage,
   withExamplePreviews,
 } from "@/components/docs/component-page";
 import { DataTableColumnFiltersDemo } from "@/components/docs/data-table-column-filters-demo";
@@ -75,6 +79,13 @@ import { DescriptionListDemo } from "@/components/docs/description-list-demo";
 import { DisclosureDemo } from "@/components/docs/disclosure-demo";
 import { DisclosureDisabledDemo } from "@/components/docs/disclosure-disabled-demo";
 import { DisclosureExpandedDemo } from "@/components/docs/disclosure-expanded-demo";
+import { DitherDemo } from "@/components/docs/dither-demo";
+import { DitherInteractiveDemo } from "@/components/docs/dither-interactive-demo";
+import { DitherShapesDemo } from "@/components/docs/dither-shapes-demo";
+import { DotFieldDemo } from "@/components/docs/dot-field-demo";
+import { DotFieldEmptyStateDemo } from "@/components/docs/dot-field-empty-state-demo";
+import { DotFieldSpacingDemo } from "@/components/docs/dot-field-spacing-demo";
+import { DotFieldStatsDemo } from "@/components/docs/dot-field-stats-demo";
 import { DropZoneBasicDemo } from "@/components/docs/drop-zone-basic-demo";
 import { DropZoneDemo } from "@/components/docs/drop-zone-demo";
 import { EmptyStateDemo } from "@/components/docs/empty-state-demo";
@@ -118,12 +129,13 @@ import { NumberFieldDisabledDemo } from "@/components/docs/number-field-disabled
 import { NumberFieldLimitsDemo } from "@/components/docs/number-field-limits-demo";
 import { NumberFieldSizesDemo } from "@/components/docs/number-field-sizes-demo";
 import { NumberFieldStackedDemo } from "@/components/docs/number-field-stacked-demo";
+import { OrbDemo } from "@/components/docs/orb-demo";
+import { OrbPaletteDemo } from "@/components/docs/orb-palette-demo";
+import { OrbStatesDemo } from "@/components/docs/orb-states-demo";
 import { PaginationBasicDemo } from "@/components/docs/pagination-basic-demo";
 import { PaginationDemo } from "@/components/docs/pagination-demo";
 import { PaginationEllipsisDemo } from "@/components/docs/pagination-ellipsis-demo";
 import { PaginationSizesDemo } from "@/components/docs/pagination-sizes-demo";
-import { PasswordStrengthMeterDemo } from "@/components/docs/password-strength-meter-demo";
-import { PasswordStrengthMeterFieldDemo } from "@/components/docs/password-strength-meter-field-demo";
 import { PopoverDemo } from "@/components/docs/popover-demo";
 import { PopoverFormDemo } from "@/components/docs/popover-form-demo";
 import { PopoverPlacementDemo } from "@/components/docs/popover-placement-demo";
@@ -238,7 +250,11 @@ import { TreeDemo } from "@/components/docs/tree-demo";
 import { TreeDragDemo } from "@/components/docs/tree-drag-demo";
 import { TreeSectionsDemo } from "@/components/docs/tree-sections-demo";
 import { TreeSelectionDemo } from "@/components/docs/tree-selection-demo";
-import { componentDescription } from "@/lib/catalog";
+import {
+  canonicalDocSlug,
+  componentDescription,
+  getDocGroup,
+} from "@/lib/catalog";
 import {
   getComponentPageData,
   getComponentUsage,
@@ -299,11 +315,6 @@ const entries: {
     slug: "number-field",
     name: "Number field",
     demo: <NumberFieldDemo />,
-  },
-  {
-    slug: "password-strength-meter",
-    name: "Password strength meter",
-    demo: <PasswordStrengthMeterDemo />,
   },
   { slug: "inline-edit", name: "Inline edit", demo: <InlineEditDemo /> },
   { slug: "rating-input", name: "Rating input", demo: <RatingInputDemo /> },
@@ -532,6 +543,10 @@ const entries: {
   { slug: "prompt-input", name: "Prompt input", demo: <PromptInputDemo /> },
   { slug: "reasoning", name: "Reasoning", demo: <ReasoningDemo /> },
   { slug: "response", name: "Response", demo: <ResponseDemo /> },
+  { slug: "aurora", name: "Aurora", demo: <AuroraDemo /> },
+  { slug: "dot-field", name: "Dot field", demo: <DotFieldDemo /> },
+  { slug: "orb", name: "Orb", demo: <OrbDemo /> },
+  { slug: "dither", name: "Dither", demo: <DitherDemo /> },
 ];
 
 const basicPreviews: Record<string, { demo: ReactNode; source: string }> = {
@@ -760,9 +775,6 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <DataTableResizableDemo key="preview-2" />,
     <DataTableFooterDemo key="preview-3" />,
   ],
-  "password-strength-meter": [
-    <PasswordStrengthMeterFieldDemo key="preview-1" />,
-  ],
   "date-range-picker": [
     <DateRangePickerLimitsDemo key="preview-1" />,
     <DateRangePickerPresetsDemo key="preview-2" />,
@@ -908,10 +920,26 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <TreeSectionsDemo key="preview-3" />,
     <TreeDragDemo key="preview-4" />,
   ],
+  aurora: [
+    <AuroraPaletteDemo key="preview-1" />,
+    <AuroraStillDemo key="preview-2" />,
+  ],
+  "dot-field": [
+    <DotFieldEmptyStateDemo key="preview-1" />,
+    <DotFieldSpacingDemo key="preview-2" />,
+    <DotFieldStatsDemo key="preview-3" />,
+  ],
+  orb: [<OrbStatesDemo key="preview-1" />, <OrbPaletteDemo key="preview-2" />],
+  dither: [
+    <DitherShapesDemo key="preview-1" />,
+    <DitherInteractiveDemo key="preview-2" />,
+  ],
 };
 
 export function generateStaticParams() {
-  return entries.map(({ slug }) => ({ slug }));
+  return entries
+    .filter(({ slug }) => canonicalDocSlug(slug) === slug)
+    .map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -926,9 +954,12 @@ export async function generateMetadata({
         "This address does not match a component in the vip/ui catalog. Browse the catalog to find the right component.",
     });
   }
+  const group = getDocGroup(slug);
   return pageMetadata({
-    title: entry.name,
-    description: `${componentDescription(slug)} See live examples, copy the source, and add it to your project with the shadcn CLI.`,
+    title: group?.name ?? entry.name,
+    description:
+      group?.description ??
+      `${componentDescription(slug)} See live examples, copy the source, and add it to your project with the shadcn CLI.`,
     path: `/components/${slug}`,
     image: "file",
   });
@@ -940,6 +971,40 @@ export default async function NewComponentPage({
   const { slug } = await params;
   const entry = entries.find((item) => item.slug === slug);
   if (!entry) notFound();
+
+  const group = getDocGroup(slug);
+  if (group) {
+    const members = group.members.map((memberSlug) => {
+      const member = entries.find((item) => item.slug === memberSlug);
+      if (!member) {
+        throw new Error(
+          `The ${group.slug} docs group includes ${memberSlug}, but the page has no entry for it.`,
+        );
+      }
+      const pageData = getComponentPageData(memberSlug);
+      const basic = basicPreviews[memberSlug];
+      return {
+        slug: memberSlug,
+        name: member.name,
+        description: componentDescription(memberSlug),
+        preview: basic?.demo ?? member.demo,
+        previewSourcePath: `src/components/docs/${basic?.source ?? `${memberSlug}-demo.tsx`}`,
+        usage: getComponentUsage(memberSlug),
+        examples: withExamplePreviews(
+          pageData?.examples ?? [],
+          examplePreviews[memberSlug] ?? [],
+        ),
+      };
+    });
+    return (
+      <GroupedComponentPage
+        name={group.name}
+        description={group.description}
+        members={members}
+      />
+    );
+  }
+
   const pageData = getComponentPageData(slug);
   const usage = getComponentUsage(slug);
   const basic = basicPreviews[slug];

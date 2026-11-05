@@ -1,0 +1,92 @@
+{
+  "groups": [
+    {
+      "slug": "button-group",
+      "name": "Button groups",
+      "description": "Join related buttons, or a set of toggle buttons, into one row or column.",
+      "members": ["button-group", "toggle-button-group"]
+    },
+    {
+      "slug": "progress-bar",
+      "name": "Progress",
+      "description": "Show how much of a task is complete, or a measured value within a range.",
+      "members": ["progress-bar", "progress-ring", "meter"]
+    },
+    {
+      "slug": "date-field",
+      "name": "Date & time fields",
+      "description": "Accept a date or time, with one editable segment for each part of the value.",
+      "members": ["date-field", "time-field"]
+    },
+    {
+      "slug": "calendar",
+      "name": "Calendars",
+      "description": "Show a month grid to select one date or a start and end date, with limits.",
+      "members": ["calendar", "range-calendar"]
+    },
+    {
+      "slug": "date-picker",
+      "name": "Date pickers",
+      "description": "Accept a date or range that you type or select from a calendar popover.",
+      "members": ["date-picker", "date-range-picker"]
+    },
+    {
+      "slug": "color-field",
+      "name": "Color",
+      "description": "Accept, show, and select colors with a field, swatch, or picker in a popover.",
+      "members": [
+        "color-field",
+        "color-swatch",
+        "color-swatch-picker",
+        "color-picker"
+      ]
+    },
+    {
+      "slug": "form",
+      "name": "Form",
+      "description": "Group fields, handle validation and submission, and label native controls.",
+      "members": ["form", "fieldset"]
+    },
+    {
+      "slug": "list-box",
+      "name": "Selection lists",
+      "description": "Select one or more options from a list or grid that stays visible on the page.",
+      "members": ["list-box", "grid-list"]
+    },
+    {
+      "slug": "tool-call",
+      "name": "Agent details",
+      "description": "Reveal an agent's tool calls and reasoning, with their input, output, and duration.",
+      "members": ["tool-call", "reasoning"]
+    },
+    {
+      "slug": "text-swap",
+      "name": "Text motion",
+      "description": "Animate text changes with a swap, reveal, scramble, or counted number.",
+      "members": [
+        "text-swap",
+        "animated-number",
+        "text-reveal",
+        "text-scramble"
+      ]
+    },
+    {
+      "slug": "presence",
+      "name": "Presence",
+      "description": "Animate content in when it appears and out before it unmounts, including list items.",
+      "members": ["presence", "presence-list"]
+    },
+    {
+      "slug": "spinner",
+      "name": "Loading",
+      "description": "Show a loading indicator for a wait, or a placeholder shape while content loads.",
+      "members": ["spinner", "skeleton"]
+    },
+    {
+      "slug": "table",
+      "name": "Tables",
+      "description": "Show data in rows and columns, with search, filters, sorting, and selection.",
+      "members": ["table", "data-table"]
+    }
+  ]
+}

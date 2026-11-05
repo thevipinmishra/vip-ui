@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ItemHighlight } from "@/components/ui/item-highlight";
-import { catalogGroups } from "@/lib/catalog";
+import { catalogDocGroups, componentHref } from "@/lib/catalog";
 import { springLayout } from "@/lib/motion";
 import { docsGuides } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
@@ -83,15 +83,15 @@ export function DocsNav({
         </p>
         {docsGuides.map(renderLink)}
       </div>
-      {catalogGroups.map((group) => (
+      {catalogDocGroups.map((group) => (
         <div key={group.title} className="grid gap-0.5">
           <p className="mb-1.5 px-3 text-xs font-medium text-muted-foreground">
             {group.title}
           </p>
           {group.components.map((component) =>
             renderLink({
-              href: `/components/${component.slug}`,
-              label: component.name,
+              href: componentHref(component.slug),
+              label: component.docName,
             }),
           )}
         </div>

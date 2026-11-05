@@ -1,6 +1,7 @@
 {
   "utils": "Merges class names with tailwind-variants.",
   "motion": "Sets the easing curves and springs of animations.",
+  "effect-color": "Resolves theme colors to channel values for canvas effects.",
   "button-link": "Shows a navigation link with button styles, for any router.",
   "button-styles": "Sets the variants and sizes of buttons and button links.",
   "chart": "Frames a TanStack chart with shadcn chart colors and tooltip styles.",

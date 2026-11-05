@@ -32,6 +32,20 @@
       ]
     },
     {
+      "name": "vip-effect-color",
+      "type": "registry:lib",
+      "title": "Effect Color",
+      "description": "Resolves theme colors to channel values for canvas effects.",
+      "dependencies": [],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/effect-color.ts",
+          "type": "registry:file",
+          "target": "@components/vip-ui/effect-color.ts"
+        }
+      ]
+    },
+    {
       "name": "vip-accordion",
       "type": "registry:ui",
       "title": "Accordion",
@@ -187,6 +201,21 @@
           "path": "registry/generated/src/components/vip-ui/attachment.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/attachment.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-aurora",
+      "type": "registry:ui",
+      "title": "Aurora",
+      "description": "Layers a soft, drifting gradient behind a hero, card, or section.",
+      "dependencies": ["motion@^14.9.0"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/aurora.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/aurora.tsx"
         }
       ]
     },
@@ -1022,6 +1051,44 @@
       ]
     },
     {
+      "name": "vip-dither",
+      "type": "registry:ui",
+      "title": "Dither",
+      "description": "Dithers a shape into a textured accent for panels and data.",
+      "dependencies": ["motion@^14.9.0"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-effect-color.json",
+        "https://vip-ui.dev/r/vip-utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/dither.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/dither.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-dot-field",
+      "type": "registry:ui",
+      "title": "Dot Field",
+      "description": "Draws a dot grid that brightens around the pointer.",
+      "dependencies": ["motion@^14.9.0"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/dot-field.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/dot-field.tsx"
+        }
+      ]
+    },
+    {
       "name": "vip-drop-zone",
       "type": "registry:ui",
       "title": "Drop Zone",
@@ -1559,6 +1626,21 @@
       ]
     },
     {
+      "name": "vip-orb",
+      "type": "registry:ui",
+      "title": "Orb",
+      "description": "Shows a glowing orb for an AI agent's idle or thinking state.",
+      "dependencies": ["motion@^14.9.0"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/orb.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/orb.tsx"
+        }
+      ]
+    },
+    {
       "name": "vip-pagination",
       "type": "registry:ui",
       "title": "Pagination",
@@ -1616,43 +1698,6 @@
           "path": "registry/generated/src/components/vip-ui/password-field.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/password-field.tsx"
-        }
-      ]
-    },
-    {
-      "name": "vip-password-strength-meter",
-      "type": "registry:ui",
-      "title": "Password Strength Meter",
-      "description": "Rates a password by its length and character mix.",
-      "dependencies": ["react-aria-components@^1.22.1"],
-      "registryDependencies": [
-        "https://vip-ui.dev/r/vip-meter.json",
-        "https://vip-ui.dev/r/vip-utils.json"
-      ],
-      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
-      "css": {
-        "@plugin tailwindcss-react-aria-components": {}
-      },
-      "cssVars": {
-        "theme": {
-          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
-        },
-        "light": {
-          "success": "oklch(0.43 0.12 155)",
-          "warning": "oklch(0.54 0.13 75)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
-        },
-        "dark": {
-          "success": "oklch(0.74 0.13 155)",
-          "warning": "oklch(0.78 0.11 75)",
-          "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
-        }
-      },
-      "files": [
-        {
-          "path": "registry/generated/src/components/vip-ui/password-strength-meter.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/password-strength-meter.tsx"
         }
       ]
     },
@@ -3491,7 +3536,7 @@
       "name": "vip-signup-01",
       "type": "registry:block",
       "title": "Signup 01",
-      "description": "A sign-up form with a password strength meter.",
+      "description": "A sign-up form with account and team details.",
       "categories": ["authentication"],
       "dependencies": ["@phosphor-icons/react@^2.1.10"],
       "registryDependencies": [
@@ -3501,7 +3546,6 @@
         "https://vip-ui.dev/r/vip-form.json",
         "https://vip-ui.dev/r/vip-link.json",
         "https://vip-ui.dev/r/vip-password-field.json",
-        "https://vip-ui.dev/r/vip-password-strength-meter.json",
         "https://vip-ui.dev/r/vip-select.json",
         "https://vip-ui.dev/r/vip-spinner.json",
         "https://vip-ui.dev/r/vip-text-field.json"
@@ -3864,7 +3908,6 @@
         "https://vip-ui.dev/r/vip-kbd-code.json",
         "https://vip-ui.dev/r/vip-menu.json",
         "https://vip-ui.dev/r/vip-password-field.json",
-        "https://vip-ui.dev/r/vip-password-strength-meter.json",
         "https://vip-ui.dev/r/vip-spinner.json",
         "https://vip-ui.dev/r/vip-switch.json",
         "https://vip-ui.dev/r/vip-table.json",

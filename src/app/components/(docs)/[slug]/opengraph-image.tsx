@@ -1,4 +1,4 @@
-import { catalogComponents } from "@/lib/catalog";
+import { catalogDocComponents } from "@/lib/catalog";
 import { componentOgCard, ogContentType, ogSize } from "@/lib/og";
 
 export const alt =
@@ -8,7 +8,7 @@ export const contentType = ogContentType;
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return catalogComponents.map((component) => ({ slug: component.slug }));
+  return catalogDocComponents.map((component) => ({ slug: component.slug }));
 }
 
 export default async function Image({
