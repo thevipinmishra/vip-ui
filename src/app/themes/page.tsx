@@ -8,7 +8,7 @@ import { findTheme, pageThemeCss, specimenCss, themes } from "./themes";
 export const metadata = pageMetadata({
   title: "Themes",
   description:
-    "Ten themes for vip/ui and shadcn/ui. Copy the CSS into your project.",
+    "Curated themes for vip/ui and shadcn/ui. Preview complete interfaces and copy the CSS into your project.",
   path: "/themes",
   image: "file",
 });

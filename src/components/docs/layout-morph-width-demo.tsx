@@ -21,6 +21,7 @@ export function LayoutMorphWidthDemo() {
   return (
     <div className="grid w-full max-w-sm justify-items-center gap-4">
       <LayoutMorph
+        aria-live="polite"
         contentKey={state}
         className="w-fit max-w-full rounded-full border border-border bg-card px-3.5 py-1.5 text-sm shadow-[var(--shadow-card)]"
       >

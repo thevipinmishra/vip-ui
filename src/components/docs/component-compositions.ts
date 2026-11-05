@@ -95,7 +95,7 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "StaggerGroup",
-        children: [{ part: "StaggerItem" }],
+        children: [{ part: "StaggerItem", repeats: true }],
       },
     ],
   },
@@ -130,6 +130,7 @@ export const compositions: Record<string, Composition> = {
     parts: [
       {
         part: "Alert",
+        note: "Set title to render the icon, title, and description from one component.",
         children: [
           { part: "AlertIcon" },
           { part: "AlertTitle" },
@@ -753,12 +754,12 @@ export const compositions: Record<string, Composition> = {
                   },
                 ],
               },
-              { part: "CardDescription" },
+              { part: "CardDescription", optional: true },
               { part: "CardAction", optional: true },
             ],
           },
-          { part: "CardContent" },
-          { part: "CardFooter" },
+          { part: "CardContent", optional: true },
+          { part: "CardFooter", optional: true },
         ],
       },
     ],
@@ -810,7 +811,11 @@ export const compositions: Record<string, Composition> = {
             repeats: true,
             children: [
               { part: "TimelineTitle" },
-              { part: "TimelineTime", note: "Set dateTime." },
+              {
+                part: "TimelineTime",
+                optional: true,
+                note: "Set dateTime.",
+              },
               { part: "TimelineDescription", optional: true },
             ],
           },
@@ -833,7 +838,11 @@ export const compositions: Record<string, Composition> = {
       {
         part: "EmptyState",
         children: [
-          { part: "EmptyStateIcon", optional: true },
+          {
+            part: "EmptyStateIcon",
+            optional: true,
+            note: "Hidden from screen readers; the title names the state.",
+          },
           { part: "EmptyStateTitle" },
           { part: "EmptyStateDescription" },
           { part: "EmptyStateActions", optional: true },

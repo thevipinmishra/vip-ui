@@ -4,20 +4,20 @@ import { cn } from "@/lib/utils";
 export function HomeSection({
   id,
   className,
+  label,
   children,
 }: {
   id: string;
   className?: string;
+  label?: string;
   children: ReactNode;
 }) {
   return (
     <section
       id={id}
-      aria-labelledby={`${id}-title`}
-      className={cn(
-        "mx-auto max-w-7xl scroll-mt-20 px-5 py-20 sm:px-8 sm:py-28",
-        className,
-      )}
+      aria-label={label}
+      aria-labelledby={label ? undefined : `${id}-title`}
+      className={cn("site-container scroll-mt-20 py-20 sm:py-28", className)}
     >
       {children}
     </section>
@@ -40,23 +40,21 @@ export function SectionHeading({
   return (
     <div
       className={cn(
-        "flex flex-wrap items-end justify-between gap-x-10 gap-y-5",
+        "mx-auto grid max-w-2xl justify-items-center gap-4 text-center",
         className,
       )}
     >
-      <div className="grid max-w-2xl min-w-0 gap-4">
-        <h2
-          id={`${id}-title`}
-          className="text-[clamp(1.875rem,1.4rem+2vw,2.75rem)] leading-[1.1] font-semibold tracking-[-0.04em] text-balance sm:tracking-[-0.05em]"
-        >
-          {title}
-        </h2>
-        {children && (
-          <p className="text-base leading-7 text-pretty text-muted-foreground sm:text-lg sm:leading-8">
-            {children}
-          </p>
-        )}
-      </div>
+      <h2
+        id={`${id}-title`}
+        className="text-[clamp(1.875rem,1.4rem+2vw,2.75rem)] leading-[1.1] font-semibold tracking-[-0.04em] text-balance sm:tracking-[-0.05em]"
+      >
+        {title}
+      </h2>
+      {children && (
+        <p className="text-base leading-7 text-pretty text-muted-foreground sm:text-lg sm:leading-8">
+          {children}
+        </p>
+      )}
       {action}
     </div>
   );

@@ -1,43 +1,70 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { StaggerGroup, StaggerItem } from "@/components/ui/stagger-group";
+import { ToggleButton } from "@/components/ui/toggle-button";
+import { ToggleButtonGroup } from "@/components/ui/toggle-button-group";
 
-const tasks = ["Write the brief", "Choose the typefaces", "Send the proofs"];
+type Status = "all" | "active" | "done";
+
+const projects = [
+  { name: "Atlas", status: "active" },
+  { name: "Beacon", status: "done" },
+  { name: "Cascade", status: "active" },
+  { name: "Drift", status: "done" },
+] as const;
+
+const filters: { id: Status; label: string }[] = [
+  { id: "all", label: "All" },
+  { id: "active", label: "Active" },
+  { id: "done", label: "Done" },
+];
 
 export function StaggerGroupDemo() {
-  const [replay, setReplay] = useState(0);
+  const [status, setStatus] = useState<Status>("all");
+  const visible = projects.filter(
+    (project) => status === "all" || project.status === status,
+  );
 
   return (
-    <div className="grid w-full max-w-sm gap-4">
-      <StaggerGroup
-        key={replay}
-        as="ol"
-        className="divide-y divide-border rounded-xl border border-border bg-card shadow-[var(--shadow-card)]"
+    <div className="grid w-full max-w-sm gap-3">
+      <ToggleButtonGroup
+        aria-label="Project status"
+        selectionMode="single"
+        disallowEmptySelection
+        selectedKeys={[status]}
+        onSelectionChange={(keys) => {
+          const [key] = keys;
+          if (key === "all" || key === "active" || key === "done")
+            setStatus(key);
+        }}
       >
-        {tasks.map((task, index) => (
+        {filters.map(({ id, label }) => (
+          <ToggleButton key={id} id={id} variant="segmented">
+            {label}
+          </ToggleButton>
+        ))}
+      </ToggleButtonGroup>
+      <StaggerGroup
+        key={status}
+        as="ul"
+        aria-label="Projects"
+        trigger="mount"
+        className="grid gap-2"
+      >
+        {visible.map((project) => (
           <StaggerItem
             as="li"
-            key={task}
-            className="flex min-w-0 items-center gap-3 px-4 py-3 text-sm"
+            key={project.name}
+            className="flex items-center justify-between gap-3 rounded-lg border border-border bg-card px-3 py-2 text-sm"
           >
-            <span className="font-mono text-xs text-muted-foreground">
-              0{index + 1}
+            <span className="min-w-0 font-medium">{project.name}</span>
+            <span className="text-xs capitalize text-muted-foreground">
+              {project.status}
             </span>
-            <span className="min-w-0 [overflow-wrap:anywhere]">{task}</span>
           </StaggerItem>
         ))}
       </StaggerGroup>
-      <div>
-        <Button
-          size="sm"
-          variant="secondary"
-          onPress={() => setReplay((value) => value + 1)}
-        >
-          Replay
-        </Button>
-      </div>
     </div>
   );
 }

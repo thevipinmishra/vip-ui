@@ -1,16 +1,12 @@
 import type { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
 
+export const kbdStyles =
+  "inline-flex min-h-5 min-w-5 shrink-0 items-center justify-center gap-1 rounded-sm border border-border bg-muted px-1.5 font-mono text-xs font-medium whitespace-nowrap text-foreground shadow-xs [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3";
+
 export function Kbd({ className, ...props }: ComponentProps<"kbd">) {
   return (
-    <kbd
-      data-slot="kbd"
-      className={cn(
-        "inline-flex min-h-5 min-w-5 shrink-0 items-center justify-center gap-1 rounded-sm border border-border bg-muted px-1.5 font-mono text-xs font-medium whitespace-nowrap text-foreground shadow-xs [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3",
-        className,
-      )}
-      {...props}
-    />
+    <kbd data-slot="kbd" className={cn(kbdStyles, className)} {...props} />
   );
 }
 

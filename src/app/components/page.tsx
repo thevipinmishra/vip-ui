@@ -16,7 +16,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Components",
   description:
-    "Accessible React components with examples, source, and an API reference.",
+    "Accessible, customizable React components with examples, source, and API references.",
   path: "/components",
   image: "file",
 });
@@ -69,16 +69,18 @@ export default async function ComponentsPage({
             <span className="size-4 rounded-[5px] bg-[var(--chart-3)]" />
             <span className="h-4 w-6 rounded-full bg-[var(--chart-5)]" />
           </span>
-          <PageHeaderHeading size="lg">Components</PageHeaderHeading>
+          <PageHeaderHeading size="lg">
+            Components, crafted with intention.
+          </PageHeaderHeading>
           <PageHeaderDescription>
-            Each page has examples, source, and an API reference.
+            A thoughtfully designed collection of customizable React components,
+            combining accessible interactions powered by React Aria with
+            purposeful motion. Explore examples, implementation details, and
+            APIs built for modern interfaces.
           </PageHeaderDescription>
           <PageActions className="mt-2 justify-center">
             <ButtonLink as={Link} href="/components/installation">
               Get started
-            </ButtonLink>
-            <ButtonLink href="#gallery" variant="outline">
-              Browse components
             </ButtonLink>
           </PageActions>
         </PageHeader>

@@ -6,7 +6,7 @@ import {
   ComponentPage,
   withExamplePreviews,
 } from "@/components/docs/component-page";
-import { componentPageData } from "@/lib/component-examples";
+import { componentPageData, getComponentUsage } from "@/lib/component-examples";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -23,6 +23,7 @@ export default function AccordionPage() {
       description={page.description}
       preview={<AccordionDemo />}
       previewSourcePath={page.usage}
+      usage={getComponentUsage("accordion")}
       examples={withExamplePreviews(page.examples, [
         <AccordionBillingDemo key="divided" />,
         <AccordionMultipleDemo key="multiple" />,

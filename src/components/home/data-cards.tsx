@@ -15,6 +15,7 @@ import { useMemo, useState } from "react";
 import { ChartPlot, groupTooltip } from "@/components/charts/chart-plot";
 import { AnimatedNumber } from "@/components/ui/animated-number";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Chart } from "@/components/ui/chart";
 import {
   EmptyState,
@@ -37,6 +38,7 @@ import {
   TableBody,
   TableHeader,
 } from "@/components/ui/table";
+import { showToast } from "@/components/ui/toast";
 import { ToggleButton } from "@/components/ui/toggle-button";
 import { ToggleButtonGroup } from "@/components/ui/toggle-button-group";
 import { Block, BlockBody, BlockFooter } from "./block";
@@ -156,7 +158,7 @@ export function RevenueCard() {
 
   return (
     <Block
-      title="Revenue"
+      title="Revenue by plan"
       action={
         <ToggleButtonGroup
           className="shrink-0"
@@ -216,6 +218,22 @@ export function RevenueCard() {
           </ChartPlot>
         </div>
       </BlockBody>
+      <BlockFooter className="justify-between border-t border-border/70 pt-4">
+        <span className="text-xs text-muted-foreground">Updated just now</span>
+        <Button
+          variant="outline"
+          size="sm"
+          onPress={() =>
+            showToast({
+              title: "Report ready",
+              description: "The revenue report is available.",
+              variant: "info",
+            })
+          }
+        >
+          View report
+        </Button>
+      </BlockFooter>
     </Block>
   );
 }
@@ -245,6 +263,13 @@ const statusVariant = {
   Draft: "neutral",
 } as const;
 
+const statusDot = {
+  Paid: "bg-success",
+  Pending: "bg-warning",
+  Overdue: "bg-destructive",
+  Draft: "bg-muted-foreground",
+} as const;
+
 const pageSize = 5;
 
 export function InvoicesCard() {
@@ -264,7 +289,7 @@ export function InvoicesCard() {
       title="Invoices"
       action={
         <SearchField
-          className="w-36 shrink-0 sm:w-44"
+          className="w-36 shrink-0 3xl:w-44"
           aria-label="Search invoices"
           placeholder="Search"
           value={query}
@@ -303,16 +328,16 @@ export function InvoicesCard() {
               {(invoice) => (
                 <Row id={invoice.id}>
                   <Cell>
-                    <span className="block truncate font-medium">
-                      {invoice.customer}
+                    <span className="flex min-w-0 items-center gap-2">
+                      <span
+                        aria-hidden="true"
+                        className={`size-1.5 shrink-0 rounded-full @min-[22rem]:hidden ${statusDot[invoice.status]}`}
+                      />
+                      <span className="block truncate font-medium">
+                        {invoice.customer}
+                      </span>
+                      <span className="sr-only">{invoice.status}</span>
                     </span>
-                    <Badge
-                      variant={statusVariant[invoice.status]}
-                      dot
-                      className="mt-1 @min-[22rem]:hidden"
-                    >
-                      {invoice.status}
-                    </Badge>
                   </Cell>
                   <Cell className="font-mono text-xs text-muted-foreground @max-[30rem]:hidden">
                     {invoice.id}

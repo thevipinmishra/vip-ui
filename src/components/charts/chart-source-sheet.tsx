@@ -31,7 +31,7 @@ export function ChartSourceSheet({
       >
         <CodeIcon size={16} aria-hidden="true" />
       </Button>
-      <Sheet position="right">
+      <Sheet position="right" size="xl">
         <SheetHandle />
         <SheetHeader className="flex items-start justify-between gap-4">
           <div>

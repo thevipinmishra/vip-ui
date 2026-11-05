@@ -3,7 +3,7 @@
   "name": "vip-marquee",
   "type": "registry:ui",
   "title": "Marquee",
-  "description": "Loops a strip of content, with a control to pause it.",
+  "description": "Loops a row of content with a built-in pause control.",
   "dependencies": ["motion@^14.9.0"],
   "registryDependencies": [
     "https://vip-ui.dev/r/vip-button.json",

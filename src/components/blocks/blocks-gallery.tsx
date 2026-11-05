@@ -65,9 +65,13 @@ export function BlocksGallery({ category }: { category: string | null }) {
               <span key={tile} className={`rounded-[3px] ${tile}`} />
             ))}
           </span>
-          <PageHeaderHeading size="lg">Blocks</PageHeaderHeading>
+          <PageHeaderHeading size="lg">
+            From components to complete experiences.
+          </PageHeaderHeading>
           <PageHeaderDescription>
-            Full pages built with vip/ui components. Copy them into your app.
+            Carefully composed React UI blocks for dashboards, AI interfaces,
+            authentication, onboarding, commerce, and more. Ready to customize,
+            compose, and make your own.
           </PageHeaderDescription>
           <PageActions className="mt-2 justify-center">
             <ButtonLink href="#gallery">Browse blocks</ButtonLink>

@@ -25,7 +25,7 @@ const ramp = [2, 4, 6, 8, 9, 10].map((index) => blue[index]);
 export const metadata = pageMetadata({
   title: "Colors",
   description:
-    "Ten OKLCH color scales with 12 steps each, for light and dark mode.",
+    "Accessible OKLCH color scales with 12 steps each, designed for light and dark themes and Tailwind CSS v4.",
   path: "/colors",
   image: "file",
 });
@@ -59,9 +59,13 @@ export default async function ColorsPage() {
             ))}
           </span>
         </span>
-        <PageHeaderHeading size="lg">Colors</PageHeaderHeading>
+        <PageHeaderHeading size="lg">
+          Color, with every detail considered.
+        </PageHeaderHeading>
         <PageHeaderDescription>
-          Ten color scales with 12 steps each, for light and dark mode.
+          A refined collection of accessible color scales for modern interfaces.
+          Explore balanced palettes with 12 carefully defined steps, designed
+          for light and dark themes and built for Tailwind CSS v4.
         </PageHeaderDescription>
         <PageActions className="mt-2 justify-center">
           <a href="#install" className={buttonLinkStyles()}>

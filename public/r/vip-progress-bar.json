@@ -3,7 +3,7 @@
   "name": "vip-progress-bar",
   "type": "registry:ui",
   "title": "Progress Bar",
-  "description": "Shows the progress of a task in a horizontal bar.",
+  "description": "Shows how much of a task is complete in a horizontal bar.",
   "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
   "registryDependencies": [
     "https://vip-ui.dev/r/vip-motion.json",

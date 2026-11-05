@@ -1,27 +1,16 @@
-"use client";
-
 import { Marquee } from "@/components/ui/marquee";
 
-const disciplines = [
-  "Typography",
-  "Photography",
-  "Editorial",
-  "Illustration",
-  "Motion",
-];
+const clients = ["Atlas", "Beacon", "Cascade", "Drift", "Ember"];
 
 export function MarqueeDemo() {
   return (
-    <Marquee speed={60} className="w-full">
-      {disciplines.map((discipline, index) => (
+    <Marquee className="w-full">
+      {clients.map((client) => (
         <span
-          key={discipline}
-          className="inline-flex items-center gap-3 whitespace-nowrap rounded-xl border border-border bg-card px-4 py-3 text-sm font-medium shadow-[var(--shadow-card)]"
+          key={client}
+          className="whitespace-nowrap text-lg font-semibold uppercase tracking-[0.18em] text-muted-foreground"
         >
-          <span aria-hidden="true" className="font-mono text-xs text-primary">
-            0{index + 1}
-          </span>
-          {discipline}
+          {client}
         </span>
       ))}
     </Marquee>

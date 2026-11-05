@@ -7,7 +7,14 @@ import {
   FolderIcon,
   FolderOpenIcon,
 } from "@phosphor-icons/react";
-import type { ReactNode } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import {
   Button as AriaButton,
   DropIndicator as AriaDropIndicator,
@@ -23,6 +30,7 @@ import {
   type TreeLoadMoreItemProps,
   type TreeProps,
 } from "react-aria-components";
+import { duration, easeOut, springLayout, transitionFor } from "./motion";
 import { cn } from "./utils";
 import { Checkbox } from "./checkbox";
 import { itemHighlightRing, withItemHighlight } from "./item-highlight";
@@ -30,23 +38,32 @@ import { Spinner } from "./spinner";
 
 const indent = "calc(0.25rem + (var(--tree-item-level, 1) - 1) * 1.25rem)";
 
+// Only rows that mount after the first commit animate in. Rows that are
+// already present on page load render without an entrance.
+const TreeSettledContext = createContext(false);
+
 export function Tree<T extends object>({
   className,
   render,
   ...props
 }: TreeProps<T>) {
+  const [settled, setSettled] = useState(false);
+  useEffect(() => setSettled(true), []);
+
   return (
-    <AriaTree
-      {...props}
-      data-slot="tree"
-      render={withItemHighlight(render, { ring: true })}
-      className={composeRenderProps(className, (className) =>
-        cn(
-          "grid max-h-96 min-w-0 content-start gap-1 overflow-y-auto overscroll-contain rounded-lg border border-border bg-card p-2 text-sm shadow-[var(--shadow-card)] outline-none transition-[background-color,box-shadow] duration-150 ease-out-quint empty:min-h-24 empty:place-items-center empty:content-center empty:text-muted-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring drop-target:bg-accent/40 drop-target:inset-ring-2 drop-target:inset-ring-primary",
-          className,
-        ),
-      )}
-    />
+    <TreeSettledContext.Provider value={settled}>
+      <AriaTree
+        {...props}
+        data-slot="tree"
+        render={withItemHighlight(render, { ring: true })}
+        className={composeRenderProps(className, (className) =>
+          cn(
+            "grid max-h-96 min-w-0 content-start gap-1 overflow-y-auto overscroll-contain rounded-lg border border-border bg-card p-2 text-sm shadow-[var(--shadow-card)] outline-none transition-[background-color,box-shadow] duration-150 ease-out-quint empty:min-h-24 empty:place-items-center empty:content-center empty:text-muted-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring drop-target:bg-accent/40 drop-target:inset-ring-2 drop-target:inset-ring-primary",
+            className,
+          ),
+        )}
+      />
+    </TreeSettledContext.Provider>
   );
 }
 
@@ -56,17 +73,54 @@ export function TreeItem({
   icon,
   children,
   className,
+  render,
   ...props
-}: Omit<TreeItemProps, "children" | "textValue"> & {
+}: Omit<TreeItemProps, "children" | "textValue" | "render"> & {
   textValue?: string;
   title: string;
   content?: ReactNode;
   icon?: ReactNode;
   children?: ReactNode;
+  render?: TreeItemProps["render"];
 }) {
+  const reducedMotion = useReducedMotion();
+  const settled = useContext(TreeSettledContext);
+  // Motion and React share handler names. Drag and drop needs React's handlers,
+  // so use a plain row while React Aria supplies them.
+  const motionRow: TreeItemProps["render"] = (rowProps) => {
+    const {
+      onAnimationStart: _onAnimationStart,
+      onAnimationEnd: _onAnimationEnd,
+      onAnimationIteration: _onAnimationIteration,
+      onDrag,
+      onDragStart,
+      onDragEnd,
+      ...rest
+    } = rowProps;
+
+    if (onDrag || onDragStart || onDragEnd) {
+      return <div {...(rowProps as React.HTMLAttributes<HTMLDivElement>)} />;
+    }
+
+    return (
+      <motion.div
+        {...rest}
+        layout={reducedMotion ? false : "position"}
+        initial={settled && !reducedMotion ? { opacity: 0, y: -4 } : false}
+        animate={{ opacity: 1, y: 0 }}
+        transition={transitionFor(reducedMotion, {
+          duration: duration.base,
+          ease: easeOut,
+          layout: springLayout,
+        })}
+      />
+    );
+  };
+
   return (
     <AriaTreeItem
       {...props}
+      render={render ?? motionRow}
       data-slot="tree-item"
       textValue={props.textValue ?? title}
       className={composeRenderProps(className, (className) =>

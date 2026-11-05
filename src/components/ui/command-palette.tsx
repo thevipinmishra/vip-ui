@@ -14,7 +14,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Autocomplete } from "./autocomplete";
 import { DialogContent, DialogTitle } from "./dialog";
-import { Kbd } from "./kbd-code";
+import { Kbd, kbdStyles } from "./kbd-code";
 import { MenuContent, MenuItem, type MenuItemProps } from "./menu";
 import {
   SearchField,
@@ -54,7 +54,7 @@ export function CommandPaletteItem<T extends object>({
             </Text>
             <Keyboard
               data-slot="command-palette-shortcut"
-              className="inline-flex min-h-5 min-w-5 shrink-0 items-center justify-center rounded-sm border border-border bg-muted px-1.5 font-mono text-xs font-medium whitespace-nowrap text-muted-foreground"
+              className={kbdStyles}
             >
               {shortcut}
             </Keyboard>
@@ -85,12 +85,23 @@ function CommandPaletteList({
     const frame = frameRef.current;
     const list = listRef.current;
     if (!frame || !list) return;
-    const observer = new ResizeObserver(() => {
-      frame.style.setProperty(
-        "--palette-list-height",
-        `${list.offsetHeight}px`,
-      );
-    });
+
+    // Mobile keeps the height of the first rendered list while filtering so the
+    // search field stays put. The empty state can render before the collection
+    // registers, so only let it grow the floor after the list has had items.
+    let tallest = 0;
+    const measure = () => {
+      const height = list.offsetHeight;
+      frame.style.setProperty("--palette-list-height", `${height}px`);
+      if (list.hasAttribute("data-empty")) {
+        if (tallest === 0) return;
+      }
+      tallest = Math.max(tallest, height);
+      frame.style.setProperty("--palette-list-min-height", `${tallest}px`);
+    };
+
+    measure();
+    const observer = new ResizeObserver(measure);
     observer.observe(list);
     return () => observer.disconnect();
   }, []);
@@ -99,15 +110,15 @@ function CommandPaletteList({
     <div
       ref={frameRef}
       data-slot="command-palette-list"
-      className="flex min-h-0 flex-1 flex-col sm:h-(--palette-list-height) sm:flex-none sm:overflow-clip sm:transition-[height] sm:duration-200 sm:ease-out-quint motion-reduce:transition-none"
+      className="flex max-h-[min(20rem,calc(var(--visual-viewport-height,100dvh)-7rem))] min-h-0 shrink-0 flex-col overflow-clip transition-[height] duration-200 ease-out-quint max-sm:h-(--palette-list-min-height) max-sm:has-[[data-empty]]:justify-center sm:h-(--palette-list-height) motion-reduce:transition-none"
     >
       <MenuContent
         ref={listRef}
         aria-label={title}
         autoFocus="first"
-        className="min-h-0 max-h-80 shrink-0 max-sm:min-h-80 max-sm:flex-1 gap-1 overflow-y-auto overscroll-contain p-2"
+        className="min-h-0 max-h-[min(20rem,calc(var(--visual-viewport-height,100dvh)-7rem))] shrink-0 content-start gap-1 overflow-y-auto overscroll-contain p-2 data-empty:content-center"
         renderEmptyState={() => (
-          <div className="grid justify-items-center gap-2 px-3 py-8 text-center text-sm text-muted-foreground">
+          <div className="grid content-center justify-items-center gap-2 px-3 py-8 text-center text-sm text-muted-foreground">
             <MagnifyingGlassIcon
               size={20}
               aria-hidden="true"

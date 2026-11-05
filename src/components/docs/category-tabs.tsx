@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
+import { ItemHighlight } from "@/components/ui/item-highlight";
 import { springLayout, transitionFor } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
@@ -62,8 +63,9 @@ export function CategoryTabs({
       <div className="site-container">
         <ul
           ref={listRef}
-          className="mx-auto flex w-fit max-w-full items-center gap-0.5 overflow-x-auto rounded-full bg-card/60 p-1 shadow-[var(--shadow-card)] ring-1 ring-border/60 backdrop-blur-xl max-[880px]:px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-[880px]:[mask-image:linear-gradient(to_right,transparent,black_16px,black_calc(100%-16px),transparent)]"
+          className="relative isolate mx-auto flex w-fit max-w-full items-center gap-0.5 overflow-x-auto rounded-full bg-card/60 p-1 shadow-[var(--shadow-card)] ring-1 ring-border/60 backdrop-blur-xl max-[880px]:px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-[880px]:[mask-image:linear-gradient(to_right,transparent,black_16px,black_calc(100%-16px),transparent)]"
         >
+          <ItemHighlight placement="under" items="a" className="bg-muted/70" />
           {tabs.map((tab) => {
             const current = tab.href === active;
             return (
@@ -81,7 +83,7 @@ export function CategoryTabs({
                     "relative isolate inline-flex min-h-8 items-center rounded-full px-3 text-[13px] font-medium whitespace-nowrap transition-[color,background-color,box-shadow] duration-200 ease-out-quint focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-transparent",
                     current
                       ? "text-foreground"
-                      : "text-muted-foreground hover:bg-muted/70 hover:text-foreground",
+                      : "text-muted-foreground hover:text-foreground",
                   )}
                 >
                   {current && (

@@ -1,26 +1,20 @@
 "use client";
 
-import {
-  CaretDownIcon,
-  CaretUpIcon,
-  PlusIcon,
-  TrashIcon,
-} from "@phosphor-icons/react";
+import { CaretDownIcon, CaretUpIcon } from "@phosphor-icons/react";
 import { useRef, useState } from "react";
-import { flushSync } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { PresenceList } from "@/components/ui/presence-list";
 
-type Row = { id: number; label: string };
+type Task = { id: string; title: string };
 
-const initialRows: Row[] = [
-  { id: 1, label: "First item" },
-  { id: 2, label: "Second item" },
-  { id: 3, label: "Third item" },
+const plan: Task[] = [
+  { id: "copy", title: "Review the homepage copy" },
+  { id: "assets", title: "Export the brand assets" },
+  { id: "update", title: "Send the client update" },
 ];
 
 export function PresenceListDemo() {
-  const [rows, setRows] = useState(initialRows);
+  const [items, setItems] = useState(plan);
   const controls = useRef(new Map<string, HTMLButtonElement>());
 
   const control = (key: string) => (node: HTMLButtonElement | null) => {
@@ -28,91 +22,54 @@ export function PresenceListDemo() {
     else controls.current.delete(key);
   };
 
-  const update = (next: Row[], focusKey?: string) => {
-    flushSync(() => setRows(next));
-    if (focusKey) controls.current.get(focusKey)?.focus();
-  };
-
-  const move = (id: number, offset: number) => {
-    const index = rows.findIndex((row) => row.id === id);
+  const move = (id: string, offset: number) => {
+    const index = items.findIndex((item) => item.id === id);
     const target = index + offset;
-    if (index < 0 || target < 0 || target >= rows.length) return;
-    const next = [...rows];
+    if (index < 0 || target < 0 || target >= items.length) return;
+
+    const next = [...items];
     [next[index], next[target]] = [next[target], next[index]];
-    update(
-      next,
-      target === 0
-        ? `down-${id}`
-        : target === rows.length - 1
-          ? `up-${id}`
-          : undefined,
-    );
-  };
 
-  const remove = (id: number) => {
-    const index = rows.findIndex((row) => row.id === id);
-    const next = rows.filter((row) => row.id !== id);
-    const neighbor = next[index] ?? next[index - 1];
-    update(next, neighbor ? `remove-${neighbor.id}` : "add");
-  };
-
-  const add = () => {
-    const id = rows.reduce((max, row) => Math.max(max, row.id), 0) + 1;
-    setRows([...rows, { id, label: `Item ${id}` }]);
+    if (target === 0) controls.current.get(`down-${id}`)?.focus();
+    if (target === items.length - 1) controls.current.get(`up-${id}`)?.focus();
+    setItems(next);
   };
 
   return (
-    <div className="grid w-full max-w-sm gap-4">
+    <div className="grid w-full max-w-sm gap-3">
       <PresenceList
-        items={rows}
-        getKey={(row) => row.id}
-        aria-label="Reorderable list"
+        items={items}
+        getKey={(item) => item.id}
+        aria-label="Today's priorities"
       >
-        {(row) => (
-          <span className="flex min-w-0 items-center gap-2 rounded-lg bg-card px-3 py-2 text-sm shadow-[var(--shadow-card)] ring-1 ring-border/70">
-            <span className="min-w-0 flex-1 truncate">{row.label}</span>
+        {(item) => (
+          <span className="flex min-w-0 items-center gap-2 rounded-lg border border-border bg-card px-3 py-2 text-sm">
+            <span className="min-w-0 flex-1 [overflow-wrap:anywhere]">
+              {item.title}
+            </span>
             <Button
-              ref={control(`up-${row.id}`)}
+              ref={control(`up-${item.id}`)}
               variant="ghost"
               iconOnly
-              aria-label={`Move ${row.label} up`}
-              isDisabled={rows[0]?.id === row.id}
-              onPress={() => move(row.id, -1)}
+              aria-label={`Move ${item.title} up`}
+              isDisabled={items[0]?.id === item.id}
+              onPress={() => move(item.id, -1)}
             >
               <CaretUpIcon aria-hidden="true" />
             </Button>
             <Button
-              ref={control(`down-${row.id}`)}
+              ref={control(`down-${item.id}`)}
               variant="ghost"
               iconOnly
-              aria-label={`Move ${row.label} down`}
-              isDisabled={rows[rows.length - 1]?.id === row.id}
-              onPress={() => move(row.id, 1)}
+              aria-label={`Move ${item.title} down`}
+              isDisabled={items[items.length - 1]?.id === item.id}
+              onPress={() => move(item.id, 1)}
             >
               <CaretDownIcon aria-hidden="true" />
-            </Button>
-            <Button
-              ref={control(`remove-${row.id}`)}
-              variant="ghost"
-              iconOnly
-              aria-label={`Remove ${row.label}`}
-              onPress={() => remove(row.id)}
-            >
-              <TrashIcon aria-hidden="true" />
             </Button>
           </span>
         )}
       </PresenceList>
-      <div>
-        <Button
-          ref={control("add")}
-          variant="secondary"
-          size="sm"
-          onPress={add}
-        >
-          <PlusIcon aria-hidden="true" /> Add item
-        </Button>
-      </div>
     </div>
   );
 }

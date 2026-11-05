@@ -5,24 +5,26 @@ import { AnimatedNumber } from "@/components/ui/animated-number";
 import { Button } from "@/components/ui/button";
 
 export function AnimatedNumberBasicDemo() {
-  const [views, setViews] = useState(1284);
+  const [checkedIn, setCheckedIn] = useState(128);
 
   return (
     <div className="grid justify-items-center gap-4 text-center">
       <div>
-        <p className="text-sm text-muted-foreground">Views today</p>
+        <p className="text-sm text-muted-foreground">Guests checked in</p>
         <AnimatedNumber
-          value={views}
+          value={checkedIn}
           aria-live="polite"
           className="mt-1 block text-5xl font-semibold tracking-[-0.06em]"
         />
+        <p className="text-sm text-muted-foreground">of 200 seats</p>
       </div>
       <Button
         variant="secondary"
         size="sm"
-        onPress={() => setViews((value) => value + 125)}
+        isDisabled={checkedIn === 200}
+        onPress={() => setCheckedIn((value) => value + 1)}
       >
-        Add 125 views
+        Check in guest
       </Button>
     </div>
   );

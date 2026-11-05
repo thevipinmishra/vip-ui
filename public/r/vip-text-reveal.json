@@ -3,7 +3,7 @@
   "name": "vip-text-reveal",
   "type": "registry:ui",
   "title": "Text Reveal",
-  "description": "Reveals text one word or one character at a time.",
+  "description": "Reveals text word by word or character by character.",
   "dependencies": ["motion@^14.9.0"],
   "registryDependencies": [
     "https://vip-ui.dev/r/vip-motion.json",

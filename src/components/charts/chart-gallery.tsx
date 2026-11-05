@@ -74,10 +74,14 @@ export async function ChartGallery({
             />
           ))}
         </span>
-        <PageHeaderHeading size="lg">Charts</PageHeaderHeading>
+        <PageHeaderHeading size="lg">
+          Data, presented beautifully.
+        </PageHeaderHeading>
         <PageHeaderDescription>
-          Chart examples built on TanStack Charts. Copy the source into your
-          app.
+          A collection of customizable React charts and data visualizations
+          built with TanStack Charts. Explore elegant chart patterns,
+          interactive examples, and ready-to-use implementations for your
+          applications.
         </PageHeaderDescription>
         <PageActions className="mt-2 justify-center">
           <ButtonLink href="#gallery">Browse charts</ButtonLink>

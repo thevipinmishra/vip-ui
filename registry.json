@@ -142,7 +142,7 @@
       "name": "vip-animated-number",
       "type": "registry:ui",
       "title": "Animated Number",
-      "description": "Animates a number when its value changes.",
+      "description": "Counts to a new number or slides the digits that change.",
       "dependencies": ["motion@^14.9.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
@@ -230,7 +230,7 @@
       "name": "vip-badge",
       "type": "registry:ui",
       "title": "Badge",
-      "description": "Shows a short label, status, or count.",
+      "description": "Labels an item with a short status or count.",
       "dependencies": ["tailwind-variants@^4.0.1"],
       "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "cssVars": {
@@ -390,7 +390,6 @@
       "description": "Shows a month grid to select one date.",
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "react-aria@^3.53.1",
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
@@ -1316,7 +1315,7 @@
       "name": "vip-layout-morph",
       "type": "registry:ui",
       "title": "Layout Morph",
-      "description": "Animates the height of a container when its content changes.",
+      "description": "Crossfades new content and animates the container to its new size.",
       "dependencies": ["motion@^14.9.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
@@ -1334,7 +1333,7 @@
       "name": "vip-link",
       "type": "registry:ui",
       "title": "Link",
-      "description": "Shows a link to another page or location.",
+      "description": "Navigates to another page or location.",
       "dependencies": ["react-aria-components@^1.22.1"],
       "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
@@ -1393,7 +1392,7 @@
       "name": "vip-marquee",
       "type": "registry:ui",
       "title": "Marquee",
-      "description": "Loops a strip of content, with a control to pause it.",
+      "description": "Loops a row of content with a built-in pause control.",
       "dependencies": ["motion@^14.9.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-button.json",
@@ -1712,7 +1711,7 @@
       "name": "vip-presence",
       "type": "registry:ui",
       "title": "Presence",
-      "description": "Animates content when it is shown or hidden.",
+      "description": "Animates content in when it appears and out before it unmounts.",
       "dependencies": ["motion@^14.9.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
@@ -1754,7 +1753,7 @@
       "name": "vip-progress-bar",
       "type": "registry:ui",
       "title": "Progress Bar",
-      "description": "Shows the progress of a task in a horizontal bar.",
+      "description": "Shows how much of a task is complete in a horizontal bar.",
       "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
@@ -1784,7 +1783,7 @@
       "name": "vip-progress-ring",
       "type": "registry:ui",
       "title": "Progress Ring",
-      "description": "Shows the progress of a task in a circular indicator.",
+      "description": "Shows how much of a task is complete in a ring.",
       "dependencies": [
         "motion@^14.9.0",
         "react-aria@^3.53.1",
@@ -1886,10 +1885,11 @@
       "type": "registry:ui",
       "title": "Range Calendar",
       "description": "Shows a month grid to select a start and end date.",
-      "dependencies": ["react-aria-components@^1.22.1"],
+      "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-calendar.json",
         "https://vip-ui.dev/r/vip-item-highlight.json",
+        "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
@@ -2240,7 +2240,7 @@
       "name": "vip-stagger-group",
       "type": "registry:ui",
       "title": "Stagger Group",
-      "description": "Animates a group of items into view one after another.",
+      "description": "Reveals a group of items one after another when it enters the viewport.",
       "dependencies": ["motion@^14.9.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
@@ -2287,7 +2287,7 @@
       "name": "vip-stepper",
       "type": "registry:ui",
       "title": "Stepper",
-      "description": "Shows the current and completed steps in a sequence.",
+      "description": "Shows the current step and the steps already complete.",
       "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.9.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
@@ -2346,7 +2346,7 @@
       "name": "vip-table",
       "type": "registry:ui",
       "title": "Table",
-      "description": "Shows data in rows and columns, with sortable headers.",
+      "description": "Shows data in rows and columns, with sorting and resizing.",
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
         "react-aria-components@^1.22.1"
@@ -2511,7 +2511,7 @@
       "name": "vip-text-reveal",
       "type": "registry:ui",
       "title": "Text Reveal",
-      "description": "Reveals text one word or one character at a time.",
+      "description": "Reveals text word by word or character by character.",
       "dependencies": ["motion@^14.9.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
@@ -2529,7 +2529,7 @@
       "name": "vip-text-scramble",
       "type": "registry:ui",
       "title": "Text Scramble",
-      "description": "Resolves text from scrambled characters when its value changes.",
+      "description": "Scrambles characters and resolves them into new text when its value changes.",
       "dependencies": ["motion@^14.9.0"],
       "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "files": [
@@ -2544,7 +2544,7 @@
       "name": "vip-text-swap",
       "type": "registry:ui",
       "title": "Text Swap",
-      "description": "Animates text when its value changes.",
+      "description": "Swaps text with a short fade when its value changes.",
       "dependencies": ["motion@^14.9.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
@@ -2858,11 +2858,13 @@
       "description": "Shows nested items that you can expand, collapse, and select.",
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
+        "motion@^14.9.0",
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-checkbox.json",
         "https://vip-ui.dev/r/vip-item-highlight.json",
+        "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-spinner.json",
         "https://vip-ui.dev/r/vip-utils.json"
       ],

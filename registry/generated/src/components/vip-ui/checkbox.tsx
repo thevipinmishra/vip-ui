@@ -120,15 +120,18 @@ export function CheckboxButton({
   className,
   ...props
 }: AriaCheckboxButtonProps & React.RefAttributes<HTMLLabelElement>) {
+  const variant = useContext(CheckboxVariantContext);
   return (
     <AriaCheckboxButton
       {...props}
       data-slot="checkbox-button"
       className={composeRenderProps(className, (className) =>
         cn(
-          // The ::after layer stretches the hit area over the whole field,
-          // so the description toggles the checkbox too.
-          "group/checkbox flex min-w-0 cursor-pointer items-start gap-3 after:absolute after:inset-0 disabled:cursor-default read-only:cursor-default",
+          // The label row keeps a 44px hit area. Descriptions stay outside it.
+          "group/checkbox flex min-h-11 min-w-0 cursor-pointer items-center gap-3 disabled:cursor-default read-only:cursor-default",
+          // Card only: the card itself is the target, so include the padding
+          // and description. Keep descriptions plain text in this variant.
+          variant === "card" && "items-start after:absolute after:inset-0",
           className,
         ),
       )}
@@ -224,7 +227,7 @@ export function CheckboxError({
     <FieldError
       {...props}
       data-slot="checkbox-error"
-      // relative keeps the message above the hit area layer.
+      // relative keeps the message above the card hit area.
       className={cn(fieldErrorStyles, "relative ps-8", className)}
     />
   );

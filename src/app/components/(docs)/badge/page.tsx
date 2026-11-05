@@ -5,12 +5,12 @@ import {
   ComponentPage,
   withExamplePreviews,
 } from "@/components/docs/component-page";
-import { componentPageData } from "@/lib/component-examples";
+import { componentPageData, getComponentUsage } from "@/lib/component-examples";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
   title: "Badge",
-  description: `${componentPageData.badge.description} Live examples cover each variant and the dot indicator, plus installation and the API reference.`,
+  description: `${componentPageData.badge.description} Examples show every variant and the dot indicator, with installation and the API reference.`,
   path: "/components/badge",
 });
 
@@ -22,6 +22,7 @@ export default function BadgePage() {
       description={page.description}
       preview={<BadgeBasicDemo />}
       previewSourcePath={page.usage}
+      usage={getComponentUsage("badge")}
       examples={withExamplePreviews(page.examples, [
         <BadgeVariantsDemo key="variants" />,
         <BadgeDemo key="dot" />,

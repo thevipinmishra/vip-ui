@@ -3,7 +3,7 @@
   "name": "vip-text-swap",
   "type": "registry:ui",
   "title": "Text Swap",
-  "description": "Animates text when its value changes.",
+  "description": "Swaps text with a short fade when its value changes.",
   "dependencies": ["motion@^14.9.0"],
   "registryDependencies": [
     "https://vip-ui.dev/r/vip-motion.json",

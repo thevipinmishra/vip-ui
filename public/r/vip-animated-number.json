@@ -3,7 +3,7 @@
   "name": "vip-animated-number",
   "type": "registry:ui",
   "title": "Animated Number",
-  "description": "Animates a number when its value changes.",
+  "description": "Counts to a new number or slides the digits that change.",
   "dependencies": ["motion@^14.9.0"],
   "registryDependencies": [
     "https://vip-ui.dev/r/vip-motion.json",

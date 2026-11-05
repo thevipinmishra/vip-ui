@@ -3,7 +3,7 @@
   "name": "vip-stepper",
   "type": "registry:ui",
   "title": "Stepper",
-  "description": "Shows the current and completed steps in a sequence.",
+  "description": "Shows the current step and the steps already complete.",
   "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.9.0"],
   "registryDependencies": [
     "https://vip-ui.dev/r/vip-motion.json",

@@ -10,7 +10,7 @@ export function InstallStep({
   children: ReactNode;
 }) {
   return (
-    <li className="grid gap-3">
+    <li className="grid min-w-0 gap-3">
       <h3 className="flex items-center gap-3 text-[15px] font-semibold text-foreground">
         <span
           aria-hidden="true"

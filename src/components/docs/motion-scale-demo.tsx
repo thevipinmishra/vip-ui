@@ -3,19 +3,24 @@
 import { motion, useReducedMotion } from "motion/react";
 import { type ReactNode, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { springLayout, springSnappy, transitionFor } from "@/lib/motion";
+import {
+  springLayout,
+  springPop,
+  springSnappy,
+  transitionFor,
+} from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 const tweens = [
   { name: "fast", value: "150 ms", className: "duration-150 ease-out-quint" },
   { name: "base", value: "200 ms", className: "duration-200 ease-out-quint" },
   { name: "slow", value: "250 ms", className: "duration-250 ease-out-quint" },
-  { name: "springPop", value: "350 ms", className: "duration-350 ease-spring" },
 ];
 
 const springs = [
   { name: "springSnappy", value: "0.24 s", transition: springSnappy },
   { name: "springLayout", value: "0.3 s", transition: springLayout },
+  { name: "springPop", value: "0.28 s", transition: springPop },
 ];
 
 function Row({

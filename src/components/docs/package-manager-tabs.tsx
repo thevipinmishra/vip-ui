@@ -1,7 +1,15 @@
 "use client";
 
-import { type ReactNode, useSyncExternalStore } from "react";
-import { Tab, TabList, TabPanel, Tabs } from "react-aria-components";
+import { LayoutGroup, motion, useReducedMotion } from "motion/react";
+import { type ReactNode, useId, useSyncExternalStore } from "react";
+import {
+  Tab as AriaTab,
+  TabList as AriaTabList,
+  TabPanel as AriaTabPanel,
+  Tabs as AriaTabs,
+} from "react-aria-components";
+import { withItemHighlight } from "@/components/ui/item-highlight";
+import { springLayout, transitionFor } from "@/lib/motion";
 import { CodeFrame } from "./code-frame";
 
 export type PackageManager = "npm" | "yarn" | "pnpm" | "bun";
@@ -53,44 +61,66 @@ export function PackageManagerTabs({
     getManager,
     (): PackageManager => "pnpm",
   );
+  const reduceMotion = useReducedMotion();
+  const groupId = useId();
 
   return (
-    <Tabs
-      selectedKey={selected}
-      onSelectionChange={(key) => selectManager(key as PackageManager)}
-      className="min-w-0"
-    >
-      <CodeFrame
-        code={commands[selected]}
-        filename=""
-        codeLabel={`${selected} command`}
-        header={
-          <TabList
-            aria-label="Package manager"
-            className="flex min-w-0 flex-1 items-center gap-0.5"
-          >
-            {managers.map((manager) => (
-              <Tab
-                key={manager}
-                id={manager}
-                className="inline-flex h-8 min-w-0 cursor-pointer items-center justify-center rounded-md px-2 font-mono text-[11px] text-muted-foreground outline-none hover:text-foreground selected:bg-foreground/8 selected:font-medium selected:text-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring"
-              >
-                {manager}
-              </Tab>
-            ))}
-          </TabList>
-        }
+    <LayoutGroup id={groupId}>
+      <AriaTabs
+        selectedKey={selected}
+        onSelectionChange={(key) => selectManager(key as PackageManager)}
+        className="min-w-0"
       >
-        {managers.map((manager, index) => (
-          <TabPanel
-            key={manager}
-            id={manager}
-            className="docs-tab-panel min-w-0 outline-none"
-          >
-            {children[index]}
-          </TabPanel>
-        ))}
-      </CodeFrame>
-    </Tabs>
+        <CodeFrame
+          code={commands[selected]}
+          filename=""
+          codeLabel={`${selected} command`}
+          header={
+            <AriaTabList
+              aria-label="Package manager"
+              className="relative isolate inline-flex min-w-0 items-center gap-0.5"
+              render={withItemHighlight(undefined, {
+                placement: "under",
+                items: "[role=tab]",
+                className: "bg-highlight",
+              })}
+            >
+              {managers.map((manager) => (
+                <AriaTab
+                  key={manager}
+                  id={manager}
+                  className="relative isolate inline-flex h-7 min-w-0 cursor-pointer items-center justify-center rounded-md px-2.5 font-mono text-[11px] text-muted-foreground outline-none transition-[color,scale] duration-150 ease-out-quint hover:text-foreground selected:text-foreground motion-safe:pressed:scale-[0.96] focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring"
+                >
+                  {({ isSelected }) => (
+                    <>
+                      {isSelected && (
+                        <motion.span
+                          layoutId="package-manager-selection"
+                          initial={false}
+                          aria-hidden="true"
+                          transition={transitionFor(reduceMotion, springLayout)}
+                          className="pointer-events-none absolute inset-0 -z-10 rounded-[inherit] bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70 forced-colors:border forced-colors:border-[Highlight]"
+                        />
+                      )}
+                      {manager}
+                    </>
+                  )}
+                </AriaTab>
+              ))}
+            </AriaTabList>
+          }
+        >
+          {managers.map((manager, index) => (
+            <AriaTabPanel
+              key={manager}
+              id={manager}
+              className="docs-tab-panel min-w-0 outline-none"
+            >
+              {children[index]}
+            </AriaTabPanel>
+          ))}
+        </CodeFrame>
+      </AriaTabs>
+    </LayoutGroup>
   );
 }

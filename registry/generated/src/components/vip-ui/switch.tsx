@@ -90,8 +90,8 @@ export function SwitchButton({
       className={composeRenderProps(className, (className) =>
         cn(
           // Spans the label and description rows so the control centers on
-          // both. The ::after layer makes the whole field the hit area.
-          "group/switch col-span-full row-[1/span_2] grid cursor-pointer grid-cols-subgrid grid-rows-subgrid items-center after:absolute after:inset-0 disabled:cursor-default read-only:cursor-default",
+          // both. The description stays outside the clickable area.
+          "group/switch col-span-full row-[1/span_2] grid min-h-11 cursor-pointer grid-cols-subgrid grid-rows-subgrid items-center disabled:cursor-default read-only:cursor-default",
           className,
         ),
       )}
@@ -142,7 +142,6 @@ export function SwitchError({
     <FieldError
       {...props}
       data-slot="switch-error"
-      // relative keeps the message above the hit area layer.
       className={cn(
         fieldErrorStyles,
         "relative col-span-full row-start-3 mt-1",

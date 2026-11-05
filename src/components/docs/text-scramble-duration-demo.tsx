@@ -7,11 +7,11 @@ import { TextScramble } from "@/components/ui/text-scramble";
 const durations = [0.4, 1.2];
 
 export function TextScrambleDurationDemo() {
-  const [alternate, setAlternate] = useState(false);
+  const [exporting, setExporting] = useState(false);
 
   return (
-    <div className="grid w-full max-w-md justify-items-start gap-4">
-      <dl className="grid gap-3">
+    <div className="grid w-full max-w-sm justify-items-start gap-4">
+      <dl className="grid w-full grid-cols-2 gap-4">
         {durations.map((duration) => (
           <div key={duration} className="grid gap-1">
             <dt className="text-xs text-muted-foreground">
@@ -19,7 +19,7 @@ export function TextScrambleDurationDemo() {
             </dt>
             <dd className="text-xl font-semibold">
               <TextScramble
-                value={alternate ? "UP TO DATE" : "SYNCING"}
+                value={exporting ? "Exporting" : "Exported"}
                 duration={duration}
               />
             </dd>
@@ -29,9 +29,9 @@ export function TextScrambleDurationDemo() {
       <Button
         size="sm"
         variant="secondary"
-        onPress={() => setAlternate((value) => !value)}
+        onPress={() => setExporting((value) => !value)}
       >
-        Change status
+        {exporting ? "Finish export" : "Start export"}
       </Button>
     </div>
   );

@@ -10,7 +10,7 @@ export function TextRevealBasicDemo() {
   return (
     <div className="grid w-full max-w-md justify-items-start gap-4">
       <p className="text-4xl leading-[1.15] font-semibold tracking-[-0.06em]">
-        <TextReveal key={replay} text="Make room for the unusual." />
+        <TextReveal key={replay} text="A studio for type, print, and motion." />
       </p>
       <Button
         size="sm"

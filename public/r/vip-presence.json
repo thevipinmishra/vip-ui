@@ -3,7 +3,7 @@
   "name": "vip-presence",
   "type": "registry:ui",
   "title": "Presence",
-  "description": "Animates content when it is shown or hidden.",
+  "description": "Animates content in when it appears and out before it unmounts.",
   "dependencies": ["motion@^14.9.0"],
   "registryDependencies": [
     "https://vip-ui.dev/r/vip-motion.json",

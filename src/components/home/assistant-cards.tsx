@@ -4,7 +4,6 @@ import {
   CheckCircleIcon,
   CloudArrowUpIcon,
   RocketLaunchIcon,
-  SparkleIcon,
 } from "@phosphor-icons/react";
 import { useInView, useReducedMotion } from "motion/react";
 import { Fragment, useEffect, useRef, useState } from "react";
@@ -79,15 +78,7 @@ export function ChatCard() {
   );
 
   return (
-    <Block
-      title="Chat"
-      action={
-        <Badge variant="accent">
-          <SparkleIcon size={13} weight="fill" aria-hidden="true" />
-          Beta
-        </Badge>
-      }
-    >
+    <Block title="Ask the docs">
       <div
         ref={log}
         role="log"
@@ -119,7 +110,7 @@ export function ChatCard() {
             Use Switch for a setting that applies at once. Use Checkbox when
             people must push Save. Put related controls in a Fieldset.
           </Message>
-          <div className="grid gap-2 sm:grid-cols-2">
+          <div className="grid gap-2">
             <SourceLink
               href="/components/switch"
               index={1}

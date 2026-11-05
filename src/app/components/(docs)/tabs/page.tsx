@@ -3,17 +3,18 @@ import {
   withExamplePreviews,
 } from "@/components/docs/component-page";
 import { TabsBasicDemo } from "@/components/docs/tabs-basic-demo";
+import { TabsControlledDemo } from "@/components/docs/tabs-controlled-demo";
 import { TabsDemo } from "@/components/docs/tabs-demo";
 import { TabsDisabledDemo } from "@/components/docs/tabs-disabled-demo";
 import { TabsOverflowDemo } from "@/components/docs/tabs-overflow-demo";
 import { TabsSizesDemo } from "@/components/docs/tabs-sizes-demo";
 import { TabsVerticalDemo } from "@/components/docs/tabs-vertical-demo";
-import { componentPageData } from "@/lib/component-examples";
+import { componentPageData, getComponentUsage } from "@/lib/component-examples";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
   title: "Tabs",
-  description: `${componentPageData.tabs.description} Examples cover icons, disabled tabs, vertical and overflowing lists, and sizes.`,
+  description: `${componentPageData.tabs.description} Examples cover icons, disabled tabs, vertical and overflowing lists, controlled selection, and sizes.`,
   path: "/components/tabs",
 });
 
@@ -30,8 +31,10 @@ export default function TabsPage() {
         <TabsDisabledDemo key="disabled-tab" />,
         <TabsVerticalDemo key="vertical" />,
         <TabsOverflowDemo key="many-tabs" />,
+        <TabsControlledDemo key="controlled-selection" />,
         <TabsSizesDemo key="sizes" />,
       ])}
+      usage={getComponentUsage("tabs")}
       sourcePath="src/components/ui/tabs.tsx"
     />
   );
