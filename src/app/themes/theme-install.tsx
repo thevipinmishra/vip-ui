@@ -1,20 +1,8 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { CodeFrame } from "@/components/docs/code-frame";
-import { type CodeLanguage, CodeSnippet } from "@/components/docs/code-snippet";
+import { CodeSnippet } from "@/components/docs/code-snippet";
 import { type Theme, themeCss } from "./themes";
-
-const highlighted = new Map<string, Promise<ReactNode>>();
-
-export function snippet(code: string, language: CodeLanguage) {
-  const key = `${language}\0${code}`;
-  let result = highlighted.get(key);
-  if (!result) {
-    result = CodeSnippet({ code, language });
-    highlighted.set(key, result);
-  }
-  return result;
-}
 
 export function Step({
   number,
@@ -49,7 +37,7 @@ export const inlineCode =
 export const textLink =
   "font-medium text-foreground underline underline-offset-4";
 
-export async function ThemeInstall({ theme }: { theme: Theme }) {
+export function ThemeInstall({ theme }: { theme: Theme }) {
   const css = themeCss(theme);
 
   return (
@@ -72,7 +60,7 @@ export async function ThemeInstall({ theme }: { theme: Theme }) {
           copyText="Copy CSS"
           previewCode
         >
-          {await snippet(css, "css")}
+          <CodeSnippet code={css} language="css" />
         </CodeFrame>
       </Step>
       <Step number={2} title="Check the details">

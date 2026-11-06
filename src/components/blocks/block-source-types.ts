@@ -1,13 +1,8 @@
-export interface BlockSourceToken {
-  content: string;
-  light: string;
-  dark: string;
-}
-
 export interface BlockSourceFile {
   path: string;
   code: string;
-  tokens: BlockSourceToken[][];
+  html: string;
+  lineDigits: number;
 }
 
 export interface BlockSource {

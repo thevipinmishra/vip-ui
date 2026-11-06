@@ -1,60 +1,23 @@
 import type { CSSProperties } from "react";
-import { codeToTokensBase } from "shiki";
+import { type CodeLanguage, highlightCode } from "@/lib/highlight";
 
-export type CodeLanguage = "tsx" | "css" | "bash" | "json";
+export type { CodeLanguage };
 
-export async function CodeSnippet({
+export function CodeSnippet({
   code,
   language = "tsx",
 }: {
   code: string;
   language?: CodeLanguage;
 }) {
-  const [lightTokens, darkTokens] = await Promise.all([
-    codeToTokensBase(code.trim(), {
-      lang: language,
-      theme: "github-light-default",
-    }),
-    codeToTokensBase(code.trim(), {
-      lang: language,
-      theme: "github-dark-default",
-    }),
-  ]);
-  const lineDigits = String(Math.max(lightTokens.length, 1)).length;
+  const { html, lineDigits } = highlightCode(code, language);
   return (
     <div
       className="code-block min-w-0 text-code-foreground"
       data-language={language}
       style={{ "--code-line-digits": lineDigits } as CSSProperties}
-    >
-      <pre className="shiki">
-        <code>
-          {lightTokens.map((line, lineIndex) => (
-            <span
-              className="line"
-              // biome-ignore lint/suspicious/noArrayIndexKey: shiki token positions are static for a given snippet
-              key={`${lineIndex}-${line.map((token) => token.content).join("")}`}
-            >
-              {line.map((token, tokenIndex) => (
-                <span
-                  // biome-ignore lint/suspicious/noArrayIndexKey: shiki token positions are static for a given snippet
-                  key={`${tokenIndex}-${token.content}`}
-                  style={
-                    {
-                      "--code-token-light": token.color,
-                      "--code-token-dark":
-                        darkTokens[lineIndex]?.[tokenIndex]?.color ??
-                        token.color,
-                    } as CSSProperties
-                  }
-                >
-                  {token.content}
-                </span>
-              ))}
-            </span>
-          ))}
-        </code>
-      </pre>
-    </div>
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: highlighter output escapes the source text
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
   );
 }

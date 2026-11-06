@@ -211,38 +211,11 @@ export function BlockSourcePanel({ block }: { block: Block }) {
                 className="code-block min-w-0 text-code-foreground"
                 data-language={file.path.endsWith(".ts") ? "ts" : "tsx"}
                 style={
-                  {
-                    "--code-line-digits": String(file.tokens.length).length,
-                  } as CSSProperties
+                  { "--code-line-digits": file.lineDigits } as CSSProperties
                 }
-              >
-                <pre className="shiki">
-                  <code>
-                    {file.tokens.map((line, lineIndex) => (
-                      <span
-                        className="line"
-                        // biome-ignore lint/suspicious/noArrayIndexKey: token positions are static for a given file
-                        key={`${lineIndex}-${line.map((token) => token.content).join("")}`}
-                      >
-                        {line.map((token, tokenIndex) => (
-                          <span
-                            // biome-ignore lint/suspicious/noArrayIndexKey: token positions are static for a given file
-                            key={`${tokenIndex}-${token.content}`}
-                            style={
-                              {
-                                "--code-token-light": token.light,
-                                "--code-token-dark": token.dark,
-                              } as CSSProperties
-                            }
-                          >
-                            {token.content}
-                          </span>
-                        ))}
-                      </span>
-                    ))}
-                  </code>
-                </pre>
-              </div>
+                // biome-ignore lint/security/noDangerouslySetInnerHtml: highlighter output escapes the source text
+                dangerouslySetInnerHTML={{ __html: file.html }}
+              />
             </section>
           </div>
         )}
