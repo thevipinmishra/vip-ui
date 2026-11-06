@@ -6,8 +6,21 @@ import {
   useIsPresent,
   useReducedMotion,
 } from "motion/react";
-import { type ComponentProps, forwardRef, type ReactNode } from "react";
-import { duration, easeOut, springLayout, transitionFor } from "@/lib/motion";
+import {
+  type ComponentProps,
+  forwardRef,
+  type ReactNode,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+} from "react";
+import {
+  duration,
+  easeOut,
+  offset,
+  springLayout,
+  transitionFor,
+} from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 export interface PresenceListProps<T>
@@ -30,9 +43,15 @@ const PresenceListRow = forwardRef<
       inert={!isPresent}
       aria-hidden={!isPresent || undefined}
       layout={reducedMotion ? false : "position"}
-      initial={reducedMotion ? false : { opacity: 0, y: 6, scale: 0.98 }}
+      initial={
+        reducedMotion ? false : { opacity: 0, y: offset.sm, scale: 0.98 }
+      }
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.98 }}
+      exit={
+        reducedMotion
+          ? { opacity: 0 }
+          : { opacity: 0, y: -offset.sm, scale: 0.98 }
+      }
       transition={transitionFor(reducedMotion, {
         duration: duration.base,
         ease: easeOut,
@@ -52,11 +71,60 @@ export function PresenceList<T>({
   ...props
 }: PresenceListProps<T>) {
   const reducedMotion = useReducedMotion() === true;
+  const list = useRef<HTMLUListElement>(null);
+  const settled = useRef(0);
+  const morph = useRef<Animation | null>(null);
+  const keys = JSON.stringify(items.map(getKey));
+  const previousKeys = useRef(keys);
+
+  useEffect(() => {
+    const node = list.current;
+    if (!node) return;
+    const observer = new ResizeObserver(() => {
+      if (morph.current?.playState !== "running")
+        settled.current = node.getBoundingClientRect().height;
+    });
+    observer.observe(node);
+    return () => {
+      observer.disconnect();
+      morph.current?.cancel();
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    const node = list.current;
+    if (!node || previousKeys.current === keys) return;
+    previousKeys.current = keys;
+    const running = morph.current?.playState === "running";
+    const from = running
+      ? node.getBoundingClientRect().height
+      : settled.current;
+    morph.current?.cancel();
+    morph.current = null;
+    const to = node.getBoundingClientRect().height;
+    settled.current = to;
+    if (reducedMotion || !from || Math.abs(from - to) < 0.5) return;
+    const animation = node.animate(
+      [{ height: `${from}px` }, { height: `${to}px` }],
+      {
+        duration: springLayout.duration * 1000,
+        easing: `cubic-bezier(${easeOut.join(", ")})`,
+      },
+    );
+    morph.current = animation;
+    animation.onfinish = () => {
+      if (morph.current !== animation) return;
+      morph.current = null;
+      settled.current = node.getBoundingClientRect().height;
+    };
+  }, [keys, reducedMotion]);
+
   return (
     <ul
       {...props}
+      ref={list}
       data-slot="presence-list"
-      className={cn("relative grid gap-2", className)}
+      className={cn("relative grid content-start gap-2", className)}
     >
       <AnimatePresence initial={false} mode="popLayout">
         {items.map((item) => (

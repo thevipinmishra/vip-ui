@@ -382,6 +382,11 @@
           "description": "Groups related content and actions in one container."
         },
         {
+          "slug": "spotlight-card",
+          "name": "Spotlight card",
+          "description": "Shows a card with a glow and border that follow the pointer."
+        },
+        {
           "slug": "accordion",
           "name": "Accordion",
           "description": "Shows a set of sections that expand and collapse."
@@ -395,6 +400,16 @@
           "slug": "separator",
           "name": "Separator",
           "description": "Shows a line between sections of content."
+        },
+        {
+          "slug": "scroll-fade",
+          "name": "Scroll fade",
+          "description": "Fades the edges of a scroll area where more content continues."
+        },
+        {
+          "slug": "progressive-blur",
+          "name": "Progressive blur",
+          "description": "Blurs content more and more toward one edge."
         },
         {
           "slug": "avatar",
@@ -474,6 +489,16 @@
           "description": "Swaps text with a short fade when its value changes."
         },
         {
+          "slug": "text-loop",
+          "name": "Text loop",
+          "description": "Cycles through a list of words on a timer."
+        },
+        {
+          "slug": "icon-swap",
+          "name": "Icon swap",
+          "description": "Swaps one icon for another with a short scale and blur."
+        },
+        {
           "slug": "animated-number",
           "name": "Animated number",
           "description": "Counts to a new number or slides the digits that change."
@@ -484,9 +509,19 @@
           "description": "Reveals text word by word or character by character."
         },
         {
+          "slug": "highlighter",
+          "name": "Highlighter",
+          "description": "Draws a highlight, underline, or circle on a phrase when it comes into view."
+        },
+        {
           "slug": "text-scramble",
           "name": "Text scramble",
           "description": "Scrambles characters and resolves them into new text when its value changes."
+        },
+        {
+          "slug": "text-shimmer",
+          "name": "Text shimmer",
+          "description": "Moves a soft highlight across text to show that work is in progress."
         },
         {
           "slug": "presence",
@@ -512,6 +547,11 @@
           "slug": "marquee",
           "name": "Marquee",
           "description": "Loops a row of content with a built-in pause control."
+        },
+        {
+          "slug": "border-beam",
+          "name": "Border beam",
+          "description": "Moves a short light around the border of a surface."
         }
       ]
     }

@@ -4,11 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { TextSwap } from "@/components/ui/text-swap";
 
-const states = [
-  "is ready to publish.",
-  "needs one more review.",
-  "has unpublished changes.",
-];
+const states = ["ready to publish.", "in review.", "scheduled."];
 
 export function TextSwapInlineDemo() {
   const [index, setIndex] = useState(0);
@@ -16,7 +12,7 @@ export function TextSwapInlineDemo() {
   return (
     <div className="grid w-full max-w-md gap-4">
       <p className="text-lg leading-7" aria-live="polite" aria-atomic="true">
-        The Harbor Museum case study{" "}
+        Your case study is{" "}
         <TextSwap value={states[index]} className="font-medium" />
       </p>
       <div>

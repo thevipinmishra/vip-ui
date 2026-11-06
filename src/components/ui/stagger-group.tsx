@@ -2,7 +2,13 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import type { HTMLAttributes, ReactNode } from "react";
-import { duration, easeOut, maxStagger, transitionFor } from "@/lib/motion";
+import {
+  duration,
+  easeOut,
+  maxStagger,
+  offset,
+  transitionFor,
+} from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 type StaggerAttributes = Omit<
@@ -67,7 +73,7 @@ export interface StaggerItemProps extends StaggerAttributes {
 }
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 12 },
+  hidden: { opacity: 0, y: offset.lg },
   visible: { opacity: 1, y: 0 },
 };
 

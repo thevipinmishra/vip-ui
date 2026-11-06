@@ -262,6 +262,21 @@
       ]
     },
     {
+      "name": "vip-border-beam",
+      "type": "registry:ui",
+      "title": "Border Beam",
+      "description": "Moves a short light around the border of a surface.",
+      "dependencies": ["motion@^14.9.0"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/border-beam.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/border-beam.tsx"
+        }
+      ]
+    },
+    {
       "name": "vip-breadcrumbs",
       "type": "registry:ui",
       "title": "Breadcrumbs",
@@ -1196,6 +1211,44 @@
       ]
     },
     {
+      "name": "vip-highlighter",
+      "type": "registry:ui",
+      "title": "Highlighter",
+      "description": "Draws a highlight, underline, or circle on a phrase when it comes into view.",
+      "dependencies": ["motion@^14.9.0"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/highlighter.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/highlighter.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-icon-swap",
+      "type": "registry:ui",
+      "title": "Icon Swap",
+      "description": "Swaps one icon for another with a short scale and blur.",
+      "dependencies": ["motion@^14.9.0"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/icon-swap.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/icon-swap.tsx"
+        }
+      ]
+    },
+    {
       "name": "vip-inline-edit",
       "type": "registry:ui",
       "title": "Inline Edit",
@@ -1769,6 +1822,21 @@
       ]
     },
     {
+      "name": "vip-progressive-blur",
+      "type": "registry:ui",
+      "title": "Progressive Blur",
+      "description": "Blurs content more and more toward one edge.",
+      "dependencies": [],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/progressive-blur.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/progressive-blur.tsx"
+        }
+      ]
+    },
+    {
       "name": "vip-prompt-input",
       "type": "registry:ui",
       "title": "Prompt Input",
@@ -1911,6 +1979,7 @@
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-collapsible-panel.json",
         "https://vip-ui.dev/r/vip-disclosure.json",
+        "https://vip-ui.dev/r/vip-text-shimmer.json",
         "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
@@ -1947,6 +2016,21 @@
           "path": "registry/generated/src/components/vip-ui/response.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/response.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-scroll-fade",
+      "type": "registry:ui",
+      "title": "Scroll Fade",
+      "description": "Fades the edges of a scroll area where more content continues.",
+      "dependencies": [],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/scroll-fade.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/scroll-fade.tsx"
         }
       ]
     },
@@ -2196,6 +2280,29 @@
           "path": "registry/generated/src/components/vip-ui/spinner.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/spinner.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-spotlight-card",
+      "type": "registry:ui",
+      "title": "Spotlight Card",
+      "description": "Shows a card with a glow and border that follow the pointer.",
+      "dependencies": ["motion@^14.9.0"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-card.json",
+        "https://vip-ui.dev/r/vip-utils.json"
+      ],
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/spotlight-card.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/spotlight-card.tsx"
         }
       ]
     },
@@ -2471,6 +2578,21 @@
       ]
     },
     {
+      "name": "vip-text-loop",
+      "type": "registry:ui",
+      "title": "Text Loop",
+      "description": "Cycles through a list of words on a timer.",
+      "dependencies": ["motion@^14.9.0"],
+      "registryDependencies": ["https://vip-ui.dev/r/vip-text-swap.json"],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/text-loop.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/text-loop.tsx"
+        }
+      ]
+    },
+    {
       "name": "vip-text-reveal",
       "type": "registry:ui",
       "title": "Text Reveal",
@@ -2500,6 +2622,32 @@
           "path": "registry/generated/src/components/vip-ui/text-scramble.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/text-scramble.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-text-shimmer",
+      "type": "registry:ui",
+      "title": "Text Shimmer",
+      "description": "Moves a soft highlight across text to show that work is in progress.",
+      "dependencies": ["motion@^14.9.0"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-utils.json"
+      ],
+      "cssVars": {
+        "light": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)"
+        },
+        "dark": {
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/text-shimmer.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/text-shimmer.tsx"
         }
       ]
     },

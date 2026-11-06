@@ -18,6 +18,7 @@ import { composeRenderProps } from "react-aria-components";
 import { cn } from "@/lib/utils";
 import { CollapsiblePanel } from "./collapsible-panel";
 import { Disclosure, DisclosureHeader } from "./disclosure";
+import { TextShimmer } from "./text-shimmer";
 
 export type ReasoningStatus = "thinking" | "complete" | "error";
 
@@ -154,10 +155,7 @@ export function ReasoningTrigger({
             size={16}
             data-slot="reasoning-icon"
             data-active={status === "thinking" || undefined}
-            className={cn(
-              "transition-[opacity,scale] duration-150 ease-out-quint data-active:opacity-100 motion-reduce:transition-none not-data-active:scale-75 not-data-active:opacity-0",
-              status === "thinking" && "motion-safe:animate-pulse",
-            )}
+            className="transition-[opacity,scale] duration-150 ease-out-quint data-active:opacity-100 motion-reduce:transition-none not-data-active:scale-75 not-data-active:opacity-0"
           />
           <CheckCircleIcon
             size={16}
@@ -173,7 +171,11 @@ export function ReasoningTrigger({
           />
         </span>
         <span className="min-w-0 font-normal tabular-nums">
-          {thinking ? "Thinking" : statusText(status, seconds)}
+          {thinking ? (
+            <TextShimmer>Thinking</TextShimmer>
+          ) : (
+            statusText(status, seconds)
+          )}
           {thinking && seconds > 0 && (
             <span aria-hidden="true"> for {formatSeconds(seconds)}</span>
           )}

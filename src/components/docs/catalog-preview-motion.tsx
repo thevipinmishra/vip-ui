@@ -1,15 +1,20 @@
 "use client";
 
+import { CheckIcon, CopyIcon } from "@phosphor-icons/react";
 import { useInView, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { AnimatedNumber } from "@/components/ui/animated-number";
+import { Highlighter } from "@/components/ui/highlighter";
+import { IconSwap } from "@/components/ui/icon-swap";
 import { LayoutMorph } from "@/components/ui/layout-morph";
 import { Marquee } from "@/components/ui/marquee";
 import { Presence } from "@/components/ui/presence";
 import { PresenceList } from "@/components/ui/presence-list";
 import { StaggerGroup, StaggerItem } from "@/components/ui/stagger-group";
+import { TextLoop } from "@/components/ui/text-loop";
 import { TextReveal } from "@/components/ui/text-reveal";
 import { TextScramble } from "@/components/ui/text-scramble";
+import { TextShimmer } from "@/components/ui/text-shimmer";
 import { TextSwap } from "@/components/ui/text-swap";
 import type { CatalogPreviewProps } from "./catalog-preview-registry";
 
@@ -103,6 +108,30 @@ export function TextScramblePreview({ active }: CatalogPreviewProps) {
       <p className="text-3xl font-semibold tracking-tight">
         <TextScramble value={titles[tick % titles.length]} />
       </p>
+    </div>
+  );
+}
+
+export function TextShimmerPreview() {
+  return (
+    <p className="text-3xl font-semibold tracking-[-0.04em]">
+      <TextShimmer>Thinking it through</TextShimmer>
+    </p>
+  );
+}
+
+export function IconSwapPreview({ active }: CatalogPreviewProps) {
+  const { ref, tick } = usePlay(active, { interval: 1100 });
+  const copied = tick % 2 === 1;
+
+  return (
+    <div
+      ref={ref}
+      className="grid size-16 place-items-center rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]"
+    >
+      <IconSwap contentKey={copied ? "copied" : "copy"} className="text-2xl">
+        {copied ? <CheckIcon /> : <CopyIcon />}
+      </IconSwap>
     </div>
   );
 }
@@ -219,5 +248,29 @@ export function MarqueePreview() {
         </span>
       ))}
     </Marquee>
+  );
+}
+
+export function TextLoopPreview({ active }: CatalogPreviewProps) {
+  return (
+    <p className="text-3xl font-semibold tracking-[-0.04em]">
+      For{" "}
+      <TextLoop
+        values={["designers", "engineers", "writers"]}
+        interval={1.4}
+        active={active}
+        className="text-muted-foreground"
+      />
+    </p>
+  );
+}
+
+export function HighlighterPreview({ active }: CatalogPreviewProps) {
+  const { tick } = usePlay(active, { autoplay: false, interval: 2200 });
+
+  return (
+    <p key={tick} className="text-3xl font-semibold tracking-[-0.04em]">
+      Ship it <Highlighter variant="circle">today</Highlighter>
+    </p>
   );
 }

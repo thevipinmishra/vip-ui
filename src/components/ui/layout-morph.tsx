@@ -8,7 +8,7 @@ import {
   useReducedMotion,
 } from "motion/react";
 import { type ReactNode, useEffect, useLayoutEffect, useRef } from "react";
-import { duration, easeOut, transitionFor } from "@/lib/motion";
+import { duration, easeOut, offset, transitionFor } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 export interface LayoutMorphProps
@@ -34,7 +34,7 @@ function MorphContent({
   useLayoutEffect(() => {
     const node = ref.current;
     if (!node) return;
-    if (isPresent) width.current = node.offsetWidth;
+    if (isPresent) width.current = node.getBoundingClientRect().width;
     else node.style.width = `${width.current}px`;
   });
 
@@ -48,7 +48,9 @@ function MorphContent({
       inert={!isPresent}
       aria-hidden={!isPresent || undefined}
       initial={
-        reducedMotion ? false : { opacity: 0, y: 6, filter: "blur(2px)" }
+        reducedMotion
+          ? false
+          : { opacity: 0, y: offset.sm, filter: "blur(2px)" }
       }
       animate={{
         opacity: 1,
@@ -61,13 +63,14 @@ function MorphContent({
           ? { opacity: 0, transition: { duration: 0 } }
           : {
               opacity: 0,
-              y: -6,
+              y: -offset.sm,
               filter: "blur(2px)",
               transition: { duration: duration.fast, ease: easeOut },
             }
       }
       transition={transitionFor(reducedMotion, {
         duration: duration.slow,
+        delay: duration.fast / 3,
         ease: easeOut,
       })}
     >
@@ -79,7 +82,8 @@ function MorphContent({
 type Size = { width: number; height: number };
 
 function sizeOf(node: HTMLElement): Size {
-  return { width: node.offsetWidth, height: node.offsetHeight };
+  const { width, height } = node.getBoundingClientRect();
+  return { width, height };
 }
 
 export function LayoutMorph({
@@ -132,7 +136,7 @@ export function LayoutMorph({
     if (widthChanged) {
       keyframes[0].width = `${from.width}px`;
       keyframes[1].width = `${to.width}px`;
-      node.style.setProperty("--morph-width", `${to.width}px`);
+      node.style.setProperty("--morph-width", `${Math.ceil(to.width)}px`);
     }
     const animation = node.animate(keyframes, {
       duration: duration.slow * 1000,

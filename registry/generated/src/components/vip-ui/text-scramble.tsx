@@ -17,11 +17,25 @@ import { cn } from "./utils";
 
 const DEFAULT_GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
+const GLYPH_INTERVAL = 0.05;
+
 function graphemes(text: string) {
   return Array.from(
     new Intl.Segmenter(undefined, { granularity: "grapheme" }).segment(text),
     ({ segment }) => segment,
   );
+}
+
+function matchCase(glyph: string, source: string | undefined) {
+  if (!source) return glyph;
+  if (source !== source.toUpperCase()) return glyph.toLowerCase();
+  if (source !== source.toLowerCase()) return glyph.toUpperCase();
+  return glyph;
+}
+
+function pick(alphabet: string[], index: number, tick: number) {
+  const hash = Math.imul(index + 1, 2654435761) ^ Math.imul(tick + 1, 40503);
+  return alphabet[(hash >>> 0) % alphabet.length];
 }
 
 export interface TextScrambleProps
@@ -40,21 +54,28 @@ export function TextScramble({
 }: TextScrambleProps) {
   const [display, setDisplay] = useState(value);
   const previousValue = useRef(value);
+  const source = useRef<string[]>([]);
   const progress = useMotionValue(1);
   const reducedMotion = useReducedMotion();
   const characters = useMemo(() => graphemes(value), [value]);
   const alphabet = useMemo(() => graphemes(glyphs || DEFAULT_GLYPHS), [glyphs]);
 
   useMotionValueEvent(progress, "change", (latest) => {
+    const from = source.current;
+    const length = Math.round(
+      from.length + (characters.length - from.length) * latest,
+    );
     const resolved = Math.floor(latest * characters.length);
+    const tick = Math.floor((latest * duration) / GLYPH_INTERVAL);
     setDisplay(
-      characters
-        .map((character, index) =>
-          index < resolved || /^\s$/u.test(character)
-            ? character
-            : alphabet[Math.floor(Math.random() * alphabet.length)],
-        )
-        .join(""),
+      Array.from({ length }, (_, index) => {
+        const target = characters[index];
+        if (index < resolved || (target && target === from[index]))
+          return target;
+        const reference = target ?? from[index];
+        if (/^\s$/u.test(reference)) return reference;
+        return matchCase(pick(alphabet, index, tick), reference);
+      }).join(""),
     );
   });
 
@@ -63,6 +84,7 @@ export function TextScramble({
       progress.set(1);
       return;
     }
+    source.current = graphemes(previousValue.current);
     previousValue.current = value;
     if (!value || reducedMotion || duration <= 0) {
       progress.set(1);

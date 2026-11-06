@@ -7,6 +7,12 @@ export const duration = {
   reveal: 0.45,
 } as const;
 
+export const offset = {
+  sm: 4,
+  md: 8,
+  lg: 12,
+} as const;
+
 export const maxStagger = 0.6;
 
 export const easeOut = [0.23, 1, 0.32, 1] as const;

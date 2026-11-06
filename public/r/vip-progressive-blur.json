@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-progressive-blur",
+  "type": "registry:ui",
+  "title": "Progressive Blur",
+  "description": "Blurs content more and more toward one edge.",
+  "dependencies": [],
+  "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
+  "files": [
+    {
+      "path": "src/components/ui/progressive-blur.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/progressive-blur.tsx",
+      "content": "import type { ComponentProps } from \"react\";\nimport { cn } from \"./utils\";\n\nexport type ProgressiveBlurSide = \"top\" | \"bottom\" | \"left\" | \"right\";\n\nexport interface ProgressiveBlurProps\n  extends Omit<ComponentProps<\"div\">, \"children\"> {\n  side?: ProgressiveBlurSide;\n  blur?: number;\n}\n\nconst layers = 5;\nconst steps = Array.from({ length: layers }, (_, step) => step);\n\nconst placement: Record<ProgressiveBlurSide, string> = {\n  top: \"inset-x-0 top-0 h-16\",\n  bottom: \"inset-x-0 bottom-0 h-16\",\n  left: \"inset-y-0 left-0 w-16\",\n  right: \"inset-y-0 right-0 w-16\",\n};\n\nfunction layerMask(side: ProgressiveBlurSide, index: number) {\n  const stop = (step: number) => `${Math.min(100, (step / layers) * 100)}%`;\n  const end =\n    index + 3 > layers ? \"black 100%\" : `transparent ${stop(index + 3)}`;\n  return `linear-gradient(to ${side}, transparent ${stop(index)}, black ${stop(index + 1)}, black ${stop(index + 2)}, ${end})`;\n}\n\nexport function ProgressiveBlur({\n  side = \"bottom\",\n  blur = 12,\n  className,\n  ...props\n}: ProgressiveBlurProps) {\n  return (\n    <div\n      aria-hidden=\"true\"\n      {...props}\n      data-slot=\"progressive-blur\"\n      data-side={side}\n      className={cn(\n        \"pointer-events-none absolute select-none\",\n        placement[side],\n        className,\n      )}\n    >\n      {steps.map((step) => {\n        const filter = `blur(${blur / 2 ** (layers - 1 - step)}px)`;\n        const mask = layerMask(side, step);\n        return (\n          <div\n            key={step}\n            className=\"absolute inset-0\"\n            style={{\n              backdropFilter: filter,\n              WebkitBackdropFilter: filter,\n              maskImage: mask,\n              WebkitMaskImage: mask,\n            }}\n          />\n        );\n      })}\n    </div>\n  );\n}\n"
+    }
+  ]
+}

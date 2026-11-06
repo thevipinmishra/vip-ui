@@ -1649,6 +1649,13 @@ const pageSources = {
         sourcePath: "presence-focus-demo.tsx",
         uses: ["button"],
       },
+      {
+        title: "Collapse",
+        description:
+          "Set `collapse` to animate the height, so the content below moves smoothly. Put padding on a child, not on `Presence`.",
+        sourcePath: "presence-collapse-demo.tsx",
+        uses: ["alert", "button"],
+      },
     ],
   },
   "source-link": {
@@ -1717,19 +1724,96 @@ const pageSources = {
       },
     ],
   },
+  "icon-swap": {
+    usage: "icon-swap-demo.tsx",
+    examples: [
+      {
+        title: "Toggle button",
+        sourcePath: "icon-swap-toggle-demo.tsx",
+        uses: ["toggle-button"],
+      },
+      {
+        title: "Loading state",
+        description: "Any element can be a child, such as a `Spinner`.",
+        sourcePath: "icon-swap-loading-demo.tsx",
+        uses: ["button", "spinner"],
+      },
+    ],
+  },
+  "text-shimmer": {
+    usage: "text-shimmer-demo.tsx",
+    examples: [
+      {
+        title: "Agent steps",
+        sourcePath: "text-shimmer-steps-demo.tsx",
+        uses: ["button"],
+      },
+      {
+        title: "Color",
+        description:
+          "Set the text color for the base and `--text-shimmer-highlight` for the highlight.",
+        sourcePath: "text-shimmer-color-demo.tsx",
+      },
+    ],
+  },
+  "scroll-fade": {
+    usage: "scroll-fade-demo.tsx",
+    examples: [
+      {
+        title: "Horizontal",
+        sourcePath: "scroll-fade-horizontal-demo.tsx",
+        uses: ["tag-group"],
+      },
+      {
+        title: "Fade size",
+        description:
+          "Use the `--scroll-fade-size` CSS variable to set the length of the fade.",
+        sourcePath: "scroll-fade-size-demo.tsx",
+      },
+    ],
+  },
   "text-swap": {
     usage: "text-swap-demo.tsx",
     examples: [
       {
         title: "Button label",
-        description: "Set a minimum width so the button keeps its size.",
         sourcePath: "text-swap-button-demo.tsx",
         uses: ["button"],
       },
       {
         title: "Inline phrase",
+        description:
+          "The value is one box and does not wrap with the text around it. Keep it short.",
         sourcePath: "text-swap-inline-demo.tsx",
         uses: ["button"],
+      },
+    ],
+  },
+  "text-loop": {
+    usage: "text-loop-demo.tsx",
+    examples: [
+      {
+        title: "Pause",
+        description:
+          "Set `active` to false to stop the loop. Give users a way to pause a loop that runs next to other content.",
+        sourcePath: "text-loop-pause-demo.tsx",
+        uses: ["toggle-button"],
+      },
+    ],
+  },
+  highlighter: {
+    usage: "highlighter-demo.tsx",
+    examples: [
+      {
+        title: "Variants",
+        sourcePath: "highlighter-variants-demo.tsx",
+        uses: ["button"],
+      },
+      {
+        title: "Sequence",
+        description:
+          "Use `delay` to draw marks one after another. Set `--highlighter-color` to change the color.",
+        sourcePath: "highlighter-sequence-demo.tsx",
       },
     ],
   },
@@ -1927,6 +2011,57 @@ const pageSources = {
         description:
           "Pass `dragAndDropHooks` to move rows; drop a row on a folder to move it inside. To move a row with the keyboard, press Right Arrow to reach the handle, press Enter, then use the arrow keys.",
         sourcePath: "tree-drag-demo.tsx",
+      },
+    ],
+  },
+  "spotlight-card": {
+    usage: "spotlight-card-demo.tsx",
+    examples: [
+      {
+        title: "Feature grid",
+        description:
+          "The light follows the pointer across the grid, so the borders of nearby cards also light up.",
+        sourcePath: "spotlight-card-grid-demo.tsx",
+      },
+      {
+        title: "Color and size",
+        description:
+          "Use the `--spotlight-color` and `--spotlight-size` CSS variables to change the light.",
+        sourcePath: "spotlight-card-color-demo.tsx",
+      },
+    ],
+  },
+  "border-beam": {
+    usage: "border-beam-demo.tsx",
+    examples: [
+      {
+        title: "Active prompt",
+        description:
+          "Set `active` to show the beam only while work is in progress.",
+        sourcePath: "border-beam-prompt-demo.tsx",
+        uses: ["prompt-input"],
+      },
+      {
+        title: "Color and width",
+        description:
+          "Use the `--border-beam-color` and `--border-beam-width` CSS variables. Match the width to the border.",
+        sourcePath: "border-beam-color-demo.tsx",
+      },
+    ],
+  },
+  "progressive-blur": {
+    usage: "progressive-blur-demo.tsx",
+    examples: [
+      {
+        title: "Sticky header",
+        description:
+          "Put the blur inside the sticky header and extend it below the header.",
+        sourcePath: "progressive-blur-header-demo.tsx",
+      },
+      {
+        title: "Caption",
+        description: "Increase `blur` to keep text readable on busy media.",
+        sourcePath: "progressive-blur-caption-demo.tsx",
       },
     ],
   },
@@ -2458,6 +2593,43 @@ export function ProjectTabs() {
 }`,
     filename: "project-tabs.tsx",
   },
+  "icon-swap": {
+    code: `import { CheckIcon, CopyIcon } from "@phosphor-icons/react";
+import { IconSwap } from "@/components/vip-ui/icon-swap";
+
+export function CopyIndicator({ copied }: { copied: boolean }) {
+  return (
+    <IconSwap contentKey={copied ? "copied" : "copy"}>
+      {copied ? <CheckIcon /> : <CopyIcon />}
+    </IconSwap>
+  );
+}`,
+    filename: "copy-indicator.tsx",
+  },
+  "text-shimmer": {
+    code: `import { TextShimmer } from "@/components/vip-ui/text-shimmer";
+
+export function SearchStatus() {
+  return <TextShimmer>Searching 24 sources</TextShimmer>;
+}`,
+    filename: "search-status.tsx",
+  },
+  "scroll-fade": {
+    code: `import { ScrollFade } from "@/components/vip-ui/scroll-fade";
+
+export function ActivityFeed({ items }: { items: string[] }) {
+  return (
+    <ScrollFade className="h-64" tabIndex={0} aria-label="Activity">
+      <ul>
+        {items.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    </ScrollFade>
+  );
+}`,
+    filename: "activity-feed.tsx",
+  },
   "text-swap": {
     code: `import { TextSwap } from "@/components/vip-ui/text-swap";
 
@@ -2465,6 +2637,30 @@ export function PublishStatus({ status }: { status: string }) {
   return <TextSwap value={status} aria-live="polite" />;
 }`,
     filename: "publish-status.tsx",
+  },
+  "text-loop": {
+    code: `import { TextLoop } from "@/components/vip-ui/text-loop";
+
+export function Tagline() {
+  return (
+    <h1>
+      Built for <TextLoop values={["designers", "engineers", "founders"]} />
+    </h1>
+  );
+}`,
+    filename: "tagline.tsx",
+  },
+  highlighter: {
+    code: `import { Highlighter } from "@/components/vip-ui/highlighter";
+
+export function Lead() {
+  return (
+    <p>
+      Plan the launch and <Highlighter>ship on the same day</Highlighter>.
+    </p>
+  );
+}`,
+    filename: "lead.tsx",
   },
   "animated-number": {
     code: `import { AnimatedNumber } from "@/components/vip-ui/animated-number";
@@ -2736,6 +2932,50 @@ export function ProjectTable() {
   );
 }`,
     filename: "project-table.tsx",
+  },
+  "spotlight-card": {
+    code: `import { CardHeader, CardTitle } from "@/components/vip-ui/card";
+import { SpotlightCard } from "@/components/vip-ui/spotlight-card";
+
+export function FeatureCard() {
+  return (
+    <SpotlightCard>
+      <CardHeader>
+        <CardTitle>Shared inbox</CardTitle>
+      </CardHeader>
+    </SpotlightCard>
+  );
+}`,
+    filename: "feature-card.tsx",
+  },
+  "border-beam": {
+    code: `import { BorderBeam } from "@/components/vip-ui/border-beam";
+import { Card } from "@/components/vip-ui/card";
+
+export function FeaturedPlan() {
+  return (
+    <Card>
+      <p>Pro</p>
+      <BorderBeam />
+    </Card>
+  );
+}`,
+    filename: "featured-plan.tsx",
+    note: "Put the beam inside a positioned element with a border. It takes the radius of that element.",
+  },
+  "progressive-blur": {
+    code: `import type { ReactNode } from "react";
+import { ProgressiveBlur } from "@/components/vip-ui/progressive-blur";
+
+export function Feed({ children }: { children: ReactNode }) {
+  return (
+    <div className="relative">
+      <div className="h-64 overflow-y-auto">{children}</div>
+      <ProgressiveBlur side="bottom" />
+    </div>
+  );
+}`,
+    filename: "feed.tsx",
   },
 } as const satisfies Record<string, ComponentUsage>;
 

@@ -6,6 +6,7 @@ import type { Attachment, AttachmentList } from "@/components/ui/attachment";
 import type { Autocomplete } from "@/components/ui/autocomplete";
 import type { Avatar } from "@/components/ui/avatar";
 import type { Badge } from "@/components/ui/badge";
+import type { BorderBeam } from "@/components/ui/border-beam";
 import type { Button } from "@/components/ui/button";
 import type { ButtonGroup } from "@/components/ui/button-group";
 import type { ButtonLink } from "@/components/ui/button-link";
@@ -28,6 +29,8 @@ import type { DateRangePicker } from "@/components/ui/date-range-picker";
 import type { DialogClose, DialogContent } from "@/components/ui/dialog";
 import type { EmptyStateTitle } from "@/components/ui/empty-state";
 import type { FileTrigger } from "@/components/ui/file-trigger";
+import type { Highlighter } from "@/components/ui/highlighter";
+import type { IconSwap } from "@/components/ui/icon-swap";
 import type { InlineEdit } from "@/components/ui/inline-edit";
 import type { InputGroup, InputGroupAddon } from "@/components/ui/input-group";
 import type { LayoutMorph } from "@/components/ui/layout-morph";
@@ -44,6 +47,7 @@ import type { Presence } from "@/components/ui/presence";
 import type { PresenceList } from "@/components/ui/presence-list";
 import type { ProgressBar } from "@/components/ui/progress-bar";
 import type { ProgressRing } from "@/components/ui/progress-ring";
+import type { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import type {
   PromptInput,
   PromptInputSubmit,
@@ -53,12 +57,14 @@ import type { Radio, RadioGroup } from "@/components/ui/radio-group";
 import type { RatingInput } from "@/components/ui/rating-input";
 import type { Reasoning, ReasoningPanel } from "@/components/ui/reasoning";
 import type { Response, ResponseContent } from "@/components/ui/response";
+import type { ScrollFade } from "@/components/ui/scroll-fade";
 import type { SearchField } from "@/components/ui/search-field";
 import type { Select, SelectSection } from "@/components/ui/select";
 import type { Sheet, SheetClose } from "@/components/ui/sheet";
 import type { Slider, SliderMarks } from "@/components/ui/slider";
 import type { SourceLink } from "@/components/ui/source-link";
 import type { Spinner } from "@/components/ui/spinner";
+import type { SpotlightCard } from "@/components/ui/spotlight-card";
 import type { StaggerGroup, StaggerItem } from "@/components/ui/stagger-group";
 import type { StatTrend } from "@/components/ui/stat";
 import type { Stepper } from "@/components/ui/stepper";
@@ -73,8 +79,10 @@ import type {
 import type { TagGroup } from "@/components/ui/tag-group";
 import type { TextArea } from "@/components/ui/text-area";
 import type { TextField } from "@/components/ui/text-field";
+import type { TextLoop } from "@/components/ui/text-loop";
 import type { TextReveal } from "@/components/ui/text-reveal";
 import type { TextScramble } from "@/components/ui/text-scramble";
+import type { TextShimmer } from "@/components/ui/text-shimmer";
 import type { TextSwap } from "@/components/ui/text-swap";
 import type { TimeField } from "@/components/ui/time-field";
 import type { TimelineItem, TimelineTitle } from "@/components/ui/timeline";
@@ -242,6 +250,13 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           default: "0.2",
           description:
             "Entrance time in seconds. The exit takes 70% of this time.",
+        },
+        {
+          name: "collapse",
+          type: "boolean",
+          default: "false",
+          description:
+            "Animates the height with the content, so the content below moves smoothly.",
         },
       ],
     }),
@@ -1068,6 +1083,73 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       ],
     }),
   ],
+  "icon-swap": [
+    apiPart<typeof IconSwap>({
+      name: "IconSwap",
+      props: [
+        {
+          name: "contentKey",
+          type: "string | number",
+          required: true,
+          description:
+            "Identifies the current icon. A change animates the new icon in and the old icon out.",
+        },
+        {
+          name: "children",
+          type: "ReactNode",
+          required: true,
+          description:
+            "The icon to show. It is hidden from assistive technology, so label the control that contains it.",
+        },
+      ],
+    }),
+  ],
+  "text-shimmer": [
+    apiPart<typeof TextShimmer>({
+      name: "TextShimmer",
+      props: [
+        {
+          name: "active",
+          type: "boolean",
+          default: "true",
+          description: "Runs the highlight. Set false when the work is done.",
+        },
+        {
+          name: "duration",
+          type: "number",
+          default: "1.6",
+          description:
+            "Time in seconds for one pass of the highlight. A short pause follows each pass.",
+        },
+        {
+          name: "--text-shimmer-highlight",
+          type: "CSS color",
+          default: "var(--color-foreground)",
+          description: "Color of the highlight. Set it in className.",
+        },
+      ],
+    }),
+  ],
+  "scroll-fade": [
+    apiPart<typeof ScrollFade>({
+      name: "ScrollFade",
+      props: [
+        {
+          name: "orientation",
+          type: '"vertical" | "horizontal"',
+          default: '"vertical"',
+          description: "Direction in which the content scrolls.",
+        },
+        {
+          name: "--scroll-fade-size",
+          type: "CSS length",
+          default: "1.5rem",
+          description:
+            "Maximum length of each fade. A fade grows as the content scrolls away from that edge. Set it in className.",
+        },
+      ],
+    }),
+  ],
   "text-swap": [
     apiPart<typeof TextSwap>({
       name: "TextSwap",
@@ -1078,6 +1160,65 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           required: true,
           description:
             "Sets the text to show. A change animates; the first value shows without animation. Add `aria-live` to announce changes. A long value truncates where text cannot wrap, such as in a button.",
+        },
+      ],
+    }),
+  ],
+  "text-loop": [
+    apiPart<typeof TextLoop>({
+      name: "TextLoop",
+      props: [
+        {
+          name: "values",
+          type: "readonly string[]",
+          required: true,
+          description:
+            "Sets the words to cycle through. The first value shows when motion is reduced.",
+        },
+        {
+          name: "interval",
+          type: "number",
+          default: "2.5",
+          description: "Time in seconds that each value stays on screen.",
+        },
+        {
+          name: "active",
+          type: "boolean",
+          default: "true",
+          description:
+            "Runs the loop. Set false to stop on the current value. The loop also stops when it is off screen.",
+        },
+      ],
+    }),
+  ],
+  highlighter: [
+    apiPart<typeof Highlighter>({
+      name: "Highlighter",
+      props: [
+        {
+          name: "variant",
+          type: '"highlight" | "underline" | "circle"',
+          default: '"highlight"',
+          description:
+            "Sets the mark to draw. A highlight wraps with the text. An underline or a circle keeps the phrase together.",
+        },
+        {
+          name: "trigger",
+          type: '"mount" | "in-view"',
+          default: '"in-view"',
+          description: "Draws the mark on mount or when the phrase is in view.",
+        },
+        {
+          name: "delay",
+          type: "number",
+          default: "0",
+          description: "Time in seconds to wait before the mark draws.",
+        },
+        {
+          name: "--highlighter-color",
+          type: "CSS color",
+          default: "var(--chart-3)",
+          description: "Color of the mark. Set it in className.",
         },
       ],
     }),
@@ -2981,6 +3122,79 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           default: '"md"',
           description:
             "Sets the size of each tag and its remove button. A size on a tag overrides it.",
+        },
+      ],
+    }),
+  ],
+  "spotlight-card": [
+    apiPart<typeof SpotlightCard>({
+      name: "SpotlightCard",
+      description:
+        "Accepts the same props as `Card`. Compose it with the Card parts.",
+      props: [
+        {
+          name: "--spotlight-color",
+          type: "CSS color",
+          default: "var(--color-foreground)",
+          description: "Color of the glow and the border light.",
+        },
+        {
+          name: "--spotlight-size",
+          type: "CSS length",
+          default: "20rem",
+          description: "Radius of the light around the pointer.",
+        },
+      ],
+    }),
+  ],
+  "border-beam": [
+    apiPart<typeof BorderBeam>({
+      name: "BorderBeam",
+      props: [
+        {
+          name: "active",
+          type: "boolean",
+          default: "true",
+          description: "Shows the beam. Set false to remove it.",
+        },
+        {
+          name: "duration",
+          type: "number",
+          default: "6",
+          description: "Time in seconds for one lap around the border.",
+        },
+        {
+          name: "--border-beam-color",
+          type: "CSS color",
+          default: "var(--color-foreground)",
+          description: "Color of the beam. Set it in className.",
+        },
+        {
+          name: "--border-beam-width",
+          type: "CSS length",
+          default: "1px",
+          description:
+            "Width of the beam. Make it the same as the border width.",
+        },
+      ],
+    }),
+  ],
+  "progressive-blur": [
+    apiPart<typeof ProgressiveBlur>({
+      name: "ProgressiveBlur",
+      props: [
+        {
+          name: "side",
+          type: '"top" | "bottom" | "left" | "right"',
+          default: '"bottom"',
+          description:
+            "Edge with the strongest blur. The component sits on this edge of its positioned parent.",
+        },
+        {
+          name: "blur",
+          type: "number",
+          default: "12",
+          description: "Blur radius in pixels at the edge.",
         },
       ],
     }),

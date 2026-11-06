@@ -11,6 +11,9 @@ import { AvatarBasicDemo } from "@/components/docs/avatar-basic-demo";
 import { AvatarDemo } from "@/components/docs/avatar-demo";
 import { AvatarFallbackDemo } from "@/components/docs/avatar-fallback-demo";
 import { AvatarSizesDemo } from "@/components/docs/avatar-sizes-demo";
+import { BorderBeamColorDemo } from "@/components/docs/border-beam-color-demo";
+import { BorderBeamDemo } from "@/components/docs/border-beam-demo";
+import { BorderBeamPromptDemo } from "@/components/docs/border-beam-prompt-demo";
 import { BreadcrumbsCollapsedDemo } from "@/components/docs/breadcrumbs-collapsed-demo";
 import { BreadcrumbsDemo } from "@/components/docs/breadcrumbs-demo";
 import { BreadcrumbsFoldersDemo } from "@/components/docs/breadcrumbs-folders-demo";
@@ -89,6 +92,12 @@ import { FormValidationDemo } from "@/components/docs/form-validation-demo";
 import { GridListDemo } from "@/components/docs/grid-list-demo";
 import { GridListDisabledDemo } from "@/components/docs/grid-list-disabled-demo";
 import { GridListSelectionDemo } from "@/components/docs/grid-list-selection-demo";
+import { HighlighterDemo } from "@/components/docs/highlighter-demo";
+import { HighlighterSequenceDemo } from "@/components/docs/highlighter-sequence-demo";
+import { HighlighterVariantsDemo } from "@/components/docs/highlighter-variants-demo";
+import { IconSwapDemo } from "@/components/docs/icon-swap-demo";
+import { IconSwapLoadingDemo } from "@/components/docs/icon-swap-loading-demo";
+import { IconSwapToggleDemo } from "@/components/docs/icon-swap-toggle-demo";
 import { InlineEditBasicDemo } from "@/components/docs/inline-edit-basic-demo";
 import { InlineEditDemo } from "@/components/docs/inline-edit-demo";
 import { InlineEditDisabledDemo } from "@/components/docs/inline-edit-disabled-demo";
@@ -126,6 +135,7 @@ import { PopoverDemo } from "@/components/docs/popover-demo";
 import { PopoverFormDemo } from "@/components/docs/popover-form-demo";
 import { PopoverPlacementDemo } from "@/components/docs/popover-placement-demo";
 import { PopoverPreviewDemo } from "@/components/docs/popover-preview-demo";
+import { PresenceCollapseDemo } from "@/components/docs/presence-collapse-demo";
 import { PresenceDemo } from "@/components/docs/presence-demo";
 import { PresenceFocusDemo } from "@/components/docs/presence-focus-demo";
 import { PresenceInlineDemo } from "@/components/docs/presence-inline-demo";
@@ -138,6 +148,9 @@ import { ProgressRingBasicDemo } from "@/components/docs/progress-ring-basic-dem
 import { ProgressRingDemo } from "@/components/docs/progress-ring-demo";
 import { ProgressRingLabelDemo } from "@/components/docs/progress-ring-label-demo";
 import { ProgressRingSizesDemo } from "@/components/docs/progress-ring-sizes-demo";
+import { ProgressiveBlurCaptionDemo } from "@/components/docs/progressive-blur-caption-demo";
+import { ProgressiveBlurDemo } from "@/components/docs/progressive-blur-demo";
+import { ProgressiveBlurHeaderDemo } from "@/components/docs/progressive-blur-header-demo";
 import { PromptInputAttachmentsDemo } from "@/components/docs/prompt-input-attachments-demo";
 import { PromptInputDemo } from "@/components/docs/prompt-input-demo";
 import { PromptInputDropDemo } from "@/components/docs/prompt-input-drop-demo";
@@ -162,6 +175,9 @@ import { ResponseDemo } from "@/components/docs/response-demo";
 import { ResponseErrorDemo } from "@/components/docs/response-error-demo";
 import { ResponseSourcesDemo } from "@/components/docs/response-sources-demo";
 import { ResponseStoppedDemo } from "@/components/docs/response-stopped-demo";
+import { ScrollFadeDemo } from "@/components/docs/scroll-fade-demo";
+import { ScrollFadeHorizontalDemo } from "@/components/docs/scroll-fade-horizontal-demo";
+import { ScrollFadeSizeDemo } from "@/components/docs/scroll-fade-size-demo";
 import { SeparatorDemo } from "@/components/docs/separator-demo";
 import { SeparatorVerticalDemo } from "@/components/docs/separator-vertical-demo";
 import { SkeletonBasicDemo } from "@/components/docs/skeleton-basic-demo";
@@ -175,6 +191,9 @@ import { SpinnerDemo } from "@/components/docs/spinner-demo";
 import { SpinnerOverlayDemo } from "@/components/docs/spinner-overlay-demo";
 import { SpinnerSizesDemo } from "@/components/docs/spinner-sizes-demo";
 import { SpinnerUsageDemo } from "@/components/docs/spinner-usage-demo";
+import { SpotlightCardColorDemo } from "@/components/docs/spotlight-card-color-demo";
+import { SpotlightCardDemo } from "@/components/docs/spotlight-card-demo";
+import { SpotlightCardGridDemo } from "@/components/docs/spotlight-card-grid-demo";
 import { StaggerGroupBasicDemo } from "@/components/docs/stagger-group-basic-demo";
 import { StaggerGroupDemo } from "@/components/docs/stagger-group-demo";
 import { StaggerGroupTimingDemo } from "@/components/docs/stagger-group-timing-demo";
@@ -197,12 +216,17 @@ import { TagGroupDemo } from "@/components/docs/tag-group-demo";
 import { TagGroupLinksDemo } from "@/components/docs/tag-group-links-demo";
 import { TagGroupSelectionDemo } from "@/components/docs/tag-group-selection-demo";
 import { TagGroupSizesDemo } from "@/components/docs/tag-group-sizes-demo";
+import { TextLoopDemo } from "@/components/docs/text-loop-demo";
+import { TextLoopPauseDemo } from "@/components/docs/text-loop-pause-demo";
 import { TextRevealBasicDemo } from "@/components/docs/text-reveal-basic-demo";
 import { TextRevealCharactersDemo } from "@/components/docs/text-reveal-characters-demo";
 import { TextRevealDemo } from "@/components/docs/text-reveal-demo";
 import { TextScrambleBasicDemo } from "@/components/docs/text-scramble-basic-demo";
 import { TextScrambleDemo } from "@/components/docs/text-scramble-demo";
 import { TextScrambleDurationDemo } from "@/components/docs/text-scramble-duration-demo";
+import { TextShimmerColorDemo } from "@/components/docs/text-shimmer-color-demo";
+import { TextShimmerDemo } from "@/components/docs/text-shimmer-demo";
+import { TextShimmerStepsDemo } from "@/components/docs/text-shimmer-steps-demo";
 import { TextSwapButtonDemo } from "@/components/docs/text-swap-button-demo";
 import { TextSwapDemo } from "@/components/docs/text-swap-demo";
 import { TextSwapInlineDemo } from "@/components/docs/text-swap-inline-demo";
@@ -278,6 +302,7 @@ const entries: {
     name: "Separator",
     demo: <SeparatorDemo />,
   },
+  { slug: "scroll-fade", name: "Scroll fade", demo: <ScrollFadeDemo /> },
   {
     slug: "progress-bar",
     name: "Progress bar",
@@ -500,12 +525,16 @@ const entries: {
     name: "Text swap",
     demo: <TextSwapDemo />,
   },
+  { slug: "text-loop", name: "Text loop", demo: <TextLoopDemo /> },
+  { slug: "icon-swap", name: "Icon swap", demo: <IconSwapDemo /> },
   { slug: "text-reveal", name: "Text reveal", demo: <TextRevealBasicDemo /> },
+  { slug: "highlighter", name: "Highlighter", demo: <HighlighterDemo /> },
   {
     slug: "text-scramble",
     name: "Text scramble",
     demo: <TextScrambleBasicDemo />,
   },
+  { slug: "text-shimmer", name: "Text shimmer", demo: <TextShimmerDemo /> },
   { slug: "presence", name: "Presence", demo: <PresenceDemo /> },
   {
     slug: "stagger-group",
@@ -525,6 +554,17 @@ const entries: {
   { slug: "prompt-input", name: "Prompt input", demo: <PromptInputDemo /> },
   { slug: "reasoning", name: "Reasoning", demo: <ReasoningDemo /> },
   { slug: "response", name: "Response", demo: <ResponseDemo /> },
+  {
+    slug: "spotlight-card",
+    name: "Spotlight card",
+    demo: <SpotlightCardDemo />,
+  },
+  { slug: "border-beam", name: "Border beam", demo: <BorderBeamDemo /> },
+  {
+    slug: "progressive-blur",
+    name: "Progressive blur",
+    demo: <ProgressiveBlurDemo />,
+  },
 ];
 
 const basicPreviews: Record<string, { demo: ReactNode; source: string }> = {
@@ -670,6 +710,18 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <SkeletonLoadingDemo key="preview-2" />,
   ],
   separator: [<SeparatorVerticalDemo key="preview-1" />],
+  "scroll-fade": [
+    <ScrollFadeHorizontalDemo key="preview-1" />,
+    <ScrollFadeSizeDemo key="preview-2" />,
+  ],
+  "icon-swap": [
+    <IconSwapToggleDemo key="preview-1" />,
+    <IconSwapLoadingDemo key="preview-2" />,
+  ],
+  "text-shimmer": [
+    <TextShimmerStepsDemo key="preview-1" />,
+    <TextShimmerColorDemo key="preview-2" />,
+  ],
   stat: [
     <StatTrendDemo key="preview-1" />,
     <StatGroupDemo key="preview-2" />,
@@ -690,6 +742,7 @@ const examplePreviews: Record<string, ReactNode[]> = {
   presence: [
     <PresenceInlineDemo key="preview-1" />,
     <PresenceFocusDemo key="preview-2" />,
+    <PresenceCollapseDemo key="preview-3" />,
   ],
   "stagger-group": [
     <StaggerGroupDemo key="preview-1" />,
@@ -897,6 +950,23 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <TreeSelectionDemo key="preview-2" />,
     <TreeSectionsDemo key="preview-3" />,
     <TreeDragDemo key="preview-4" />,
+  ],
+  "spotlight-card": [
+    <SpotlightCardGridDemo key="preview-1" />,
+    <SpotlightCardColorDemo key="preview-2" />,
+  ],
+  "border-beam": [
+    <BorderBeamPromptDemo key="preview-1" />,
+    <BorderBeamColorDemo key="preview-2" />,
+  ],
+  "progressive-blur": [
+    <ProgressiveBlurHeaderDemo key="preview-1" />,
+    <ProgressiveBlurCaptionDemo key="preview-2" />,
+  ],
+  "text-loop": [<TextLoopPauseDemo key="preview-1" />],
+  highlighter: [
+    <HighlighterVariantsDemo key="preview-1" />,
+    <HighlighterSequenceDemo key="preview-2" />,
   ],
 };
 
