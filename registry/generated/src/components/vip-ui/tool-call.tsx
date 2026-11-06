@@ -105,7 +105,7 @@ export function ToolCallTrigger({
         data-slot="tool-call-trigger"
         data-status={status}
         className={cn(
-          "min-h-12 items-start rounded-xl px-3 py-2.5 hover:bg-muted/70 aria-expanded:rounded-b-none focus-visible:-outline-offset-2 [&>span:first-child]:min-w-0 [&>span:first-child]:flex-1 [&>span:last-child]:mt-2",
+          "min-h-12 items-start rounded-xl px-3 py-2.5 hover:bg-muted/70 [&>span:first-child]:min-w-0 [&>span:first-child]:flex-1 [&>span:last-child]:mt-2",
           className,
         )}
       >
