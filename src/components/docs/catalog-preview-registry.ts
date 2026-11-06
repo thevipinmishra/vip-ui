@@ -403,6 +403,11 @@ export const catalogPreviews: Record<string, CatalogPreviewEntry> = {
     load: () =>
       import("./separator-demo").then((m) => ({ default: m.SeparatorDemo })),
   },
+  "scroll-fade": {
+    scale: 0.7,
+    load: () =>
+      import("./scroll-fade-demo").then((m) => ({ default: m.ScrollFadeDemo })),
+  },
   avatar: {
     scale: 1,
     load: () =>
@@ -472,6 +477,12 @@ export const catalogPreviews: Record<string, CatalogPreviewEntry> = {
         default: m.TextSwapPreview,
       })),
   },
+  "text-loop": {
+    load: () =>
+      import("./catalog-preview-motion").then((m) => ({
+        default: m.TextLoopPreview,
+      })),
+  },
   "animated-number": {
     load: () =>
       import("./catalog-preview-motion").then((m) => ({
@@ -484,10 +495,28 @@ export const catalogPreviews: Record<string, CatalogPreviewEntry> = {
         default: m.TextRevealPreview,
       })),
   },
+  highlighter: {
+    load: () =>
+      import("./catalog-preview-motion").then((m) => ({
+        default: m.HighlighterPreview,
+      })),
+  },
   "text-scramble": {
     load: () =>
       import("./catalog-preview-motion").then((m) => ({
         default: m.TextScramblePreview,
+      })),
+  },
+  "text-shimmer": {
+    load: () =>
+      import("./catalog-preview-motion").then((m) => ({
+        default: m.TextShimmerPreview,
+      })),
+  },
+  "icon-swap": {
+    load: () =>
+      import("./catalog-preview-motion").then((m) => ({
+        default: m.IconSwapPreview,
       })),
   },
   presence: {
@@ -521,6 +550,24 @@ export const catalogPreviews: Record<string, CatalogPreviewEntry> = {
     load: () =>
       import("./catalog-preview-motion").then((m) => ({
         default: m.MarqueePreview,
+      })),
+  },
+  "spotlight-card": {
+    load: () =>
+      import("./catalog-preview-effects").then((m) => ({
+        default: m.SpotlightCardPreview,
+      })),
+  },
+  "border-beam": {
+    load: () =>
+      import("./catalog-preview-effects").then((m) => ({
+        default: m.BorderBeamPreview,
+      })),
+  },
+  "progressive-blur": {
+    load: () =>
+      import("./catalog-preview-effects").then((m) => ({
+        default: m.ProgressiveBlurPreview,
       })),
   },
 };

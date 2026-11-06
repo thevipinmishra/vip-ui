@@ -8,7 +8,12 @@ import {
   useReducedMotion,
 } from "motion/react";
 import type { ReactNode } from "react";
-import { duration as durations, easeOut, transitionFor } from "./motion";
+import {
+  duration as durations,
+  easeOut,
+  offset,
+  transitionFor,
+} from "./motion";
 import { cn } from "./utils";
 
 export interface PresenceProps
@@ -21,14 +26,16 @@ export interface PresenceProps
   as?: "div" | "span";
   distance?: number;
   duration?: number;
+  collapse?: boolean;
 }
 
 function PresenceContent({
   as,
   children,
   className,
-  distance = 8,
+  distance = offset.md,
   duration = durations.base,
+  collapse = false,
   ...props
 }: Omit<PresenceProps, "show">) {
   const isPresent = useIsPresent();
@@ -42,15 +49,34 @@ function PresenceContent({
       className={cn(as === "span" && "inline-block", className)}
       inert={!isPresent}
       aria-hidden={!isPresent || undefined}
-      initial={reducedMotion ? false : { opacity: 0, y: distance }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={
+        reducedMotion
+          ? false
+          : {
+              opacity: 0,
+              y: distance,
+              ...(collapse && { height: 0, overflow: "clip" }),
+            }
+      }
+      animate={{
+        opacity: 1,
+        y: 0,
+        ...(collapse && {
+          height: "auto",
+          transitionEnd: { overflow: "visible" },
+        }),
+      }}
       exit={
         reducedMotion
           ? { opacity: 0, transition: { duration: 0 } }
           : {
               opacity: 0,
-              y: -distance,
-              transition: { duration: duration * 0.7, ease: easeOut },
+              y: collapse ? 0 : -distance,
+              ...(collapse && { height: 0, overflow: "clip" }),
+              transition: {
+                duration: collapse ? duration : duration * 0.7,
+                ease: easeOut,
+              },
             }
       }
       transition={transitionFor(reducedMotion, { duration, ease: easeOut })}

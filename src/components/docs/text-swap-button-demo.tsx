@@ -14,11 +14,7 @@ export function TextSwapButtonDemo() {
   }, [isSaved]);
 
   return (
-    <Button
-      variant="secondary"
-      className="min-w-36"
-      onPress={() => setSaved(true)}
-    >
+    <Button variant="secondary" onPress={() => setSaved(true)}>
       <TextSwap value={isSaved ? "Saved" : "Save changes"} aria-live="polite" />
     </Button>
   );

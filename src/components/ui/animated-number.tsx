@@ -5,10 +5,16 @@ import {
   animate,
   motion,
   useMotionValue,
-  useMotionValueEvent,
   useReducedMotion,
+  useTransform,
 } from "motion/react";
-import { type ComponentProps, useEffect, useMemo, useState } from "react";
+import {
+  type ComponentProps,
+  type ReactNode,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { duration, easeOut, springSnappy, transitionFor } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
@@ -78,9 +84,7 @@ function CountingNumber({
   reducedMotion,
 }: NumberDisplayProps) {
   const number = useMotionValue(value);
-  const [displayed, setDisplayed] = useState(value);
-
-  useMotionValueEvent(number, "change", setDisplayed);
+  const text = useTransform(number, (latest) => formatter.format(latest));
 
   useEffect(() => {
     if (reducedMotion) {
@@ -94,11 +98,7 @@ function CountingNumber({
     return () => controls.stop();
   }, [number, reducedMotion, value]);
 
-  return (
-    <span aria-hidden="true">
-      {formatter.format(reducedMotion ? value : displayed)}
-    </span>
-  );
+  return <motion.span aria-hidden="true">{text}</motion.span>;
 }
 
 const slideVariants = {
@@ -125,7 +125,7 @@ function SlidingDigit({
   return (
     <span
       data-slot="animated-number-digit"
-      className="-mx-[0.06em] inline-grid overflow-hidden px-[0.06em] align-baseline"
+      className="-mx-[0.06em] -my-[0.15em] inline-grid overflow-hidden px-[0.06em] py-[0.15em] align-baseline [mask-image:linear-gradient(to_bottom,transparent,black_0.15em,black_calc(100%-0.15em),transparent)]"
     >
       <AnimatePresence initial={false} custom={direction}>
         <motion.span
@@ -204,18 +204,41 @@ function SlidingNumber({
       aria-hidden="true"
       className="inline-flex max-w-full flex-wrap align-baseline"
     >
-      {segments.map(({ key, text, isDigit }) =>
-        isDigit ? (
-          <SlidingDigit
-            key={key}
-            digit={text}
-            direction={change.direction}
-            reducedMotion={reducedMotion}
-          />
-        ) : (
-          <span key={key}>{text}</span>
-        ),
-      )}
+      <AnimatePresence initial={false}>
+        {segments.map(({ key, text, isDigit }) => (
+          <SlidingSlot key={key} reducedMotion={reducedMotion}>
+            {isDigit ? (
+              <SlidingDigit
+                digit={text}
+                direction={change.direction}
+                reducedMotion={reducedMotion}
+              />
+            ) : (
+              text
+            )}
+          </SlidingSlot>
+        ))}
+      </AnimatePresence>
     </span>
+  );
+}
+
+function SlidingSlot({
+  children,
+  reducedMotion,
+}: {
+  children: ReactNode;
+  reducedMotion: boolean | null;
+}) {
+  return (
+    <motion.span
+      className="inline-flex justify-end overflow-x-clip"
+      initial={{ width: 0, opacity: 0 }}
+      animate={{ width: "auto", opacity: 1 }}
+      exit={{ width: 0, opacity: 0 }}
+      transition={transitionFor(reducedMotion, springSnappy)}
+    >
+      {children}
+    </motion.span>
   );
 }

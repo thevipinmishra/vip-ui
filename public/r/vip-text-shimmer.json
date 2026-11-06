@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-text-shimmer",
+  "type": "registry:ui",
+  "title": "Text Shimmer",
+  "description": "Moves a soft highlight across text to show that work is in progress.",
+  "dependencies": ["motion@^14.9.0"],
+  "registryDependencies": [
+    "https://vip-ui.dev/r/vip-motion.json",
+    "https://vip-ui.dev/r/vip-utils.json"
+  ],
+  "cssVars": {
+    "light": {
+      "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)"
+    },
+    "dark": {
+      "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)"
+    }
+  },
+  "files": [
+    {
+      "path": "src/components/ui/text-shimmer.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/text-shimmer.tsx",
+      "content": "\"use client\";\n\nimport { motion, type Transition, useReducedMotion } from \"motion/react\";\nimport { type ComponentProps, useEffect, useRef, useState } from \"react\";\nimport { loop } from \"./motion\";\nimport { cn } from \"./utils\";\n\nexport interface TextShimmerProps extends ComponentProps<\"span\"> {\n  duration?: number;\n  active?: boolean;\n}\n\nfunction sweep(from: number, to: number) {\n  return [`translateX(${from}%)`, `translateX(${to}%)`, `translateX(${to}%)`];\n}\n\nexport function TextShimmer({\n  duration = loop.sweep,\n  active = true,\n  children,\n  className,\n  ...props\n}: TextShimmerProps) {\n  const reduceMotion = useReducedMotion();\n  const root = useRef<HTMLSpanElement>(null);\n  const [direction, setDirection] = useState(0);\n\n  useEffect(() => {\n    const node = root.current;\n    if (node) setDirection(getComputedStyle(node).direction === \"rtl\" ? -1 : 1);\n  }, []);\n\n  const travel = 65 * direction;\n  const transition: Transition = {\n    duration: duration / 0.75,\n    times: [0, 0.75, 1],\n    ease: \"easeInOut\",\n    repeat: Infinity,\n  };\n\n  return (\n    <span\n      {...props}\n      ref={root}\n      data-slot=\"text-shimmer\"\n      className={cn(\n        \"relative inline-block max-w-full text-muted-foreground\",\n        className,\n      )}\n    >\n      {children}\n      {direction !== 0 && active && !reduceMotion && (\n        <motion.span\n          aria-hidden=\"true\"\n          className=\"pointer-events-none absolute inset-0 select-none overflow-clip [mask-image:linear-gradient(to_right,transparent_35%,black_50%,transparent_65%)] forced-colors:hidden\"\n          initial={{ transform: `translateX(${-travel}%)` }}\n          animate={{ transform: sweep(-travel, travel) }}\n          transition={transition}\n        >\n          <motion.span\n            className=\"absolute inset-0 text-(--text-shimmer-highlight,var(--color-foreground))\"\n            initial={{ transform: `translateX(${travel}%)` }}\n            animate={{ transform: sweep(travel, -travel) }}\n            transition={transition}\n          >\n            {children}\n          </motion.span>\n        </motion.span>\n      )}\n    </span>\n  );\n}\n"
+    }
+  ]
+}

@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  animate,
-  motion,
-  useInView,
-  useMotionValue,
-  useReducedMotion,
-} from "motion/react";
+import { useInView, useReducedMotion } from "motion/react";
 import { type ComponentProps, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "./button";
@@ -14,6 +8,22 @@ import { Button } from "./button";
 export interface MarqueeProps extends ComponentProps<"div"> {
   speed?: number;
   reverse?: boolean;
+}
+
+interface Loop {
+  animation: Animation;
+  from: number;
+  to: number;
+  length: number;
+}
+
+function wrap(value: number) {
+  return ((value % 1) + 1) % 1;
+}
+
+function offsetOf({ animation, from, to, length }: Loop) {
+  const time = Number(animation.currentTime ?? 0);
+  return from + (to - from) * wrap(time / length);
 }
 
 export function Marquee({
@@ -24,14 +34,16 @@ export function Marquee({
   ...props
 }: MarqueeProps) {
   const viewport = useRef<HTMLDivElement>(null);
+  const track = useRef<HTMLDivElement>(null);
   const firstCopy = useRef<HTMLDivElement>(null);
+  const loop = useRef<Loop | null>(null);
+  const offset = useRef(0);
   const [size, setSize] = useState({ content: 0, viewport: 0, rtl: false });
   const [paused, setPaused] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const inView = useInView(viewport);
   const reducedMotion = useReducedMotion();
-  const x = useMotionValue(0);
   const isStatic = speed <= 0;
   const moving = !isStatic && !reducedMotion && size.content > 0;
   const playing = moving && !paused && !hovered && !focused && inView;
@@ -58,27 +70,36 @@ export function Marquee({
   }, []);
 
   useEffect(() => {
-    if (!moving) {
-      x.set(0);
+    const node = track.current;
+    if (!node || !moving) {
+      offset.current = 0;
       return;
     }
     const distance = size.rtl ? size.content : -size.content;
     const [from, to] = reverse ? [distance, 0] : [0, distance];
-    const loop = size.content / speed;
-    const progress = ((((x.get() - from) / (to - from)) % 1) + 1) % 1;
-    const animation = animate(x, [from, to], {
-      duration: loop,
-      ease: "linear",
-      repeat: Infinity,
-    });
-    animation.time = progress * loop;
+    const length = (size.content / speed) * 1000;
+    const animation = node.animate(
+      [
+        { transform: `translateX(${from}px)` },
+        { transform: `translateX(${to}px)` },
+      ],
+      { duration: length, iterations: Infinity, easing: "linear" },
+    );
+    animation.currentTime =
+      wrap((offset.current - from) / (to - from)) * length;
     if (!playing) animation.pause();
-    return () => animation.stop();
-  }, [moving, playing, reverse, size.content, size.rtl, speed, x]);
+    loop.current = { animation, from, to, length };
+    return () => {
+      if (loop.current) offset.current = offsetOf(loop.current);
+      loop.current = null;
+      animation.cancel();
+    };
+  }, [moving, playing, reverse, size.content, size.rtl, speed]);
 
   function reveal(target: Element) {
     const node = viewport.current;
-    if (!node || !moving) return;
+    const current = loop.current;
+    if (!node || !current) return;
     const fade =
       2 * parseFloat(getComputedStyle(document.documentElement).fontSize);
     const view = node.getBoundingClientRect();
@@ -90,10 +111,13 @@ export function Marquee({
           ? view.right - fade - box.right
           : 0;
     if (!shift) return;
+    const { from, to, length, animation } = current;
     const end = size.rtl ? size.content : -size.content;
-    x.jump(
-      Math.min(Math.max(x.get() + shift, Math.min(0, end)), Math.max(0, end)),
+    const next = Math.min(
+      Math.max(offsetOf(current) + shift, Math.min(0, end)),
+      Math.max(0, end),
     );
+    animation.currentTime = wrap((next - from) / (to - from)) * length;
   }
 
   const copyClassName = cn(
@@ -105,7 +129,7 @@ export function Marquee({
     <div
       {...props}
       data-slot="marquee"
-      className={cn("grid gap-3 [--marquee-gap:1.5rem]", className)}
+      className={cn("grid gap-2 [--marquee-gap:1.5rem]", className)}
     >
       <div
         ref={viewport}
@@ -125,12 +149,12 @@ export function Marquee({
             setFocused(false);
         }}
       >
-        <motion.div
+        <div
+          ref={track}
           className={cn(
             "flex w-max motion-reduce:block motion-reduce:w-auto",
             isStatic && "block w-auto",
           )}
-          style={{ x }}
         >
           <div ref={firstCopy} className={copyClassName}>
             {children}
@@ -146,13 +170,13 @@ export function Marquee({
               {children}
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
       {!isStatic && (
         <div className="flex justify-start motion-reduce:hidden">
           <Button
-            size="sm"
-            variant="secondary"
+            size="xs"
+            variant="minimal"
             onPress={() => setPaused((current) => !current)}
           >
             {paused ? "Play motion" : "Pause motion"}
