@@ -158,7 +158,7 @@ export function RevenueCard() {
 
   return (
     <Block
-      title="Revenue by plan"
+      title="Revenue"
       action={
         <ToggleButtonGroup
           className="shrink-0"
