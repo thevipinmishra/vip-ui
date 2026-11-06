@@ -182,7 +182,7 @@ function PreviewContent({
                   role="status"
                   className="pointer-events-none absolute inset-0 z-10 grid place-items-center bg-background"
                 >
-                  <span className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <span className="flex items-center gap-2 text-xs text-muted-foreground transition-opacity delay-500 duration-300 ease-out-quint starting:opacity-0">
                     <Spinner size="sm" decorative />
                     Loading preview
                   </span>
@@ -194,6 +194,7 @@ function PreviewContent({
                 title={`${block.title} preview`}
                 height="100%"
                 className="h-full"
+                loading="eager"
                 onLoad={() => setFrameLoaded(true)}
               />
             </div>

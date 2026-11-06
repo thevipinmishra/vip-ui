@@ -13,6 +13,7 @@ export function PreviewFrame({
   height,
   className,
   scrolling,
+  loading = "lazy",
   onLoad,
   ref,
 }: {
@@ -21,6 +22,7 @@ export function PreviewFrame({
   height: number | string;
   className?: string;
   scrolling?: "no";
+  loading?: "lazy" | "eager";
   onLoad?: () => void;
   ref?: Ref<PreviewFrameHandle>;
 }) {
@@ -57,7 +59,7 @@ export function PreviewFrame({
       ref={frameRef}
       src={src}
       title={title}
-      loading="lazy"
+      loading={loading}
       scrolling={scrolling}
       onLoad={onLoad}
       style={{ height }}
