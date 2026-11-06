@@ -151,12 +151,12 @@ import { ProgressRingSizesDemo } from "@/components/docs/progress-ring-sizes-dem
 import { ProgressiveBlurCaptionDemo } from "@/components/docs/progressive-blur-caption-demo";
 import { ProgressiveBlurDemo } from "@/components/docs/progressive-blur-demo";
 import { ProgressiveBlurHeaderDemo } from "@/components/docs/progressive-blur-header-demo";
+import { PromptInputActionsDemo } from "@/components/docs/prompt-input-actions-demo";
 import { PromptInputAttachmentsDemo } from "@/components/docs/prompt-input-attachments-demo";
 import { PromptInputDemo } from "@/components/docs/prompt-input-demo";
-import { PromptInputDropDemo } from "@/components/docs/prompt-input-drop-demo";
 import { PromptInputKeyboardDemo } from "@/components/docs/prompt-input-keyboard-demo";
-import { PromptInputModelDemo } from "@/components/docs/prompt-input-model-demo";
 import { PromptInputStopDemo } from "@/components/docs/prompt-input-stop-demo";
+import { PromptInputSuggestionsDemo } from "@/components/docs/prompt-input-suggestions-demo";
 import { PromptInputTranscriptDemo } from "@/components/docs/prompt-input-transcript-demo";
 import { RangeCalendarControlledDemo } from "@/components/docs/range-calendar-controlled-demo";
 import { RangeCalendarDemo } from "@/components/docs/range-calendar-demo";
@@ -166,6 +166,7 @@ import { RatingInputDemo } from "@/components/docs/rating-input-demo";
 import { RatingInputIconDemo } from "@/components/docs/rating-input-icon-demo";
 import { RatingInputReadOnlyDemo } from "@/components/docs/rating-input-read-only-demo";
 import { RatingInputRequiredDemo } from "@/components/docs/rating-input-required-demo";
+import { RatingInputSizesDemo } from "@/components/docs/rating-input-sizes-demo";
 import { ReasoningAutoCollapseDemo } from "@/components/docs/reasoning-auto-collapse-demo";
 import { ReasoningDemo } from "@/components/docs/reasoning-demo";
 import { ReasoningErrorDemo } from "@/components/docs/reasoning-error-demo";
@@ -853,6 +854,7 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <RatingInputIconDemo key="preview-1" />,
     <RatingInputReadOnlyDemo key="preview-2" />,
     <RatingInputRequiredDemo key="preview-3" />,
+    <RatingInputSizesDemo key="preview-4" />,
   ],
   pagination: [
     <PaginationDemo key="preview-1" />,
@@ -872,9 +874,9 @@ const examplePreviews: Record<string, ReactNode[]> = {
   "prompt-input": [
     <PromptInputKeyboardDemo key="preview-1" />,
     <PromptInputAttachmentsDemo key="preview-2" />,
-    <PromptInputStopDemo key="preview-3" />,
-    <PromptInputDropDemo key="preview-4" />,
-    <PromptInputModelDemo key="preview-5" />,
+    <PromptInputActionsDemo key="preview-3" />,
+    <PromptInputSuggestionsDemo key="preview-4" />,
+    <PromptInputStopDemo key="preview-5" />,
     <PromptInputTranscriptDemo key="preview-6" />,
   ],
   reasoning: [

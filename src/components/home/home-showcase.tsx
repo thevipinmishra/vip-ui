@@ -1,55 +1,46 @@
 import { HomeReveal } from "@/components/docs/home-page-motion";
 import { ChatCard, UploadCard } from "./assistant-cards";
 import {
+  AppearanceCard,
+  CommandCard,
   CreateProjectCard,
   OrderCard,
   ProjectCard,
-  SearchCard,
-  ShortcutsCard,
-  VisibilityCard,
+  ShareCard,
 } from "./component-preview";
 import { InvoicesCard, RevenueCard } from "./data-cards";
-import {
-  FeedbackBlock,
-  NotificationsBlock,
-  TeamBlock,
-  TimeOffBlock,
-} from "./form-blocks";
-import { ChecklistCard } from "./project-cards";
+import { FeedbackBlock, TimeOffBlock } from "./form-blocks";
 
 const columns = [
   {
     key: "one",
     cards: [
-      { key: "visibility", node: <VisibilityCard /> },
-      { key: "project", node: <ProjectCard /> },
-      { key: "team", node: <TeamBlock /> },
+      { key: "order", node: <OrderCard /> },
+      { key: "uploads", node: <UploadCard /> },
       { key: "invoices", node: <InvoicesCard /> },
     ],
   },
   {
     key: "two",
     cards: [
-      { key: "checklist", node: <ChecklistCard /> },
-      { key: "search", node: <SearchCard /> },
+      { key: "command", node: <CommandCard /> },
       { key: "create-project", node: <CreateProjectCard /> },
-      { key: "uploads", node: <UploadCard /> },
+      { key: "time-off", node: <TimeOffBlock /> },
     ],
   },
   {
     key: "three",
     cards: [
-      { key: "shortcuts", node: <ShortcutsCard /> },
-      { key: "notifications", node: <NotificationsBlock /> },
-      { key: "feedback", node: <FeedbackBlock /> },
+      { key: "appearance", node: <AppearanceCard /> },
       { key: "revenue", node: <RevenueCard /> },
+      { key: "feedback", node: <FeedbackBlock /> },
     ],
   },
   {
     key: "four",
     cards: [
-      { key: "order", node: <OrderCard /> },
-      { key: "time-off", node: <TimeOffBlock /> },
+      { key: "project", node: <ProjectCard /> },
+      { key: "share", node: <ShareCard /> },
       { key: "chat", node: <ChatCard /> },
     ],
   },

@@ -6,7 +6,8 @@ export function RatingInputReadOnlyDemo() {
   return (
     <RatingInput
       label="Average rating"
-      defaultValue={4}
+      description="4.6 out of 5 from 128 reviews."
+      value={4.6}
       isReadOnly
       className="w-full max-w-sm"
     />

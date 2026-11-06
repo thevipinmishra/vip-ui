@@ -40,14 +40,14 @@ export function DisclosureHeader({
   ...props
 }: Omit<ButtonProps, "children"> & { children: ReactNode }) {
   return (
-    <Heading className="m-0 text-sm font-semibold">
+    <Heading className="m-0 min-w-0 flex-1 text-sm font-semibold">
       <Button
         data-slot="disclosure-header"
         {...props}
         slot="trigger"
         className={composeRenderProps(className, (className) =>
           cn(
-            "group/trigger flex min-h-11 w-full cursor-pointer items-center justify-between gap-3 rounded-lg px-4 py-2.5 text-start outline-offset-4 outline-transparent transition-[background-color,outline-color,outline-offset] duration-150 ease-out-quint hover:bg-muted disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2",
+            "group/trigger flex min-h-11 w-full cursor-pointer items-center justify-between gap-3 rounded-lg px-4 py-2.5 text-start outline-transparent transition-[background-color,outline-color] duration-150 ease-out-quint hover:bg-muted disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring aria-expanded:rounded-b-none",
             className,
           ),
         )}

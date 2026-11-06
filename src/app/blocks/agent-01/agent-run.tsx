@@ -224,7 +224,7 @@ export function AgentRun() {
           </Alert>
         )}
 
-        <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
+        <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto]">
           <AgentStatus
             state={status === "working" ? "working" : "error"}
             label={
@@ -235,6 +235,7 @@ export function AgentRun() {
                 ? "Step 4 of 5 · 24 line totals"
                 : "Stopped by you. Resume to continue from step 4."
             }
+            className="items-center"
           />
           <Card className="flex flex-wrap items-center gap-4 px-4 py-3">
             <ProgressRing
@@ -242,6 +243,7 @@ export function AgentRun() {
               value={run.progress}
               label="Progress"
               valueLabel={`${run.progress}%`}
+              className="[&_[data-slot=progress-ring-label]]:sr-only"
             />
             <div className="grid grid-cols-2 gap-x-4 gap-y-1">
               <div>

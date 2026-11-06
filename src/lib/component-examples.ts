@@ -1076,32 +1076,33 @@ const pageSources = {
     examples: [
       {
         title: "Keyboard",
-        description:
-          'Set submitKey="mod+enter" for multi-line input. IME composition never submits.',
+        description: 'Set `submitKey="mod+enter"` so Enter adds a line.',
         sourcePath: "prompt-input-keyboard-demo.tsx",
+        uses: ["kbd-code"],
       },
       {
         title: "Attachments",
-        description: "Set onFilesDropped to accept dropped files.",
+        description:
+          "Set `onFilesDropped` to accept files dropped on the frame.",
         sourcePath: "prompt-input-attachments-demo.tsx",
         uses: ["attachment", "file-trigger"],
       },
       {
-        title: "Stop while streaming",
-        description: "Set isPending and onStop to change Send to Stop.",
-        sourcePath: "prompt-input-stop-demo.tsx",
-      },
-      {
-        title: "Drag and drop",
-        description:
-          "While a file is over the frame, an overlay shows dropLabel.",
-        sourcePath: "prompt-input-drop-demo.tsx",
-      },
-      {
         title: "Footer actions",
-        description: "PromptInputSubmit gets its state from PromptInput.",
-        sourcePath: "prompt-input-model-demo.tsx",
-        uses: ["select"],
+        sourcePath: "prompt-input-actions-demo.tsx",
+        uses: ["toggle-button", "select"],
+      },
+      {
+        title: "Suggestions",
+        description:
+          "Set `value` and `onChange` to fill the prompt from outside.",
+        sourcePath: "prompt-input-suggestions-demo.tsx",
+      },
+      {
+        title: "Stop while streaming",
+        description: "Set `isPending` and `onStop` to change Send to Stop.",
+        sourcePath: "prompt-input-stop-demo.tsx",
+        uses: ["response"],
       },
       {
         title: "Full transcript",
@@ -1133,6 +1134,10 @@ const pageSources = {
         description: "The error shows after the first submit.",
         sourcePath: "rating-input-required-demo.tsx",
         uses: ["form", "button"],
+      },
+      {
+        title: "Sizes",
+        sourcePath: "rating-input-sizes-demo.tsx",
       },
     ],
   },
@@ -1663,7 +1668,7 @@ const pageSources = {
     examples: [
       {
         title: "Source list",
-        description: "Set index to the citation number in the answer.",
+        description: "Set `index` to the citation number in the answer.",
         sourcePath: "source-link-list-demo.tsx",
       },
     ],

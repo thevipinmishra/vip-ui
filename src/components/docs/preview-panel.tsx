@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { type CodeLanguage, CodeSnippet } from "./code-snippet";
 import { PreviewCode } from "./preview-code";
 
-export async function PreviewPanel({
+export function PreviewPanel({
   children,
   code,
   filename = "example.tsx",

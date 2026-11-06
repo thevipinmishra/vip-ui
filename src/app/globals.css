@@ -385,7 +385,47 @@
   }
 }
 
-.code-block .shiki {
+.code-block {
+  --th-attr: #0550ae;
+  --th-command: #8250df;
+  --th-comment: #6e7781;
+  --th-deleted: #cf222e;
+  --th-function: #8250df;
+  --th-heading: #0550ae;
+  --th-inserted: #1a7f37;
+  --th-keyword: #cf222e;
+  --th-literal: #0550ae;
+  --th-meta: #57606a;
+  --th-number: #0550ae;
+  --th-operator: #8250df;
+  --th-property: #0550ae;
+  --th-selector: #116329;
+  --th-string: #0a3069;
+  --th-tag: #116329;
+  --th-type: #953800;
+  --th-variable: #953800;
+}
+.dark .code-block {
+  --th-attr: #79c0ff;
+  --th-command: #d2a8ff;
+  --th-comment: #8b949e;
+  --th-deleted: #ff7b72;
+  --th-function: #d2a8ff;
+  --th-heading: #79c0ff;
+  --th-inserted: #7ee787;
+  --th-keyword: #ff7b72;
+  --th-literal: #79c0ff;
+  --th-meta: #8b949e;
+  --th-number: #79c0ff;
+  --th-operator: #d2a8ff;
+  --th-property: #79c0ff;
+  --th-selector: #7ee787;
+  --th-string: #a5d6ff;
+  --th-tag: #7ee787;
+  --th-type: #ffa657;
+  --th-variable: #ffa657;
+}
+.code-block .th-code {
   margin: 0;
   min-width: max-content;
   padding: 1.25rem 1.5rem 1.75rem 1rem;
@@ -394,35 +434,74 @@
   font-size: 0.8125rem;
   line-height: 1.75;
   tab-size: 2;
-  counter-reset: code-line;
 }
-.code-block .shiki .line {
-  display: block;
-  min-height: 1.8em;
-  counter-increment: code-line;
-}
-.code-block .shiki .line::before {
+.code-block .th-line::before {
   display: inline-block;
   width: calc(var(--code-line-digits, 2) * 1ch);
   margin-inline-end: 1.25rem;
   color: var(--sage-10);
-  content: counter(code-line);
+  content: attr(data-line);
   text-align: end;
   user-select: none;
 }
-.code-block[data-language="bash"] .shiki {
+.code-block[data-language="bash"] .th-code {
   padding-inline: 1.25rem;
-}
-.code-block[data-language="bash"] .shiki .line::before {
-  display: none;
 }
 .code-block ::selection {
   background: var(--accent);
   color: var(--accent-foreground);
 }
-.code-frame [style*="--code-token-light"] {
-  color: var(--code-token-light);
+.code-block .th-attr {
+  color: var(--th-attr);
 }
-.dark .code-frame [style*="--code-token-dark"] {
-  color: var(--code-token-dark);
+.code-block .th-command {
+  color: var(--th-command);
+}
+.code-block .th-comment {
+  color: var(--th-comment);
+}
+.code-block .th-deleted {
+  color: var(--th-deleted);
+}
+.code-block .th-function {
+  color: var(--th-function);
+}
+.code-block .th-heading {
+  color: var(--th-heading);
+}
+.code-block .th-inserted {
+  color: var(--th-inserted);
+}
+.code-block .th-keyword {
+  color: var(--th-keyword);
+}
+.code-block .th-literal {
+  color: var(--th-literal);
+}
+.code-block .th-meta {
+  color: var(--th-meta);
+}
+.code-block .th-number {
+  color: var(--th-number);
+}
+.code-block .th-operator {
+  color: var(--th-operator);
+}
+.code-block .th-property {
+  color: var(--th-property);
+}
+.code-block .th-selector {
+  color: var(--th-selector);
+}
+.code-block .th-string {
+  color: var(--th-string);
+}
+.code-block .th-tag {
+  color: var(--th-tag);
+}
+.code-block .th-type {
+  color: var(--th-type);
+}
+.code-block .th-variable {
+  color: var(--th-variable);
 }

@@ -1,12 +1,8 @@
 import { ArrowDownIcon } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
-import {
-  inlineCode,
-  Step,
-  snippet,
-  textLink,
-} from "@/app/themes/theme-install";
+import { inlineCode, Step, textLink } from "@/app/themes/theme-install";
 import { CodeFrame } from "@/components/docs/code-frame";
+import { CodeSnippet } from "@/components/docs/code-snippet";
 import { CopyButton } from "@/components/docs/copy-button";
 import {
   PageActions,
@@ -30,13 +26,9 @@ export const metadata = pageMetadata({
   image: "file",
 });
 
-export default async function ColorsPage() {
+export default function ColorsPage() {
   const css = paletteCss();
   const tailwind = paletteTailwindCss();
-  const [cssSnippet, tailwindSnippet] = await Promise.all([
-    snippet(css, "css"),
-    snippet(tailwind, "css"),
-  ]);
 
   return (
     <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-14">
@@ -118,7 +110,7 @@ export default async function ColorsPage() {
                 copyText="Copy CSS"
                 previewCode
               >
-                {cssSnippet}
+                <CodeSnippet code={css} language="css" />
               </CodeFrame>
             </Step>
             <Step number={2} title="Add Tailwind colors">
@@ -135,7 +127,7 @@ export default async function ColorsPage() {
                 copyText="Copy CSS"
                 previewCode
               >
-                {tailwindSnippet}
+                <CodeSnippet code={tailwind} language="css" />
               </CodeFrame>
             </Step>
             <Step number={3} title="Use a theme">

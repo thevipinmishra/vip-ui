@@ -11,6 +11,19 @@ import {
   RadioGroup,
   type RadioGroupProps,
 } from "./radio-group";
+import { type Size, useSize } from "./size";
+
+type RatingSize = Extract<Size, "sm" | "md" | "lg">;
+
+function fillAt(rating: number, index: number) {
+  return Math.min(Math.max(rating - index, 0), 1);
+}
+
+const ratingSizeStyles = {
+  sm: { field: "min-h-7", button: "size-7", icon: "size-5" },
+  md: { field: "min-h-8", button: "size-8", icon: "size-6" },
+  lg: { field: "min-h-10", button: "size-10", icon: "size-8" },
+} satisfies Record<RatingSize, Record<"field" | "button" | "icon", string>>;
 
 export interface RatingInputProps
   extends Omit<
@@ -28,6 +41,7 @@ export interface RatingInputProps
   /** The icon for each step. It is filled up to the rating. */
   icon?: Icon;
   max?: number;
+  size?: RatingSize;
   value?: number;
   defaultValue?: number;
   onValueChange?: (value: number) => void;
@@ -37,6 +51,7 @@ export function RatingInput({
   label,
   icon: RatingIcon = StarIcon,
   max = 5,
+  size: sizeProp,
   value,
   defaultValue = 0,
   onValueChange,
@@ -46,7 +61,16 @@ export function RatingInput({
   const [hovered, setHovered] = useState<number | null>(null);
   const [pop, setPop] = useState({ from: 0, to: 0, id: 0 });
   const reduceMotion = useReducedMotion();
+  const inherited = useSize(sizeProp);
+  const size: RatingSize =
+    inherited === "xs" || inherited === "sm"
+      ? "sm"
+      : inherited === "lg" || inherited === "xl"
+        ? "lg"
+        : "md";
+  const styles = ratingSizeStyles[size];
   const selected = value === undefined ? localValue : value;
+  const checked = Math.round(selected);
   const interactive = !props.isDisabled && !props.isReadOnly;
   const shown = interactive && hovered !== null ? hovered : selected;
 
@@ -55,11 +79,12 @@ export function RatingInput({
       {...props}
       label={label}
       orientation="horizontal"
-      value={selected > 0 ? String(selected) : null}
+      data-size={size}
+      value={checked > 0 ? String(checked) : null}
       onValueChange={(next) => {
         const rating = Number(next);
         setPop((current) => ({
-          from: rating > selected ? selected : rating - 1,
+          from: rating > selected ? Math.floor(selected) : rating - 1,
           to: rating,
           id: current.id + 1,
         }));
@@ -70,14 +95,16 @@ export function RatingInput({
       <div className="-ms-1 flex flex-wrap" data-slot="rating-input-options">
         {Array.from({ length: max }, (_, index) => {
           const rating = index + 1;
-          const filled = rating <= shown;
+          const fill = fillAt(shown, index);
+          const filled = fill === 1;
+          const partial = fill > 0 && fill < 1;
           const pops = pop.id > 0 && rating > pop.from && rating <= pop.to;
           return (
             <RadioField
               key={rating}
               value={String(rating)}
               aria-label={`${rating} of ${max}`}
-              className="min-h-8 py-0"
+              className={cn("py-0", styles.field)}
             >
               <RadioButton
                 onHoverStart={() => setHovered(rating)}
@@ -87,18 +114,21 @@ export function RatingInput({
                 data-preview={
                   hovered !== null &&
                   interactive &&
-                  filled !== rating <= selected
+                  fill !== fillAt(selected, index)
                     ? ""
                     : undefined
                 }
                 className={cn(
-                  "size-8 items-center justify-center rounded-md outline-offset-4 outline-transparent transition-[color,outline-color,outline-offset] duration-150 ease-out-quint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring data-preview:text-primary/60 motion-reduce:outline-offset-2",
-                  filled ? "text-primary" : "text-muted-foreground",
+                  "items-center justify-center rounded-md outline-offset-4 outline-transparent transition-[color,scale,outline-color,outline-offset] duration-150 ease-out-quint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-safe:pressed:scale-90 data-preview:text-primary/60 invalid:text-destructive/70 invalid:data-preview:text-destructive/50 motion-reduce:outline-offset-2 forced-colors:text-[ButtonText] forced-colors:data-preview:text-[Highlight]",
+                  styles.button,
+                  filled
+                    ? "text-primary invalid:text-destructive forced-colors:text-[Highlight]"
+                    : "text-muted-foreground",
                 )}
               >
                 <motion.span
                   key={pops ? `${rating}-${pop.id}` : rating}
-                  className="grid place-items-center"
+                  className="relative grid place-items-center"
                   initial={pops && !reduceMotion ? { scale: 0.6 } : false}
                   animate={{ scale: 1 }}
                   transition={{
@@ -107,10 +137,26 @@ export function RatingInput({
                   }}
                 >
                   <RatingIcon
-                    size={24}
                     weight={filled ? "fill" : "regular"}
                     aria-hidden="true"
+                    className={styles.icon}
                   />
+                  {partial && (
+                    <RatingIcon
+                      weight="fill"
+                      aria-hidden="true"
+                      data-slot="rating-input-partial"
+                      style={
+                        {
+                          "--rating-fill": `${fill * 100}%`,
+                        } as React.CSSProperties
+                      }
+                      className={cn(
+                        "absolute inset-0 text-primary [clip-path:inset(0_calc(100%-var(--rating-fill))_0_0)] rtl:[clip-path:inset(0_0_0_calc(100%-var(--rating-fill)))] forced-colors:text-[Highlight]",
+                        styles.icon,
+                      )}
+                    />
+                  )}
                 </motion.span>
               </RadioButton>
             </RadioField>

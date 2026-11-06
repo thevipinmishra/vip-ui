@@ -110,16 +110,14 @@ export function ChatCard() {
             Use Switch for a setting that applies at once. Use Checkbox when
             people must push Save. Put related controls in a Fieldset.
           </Message>
-          <div className="grid gap-2">
+          <div className="grid grid-cols-2 gap-2">
             <SourceLink
               href="/components/switch"
-              index={1}
               label="Switch"
               source="vip/ui docs"
             />
             <SourceLink
               href="/components/fieldset"
-              index={2}
               label="Fieldset"
               source="vip/ui docs"
             />

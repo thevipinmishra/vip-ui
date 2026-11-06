@@ -7,7 +7,7 @@ interface CodeBlockProps {
   language?: CodeLanguage;
 }
 
-export async function CodeBlock({
+export function CodeBlock({
   code,
   filename,
   language = "tsx",

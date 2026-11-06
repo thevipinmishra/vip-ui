@@ -1,5 +1,3 @@
-import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
-import Link from "next/link";
 import { CategoryTabs } from "@/components/docs/category-tabs";
 import {
   PageActions,
@@ -114,22 +112,12 @@ function AllBlocks() {
           const headingId = `${category.slug}-title`;
           return (
             <section key={category.slug} aria-labelledby={headingId}>
-              <div className="mb-4 flex items-center justify-between gap-4">
-                <h3
-                  id={headingId}
-                  className="text-base font-semibold tracking-[-0.03em]"
-                >
-                  {category.label}
-                </h3>
-                <Link
-                  href={`/blocks?category=${category.slug}`}
-                  className="inline-flex items-center gap-1.5 rounded-sm text-[13px] font-medium text-muted-foreground transition-[color] duration-150 ease-out-quint hover:text-foreground focus-visible:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid"
-                >
-                  View all
-                  <span className="sr-only"> {category.label} blocks</span>
-                  <ArrowRightIcon size={14} aria-hidden="true" />
-                </Link>
-              </div>
+              <h3
+                id={headingId}
+                className="mb-4 text-base font-semibold tracking-[-0.03em]"
+              >
+                {category.label}
+              </h3>
               <BlockGrid blocks={blocks} />
             </section>
           );

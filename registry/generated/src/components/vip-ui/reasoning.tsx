@@ -141,10 +141,7 @@ export function ReasoningTrigger({
     <DisclosureHeader
       {...props}
       data-slot="reasoning-trigger"
-      className={cn(
-        "text-muted-foreground aria-expanded:rounded-b-none",
-        className,
-      )}
+      className={cn("text-muted-foreground", className)}
     >
       <span className="flex min-w-0 items-center gap-2">
         <span

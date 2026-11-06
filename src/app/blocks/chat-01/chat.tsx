@@ -12,7 +12,7 @@ import { Attachment, AttachmentList } from "@/components/ui/attachment";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
-import { Kbd } from "@/components/ui/kbd-code";
+import { FileTrigger } from "@/components/ui/file-trigger";
 import { Message } from "@/components/ui/message";
 import {
   PromptInput,
@@ -32,7 +32,12 @@ import {
   ResponseFooter,
   ResponseNotice,
 } from "@/components/ui/response";
-import { Select } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SourceLink } from "@/components/ui/source-link";
 import { showToast } from "@/components/ui/toast";
@@ -163,16 +168,6 @@ export function AssistantChat() {
     }
   }
 
-  function openFilePicker() {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.multiple = true;
-    input.addEventListener("change", () => {
-      addFiles(Array.from(input.files ?? []));
-    });
-    input.click();
-  }
-
   async function share(turn: ChatTurn) {
     try {
       await navigator.clipboard.writeText(
@@ -197,7 +192,7 @@ export function AssistantChat() {
 
   return (
     <div className="flex h-svh min-h-[34rem] flex-col bg-background text-foreground">
-      <header className="shrink-0 border-b border-border/70 bg-card/85 backdrop-blur">
+      <header className="shrink-0 border-b border-border/70">
         <div className="mx-auto flex w-full max-w-3xl items-center gap-3 px-4 py-3 sm:px-6">
           <span
             aria-hidden="true"
@@ -216,14 +211,6 @@ export function AssistantChat() {
               Answers with sources
             </p>
           </div>
-          <Select
-            aria-label="Model"
-            size="sm"
-            options={modelOptions}
-            value={model}
-            onValueChange={setModel}
-            className="w-28 shrink-0"
-          />
         </div>
       </header>
 
@@ -231,7 +218,7 @@ export function AssistantChat() {
         ref={scrollRef}
         className="min-h-0 flex-1 overflow-y-auto overscroll-contain"
       >
-        <div className="mx-auto grid w-full max-w-3xl gap-6 px-4 py-6 sm:px-6">
+        <div className="mx-auto grid w-full max-w-3xl gap-6 px-4 pt-6 pb-10 sm:px-6">
           <h2 className="sr-only">Conversation</h2>
           <div className="flex items-center gap-3 text-xs text-muted-foreground">
             <span className="h-px flex-1 bg-border/70" />
@@ -437,12 +424,10 @@ export function AssistantChat() {
         </div>
       </div>
 
-      <footer className="shrink-0 border-t border-border/70 bg-card/85 backdrop-blur">
-        <div className="mx-auto w-full max-w-3xl px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:px-6">
+      <footer className="relative shrink-0 bg-background before:pointer-events-none before:absolute before:inset-x-0 before:bottom-full before:h-8 before:bg-gradient-to-t before:from-background before:to-transparent">
+        <div className="mx-auto w-full max-w-3xl px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:px-6">
           <PromptInput
             label="Message"
-            size="md"
-            placeholder="Ask about activation, revenue, or a customer"
             value={draft}
             onChange={setDraft}
             isPending={pending}
@@ -450,19 +435,15 @@ export function AssistantChat() {
             onStop={stop}
             onFilesDropped={addFiles}
           >
-            <PromptInputTextArea
-              className="py-2.5"
-              placeholder="Ask about activation, revenue, or a customer"
-            />
             {files.length > 0 && (
-              <AttachmentList className="px-2.5 pt-2.5">
+              <AttachmentList className="flex flex-wrap px-3 pt-3">
                 {files.map((file) => (
                   <Attachment
                     key={file.id}
                     name={file.name}
                     fileSize={file.size}
                     status={file.status}
-                    className="gap-2 p-1.5 [&_[data-slot=attachment-details]]:text-[11px] [&_[data-slot=attachment-name]]:text-xs [&_[data-slot=attachment-preview]]:size-8"
+                    className="w-full gap-2.5 p-1.5 pe-1 sm:w-72 [&_[data-slot=attachment-details]]:text-[11px] [&_[data-slot=attachment-name]]:truncate [&_[data-slot=attachment-name]]:text-xs [&_[data-slot=attachment-preview]]:size-9"
                     onRemove={() =>
                       setFiles((current) =>
                         current.filter((item) => item.id !== file.id),
@@ -472,21 +453,48 @@ export function AssistantChat() {
                 ))}
               </AttachmentList>
             )}
+            <PromptInputTextArea placeholder="Ask about activation, revenue, or a customer" />
             <PromptInputFooter>
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                iconOnly
-                aria-label="Attach files"
-                onPress={openFilePicker}
+              <FileTrigger
+                allowsMultiple
+                onSelect={(selected) => addFiles(Array.from(selected ?? []))}
               >
-                <PaperclipIcon aria-hidden="true" />
-              </Button>
-              <span className="hidden items-center gap-1.5 text-xs text-muted-foreground sm:flex">
-                <Kbd>Enter</Kbd> to send
-              </span>
-              <PromptInputSubmit className="ms-auto" />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  iconOnly
+                  aria-label="Attach files"
+                >
+                  <PaperclipIcon aria-hidden="true" />
+                </Button>
+              </FileTrigger>
+              <Select
+                aria-label="Model"
+                size="sm"
+                value={model}
+                onValueChange={setModel}
+                className="ms-auto w-auto"
+              >
+                <SelectTrigger className="border-transparent bg-transparent text-muted-foreground shadow-none hover:border-transparent hover:bg-muted hover:text-foreground" />
+                <SelectContent placement="top end" className="w-64">
+                  {modelOptions.map((option) => (
+                    <SelectItem
+                      key={option.id}
+                      id={option.id}
+                      textValue={option.name}
+                    >
+                      <span className="min-w-0">
+                        <span className="block font-medium">{option.name}</span>
+                        <span className="block text-xs text-muted-foreground group-selected/item:text-accent-foreground">
+                          {option.description}
+                        </span>
+                      </span>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <PromptInputSubmit />
             </PromptInputFooter>
           </PromptInput>
           <p className="mt-2 text-center text-[11px] leading-4 text-muted-foreground">

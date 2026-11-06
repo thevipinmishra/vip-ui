@@ -13,46 +13,21 @@ import { Spinner } from "@/components/ui/spinner";
 import type { Block } from "@/lib/blocks";
 import { cn } from "@/lib/utils";
 import { useBlockPreview } from "./block-preview";
+import {
+  releasePreview,
+  requestPreview,
+  retainPreview,
+} from "./preview-scheduler";
 
 const frameWidth = 1024;
 const frameHeight = 640;
-
-// Mounting several preview documents at once competes with the gallery for
-// main-thread time. Queue them during idle periods so the page stays smooth.
-const mounts: { run: () => void; cancelled: boolean }[] = [];
-let flushing = false;
-
-function whenIdle(callback: () => void) {
-  if (typeof window.requestIdleCallback === "function")
-    window.requestIdleCallback(callback, { timeout: 300 });
-  else window.setTimeout(callback, 16);
-}
-
-function flushMounts() {
-  const entry = mounts.shift();
-  if (entry && !entry.cancelled) entry.run();
-  if (mounts.length) whenIdle(flushMounts);
-  else flushing = false;
-}
-
-function queueMount(run: () => void) {
-  const entry = { run, cancelled: false };
-  mounts.push(entry);
-  if (!flushing) {
-    flushing = true;
-    whenIdle(flushMounts);
-  }
-  return () => {
-    entry.cancelled = true;
-  };
-}
 
 export function BlockCard({ block }: { block: Block }) {
   const preview = useBlockPreview();
   const stageRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0);
   const [inRange, setInRange] = useState(false);
-  const [shouldMount, setShouldMount] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const src = `/blocks/${block.name}`;
 
@@ -71,17 +46,25 @@ export function BlockCard({ block }: { block: Block }) {
     return () => {
       resize.disconnect();
       range.disconnect();
+      releasePreview(stage);
     };
   }, []);
 
   useEffect(() => {
-    if (!inRange) {
-      setShouldMount(false);
+    const stage = stageRef.current;
+    if (!stage || !inRange || mounted) return;
+    return requestPreview(stage, () => setMounted(true));
+  }, [inRange, mounted]);
+
+  const handleLoad = () => {
+    const stage = stageRef.current;
+    if (!stage) return;
+    setLoaded(true);
+    retainPreview(stage, () => {
+      setMounted(false);
       setLoaded(false);
-      return;
-    }
-    return queueMount(() => setShouldMount(true));
-  }, [inRange]);
+    });
+  };
 
   return (
     <article className="group relative isolate flex w-full min-w-0 flex-col rounded-2xl bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70 outline-offset-2 outline-transparent transition-[box-shadow,outline-color] duration-300 ease-out-quint hover:shadow-[var(--shadow-float)] has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-ring has-[button:focus-visible]:outline-2 has-[button:focus-visible]:outline-ring">
@@ -89,19 +72,17 @@ export function BlockCard({ block }: { block: Block }) {
         ref={stageRef}
         className="relative aspect-[16/10] overflow-hidden rounded-t-2xl bg-muted/50"
       >
-        <div inert aria-hidden="true" className="absolute inset-0">
-          {!loaded && (
-            <div className="absolute inset-0 grid place-items-center bg-muted/50">
-              {shouldMount && (
-                <Spinner
-                  size="sm"
-                  decorative
-                  className="text-muted-foreground"
-                />
-              )}
+        <div
+          inert
+          aria-hidden="true"
+          className="absolute inset-0 [content-visibility:auto]"
+        >
+          {!loaded && mounted && (
+            <div className="absolute inset-0 grid place-items-center transition-opacity delay-500 duration-300 ease-out-quint starting:opacity-0">
+              <Spinner size="sm" decorative className="text-muted-foreground" />
             </div>
           )}
-          {shouldMount && scale > 0 && (
+          {mounted && scale > 0 && (
             <div
               className={cn(
                 "absolute start-0 top-0 origin-top-left transition-opacity duration-500 ease-out-quint rtl:origin-top-right",
@@ -118,7 +99,8 @@ export function BlockCard({ block }: { block: Block }) {
                 title={`${block.title} preview`}
                 height={frameHeight}
                 scrolling="no"
-                onLoad={() => setLoaded(true)}
+                loading="eager"
+                onLoad={handleLoad}
               />
             </div>
           )}

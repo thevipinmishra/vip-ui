@@ -610,7 +610,7 @@
         "https://vip-ui.dev/r/vip-button.json",
         "https://vip-ui.dev/r/vip-color-field.json",
         "https://vip-ui.dev/r/vip-color-swatch.json",
-        "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-input-group.json",
         "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-popover.json",
         "https://vip-ui.dev/r/vip-utils.json"
@@ -1952,6 +1952,7 @@
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-radio-group.json",
+        "https://vip-ui.dev/r/vip-size.json",
         "https://vip-ui.dev/r/vip-utils.json"
       ],
       "cssVars": {
@@ -2500,10 +2501,12 @@
       "description": "Shows a group of tags that you can select or remove.",
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
+        "motion@^14.9.0",
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-field-styles.json",
+        "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-size.json",
         "https://vip-ui.dev/r/vip-utils.json"
       ],
@@ -3405,7 +3408,7 @@
         "https://vip-ui.dev/r/vip-badge.json",
         "https://vip-ui.dev/r/vip-button.json",
         "https://vip-ui.dev/r/vip-copy-button.json",
-        "https://vip-ui.dev/r/vip-kbd-code.json",
+        "https://vip-ui.dev/r/vip-file-trigger.json",
         "https://vip-ui.dev/r/vip-message.json",
         "https://vip-ui.dev/r/vip-prompt-input.json",
         "https://vip-ui.dev/r/vip-reasoning.json",
