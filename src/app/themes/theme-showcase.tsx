@@ -13,6 +13,7 @@ import {
 } from "@phosphor-icons/react";
 import { areaY, defineChart, lineY } from "@tanstack/charts";
 import { decorative } from "@tanstack/charts/mark/decorative";
+import { pie, polar, radialArc } from "@tanstack/charts/polar";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
@@ -26,13 +27,20 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Card,
+  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Chart } from "@/components/ui/chart";
+import {
+  Chart,
+  ChartCenter,
+  ChartFrame,
+  ChartTable,
+  ChartValue,
+} from "@/components/ui/chart";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
@@ -58,21 +66,9 @@ import {
   MenuTrigger,
 } from "@/components/ui/menu";
 import { Message } from "@/components/ui/message";
-import { Meter } from "@/components/ui/meter";
 import { ProgressRing } from "@/components/ui/progress-ring";
-import { Radio, RadioGroup } from "@/components/ui/radio-group";
 import { SearchField } from "@/components/ui/search-field";
 import { Select } from "@/components/ui/select";
-import {
-  Sheet,
-  SheetBody,
-  SheetClose,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import {
@@ -313,6 +309,180 @@ function RevenueScene({ className }: { className?: string }) {
   );
 }
 
+const plans = [
+  { plan: "Starter", revenue: 31400, color: "var(--chart-1)" },
+  { plan: "Growth", revenue: 88200, color: "var(--chart-2)" },
+  { plan: "Scale", revenue: 104900, color: "var(--chart-3)" },
+  { plan: "Enterprise", revenue: 48500, color: "var(--chart-4)" },
+];
+
+const planTotal = plans.reduce((sum, row) => sum + row.revenue, 0);
+
+const share = new Intl.NumberFormat("en-US", {
+  style: "percent",
+  maximumFractionDigits: 0,
+});
+
+const planDefinition = defineChart({
+  marks: [
+    polar({
+      radiusRatio: 0.92,
+      marks: [
+        radialArc(pie(plans, { value: "revenue", gapAngle: 0.03 }), {
+          color: "plan",
+          key: "plan",
+          innerRadius: ({ radius }) => radius * 0.7,
+          cornerRadius: 4,
+        }),
+      ],
+      scales: { angle: null, radius: null },
+    }),
+  ],
+  scales: { x: null, y: null },
+  color: {
+    domain: plans.map((row) => row.plan),
+    range: plans.map((row) => row.color),
+  },
+  tooltip: {
+    use: tooltip,
+    content: ([point]) => ({
+      title: point.datum.plan,
+      rows: [
+        {
+          label: "Revenue",
+          value: money.format(point.datum.revenue),
+          color: point.color,
+        },
+        {
+          label: "Share",
+          value: share.format(point.datum.revenue / planTotal),
+        },
+      ],
+    }),
+  },
+});
+
+function PlanMixScene({ className }: { className?: string }) {
+  return (
+    <Card className={cn("flex min-w-0 flex-col", className)}>
+      <CardHeader>
+        <CardTitle>Revenue by plan</CardTitle>
+        <CardDescription>Last 30 days.</CardDescription>
+      </CardHeader>
+      <CardContent className="grid flex-1 content-center gap-6">
+        <ChartFrame className="bg-transparent p-0 sm:p-0">
+          <Chart
+            definition={planDefinition}
+            height={196}
+            initialWidth={360}
+            ariaLabel={`${money.format(planTotal)} in revenue across the Starter, Growth, Scale and Enterprise plans`}
+          >
+            <ChartCenter aria-hidden="true">
+              <ChartValue>{moneyCompact.format(planTotal)}</ChartValue>
+              <span className="text-xs text-muted-foreground">Total</span>
+            </ChartCenter>
+          </Chart>
+          <ChartTable
+            caption="Revenue by plan, last 30 days"
+            columns={["Plan", "Revenue", "Share"]}
+            rows={plans.map((row) => [
+              row.plan,
+              money.format(row.revenue),
+              share.format(row.revenue / planTotal),
+            ])}
+          />
+        </ChartFrame>
+        <ul aria-hidden="true" className="grid gap-2.5 text-sm">
+          {plans.map((row) => (
+            <li key={row.plan} className="flex items-center gap-2.5">
+              <span
+                className="size-2.5 shrink-0 rounded-[3px]"
+                style={{ background: row.color }}
+              />
+              <span className="min-w-0 flex-1 truncate">{row.plan}</span>
+              <span className="text-muted-foreground tabular-nums">
+                {share.format(row.revenue / planTotal)}
+              </span>
+              <span className="w-16 text-end font-medium tabular-nums">
+                {moneyCompact.format(row.revenue)}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </CardContent>
+    </Card>
+  );
+}
+
+const payouts = [
+  { week: "Aug 27", amount: 12140 },
+  { week: "Sep 3", amount: 13420 },
+  { week: "Sep 10", amount: 12860 },
+  { week: "Sep 17", amount: 14910 },
+  { week: "Sep 24", amount: 15630 },
+  { week: "Oct 1", amount: 14280 },
+  { week: "Oct 8", amount: 16790 },
+  { week: "Oct 15", amount: 18420 },
+];
+
+const payoutMax = Math.max(...payouts.map((payout) => payout.amount));
+
+const payoutSurface = cn(
+  "[--payout-bg:var(--primary)] [--payout-text:var(--primary-foreground)] [--payout-ink:var(--primary-foreground)] [--payout-on-ink:var(--primary)]",
+  "dark:[--payout-bg:color-mix(in_oklab,var(--primary)_14%,var(--card))] dark:[--payout-text:var(--card-foreground)] dark:[--payout-ink:var(--primary)] dark:[--payout-on-ink:var(--primary-foreground)]",
+  "bg-(--payout-bg) text-(--payout-text) ring-[color-mix(in_oklab,var(--payout-ink)_18%,var(--payout-bg))]",
+);
+
+function PayoutScene({ className }: { className?: string }) {
+  const next = payouts[payouts.length - 1];
+  return (
+    <Card className={cn("flex min-w-0 flex-col", payoutSurface, className)}>
+      <CardHeader>
+        <CardTitle>Next payout</CardTitle>
+        <CardDescription className="text-(--payout-text)/75">
+          Thursday, Oct 15 to Chase •• 4821
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="grid flex-1 grid-rows-[auto_minmax(5rem,1fr)] gap-5">
+        <p className="text-4xl font-semibold tracking-[-0.04em] tabular-nums">
+          {money.format(next.amount)}
+        </p>
+        <div
+          role="img"
+          aria-label={`Weekly payouts since ${payouts[0].week}, from ${money.format(payouts[0].amount)} to ${money.format(next.amount)}`}
+          className="flex items-end gap-1.5"
+        >
+          {payouts.map((payout) => (
+            <span
+              key={payout.week}
+              className="flex-1 rounded-sm bg-(--payout-ink)/25 last:bg-(--payout-ink)"
+              style={{ height: `${(payout.amount / payoutMax) * 100}%` }}
+            />
+          ))}
+        </div>
+      </CardContent>
+      <CardFooter className="justify-between">
+        <span className="text-sm text-(--payout-text)/75">
+          Paid out every Thursday
+        </span>
+        <Button
+          size="sm"
+          className="bg-(--payout-ink) text-(--payout-on-ink) hover:bg-(--payout-ink)/90 pressed:bg-(--payout-ink)/90 focus-visible:outline-(--payout-ink)"
+          onPress={() =>
+            showToast({
+              title: "Payout started",
+              description: `${money.format(next.amount)} is on its way to Chase •• 4821.`,
+              variant: "success",
+            })
+          }
+        >
+          Pay out now
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+}
+
 const roles = ["Owner", "Admin", "Editor", "Viewer"] as const;
 type Role = (typeof roles)[number];
 
@@ -358,9 +528,15 @@ function TeamScene({ className }: { className?: string }) {
     <Card className={cn("flex min-w-0 flex-col", className)}>
       <CardHeader>
         <CardTitle>Team</CardTitle>
-        <CardDescription>
-          Invite people and set what they can do.
-        </CardDescription>
+        <CardDescription>12 of 15 seats used.</CardDescription>
+        <CardAction>
+          <ProgressRing
+            label="Seats used"
+            value={80}
+            size="sm"
+            className="[&_[data-slot=progress-ring-label]]:sr-only"
+          />
+        </CardAction>
       </CardHeader>
       <CardContent className="flex-1">
         <ul className="grid gap-1">
@@ -485,27 +661,25 @@ function AssistantScene({ className }: { className?: string }) {
   function send() {
     const text = draft.trim();
     if (!text || working) return;
-    setMessages((current) => [
-      ...current,
-      { id: nextId.current++, side: "outgoing", text },
-    ]);
+    const question: Chat = { id: nextId.current++, side: "outgoing", text };
+    setMessages((current) => [...current, question]);
     setDraft("");
     setWorking(true);
     window.setTimeout(() => {
-      setMessages((current) => [
-        ...current,
-        {
-          id: nextId.current++,
-          side: "incoming",
-          text: answers[replies.current++ % answers.length],
-        },
-      ]);
+      const reply: Chat = {
+        id: nextId.current++,
+        side: "incoming",
+        text: answers[replies.current++ % answers.length],
+      };
+      setMessages((current) => [...current, reply]);
       setWorking(false);
     }, 1600);
   }
 
   return (
-    <Card className={cn("flex min-w-0 flex-col", className)}>
+    <Card
+      className={cn("flex min-w-0 flex-col md:h-0 md:min-h-full", className)}
+    >
       <CardHeader className="flex-row items-start justify-between gap-3">
         <div className="grid gap-1">
           <CardTitle>Assistant</CardTitle>
@@ -516,45 +690,44 @@ function AssistantScene({ className }: { className?: string }) {
           Beta
         </Badge>
       </CardHeader>
-      <CardContent className="grid flex-1 content-end gap-3">
-        <Message side="system" sender="Assistant">
-          Today · Connected to Billing, Support, and Analytics
-        </Message>
-        <Message side="outgoing" sender="You" status="Read">
-          {messages[0].text}
-        </Message>
-        <ToolCall>
-          <ToolCallTrigger
-            name="query_metrics"
-            status="complete"
-            summary="Read 4 weeks of cancellations"
-          />
-        </ToolCall>
-        {messages.slice(1).map((message) => (
-          <Message
-            key={message.id}
-            side={message.side}
-            sender={message.side === "incoming" ? "Assistant" : "You"}
-            avatar={
-              message.side === "incoming" ? (
-                <Avatar name="Assistant" initials="AI" size="sm" />
-              ) : undefined
-            }
-          >
-            {message.text}
+      <CardContent className="flex min-h-0 flex-1 flex-col-reverse overflow-y-auto [mask-image:linear-gradient(to_bottom,transparent,black_1.5rem)]">
+        <div className="grid gap-3">
+          <Message side="outgoing" sender="You" status="Read">
+            {messages[0].text}
           </Message>
-        ))}
-        <AgentStatus
-          state={working ? "working" : "complete"}
-          label={
-            working ? "Looking through your data" : "Win-back email drafted"
-          }
-          detail={
-            working
-              ? "Reading revenue, invoices, and support"
-              : "Ready to review in Campaigns"
-          }
-        />
+          <ToolCall>
+            <ToolCallTrigger
+              name="query_metrics"
+              status="complete"
+              summary="Read 4 weeks of cancellations"
+            />
+          </ToolCall>
+          {messages.slice(1).map((message) => (
+            <Message
+              key={message.id}
+              side={message.side}
+              sender={message.side === "incoming" ? "Assistant" : "You"}
+              avatar={
+                message.side === "incoming" ? (
+                  <Avatar name="Assistant" initials="AI" size="sm" />
+                ) : undefined
+              }
+            >
+              {message.text}
+            </Message>
+          ))}
+          <AgentStatus
+            state={working ? "working" : "complete"}
+            label={
+              working ? "Looking through your data" : "Win-back email drafted"
+            }
+            detail={
+              working
+                ? "Reading revenue, invoices, and support"
+                : "Ready to review in Campaigns"
+            }
+          />
+        </div>
       </CardContent>
       <CardFooter className="border-t border-border/70 pt-5">
         <Form
@@ -612,74 +785,95 @@ function ScheduleScene({ className }: { className?: string }) {
         <CardTitle>Book a walkthrough</CardTitle>
         <CardDescription>30 minutes with our solutions team.</CardDescription>
       </CardHeader>
-      <CardContent className="grid flex-1 grid-cols-[minmax(0,1fr)] content-center justify-items-center gap-5 px-2 sm:px-5">
-        <div className="flex w-full items-center gap-3 rounded-lg bg-muted/60 px-3 py-2.5">
-          <Avatar name="Sam Rivera" className="size-9" />
-          <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-medium">Sam Rivera</p>
-            <p className="truncate text-xs text-muted-foreground">
-              Solutions engineer · Berlin (CEST)
-            </p>
-          </div>
-          <Badge variant="success" dot>
-            Available
-          </Badge>
-        </div>
+      <CardContent className="grid flex-1 grid-cols-[minmax(0,1fr)] gap-6 px-2 pb-5 sm:grid-cols-[auto_minmax(0,1fr)] sm:px-5">
         <Calendar
           aria-label="Walkthrough date"
-          className="max-sm:[--spacing:0.22rem]"
+          className="justify-self-center max-sm:[--spacing:0.22rem] sm:-ms-2"
           value={date}
           onChange={setDate}
           isDateUnavailable={(day) => day.toDate("UTC").getUTCDay() % 6 === 0}
         />
-        <ToggleButtonGroup
-          aria-label="Time"
-          selectionMode="single"
-          disallowEmptySelection
-          selectedKeys={[slot]}
-          onSelectionChange={(keys) => {
-            const [next] = keys;
-            if (typeof next === "string") setSlot(next);
-          }}
-          className="grid w-full min-w-0 grid-cols-2 gap-2 sm:grid-cols-4"
-        >
-          {slots.map((time) => (
-            <ToggleButton key={time} id={time} className="px-2 tabular-nums">
-              {time}
-            </ToggleButton>
-          ))}
-        </ToggleButtonGroup>
+        <div className="flex min-w-0 flex-col gap-5 px-3 sm:border-s sm:border-border/70 sm:ps-6 sm:pe-0">
+          <div className="flex items-center gap-3">
+            <Avatar name="Sam Rivera" className="size-9" />
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-medium">Sam Rivera</p>
+              <p className="truncate text-xs text-muted-foreground">
+                Solutions engineer · Berlin (CEST)
+              </p>
+            </div>
+            <Badge variant="success" dot>
+              Available
+            </Badge>
+          </div>
+          <div className="grid gap-2.5">
+            <p className="text-sm font-medium">{label}</p>
+            <ToggleButtonGroup
+              aria-label="Time"
+              selectionMode="single"
+              disallowEmptySelection
+              selectedKeys={[slot]}
+              onSelectionChange={(keys) => {
+                const [next] = keys;
+                if (typeof next === "string") setSlot(next);
+              }}
+              className="grid w-full min-w-0 grid-cols-2 gap-2"
+            >
+              {slots.map((time) => (
+                <ToggleButton
+                  key={time}
+                  id={time}
+                  className="px-2 tabular-nums"
+                >
+                  {time}
+                </ToggleButton>
+              ))}
+            </ToggleButtonGroup>
+          </div>
+          <dl className="grid gap-2 rounded-lg bg-muted/60 px-4 py-3 text-sm">
+            {[
+              ["Length", "30 minutes"],
+              ["Location", "Video call"],
+              ["Invite to", "maya@northwind.co"],
+            ].map(([term, detail]) => (
+              <div key={term} className="flex min-w-0 justify-between gap-4">
+                <dt className="text-muted-foreground">{term}</dt>
+                <dd className="truncate font-medium">{detail}</dd>
+              </div>
+            ))}
+          </dl>
+          <Dialog>
+            <DialogTrigger className="mt-auto w-full">
+              Book {slot}
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Confirm your walkthrough</DialogTitle>
+                <DialogClose aria-label="Close" />
+              </DialogHeader>
+              <DialogDescription>
+                {label} at {slot}. We will send a calendar invitation and a
+                video link to maya@northwind.co.
+              </DialogDescription>
+              <DialogFooter>
+                <DialogClose variant="outline">Back</DialogClose>
+                <DialogClose
+                  variant="default"
+                  onPress={() =>
+                    showToast({
+                      title: "Walkthrough booked",
+                      description: `${label} at ${slot}.`,
+                      variant: "success",
+                    })
+                  }
+                >
+                  Confirm
+                </DialogClose>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
       </CardContent>
-      <CardFooter>
-        <Dialog>
-          <DialogTrigger className="w-full">Book {slot}</DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Confirm your walkthrough</DialogTitle>
-              <DialogClose aria-label="Close" />
-            </DialogHeader>
-            <DialogDescription>
-              {label} at {slot}. We will send a calendar invitation and a video
-              link to maya@northwind.co.
-            </DialogDescription>
-            <DialogFooter>
-              <DialogClose variant="outline">Back</DialogClose>
-              <DialogClose
-                variant="default"
-                onPress={() =>
-                  showToast({
-                    title: "Walkthrough booked",
-                    description: `${label} at ${slot}.`,
-                    variant: "success",
-                  })
-                }
-              >
-                Confirm
-              </DialogClose>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      </CardFooter>
     </Card>
   );
 }
@@ -698,6 +892,12 @@ function NotificationsScene({ className }: { className?: string }) {
       label: "Failed payments",
       description: "As soon as a charge is declined.",
       on: true,
+    },
+    {
+      id: "invoices",
+      label: "Paid invoices",
+      description: "A receipt for each payment you receive.",
+      on: false,
     },
     {
       id: "product",
@@ -745,84 +945,6 @@ function NotificationsScene({ className }: { className?: string }) {
             Weekly
           </ToggleButton>
         </ToggleButtonGroup>
-      </CardFooter>
-    </Card>
-  );
-}
-
-function UsageScene({ className }: { className?: string }) {
-  return (
-    <Card className={cn("flex min-w-0 flex-col", className)}>
-      <CardHeader className="flex-row items-start justify-between gap-3">
-        <div className="grid gap-1">
-          <CardTitle>Storage</CardTitle>
-          <CardDescription>72 GB of 100 GB on Growth.</CardDescription>
-        </div>
-        <ProgressRing label="Storage used" value={72} size="sm" />
-      </CardHeader>
-      <CardContent className="grid flex-1 content-start gap-4">
-        <Meter label="Media" value={38} valueLabel="38 GB" />
-        <Meter label="Documents" value={18} valueLabel="18 GB" />
-        <Meter label="Backups" value={16} valueLabel="16 GB" />
-      </CardContent>
-      <CardFooter>
-        <SheetTrigger>
-          <Button variant="outline" className="w-full">
-            Compare plans
-          </Button>
-          <Sheet position="right" className="w-full max-w-md">
-            <SheetHeader>
-              <SheetTitle>Change plan</SheetTitle>
-              <SheetDescription>
-                Changes apply now. We prorate the difference.
-              </SheetDescription>
-            </SheetHeader>
-            <SheetBody>
-              <RadioGroup
-                aria-label="Plan"
-                defaultValue="growth"
-                className="gap-2"
-              >
-                <Radio
-                  variant="card"
-                  value="starter"
-                  description="25 GB, 3 seats, community support."
-                >
-                  Starter · $12
-                </Radio>
-                <Radio
-                  variant="card"
-                  value="growth"
-                  description="100 GB, 15 seats, priority support."
-                >
-                  Growth · $48
-                </Radio>
-                <Radio
-                  variant="card"
-                  value="scale"
-                  description="1 TB, unlimited seats, a named contact."
-                >
-                  Scale · $160
-                </Radio>
-              </RadioGroup>
-            </SheetBody>
-            <SheetFooter>
-              <SheetClose variant="outline">Cancel</SheetClose>
-              <SheetClose
-                variant="default"
-                onPress={() =>
-                  showToast({
-                    title: "Plan updated",
-                    description: "Your new limits are active.",
-                    variant: "success",
-                  })
-                }
-              >
-                Update plan
-              </SheetClose>
-            </SheetFooter>
-          </Sheet>
-        </SheetTrigger>
       </CardFooter>
     </Card>
   );
@@ -1070,15 +1192,14 @@ export function ThemeShowcase() {
   return (
     <div className="grid min-w-0 gap-4 md:grid-cols-2 lg:grid-cols-3">
       <RevenueScene className="md:col-span-2" />
+      <PlanMixScene />
+      <PayoutScene />
       <TeamScene />
-      <AssistantScene />
-      <ScheduleScene />
-      <div className="flex min-w-0 flex-col gap-4">
-        <NotificationsScene />
-        <UsageScene className="flex-1" />
-      </div>
+      <NotificationsScene />
       <InvoicesScene className="md:col-span-2" />
+      <AssistantScene />
       <ProjectScene />
+      <ScheduleScene className="md:col-span-2" />
     </div>
   );
 }
