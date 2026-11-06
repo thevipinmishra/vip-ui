@@ -30,8 +30,12 @@ export interface ChatTurn {
 export const assistantAvatarLabel = "Fernway Assistant";
 
 export const modelOptions = [
-  { id: "fast", name: "Fast" },
-  { id: "deep", name: "Deep" },
+  { id: "fast", name: "Fast", description: "Short answers in seconds" },
+  {
+    id: "deep",
+    name: "Deep",
+    description: "Checks more data and takes longer",
+  },
 ];
 
 export const starterPrompts = [

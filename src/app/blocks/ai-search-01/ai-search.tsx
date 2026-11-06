@@ -279,7 +279,7 @@ export function AiSearch() {
                               aria-label="Copy code"
                             />
                           </div>
-                          <pre className="overflow-x-auto p-3 font-mono text-xs leading-5 whitespace-pre-wrap [overflow-wrap:anywhere]">
+                          <pre className="overflow-x-auto p-3 font-mono text-xs leading-5 whitespace-pre">
                             {result.code}
                           </pre>
                         </div>

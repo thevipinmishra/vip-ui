@@ -331,7 +331,6 @@ export function SetupFlow() {
                       invites={invites}
                       invitesError={inviteError}
                       inviteRef={inviteRef}
-                      onSkip={skipInvites}
                       onInvitesChange={(value) => {
                         setInvites(value);
                         setInviteError("");
@@ -353,7 +352,7 @@ export function SetupFlow() {
                 </LayoutMorph>
               </CardContent>
               {!done && (
-                <CardFooter className="justify-between gap-3 border-t border-border/70">
+                <CardFooter className="justify-between gap-3 border-t border-border/70 pt-5">
                   <Button
                     variant="ghost"
                     isDisabled={step === 0}
@@ -366,6 +365,11 @@ export function SetupFlow() {
                     Back
                   </Button>
                   <div className="flex flex-wrap items-center justify-end gap-2">
+                    {step === 1 && (
+                      <Button variant="ghost" onPress={skipInvites}>
+                        Skip for now
+                      </Button>
+                    )}
                     <Button type="submit">
                       {step === setupSteps.length - 1
                         ? "Finish setup"
@@ -513,20 +517,18 @@ function InviteStep({
   invites,
   invitesError,
   inviteRef,
-  onSkip,
   onInvitesChange,
 }: {
   invites: TagFieldValue;
   invitesError: string;
   inviteRef: React.RefObject<HTMLDivElement | null>;
-  onSkip: () => void;
   onInvitesChange: (value: TagFieldValue) => void;
 }) {
   return (
     <div className="grid gap-5">
       <StepHeading
         title="Invite your team"
-        description="Add the people who will collect notes with you."
+        description="Add the people who collect notes with you."
       />
       <TokenField
         ref={inviteRef}
@@ -565,9 +567,6 @@ function InviteStep({
           Each person gets an email with a join link.
         </p>
       </div>
-      <Button variant="ghost" size="sm" className="w-fit" onPress={onSkip}>
-        Skip invites for now
-      </Button>
     </div>
   );
 }
@@ -592,8 +591,8 @@ function TopicsStep({
   return (
     <div className="grid gap-5">
       <StepHeading
-        title="What will your team research?"
-        description="We use this to pick sample projects for your workspace."
+        title="Choose your research topics"
+        description="We use these topics to suggest sample projects."
       />
       <CheckboxGroup
         label="Research topics"
@@ -646,7 +645,7 @@ function DonePanel({
           {setup.name} is ready
         </h2>
         <p className="text-sm leading-6 text-muted-foreground">
-          The checklist uses the same settings.
+          Next, do the tasks in the checklist.
         </p>
       </div>
       <div className="flex flex-wrap gap-2">

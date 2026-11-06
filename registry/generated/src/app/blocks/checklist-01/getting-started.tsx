@@ -112,7 +112,7 @@ const tasks: readonly {
     id: "import",
     title: "Import your notes",
     summary: "Use a CSV or sample notes",
-    detail: "Import a CSV file or use sample notes.",
+    detail: "Imported notes go into your first project.",
   },
 ];
 
@@ -198,7 +198,8 @@ export function GettingStarted() {
     setDone((current) => ({ ...current, [id]: checked }));
     if (!task) return;
     showToast({
-      title: checked ? `${task.title} is done` : `${task.title} is open again`,
+      title: checked ? "Task is done" : "Task is open again",
+      description: task.title,
       variant: checked ? "success" : "info",
     });
   }
@@ -393,7 +394,7 @@ export function GettingStarted() {
             <TextFieldDescription
               className={cn(profileError && "text-destructive")}
             >
-              {profileError || "This name shows on notes and comments."}
+              {profileError || "Use 2 or more characters."}
             </TextFieldDescription>
           </TextField>
           <div className="flex flex-wrap items-center gap-3">
@@ -571,11 +572,11 @@ export function GettingStarted() {
           {percent === 100 && (
             <Alert
               variant="success"
-              title="You are ready."
+              title="All tasks are done"
               className="mt-5"
               role="status"
             >
-              All tasks are done. Open a project to add your first note.
+              Open a project to add your first note.
             </Alert>
           )}
 
@@ -593,8 +594,8 @@ export function GettingStarted() {
                   defaultExpanded={index === 0}
                   className={cn(done[task.id] && "bg-muted/30")}
                 >
-                  <div className="flex items-center gap-1 pe-2">
-                    <div className="ps-3">
+                  <div className="flex items-center rounded-lg outline-transparent transition-[background-color,outline-color] duration-150 ease-out-quint has-[[data-slot=disclosure-header][data-hovered]]:bg-muted has-[[data-slot=disclosure-header][aria-expanded=true]]:rounded-b-none has-[[data-slot=disclosure-header][data-focus-visible]]:outline-2 has-[[data-slot=disclosure-header][data-focus-visible]]:-outline-offset-2 has-[[data-slot=disclosure-header][data-focus-visible]]:outline-ring">
+                    <div className="flex shrink-0 ps-4">
                       <Checkbox
                         checked={done[task.id]}
                         onCheckedChange={(checked) =>
@@ -603,7 +604,7 @@ export function GettingStarted() {
                         aria-label={`Mark ${task.title} as done`}
                       />
                     </div>
-                    <DisclosureHeader className="min-w-0 flex-1 ps-1 pe-2">
+                    <DisclosureHeader className="ps-3 hover:bg-transparent focus-visible:outline-transparent">
                       <span className="flex min-w-0 flex-col gap-0.5">
                         <span
                           className={cn(
