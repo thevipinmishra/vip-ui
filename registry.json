@@ -1952,6 +1952,7 @@
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-radio-group.json",
+        "https://vip-ui.dev/r/vip-size.json",
         "https://vip-ui.dev/r/vip-utils.json"
       ],
       "cssVars": {

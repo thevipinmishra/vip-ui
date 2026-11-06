@@ -1134,6 +1134,10 @@ const pageSources = {
         sourcePath: "rating-input-required-demo.tsx",
         uses: ["form", "button"],
       },
+      {
+        title: "Sizes",
+        sourcePath: "rating-input-sizes-demo.tsx",
+      },
     ],
   },
   "radio-group": {

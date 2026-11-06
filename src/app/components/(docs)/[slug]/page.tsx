@@ -166,6 +166,7 @@ import { RatingInputDemo } from "@/components/docs/rating-input-demo";
 import { RatingInputIconDemo } from "@/components/docs/rating-input-icon-demo";
 import { RatingInputReadOnlyDemo } from "@/components/docs/rating-input-read-only-demo";
 import { RatingInputRequiredDemo } from "@/components/docs/rating-input-required-demo";
+import { RatingInputSizesDemo } from "@/components/docs/rating-input-sizes-demo";
 import { ReasoningAutoCollapseDemo } from "@/components/docs/reasoning-auto-collapse-demo";
 import { ReasoningDemo } from "@/components/docs/reasoning-demo";
 import { ReasoningErrorDemo } from "@/components/docs/reasoning-error-demo";
@@ -853,6 +854,7 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <RatingInputIconDemo key="preview-1" />,
     <RatingInputReadOnlyDemo key="preview-2" />,
     <RatingInputRequiredDemo key="preview-3" />,
+    <RatingInputSizesDemo key="preview-4" />,
   ],
   pagination: [
     <PaginationDemo key="preview-1" />,

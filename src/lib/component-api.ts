@@ -1651,10 +1651,16 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
             "A Phosphor icon for each step. Steps up to the rating use the fill weight.",
         },
         {
+          name: "size",
+          type: '"sm" | "md" | "lg"',
+          default: '"md"',
+          description: "Sets the size of each step.",
+        },
+        {
           name: "value",
           type: "number",
           description:
-            "The selected rating, controlled. 0 means no rating. Use a number from 1 to max for a selection.",
+            "The selected rating, controlled. 0 means no rating. A decimal value, such as an average, fills part of a step.",
         },
         {
           name: "defaultValue",
