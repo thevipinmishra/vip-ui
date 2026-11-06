@@ -1,7 +1,6 @@
 import { DocsNav } from "@/components/docs/docs-nav";
 import { OnThisPage } from "@/components/docs/on-this-page";
 import { SidebarScrollArea } from "@/components/docs/sidebar-scroll-area";
-import { SiteFooter } from "@/components/docs/site-footer";
 import { SiteHeader } from "@/components/docs/site-header";
 
 export default function ComponentsLayout({
@@ -34,7 +33,6 @@ export default function ComponentsLayout({
           </div>
         </div>
       </div>
-      <SiteFooter />
     </div>
   );
 }
