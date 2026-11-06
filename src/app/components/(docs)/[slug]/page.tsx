@@ -6,9 +6,6 @@ import { AgentStatusStatesDemo } from "@/components/docs/agent-status-states-dem
 import { AnimatedNumberBasicDemo } from "@/components/docs/animated-number-basic-demo";
 import { AnimatedNumberFormatDemo } from "@/components/docs/animated-number-format-demo";
 import { AnimatedNumberSlideDemo } from "@/components/docs/animated-number-slide-demo";
-import { AuroraDemo } from "@/components/docs/aurora-demo";
-import { AuroraPaletteDemo } from "@/components/docs/aurora-palette-demo";
-import { AuroraStillDemo } from "@/components/docs/aurora-still-demo";
 import { AutocompleteDemo } from "@/components/docs/autocomplete-demo";
 import { AvatarBasicDemo } from "@/components/docs/avatar-basic-demo";
 import { AvatarDemo } from "@/components/docs/avatar-demo";
@@ -78,13 +75,6 @@ import { DescriptionListDemo } from "@/components/docs/description-list-demo";
 import { DisclosureDemo } from "@/components/docs/disclosure-demo";
 import { DisclosureDisabledDemo } from "@/components/docs/disclosure-disabled-demo";
 import { DisclosureExpandedDemo } from "@/components/docs/disclosure-expanded-demo";
-import { DitherDemo } from "@/components/docs/dither-demo";
-import { DitherInteractiveDemo } from "@/components/docs/dither-interactive-demo";
-import { DitherShapesDemo } from "@/components/docs/dither-shapes-demo";
-import { DotFieldDemo } from "@/components/docs/dot-field-demo";
-import { DotFieldEmptyStateDemo } from "@/components/docs/dot-field-empty-state-demo";
-import { DotFieldSpacingDemo } from "@/components/docs/dot-field-spacing-demo";
-import { DotFieldStatsDemo } from "@/components/docs/dot-field-stats-demo";
 import { DropZoneBasicDemo } from "@/components/docs/drop-zone-basic-demo";
 import { DropZoneDemo } from "@/components/docs/drop-zone-demo";
 import { EmptyStateDemo } from "@/components/docs/empty-state-demo";
@@ -128,9 +118,6 @@ import { NumberFieldDisabledDemo } from "@/components/docs/number-field-disabled
 import { NumberFieldLimitsDemo } from "@/components/docs/number-field-limits-demo";
 import { NumberFieldSizesDemo } from "@/components/docs/number-field-sizes-demo";
 import { NumberFieldStackedDemo } from "@/components/docs/number-field-stacked-demo";
-import { OrbDemo } from "@/components/docs/orb-demo";
-import { OrbPaletteDemo } from "@/components/docs/orb-palette-demo";
-import { OrbStatesDemo } from "@/components/docs/orb-states-demo";
 import { PaginationBasicDemo } from "@/components/docs/pagination-basic-demo";
 import { PaginationDemo } from "@/components/docs/pagination-demo";
 import { PaginationEllipsisDemo } from "@/components/docs/pagination-ellipsis-demo";
@@ -538,10 +525,6 @@ const entries: {
   { slug: "prompt-input", name: "Prompt input", demo: <PromptInputDemo /> },
   { slug: "reasoning", name: "Reasoning", demo: <ReasoningDemo /> },
   { slug: "response", name: "Response", demo: <ResponseDemo /> },
-  { slug: "aurora", name: "Aurora", demo: <AuroraDemo /> },
-  { slug: "dot-field", name: "Dot field", demo: <DotFieldDemo /> },
-  { slug: "orb", name: "Orb", demo: <OrbDemo /> },
-  { slug: "dither", name: "Dither", demo: <DitherDemo /> },
 ];
 
 const basicPreviews: Record<string, { demo: ReactNode; source: string }> = {
@@ -914,20 +897,6 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <TreeSelectionDemo key="preview-2" />,
     <TreeSectionsDemo key="preview-3" />,
     <TreeDragDemo key="preview-4" />,
-  ],
-  aurora: [
-    <AuroraPaletteDemo key="preview-1" />,
-    <AuroraStillDemo key="preview-2" />,
-  ],
-  "dot-field": [
-    <DotFieldEmptyStateDemo key="preview-1" />,
-    <DotFieldSpacingDemo key="preview-2" />,
-    <DotFieldStatsDemo key="preview-3" />,
-  ],
-  orb: [<OrbStatesDemo key="preview-1" />, <OrbPaletteDemo key="preview-2" />],
-  dither: [
-    <DitherShapesDemo key="preview-1" />,
-    <DitherInteractiveDemo key="preview-2" />,
   ],
 };
 

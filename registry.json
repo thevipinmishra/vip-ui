@@ -32,20 +32,6 @@
       ]
     },
     {
-      "name": "vip-effect-color",
-      "type": "registry:lib",
-      "title": "Effect Color",
-      "description": "Resolves theme colors to channel values for canvas effects.",
-      "dependencies": [],
-      "files": [
-        {
-          "path": "registry/generated/src/components/vip-ui/effect-color.ts",
-          "type": "registry:file",
-          "target": "@components/vip-ui/effect-color.ts"
-        }
-      ]
-    },
-    {
       "name": "vip-accordion",
       "type": "registry:ui",
       "title": "Accordion",
@@ -201,21 +187,6 @@
           "path": "registry/generated/src/components/vip-ui/attachment.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/attachment.tsx"
-        }
-      ]
-    },
-    {
-      "name": "vip-aurora",
-      "type": "registry:ui",
-      "title": "Aurora",
-      "description": "Layers a soft, drifting gradient behind a hero, card, or section.",
-      "dependencies": ["motion@^14.9.0"],
-      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
-      "files": [
-        {
-          "path": "registry/generated/src/components/vip-ui/aurora.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/aurora.tsx"
         }
       ]
     },
@@ -1051,44 +1022,6 @@
       ]
     },
     {
-      "name": "vip-dither",
-      "type": "registry:ui",
-      "title": "Dither",
-      "description": "Dithers a shape into a textured accent for panels and data.",
-      "dependencies": ["motion@^14.9.0"],
-      "registryDependencies": [
-        "https://vip-ui.dev/r/vip-effect-color.json",
-        "https://vip-ui.dev/r/vip-utils.json"
-      ],
-      "files": [
-        {
-          "path": "registry/generated/src/components/vip-ui/dither.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/dither.tsx"
-        }
-      ]
-    },
-    {
-      "name": "vip-dot-field",
-      "type": "registry:ui",
-      "title": "Dot Field",
-      "description": "Draws a dot grid that brightens around the pointer.",
-      "dependencies": ["motion@^14.9.0"],
-      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
-      "cssVars": {
-        "theme": {
-          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
-        }
-      },
-      "files": [
-        {
-          "path": "registry/generated/src/components/vip-ui/dot-field.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/dot-field.tsx"
-        }
-      ]
-    },
-    {
       "name": "vip-drop-zone",
       "type": "registry:ui",
       "title": "Drop Zone",
@@ -1622,21 +1555,6 @@
           "path": "registry/generated/src/components/vip-ui/number-field.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/number-field.tsx"
-        }
-      ]
-    },
-    {
-      "name": "vip-orb",
-      "type": "registry:ui",
-      "title": "Orb",
-      "description": "Shows a glowing orb for an AI agent's idle or thinking state.",
-      "dependencies": ["motion@^14.9.0"],
-      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
-      "files": [
-        {
-          "path": "registry/generated/src/components/vip-ui/orb.tsx",
-          "type": "registry:file",
-          "target": "@components/vip-ui/orb.tsx"
         }
       ]
     },
