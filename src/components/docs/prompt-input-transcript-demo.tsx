@@ -66,14 +66,6 @@ const TURNS: Turn[] = [
   },
 ];
 
-const HINTS: Record<Phase, string> = {
-  stopped: "The run stopped. Send a prompt to start a new run.",
-  thinking: "The newest reasoning line stays in view.",
-  streaming: "The answer streams with the caret. Stop ends the run.",
-  complete: "Copy the answer, or send the next prompt.",
-  error: "The second prompt fails once on purpose. Retry runs it again.",
-};
-
 function words(text: string) {
   return text.split(" ");
 }
@@ -229,7 +221,6 @@ export function PromptInputTranscriptDemo() {
         onSubmit={submit}
         onStop={() => setPhase("stopped")}
       />
-      <p className="text-xs leading-5 text-muted-foreground">{HINTS[phase]}</p>
     </div>
   );
 }

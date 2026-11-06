@@ -21,8 +21,8 @@ export function ResponseSourcesDemo() {
       </Reasoning>
       <Response status="complete" className="w-full">
         <ResponseContent>
-          The composer grows to maxRows, then scrolls. Install Attachment
-          separately to show the files in the composer.
+          The composer grows one row at a time up to eight rows, then scrolls so
+          Send stays in view. Dropped files show as attachments above the text.
         </ResponseContent>
         <ResponseFooter>
           <SourceLink
