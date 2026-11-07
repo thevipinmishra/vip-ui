@@ -33,7 +33,7 @@ Open <http://localhost:3000/components>. `pnpm dev` runs `pnpm registry:build` f
 | `src/components/ui/`                                | Component source files. Each file becomes a registry item.                            |
 | `src/components/docs/`                              | Demos and the parts of the docs site.                                                 |
 | `src/app/components/`                               | Component docs routes. Most components use `[slug]/page.tsx`.                         |
-| `src/app/blocks/`                                   | Full-page blocks. `src/lib/blocks.json` lists them.                                   |
+| `src/app/blocks/`                                   | Full-page blocks. `src/lib/blocks.json` lists them. `page.tsx` renders one component. |
 | `src/lib/catalog.json`                              | Component names, groups, navigation order, and the one description of each component. |
 | `src/lib/catalog.ts`                                | Catalog helpers and React Aria links.                                                 |
 | `src/lib/internal-descriptions.json`                | Descriptions of shared files that have no docs page.                                  |
@@ -73,7 +73,7 @@ Use a kebab-case slug, for example `date-field`. The registry item name is `vip-
 4. Add a preview for the component index to `catalogPreviews` in `src/components/docs/catalog-preview-registry.ts`. Overlays must not open from a preview; use a drawing, as in `catalog-preview-overlays.tsx`.
 5. Add demos to `src/components/docs/`. Name the usage demo `<slug>-demo.tsx` or `<slug>-basic-demo.tsx`. Name each example `<slug>-<example>-demo.tsx`.
 6. Add the page data to `pageSources` in `src/lib/component-examples.ts`: `usage` and `examples`. Each example has a `title`, an optional `description`, and a `sourcePath`.
-7. Add the page to `src/app/components/[slug]/page.tsx`. Add an item to `entries`. Add the usage demo to `basicPreviews` if it is not `<slug>-demo.tsx`. Add the example demos to `examplePreviews` in the same order as `examples`.
+7. Add the page to `src/app/components/(docs)/[slug]/page.tsx`. Add an item to `entries`. Add the usage demo to `basicPreviews` if it is not `<slug>-demo.tsx`. Add the example demos to `examplePreviews` in the same order as `examples`. To give a component its own page, add `src/app/components/(docs)/<slug>/page.tsx` instead, as `alert/page.tsx` does.
 8. Add the API table to `componentApi` in `src/lib/component-api.ts`. Use `apiPart<typeof YourComponent>()`, so TypeScript checks each prop name against the component props.
 9. If the component has more than one part, add its part tree to `src/components/docs/component-compositions.ts`.
 10. Run `pnpm registry:build` and commit the generated files.

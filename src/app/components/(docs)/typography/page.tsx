@@ -27,7 +27,7 @@ const presets = `.typography-chat {
 }
 
 .typography-reading {
-  --typography-font-body: var(--font-newsreader);
+  --typography-font-body: "Newsreader", Georgia, serif;
   --typography-size: 19px;
   --typography-leading: 1.7;
   --typography-flow: 1.3em;

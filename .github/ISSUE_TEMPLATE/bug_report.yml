@@ -5,8 +5,8 @@ body:
   - type: input
     id: component
     attributes:
-      label: Component
-      description: The component name or registry item, for example Button or vip-button.
+      label: Component or block
+      description: The name or registry item, for example Button, vip-button, or vip-dashboard-01.
     validations:
       required: true
   - type: dropdown

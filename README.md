@@ -14,15 +14,14 @@ Accessible React components that you copy into your project through a shadcn-com
 - **Tailwind CSS v4.** Tailwind Variants recipes define the variants and sizes. Colors come from your shadcn theme.
 - **Motion.** Motion animates state changes. Each animation obeys the reduced motion setting of the operating system.
 - **One size scale.** Buttons, fields, toggles, and tabs share five heights, from 28px to 56px.
-- **No Next.js lock-in.** Components do not import from `next/`. You can use them in Vite and other React apps.
+- **No Next.js lock-in.** Components and blocks do not import from `next/`. You can use them in Vite and other React apps.
 - **More than components.** The site also has color scales, themes, a chart gallery, and full-page blocks.
 
 ## Requirements
 
 - React 19 and TypeScript
-- Tailwind CSS v4
+- Tailwind CSS v4.1 or later
 - A shadcn theme that uses CSS variables
-- Next.js App Router, for blocks only
 
 ## Installation
 
@@ -36,13 +35,7 @@ Accessible React components that you copy into your project through a shadcn-com
    pnpm dlx shadcn@latest add https://vip-ui.dev/r/vip-button.json
    ```
 
-The CLI does these steps:
-
-- It writes the component files to the `vip-ui/` folder in your components alias.
-- It installs the packages that the component uses.
-- It adds the Tailwind plugin and the theme variables to your global CSS file.
-
-The CLI does not change the files in your shadcn `components/ui/` folder.
+The CLI writes the files to a `vip-ui/` folder in your components alias. It does not change the files in your shadcn `components/ui/` folder.
 
 ### Use the registry namespace
 
@@ -87,14 +80,14 @@ To change the styles of an installed component, read [Styling](https://vip-ui.de
 
 ## Documentation
 
-| Page                                        | Contents                                                                        |
-| ------------------------------------------- | ------------------------------------------------------------------------------- |
-| [Components](https://vip-ui.dev/components) | Live previews, source files, install commands, and API references               |
-| [Blocks](https://vip-ui.dev/blocks)         | Dashboard, sign-in, sign-up, settings, billing, pricing, team, and upload pages |
-| [Charts](https://vip-ui.dev/charts)         | A TanStack Charts gallery and a chart frame that you can use again              |
-| [Colors](https://vip-ui.dev/colors)         | Color scales with contrast checks                                               |
-| [Themes](https://vip-ui.dev/themes)         | Themes made from the color scales                                               |
-| [llms.txt](https://vip-ui.dev/llms.txt)     | A list of all docs pages for AI tools                                           |
+| Page                                        | Contents                                                                      |
+| ------------------------------------------- | ----------------------------------------------------------------------------- |
+| [Components](https://vip-ui.dev/components) | Live previews, source files, install commands, and API references             |
+| [Blocks](https://vip-ui.dev/blocks)         | Dashboard, authentication, settings, AI, marketing, commerce, and other pages |
+| [Charts](https://vip-ui.dev/charts)         | A TanStack Charts gallery and a chart frame that you can use again            |
+| [Colors](https://vip-ui.dev/colors)         | Color scales with contrast checks                                             |
+| [Themes](https://vip-ui.dev/themes)         | Themes made from the color scales                                             |
+| [llms.txt](https://vip-ui.dev/llms.txt)     | A list of all docs pages for AI tools                                         |
 
 ## Development
 
@@ -132,7 +125,7 @@ Do not open a public issue for a security problem. Read the [security policy](SE
 
 vip/ui uses these projects:
 
-- [React Aria](https://react-spectrum.adobe.com/react-aria/)
+- [React Aria](https://react-aria.adobe.com)
 - [shadcn/ui](https://ui.shadcn.com)
 - [Tailwind CSS](https://tailwindcss.com)
 - [Tailwind Variants](https://www.tailwind-variants.org)

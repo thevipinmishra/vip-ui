@@ -99,8 +99,8 @@ export default function ReactAriaPage() {
             merge.
           </li>
           <li>
-            State contexts give the parent state. vip/ui uses{" "}
-            <Code>DisclosureStateContext</Code> to animate disclosure panels.
+            State contexts, such as <Code>DisclosureStateContext</Code>, give
+            the state of the parent.
           </li>
         </List>
         <p>
