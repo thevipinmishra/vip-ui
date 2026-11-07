@@ -9,7 +9,6 @@ import {
 } from "@/lib/component-examples";
 import { allComponents } from "@/lib/navigation";
 import { registryUrl } from "@/lib/registry-docs";
-import { cn } from "@/lib/utils";
 import { ApiReference } from "./api-reference";
 import { CodeBlock } from "./code-block";
 import { ComponentComposition } from "./component-composition";
@@ -18,8 +17,8 @@ import { Code, DocsHeader, DocsPager, ExternalLink, TextLink } from "./guide";
 import { InstallTabs } from "./install-tabs";
 import { ManualInstall } from "./manual-install";
 import { PackageManagerCommand } from "./package-manager-command";
-import { sectionTitleClass } from "./page-header";
 import { PreviewPanel } from "./preview-panel";
+import { SectionHeading } from "./section-heading";
 
 export interface ComponentExample extends ComponentExampleMetadata {
   preview: ReactNode;
@@ -119,7 +118,9 @@ export async function ComponentPage({
       </section>
 
       <section id="installation" className="mt-14 scroll-mt-8">
-        <SectionHeading title="Installation" />
+        <SectionHeading section="installation" className="mb-5">
+          Installation
+        </SectionHeading>
         <InstallTabs
           cliAvailable={Boolean(cliUrl)}
           cli={
@@ -151,7 +152,9 @@ export async function ComponentPage({
 
       {usage && (
         <section id="usage" className="mt-14 scroll-mt-8">
-          <SectionHeading title="Usage" />
+          <SectionHeading section="usage" className="mb-5">
+            Usage
+          </SectionHeading>
           <div className="grid max-w-[670px] gap-5">
             {usage.note && (
               <p className="text-sm leading-6 text-muted-foreground">
@@ -165,7 +168,9 @@ export async function ComponentPage({
 
       {compositions[componentSlug] && (
         <section id="composition" className="mt-14 scroll-mt-8">
-          <SectionHeading title="Composition" />
+          <SectionHeading section="composition" className="mb-5">
+            Composition
+          </SectionHeading>
           <ComponentComposition {...compositions[componentSlug]} />
         </section>
       )}
@@ -176,7 +181,12 @@ export async function ComponentPage({
           id={exampleAnchor(example.title)}
           className="mt-14 scroll-mt-8"
         >
-          <SectionHeading title={example.title} />
+          <SectionHeading
+            section={exampleAnchor(example.title)}
+            className="mb-5"
+          >
+            {example.title}
+          </SectionHeading>
           {(example.description || example.uses) && (
             <p className="-mt-2 mb-5 max-w-[670px] text-sm leading-6 text-muted-foreground">
               {example.description && (
@@ -197,7 +207,9 @@ export async function ComponentPage({
 
       {accessibility && (
         <section id="accessibility" className="mt-14 scroll-mt-8">
-          <SectionHeading title="Accessibility" />
+          <SectionHeading section="accessibility" className="mb-5">
+            Accessibility
+          </SectionHeading>
           <div className="grid max-w-[670px] gap-4 text-sm leading-7 text-muted-foreground">
             {accessibility}
           </div>
@@ -206,7 +218,9 @@ export async function ComponentPage({
 
       {(apiParts.length > 0 || reactAria) && (
         <section id="api" className="mt-14 scroll-mt-8">
-          <SectionHeading title="API reference" />
+          <SectionHeading section="api" className="mb-5">
+            API reference
+          </SectionHeading>
           {reactAria && (
             <p className="mb-5 max-w-[670px] text-sm leading-7 text-muted-foreground">
               {apiParts.length > 0
@@ -279,8 +293,4 @@ function ExampleUses({ slugs }: { slugs: readonly string[] }) {
       {"."}
     </>
   );
-}
-
-function SectionHeading({ title }: { title: string }) {
-  return <h2 className={cn("mb-5", sectionTitleClass)}>{title}</h2>;
 }

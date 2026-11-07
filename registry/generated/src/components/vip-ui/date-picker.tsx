@@ -65,68 +65,153 @@ export function DatePicker<T extends DateValue>({
     >
       {children ?? (
         <>
-          {label && (
-            <Label data-slot="date-picker-label" className={fieldLabelStyles}>
-              {label}
-            </Label>
-          )}
-          <Group
-            data-slot="date-picker-group"
-            className={cn(
-              segmentedFieldStyles,
-              "data-[focus-visible]:outline-none",
-            )}
-          >
-            <DateInput
-              data-slot="date-picker-input"
-              className={cn(
-                fieldText,
-                "min-w-0 flex-1 px-[calc(var(--field-px,0.875rem)-0.25rem)] py-[clamp(0px,calc((var(--field-h,3rem)-2rem)/2),0.5rem)] data-[focus-visible]:outline-none",
-              )}
-            >
-              {(segment) => <DateSegment segment={segment} />}
-            </DateInput>
-            <Button
-              aria-label="Choose date"
-              data-slot="date-picker-trigger"
-              variant="ghost"
-              iconOnly
-              className={cn(
-                fieldTriggerStyles,
-                "me-[var(--field-inset,0.25rem)]",
-              )}
-            >
-              <CalendarBlankIcon aria-hidden="true" />
-            </Button>
-          </Group>
+          {label && <DatePickerLabel>{label}</DatePickerLabel>}
+          <DatePickerGroup />
           {description && (
-            <Text
-              slot="description"
-              data-slot="date-picker-description"
-              className={fieldDescriptionStyles}
-            >
-              {description}
-            </Text>
+            <DatePickerDescription>{description}</DatePickerDescription>
           )}
-          <FieldError
-            data-slot="date-picker-error"
-            className={fieldErrorStyles}
-          />
-          <Popover
-            data-slot="date-picker-popover"
-            placement="bottom start"
-            className="flex p-3 max-sm:flex-col"
-          >
+          <DatePickerError />
+          <DatePickerContent>
             {presets && <DatePickerPresets presets={presets} />}
             <Calendar />
-          </Popover>
+          </DatePickerContent>
         </>
       )}
     </AriaDatePicker>
   );
 }
 
-function DatePickerPresets<T extends DateValue>({
+export function DatePickerLabel({
+  className,
+  ...props
+}: React.ComponentProps<typeof Label>) {
+  return (
+    <Label
+      {...props}
+      data-slot="date-picker-label"
+      className={cn(fieldLabelStyles, className)}
+    />
+  );
+}
+
+export function DatePickerGroup({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof Group>) {
+  return (
+    <Group
+      {...props}
+      data-slot="date-picker-group"
+      className={composeRenderProps(className, (className) =>
+        cn(
+          segmentedFieldStyles,
+          "data-[focus-visible]:outline-none",
+          className,
+        ),
+      )}
+    >
+      {children ?? (
+        <>
+          <DatePickerInput />
+          <DatePickerTrigger />
+        </>
+      )}
+    </Group>
+  );
+}
+
+export function DatePickerInput({
+  className,
+  ...props
+}: Omit<React.ComponentProps<typeof DateInput>, "children">) {
+  return (
+    <DateInput
+      {...props}
+      data-slot="date-picker-input"
+      className={composeRenderProps(className, (className) =>
+        cn(
+          fieldText,
+          "min-w-0 flex-1 px-[calc(var(--field-px,0.875rem)-0.25rem)] py-[clamp(0px,calc((var(--field-h,3rem)-2rem)/2),0.5rem)] data-[focus-visible]:outline-none",
+          className,
+        ),
+      )}
+    >
+      {(segment) => <DateSegment segment={segment} />}
+    </DateInput>
+  );
+}
+
+export function DatePickerTrigger({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof Button>) {
+  return (
+    <Button
+      aria-label="Choose date"
+      {...props}
+      data-slot="date-picker-trigger"
+      variant="ghost"
+      iconOnly
+      className={composeRenderProps(className, (className) =>
+        cn(fieldTriggerStyles, "me-[var(--field-inset,0.25rem)]", className),
+      )}
+    >
+      {children ?? <CalendarBlankIcon aria-hidden="true" />}
+    </Button>
+  );
+}
+
+export function DatePickerDescription({
+  className,
+  ...props
+}: React.ComponentProps<typeof Text>) {
+  return (
+    <Text
+      {...props}
+      slot="description"
+      data-slot="date-picker-description"
+      className={cn(fieldDescriptionStyles, className)}
+    />
+  );
+}
+
+export function DatePickerError({
+  className,
+  ...props
+}: React.ComponentProps<typeof FieldError>) {
+  return (
+    <FieldError
+      {...props}
+      data-slot="date-picker-error"
+      className={composeRenderProps(className, (className) =>
+        cn(fieldErrorStyles, className),
+      )}
+    />
+  );
+}
+
+export function DatePickerContent({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof Popover>) {
+  return (
+    <Popover
+      placement="bottom start"
+      {...props}
+      data-slot="date-picker-popover"
+      className={composeRenderProps(className, (className) =>
+        cn("flex p-3 max-sm:flex-col", className),
+      )}
+    >
+      {children ?? <Calendar />}
+    </Popover>
+  );
+}
+
+export function DatePickerPresets<T extends DateValue>({
   presets,
 }: {
   presets: DatePickerPreset<T>[];

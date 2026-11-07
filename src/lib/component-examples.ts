@@ -302,6 +302,12 @@ const pageSources = {
         title: "Controlled value",
         sourcePath: "calendar-controlled-demo.tsx",
       },
+      {
+        title: "Month and year pickers",
+        description:
+          "The year list shows 20 years. Set `visibleYears` to change it.",
+        sourcePath: "calendar-pickers-demo.tsx",
+      },
     ],
   },
   card: {
@@ -558,6 +564,12 @@ const pageSources = {
       {
         title: "Presets",
         sourcePath: "date-picker-presets-demo.tsx",
+      },
+      {
+        title: "Month and year pickers",
+        description:
+          "Compose a `Calendar` with pickers in `DatePickerContent`.",
+        sourcePath: "date-picker-pickers-demo.tsx",
       },
       {
         title: "Disabled",

@@ -174,6 +174,51 @@ export const compositions: Record<string, Composition> = {
       },
     ],
   },
+  calendar: {
+    parts: [
+      {
+        part: "Calendar",
+        note: "Owns the value and the visible month.",
+        children: [
+          {
+            part: "CalendarHeader",
+            children: [
+              { part: "CalendarMonthPicker", optional: true },
+              { part: "CalendarYearPicker", optional: true },
+            ],
+          },
+          { part: "CalendarGrid" },
+        ],
+      },
+    ],
+  },
+  "date-picker": {
+    parts: [
+      {
+        part: "DatePicker",
+        note: "Owns the value, the open state, and validation.",
+        children: [
+          { part: "DatePickerLabel" },
+          {
+            part: "DatePickerGroup",
+            children: [
+              { part: "DatePickerInput" },
+              { part: "DatePickerTrigger" },
+            ],
+          },
+          { part: "DatePickerDescription", optional: true },
+          { part: "DatePickerError" },
+          {
+            part: "DatePickerContent",
+            children: [
+              { part: "DatePickerPresets", optional: true },
+              { part: "Calendar" },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   dialog: {
     parts: [
       {
