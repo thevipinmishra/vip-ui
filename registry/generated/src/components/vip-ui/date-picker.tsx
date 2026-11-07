@@ -1,6 +1,6 @@
 "use client";
 
-import { CaretDownIcon } from "@phosphor-icons/react";
+import { CalendarBlankIcon } from "@phosphor-icons/react";
 import { useContext } from "react";
 import {
   DatePicker as AriaDatePicker,
@@ -19,7 +19,6 @@ import { Button } from "./button";
 import { Calendar, CalendarPresets } from "./calendar";
 import { DateSegment } from "./date-segment";
 import {
-  fieldChevronStyles,
   fieldDescriptionStyles,
   fieldErrorStyles,
   fieldLabelStyles,
@@ -97,7 +96,7 @@ export function DatePicker<T extends DateValue>({
                 "me-[var(--field-inset,0.25rem)]",
               )}
             >
-              <DatePickerChevron />
+              <CalendarBlankIcon aria-hidden="true" />
             </Button>
           </Group>
           {description && (
@@ -148,13 +147,5 @@ function DatePickerPresets<T extends DateValue>({
         state.close();
       }}
     />
-  );
-}
-
-function DatePickerChevron() {
-  return (
-    <span aria-hidden="true" className={fieldChevronStyles}>
-      <CaretDownIcon />
-    </span>
   );
 }
