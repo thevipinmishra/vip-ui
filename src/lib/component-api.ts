@@ -10,6 +10,11 @@ import type { BorderBeam } from "@/components/ui/border-beam";
 import type { Button } from "@/components/ui/button";
 import type { ButtonGroup } from "@/components/ui/button-group";
 import type { ButtonLink } from "@/components/ui/button-link";
+import type {
+  CalendarHeader,
+  CalendarMonthPicker,
+  CalendarYearPicker,
+} from "@/components/ui/calendar";
 import type { CardTitle } from "@/components/ui/card";
 import type { Checkbox } from "@/components/ui/checkbox";
 import type { CheckboxGroup } from "@/components/ui/checkbox-group";
@@ -2556,6 +2561,59 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           name: "description",
           type: "string",
           description: "Help text below the field.",
+        },
+      ],
+    }),
+  ],
+  calendar: [
+    apiPart<typeof CalendarHeader>({
+      name: "CalendarHeader",
+      props: [
+        {
+          name: "children",
+          type: "ReactNode",
+          description:
+            "Replaces the month heading between the previous and next buttons.",
+        },
+      ],
+    }),
+    apiPart<typeof CalendarMonthPicker>({
+      name: "CalendarMonthPicker",
+      props: [
+        {
+          name: "format",
+          type: '"numeric" | "2-digit" | "long" | "short" | "narrow"',
+          default: '"short"',
+          description: "Sets the format of the month names.",
+        },
+        {
+          name: "children",
+          type: "(picker: CalendarMonthPickerAria) => ReactElement",
+          description:
+            "Renders a custom picker. Pass the picker props to a Select.",
+        },
+      ],
+    }),
+    apiPart<typeof CalendarYearPicker>({
+      name: "CalendarYearPicker",
+      props: [
+        {
+          name: "visibleYears",
+          type: "number",
+          default: "20",
+          description:
+            "Sets the number of years in the list. minValue and maxValue limit the range.",
+        },
+        {
+          name: "format",
+          type: "CalendarYearPickerFormatOptions",
+          description: "Sets the format of the years.",
+        },
+        {
+          name: "children",
+          type: "(picker: CalendarYearPickerAria) => ReactElement",
+          description:
+            "Renders a custom picker. Pass the picker props to a Select.",
         },
       ],
     }),

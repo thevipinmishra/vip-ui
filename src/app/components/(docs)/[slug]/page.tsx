@@ -23,6 +23,7 @@ import { ButtonGroupOrientationsDemo } from "@/components/docs/button-group-orie
 import { ButtonGroupSizesDemo } from "@/components/docs/button-group-sizes-demo";
 import { CalendarControlledDemo } from "@/components/docs/calendar-controlled-demo";
 import { CalendarDemo } from "@/components/docs/calendar-demo";
+import { CalendarPickersDemo } from "@/components/docs/calendar-pickers-demo";
 import { CalendarUnavailableDemo } from "@/components/docs/calendar-unavailable-demo";
 import { CardActionDemo } from "@/components/docs/card-action-demo";
 import { CardBasicDemo } from "@/components/docs/card-basic-demo";
@@ -65,6 +66,7 @@ import { DateFieldTimeDemo } from "@/components/docs/date-field-time-demo";
 import { DatePickerControlledDemo } from "@/components/docs/date-picker-controlled-demo";
 import { DatePickerDemo } from "@/components/docs/date-picker-demo";
 import { DatePickerDisabledDemo } from "@/components/docs/date-picker-disabled-demo";
+import { DatePickerPickersDemo } from "@/components/docs/date-picker-pickers-demo";
 import { DatePickerPresetsDemo } from "@/components/docs/date-picker-presets-demo";
 import { DatePickerSizesDemo } from "@/components/docs/date-picker-sizes-demo";
 import { DatePickerUnavailableDemo } from "@/components/docs/date-picker-unavailable-demo";
@@ -766,6 +768,7 @@ const examplePreviews: Record<string, ReactNode[]> = {
   calendar: [
     <CalendarUnavailableDemo key="preview-1" />,
     <CalendarControlledDemo key="preview-2" />,
+    <CalendarPickersDemo key="preview-3" />,
   ],
   "color-field": [
     <ColorFieldChannelDemo key="preview-1" />,
@@ -798,9 +801,10 @@ const examplePreviews: Record<string, ReactNode[]> = {
   "date-picker": [
     <DatePickerUnavailableDemo key="preview-1" />,
     <DatePickerPresetsDemo key="preview-2" />,
-    <DatePickerDisabledDemo key="preview-3" />,
-    <DatePickerControlledDemo key="preview-4" />,
-    <DatePickerSizesDemo key="preview-5" />,
+    <DatePickerPickersDemo key="preview-3" />,
+    <DatePickerDisabledDemo key="preview-4" />,
+    <DatePickerControlledDemo key="preview-5" />,
+    <DatePickerSizesDemo key="preview-6" />,
   ],
   "data-table": [
     <DataTableColumnFiltersDemo key="preview-1" />,

@@ -32,7 +32,7 @@ export function Popover({
   "data-slot": dataSlot = "popover",
   arrowBoundaryOffset = 16,
   ...props
-}: PopoverProps) {
+}: PopoverProps & React.RefAttributes<HTMLElement>) {
   return (
     <AriaPopover
       {...props}

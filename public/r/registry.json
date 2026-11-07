@@ -409,7 +409,9 @@
       ],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-field-styles.json",
         "https://vip-ui.dev/r/vip-item-highlight.json",
+        "https://vip-ui.dev/r/vip-select.json",
         "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],

@@ -1,7 +1,12 @@
 "use client";
 
-import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import {
+  CaretDownIcon,
+  CaretLeftIcon,
+  CaretRightIcon,
+} from "@phosphor-icons/react";
+import {
+  type ReactElement,
   type ReactNode,
   type RefObject,
   useContext,
@@ -11,11 +16,18 @@ import {
 } from "react";
 import {
   Calendar as AriaCalendar,
+  CalendarGrid as AriaCalendarGrid,
   CalendarGridBody as AriaCalendarGridBody,
+  type CalendarGridProps as AriaCalendarGridProps,
+  CalendarMonthPicker as AriaCalendarMonthPicker,
+  type CalendarMonthPickerProps as AriaCalendarMonthPickerProps,
+  CalendarYearPicker as AriaCalendarYearPicker,
+  type CalendarYearPickerProps as AriaCalendarYearPickerProps,
   ListBox as AriaListBox,
   ListBoxItem as AriaListBoxItem,
+  Select as AriaSelect,
+  SelectValue as AriaSelectValue,
   CalendarCell,
-  CalendarGrid,
   type CalendarGridBodyProps,
   CalendarGridHeader,
   CalendarHeaderCell,
@@ -24,11 +36,14 @@ import {
   CalendarStateContext,
   composeRenderProps,
   type DateValue,
+  type Key,
   RangeCalendarStateContext,
 } from "react-aria-components";
 import { cn } from "./utils";
 import { Button } from "./button";
+import { fieldChevronStyles } from "./field-styles";
 import { itemHighlightRing, withItemHighlight } from "./item-highlight";
+import { SelectContent, SelectItem } from "./select";
 
 export const calendarStyles = "w-77 max-w-full text-foreground";
 export const calendarMonthsStyles = "w-auto";
@@ -65,30 +80,51 @@ export function Calendar<T extends DateValue>({
       {children ?? (
         <CalendarMonths count={months}>
           {(offset) => (
-            <CalendarGridFrame>
-              <CalendarGrid
-                offset={offset ? { months: offset } : undefined}
-                className={calendarGridStyles}
-                weekdayStyle="short"
-              >
-                <CalendarGridHeader>
-                  {(day) => (
-                    <CalendarHeaderCell className={calendarHeaderCellStyles}>
-                      {day}
-                    </CalendarHeaderCell>
-                  )}
-                </CalendarGridHeader>
-                <CalendarGridBody>
-                  {(date) => (
-                    <CalendarCell date={date} className={calendarCellClass} />
-                  )}
-                </CalendarGridBody>
-              </CalendarGrid>
-            </CalendarGridFrame>
+            <CalendarGrid offset={offset ? { months: offset } : undefined} />
           )}
         </CalendarMonths>
       )}
     </AriaCalendar>
+  );
+}
+
+export interface CalendarGridProps
+  extends Omit<AriaCalendarGridProps, "children"> {
+  children?: Extract<
+    AriaCalendarGridProps["children"],
+    (...args: never[]) => ReactElement
+  >;
+}
+
+export function CalendarGrid({
+  className,
+  children,
+  weekdayStyle = "short",
+  ...props
+}: CalendarGridProps & React.RefAttributes<HTMLTableElement>) {
+  return (
+    <CalendarGridFrame>
+      <AriaCalendarGrid
+        {...props}
+        data-slot="calendar-grid"
+        weekdayStyle={weekdayStyle}
+        className={cn(calendarGridStyles, className)}
+      >
+        <CalendarGridHeader>
+          {(day) => (
+            <CalendarHeaderCell className={calendarHeaderCellStyles}>
+              {day}
+            </CalendarHeaderCell>
+          )}
+        </CalendarGridHeader>
+        <CalendarGridBody>
+          {children ??
+            ((date) => (
+              <CalendarCell date={date} className={calendarCellClass} />
+            ))}
+        </CalendarGridBody>
+      </AriaCalendarGrid>
+    </CalendarGridFrame>
   );
 }
 
@@ -164,12 +200,14 @@ export interface CalendarHeaderProps {
   offset?: number;
   previous?: boolean;
   next?: boolean;
+  children?: ReactNode;
 }
 
 export function CalendarHeader({
   offset = 0,
   previous = true,
   next = true,
+  children,
 }: CalendarHeaderProps) {
   const headingRef = useRef<HTMLHeadingElement>(null);
   useMonthSlide(headingRef, 0.375);
@@ -190,11 +228,20 @@ export function CalendarHeader({
       ) : (
         <span aria-hidden="true" className="size-11 shrink-0" />
       )}
-      <CalendarHeading
-        ref={headingRef}
-        offset={offset ? { months: offset } : undefined}
-        className="min-w-0 text-center text-sm font-semibold [overflow-wrap:anywhere] [text-wrap:balance]"
-      />
+      {children ? (
+        <div
+          data-slot="calendar-pickers"
+          className="flex min-w-0 flex-1 items-center justify-center gap-1"
+        >
+          {children}
+        </div>
+      ) : (
+        <CalendarHeading
+          ref={headingRef}
+          offset={offset ? { months: offset } : undefined}
+          className="min-w-0 text-center text-sm font-semibold [overflow-wrap:anywhere] [text-wrap:balance]"
+        />
+      )}
       {next ? (
         <Button slot="next" aria-label="Next month" variant="ghost" iconOnly>
           <CaretRightIcon aria-hidden="true" className="rtl:rotate-180" />
@@ -203,6 +250,139 @@ export function CalendarHeader({
         <span aria-hidden="true" className="size-11 shrink-0" />
       )}
     </div>
+  );
+}
+
+interface CalendarPickerItem {
+  id: number;
+  formatted: string;
+}
+
+interface CalendarPickerSelectProps {
+  "aria-label": string;
+  value: Key;
+  onChange: (key: Key | null) => void;
+  items: CalendarPickerItem[];
+  className?: string;
+}
+
+function centerSelectedOption(content: HTMLElement | null) {
+  const option = content?.querySelector<HTMLElement>("[aria-selected=true]");
+  if (!content || !option) return;
+  let top = 0;
+  let node: Element | null = option;
+  while (node instanceof HTMLElement && node !== content) {
+    top += node.offsetTop;
+    node = node.offsetParent;
+  }
+  content.scrollTop = top - (content.clientHeight - option.offsetHeight) / 2;
+}
+
+function CalendarPickerSelect({
+  items,
+  className,
+  ...props
+}: CalendarPickerSelectProps) {
+  const contentRef = useRef<HTMLElement>(null);
+  return (
+    <AriaSelect
+      {...props}
+      data-slot="calendar-picker"
+      onOpenChange={(open) => {
+        if (open)
+          requestAnimationFrame(() => centerSelectedOption(contentRef.current));
+      }}
+      className={cn("min-w-0", className)}
+    >
+      <Button
+        variant="ghost"
+        className="group/trigger max-w-full cursor-pointer gap-1 px-2.5 font-semibold"
+      >
+        <AriaSelectValue className="min-w-0 truncate">
+          {({ selectedText }) => selectedText}
+        </AriaSelectValue>
+        <span aria-hidden="true" className={fieldChevronStyles}>
+          <CaretDownIcon className="size-3.5 text-muted-foreground" />
+        </span>
+      </Button>
+      <SelectContent
+        ref={contentRef}
+        className="w-auto min-w-[max(var(--trigger-width),7rem)]"
+      >
+        {items.map((item) => (
+          <SelectItem key={item.id} id={item.id}>
+            {item.formatted}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </AriaSelect>
+  );
+}
+
+export interface CalendarMonthPickerProps
+  extends Omit<AriaCalendarMonthPickerProps, "children"> {
+  children?: AriaCalendarMonthPickerProps["children"];
+  className?: string;
+}
+
+export function CalendarMonthPicker({
+  children,
+  className,
+  ...props
+}: CalendarMonthPickerProps) {
+  return (
+    <AriaCalendarMonthPicker {...props}>
+      {children ??
+        ((picker) => (
+          <CalendarPickerSelect {...picker} className={className} />
+        ))}
+    </AriaCalendarMonthPicker>
+  );
+}
+
+export interface CalendarYearPickerProps
+  extends Omit<AriaCalendarYearPickerProps, "children"> {
+  children?: AriaCalendarYearPickerProps["children"];
+  className?: string;
+}
+
+export function CalendarYearPicker({
+  children,
+  className,
+  ...props
+}: CalendarYearPickerProps) {
+  return (
+    <AriaCalendarYearPicker {...props}>
+      {children ??
+        ((picker) => (
+          <CalendarYearSelect picker={picker} className={className} />
+        ))}
+    </AriaCalendarYearPicker>
+  );
+}
+
+function CalendarYearSelect({
+  picker,
+  className,
+}: {
+  picker: Parameters<AriaCalendarYearPickerProps["children"]>[0];
+  className?: string;
+}) {
+  const calendar = useContext(CalendarStateContext);
+  const range = useContext(RangeCalendarStateContext);
+  const state = calendar ?? range;
+  return (
+    <CalendarPickerSelect
+      {...picker}
+      className={className}
+      onChange={(key) => {
+        const year = key === null ? undefined : picker.items[Number(key)]?.date;
+        if (!state || !year) return picker.onChange(key);
+        state.setFocusedDate(
+          state.focusedDate.set({ era: year.era, year: year.year }),
+        );
+      }}
+    />
   );
 }
 
