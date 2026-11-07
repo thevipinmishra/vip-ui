@@ -153,7 +153,7 @@
         {
           "slug": "drop-zone",
           "name": "Drop zone",
-          "description": "Accepts files that you drag and drop onto it."
+          "description": "Accepts files that you drop onto it or select from a file picker."
         },
         {
           "slug": "attachment",

@@ -17,8 +17,8 @@ import {
   DropZone,
   DropZoneIcon,
   DropZoneLabel,
+  DropZoneTrigger,
 } from "@/components/ui/drop-zone";
-import { FileTrigger } from "@/components/ui/file-trigger";
 import { Message } from "@/components/ui/message";
 import { PromptInput } from "@/components/ui/prompt-input";
 import { SourceLink } from "@/components/ui/source-link";
@@ -329,17 +329,17 @@ export function UploadCard() {
             <CloudArrowUpIcon size={17} />
           </DropZoneIcon>
           <DropZoneLabel>Drop files here</DropZoneLabel>
-          <FileTrigger
+          <DropZoneTrigger
+            ref={picker}
+            size="sm"
             acceptedFileTypes={acceptedTypes}
             allowsMultiple
             onSelect={(files) => {
               if (files) add(Array.from(files));
             }}
           >
-            <Button ref={picker} variant="outline" size="sm">
-              Browse
-            </Button>
-          </FileTrigger>
+            Browse
+          </DropZoneTrigger>
         </DropZone>
         <AttachmentList aria-label="Uploads">
           {uploads.map((upload) => (

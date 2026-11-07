@@ -3,14 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import type { DropItem, FileDropItem } from "react-aria-components";
 import { Attachment, AttachmentList } from "@/components/ui/attachment";
-import { Button } from "@/components/ui/button";
 import {
   DropZone,
   DropZoneDescription,
   DropZoneIcon,
   DropZoneLabel,
+  DropZoneTrigger,
 } from "@/components/ui/drop-zone";
-import { FileTrigger } from "@/components/ui/file-trigger";
 
 type LocalAttachment = { id: string; file: File; previewUrl?: string };
 const acceptedTypes = ["image/png", "image/jpeg", "application/pdf"];
@@ -84,17 +83,16 @@ export function AttachmentDemo() {
         <DropZoneDescription>
           PNG, JPEG, or PDF up to 5 MB each
         </DropZoneDescription>
-        <FileTrigger
+        <DropZoneTrigger
+          ref={pickerRef}
           acceptedFileTypes={acceptedTypes}
           allowsMultiple
           onSelect={(files) => {
             if (files) addFiles(Array.from(files));
           }}
         >
-          <Button ref={pickerRef} variant="outline">
-            Browse files
-          </Button>
-        </FileTrigger>
+          Browse files
+        </DropZoneTrigger>
       </DropZone>
       <AttachmentList>
         {attachments.map((item) => (

@@ -902,9 +902,9 @@ export const compositions: Record<string, Composition> = {
           { part: "DropZoneLabel" },
           { part: "DropZoneDescription", optional: true },
           {
-            part: "FileTrigger",
+            part: "DropZoneTrigger",
             optional: true,
-            note: "Install File trigger separately.",
+            note: "Opens the file picker. A click anywhere in the zone opens it too.",
           },
         ],
       },

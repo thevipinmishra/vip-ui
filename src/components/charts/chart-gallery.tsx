@@ -110,7 +110,7 @@ function ChartCategoryContent({ category }: { category: ChartCategory }) {
     <section
       id="gallery"
       aria-labelledby="category-title"
-      className="scroll-mt-32 pt-10"
+      className="scroll-mt-20 pt-10"
     >
       <h2
         id="category-title"
@@ -123,7 +123,7 @@ function ChartCategoryContent({ category }: { category: ChartCategory }) {
           <div
             key={example.file}
             id={example.file}
-            className="relative z-0 flex min-w-0 scroll-mt-28 flex-col rounded-2xl bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70 transition-[box-shadow] duration-300 ease-out-quint hover:z-10 hover:shadow-[var(--shadow-float)] focus-within:z-10"
+            className="relative z-0 flex min-w-0 scroll-mt-20 flex-col rounded-2xl bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70 transition-[box-shadow] duration-300 ease-out-quint hover:z-10 hover:shadow-[var(--shadow-float)] focus-within:z-10"
           >
             <div className="min-w-0 flex-1 pb-2 *:data-[slot=chart-frame]:bg-transparent">
               {example.preview}

@@ -10,6 +10,7 @@ import {
   PaletteIcon,
   SquaresFourIcon,
   SwatchesIcon,
+  TextAaIcon,
 } from "@phosphor-icons/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -37,6 +38,7 @@ const icons: Record<string, Icon> = {
   "/blocks": SquaresFourIcon,
   "/charts": ChartBarIcon,
   "/themes": PaletteIcon,
+  "/typography": TextAaIcon,
   "/colors": SwatchesIcon,
 };
 

@@ -1,0 +1,384 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-typography",
+  "type": "registry:item",
+  "title": "Typography",
+  "description": "Sets the size, line height, and spacing of headings, text, lists, tables, and code in HTML content.",
+  "dependencies": [],
+  "cssVars": {
+    "light": {
+      "success": "oklch(0.43 0.12 155)",
+      "success-subtle": "oklch(0.955 0.035 155)",
+      "success-foreground": "oklch(0.32 0.09 155)",
+      "warning": "oklch(0.54 0.13 75)",
+      "warning-subtle": "oklch(0.965 0.045 85)",
+      "warning-foreground": "oklch(0.36 0.09 75)",
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+    },
+    "dark": {
+      "success": "oklch(0.74 0.13 155)",
+      "success-subtle": "oklch(0.24 0.045 155)",
+      "success-foreground": "oklch(0.86 0.085 155)",
+      "warning": "oklch(0.78 0.11 75)",
+      "warning-subtle": "oklch(0.27 0.045 75)",
+      "warning-foreground": "oklch(0.89 0.07 75)",
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+    }
+  },
+  "css": {
+    "@layer components": {
+      ".typography": {
+        "--typography-font-body": "inherit",
+        "--typography-font-heading": "var(--typography-font-body)",
+        "--typography-font-mono": "var(--font-mono, ui-monospace, monospace)",
+        "--typography-size": "1em",
+        "--typography-leading": "1.75",
+        "--typography-flow": "1.25em",
+        "font-family": "var(--typography-font-body)",
+        "font-size": "var(--typography-size)",
+        "line-height": "var(--typography-leading)",
+        "color": "var(--foreground)",
+        "overflow-wrap": "break-word"
+      },
+      "@media (width < 40rem)": {
+        ".typography": {
+          "font-size": "calc(var(--typography-size) * 1.0625)"
+        }
+      },
+      ":where(.typography) :where(* + :is(p, ul, ol, dl, pre, blockquote, figure, table, details, div, section, aside, img, video, iframe)):not(:where(:is(h1, h2, h3, h4, h5, h6, hr, summary, .markdown-alert-title) + *, .not-typography *, [data-not-typography] *))": {
+        "margin-block-start": "var(--typography-flow)"
+      },
+      ":where(.typography) :where(* + :is(h1, h2)):not(:where(:is(h1, h2, h3, h4, h5, h6, hr, summary) + *, .not-typography *, [data-not-typography] *))": {
+        "margin-block-start": "calc(var(--typography-flow) * 1.6)"
+      },
+      ":where(.typography) :where(* + h3):not(:where(:is(h1, h2, h3, h4, h5, h6, hr, summary) + *, .not-typography *, [data-not-typography] *))": {
+        "margin-block-start": "calc(var(--typography-flow) * 1.4)"
+      },
+      ":where(.typography) :where(* + :is(h4, h5, h6)):not(:where(:is(h1, h2, h3, h4, h5, h6, hr, summary) + *, .not-typography *, [data-not-typography] *))": {
+        "margin-block-start": "calc(var(--typography-flow) * 1.2)"
+      },
+      ":where(.typography) :where(:is(h1, h2, h3, h4, h5, h6):not(.sr-only) + *):not(:where(hr, .not-typography *, [data-not-typography] *))": {
+        "margin-block-start": "calc(var(--typography-flow) * 0.6)"
+      },
+      ":where(.typography) :where(* + hr, hr + *):not(:where(.not-typography *, [data-not-typography] *))": {
+        "margin-block-start": "calc(var(--typography-flow) * 2)"
+      },
+      ":where(.typography) :where(li + li, li > :is(ul, ol):first-child, .markdown-alert-title + *):not(:where(.not-typography *, [data-not-typography] *))": {
+        "margin-block-start": "calc(var(--typography-flow) * 0.4)"
+      },
+      ":where(.typography) :where(:is(dt, dd) + dd):not(:where(.not-typography *, [data-not-typography] *))": {
+        "margin-block-start": "calc(var(--typography-flow) * 0.2)"
+      },
+      ":where(.typography) :where(dd + dt):not(:where(.not-typography *, [data-not-typography] *))": {
+        "margin-block-start": "calc(var(--typography-flow) * 0.8)"
+      },
+      ":where(.typography) :where(* + figcaption):not(:where(.not-typography *, [data-not-typography] *))": {
+        "margin-block-start": "calc(var(--typography-flow) * 0.5)"
+      },
+      ":where(.typography) :where(h1, h2, h3, h4, h5, h6):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "font-family": "var(--typography-font-heading)",
+        "font-weight": "600",
+        "color": "var(--foreground)",
+        "text-wrap": "balance"
+      },
+      ":where(.typography) :where(h1):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "font-size": "2em",
+        "line-height": "calc(var(--typography-leading) * 0.68)",
+        "letter-spacing": "-0.035em"
+      },
+      ":where(.typography) :where(h2):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "font-size": "1.5em",
+        "line-height": "calc(var(--typography-leading) * 0.75)",
+        "letter-spacing": "-0.03em"
+      },
+      ":where(.typography) :where(h3):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "font-size": "1.25em",
+        "line-height": "calc(var(--typography-leading) * 0.8)",
+        "letter-spacing": "-0.02em"
+      },
+      ":where(.typography) :where(h4):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "font-size": "1.125em",
+        "line-height": "calc(var(--typography-leading) * 0.86)",
+        "letter-spacing": "-0.01em"
+      },
+      ":where(.typography) :where(h6):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "font-size": "0.875em",
+        "color": "var(--muted-foreground)"
+      },
+      ":where(.typography) :where(p):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "text-wrap": "pretty"
+      },
+      ":where(.typography) :where(.lead):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "font-size": "1.25em",
+        "line-height": "calc(var(--typography-leading) * 0.9)",
+        "color": "var(--muted-foreground)"
+      },
+      ":where(.typography) :where(strong, b):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "font-weight": "600"
+      },
+      ":where(.typography) :where(small):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "font-size": "0.875em"
+      },
+      ":where(.typography) :where(del, s):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "color": "var(--muted-foreground)"
+      },
+      ":where(.typography) :where(mark):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "border-radius": "0.2em",
+        "background-color": "color-mix( in oklab, var(--chart-3, oklch(0.63 0.13 75)) 28%, transparent )",
+        "padding-inline": "0.15em",
+        "color": "inherit",
+        "box-decoration-break": "clone"
+      },
+      ":where(.typography) :where(a):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "border-radius": "calc(var(--radius) * 0.6)",
+        "overflow-wrap": "anywhere",
+        "box-decoration-break": "clone",
+        "text-underline-offset": "0.25em",
+        "transition-property": "color, background-color, box-shadow",
+        "transition-duration": "150ms",
+        "transition-timing-function": "cubic-bezier(0.23, 1, 0.32, 1)"
+      },
+      ":where(.typography) :where(a):not(:where(:is(h1, h2, h3, h4, h5, h6) *, [data-footnote-ref], [data-footnote-backref], .not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "font-weight": "500",
+        "color": "var(--primary)",
+        "text-decoration-line": "underline"
+      },
+      ":where(.typography) :where(a):not(:where(:is(h1, h2, h3, h4, h5, h6) *, [data-footnote-ref], [data-footnote-backref], .not-typography, .not-typography *, [data-not-typography], [data-not-typography] *)):hover:not(:focus-visible)": {
+        "color": "color-mix(in oklab, var(--primary) 80%, transparent)"
+      },
+      ":where(.typography) :where(:is(h1, h2, h3, h4, h5, h6) a, [data-footnote-ref]):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *)):hover": {
+        "text-decoration-line": "underline",
+        "text-decoration-color": "var(--border)"
+      },
+      ":where(.typography) :where([data-footnote-ref]):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "font-weight": "500",
+        "color": "var(--primary)"
+      },
+      ":where(.typography) :where([data-footnote-backref]):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "color": "var(--muted-foreground)"
+      },
+      ":where(.typography) :where([data-footnote-backref]):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *)):hover:not(:focus-visible)": {
+        "color": "var(--primary)"
+      },
+      ":where(.typography) :where(a):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *)):focus-visible": {
+        "background-color": "var(--primary)",
+        "color": "var(--primary-foreground)",
+        "text-decoration-line": "none",
+        "box-shadow": "0 0 0 3px var(--primary)",
+        "outline": "2px solid transparent",
+        "outline-offset": "2px"
+      },
+      ":where(.typography) :where(code):not(:where(pre *, .not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "border-radius": "calc(var(--radius) * 0.6)",
+        "background-color": "var(--muted)",
+        "padding": "0.125em 0.375em",
+        "font-family": "var(--typography-font-mono)",
+        "font-size": "0.85em",
+        "overflow-wrap": "anywhere",
+        "box-decoration-break": "clone"
+      },
+      ":where(.typography) :where(kbd):not(:where(:has(kbd), .not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "border": "1px solid var(--border)",
+        "border-radius": "calc(var(--radius) * 0.6)",
+        "background-color": "var(--muted)",
+        "padding": "0.0625em 0.375em",
+        "font-family": "var(--typography-font-mono)",
+        "font-size": "0.8125em",
+        "font-weight": "500",
+        "white-space": "nowrap",
+        "box-shadow": "0 1px 0 var(--border)"
+      },
+      ":where(.typography) :where(kbd:has(kbd)):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "font-family": "inherit"
+      },
+      ":where(.typography) :where(pre):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "overflow-x": "auto",
+        "border": "1px solid var(--border)",
+        "border-radius": "calc(var(--radius) * 1.4)",
+        "background-color": "var(--muted)",
+        "padding": "1em 1.15em",
+        "font-family": "var(--typography-font-mono)",
+        "font-size": "0.875em",
+        "line-height": "1.7",
+        "tab-size": "2"
+      },
+      ":where(.typography) :where(pre code):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "font-family": "inherit",
+        "font-size": "inherit"
+      },
+      ":where(.typography) :where(blockquote):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "border-inline-start": "2px solid var(--border)",
+        "padding-inline-start": "1em"
+      },
+      ":where(.typography) :where(hr):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "border-color": "var(--border)"
+      },
+      ":where(.typography) :where(img, video, iframe):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "max-width": "100%",
+        "border-radius": "var(--radius)"
+      },
+      ":where(.typography) :where(figcaption):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "font-size": "0.875em",
+        "line-height": "calc(var(--typography-leading) * 0.85)",
+        "color": "var(--muted-foreground)"
+      },
+      ":where(.typography) :where(details):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "border": "1px solid var(--border)",
+        "border-radius": "var(--radius)",
+        "padding-inline": "1em"
+      },
+      ":where(.typography) :where(details[open]):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "padding-block-end": "0.75em"
+      },
+      ":where(.typography) :where(summary):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "margin-inline": "-1em",
+        "cursor": "pointer",
+        "border-radius": "inherit",
+        "padding": "0.625em 1em",
+        "font-weight": "500",
+        "color": "var(--foreground)"
+      },
+      ":where(.typography) :where(summary, li):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))::marker": {
+        "color": "var(--muted-foreground)"
+      },
+      ":where(.typography) :where(ul, ol):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "padding-inline-start": "1.625em"
+      },
+      ":where(.typography) :where(li):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "padding-inline-start": "0.375em"
+      },
+      ":where(.typography) :where(ol > li):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))::marker": {
+        "font-variant-numeric": "tabular-nums"
+      },
+      ":where(.typography) :where(ul):not(:where(ul *, .not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "list-style-type": "disc"
+      },
+      ":where(.typography) :where(ul ul):not(:where(ul ul *, .not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "list-style-type": "circle"
+      },
+      ":where(.typography) :where(ul ul ul):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "list-style-type": "square"
+      },
+      ":where(.typography) :where(ol):not(:where(ol *, .not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "list-style-type": "decimal"
+      },
+      ":where(.typography) :where(ol ol):not(:where(ol ol *, .not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "list-style-type": "lower-alpha"
+      },
+      ":where(.typography) :where(ol ol ol):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "list-style-type": "lower-roman"
+      },
+      ":where(.typography) :where(.task-list-item):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "list-style-type": "none"
+      },
+      ":where(.typography) :where(.task-list-item > input[type=\"checkbox\"]:first-child, .task-list-item > p:first-child > input[type=\"checkbox\"]:first-child):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "margin-block": "0",
+        "margin-inline": "-1.375em 0.375em",
+        "width": "1em",
+        "height": "1em",
+        "vertical-align": "-0.125em",
+        "accent-color": "var(--primary)"
+      },
+      ":where(.typography) :where(dt):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "font-weight": "600"
+      },
+      ":where(.typography) :where(dd):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "padding-inline-start": "1.625em"
+      },
+      ":where(.typography) :where(table):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "width": "100%",
+        "font-size": "0.875em",
+        "line-height": "calc(var(--typography-leading) * 0.9)",
+        "font-variant-numeric": "tabular-nums"
+      },
+      ":where(.typography) :where(th, td):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "border-color": "var(--border)",
+        "padding-block": "0.5em"
+      },
+      ":where(.typography) :where(th, td):not(:where(.typography-scroll *, .not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "overflow-wrap": "anywhere"
+      },
+      ":where(.typography) :where(:is(th, td) + :is(th, td)):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "padding-inline-start": "1em"
+      },
+      ":where(.typography) :where(th):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "text-align": "start",
+        "font-weight": "600"
+      },
+      ":where(.typography) :where(:is(th, td):not(thead *)):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "vertical-align": "top"
+      },
+      ":where(.typography) :where(thead :is(th, td)):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "vertical-align": "bottom",
+        "border-block-end-width": "1px"
+      },
+      ":where(.typography) :where(tbody tr + tr > :is(th, td), tfoot :is(th, td)):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "border-block-start-width": "1px"
+      },
+      ":where(.typography) :where(tfoot td):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "font-weight": "500"
+      },
+      ":where(.typography) :where(caption):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "caption-side": "bottom",
+        "margin-block-start": "0.75em",
+        "text-align": "start",
+        "color": "var(--muted-foreground)"
+      },
+      ":where(.typography-scroll)": {
+        "overflow-x": "auto",
+        "overscroll-behavior-x": "contain"
+      },
+      ":where(.typography) :where([data-footnotes], .footnotes):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "border-block-start": "1px solid var(--border)",
+        "padding-block-start": "var(--typography-flow)",
+        "font-size": "0.875em",
+        "color": "var(--muted-foreground)"
+      },
+      ":where(.typography) :where(.markdown-alert):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "border-radius": "calc(var(--radius) * 1.4)",
+        "background-color": "var(--card)",
+        "padding": "0.75em 1em",
+        "color": "var(--card-foreground)",
+        "box-shadow": "inset 0 0 0 1px var(--border), var(--shadow-card, 0 0 #0000)"
+      },
+      ":where(.typography) :where(.markdown-alert-note):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "background-color": "var(--accent)",
+        "color": "var(--accent-foreground)",
+        "box-shadow": "inset 0 0 0 1px color-mix(in oklab, var(--primary) 12%, transparent), var(--shadow-card, 0 0 #0000)"
+      },
+      ":where(.typography) :where(.markdown-alert-tip):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "background-color": "var(--success-subtle)",
+        "color": "var(--success-foreground)",
+        "box-shadow": "inset 0 0 0 1px color-mix(in oklab, var(--success) 20%, transparent), var(--shadow-card, 0 0 #0000)"
+      },
+      ":where(.typography) :where(.markdown-alert-warning):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "background-color": "var(--warning-subtle)",
+        "color": "var(--warning-foreground)",
+        "box-shadow": "inset 0 0 0 1px color-mix(in oklab, var(--warning) 25%, transparent), var(--shadow-card, 0 0 #0000)"
+      },
+      ":where(.typography) :where(.markdown-alert-caution):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "background-color": "color-mix(in oklab, var(--destructive) 9%, var(--card))",
+        "color": "var(--foreground)",
+        "box-shadow": "inset 0 0 0 1px color-mix(in oklab, var(--destructive) 25%, transparent), var(--shadow-card, 0 0 #0000)"
+      },
+      ":where(.typography) :where(.markdown-alert-title):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "display": "flex",
+        "align-items": "center",
+        "gap": "0.5em",
+        "font-weight": "500"
+      },
+      ":where(.typography) :where(.markdown-alert-title svg):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "width": "1em",
+        "height": "1em",
+        "flex-shrink": "0",
+        "fill": "currentColor"
+      },
+      "@media (forced-colors: active)": {
+        ":where(.typography) :where(.markdown-alert, kbd):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+          "border": "1px solid"
+        }
+      }
+    }
+  },
+  "files": []
+}

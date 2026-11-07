@@ -23,7 +23,10 @@ export default function ErrorPage({
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <SiteHeader />
-      <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col justify-center px-5 py-24 sm:px-8">
+      <main
+        id="main"
+        className="mx-auto flex w-full max-w-3xl flex-1 flex-col justify-center px-5 py-24 sm:px-8"
+      >
         <h1 className={pageTitleClass}>Something went wrong</h1>
         <p className="mt-4 max-w-xl text-sm leading-7 text-muted-foreground">
           This page failed to render. Try again, or return to the component

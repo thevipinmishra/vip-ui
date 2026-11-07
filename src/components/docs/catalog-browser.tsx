@@ -52,7 +52,7 @@ export function CatalogBrowser({ category }: { category?: string }) {
     <section
       id="gallery"
       aria-label="Components"
-      className="grid scroll-mt-32 gap-14 pt-6"
+      className="grid scroll-mt-20 gap-14 pt-6"
     >
       {groups.map((group) => {
         const headingId = group.title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
@@ -62,7 +62,7 @@ export function CatalogBrowser({ category }: { category?: string }) {
             key={group.title}
             id={headingId}
             aria-labelledby={`${headingId}-title`}
-            className="scroll-mt-28"
+            className="scroll-mt-20"
           >
             <div className="flex items-baseline gap-2.5">
               <h2

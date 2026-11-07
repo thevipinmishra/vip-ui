@@ -16,12 +16,6 @@ export const metadata = pageMetadata({
 export default function Home() {
   return (
     <div className="min-h-screen overflow-x-clip bg-background text-foreground">
-      <a
-        href="#main"
-        className="sr-only fixed start-4 top-4 z-50 rounded-md bg-primary px-4 py-2 text-primary-foreground focus:not-sr-only"
-      >
-        Skip to content
-      </a>
       <SiteHeader />
 
       <main id="main">
@@ -70,7 +64,7 @@ export default function Home() {
         <section
           id="components"
           aria-labelledby="components-title"
-          className="w-full scroll-mt-20 px-5 pb-10 pt-2 sm:px-8 sm:pb-14 sm:pt-4"
+          className="w-full px-5 pb-10 pt-2 sm:px-8 sm:pb-14 sm:pt-4"
         >
           <h2 id="components-title" className="sr-only">
             Component examples

@@ -80,7 +80,7 @@ export default function ColorsPage() {
       <section
         id="install"
         aria-labelledby="install-title"
-        className="site-container scroll-mt-24"
+        className="site-container scroll-mt-8"
       >
         <div className="grid gap-10 border-t border-border/70 pt-12">
           <div className="grid max-w-2xl gap-3">

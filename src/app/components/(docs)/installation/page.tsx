@@ -242,7 +242,7 @@ export default async function InstallationPage() {
           <div
             key={slug}
             id={`file-${slug}`}
-            className="grid scroll-mt-28 gap-3"
+            className="grid scroll-mt-8 gap-3"
           >
             <h3 className="font-mono text-[15px] font-semibold text-foreground">
               {fileName(file)}

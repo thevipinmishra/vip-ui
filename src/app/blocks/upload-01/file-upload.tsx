@@ -18,8 +18,8 @@ import {
   DropZoneDescription,
   DropZoneIcon,
   DropZoneLabel,
+  DropZoneTrigger,
 } from "@/components/ui/drop-zone";
-import { FileTrigger } from "@/components/ui/file-trigger";
 import { showToast } from "@/components/ui/toast";
 
 const acceptedTypes = ["image/png", "image/jpeg", "application/pdf"];
@@ -137,17 +137,17 @@ export function FileUpload() {
           <DropZoneDescription>
             PNG, JPEG, or PDF up to 10 MB each
           </DropZoneDescription>
-          <FileTrigger
+          <DropZoneTrigger
+            ref={pickerRef}
+            size="sm"
             acceptedFileTypes={acceptedTypes}
             allowsMultiple
             onSelect={(files) => {
               if (files) add(Array.from(files));
             }}
           >
-            <Button ref={pickerRef} variant="outline" size="sm">
-              Browse files
-            </Button>
-          </FileTrigger>
+            Browse files
+          </DropZoneTrigger>
         </DropZone>
         <AttachmentList aria-label="Files">
           {uploads.map((upload) => (

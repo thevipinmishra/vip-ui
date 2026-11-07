@@ -12,6 +12,7 @@ import {
   SquaresFourIcon,
   SwatchesIcon,
   TerminalWindowIcon,
+  TextAaIcon,
   WaveSineIcon,
 } from "@phosphor-icons/react";
 import { usePathname, useRouter } from "next/navigation";
@@ -31,6 +32,7 @@ const shortcutTakenByDemo = new Set(["/components/command-palette"]);
 const guideIcons: Record<Guide["href"], Icon> = {
   "/components/installation": TerminalWindowIcon,
   "/components/styling": PaintBrushIcon,
+  "/components/typography": TextAaIcon,
   "/components/react-aria": AtomIcon,
   "/components/motion": WaveSineIcon,
 };

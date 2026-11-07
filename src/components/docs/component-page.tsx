@@ -108,7 +108,7 @@ export async function ComponentPage({
         id="preview"
         data-toc-label="Preview"
         aria-label={`${name} preview`}
-        className="mt-6 scroll-mt-24"
+        className="mt-6 scroll-mt-8"
       >
         <PreviewPanel
           code={previewSource}
@@ -118,7 +118,7 @@ export async function ComponentPage({
         </PreviewPanel>
       </section>
 
-      <section id="installation" className="mt-14 scroll-mt-24">
+      <section id="installation" className="mt-14 scroll-mt-8">
         <SectionHeading title="Installation" />
         <InstallTabs
           cliAvailable={Boolean(cliUrl)}
@@ -150,7 +150,7 @@ export async function ComponentPage({
       </section>
 
       {usage && (
-        <section id="usage" className="mt-14 scroll-mt-24">
+        <section id="usage" className="mt-14 scroll-mt-8">
           <SectionHeading title="Usage" />
           <div className="grid max-w-[670px] gap-5">
             {usage.note && (
@@ -164,7 +164,7 @@ export async function ComponentPage({
       )}
 
       {compositions[componentSlug] && (
-        <section id="composition" className="mt-14 scroll-mt-24">
+        <section id="composition" className="mt-14 scroll-mt-8">
           <SectionHeading title="Composition" />
           <ComponentComposition {...compositions[componentSlug]} />
         </section>
@@ -174,7 +174,7 @@ export async function ComponentPage({
         <section
           key={example.sourcePath}
           id={exampleAnchor(example.title)}
-          className="mt-14 scroll-mt-24"
+          className="mt-14 scroll-mt-8"
         >
           <SectionHeading title={example.title} />
           {(example.description || example.uses) && (
@@ -196,7 +196,7 @@ export async function ComponentPage({
       ))}
 
       {accessibility && (
-        <section id="accessibility" className="mt-14 scroll-mt-24">
+        <section id="accessibility" className="mt-14 scroll-mt-8">
           <SectionHeading title="Accessibility" />
           <div className="grid max-w-[670px] gap-4 text-sm leading-7 text-muted-foreground">
             {accessibility}
@@ -205,7 +205,7 @@ export async function ComponentPage({
       )}
 
       {(apiParts.length > 0 || reactAria) && (
-        <section id="api" className="mt-14 scroll-mt-24">
+        <section id="api" className="mt-14 scroll-mt-8">
           <SectionHeading title="API reference" />
           {reactAria && (
             <p className="mb-5 max-w-[670px] text-sm leading-7 text-muted-foreground">
