@@ -3,19 +3,31 @@
 import { normalizeProps, useMachine } from "@zag-js/react";
 import * as scrollArea from "@zag-js/scroll-area";
 import { type ReactNode, useId } from "react";
+import { cn } from "@/lib/utils";
 
-export function SidebarScrollArea({ children }: { children: ReactNode }) {
+export function SidebarScrollArea({
+  children,
+  className,
+  contentClassName,
+}: {
+  children: ReactNode;
+  className?: string;
+  contentClassName?: string;
+}) {
   const service = useMachine(scrollArea.machine, { id: useId() });
   const api = scrollArea.connect(service, normalizeProps);
 
   return (
-    <div className="sticky top-0">
+    <div className={cn("sticky top-(--header-height)", className)}>
       <div {...api.getRootProps()} className="sidebar-scroll-area">
         <div
           {...api.getViewportProps()}
-          className="sidebar-scroll-viewport h-dvh"
+          className="sidebar-scroll-viewport h-[calc(100dvh-var(--header-height))]"
         >
-          <div {...api.getContentProps()} className="pt-14 pb-10 pe-5">
+          <div
+            {...api.getContentProps()}
+            className={cn("pt-12 pb-10", contentClassName)}
+          >
             {children}
           </div>
         </div>

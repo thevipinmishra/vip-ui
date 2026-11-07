@@ -58,7 +58,7 @@ export function CategoryTabs({
   return (
     <nav
       aria-label={label}
-      className="sticky top-0 z-30 bg-linear-to-b from-background from-70% to-transparent pb-4 pt-3"
+      className="sticky top-(--header-height) z-30 bg-linear-to-b from-background from-70% to-transparent pb-4 pt-3"
     >
       <div className="site-container">
         <ul

@@ -17,7 +17,7 @@ export function HomeSection({
       id={id}
       aria-label={label}
       aria-labelledby={label ? undefined : `${id}-title`}
-      className={cn("site-container scroll-mt-20 py-20 sm:py-28", className)}
+      className={cn("site-container py-20 sm:py-28", className)}
     >
       {children}
     </section>

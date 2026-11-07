@@ -74,7 +74,7 @@ export function GuideSection({
   children: ReactNode;
 }) {
   return (
-    <section id={id} className="mt-14 scroll-mt-28">
+    <section id={id} className="mt-14 scroll-mt-8">
       <h2 className={sectionTitleClass}>{title}</h2>
       <div className="mt-4 grid gap-4 text-sm leading-7 text-muted-foreground">
         {children}

@@ -209,6 +209,15 @@
 @layer base {
   :root {
     --header-height: 3.5rem;
+    --toc-bar-height: 2.75rem;
+  }
+  html {
+    scroll-padding-top: var(--header-height);
+  }
+  @media (width < 80rem) {
+    html:has([data-slot="toc-bar"]) {
+      scroll-padding-top: calc(var(--header-height) + var(--toc-bar-height));
+    }
   }
   * {
     border-color: var(--border);
@@ -280,6 +289,13 @@
 
 .sidebar-scroll-viewport {
   scrollbar-width: none;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 2rem,
+    black calc(100% - 2.5rem),
+    transparent
+  );
 }
 .sidebar-scroll-viewport::-webkit-scrollbar {
   display: none;
