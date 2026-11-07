@@ -9,5 +9,6 @@
   "field-styles": "Sets the theme styles of text and segmented fields.",
   "item-highlight": "Moves one highlight to the hovered or focused item.",
   "press-button": "Handles press interactions for shared button controls.",
-  "size": "Sets one size scale for buttons, toggles, and their groups."
+  "size": "Sets one size scale for buttons, toggles, and their groups.",
+  "typography": "Sets the size, line height, and spacing of headings, text, lists, tables, and code in HTML content."
 }

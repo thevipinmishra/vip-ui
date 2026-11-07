@@ -24,6 +24,7 @@ const staticRoutes: SitemapRoute[] = [
     }),
   ),
   { path: "/themes", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/typography", changeFrequency: "monthly", priority: 0.8 },
   { path: "/colors", changeFrequency: "monthly", priority: 0.8 },
   { path: "/charts", changeFrequency: "monthly", priority: 0.8 },
   { path: "/blocks", changeFrequency: "weekly", priority: 0.8 },

@@ -17,6 +17,12 @@ export const docsGuides = [
       "Change the theme, color scales, dark mode, and the styles of a component. vip/ui uses your shadcn theme.",
   },
   {
+    href: "/components/typography",
+    label: "Typography",
+    description:
+      "Style HTML and rendered markdown with one CSS file. A preset sets the fonts, size, line height, and spacing.",
+  },
+  {
     href: "/components/react-aria",
     label: "React Aria",
     description:
@@ -52,6 +58,7 @@ export const mainNav: NavLink[] = [
   { href: "/blocks", label: "Blocks" },
   { href: "/charts", label: "Charts" },
   { href: "/themes", label: "Themes" },
+  { href: "/typography", label: "Typography" },
   { href: "/colors", label: "Colors" },
 ];
 

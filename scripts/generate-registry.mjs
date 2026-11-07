@@ -19,6 +19,17 @@ const libSources = new Map(
     ]),
   ),
 );
+const styleSources = new Map(
+  await Promise.all(
+    ["typography"].map(async (name) => [
+      name,
+      (await readFile(path.join(root, `src/app/${name}.css`), "utf8")).replace(
+        /\r\n/g,
+        "\n",
+      ),
+    ]),
+  ),
+);
 const packageJson = JSON.parse(
   await readFile(path.join(root, "package.json"), "utf8"),
 );
@@ -188,6 +199,71 @@ export function createLibItem(name) {
     ],
   };
 }
+
+export function cssObject(source) {
+  let index = 0;
+  function declaration(target, text) {
+    const trimmed = text.trim();
+    if (!trimmed) return;
+    const colon = trimmed.indexOf(":");
+    if (colon === -1) throw new Error(`Unparsed CSS statement: ${trimmed}`);
+    const property = trimmed.slice(0, colon).trim();
+    if (Object.hasOwn(target, property))
+      throw new Error(`Repeated CSS property ${property}`);
+    target[property] = trimmed
+      .slice(colon + 1)
+      .trim()
+      .replace(/\s+/g, " ");
+  }
+  function block() {
+    const target = {};
+    let buffer = "";
+    while (index < source.length) {
+      const character = source[index++];
+      if (character === "{") {
+        const key = buffer
+          .trim()
+          .replace(/\s+/g, " ")
+          .replace(/\( /g, "(")
+          .replace(/ \)/g, ")");
+        if (Object.hasOwn(target, key))
+          throw new Error(`Repeated CSS block ${key}`);
+        buffer = "";
+        target[key] = block();
+      } else if (character === "}") {
+        declaration(target, buffer);
+        return target;
+      } else if (character === ";") {
+        declaration(target, buffer);
+        buffer = "";
+      } else {
+        buffer += character;
+      }
+    }
+    if (buffer.trim()) throw new Error("Unclosed CSS block");
+    return target;
+  }
+  return block();
+}
+
+export function createStyleItem(name) {
+  const source = styleSources.get(name);
+  if (source === undefined) throw new Error(`Missing stylesheet ${name}`);
+  const { cssVars } = styleSetup([source], new Set());
+  return {
+    $schema: "https://ui.shadcn.com/schema/registry-item.json",
+    name: `vip-${name}`,
+    type: "registry:item",
+    title: titleFor(name),
+    description: componentDescription(name),
+    dependencies: [],
+    ...(cssVars ? { cssVars } : {}),
+    css: cssObject(source),
+    files: [],
+  };
+}
+
+export const styleNames = [...styleSources.keys()];
 
 export function createItem(name, sources) {
   const source = sources.get(name);
@@ -427,7 +503,7 @@ export async function generate() {
   }
   await rm(sourceDirectory, { recursive: true, force: true });
   for (const slug of Object.keys(internalDescriptions)) {
-    if (!sources.has(slug) && !libSources.has(slug))
+    if (!sources.has(slug) && !libSources.has(slug) && !styleSources.has(slug))
       throw new Error(
         `src/lib/internal-descriptions.json describes missing file ${slug}`,
       );
@@ -439,6 +515,11 @@ export async function generate() {
     items.push(createLibItem(name));
   }
   for (const name of sources.keys()) items.push(createItem(name, sources));
+  for (const name of styleSources.keys()) {
+    if (sources.has(name) || libSources.has(name))
+      throw new Error(`Stylesheet ${name} has the name of another item`);
+    items.push(createStyleItem(name));
+  }
   const blocks = await readBlockCatalog();
   for (const block of blocks) {
     if (sources.has(block.name) || libSources.has(block.name))
@@ -477,7 +558,7 @@ export async function generate() {
   await writeFile(path.join(outputDirectory, "registry.json"), json);
   await writeFile(path.join(outputDirectory, "setup.css"), setupCss());
   console.log(
-    `Generated ${libSources.size} libraries, ${sources.size} components, and ${blocks.length} blocks in public/r`,
+    `Generated ${libSources.size} libraries, ${sources.size} components, ${styleSources.size} stylesheets, and ${blocks.length} blocks in public/r`,
   );
 }
 
