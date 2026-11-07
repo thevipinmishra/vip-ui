@@ -342,8 +342,8 @@ export default function MotionPage() {
         <p>
           Lists do not fill each row on hover. One highlight layer moves between
           the items. ListBox, Menu, Select, ComboBox, GridList, Tree, Table,
-          Calendar, Tabs, Toolbar, and ToggleButtonGroup use it. It is in{" "}
-          <Code>item-highlight.tsx</Code>.
+          Calendar, RangeCalendar, Tabs, Toolbar, ToggleButtonGroup, and
+          Pagination use it. It is in <Code>item-highlight.tsx</Code>.
         </p>
         <List>
           <li>

@@ -8,4 +8,5 @@ export interface BlockSourceFile {
 export interface BlockSource {
   files: BlockSourceFile[];
   command: string;
+  entry: { component: string; path: string };
 }

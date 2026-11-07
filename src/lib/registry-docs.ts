@@ -16,6 +16,7 @@ export interface RegistryItem {
   dependencies: string[];
   devDependencies?: string[];
   registryDependencies?: string[];
+  meta?: { entry?: { component: string; file: string } };
   files: RegistryFile[];
 }
 

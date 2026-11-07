@@ -153,7 +153,7 @@ export function DocsPager({
 
 const guideSeoDescriptions: Partial<Record<Guide["href"], string>> = {
   "/components/installation":
-    "Set up your project, then add components with the shadcn CLI or copy the files. Tailwind CSS v4, React Aria, and Motion are configured for you.",
+    "Add vip/ui components with the shadcn CLI, or copy the files manually. Requires React 19, TypeScript, and Tailwind CSS v4.1 or later.",
 };
 
 export function guideMetadata(href: Guide["href"]): Metadata {

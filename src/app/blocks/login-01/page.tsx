@@ -1,14 +1,8 @@
 import { blockMetadata } from "@/lib/block-seo";
-import { LoginForm } from "./login-form";
+import { LoginPage } from "./login-page";
 
 export const metadata = blockMetadata("login-01");
 
-export default function LoginPage() {
-  return (
-    <main className="flex min-h-svh items-center justify-center bg-muted/40 p-6 md:p-10">
-      <div className="w-full max-w-sm">
-        <LoginForm />
-      </div>
-    </main>
-  );
+export default function Page() {
+  return <LoginPage />;
 }

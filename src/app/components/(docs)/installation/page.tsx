@@ -12,6 +12,7 @@ import {
 } from "@/components/docs/guide";
 import { InstallStep } from "@/components/docs/install-step";
 import { PackageManagerCommand } from "@/components/docs/package-manager-command";
+import { Alert } from "@/components/ui/alert";
 import {
   displayPath,
   fileName,
@@ -27,7 +28,7 @@ export const metadata = guideMetadata("/components/installation");
 
 const componentsJson = `{
   "tsx": true,
-  "tailwind": { "css": "src/app/globals.css", "cssVariables": true }
+  "tailwind": { "css": "src/index.css", "cssVariables": true }
 }`;
 
 function namespaceJson(url: string) {
@@ -59,47 +60,49 @@ export default async function InstallationPage() {
     <GuidePage href="/components/installation">
       <GuideSection id="requirements" title="Requirements">
         <List>
-          <li>React 19 and TypeScript</li>
-          <li>Tailwind CSS v4</li>
-          <li>A shadcn theme with CSS variables</li>
+          <li>React 19</li>
+          <li>TypeScript</li>
+          <li>Tailwind CSS v4.1 or later</li>
+          <li>A shadcn/ui theme that uses CSS variables</li>
         </List>
-        <p>
-          vip/ui does not support Tailwind CSS v3, JavaScript-only projects, or
-          the shadcn <Code>--no-css-variables</Code> mode.
-        </p>
-        <p>
-          Components do not import from <Code>next/</Code>. You can use them in
-          any React 19 app, such as a Vite app.{" "}
-          <TextLink href="/blocks">Blocks</TextLink> install as Next.js App
-          Router routes, so they need Next.js.
-        </p>
+        <Alert variant="warning" title="Not supported">
+          Tailwind CSS v3, JavaScript projects, and projects that set{" "}
+          <Code>tailwind.cssVariables</Code> to <Code>false</Code>.
+        </Alert>
       </GuideSection>
 
       <GuideSection id="setup" title="Set up your project">
         <p>
-          If your project does not have a <Code>components.json</Code> file, run
-          the shadcn <Code>init</Code> command. For framework steps, see the{" "}
+          vip/ui uses the shadcn CLI and the shadcn/ui color tokens. If your
+          project does not have a <Code>components.json</Code> file, run the
+          shadcn <Code>init</Code> command. For the steps for your framework,
+          see the{" "}
           <ExternalLink href="https://ui.shadcn.com/docs/installation">
-            shadcn installation guide
+            shadcn/ui installation guide
           </ExternalLink>
           .
         </p>
         <PackageManagerCommand action="run" args="shadcn@latest init" />
         <p>
-          Make sure that <Code>components.json</Code> has these values.{" "}
-          <Code>tailwind.css</Code> is the path to your global CSS file.
+          Make sure that <Code>components.json</Code> has these values. Set{" "}
+          <Code>tailwind.css</Code> to the path of your global CSS file.
         </p>
         <CodeBlock
           code={componentsJson}
           filename="components.json"
           language="json"
         />
+        <Alert variant="neutral" title="Not using the CLI?">
+          A manual installation does not need <Code>components.json</Code>. Go
+          to <TextLink href="#manual">Install manually</TextLink>.
+        </Alert>
       </GuideSection>
 
       <GuideSection id="theme" title="Add a theme">
         <p>
-          Components use the shadcn color tokens, such as <Code>--primary</Code>{" "}
-          and <Code>--border</Code>. Your shadcn theme works with no changes.
+          Components use the shadcn/ui color tokens, such as{" "}
+          <Code>--primary</Code> and <Code>--border</Code>. Your current theme
+          works with no changes.
         </p>
         <p>To use the vip/ui colors:</p>
         <List>
@@ -139,24 +142,25 @@ export default async function InstallationPage() {
         <p>The CLI does these steps:</p>
         <List>
           <li>
-            Adds the component file to a <Code>vip-ui/</Code> folder in your
-            components alias.
+            Adds the component to a <Code>vip-ui/</Code> folder in your{" "}
+            <Code>components</Code> alias.
           </li>
           <li>
             Adds the files that the component needs, such as{" "}
-            <Code>utils.ts</Code> and <Code>popover.tsx</Code>. Each file is a
-            separate registry item. All components use the same copy.
+            <Code>utils.ts</Code> and <Code>popover.tsx</Code>. Components share
+            one copy of each file.
           </li>
-          <li>Installs the packages that the component uses.</li>
+          <li>Installs the npm packages that the component uses.</li>
           <li>
-            Adds the Tailwind plugin and theme variables to your global CSS
-            file. It keeps the values that you already set.
-          </li>
-          <li>
-            Does not change the files in your shadcn <Code>components/ui/</Code>{" "}
-            folder.
+            Adds the Tailwind plugin and the theme variables to your global CSS
+            file.
           </li>
         </List>
+        <Alert variant="success" title="Safe for existing shadcn/ui projects">
+          The CLI does not change the files in your <Code>components/ui/</Code>{" "}
+          folder or your shadcn <Code>utils.ts</Code> file. It keeps the CSS
+          variable values that you already set.
+        </Alert>
       </GuideSection>
 
       {namespaceUrl ? (
@@ -181,7 +185,10 @@ export default async function InstallationPage() {
       ) : null}
 
       <GuideSection id="manual" title="Install manually">
-        <p>Use these steps if you do not use the CLI.</p>
+        <p>
+          Use these steps if you do not use the CLI. Do steps 1 and 2 one time
+          for each project.
+        </p>
         <ol className="mt-2 grid gap-8">
           <InstallStep number={1} title="Install the Tailwind plugin">
             <p>
@@ -195,30 +202,26 @@ export default async function InstallationPage() {
           </InstallStep>
           <InstallStep number={2} title="Add the theme styles">
             <p>
-              Add this CSS to your global CSS file one time. It loads the plugin
-              and adds status colors, shadows, and easing curves. All other
-              colors come from your shadcn theme or a{" "}
-              <TextLink href="#theme">vip/ui theme</TextLink>. The radius comes
-              from your shadcn theme.
+              Add this CSS to your global CSS file, after the{" "}
+              <Code>@import "tailwindcss"</Code> line. It loads the plugin and
+              adds the status colors, shadows, and easing curves that components
+              use. The other colors and the radius come from your theme.
             </p>
-            <CodeBlock code={setupCss} filename="globals.css" language="css" />
+            <CodeBlock code={setupCss} filename="index.css" language="css" />
           </InstallStep>
-          <InstallStep number={3} title="Install the packages">
+          <InstallStep number={3} title="Add a component">
             <p>
               Open the Manual tab on the component page. Install the packages
-              that it shows.
-            </p>
-          </InstallStep>
-          <InstallStep number={4} title="Copy the files">
-            <p>
-              Copy the component file into a <Code>vip-ui/</Code> folder in your
-              components folder. Then add the required files that the Manual tab
-              shows. Do not change relative imports, such as{" "}
-              <Code>./utils</Code>. Examine existing files before you replace
-              them.
+              and copy the files that it shows into a <Code>vip-ui/</Code>{" "}
+              folder in your components folder.
             </p>
           </InstallStep>
         </ol>
+        <Alert variant="warning" title="Keep the files in one folder">
+          Files import each other with relative paths, such as{" "}
+          <Code>./utils</Code>. Put all vip/ui files in the same folder, and do
+          not change these imports.
+        </Alert>
       </GuideSection>
 
       <GuideSection id="usage" title="Import a component">
@@ -226,11 +229,11 @@ export default async function InstallationPage() {
           Import the component from the <Code>vip-ui/</Code> folder.
         </p>
         <CodeBlock code={usage} filename="example.tsx" />
-        <p>
+        <Alert variant="neutral" title="Demo imports">
           Demo code imports from <Code>@/components/vip-ui/</Code>. If your
           alias is different, change the import paths. A demo can use other
           vip/ui components. Add those components too.
-        </p>
+        </Alert>
       </GuideSection>
 
       <GuideSection id="shared-files" title="Shared files">

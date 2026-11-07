@@ -80,6 +80,9 @@ export default function StylingPage() {
             <Code>--shadow-inset</Code> for shadows.
           </li>
           <li>
+            <Code>--highlight</Code> for the hover highlight in lists and menus.
+          </li>
+          <li>
             <Code>--ease-out-quint</Code> and <Code>--ease-spring</Code> for
             transitions.
           </li>

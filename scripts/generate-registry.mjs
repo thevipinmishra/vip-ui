@@ -302,71 +302,69 @@ function relativeImport(from, target) {
   return relative.startsWith(".") ? relative : `./${relative}`;
 }
 
-function createRouteItem(routeDirectory, sources, routeFiles, block) {
+const blockPagePattern =
+  /^import \{ blockMetadata \} from "@\/lib\/block-seo";\nimport \{ (\w+) \} from "\.\/([\w-]+)";\n\nexport const metadata = blockMetadata\("([\w-]+)"\);\n\nexport default function \w+\(\) \{\n {2}return <\1 \/>;\n\}\n$/;
+
+export function blockEntry(block, blockFiles) {
+  const page = blockFiles.get("page.tsx");
+  if (page === undefined)
+    throw new Error(`Block ${block.name} has no page.tsx`);
+  const match = page.replace(/\r\n/g, "\n").match(blockPagePattern);
+  if (!match || match[3] !== block.name)
+    throw new Error(
+      `src/app/blocks/${block.name}/page.tsx must only set metadata and render one component from the block`,
+    );
+  const file = `${match[2]}.tsx`;
+  if (!blockFiles.has(file))
+    throw new Error(`Block ${block.name} has no entry file ${file}`);
+  return { component: match[1], file };
+}
+
+function blockFilesItem(name, sources, blockFiles) {
   const dependencies = new Set();
   const registryDependencies = new Set();
   const files = [];
-  for (const [relative, source] of routeFiles) {
-    const pathInApp = `${routeDirectory}/${relative}`;
+  for (const [relative, source] of blockFiles) {
+    if (relative === "page.tsx") continue;
+    const location = `src/components/blocks/${name}/${relative}`;
     let content = source.replace(/\r\n/g, "\n");
-    if (relative === "page.tsx" && block) {
-      content = content
-        .replace('import { blockMetadata } from "@/lib/block-seo";\n', "")
-        .replace(
-          /export const metadata = blockMetadata\("[^"]+"\);/,
-          `export const metadata = {\n  title: ${JSON.stringify(block.title)},\n  description: ${JSON.stringify(block.description)},\n};`,
-        );
-    }
     for (const specifier of importsFrom(content)) {
       const lib = specifier.replace(/^@\/lib\//, "");
       if (specifier.startsWith("@/components/ui/")) {
         const slug = specifier.slice("@/components/ui/".length);
         if (!sources.has(slug))
-          throw new Error(`${pathInApp} imports missing component ${slug}`);
+          throw new Error(`${location} imports missing component ${slug}`);
         registryDependencies.add(slug);
         content = content.replaceAll(
           specifier,
-          relativeImport(pathInApp, `src/components/vip-ui/${slug}`),
+          relativeImport(location, `src/components/vip-ui/${slug}`),
         );
       } else if (specifier.startsWith("@/lib/") && libSources.has(lib)) {
         registryDependencies.add(lib);
         content = content.replaceAll(
           specifier,
-          relativeImport(pathInApp, `src/components/vip-ui/${lib}`),
+          relativeImport(location, `src/components/vip-ui/${lib}`),
         );
       } else if (
-        specifier === "server-only" ||
-        (!specifier.startsWith(".") &&
-          !specifier.startsWith("@/") &&
-          packageJson.dependencies?.[packageName(specifier)] &&
-          !["next", "react", "react-dom"].includes(packageName(specifier)))
+        !specifier.startsWith(".") &&
+        !specifier.startsWith("@/") &&
+        packageJson.dependencies?.[packageName(specifier)] &&
+        !["next", "react", "react-dom"].includes(packageName(specifier))
       ) {
         dependencies.add(packageName(specifier));
-      } else if (
-        !specifier.startsWith(".") &&
-        !specifier.startsWith("next/") &&
-        specifier !== "next" &&
-        specifier !== "react"
-      ) {
-        throw new Error(`Unhandled import in ${pathInApp}: ${specifier}`);
+      } else if (!specifier.startsWith(".") && specifier !== "react") {
+        throw new Error(`Unhandled import in ${location}: ${specifier}`);
       }
     }
     files.push({
-      path: pathInApp,
-      type:
-        relative.endsWith("/page.tsx") || relative === "page.tsx"
-          ? "registry:page"
-          : "registry:file",
-      target: pathInApp,
+      path: location,
+      type: "registry:file",
+      target: `@components/blocks/${name}/${relative}`,
       content,
     });
   }
   return {
-    dependencies: [...dependencies]
-      .sort()
-      .map((dependency) =>
-        dependency === "server-only" ? dependency : versioned(dependency),
-      ),
+    dependencies: [...dependencies].sort().map(versioned),
     ...linkedItems(registryDependencies),
     ...styleSetup(
       files.map((file) => file.content),
@@ -377,33 +375,25 @@ function createRouteItem(routeDirectory, sources, routeFiles, block) {
 }
 
 export function createBlockItem(block, sources, blockFiles) {
-  if (!blockFiles.has("page.tsx"))
-    throw new Error(`Block ${block.name} has no page.tsx`);
+  const entry = blockEntry(block, blockFiles);
   return {
     $schema: "https://ui.shadcn.com/schema/registry-item.json",
     name: `vip-${block.name}`,
     type: "registry:block",
-    title: block.name
-      .split("-")
-      .map((word) => word[0].toUpperCase() + word.slice(1))
-      .join(" "),
+    title: titleFor(block.name),
     description: block.description,
     categories: [block.category],
-    ...createRouteItem(
-      `src/app/blocks/${block.name}`,
-      sources,
-      blockFiles,
-      block,
-    ),
+    meta: { entry },
+    ...blockFilesItem(block.name, sources, blockFiles),
   };
 }
 
-export async function readRouteFiles(directory, prefix = "") {
+export async function readBlockFiles(directory, prefix = "") {
   const files = new Map();
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     const relative = `${prefix}${entry.name}`;
     if (entry.isDirectory()) {
-      for (const [name, source] of await readRouteFiles(
+      for (const [name, source] of await readBlockFiles(
         path.join(directory, entry.name),
         `${relative}/`,
       )) {
@@ -528,7 +518,7 @@ export async function generate() {
       createBlockItem(
         block,
         sources,
-        await readRouteFiles(path.join(blocksDirectory, block.name)),
+        await readBlockFiles(path.join(blocksDirectory, block.name)),
       ),
     );
   }
