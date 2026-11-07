@@ -8,7 +8,7 @@ import { Code, ExternalLink, TextLink } from "@/components/docs/guide";
 import { InstallTabs } from "@/components/docs/install-tabs";
 import { ManualInstall } from "@/components/docs/manual-install";
 import { PackageManagerCommand } from "@/components/docs/package-manager-command";
-import { sectionTitleClass } from "@/components/docs/page-header";
+import { SectionHeading } from "@/components/docs/section-heading";
 import type {
   Chart,
   ChartAction,
@@ -461,9 +461,9 @@ export async function ChartDocumentation() {
 
           <section id="api" aria-labelledby="chart-api" className="scroll-mt-8">
             <div className="mb-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-              <h2 id="chart-api" className={cn(sectionTitleClass, "mb-0")}>
+              <SectionHeading section="api" id="chart-api">
                 API reference
-              </h2>
+              </SectionHeading>
               <a
                 href="https://tanstack.com/charts/latest/docs/reference/chart-definitions"
                 target="_blank"
@@ -498,9 +498,9 @@ function DocumentationSection({
 }) {
   return (
     <section id={id} aria-labelledby={`chart-${id}`} className="scroll-mt-8">
-      <h2 id={`chart-${id}`} className={cn("mb-4", sectionTitleClass)}>
+      <SectionHeading section={id} id={`chart-${id}`} className="mb-4">
         {title}
-      </h2>
+      </SectionHeading>
       <div className="grid gap-4">{children}</div>
     </section>
   );

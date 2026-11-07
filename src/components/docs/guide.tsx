@@ -10,7 +10,8 @@ import { Breadcrumb, Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { type Guide, guideNeighbors, type NavLink } from "@/lib/navigation";
 import { pageMetadata } from "@/lib/seo";
 import { cn } from "@/lib/utils";
-import { pageTitleClass, sectionTitleClass } from "./page-header";
+import { pageTitleClass } from "./page-header";
+import { SectionHeading } from "./section-heading";
 
 export const textLinkClass =
   "rounded-sm font-medium text-primary underline decoration-primary/40 underline-offset-4 transition-[color,background-color,box-shadow] duration-150 ease-out-quint hover:decoration-primary focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:decoration-primary-foreground/40 focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-transparent";
@@ -75,7 +76,7 @@ export function GuideSection({
 }) {
   return (
     <section id={id} className="mt-14 scroll-mt-8">
-      <h2 className={sectionTitleClass}>{title}</h2>
+      <SectionHeading section={id}>{title}</SectionHeading>
       <div className="mt-4 grid gap-4 text-sm leading-7 text-muted-foreground">
         {children}
       </div>

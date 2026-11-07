@@ -6,6 +6,9 @@ Concise, user-visible changes. Versions track site releases, not a published npm
 
 ### Components
 
+- Calendar adds `CalendarMonthPicker` and `CalendarYearPicker`. Put them in `CalendarHeader` to replace the heading with month and year lists. The year list shows 20 years by default; set `visibleYears` to change it.
+- DatePicker has composable parts: `DatePickerLabel`, `DatePickerGroup`, `DatePickerInput`, `DatePickerTrigger`, `DatePickerDescription`, `DatePickerError`, and `DatePickerContent`. Put a composed `Calendar` in `DatePickerContent` to add month and year pickers.
+- Docs section headings show a link on hover. Click it to copy the section URL.
 - `TooltipChart` renders a React body in the chart tooltip. Pass `renderTooltipBody` to replace the default rows, for example with a close button on a pinned tooltip. The body uses the chart tooltip surface, border, and shadow.
 - The chart frame styles TanStack `interactiveColorLegend` buttons like the other kit controls.
 - Response shows a streaming answer with status states. The content shows a caret and `aria-busy` while `status="streaming"`, screen readers hear one announcement when the run ends, `ResponseNotice` marks stopped and error runs, and `ResponseActions` and `ResponseFooter` hold buttons and sources.
