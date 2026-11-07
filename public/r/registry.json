@@ -1040,12 +1040,17 @@
       "name": "vip-drop-zone",
       "type": "registry:ui",
       "title": "Drop Zone",
-      "description": "Accepts files that you drag and drop onto it.",
+      "description": "Accepts files that you drop onto it or select from a file picker.",
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
+        "react-aria@^3.53.1",
         "react-aria-components@^1.22.1"
       ],
-      "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-button.json",
+        "https://vip-ui.dev/r/vip-file-trigger.json",
+        "https://vip-ui.dev/r/vip-utils.json"
+      ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
         "@plugin tailwindcss-react-aria-components": {}
@@ -5214,7 +5219,6 @@
         "https://vip-ui.dev/r/vip-button.json",
         "https://vip-ui.dev/r/vip-card.json",
         "https://vip-ui.dev/r/vip-drop-zone.json",
-        "https://vip-ui.dev/r/vip-file-trigger.json",
         "https://vip-ui.dev/r/vip-toast.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],

@@ -201,7 +201,7 @@ const pageSources = {
         title: "Adding and removing files",
         description: "Check the type and size of each file before you add it.",
         sourcePath: "attachment-demo.tsx",
-        uses: ["drop-zone", "file-trigger"],
+        uses: ["drop-zone"],
       },
       {
         title: "Upload states",
@@ -667,7 +667,6 @@ const pageSources = {
         title: "Accepted file types",
         description: "Use getDropOperation to accept or cancel a drop.",
         sourcePath: "drop-zone-demo.tsx",
-        uses: ["file-trigger"],
       },
     ],
   },

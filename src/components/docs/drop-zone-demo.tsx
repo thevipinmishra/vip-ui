@@ -7,8 +7,8 @@ import {
   DropZoneDescription,
   DropZoneIcon,
   DropZoneLabel,
+  DropZoneTrigger,
 } from "@/components/ui/drop-zone";
-import { FileTrigger } from "@/components/ui/file-trigger";
 
 const acceptedTypes = ["image/png", "image/jpeg", "application/pdf"];
 
@@ -36,15 +36,16 @@ export function DropZoneDemo() {
         <DropZoneIcon />
         <DropZoneLabel>Drop images or PDFs here</DropZoneLabel>
         <DropZoneDescription>PNG, JPEG, or PDF</DropZoneDescription>
-        <FileTrigger
-          label="Browse files"
+        <DropZoneTrigger
           acceptedFileTypes={acceptedTypes}
           allowsMultiple
           onSelect={(selected) => {
             if (selected)
               setFiles((current) => [...current, ...Array.from(selected)]);
           }}
-        />
+        >
+          Browse files
+        </DropZoneTrigger>
       </DropZone>
       <ul
         aria-live="polite"

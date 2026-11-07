@@ -6,34 +6,46 @@ import {
   DropZone,
   DropZoneIcon,
   DropZoneLabel,
+  DropZoneTrigger,
 } from "@/components/ui/drop-zone";
 
 export function DropZoneBasicDemo() {
   const [files, setFiles] = useState<{ id: number; name: string }[]>([]);
   const nextId = useRef(0);
 
+  function addFiles(added: File[]) {
+    setFiles((current) => [
+      ...current,
+      ...added.map((file) => ({ id: nextId.current++, name: file.name })),
+    ]);
+  }
+
   return (
     <div className="grid w-full max-w-md gap-3">
       <DropZone
         onDrop={async ({ items }) => {
-          const dropped = await Promise.all(
-            items
-              .filter(
-                (item: DropItem): item is FileDropItem => item.kind === "file",
-              )
-              .map((item) => item.getFile()),
+          addFiles(
+            await Promise.all(
+              items
+                .filter(
+                  (item: DropItem): item is FileDropItem =>
+                    item.kind === "file",
+                )
+                .map((item) => item.getFile()),
+            ),
           );
-          setFiles((current) => [
-            ...current,
-            ...dropped.map((file) => ({
-              id: nextId.current++,
-              name: file.name,
-            })),
-          ]);
         }}
       >
         <DropZoneIcon />
         <DropZoneLabel>Drop files here</DropZoneLabel>
+        <DropZoneTrigger
+          allowsMultiple
+          onSelect={(selected) => {
+            if (selected) addFiles(Array.from(selected));
+          }}
+        >
+          Browse files
+        </DropZoneTrigger>
       </DropZone>
       <ul
         aria-live="polite"

@@ -51,6 +51,7 @@ import {
   DropZoneDescription,
   DropZoneIcon,
   DropZoneLabel,
+  DropZoneTrigger,
 } from "@/components/ui/drop-zone";
 import {
   EmptyState,
@@ -1050,7 +1051,9 @@ export function FileManager() {
                 </DropZoneLabel>
                 <DropZoneDescription>Up to 25 MB per file.</DropZoneDescription>
               </div>
-              <FileTrigger
+              <DropZoneTrigger
+                size="sm"
+                className="shrink-0"
                 acceptedFileTypes={[
                   "image/*",
                   "application/pdf",
@@ -1062,10 +1065,8 @@ export function FileManager() {
                   if (list) addFiles(Array.from(list));
                 }}
               >
-                <Button variant="outline" size="sm" className="shrink-0">
-                  Browse
-                </Button>
-              </FileTrigger>
+                Browse
+              </DropZoneTrigger>
             </DropZone>
           </div>
         </main>
