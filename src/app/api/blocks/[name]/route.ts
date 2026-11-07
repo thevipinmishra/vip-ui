@@ -26,11 +26,13 @@ export async function GET(
   }
 
   const item = await readRegistryItem(name);
+  const entry = item.meta?.entry;
+  if (!entry) throw new Error(`Block ${name} has no entry component`);
   const files = item.files
-    .filter((file) => file.target.startsWith(`src/app/blocks/${name}/`))
+    .filter((file) => file.target.startsWith(`@components/blocks/${name}/`))
     .map(
       (file): BlockSourceFile => ({
-        path: file.target,
+        path: file.target.slice(1),
         code: file.content,
         ...highlightCode(
           file.content,
@@ -41,7 +43,11 @@ export async function GET(
   const installUrl = registryUrl(name);
   const source: BlockSource = {
     files,
-    command: `npx shadcn@latest add ${installUrl ?? `${registryNamespace}/${name}`}`,
+    command: `npx shadcn@latest add ${installUrl ?? `${registryNamespace}/vip-${name}`}`,
+    entry: {
+      component: entry.component,
+      path: `components/blocks/${name}/${entry.file}`,
+    },
   };
 
   return Response.json(source, {

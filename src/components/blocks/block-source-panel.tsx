@@ -27,7 +27,7 @@ const cache = new Map<string, BlockSource>();
 
 function defaultFile(source: BlockSource) {
   return (
-    source.files.find((file) => file.path.endsWith("/page.tsx"))?.path ??
+    source.files.find((file) => file.path === source.entry.path)?.path ??
     source.files[0]?.path ??
     null
   );
@@ -146,6 +146,15 @@ export function BlockSourcePanel({ block }: { block: Block }) {
             className="self-start sm:self-auto"
           />
         </div>
+        <p className="text-pretty text-xs leading-5 text-muted-foreground">
+          Render{" "}
+          <code className="font-mono text-foreground">{`<${source.entry.component} />`}</code>{" "}
+          from{" "}
+          <code className="break-all font-mono text-foreground">
+            {source.entry.path}
+          </code>{" "}
+          on any page.
+        </p>
       </div>
       <div className="code-frame flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl bg-code text-code-foreground md:grid md:grid-cols-[14rem_minmax(0,1fr)] md:grid-rows-[minmax(0,1fr)]">
         <div className="flex min-h-0 shrink-0 flex-col border-b border-border/70 md:overflow-y-auto md:border-e md:border-b-0">

@@ -63,6 +63,8 @@ Concise, user-visible changes. Versions track site releases, not a published npm
 
 ### Registry
 
+- Breaking: blocks install as React components in `components/blocks/<name>/`, not as Next.js routes in `app/blocks/`. Render the entry component, such as `<Dashboard />`, on any page. Blocks no longer need Next.js.
+- The block code panel opens the entry file and shows the component to render.
 - Each registry item contains only its own file. Items get shared files and other components through `registryDependencies`, with full URLs.
 - New items `vip-utils` and `vip-motion` contain `utils.ts` and `motion.ts`. New item `vip-size` holds the shared size type and group context.
 - When you add a second component, the CLI does not write shared files again and does not replace them.
