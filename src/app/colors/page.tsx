@@ -21,7 +21,7 @@ const ramp = [2, 4, 6, 8, 9, 10].map((index) => blue[index]);
 export const metadata = pageMetadata({
   title: "Colors",
   description:
-    "Accessible OKLCH color scales with 12 steps each, designed for light and dark themes and Tailwind CSS v4.",
+    "Accessible OKLCH color scales with 12 steps each, designed for light and dark themes and Tailwind CSS.",
   path: "/colors",
   image: "file",
 });

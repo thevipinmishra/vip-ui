@@ -77,3 +77,4 @@ Concise, user-visible changes. Versions track site releases, not a published npm
 ### Site
 
 - The site runs on Next.js 16.4.5, which includes the November security fixes.
+- Social preview images use the light site theme and the gallery hero layout. They show no counts or version numbers, and every component page uses the component card.

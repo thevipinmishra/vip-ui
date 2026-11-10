@@ -1,17 +1,16 @@
-import { blockCategories, blocks } from "@/lib/blocks";
-import { ogColors, ogContentType, ogSize, renderOgCard } from "@/lib/og";
+import { ogContentType, ogSize, renderOgCard } from "@/lib/og";
 
 export const alt =
-  "vip/ui blocks — complete page sections built with accessible React components";
+  "vip/ui blocks — complete pages built with accessible React components";
 export const size = ogSize;
 export const contentType = ogContentType;
 
 export default async function Image() {
   return renderOgCard({
-    eyebrow: "Blocks",
-    title: "Full pages built with vip/ui",
-    description: "Copy them into your app.",
-    meta: `${blocks.length} blocks / ${blockCategories.length} categories`,
-    accent: ogColors.amber,
+    label: "Blocks",
+    title: "From components to complete experiences.",
+    description:
+      "Full pages and sections built with vip/ui. Copy them into your app.",
+    art: "blocks",
   });
 }

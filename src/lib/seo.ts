@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { getComponent } from "./catalog";
+import type { OgArt } from "./og";
 import { SITE_DOMAIN, siteUrl } from "./site-url";
 
 export const site = {
@@ -7,7 +9,7 @@ export const site = {
   title: "vip/ui — Accessible React components",
   tagline: "Accessible React components",
   description:
-    "92 accessible React components built on Tailwind CSS v4, with React Aria for interaction. Add the source with the shadcn CLI, then edit it like your own code.",
+    "React components built with React Aria, Tailwind CSS, and Motion. Add the source with the shadcn CLI, then edit it like your own code.",
   url: siteUrl(),
   repository: "https://github.com/thevipinmishra/vip-ui",
   author: {
@@ -116,10 +118,8 @@ export interface PageMetadataOptions {
    */
   image?: "file" | "endpoint";
   og?: {
-    eyebrow?: string;
-    meta?: string;
-    snippet?: string;
-    accent?: "teal" | "amber";
+    label?: string;
+    art?: OgArt;
   };
   type?: "website" | "article";
 }
@@ -127,19 +127,24 @@ export interface PageMetadataOptions {
 function ogImageUrl({
   title,
   description,
+  path,
   og,
 }: {
   title: string;
   description: string;
+  path: string;
   og?: PageMetadataOptions["og"];
 }) {
   const url = new URL("/og", site.url);
+  const slug = path.match(/^\/components\/([^/]+)$/)?.[1];
+  if (slug && getComponent(slug)) {
+    url.searchParams.set("component", slug);
+    return url.toString();
+  }
   url.searchParams.set("title", title);
   url.searchParams.set("description", description);
-  if (og?.eyebrow) url.searchParams.set("eyebrow", og.eyebrow);
-  if (og?.meta) url.searchParams.set("meta", og.meta);
-  if (og?.snippet) url.searchParams.set("snippet", og.snippet);
-  if (og?.accent) url.searchParams.set("accent", og.accent);
+  if (og?.label) url.searchParams.set("label", og.label);
+  if (og?.art) url.searchParams.set("art", og.art);
   return url.toString();
 }
 
@@ -168,7 +173,7 @@ export function pageMetadata({
   if (image === "endpoint") {
     openGraph.images = [
       {
-        url: ogImageUrl({ title, description, og }),
+        url: ogImageUrl({ title, description, path, og }),
         width: socialImage.width,
         height: socialImage.height,
         type: socialImage.type,

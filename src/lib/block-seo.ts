@@ -10,5 +10,6 @@ export function blockMetadata(name: string) {
     path: `/blocks/${name}`,
     noIndex: true,
     canonical: false,
+    og: { label: "Blocks", art: "blocks" },
   });
 }

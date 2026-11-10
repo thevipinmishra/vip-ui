@@ -162,6 +162,7 @@ export function guideMetadata(href: Guide["href"]): Metadata {
     title: guide.label,
     description: guideSeoDescriptions[href] ?? guide.description,
     path: href,
+    og: { label: "Docs" },
   });
 }
 
