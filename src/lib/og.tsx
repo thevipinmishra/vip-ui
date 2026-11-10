@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { componentName, getComponent } from "./catalog";
+import { findPalette } from "./palettes";
 import { site } from "./seo";
 
 export const ogContentType = "image/png";
@@ -13,32 +14,81 @@ export const ogSize = {
 
 export const ogAlt = `${site.name} — ${site.tagline}`;
 
+export const ogArts = [
+  "controls",
+  "chart",
+  "blocks",
+  "swatches",
+  "scale",
+  "type",
+] as const;
+
+export type OgArt = (typeof ogArts)[number];
+
+function oklchToHex(value: string): string {
+  const match = value.match(/oklch\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)\s*\)/);
+  if (!match) return value;
+  const [lightness, chroma, hue] = match.slice(1).map(Number);
+  const angle = (hue * Math.PI) / 180;
+  const a = chroma * Math.cos(angle);
+  const b = chroma * Math.sin(angle);
+  const l = (lightness + 0.3963377774 * a + 0.2158037573 * b) ** 3;
+  const m = (lightness - 0.1055613458 * a - 0.0638541728 * b) ** 3;
+  const s = (lightness - 0.0894841775 * a - 1.291485548 * b) ** 3;
+  const linear = [
+    4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
+    -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
+    -0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s,
+  ];
+  return `#${linear
+    .map((channel) => {
+      const clamped = Math.min(1, Math.max(0, channel));
+      const encoded =
+        clamped <= 0.0031308
+          ? 12.92 * clamped
+          : 1.055 * clamped ** (1 / 2.4) - 0.055;
+      return Math.round(encoded * 255)
+        .toString(16)
+        .padStart(2, "0");
+    })
+    .join("")}`;
+}
+
+function rgba(hex: string, alpha: number): string {
+  const number = Number.parseInt(hex.slice(1), 16);
+  return `rgba(${(number >> 16) & 255}, ${(number >> 8) & 255}, ${number & 255}, ${alpha})`;
+}
+
+const ink = "#1a211e";
+
 export const ogColors = {
-  background: "#101211",
-  surface: "#171918",
-  foreground: "#eceeed",
-  muted: "#adb5b2",
-  border: "rgba(236,238,237,0.12)",
-  teal: "#7bd3c7",
-  amber: "#e6b566",
+  background: "#f7f9f8",
+  card: "#ffffff",
+  foreground: ink,
+  muted: "#5f6563",
+  border: "#d7dad9",
+  teal: oklchToHex("oklch(0.62 0.11 180)"),
+  ochre: oklchToHex("oklch(0.63 0.13 75)"),
+  orchid: oklchToHex("oklch(0.56 0.14 320)"),
+  brick: oklchToHex("oklch(0.48 0.13 32)"),
 } as const;
 
-export const ogChips = [
-  "React Aria",
-  "Tailwind CSS v4",
-  "Motion",
-  "vip-ui.dev",
-] as const;
+const blueRamp = [2, 4, 6, 8, 9, 10].map((index) =>
+  oklchToHex(findPalette("blue").light[index]),
+);
+
+const artGlow: Record<OgArt, string> = {
+  controls: ogColors.orchid,
+  chart: ogColors.teal,
+  blocks: ogColors.ochre,
+  swatches: ink,
+  scale: blueRamp[3],
+  type: ogColors.teal,
+};
 
 const geistFontPath = (file: string) =>
   join(process.cwd(), "node_modules/geist/dist/fonts/geist-sans", file);
 
-/**
- * Read the fonts only when a card is rendered. Next resolves the metadata of
- * every `opengraph-image` route during a page render, which imports this module
- * without rendering the image. Reading the fonts at import time made dynamic
- * pages crash when the fonts were not part of that route's traced files.
- */
 function loadOgFonts() {
   return Promise.all([
     readFile(geistFontPath("Geist-Regular.ttf")),
@@ -66,34 +116,10 @@ function getOgFonts() {
   return ogFonts;
 }
 
-const logoMark = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="64" height="64"><path fill="#eceeed" d="M7.71 32H7a7 7 0 0 1-7-7V7a7 7 0 0 1 7-7h13.51z"/><path fill="#eceeed" fill-opacity=".5" d="M24.29 0H25a7 7 0 0 1 7 7v18a7 7 0 0 1-7 7H11.49z"/></svg>`;
+const logoMark = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="44" height="44"><path fill="${ink}" d="M7.71 32H7a7 7 0 0 1-7-7V7a7 7 0 0 1 7-7h13.51z"/><path fill="${ink}" fill-opacity=".5" d="M24.29 0H25a7 7 0 0 1 7 7v18a7 7 0 0 1-7 7H11.49z"/></svg>`;
 const logoMarkSrc = `data:image/svg+xml;base64,${Buffer.from(logoMark).toString("base64")}`;
 
-interface OgCardOptions {
-  eyebrow: string;
-  title: string;
-  description: string;
-  meta?: string;
-  snippet?: string;
-  accent?: string;
-  chips?: readonly string[];
-}
-
-function rgba(hex: string, alpha: number): string {
-  const value = hex.replace("#", "");
-  const full =
-    value.length === 3
-      ? value
-          .split("")
-          .map((part) => `${part}${part}`)
-          .join("")
-      : value;
-  const number = Number.parseInt(full, 16);
-  return `rgba(${(number >> 16) & 255}, ${(number >> 8) & 255}, ${number & 255}, ${alpha})`;
-}
-
-/** Cut at a word boundary so a long catalog description never overflows. */
-export function truncateDescription(text: string, maxLength = 170): string {
+export function truncateDescription(text: string, maxLength = 150): string {
   const clean = text.replace(/\s+/g, " ").trim();
   if (clean.length <= maxLength) return clean;
 
@@ -104,32 +130,199 @@ export function truncateDescription(text: string, maxLength = 170): string {
 }
 
 function titleSize(title: string): number {
-  if (title.length <= 16) return 92;
-  if (title.length <= 26) return 84;
-  if (title.length <= 34) return 78;
-  return 72;
+  if (title.length <= 20) return 88;
+  if (title.length <= 36) return 76;
+  return 68;
 }
 
-function pascalCase(slug: string): string {
-  return slug
-    .split("-")
-    .filter(Boolean)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join("");
+function Art({ art }: { art: OgArt }) {
+  switch (art) {
+    case "chart":
+      return (
+        <div style={{ display: "flex", alignItems: "flex-end", gap: 14 }}>
+          {(
+            [
+              [28, ogColors.ochre],
+              [46, ogColors.teal],
+              [36, ogColors.orchid],
+              [58, ogColors.teal],
+              [42, ogColors.brick],
+              [52, ogColors.ochre],
+            ] as const
+          ).map(([height, color]) => (
+            <div
+              key={`${height}-${color}`}
+              style={{
+                width: 14,
+                height,
+                borderRadius: 9999,
+                backgroundColor: color,
+              }}
+            />
+          ))}
+        </div>
+      );
+    case "blocks":
+      return (
+        <div style={{ display: "flex", gap: 9, width: 112, height: 70 }}>
+          <div
+            style={{
+              width: 26,
+              borderRadius: 8,
+              backgroundColor: ogColors.ochre,
+            }}
+          />
+          <div
+            style={{
+              display: "flex",
+              flex: 1,
+              flexDirection: "column",
+              gap: 9,
+            }}
+          >
+            <div
+              style={{
+                height: 20,
+                borderRadius: 8,
+                backgroundColor: ogColors.teal,
+              }}
+            />
+            <div style={{ display: "flex", flex: 1, gap: 9 }}>
+              <div
+                style={{
+                  flex: 1,
+                  borderRadius: 8,
+                  backgroundColor: ogColors.orchid,
+                }}
+              />
+              <div
+                style={{
+                  flex: 1,
+                  borderRadius: 8,
+                  backgroundColor: ogColors.brick,
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      );
+    case "swatches":
+      return (
+        <div style={{ display: "flex", alignItems: "center" }}>
+          {[
+            ink,
+            ogColors.teal,
+            ogColors.ochre,
+            ogColors.orchid,
+            ogColors.brick,
+          ].map((color, index) => (
+            <div
+              key={color}
+              style={{
+                width: 56,
+                height: 56,
+                marginLeft: index === 0 ? 0 : -14,
+                borderRadius: 9999,
+                border: `5px solid ${ogColors.background}`,
+                backgroundColor: color,
+              }}
+            />
+          ))}
+        </div>
+      );
+    case "scale":
+      return (
+        <div
+          style={{
+            display: "flex",
+            height: 40,
+            overflow: "hidden",
+            borderRadius: 9999,
+            border: `1px solid ${rgba(ink, 0.1)}`,
+          }}
+        >
+          {blueRamp.map((color) => (
+            <div
+              key={color}
+              style={{ width: 26, height: 40, backgroundColor: color }}
+            />
+          ))}
+        </div>
+      );
+    case "type":
+      return (
+        <div
+          style={{
+            display: "flex",
+            fontSize: 64,
+            fontWeight: 600,
+            letterSpacing: "-0.04em",
+            lineHeight: 1,
+            color: ink,
+          }}
+        >
+          Aa
+        </div>
+      );
+    default:
+      return (
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              width: 70,
+              height: 40,
+              padding: 5,
+              borderRadius: 9999,
+              backgroundColor: ogColors.teal,
+            }}
+          >
+            <div
+              style={{
+                width: 30,
+                height: 30,
+                borderRadius: 9999,
+                backgroundColor: ogColors.background,
+              }}
+            />
+          </div>
+          <div
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 12,
+              backgroundColor: ogColors.ochre,
+            }}
+          />
+          <div
+            style={{
+              width: 60,
+              height: 40,
+              borderRadius: 9999,
+              backgroundColor: ogColors.brick,
+            }}
+          />
+        </div>
+      );
+  }
+}
+
+interface OgCardOptions {
+  title: string;
+  description: string;
+  label?: string;
+  art?: OgArt;
 }
 
 function OgCard({
-  eyebrow,
   title,
   description,
-  meta,
-  snippet,
-  accent = ogColors.teal,
-  chips = ogChips,
+  label,
+  art = "controls",
 }: OgCardOptions) {
-  const descriptionText = truncateDescription(description);
-  const accentTint = rgba(accent, 0.06);
-  const accentRing = rgba(accent, 0.4);
+  const glow = artGlow[art];
 
   return (
     <div
@@ -138,76 +331,27 @@ function OgCard({
         height: ogSize.height,
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-between",
+        alignItems: "center",
         position: "relative",
         overflow: "hidden",
         backgroundColor: ogColors.background,
         color: ogColors.foreground,
         fontFamily: "Geist",
-        padding: "52px 64px 46px",
+        padding: "52px 64px 48px",
       }}
     >
-      {/* Background geometry: a clipped ring, an accent wash, a marker, and a hairline. */}
       <div
         style={{
           position: "absolute",
-          top: -190,
-          right: -110,
-          width: 560,
-          height: 560,
+          top: 0,
+          left: 0,
+          width: ogSize.width,
+          height: ogSize.height,
           display: "flex",
-          borderRadius: 9999,
-          border: "1px solid rgba(236,238,237,0.08)",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          top: 86,
-          right: 142,
-          width: 240,
-          height: 240,
-          display: "flex",
-          borderRadius: 9999,
-          backgroundColor: accentTint,
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          top: 212,
-          right: 240,
-          width: 26,
-          height: 26,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          borderRadius: 9999,
-          border: `1px solid ${accentRing}`,
-        }}
-      >
-        <div
-          style={{
-            width: 7,
-            height: 7,
-            borderRadius: 9999,
-            backgroundColor: accent,
-          }}
-        />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: 132,
-          right: 320,
-          width: 1,
-          height: 174,
-          display: "flex",
-          backgroundColor: "rgba(236,238,237,0.08)",
+          backgroundImage: `radial-gradient(circle at 50% 0%, ${rgba(glow, glow === ink ? 0.08 : 0.16)} 0%, ${rgba(glow, 0)} 60%)`,
         }}
       />
 
-      {/* Masthead: logo mark, wordmark, and the route eyebrow with meta or snippet. */}
       <div
         style={{
           display: "flex",
@@ -216,119 +360,66 @@ function OgCard({
           width: "100%",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           {/* biome-ignore lint/performance/noImgElement: Satori renders the card, not the browser. */}
-          <img src={logoMarkSrc} width={64} height={64} alt="" />
+          <img src={logoMarkSrc} width={44} height={44} alt="" />
+          <div
+            style={{
+              display: "flex",
+              fontSize: 30,
+              fontWeight: 600,
+              letterSpacing: "-0.04em",
+              lineHeight: 1,
+            }}
+          >
+            vip/ui
+          </div>
+        </div>
+        {label ? (
           <div
             style={{
               display: "flex",
               alignItems: "center",
-              fontSize: 30,
-              fontWeight: 600,
-              letterSpacing: "-0.055em",
-              lineHeight: 1,
+              padding: "8px 18px",
+              border: `1px solid ${ogColors.border}`,
+              borderRadius: 9999,
+              backgroundColor: ogColors.card,
+              color: ogColors.muted,
+              fontSize: 20,
+              lineHeight: 1.2,
             }}
           >
-            <span>vip</span>
-            <span style={{ color: ogColors.muted }}>/</span>
-            <span>ui</span>
+            {label}
           </div>
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-end",
-            gap: 10,
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <div
-              style={{
-                width: 7,
-                height: 7,
-                borderRadius: 9999,
-                backgroundColor: accent,
-              }}
-            />
-            <div
-              style={{
-                fontSize: 13,
-                fontWeight: 600,
-                letterSpacing: "0.18em",
-                color: ogColors.muted,
-              }}
-            >
-              {eyebrow.toUpperCase()}
-            </div>
-          </div>
-          {snippet ? (
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                padding: "6px 12px",
-                border: `1px solid ${ogColors.border}`,
-                borderRadius: 9999,
-                backgroundColor: "rgba(236,238,237,0.03)",
-                color: accent,
-                fontSize: 14,
-                fontWeight: 600,
-                letterSpacing: "-0.01em",
-              }}
-            >
-              {snippet}
-            </div>
-          ) : meta ? (
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                fontSize: 14,
-                lineHeight: 1.2,
-                color: ogColors.muted,
-              }}
-            >
-              {meta}
-            </div>
-          ) : null}
-        </div>
+        ) : null}
       </div>
 
-      {/* Main copy: accent rule, title, then a truncated 2–3 line description. */}
       <div
         style={{
           display: "flex",
-          flex: "1 1 0",
+          flex: 1,
           flexDirection: "column",
+          alignItems: "center",
           justifyContent: "center",
           width: "100%",
-          maxWidth: 820,
-          paddingTop: 4,
-          paddingBottom: 10,
+          paddingBottom: 12,
         }}
       >
+        <div style={{ display: "flex", opacity: 0.9 }}>
+          <Art art={art} />
+        </div>
         <div
           style={{
             display: "flex",
-            width: 48,
-            height: 3,
-            marginBottom: 22,
-            borderRadius: 9999,
-            backgroundColor: accent,
-            opacity: 0.85,
-          }}
-        />
-        <div
-          style={{
-            display: "flex",
-            maxWidth: 820,
+            justifyContent: "center",
+            maxWidth: 940,
+            marginTop: 36,
             fontSize: titleSize(title),
             fontWeight: 600,
-            letterSpacing: "-0.05em",
-            lineHeight: 0.98,
-            color: ogColors.foreground,
+            letterSpacing: "-0.045em",
+            lineHeight: 1.06,
+            textAlign: "center",
+            textWrap: title.length > 20 ? "balance" : "wrap",
           }}
         >
           {title}
@@ -336,158 +427,29 @@ function OgCard({
         <div
           style={{
             display: "flex",
-            maxWidth: 800,
+            justifyContent: "center",
+            maxWidth: 840,
             marginTop: 24,
-            fontSize: 29,
-            lineHeight: 1.42,
+            fontSize: 28,
+            lineHeight: 1.45,
+            textAlign: "center",
+            textWrap: "balance",
             color: ogColors.muted,
           }}
         >
-          {descriptionText}
+          {truncateDescription(description)}
         </div>
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        {chips.map((chip) => (
-          <div
-            key={chip}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              padding: "8px 14px",
-              border: `1px solid ${ogColors.border}`,
-              borderRadius: 9999,
-              backgroundColor: "rgba(236,238,237,0.03)",
-              color: ogColors.muted,
-              fontSize: 14,
-              lineHeight: 1.2,
-              letterSpacing: "0.01em",
-            }}
-          >
-            {chip}
-          </div>
-        ))}
-      </div>
-
-      {/* Abstract UI panel: solid surfaces and bars, so it stays Satori-safe. */}
       <div
         style={{
-          position: "absolute",
-          right: 64,
-          bottom: 140,
-          width: 236,
-          height: 158,
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          padding: 20,
-          border: `1px solid ${ogColors.border}`,
-          borderRadius: 24,
-          backgroundColor: ogColors.surface,
+          fontSize: 20,
+          lineHeight: 1,
+          color: ogColors.muted,
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            <div
-              style={{
-                width: 8,
-                height: 8,
-                borderRadius: 9999,
-                backgroundColor: accent,
-              }}
-            />
-            <div
-              style={{
-                width: 8,
-                height: 8,
-                borderRadius: 9999,
-                backgroundColor: "rgba(236,238,237,0.22)",
-              }}
-            />
-            <div
-              style={{
-                width: 8,
-                height: 8,
-                borderRadius: 9999,
-                backgroundColor: "rgba(236,238,237,0.12)",
-              }}
-            />
-          </div>
-          <div
-            style={{
-              width: 34,
-              height: 4,
-              borderRadius: 9999,
-              backgroundColor: "rgba(236,238,237,0.16)",
-            }}
-          />
-        </div>
-
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-          <div
-            style={{
-              width: 150,
-              height: 8,
-              borderRadius: 9999,
-              backgroundColor: "rgba(236,238,237,0.22)",
-            }}
-          />
-          <div
-            style={{
-              width: 104,
-              height: 8,
-              borderRadius: 9999,
-              backgroundColor: "rgba(236,238,237,0.12)",
-            }}
-          />
-        </div>
-
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <div
-            style={{
-              width: 26,
-              height: 26,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: 8,
-              backgroundColor: rgba(ogColors.amber, 0.16),
-            }}
-          >
-            <div
-              style={{
-                width: 7,
-                height: 7,
-                borderRadius: 9999,
-                backgroundColor: ogColors.amber,
-              }}
-            />
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            <div
-              style={{
-                width: 62,
-                height: 5,
-                borderRadius: 9999,
-                backgroundColor: "rgba(236,238,237,0.16)",
-              }}
-            />
-            <div
-              style={{
-                width: 40,
-                height: 5,
-                borderRadius: 9999,
-                backgroundColor: "rgba(236,238,237,0.10)",
-              }}
-            />
-          </div>
-        </div>
+        {site.domain}
       </div>
     </div>
   );
@@ -504,15 +466,13 @@ export async function renderOgCard(
 
 export async function componentOgCard(slug: string): Promise<ImageResponse> {
   const component = getComponent(slug);
-  const name = component?.name ?? componentName(slug);
 
   return renderOgCard({
-    eyebrow: component?.group ?? "Component",
-    title: name,
+    label: component?.group ?? "Components",
+    title: component?.name ?? componentName(slug),
     description:
       component?.description ??
-      "An accessible React component built with React Aria, Tailwind CSS v4, and Motion.",
-    snippet: `<${pascalCase(slug)} />`,
-    accent: ogColors.teal,
+      "An accessible React component built with React Aria, Tailwind CSS, and Motion.",
+    art: "controls",
   });
 }

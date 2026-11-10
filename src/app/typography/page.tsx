@@ -9,6 +9,7 @@ export const metadata = pageMetadata({
   description:
     "Style HTML and rendered markdown with one CSS file. Set the fonts, size, line height, and spacing, then copy the preset.",
   path: "/typography",
+  og: { label: "Typography", art: "type" },
 });
 
 export default function TypographyPage() {
