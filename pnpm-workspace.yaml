@@ -1,8 +1,6 @@
 allowBuilds:
   sharp: false
   unrs-resolver: false
-minimumReleaseAgeExclude:
-  - "@tanstack/charts@1.2.1"
 permissions:
   "@tanstack/charts":
     skills: true

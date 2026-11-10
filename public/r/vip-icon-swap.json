@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Icon Swap",
   "description": "Swaps one icon for another with a short scale and blur.",
-  "dependencies": ["motion@^14.9.0"],
+  "dependencies": ["motion@^14.10.1"],
   "registryDependencies": [
     "https://vip-ui.dev/r/vip-motion.json",
     "https://vip-ui.dev/r/vip-utils.json"

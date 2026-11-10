@@ -5,7 +5,7 @@
   "title": "Pagination",
   "description": "Shows links between pages of results.",
   "dependencies": [
-    "motion@^14.9.0",
+    "motion@^14.10.1",
     "react-aria-components@^1.22.1",
     "tailwind-variants@^4.0.1"
   ],

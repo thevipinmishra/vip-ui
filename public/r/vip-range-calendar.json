@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Range Calendar",
   "description": "Shows a month grid to select a start and end date.",
-  "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
+  "dependencies": ["motion@^14.10.1", "react-aria-components@^1.22.1"],
   "registryDependencies": [
     "https://vip-ui.dev/r/vip-calendar.json",
     "https://vip-ui.dev/r/vip-item-highlight.json",

@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Spotlight Card",
   "description": "Shows a card with a glow and border that follow the pointer.",
-  "dependencies": ["motion@^14.9.0"],
+  "dependencies": ["motion@^14.10.1"],
   "registryDependencies": [
     "https://vip-ui.dev/r/vip-card.json",
     "https://vip-ui.dev/r/vip-utils.json"

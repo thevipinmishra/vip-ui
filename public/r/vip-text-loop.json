@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Text Loop",
   "description": "Cycles through a list of words on a timer.",
-  "dependencies": ["motion@^14.9.0"],
+  "dependencies": ["motion@^14.10.1"],
   "registryDependencies": ["https://vip-ui.dev/r/vip-text-swap.json"],
   "files": [
     {

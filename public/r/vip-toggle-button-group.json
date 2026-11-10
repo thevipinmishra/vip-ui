@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Toggle Button Group",
   "description": "Groups toggle buttons for one or more choices.",
-  "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
+  "dependencies": ["motion@^14.10.1", "react-aria-components@^1.22.1"],
   "registryDependencies": [
     "https://vip-ui.dev/r/vip-item-highlight.json",
     "https://vip-ui.dev/r/vip-size.json",

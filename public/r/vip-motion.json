@@ -4,7 +4,7 @@
   "type": "registry:lib",
   "title": "Motion",
   "description": "Sets the easing curves and springs of animations.",
-  "dependencies": ["motion@^14.9.0"],
+  "dependencies": ["motion@^14.10.1"],
   "files": [
     {
       "path": "src/lib/motion.ts",

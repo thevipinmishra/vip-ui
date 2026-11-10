@@ -72,3 +72,8 @@ Concise, user-visible changes. Versions track site releases, not a published npm
 - The registry build stops when a dependency is a bare name, when a dependency URL does not resolve to an item, or when dependencies make a cycle.
 - The registry `homepage` has no trailing slash when `NEXT_PUBLIC_REGISTRY_URL` ends with one.
 - `vip-sheet` and `vip-dashboard-01` carry the Sheet changes above.
+- Items that use Motion require `motion@^14.10.1`. Chart items require `@tanstack/charts@^1.5.0`.
+
+### Site
+
+- The site runs on Next.js 16.4.5, which includes the November security fixes.

@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Meter",
   "description": "Shows a measured value within a known range.",
-  "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
+  "dependencies": ["motion@^14.10.1", "react-aria-components@^1.22.1"],
   "registryDependencies": [
     "https://vip-ui.dev/r/vip-motion.json",
     "https://vip-ui.dev/r/vip-utils.json"
