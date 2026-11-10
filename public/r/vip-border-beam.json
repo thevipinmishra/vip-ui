@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Border Beam",
   "description": "Moves a short light around the border of a surface.",
-  "dependencies": ["motion@^14.9.0"],
+  "dependencies": ["motion@^14.10.1"],
   "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
   "files": [
     {

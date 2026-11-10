@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Marquee",
   "description": "Loops a row of content with a built-in pause control.",
-  "dependencies": ["motion@^14.9.0"],
+  "dependencies": ["motion@^14.10.1"],
   "registryDependencies": [
     "https://vip-ui.dev/r/vip-button.json",
     "https://vip-ui.dev/r/vip-utils.json"

@@ -11,7 +11,7 @@
       "file": "settings-page.tsx"
     }
   },
-  "dependencies": ["motion@^14.9.0"],
+  "dependencies": ["motion@^14.10.1"],
   "registryDependencies": [
     "https://vip-ui.dev/r/vip-avatar.json",
     "https://vip-ui.dev/r/vip-button.json",

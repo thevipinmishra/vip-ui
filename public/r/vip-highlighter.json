@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Highlighter",
   "description": "Draws a highlight, underline, or circle on a phrase when it comes into view.",
-  "dependencies": ["motion@^14.9.0"],
+  "dependencies": ["motion@^14.10.1"],
   "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
   "cssVars": {
     "theme": {

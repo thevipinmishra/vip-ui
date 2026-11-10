@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Chart",
   "description": "Frames a TanStack chart with shadcn chart colors and tooltip styles.",
-  "dependencies": ["@tanstack/charts@^1.2.1"],
+  "dependencies": ["@tanstack/charts@^1.5.0"],
   "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
   "cssVars": {
     "theme": {

@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Stepper",
   "description": "Shows the current step and the steps already complete.",
-  "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.9.0"],
+  "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.10.1"],
   "registryDependencies": [
     "https://vip-ui.dev/r/vip-motion.json",
     "https://vip-ui.dev/r/vip-utils.json"

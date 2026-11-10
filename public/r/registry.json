@@ -22,7 +22,7 @@
       "type": "registry:lib",
       "title": "Motion",
       "description": "Sets the easing curves and springs of animations.",
-      "dependencies": ["motion@^14.9.0"],
+      "dependencies": ["motion@^14.10.1"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/motion.ts",
@@ -72,7 +72,7 @@
       "type": "registry:ui",
       "title": "Agent Status",
       "description": "Shows the current step of an agent and its state.",
-      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.9.0"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.10.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-utils.json"
@@ -143,7 +143,7 @@
       "type": "registry:ui",
       "title": "Animated Number",
       "description": "Counts to a new number or slides the digits that change.",
-      "dependencies": ["motion@^14.9.0"],
+      "dependencies": ["motion@^14.10.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-utils.json"
@@ -161,7 +161,7 @@
       "type": "registry:ui",
       "title": "Attachment",
       "description": "Shows the name, size, preview, and upload state of a file.",
-      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.9.0"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.10.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-button.json",
         "https://vip-ui.dev/r/vip-motion.json",
@@ -266,7 +266,7 @@
       "type": "registry:ui",
       "title": "Border Beam",
       "description": "Moves a short light around the border of a surface.",
-      "dependencies": ["motion@^14.9.0"],
+      "dependencies": ["motion@^14.10.1"],
       "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "files": [
         {
@@ -380,7 +380,7 @@
       "type": "registry:ui",
       "title": "Button",
       "description": "Triggers an action with primary, secondary, or destructive emphasis.",
-      "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
+      "dependencies": ["motion@^14.10.1", "react-aria-components@^1.22.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-button-styles.json",
         "https://vip-ui.dev/r/vip-motion.json",
@@ -472,7 +472,7 @@
       "type": "registry:ui",
       "title": "Chart",
       "description": "Frames a TanStack chart with shadcn chart colors and tooltip styles.",
-      "dependencies": ["@tanstack/charts@^1.2.1"],
+      "dependencies": ["@tanstack/charts@^1.5.0"],
       "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "cssVars": {
         "theme": {
@@ -607,7 +607,7 @@
       "type": "registry:ui",
       "title": "Color Picker",
       "description": "Selects a color with a color area, hue slider, and hex field in a popover.",
-      "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
+      "dependencies": ["motion@^14.10.1", "react-aria-components@^1.22.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-button.json",
         "https://vip-ui.dev/r/vip-color-field.json",
@@ -788,7 +788,7 @@
       "description": "Copies a value to the clipboard and shows the result.",
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "motion@^14.9.0",
+        "motion@^14.10.1",
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
@@ -1222,7 +1222,7 @@
       "type": "registry:ui",
       "title": "Highlighter",
       "description": "Draws a highlight, underline, or circle on a phrase when it comes into view.",
-      "dependencies": ["motion@^14.9.0"],
+      "dependencies": ["motion@^14.10.1"],
       "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "cssVars": {
         "theme": {
@@ -1242,7 +1242,7 @@
       "type": "registry:ui",
       "title": "Icon Swap",
       "description": "Swaps one icon for another with a short scale and blur.",
-      "dependencies": ["motion@^14.9.0"],
+      "dependencies": ["motion@^14.10.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-utils.json"
@@ -1335,7 +1335,7 @@
       "type": "registry:ui",
       "title": "Item Highlight",
       "description": "Moves one highlight to the hovered or focused item.",
-      "dependencies": ["motion@^14.9.0"],
+      "dependencies": ["motion@^14.10.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-utils.json"
@@ -1376,7 +1376,7 @@
       "type": "registry:ui",
       "title": "Layout Morph",
       "description": "Crossfades new content and animates the container to its new size.",
-      "dependencies": ["motion@^14.9.0"],
+      "dependencies": ["motion@^14.10.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-utils.json"
@@ -1453,7 +1453,7 @@
       "type": "registry:ui",
       "title": "Marquee",
       "description": "Loops a row of content with a built-in pause control.",
-      "dependencies": ["motion@^14.9.0"],
+      "dependencies": ["motion@^14.10.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-button.json",
         "https://vip-ui.dev/r/vip-utils.json"
@@ -1532,7 +1532,7 @@
       "type": "registry:ui",
       "title": "Meter",
       "description": "Shows a measured value within a known range.",
-      "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
+      "dependencies": ["motion@^14.10.1", "react-aria-components@^1.22.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-utils.json"
@@ -1624,7 +1624,7 @@
       "title": "Pagination",
       "description": "Shows links between pages of results.",
       "dependencies": [
-        "motion@^14.9.0",
+        "motion@^14.10.1",
         "react-aria-components@^1.22.1",
         "tailwind-variants@^4.0.1"
       ],
@@ -1665,7 +1665,7 @@
       "type": "registry:ui",
       "title": "Password Field",
       "description": "Accepts a password, with a button to show or hide it.",
-      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.9.0"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.10.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-input-group.json",
         "https://vip-ui.dev/r/vip-motion.json",
@@ -1717,7 +1717,7 @@
       "type": "registry:ui",
       "title": "Presence List",
       "description": "Animates list items when you add, remove, or move them.",
-      "dependencies": ["motion@^14.9.0"],
+      "dependencies": ["motion@^14.10.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-utils.json"
@@ -1735,7 +1735,7 @@
       "type": "registry:ui",
       "title": "Presence",
       "description": "Animates content in when it appears and out before it unmounts.",
-      "dependencies": ["motion@^14.9.0"],
+      "dependencies": ["motion@^14.10.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-utils.json"
@@ -1777,7 +1777,7 @@
       "type": "registry:ui",
       "title": "Progress Bar",
       "description": "Shows how much of a task is complete in a horizontal bar.",
-      "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
+      "dependencies": ["motion@^14.10.1", "react-aria-components@^1.22.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-utils.json"
@@ -1808,7 +1808,7 @@
       "title": "Progress Ring",
       "description": "Shows how much of a task is complete in a ring.",
       "dependencies": [
-        "motion@^14.9.0",
+        "motion@^14.10.1",
         "react-aria@^3.53.1",
         "react-aria-components@^1.22.1"
       ],
@@ -1923,7 +1923,7 @@
       "type": "registry:ui",
       "title": "Range Calendar",
       "description": "Shows a month grid to select a start and end date.",
-      "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
+      "dependencies": ["motion@^14.10.1", "react-aria-components@^1.22.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-calendar.json",
         "https://vip-ui.dev/r/vip-item-highlight.json",
@@ -1955,7 +1955,7 @@
       "type": "registry:ui",
       "title": "Rating Input",
       "description": "Sets a star rating with radio controls.",
-      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.9.0"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.10.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-radio-group.json",
@@ -2143,7 +2143,7 @@
       "description": "Shows a swipeable panel that slides in from the edge of the screen.",
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "motion@^14.9.0",
+        "motion@^14.10.1",
         "react-aria@^3.53.1",
         "react-aria-components@^1.22.1",
         "tailwind-variants@^4.0.1"
@@ -2193,7 +2193,7 @@
       "type": "registry:ui",
       "title": "Skeleton",
       "description": "Shows a placeholder shape while content loads.",
-      "dependencies": ["motion@^14.9.0"],
+      "dependencies": ["motion@^14.10.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-utils.json"
@@ -2296,7 +2296,7 @@
       "type": "registry:ui",
       "title": "Spotlight Card",
       "description": "Shows a card with a glow and border that follow the pointer.",
-      "dependencies": ["motion@^14.9.0"],
+      "dependencies": ["motion@^14.10.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-card.json",
         "https://vip-ui.dev/r/vip-utils.json"
@@ -2319,7 +2319,7 @@
       "type": "registry:ui",
       "title": "Stagger Group",
       "description": "Reveals a group of items one after another when it enters the viewport.",
-      "dependencies": ["motion@^14.9.0"],
+      "dependencies": ["motion@^14.10.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-utils.json"
@@ -2366,7 +2366,7 @@
       "type": "registry:ui",
       "title": "Stepper",
       "description": "Shows the current step and the steps already complete.",
-      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.9.0"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.10.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-utils.json"
@@ -2466,7 +2466,7 @@
       "type": "registry:ui",
       "title": "Tabs",
       "description": "Shows one panel of related content at a time.",
-      "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
+      "dependencies": ["motion@^14.10.1", "react-aria-components@^1.22.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-button-styles.json",
         "https://vip-ui.dev/r/vip-item-highlight.json",
@@ -2508,7 +2508,7 @@
       "description": "Shows a group of tags that you can select or remove.",
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "motion@^14.9.0",
+        "motion@^14.10.1",
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
@@ -2592,7 +2592,7 @@
       "type": "registry:ui",
       "title": "Text Loop",
       "description": "Cycles through a list of words on a timer.",
-      "dependencies": ["motion@^14.9.0"],
+      "dependencies": ["motion@^14.10.1"],
       "registryDependencies": ["https://vip-ui.dev/r/vip-text-swap.json"],
       "files": [
         {
@@ -2607,7 +2607,7 @@
       "type": "registry:ui",
       "title": "Text Reveal",
       "description": "Reveals text word by word or character by character.",
-      "dependencies": ["motion@^14.9.0"],
+      "dependencies": ["motion@^14.10.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-utils.json"
@@ -2625,7 +2625,7 @@
       "type": "registry:ui",
       "title": "Text Scramble",
       "description": "Scrambles characters and resolves them into new text when its value changes.",
-      "dependencies": ["motion@^14.9.0"],
+      "dependencies": ["motion@^14.10.1"],
       "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
       "files": [
         {
@@ -2640,7 +2640,7 @@
       "type": "registry:ui",
       "title": "Text Shimmer",
       "description": "Moves a soft highlight across text to show that work is in progress.",
-      "dependencies": ["motion@^14.9.0"],
+      "dependencies": ["motion@^14.10.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-utils.json"
@@ -2666,7 +2666,7 @@
       "type": "registry:ui",
       "title": "Text Swap",
       "description": "Swaps text with a short fade when its value changes.",
-      "dependencies": ["motion@^14.9.0"],
+      "dependencies": ["motion@^14.10.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-utils.json"
@@ -2765,7 +2765,7 @@
       "type": "registry:ui",
       "title": "Toggle Button Group",
       "description": "Groups toggle buttons for one or more choices.",
-      "dependencies": ["motion@^14.9.0", "react-aria-components@^1.22.1"],
+      "dependencies": ["motion@^14.10.1", "react-aria-components@^1.22.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-item-highlight.json",
         "https://vip-ui.dev/r/vip-size.json",
@@ -2798,7 +2798,7 @@
       "title": "Toggle Button",
       "description": "Switches a button between selected and unselected states.",
       "dependencies": [
-        "motion@^14.9.0",
+        "motion@^14.10.1",
         "react-aria-components@^1.22.1",
         "tailwind-variants@^4.0.1"
       ],
@@ -2874,7 +2874,7 @@
       "description": "Shows a tool call and its status, and expands to show the input and output.",
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "motion@^14.9.0",
+        "motion@^14.10.1",
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
@@ -2979,7 +2979,7 @@
       "description": "Shows nested items that you can expand, collapse, and select.",
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "motion@^14.9.0",
+        "motion@^14.10.1",
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
@@ -3412,7 +3412,7 @@
       },
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "@tanstack/charts@^1.2.1"
+        "@tanstack/charts@^1.5.0"
       ],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-avatar.json",
@@ -3501,7 +3501,7 @@
       },
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "@tanstack/charts@^1.2.1"
+        "@tanstack/charts@^1.5.0"
       ],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-animated-number.json",
@@ -3547,7 +3547,7 @@
       "dependencies": [
         "@internationalized/date@^3.12.4",
         "@phosphor-icons/react@^2.1.10",
-        "@tanstack/charts@^1.2.1",
+        "@tanstack/charts@^1.5.0",
         "react-aria-components@^1.22.1"
       ],
       "registryDependencies": [
@@ -3610,7 +3610,7 @@
       },
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "@tanstack/charts@^1.2.1"
+        "@tanstack/charts@^1.5.0"
       ],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-alert.json",
@@ -4284,7 +4284,7 @@
           "file": "settings-page.tsx"
         }
       },
-      "dependencies": ["motion@^14.9.0"],
+      "dependencies": ["motion@^14.10.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-avatar.json",
         "https://vip-ui.dev/r/vip-button.json",

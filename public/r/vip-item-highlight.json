@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Item Highlight",
   "description": "Moves one highlight to the hovered or focused item.",
-  "dependencies": ["motion@^14.9.0"],
+  "dependencies": ["motion@^14.10.1"],
   "registryDependencies": [
     "https://vip-ui.dev/r/vip-motion.json",
     "https://vip-ui.dev/r/vip-utils.json"

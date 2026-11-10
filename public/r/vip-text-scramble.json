@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Text Scramble",
   "description": "Scrambles characters and resolves them into new text when its value changes.",
-  "dependencies": ["motion@^14.9.0"],
+  "dependencies": ["motion@^14.10.1"],
   "registryDependencies": ["https://vip-ui.dev/r/vip-utils.json"],
   "files": [
     {
