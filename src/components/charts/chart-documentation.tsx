@@ -91,12 +91,19 @@ const canvas = `import { canvasChartRenderer } from "@tanstack/charts/canvas";
   ariaLabel="Large scatterplot"
 />`;
 
-const staticSvg = `import { createChartRuntime, renderChartSvg } from "@tanstack/charts";
+const staticSvg = `import { createChartScene, renderChartSvg } from "@tanstack/charts";
 
-const runtime = createChartRuntime();
-const scene = runtime.render(definition, { width: 720, height: 320 });
-const svg = renderChartSvg(scene, { ariaLabel: "Weekly revenue" });
-runtime.destroy();`;
+const scene = createChartScene(definition, { width: 720, height: 320 });
+const svg = renderChartSvg(scene, { ariaLabel: "Weekly revenue" });`;
+
+const exportChart = `import { downloadChartImage, downloadChartSvg } from "@tanstack/charts/export";
+
+const frame = useRef<HTMLElement>(null);
+
+<ChartFrame ref={frame}>…</ChartFrame>
+
+downloadChartSvg(frame.current, "revenue.svg");
+await downloadChartImage(frame.current, "revenue.png", { scale: 2 });`;
 
 const crosshair = `import { crosshair } from "@tanstack/charts/crosshair";
 
@@ -112,8 +119,8 @@ const definition = defineChart({
   focus: "group-x",
 });`;
 
-const timeScale = `import { scaleUtc } from "d3-scale";
-import { scaleLinear } from "@tanstack/charts/scales/linear";
+const timeScale = `import { scaleLinear } from "@tanstack/charts/scales/linear";
+import { scaleUtc } from "@tanstack/charts/scales/time";
 
 const definition = defineChart({
   marks: [lineY(rows, { x: "date", y: "value" })],
@@ -122,6 +129,23 @@ const definition = defineChart({
     y: { scale: scaleLinear, nice: true },
   },
 });`;
+
+const linkedCharts = `import { createChartCursor, cursorHost } from "@tanstack/charts/cursor";
+
+const cursor = {
+  use: cursorHost,
+  controller: createChartCursor<string, number>(),
+  mode: "focus" as const,
+  match: "x" as const,
+};
+
+const requests = defineChart({ ...requestsSpec, cursor });
+const errors = defineChart({ ...errorsSpec, cursor });
+
+<ChartFrame>
+  <Chart definition={requests} ariaLabel="Daily requests" />
+  <Chart definition={errors} ariaLabel="Daily error rate" />
+</ChartFrame>`;
 
 const tooltipBody = `import { TooltipChart } from "@/components/vip-ui/chart";
 
@@ -154,6 +178,7 @@ const composition: CompositionPart[] = [
       },
       {
         part: "Chart",
+        repeats: true,
         note: "Owns the motion. Accepts the TanStack core Chart props.",
         children: [
           {
@@ -197,6 +222,13 @@ const api = [
   apiPart<typeof ChartFrame>({
     name: "ChartFrame",
     props: [
+      {
+        name: "variant",
+        type: '"default" | "card" | "plain"',
+        default: '"default"',
+        description:
+          "The frame surface. Use card to match Card. Use plain when the chart is inside another surface.",
+      },
       {
         name: "--ts-chart-1",
         type: "color",
@@ -309,8 +341,9 @@ export async function ChartDocumentation() {
         <div className="space-y-14">
           <DocumentationSection id="installation" title="Installation">
             <Note>
-              The CLI adds the chart file, its packages, and the series color
-              variables. Complete the{" "}
+              The CLI adds the chart file and its packages. Charts read the
+              series colors from your theme, see{" "}
+              <TextLink href="#theming">Theming</TextLink>. Complete the{" "}
               <TextLink href="/components/installation#setup">
                 one-time setup
               </TextLink>{" "}
@@ -350,7 +383,8 @@ export async function ChartDocumentation() {
             <Note>
               ChartFrame is the root. Chart draws the plot. The caption, action,
               legend, and table are optional, so add only the parts that the
-              chart needs.
+              chart needs. Chart also works on its own, for example as a
+              sparkline in a Card.
             </Note>
             <ComponentComposition parts={composition} />
           </DocumentationSection>
@@ -391,6 +425,11 @@ export async function ChartDocumentation() {
               result works for email, static pages, and image export.
             </Note>
             <CodeBlock code={staticSvg} filename="static-chart.ts" />
+            <Note>
+              Use the export helpers to download a mounted chart as an SVG or
+              PNG file.
+            </Note>
+            <CodeBlock code={exportChart} filename="export-chart.tsx" />
           </DocumentationSection>
 
           <DocumentationSection id="interaction" title="Interaction">
@@ -401,6 +440,11 @@ export async function ChartDocumentation() {
             </Note>
             <CodeBlock code={crosshair} filename="crosshair-chart.tsx" />
             <Note>
+              Share one cursor between charts to link them. Each chart shows the
+              same x value with its own scales.
+            </Note>
+            <CodeBlock code={linkedCharts} filename="linked-charts.tsx" />
+            <Note>
               Tooltips can stay inside the chart definition. Use TooltipChart
               when a pinned tooltip needs React controls, nested charts, or a
               portal.
@@ -410,9 +454,9 @@ export async function ChartDocumentation() {
 
           <DocumentationSection id="scales" title="Scales and data">
             <Note>
-              Start with the compact scales for numbers and categories. Use a D3
-              scale only when the data needs UTC time, a logarithmic domain, or
-              a sequential color ramp.
+              Start with the compact scales for numbers, categories, and UTC
+              time. Use a D3 scale only when the data needs local time, a
+              logarithmic domain, or a sequential color ramp.
             </Note>
             <CodeBlock code={timeScale} filename="time-series.ts" />
             <Note>

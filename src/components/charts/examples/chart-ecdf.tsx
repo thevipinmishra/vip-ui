@@ -30,6 +30,7 @@ const noise = (seed: number) => {
 
 const rows = tiers.flatMap((tier, tierIndex) =>
   Array.from({ length: 20 }, (_, index) => ({
+    id: `${tier.label}-${index}`,
     tier: tier.label,
     latency: Math.round(
       tier.base + noise(tierIndex * 40 + index + 1) ** 2 * tier.spread,
@@ -68,6 +69,7 @@ const definition = defineChart({
       x: "latency",
       y: "share",
       z: "tier",
+      key: "id",
       color: "tier",
       curve: d3Curve(curveStepAfter),
       strokeWidth: 2,

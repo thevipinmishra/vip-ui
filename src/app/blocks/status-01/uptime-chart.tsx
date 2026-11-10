@@ -118,7 +118,7 @@ export function UptimeChart() {
   );
 
   return (
-    <ChartFrame className="h-full shadow-[var(--shadow-card)] ring-1 ring-border/70">
+    <ChartFrame variant="card" className="h-full">
       <ChartCaption>
         <ChartTitle>Platform uptime</ChartTitle>
         <ChartValue>{formatAverage(percent)}</ChartValue>

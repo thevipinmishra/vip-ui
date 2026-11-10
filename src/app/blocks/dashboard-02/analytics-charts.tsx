@@ -127,7 +127,7 @@ export function AreaChart({
   }, [rows, value, color, labels, ticks, formatAxis, formatValue, title]);
 
   return (
-    <ChartFrame className="shadow-[var(--shadow-card)] ring-1 ring-border/70">
+    <ChartFrame variant="card">
       <ChartCaption>
         <ChartTitle>{title}</ChartTitle>
         <ChartValue>{headline}</ChartValue>
@@ -256,7 +256,7 @@ export function BarChart({
   }, [rows, series, labels, ticks, formatValue, formatAxis]);
 
   return (
-    <ChartFrame className="shadow-[var(--shadow-card)] ring-1 ring-border/70">
+    <ChartFrame variant="card">
       <ChartCaption>
         <ChartTitle>{title}</ChartTitle>
         <ChartDescription className="text-[13px] leading-5">

@@ -19,10 +19,12 @@ import { ChartBoxPlot } from "./examples/chart-box-plot";
 import { ChartBrush } from "./examples/chart-brush";
 import { ChartCandlestick } from "./examples/chart-candlestick";
 import { ChartColorLegend } from "./examples/chart-color-legend";
+import { ChartContour } from "./examples/chart-contour";
 import { ChartCrosshair } from "./examples/chart-crosshair";
 import { ChartDensity } from "./examples/chart-density";
 import { ChartEcdf } from "./examples/chart-ecdf";
 import { ChartErrorBars } from "./examples/chart-error-bars";
+import { ChartExport } from "./examples/chart-export";
 import { ChartFacet } from "./examples/chart-facet";
 import { ChartForce } from "./examples/chart-force";
 import { ChartFunnel } from "./examples/chart-funnel";
@@ -38,6 +40,7 @@ import { ChartLineDots } from "./examples/chart-line-dots";
 import { ChartLineInteractive } from "./examples/chart-line-interactive";
 import { ChartLineMultiple } from "./examples/chart-line-multiple";
 import { ChartLineStep } from "./examples/chart-line-step";
+import { ChartLinked } from "./examples/chart-linked";
 import { ChartMosaic } from "./examples/chart-mosaic";
 import { ChartPieDefault } from "./examples/chart-pie-default";
 import { ChartPieDonut } from "./examples/chart-pie-donut";
@@ -55,9 +58,11 @@ import { ChartScatterBubble } from "./examples/chart-scatter-bubble";
 import { ChartScatterCanvas } from "./examples/chart-scatter-canvas";
 import { ChartScatterDefault } from "./examples/chart-scatter-default";
 import { ChartScatterTrend } from "./examples/chart-scatter-trend";
+import { ChartScrubber } from "./examples/chart-scrubber";
 import { ChartSelectionTable } from "./examples/chart-selection-table";
 import { ChartStreamgraph } from "./examples/chart-streamgraph";
 import { ChartSunburst } from "./examples/chart-sunburst";
+import { ChartTimeBins } from "./examples/chart-time-bins";
 import { ChartTooltip } from "./examples/chart-tooltip";
 import { ChartTree } from "./examples/chart-tree";
 import { ChartTreemap } from "./examples/chart-treemap";
@@ -307,6 +312,11 @@ export const chartCategories: ChartCategory[] = [
         name: "Histogram",
         preview: <ChartHistogram />,
       },
+      {
+        file: "chart-time-bins",
+        name: "Time bins",
+        preview: <ChartTimeBins />,
+      },
       { file: "chart-box-plot", name: "Box plot", preview: <ChartBoxPlot /> },
       { file: "chart-beeswarm", name: "Beeswarm", preview: <ChartBeeswarm /> },
       {
@@ -377,6 +387,11 @@ export const chartCategories: ChartCategory[] = [
         file: "chart-geo",
         name: "Floor plan",
         preview: <ChartGeo />,
+      },
+      {
+        file: "chart-contour",
+        name: "Contour",
+        preview: <ChartContour />,
       },
     ],
   },
@@ -475,6 +490,21 @@ export const chartCategories: ChartCategory[] = [
         file: "chart-color-legend",
         name: "Interactive legend",
         preview: <ChartColorLegend />,
+      },
+      {
+        file: "chart-scrubber",
+        name: "Scrubber",
+        preview: <ChartScrubber />,
+      },
+      {
+        file: "chart-linked",
+        name: "Linked charts",
+        preview: <ChartLinked />,
+      },
+      {
+        file: "chart-export",
+        name: "Export",
+        preview: <ChartExport />,
       },
     ],
   },

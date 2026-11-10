@@ -370,7 +370,7 @@ function PlanMixScene({ className }: { className?: string }) {
         <CardDescription>Last 30 days.</CardDescription>
       </CardHeader>
       <CardContent className="grid flex-1 content-center gap-6">
-        <ChartFrame className="bg-transparent p-0 sm:p-0">
+        <ChartFrame variant="plain">
           <Chart
             definition={planDefinition}
             height={196}

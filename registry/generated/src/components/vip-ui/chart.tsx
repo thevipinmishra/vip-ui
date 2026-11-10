@@ -11,10 +11,11 @@ import {
   type RendererChartProps as TooltipRendererChartProps,
 } from "@tanstack/charts/react/tooltip";
 import {
+  type ComponentProps,
   type CSSProperties,
-  type HTMLAttributes,
-  type LiHTMLAttributes,
+  createContext,
   type ReactNode,
+  use,
   useEffect,
   useRef,
   useState,
@@ -44,31 +45,48 @@ const chartStyle = {
   "--ts-chart-tooltip-shadow": "var(--shadow-float, var(--shadow-lg))",
 } as CSSProperties;
 
+const chartSurfaceClass = cn(
+  "[&_.ts-chart:is(:focus):not(:focus-visible)]:outline-none [&_.ts-chart:focus-visible]:outline-2 [&_.ts-chart:focus-visible]:outline-ring [&_.ts-chart:focus-visible]:outline-offset-2 [&_.ts-chart-tooltip]:w-max [&_.ts-chart-tooltip]:min-w-36 [&_.ts-chart-tooltip]:[overflow-wrap:normal]!",
+  String.raw`[&_.ts-chart-tooltip\_\_title]:text-xs [&_.ts-chart-tooltip\_\_title]:text-muted-foreground [&_.ts-chart-tooltip\_\_rows]:grid [&_.ts-chart-tooltip\_\_rows]:gap-0.5 [&_.ts-chart-tooltip\_\_row]:-mx-1.5 [&_.ts-chart-tooltip\_\_row]:gap-x-3! [&_.ts-chart-tooltip\_\_row]:px-1.5 [&_.ts-chart-tooltip\_\_row]:py-0.5 [&_.ts-chart-tooltip\_\_row>span:nth-child(2)]:text-muted-foreground [&_.ts-chart-tooltip\_\_row>span:last-child]:font-semibold`,
+  String.raw`[&_.ts-chart\_\_interactive-legend_button]:rounded-md! [&_.ts-chart\_\_interactive-legend_button]:border-transparent! [&_.ts-chart\_\_interactive-legend_button]:bg-transparent! [&_.ts-chart\_\_interactive-legend_button]:px-2.5! [&_.ts-chart\_\_interactive-legend_button]:[font-family:inherit]! [&_.ts-chart\_\_interactive-legend_button]:text-xs! [&_.ts-chart\_\_interactive-legend_button]:leading-none! [&_.ts-chart\_\_interactive-legend_button]:font-medium! [&_.ts-chart\_\_interactive-legend_button]:text-muted-foreground! [&_.ts-chart\_\_interactive-legend_button]:transition-colors [&_.ts-chart\_\_interactive-legend_button]:duration-150 [&_.ts-chart\_\_interactive-legend_button[aria-pressed=true]]:text-foreground! [&_.ts-chart\_\_interactive-legend_button:hover]:bg-accent! [&_.ts-chart\_\_interactive-legend_button:focus-visible]:outline-2 [&_.ts-chart\_\_interactive-legend_button:focus-visible]:outline-solid [&_.ts-chart\_\_interactive-legend_button:focus-visible]:outline-offset-0 [&_.ts-chart\_\_interactive-legend_button:focus-visible]:outline-ring`,
+);
+
+const ChartFrameContext = createContext(false);
+
+const frameVariants = {
+  default: "rounded-xl bg-card p-4 text-card-foreground sm:p-5",
+  card: "rounded-xl bg-card p-4 text-card-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70 sm:p-5 forced-colors:border",
+  plain: "",
+};
+
 export function ChartFrame({
+  variant = "default",
   className,
   style,
   ...props
-}: HTMLAttributes<HTMLElement>) {
+}: ComponentProps<"figure"> & { variant?: keyof typeof frameVariants }) {
   return (
-    <figure
-      data-slot="chart-frame"
-      className={cn(
-        "flex min-w-0 flex-wrap items-start gap-x-4 rounded-xl bg-card p-4 text-card-foreground sm:p-5 *:min-w-0 *:basis-full *:data-[slot=chart-action]:ml-auto *:data-[slot=chart-action]:basis-auto *:data-[slot=chart-caption]:grow *:data-[slot=chart-caption]:basis-48",
-        "[&_.ts-chart:is(:focus):not(:focus-visible)]:outline-none [&_.ts-chart:focus-visible]:outline-2 [&_.ts-chart:focus-visible]:outline-ring [&_.ts-chart:focus-visible]:outline-offset-2 [&_.ts-chart-tooltip]:w-max [&_.ts-chart-tooltip]:min-w-36 [&_.ts-chart-tooltip]:[overflow-wrap:normal]!",
-        String.raw`[&_.ts-chart-tooltip\_\_title]:text-xs [&_.ts-chart-tooltip\_\_title]:text-muted-foreground [&_.ts-chart-tooltip\_\_rows]:grid [&_.ts-chart-tooltip\_\_rows]:gap-0.5 [&_.ts-chart-tooltip\_\_row]:-mx-1.5 [&_.ts-chart-tooltip\_\_row]:gap-x-3! [&_.ts-chart-tooltip\_\_row]:px-1.5 [&_.ts-chart-tooltip\_\_row]:py-0.5 [&_.ts-chart-tooltip\_\_row>span:nth-child(2)]:text-muted-foreground [&_.ts-chart-tooltip\_\_row>span:last-child]:font-semibold`,
-        String.raw`[&_.ts-chart\_\_interactive-legend_button]:rounded-md! [&_.ts-chart\_\_interactive-legend_button]:border-transparent! [&_.ts-chart\_\_interactive-legend_button]:bg-transparent! [&_.ts-chart\_\_interactive-legend_button]:px-2.5! [&_.ts-chart\_\_interactive-legend_button]:[font-family:inherit]! [&_.ts-chart\_\_interactive-legend_button]:text-xs! [&_.ts-chart\_\_interactive-legend_button]:leading-none! [&_.ts-chart\_\_interactive-legend_button]:font-medium! [&_.ts-chart\_\_interactive-legend_button]:text-muted-foreground! [&_.ts-chart\_\_interactive-legend_button]:transition-colors [&_.ts-chart\_\_interactive-legend_button]:duration-150 [&_.ts-chart\_\_interactive-legend_button[aria-pressed=true]]:text-foreground! [&_.ts-chart\_\_interactive-legend_button:hover]:bg-accent! [&_.ts-chart\_\_interactive-legend_button:focus-visible]:outline-2 [&_.ts-chart\_\_interactive-legend_button:focus-visible]:outline-solid [&_.ts-chart\_\_interactive-legend_button:focus-visible]:outline-offset-0 [&_.ts-chart\_\_interactive-legend_button:focus-visible]:outline-ring`,
-        className,
-      )}
-      style={{ ...chartStyle, ...style }}
-      {...props}
-    />
+    <ChartFrameContext.Provider value={true}>
+      <figure
+        data-slot="chart-frame"
+        data-variant={variant}
+        className={cn(
+          "flex min-w-0 flex-wrap items-start gap-x-4 *:min-w-0 *:basis-full *:data-[slot=chart-action]:ml-auto *:data-[slot=chart-action]:basis-auto *:data-[slot=chart-caption]:grow *:data-[slot=chart-caption]:basis-48",
+          frameVariants[variant],
+          chartSurfaceClass,
+          className,
+        )}
+        style={{ ...chartStyle, ...style }}
+        {...props}
+      />
+    </ChartFrameContext.Provider>
   );
 }
 
 export function ChartCaption({
   className,
   ...props
-}: HTMLAttributes<HTMLElement>) {
+}: ComponentProps<"figcaption">) {
   return (
     <figcaption
       data-slot="chart-caption"
@@ -78,10 +96,7 @@ export function ChartCaption({
   );
 }
 
-export function ChartTitle({
-  className,
-  ...props
-}: HTMLAttributes<HTMLSpanElement>) {
+export function ChartTitle({ className, ...props }: ComponentProps<"span">) {
   return (
     <span
       data-slot="chart-title"
@@ -91,10 +106,7 @@ export function ChartTitle({
   );
 }
 
-export function ChartValue({
-  className,
-  ...props
-}: HTMLAttributes<HTMLSpanElement>) {
+export function ChartValue({ className, ...props }: ComponentProps<"span">) {
   return (
     <span
       data-slot="chart-value"
@@ -110,7 +122,7 @@ export function ChartValue({
 export function ChartDescription({
   className,
   ...props
-}: HTMLAttributes<HTMLSpanElement>) {
+}: ComponentProps<"span">) {
   return (
     <span
       data-slot="chart-description"
@@ -120,10 +132,7 @@ export function ChartDescription({
   );
 }
 
-export function ChartAction({
-  className,
-  ...props
-}: HTMLAttributes<HTMLDivElement>) {
+export function ChartAction({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       data-slot="chart-action"
@@ -168,6 +177,7 @@ function ChartShell({
   children: (entrance: ChartEntrance) => ReactNode;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const framed = use(ChartFrameContext);
   const [entrance, setEntrance] = useState<ChartEntrance>("idle");
 
   useEffect(() => {
@@ -206,7 +216,11 @@ function ChartShell({
       ref={ref}
       data-slot="chart-plot"
       data-entrance={animated ? entrance : "idle"}
-      className="relative transition-opacity duration-250 ease-out-quint data-[entrance=waiting]:opacity-0 data-[entrance=waiting]:transition-none print:data-[entrance=waiting]:opacity-100"
+      className={cn(
+        "relative transition-opacity duration-250 ease-out-quint data-[entrance=waiting]:opacity-0 data-[entrance=waiting]:transition-none print:data-[entrance=waiting]:opacity-100",
+        !framed && chartSurfaceClass,
+      )}
+      style={framed ? undefined : chartStyle}
     >
       {children(entrance)}
     </div>
@@ -279,10 +293,7 @@ export function TooltipChart<
   );
 }
 
-export function ChartCenter({
-  className,
-  ...props
-}: HTMLAttributes<HTMLDivElement>) {
+export function ChartCenter({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       data-slot="chart-center"
@@ -295,10 +306,7 @@ export function ChartCenter({
   );
 }
 
-export function ChartLegend({
-  className,
-  ...props
-}: HTMLAttributes<HTMLUListElement>) {
+export function ChartLegend({ className, ...props }: ComponentProps<"ul">) {
   return (
     <ul
       data-slot="chart-legend"
@@ -323,7 +331,7 @@ export function ChartLegendItem({
   className,
   children,
   ...props
-}: LiHTMLAttributes<HTMLLIElement> & {
+}: ComponentProps<"li"> & {
   color: string;
   swatch?: keyof typeof legendSwatches;
 }) {
@@ -349,7 +357,7 @@ export function ChartTable({
   rows,
   className,
   ...props
-}: HTMLAttributes<HTMLDivElement> & {
+}: ComponentProps<"div"> & {
   caption: string;
   columns: readonly string[];
   rows: readonly (readonly (string | number)[])[];
