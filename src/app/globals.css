@@ -252,6 +252,22 @@
   }
 }
 
+@keyframes header-settle {
+  from {
+    background-color: transparent;
+    border-bottom-color: transparent;
+    backdrop-filter: none;
+  }
+}
+
+@utility header-settle {
+  @supports (animation-timeline: scroll()) {
+    animation: header-settle linear both;
+    animation-timeline: scroll();
+    animation-range: 0 4rem;
+  }
+}
+
 @supports not (scrollbar-color: auto) {
   *::-webkit-scrollbar {
     width: 10px;
