@@ -4,6 +4,7 @@ import { useState } from "react";
 import {
   SearchField,
   SearchFieldClear,
+  SearchFieldControl,
   SearchFieldInput,
   SearchFieldLabel,
 } from "@/components/ui/search-field";
@@ -20,8 +21,10 @@ export function SearchFieldDemo() {
     <div className="grid w-full max-w-sm gap-4">
       <SearchField name="topicSearch" value={query} onChange={setQuery}>
         <SearchFieldLabel>Search topics</SearchFieldLabel>
-        <SearchFieldInput placeholder="Topic" />
-        <SearchFieldClear />
+        <SearchFieldControl>
+          <SearchFieldInput placeholder="Topic" />
+          <SearchFieldClear />
+        </SearchFieldControl>
       </SearchField>
       {query ? (
         <ul className="divide-y divide-border text-sm">
