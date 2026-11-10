@@ -11,7 +11,11 @@ import { MobileNav } from "./mobile-nav";
 import { SiteLogo } from "./site-logo";
 import { ThemeToggle } from "./theme-toggle";
 
-export function SiteHeader() {
+export function SiteHeader({
+  transparentAtTop = false,
+}: {
+  transparentAtTop?: boolean;
+}) {
   const pathname = usePathname();
   const active = activeSection(pathname);
 
@@ -23,7 +27,12 @@ export function SiteHeader() {
       >
         Skip to content
       </a>
-      <header className="sticky top-0 z-40 border-b border-border/70 bg-background/80 backdrop-blur-xl backdrop-saturate-150">
+      <header
+        className={cn(
+          "sticky top-0 z-40 border-b border-border/70 bg-background/80 backdrop-blur-xl backdrop-saturate-150",
+          transparentAtTop && "header-settle",
+        )}
+      >
         <div className="site-container flex h-(--header-height) items-center gap-2">
           <Link
             href="/"

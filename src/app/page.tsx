@@ -16,7 +16,7 @@ export const metadata = pageMetadata({
 export default function Home() {
   return (
     <div className="min-h-screen overflow-x-clip bg-background text-foreground">
-      <SiteHeader />
+      <SiteHeader transparentAtTop />
 
       <main id="main">
         <section
