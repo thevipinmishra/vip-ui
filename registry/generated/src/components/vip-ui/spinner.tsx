@@ -2,7 +2,7 @@ import type { ComponentProps } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const spinnerStyles = tv({
-  base: "relative inline-grid shrink-0 place-items-center align-middle text-current [&>*]:col-start-1 [&>*]:row-start-1",
+  base: "relative inline-grid shrink-0 place-items-center align-middle text-current transition-opacity duration-200 ease-out-quint starting:opacity-0 [&>*]:col-start-1 [&>*]:row-start-1",
   variants: {
     size: {
       xs: "size-3.5 [--spinner-stroke:1.75px]",

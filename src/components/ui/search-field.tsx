@@ -62,14 +62,10 @@ export function SearchField({
         (({ isEmpty }) => (
           <>
             {label && <SearchFieldLabel>{label}</SearchFieldLabel>}
-            <div className={cn("relative flex items-center", fieldIcon)}>
-              <MagnifyingGlassIcon
-                aria-hidden="true"
-                className="pointer-events-none absolute start-[var(--field-px,0.875rem)] text-muted-foreground transition-colors duration-150 ease-out-quint group-focus-within:text-foreground group-disabled:opacity-60"
-              />
+            <SearchFieldControl>
               <SearchFieldInput placeholder={placeholder} />
               {!isEmpty && <SearchFieldClear />}
-            </div>
+            </SearchFieldControl>
             {description && (
               <SearchFieldDescription>{description}</SearchFieldDescription>
             )}
@@ -90,6 +86,26 @@ export function SearchFieldLabel({
       data-slot="search-field-label"
       className={cn(fieldLabelStyles, className)}
     />
+  );
+}
+
+export function SearchFieldControl({
+  className,
+  children,
+  ...props
+}: React.ComponentPropsWithRef<"div">) {
+  return (
+    <div
+      {...props}
+      data-slot="search-field-control"
+      className={cn("relative flex min-w-0 items-center", fieldIcon, className)}
+    >
+      <MagnifyingGlassIcon
+        aria-hidden="true"
+        className="pointer-events-none absolute start-[var(--field-px,0.875rem)] text-muted-foreground transition-colors duration-150 ease-out-quint group-focus-within:text-foreground group-disabled:opacity-60"
+      />
+      {children}
+    </div>
   );
 }
 

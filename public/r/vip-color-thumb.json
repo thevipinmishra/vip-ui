@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vip-color-thumb",
+  "type": "registry:ui",
+  "title": "Color Thumb",
+  "description": "Shows the draggable handle of color areas, sliders, and wheels.",
+  "dependencies": ["motion@^14.10.1", "react-aria-components@^1.22.1"],
+  "registryDependencies": [
+    "https://vip-ui.dev/r/vip-motion.json",
+    "https://vip-ui.dev/r/vip-utils.json"
+  ],
+  "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
+  "cssVars": {
+    "theme": {
+      "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+    },
+    "light": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+    },
+    "dark": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+    }
+  },
+  "files": [
+    {
+      "path": "src/components/ui/color-thumb.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/color-thumb.tsx",
+      "content": "\"use client\";\n\nimport { motion, useReducedMotion } from \"motion/react\";\nimport {\n  ColorThumb as AriaColorThumb,\n  type ColorThumbProps,\n  composeRenderProps,\n} from \"react-aria-components\";\nimport { duration, easeOut } from \"./motion\";\nimport { cn } from \"./utils\";\n\nexport function ColorThumb({ className, ...props }: ColorThumbProps) {\n  return (\n    <AriaColorThumb\n      {...props}\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"size-6 cursor-grab rounded-full border-2 border-white shadow-[var(--shadow-card)] ring-1 ring-black/50 outline-none outline-offset-4 outline-transparent transition-[outline-color,outline-offset] duration-150 ease-out-quint dragging:cursor-grabbing disabled:cursor-default focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2\",\n          className,\n        ),\n      )}\n    >\n      {({ isDragging }) => <ThumbDragRing isDragging={isDragging} />}\n    </AriaColorThumb>\n  );\n}\n\nfunction ThumbDragRing({ isDragging }: { isDragging: boolean }) {\n  const reduceMotion = useReducedMotion();\n  return (\n    <motion.span\n      aria-hidden=\"true\"\n      className=\"pointer-events-none absolute -inset-1 rounded-full ring-2 ring-primary/60\"\n      initial={false}\n      animate={{ opacity: isDragging ? 1 : 0, scale: isDragging ? 1 : 0.85 }}\n      transition={{ duration: reduceMotion ? 0 : duration.fast, ease: easeOut }}\n    />\n  );\n}\n"
+    }
+  ]
+}

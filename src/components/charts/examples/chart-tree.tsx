@@ -91,7 +91,7 @@ const definition = defineChart({
       axis: false,
     },
   },
-  margin: { top: 12, right: 16, bottom: 12, left: 12 },
+  margin: { top: 12, right: 16, bottom: 12, left: 24 },
   tooltip: {
     use: tooltip,
     content: ([point]) => ({

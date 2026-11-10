@@ -1,5 +1,3 @@
-import type { Transition } from "motion/react";
-
 export const duration = {
   fast: 0.15,
   base: 0.2,
@@ -25,19 +23,25 @@ export const springSnappy = {
   type: "spring",
   duration: 0.24,
   bounce: 0,
-} as const satisfies Transition;
+} as const;
+
+export const springSnappyEasing = {
+  duration: 0.25,
+  easing:
+    "linear(0, 0.0618, 0.1918, 0.3382, 0.476, 0.595, 0.6925, 0.7698, 0.8296, 0.875, 0.909, 0.9342, 0.9526, 0.9661, 0.9758, 0.9828, 0.9878, 0.9914, 0.994, 0.9958, 0.997, 0.9979, 0.9985, 0.999, 1)",
+} as const;
 
 export const springLayout = {
   type: "spring",
   duration: 0.3,
   bounce: 0,
-} as const satisfies Transition;
+} as const;
 
 export const springPop = {
   type: "spring",
   visualDuration: 0.28,
   bounce: 0.12,
-} as const satisfies Transition;
+} as const;
 
 export const loop = {
   spin: 0.8,
@@ -45,9 +49,9 @@ export const loop = {
   sweep: 1.6,
 } as const;
 
-export function transitionFor(
+export function transitionFor<T extends object>(
   reduceMotion: boolean | null,
-  transition: Transition,
-): Transition {
+  transition: T,
+): T | { duration: 0 } {
   return reduceMotion ? { duration: 0 } : transition;
 }

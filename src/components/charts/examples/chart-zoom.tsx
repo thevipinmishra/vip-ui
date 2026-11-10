@@ -8,7 +8,7 @@ import {
   zoomX,
 } from "@tanstack/charts/interaction/zoom";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
-import { scaleUtc } from "d3-scale";
+import { scaleUtc } from "@tanstack/charts/scales/time";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {

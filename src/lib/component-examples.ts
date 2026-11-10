@@ -429,6 +429,26 @@ const pageSources = {
       },
     ],
   },
+  "color-wheel": {
+    usage: "color-wheel-demo.tsx",
+    examples: [
+      {
+        title: "Controlled value",
+        description: "Children render in the center of the wheel.",
+        sourcePath: "color-wheel-controlled-demo.tsx",
+        uses: ["color-swatch"],
+      },
+      {
+        title: "Size",
+        description: "innerRadius defaults to 24 pixels less than outerRadius.",
+        sourcePath: "color-wheel-size-demo.tsx",
+      },
+      {
+        title: "Disabled",
+        sourcePath: "color-wheel-disabled-demo.tsx",
+      },
+    ],
+  },
   "color-swatch": {
     usage: "color-swatch-basic-demo.tsx",
     examples: [

@@ -22,7 +22,7 @@
       "type": "registry:lib",
       "title": "Motion",
       "description": "Sets the easing curves and springs of animations.",
-      "dependencies": ["motion@^14.10.1"],
+      "dependencies": [],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/motion.ts",
@@ -380,10 +380,9 @@
       "type": "registry:ui",
       "title": "Button",
       "description": "Triggers an action with primary, secondary, or destructive emphasis.",
-      "dependencies": ["motion@^14.10.1", "react-aria-components@^1.22.1"],
+      "dependencies": ["react-aria-components@^1.22.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-button-styles.json",
-        "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-size.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
@@ -481,11 +480,13 @@
         "light": {
           "success": "oklch(0.43 0.12 155)",
           "warning": "oklch(0.54 0.13 75)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
         },
         "dark": {
           "success": "oklch(0.74 0.13 155)",
           "warning": "oklch(0.78 0.11 75)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
           "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
         }
       },
@@ -607,30 +608,19 @@
       "type": "registry:ui",
       "title": "Color Picker",
       "description": "Selects a color with a color area, hue slider, and hex field in a popover.",
-      "dependencies": ["motion@^14.10.1", "react-aria-components@^1.22.1"],
+      "dependencies": ["react-aria-components@^1.22.1"],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-button.json",
         "https://vip-ui.dev/r/vip-color-field.json",
         "https://vip-ui.dev/r/vip-color-swatch.json",
+        "https://vip-ui.dev/r/vip-color-thumb.json",
         "https://vip-ui.dev/r/vip-input-group.json",
-        "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-popover.json",
         "https://vip-ui.dev/r/vip-utils.json"
       ],
       "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
       "css": {
         "@plugin tailwindcss-react-aria-components": {}
-      },
-      "cssVars": {
-        "theme": {
-          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
-        },
-        "light": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
-        },
-        "dark": {
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
-        }
       },
       "files": [
         {
@@ -684,6 +674,61 @@
           "path": "registry/generated/src/components/vip-ui/color-swatch.tsx",
           "type": "registry:file",
           "target": "@components/vip-ui/color-swatch.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-color-thumb",
+      "type": "registry:ui",
+      "title": "Color Thumb",
+      "description": "Shows the draggable handle of color areas, sliders, and wheels.",
+      "dependencies": ["motion@^14.10.1", "react-aria-components@^1.22.1"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-motion.json",
+        "https://vip-ui.dev/r/vip-utils.json"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        },
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/color-thumb.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/color-thumb.tsx"
+        }
+      ]
+    },
+    {
+      "name": "vip-color-wheel",
+      "type": "registry:ui",
+      "title": "Color Wheel",
+      "description": "Adjusts the hue of a color on a circular track.",
+      "dependencies": ["react-aria-components@^1.22.1"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/vip-color-thumb.json",
+        "https://vip-ui.dev/r/vip-utils.json"
+      ],
+      "devDependencies": ["tailwindcss-react-aria-components@^2.2.0"],
+      "css": {
+        "@plugin tailwindcss-react-aria-components": {}
+      },
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/color-wheel.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/color-wheel.tsx"
         }
       ]
     },
@@ -1335,7 +1380,7 @@
       "type": "registry:ui",
       "title": "Item Highlight",
       "description": "Moves one highlight to the hovered or focused item.",
-      "dependencies": ["motion@^14.10.1"],
+      "dependencies": [],
       "registryDependencies": [
         "https://vip-ui.dev/r/vip-motion.json",
         "https://vip-ui.dev/r/vip-utils.json"
@@ -2283,6 +2328,11 @@
       "title": "Spinner",
       "description": "Shows a loading indicator for a task with no known end time.",
       "dependencies": ["tailwind-variants@^4.0.1"],
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/spinner.tsx",
@@ -3441,12 +3491,10 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
-          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)"
         },
         "dark": {
-          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)"
         }
       },
       "files": [
@@ -3631,15 +3679,13 @@
           "success": "oklch(0.43 0.12 155)",
           "warning": "oklch(0.54 0.13 75)",
           "warning-subtle": "oklch(0.965 0.045 85)",
-          "warning-foreground": "oklch(0.36 0.09 75)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "warning-foreground": "oklch(0.36 0.09 75)"
         },
         "dark": {
           "success": "oklch(0.74 0.13 155)",
           "warning": "oklch(0.78 0.11 75)",
           "warning-subtle": "oklch(0.27 0.045 75)",
-          "warning-foreground": "oklch(0.89 0.07 75)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "warning-foreground": "oklch(0.89 0.07 75)"
         }
       },
       "files": [

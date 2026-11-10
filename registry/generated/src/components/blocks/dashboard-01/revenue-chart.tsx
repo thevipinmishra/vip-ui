@@ -75,7 +75,7 @@ export function RevenueChart() {
   }, [rows]);
 
   return (
-    <ChartFrame className="shadow-[var(--shadow-card)] ring-1 ring-border/70">
+    <ChartFrame variant="card">
       <ChartCaption>
         <ChartTitle>Revenue</ChartTitle>
         <ChartDescription>

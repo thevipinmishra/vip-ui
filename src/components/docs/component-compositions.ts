@@ -376,8 +376,14 @@ export const compositions: Record<string, Composition> = {
         note: "Owns the query and submission state.",
         children: [
           { part: "SearchFieldLabel" },
-          { part: "SearchFieldInput" },
-          { part: "SearchFieldClear" },
+          {
+            part: "SearchFieldControl",
+            note: "Shows the search icon and positions the clear button.",
+            children: [
+              { part: "SearchFieldInput" },
+              { part: "SearchFieldClear" },
+            ],
+          },
           { part: "SearchFieldDescription" },
           { part: "SearchFieldError" },
         ],

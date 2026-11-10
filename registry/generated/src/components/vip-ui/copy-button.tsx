@@ -1,10 +1,15 @@
 "use client";
 
 import { CheckIcon, CopyIcon, WarningIcon } from "@phosphor-icons/react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import {
+  AnimatePresence,
+  type HTMLMotionProps,
+  motion,
+  useReducedMotion,
+} from "motion/react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { composeRenderProps } from "react-aria-components";
-import { duration, easeOut } from "./motion";
+import { duration, easeOut, springLayout } from "./motion";
 import { cn } from "./utils";
 import { Button, type ButtonProps } from "./button";
 import { buttonLabel } from "./button-styles";
@@ -12,10 +17,7 @@ import { buttonLabel } from "./button-styles";
 export type CopyButtonStatus = "idle" | "copied" | "error";
 
 export interface CopyButtonProps
-  extends Omit<
-    ButtonProps,
-    "children" | "onPress" | "type" | "value" | "layout"
-  > {
+  extends Omit<ButtonProps, "children" | "onPress" | "type" | "value"> {
   value: string;
   children?: ReactNode | ((status: CopyButtonStatus) => ReactNode);
 }
@@ -60,6 +62,22 @@ export function CopyButton({
     resetTimer.current = window.setTimeout(() => setStatus("idle"), 2000);
   }
 
+  const motionButton: ButtonProps["render"] = (buttonProps) => {
+    const {
+      onAnimationStart: _onAnimationStart,
+      onAnimationEnd: _onAnimationEnd,
+      onAnimationIteration: _onAnimationIteration,
+      ...rest
+    } = buttonProps;
+    return (
+      <motion.button
+        {...(rest as HTMLMotionProps<"button">)}
+        layout={!reduceMotion}
+        transition={springLayout}
+      />
+    );
+  };
+
   const content = typeof children === "function" ? children(status) : children;
   const idleContent =
     typeof children === "function" ? children("idle") : children;
@@ -94,7 +112,7 @@ export function CopyButton({
         data-status={status}
         variant={variant}
         iconOnly={iconOnly}
-        layout
+        render={props.render ?? motionButton}
         className={composeRenderProps(className, (className) =>
           cn("relative", className),
         )}

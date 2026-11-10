@@ -42,7 +42,7 @@ export function ChartPlot({
   legend?: readonly { label: string; color: string }[];
 }) {
   return (
-    <ChartFrame className="w-full bg-transparent p-0 pb-4 sm:p-0 sm:pb-5">
+    <ChartFrame variant="plain" className="w-full pb-4 sm:pb-5">
       <ChartCaption className="sr-only">
         <ChartTitle>{title}</ChartTitle>
       </ChartCaption>

@@ -3,8 +3,8 @@
 import { bandX, defineChart, lineY, whenFocused } from "@tanstack/charts";
 import { crosshair } from "@tanstack/charts/crosshair";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
+import { scaleUtc } from "@tanstack/charts/scales/time";
 import { tooltip } from "@tanstack/charts/tooltip";
-import { scaleUtc } from "d3-scale";
 import {
   Chart,
   ChartCaption,

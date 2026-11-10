@@ -32,7 +32,13 @@ const coverage: readonly CoverageRow[] = [
   },
   {
     label: "Spatial and geographic",
-    files: ["chart-hexbin", "chart-density", "chart-voronoi", "chart-geo"],
+    files: [
+      "chart-hexbin",
+      "chart-density",
+      "chart-contour",
+      "chart-voronoi",
+      "chart-geo",
+    ],
   },
   {
     label: "Composition and hierarchy",
@@ -72,6 +78,8 @@ const coverage: readonly CoverageRow[] = [
       "chart-selection-table",
       "chart-tooltip",
       "chart-color-legend",
+      "chart-scrubber",
+      "chart-linked",
     ],
   },
   {
@@ -79,12 +87,14 @@ const coverage: readonly CoverageRow[] = [
     files: ["chart-annotations"],
   },
   {
-    label: "Rendering",
-    files: ["chart-scatter-canvas"],
+    label: "Rendering and export",
+    files: ["chart-scatter-canvas", "chart-export"],
   },
   {
     label: "Scales and transforms",
     files: [
+      "chart-crosshair",
+      "chart-time-bins",
       "chart-bar-rank",
       "chart-ridgeline",
       "chart-ecdf",
