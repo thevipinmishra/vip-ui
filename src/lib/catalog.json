@@ -225,6 +225,11 @@
           "slug": "color-picker",
           "name": "Color picker",
           "description": "Selects a color with a color area, hue slider, and hex field in a popover."
+        },
+        {
+          "slug": "color-wheel",
+          "name": "Color wheel",
+          "description": "Adjusts the hue of a color on a circular track."
         }
       ]
     },

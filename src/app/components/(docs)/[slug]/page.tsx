@@ -48,6 +48,10 @@ import { ColorSwatchPickerControlledDemo } from "@/components/docs/color-swatch-
 import { ColorSwatchPickerDemo } from "@/components/docs/color-swatch-picker-demo";
 import { ColorSwatchPickerDisabledDemo } from "@/components/docs/color-swatch-picker-disabled-demo";
 import { ColorSwatchTransparencyDemo } from "@/components/docs/color-swatch-transparency-demo";
+import { ColorWheelControlledDemo } from "@/components/docs/color-wheel-controlled-demo";
+import { ColorWheelDemo } from "@/components/docs/color-wheel-demo";
+import { ColorWheelDisabledDemo } from "@/components/docs/color-wheel-disabled-demo";
+import { ColorWheelSizeDemo } from "@/components/docs/color-wheel-size-demo";
 import { CommandPaletteBasicDemo } from "@/components/docs/command-palette-basic-demo";
 import { CommandPaletteDemo } from "@/components/docs/command-palette-demo";
 import {
@@ -299,6 +303,11 @@ const entries: {
     slug: "color-picker",
     name: "Color picker",
     demo: <ColorPickerDemo />,
+  },
+  {
+    slug: "color-wheel",
+    name: "Color wheel",
+    demo: <ColorWheelDemo />,
   },
   {
     slug: "separator",
@@ -777,6 +786,11 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <ColorFieldSizesDemo key="preview-4" />,
   ],
   "color-picker": [<ColorPickerControlledDemo key="preview-1" />],
+  "color-wheel": [
+    <ColorWheelControlledDemo key="preview-1" />,
+    <ColorWheelSizeDemo key="preview-2" />,
+    <ColorWheelDisabledDemo key="preview-3" />,
+  ],
   "color-swatch-picker": [
     <ColorSwatchPickerDisabledDemo key="preview-1" />,
     <ColorSwatchPickerControlledDemo key="preview-2" />,

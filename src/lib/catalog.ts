@@ -40,6 +40,7 @@ const reactAriaDocs: Record<string, string> = {
   "color-swatch": "https://react-aria.adobe.com/ColorSwatch",
   "color-swatch-picker": "https://react-aria.adobe.com/ColorSwatchPicker",
   "color-picker": "https://react-aria.adobe.com/ColorPicker",
+  "color-wheel": "https://react-aria.adobe.com/ColorWheel",
   tabs: "https://react-aria.adobe.com/Tabs",
   accordion: "https://react-aria.adobe.com/DisclosureGroup",
   disclosure: "https://react-aria.adobe.com/Disclosure",

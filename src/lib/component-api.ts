@@ -20,6 +20,7 @@ import type { Checkbox } from "@/components/ui/checkbox";
 import type { CheckboxGroup } from "@/components/ui/checkbox-group";
 import type { ColorField } from "@/components/ui/color-field";
 import type { ColorPicker } from "@/components/ui/color-picker";
+import type { ColorWheel } from "@/components/ui/color-wheel";
 import type { ComboBoxProps, ComboBoxTags } from "@/components/ui/combo-box";
 import type {
   CommandPalette,
@@ -2712,6 +2713,30 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: "ReactNode",
           description:
             "Replaces the default trigger and popover. Without it, ColorPicker shows its built-in layout.",
+        },
+      ],
+    }),
+  ],
+  "color-wheel": [
+    apiPart<typeof ColorWheel>({
+      name: "ColorWheel",
+      props: [
+        {
+          name: "outerRadius",
+          type: "number",
+          default: "96",
+          description: "Outer radius of the track, in pixels.",
+        },
+        {
+          name: "innerRadius",
+          type: "number",
+          default: "outerRadius - 24",
+          description: "Inner radius of the track, in pixels.",
+        },
+        {
+          name: "children",
+          type: "ReactNode",
+          description: "Content in the center of the wheel.",
         },
       ],
     }),

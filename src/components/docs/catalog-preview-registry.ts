@@ -252,6 +252,13 @@ export const catalogPreviews: Record<string, CatalogPreviewEntry> = {
         default: m.ColorPickerDemo,
       })),
   },
+  "color-wheel": {
+    scale: 0.72,
+    load: () =>
+      import("./color-wheel-demo").then((m) => ({
+        default: m.ColorWheelDemo,
+      })),
+  },
   dialog: {
     scale: 0.72,
     load: () =>

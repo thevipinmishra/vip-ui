@@ -5,6 +5,7 @@
   "button-styles": "Sets the variants and sizes of buttons and button links.",
   "chart": "Frames a TanStack chart with shadcn chart colors and tooltip styles.",
   "collapsible-panel": "Animates a disclosure panel and keeps its content accessible.",
+  "color-thumb": "Shows the draggable handle of color areas, sliders, and wheels.",
   "date-segment": "Shows the editable segments of date and time fields.",
   "field-styles": "Sets the theme styles of text and segmented fields.",
   "item-highlight": "Moves one highlight to the hovered or focused item.",

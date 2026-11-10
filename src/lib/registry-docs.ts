@@ -29,6 +29,7 @@ const sharedFileSlugs = [
   "date-segment",
   "collapsible-panel",
   "item-highlight",
+  "color-thumb",
 ] as const satisfies readonly (keyof typeof internalDescriptions)[];
 
 export type SharedFileSlug = (typeof sharedFileSlugs)[number];
