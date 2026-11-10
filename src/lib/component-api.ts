@@ -1474,12 +1474,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           description:
             "Disables press scaling while keeping the button interactive.",
         },
-        {
-          name: "layout",
-          type: 'MotionProps["layout"]',
-          description:
-            "Animate position or size changes when the button moves in the layout. Ignored when reduced motion is requested.",
-        },
       ],
     }),
     apiPart<typeof ButtonLink>({

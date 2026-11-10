@@ -1,15 +1,12 @@
 "use client";
 
 import {
-  animate,
-  createGeneratorEasing,
-  generateLinearEasing,
-  spring,
-  type Transition,
-  useReducedMotion,
-} from "motion/react";
-import { type ReactElement, useLayoutEffect, useRef } from "react";
-import { duration, easeOut, springSnappy, transitionFor } from "./motion";
+  type ReactElement,
+  useLayoutEffect,
+  useRef,
+  useSyncExternalStore,
+} from "react";
+import { duration, easeOut, springSnappyEasing } from "./motion";
 import { cn } from "./utils";
 
 const collectionItems =
@@ -21,21 +18,31 @@ export const itemHighlightRing =
 const focusVisible =
   ":is([data-rac][data-focus-visible], :not([data-rac]):focus-visible)";
 
-const fade = { duration: duration.fast, ease: easeOut } satisfies Transition;
-
-const snap = { duration: 0 } satisfies Transition;
-
-const curve = createGeneratorEasing(
-  { bounce: springSnappy.bounce, duration: springSnappy.duration * 1000 },
-  100,
-  spring,
-);
+const fadeTiming = {
+  duration: duration.fast * 1000,
+  easing: `cubic-bezier(${easeOut.join(", ")})`,
+} satisfies KeyframeAnimationOptions;
 
 const glideTiming = {
-  duration: curve.duration * 1000,
-  easing: generateLinearEasing(curve.ease, curve.duration * 1000),
-  fill: "forwards",
-} satisfies KeyframeEffectOptions;
+  duration: springSnappyEasing.duration * 1000,
+  easing: springSnappyEasing.easing,
+} satisfies KeyframeAnimationOptions;
+
+const reducedMotionQuery = "(prefers-reduced-motion: reduce)";
+
+function subscribeReducedMotion(onChange: () => void) {
+  const query = window.matchMedia(reducedMotionQuery);
+  query.addEventListener("change", onChange);
+  return () => query.removeEventListener("change", onChange);
+}
+
+function useReducedMotionPreference() {
+  return useSyncExternalStore(
+    subscribeReducedMotion,
+    () => window.matchMedia(reducedMotionQuery).matches,
+    () => false,
+  );
+}
 
 type Move = "glide" | "snap";
 
@@ -48,8 +55,6 @@ type Layer =
   | { kind: "leaving" }
   | { kind: "shown"; target: HTMLElement; box: Box; ring: boolean };
 
-type Flight = { from: Point; to: Point };
-
 type Pointer = Point & {
   over: EventTarget | null;
   item: HTMLElement | null;
@@ -57,15 +62,8 @@ type Pointer = Point & {
 
 const translate = ({ x, y }: Point) => `translate(${x}px, ${y}px)`;
 
-const position = (animation: Animation, { from, to }: Flight): Point => {
-  const progress = curve.ease(
-    Math.min(1, Number(animation.currentTime ?? 0) / glideTiming.duration),
-  );
-  return {
-    x: from.x + (to.x - from.x) * progress,
-    y: from.y + (to.y - from.y) * progress,
-  };
-};
+const running = (animation: Animation | null): animation is Animation =>
+  animation?.playState === "running";
 
 export interface ItemHighlightProps {
   items?: string;
@@ -81,7 +79,7 @@ export function ItemHighlight({
   className,
 }: ItemHighlightProps) {
   const ref = useRef<HTMLSpanElement>(null);
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotionPreference();
 
   useLayoutEffect(() => {
     const layer = ref.current;
@@ -95,16 +93,15 @@ export function ItemHighlight({
     )
       return;
     const rest = placement === "under" ? "under" : "fill";
-    const sizeTransition = transitionFor(reduceMotion, springSnappy);
     const focusedItem = `:is(${items})${focusVisible}`;
     const virtualItem = `:is(${items})[data-focused]`;
     let focused: HTMLElement | null = null;
     let last: "pointer" | "focus" = "focus";
     let pointer: Pointer | null = null;
     let state: Layer = { kind: "hidden" };
-    let flight: Flight | null = null;
-    const glideEffect = new KeyframeEffect(layer, null, glideTiming);
-    const glide = new Animation(glideEffect);
+    let glide: Animation | null = null;
+    let sizing: Animation | null = null;
+    let fading: Animation | null = null;
 
     const owned = (node: Element | null): node is HTMLElement =>
       node instanceof HTMLElement &&
@@ -144,31 +141,64 @@ export function ItemHighlight({
 
     const slide = (to: Point, from: Point | null, move: Move) => {
       if (from && to.x === from.x && to.y === from.y) return;
-      const start = from && (flight ? position(glide, flight) : from);
-      if (!start || move === "snap" || reduceMotion) {
-        glide.cancel();
-        flight = null;
-        layer.style.transform = translate(to);
-        return;
+      let start = from;
+      if (running(glide)) {
+        const { m41, m42 } = new DOMMatrixReadOnly(
+          getComputedStyle(layer).transform,
+        );
+        start = { x: m41, y: m42 };
       }
-      glideEffect.setKeyframes({
-        transform: [translate(start), translate(to)],
-      });
-      glide.currentTime = 0;
-      glide.play();
-      flight = { from: start, to };
+      glide?.cancel();
+      glide = null;
+      layer.style.transform = translate(to);
+      if (start && move === "glide" && !reduceMotion)
+        glide = layer.animate(
+          { transform: [translate(start), translate(to)] },
+          glideTiming,
+        );
+    };
+
+    const resizeTo = (box: Box, from: Box | null, move: Move) => {
+      if (from && box.width === from.width && box.height === from.height)
+        return;
+      let start = from && {
+        width: `${from.width}px`,
+        height: `${from.height}px`,
+      };
+      if (running(sizing)) {
+        const { width, height } = getComputedStyle(layer);
+        start = { width, height };
+      }
+      sizing?.cancel();
+      sizing = null;
+      layer.style.width = `${box.width}px`;
+      layer.style.height = `${box.height}px`;
+      if (start && move === "glide" && !reduceMotion)
+        sizing = layer.animate(
+          {
+            width: [start.width, `${box.width}px`],
+            height: [start.height, `${box.height}px`],
+          },
+          glideTiming,
+        );
+    };
+
+    const fadeTo = (opacity: number) => {
+      const start = getComputedStyle(layer).opacity;
+      fading?.cancel();
+      layer.style.opacity = String(opacity);
+      fading = layer.animate({ opacity: [start, String(opacity)] }, fadeTiming);
+      return fading.finished.then(
+        () => true,
+        () => false,
+      );
     };
 
     const place = (box: Box, from: Box | null, move: Move) => {
       slide(box, from, move);
-      if (!from || box.width !== from.width || box.height !== from.height)
-        animate(
-          layer,
-          { width: box.width, height: box.height },
-          from && move === "glide" ? sizeTransition : snap,
-        );
+      resizeTo(box, from, move);
       if (!from || box.radius !== from.radius)
-        animate(layer, { borderRadius: box.radius }, snap);
+        layer.style.borderRadius = box.radius;
     };
 
     const paintRing = (on: boolean) => {
@@ -194,10 +224,12 @@ export function ItemHighlight({
       resize.unobserve(state.target);
       const leaving: Layer = { kind: "leaving" };
       state = leaving;
-      animate(layer, { opacity: 0 }, fade).then(() => {
-        if (state !== leaving) return;
+      void fadeTo(0).then((finished) => {
+        if (!finished || state !== leaving) return;
         state = { kind: "hidden" };
-        animate(layer, { width: 0, height: 0 }, snap);
+        sizing?.cancel();
+        layer.style.width = "0px";
+        layer.style.height = "0px";
       });
     };
 
@@ -222,7 +254,7 @@ export function ItemHighlight({
         state.kind === "shown" ? state.box : null,
         same ? "snap" : move,
       );
-      if (state.kind !== "shown") animate(layer, { opacity: 1 }, fade);
+      if (state.kind !== "shown") void fadeTo(1);
       if (!same) {
         if (state.kind === "shown") resize.unobserve(state.target);
         resize.observe(target);
@@ -312,8 +344,10 @@ export function ItemHighlight({
       document.removeEventListener("scroll", onScroll, { capture: true });
       container.removeAttribute("data-item-highlight");
       layer.removeAttribute("data-ring");
-      glide.cancel();
-      animate(layer, { opacity: 0, width: 0, height: 0 }, snap);
+      for (const animation of [glide, sizing, fading]) animation?.cancel();
+      layer.style.opacity = "0";
+      layer.style.width = "0px";
+      layer.style.height = "0px";
     };
   }, [items, placement, ring, reduceMotion]);
 
