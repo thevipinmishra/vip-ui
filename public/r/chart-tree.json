@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-tree",
+  "type": "registry:block",
+  "title": "Tree",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartTree /> from components/charts/chart-tree.tsx. Preview: https://vip-ui.dev/charts#chart-tree",
+  "meta": {
+    "entry": {
+      "component": "ChartTree",
+      "file": "chart-tree.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-tree.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-tree.tsx",
+      "content": "\"use client\";\n\nimport { defineChart, dot, link, text } from \"@tanstack/charts\";\nimport { treeLayout } from \"@tanstack/charts/hierarchy/tree\";\nimport { decorative } from \"@tanstack/charts/mark/decorative\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst topics = [\n  { path: \"Support\", tickets: 0 },\n  { path: \"Support.Billing\", tickets: 0 },\n  { path: \"Support.Billing.Invoices\", tickets: 128 },\n  { path: \"Support.Billing.Refunds\", tickets: 64 },\n  { path: \"Support.Billing.Tax\", tickets: 31 },\n  { path: \"Support.Account\", tickets: 0 },\n  { path: \"Support.Account.Sign-in\", tickets: 212 },\n  { path: \"Support.Account.Roles\", tickets: 47 },\n  { path: \"Support.Product\", tickets: 0 },\n  { path: \"Support.Product.API\", tickets: 96 },\n  { path: \"Support.Product.Exports\", tickets: 58 },\n  { path: \"Support.Product.Webhooks\", tickets: 39 },\n];\n\nconst hierarchy = treeLayout(topics, {\n  path: \"path\",\n  delimiter: \".\",\n  orientation: \"left\",\n  nodeSize: [1, 1],\n});\n\nconst { nodes, links } = hierarchy;\n\nconst total = (id: string) =>\n  topics\n    .filter((topic) => `/${topic.path.replaceAll(\".\", \"/\")}`.startsWith(id))\n    .reduce((sum, topic) => sum + topic.tickets, 0);\n\nconst xs = nodes.map((node) => node.x);\nconst ys = nodes.map((node) => node.y);\n\nconst definition = defineChart({\n  marks: [\n    decorative(\n      link(links, {\n        x1: \"x1\",\n        y1: \"y1\",\n        x2: \"x2\",\n        y2: \"y2\",\n        key: \"id\",\n        stroke: \"var(--border)\",\n        strokeWidth: 1.5,\n      }),\n    ),\n    dot(nodes, {\n      x: \"x\",\n      y: \"y\",\n      key: \"id\",\n      r: (node) => (node.internal ? 4 : 3),\n      fill: \"var(--ts-chart-1)\",\n      stroke: \"var(--card)\",\n      strokeWidth: 1.5,\n    }),\n    decorative(\n      text(nodes, {\n        x: \"x\",\n        y: \"y\",\n        key: \"id\",\n        text: \"name\",\n        anchor: (node) => (node.internal ? \"middle\" : \"start\"),\n        dx: (node) => (node.internal ? 0 : 8),\n        dy: (node) => (node.internal ? -12 : 0),\n        fill: \"var(--foreground)\",\n        fontSize: 11,\n      }),\n    ),\n  ],\n  scales: {\n    x: {\n      scale: scaleLinear().domain([Math.min(...xs), Math.max(...xs) + 0.8]),\n      axis: false,\n    },\n    y: {\n      scale: scaleLinear().domain([Math.min(...ys), Math.max(...ys)]),\n      axis: false,\n    },\n  },\n  margin: { top: 12, right: 16, bottom: 12, left: 24 },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: point.datum.name,\n      rows: [\n        {\n          label: \"Tickets\",\n          value: total(point.datum.id).toLocaleString(\"en-US\"),\n          color: point.color,\n        },\n        { label: \"Depth\", value: `${point.datum.depth}` },\n      ],\n    }),\n  },\n});\n\nexport function ChartTree() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Support taxonomy</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={280}\n        initialWidth={520}\n        ariaLabel=\"Tree of support topics: billing, account and product, each with two or three subtopics\"\n      />\n      <ChartTable\n        caption=\"Support topics and ticket counts\"\n        columns={[\"Topic\", \"Parent\", \"Tickets\"]}\n        rows={nodes.map((node) => [\n          node.name,\n          nodes.find((item) => item.id === node.parentId)?.name ?? \"—\",\n          total(node.id),\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

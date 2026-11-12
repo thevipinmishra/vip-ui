@@ -1,13 +1,11 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
 import {
   Meter as AriaMeter,
   type MeterProps as AriaMeterProps,
   composeRenderProps,
   Label,
 } from "react-aria-components";
-import { duration, easeOut } from "./motion";
 import { cn } from "./utils";
 
 export interface MeterProps
@@ -19,7 +17,6 @@ export interface MeterProps
 }
 
 export function Meter({ label, className, children, ...props }: MeterProps) {
-  const reduceMotion = useReducedMotion();
   return (
     <AriaMeter
       {...props}
@@ -51,15 +48,10 @@ export function Meter({ label, className, children, ...props }: MeterProps) {
               data-slot="meter-track"
               className="h-2 overflow-hidden rounded-full bg-secondary shadow-[var(--shadow-inset)] forced-colors:border rtl:-scale-x-100"
             >
-              <motion.div
+              <div
                 data-slot="meter-fill"
-                className="h-full w-full origin-left rounded-full bg-primary forced-colors:bg-[Highlight]"
-                initial={false}
-                animate={{ scaleX: percentage / 100 }}
-                transition={{
-                  duration: reduceMotion ? 0 : duration.base,
-                  ease: easeOut,
-                }}
+                className="h-full w-full origin-left rounded-full bg-primary forced-colors:bg-[Highlight] transition-[scale] duration-200 ease-out-quint motion-reduce:duration-0"
+                style={{ scale: `${percentage / 100} 1` }}
               />
             </div>
           </>

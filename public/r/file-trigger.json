@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "file-trigger",
+  "type": "registry:ui",
+  "title": "File Trigger",
+  "description": "Opens the file picker from a button or other trigger.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["actions"],
+  "dependencies": [
+    "react-aria-components@^1.22.1",
+    "tailwindcss-react-aria-components@^2.2.0"
+  ],
+  "registryDependencies": ["https://vip-ui.dev/r/button.json"],
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
+  "files": [
+    {
+      "path": "src/components/ui/file-trigger.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/file-trigger.tsx",
+      "content": "\"use client\";\n\nimport {\n  FileTrigger as AriaFileTrigger,\n  type FileTriggerProps,\n  InputContext,\n} from \"react-aria-components\";\nimport { Button } from \"./button\";\n\nexport function FileTrigger({\n  label = \"Choose files\",\n  className,\n  children,\n  ...props\n}: FileTriggerProps & {\n  label?: string;\n  className?: string;\n}) {\n  return (\n    <InputContext value={null}>\n      <AriaFileTrigger {...props}>\n        {children ?? (\n          <Button\n            data-slot=\"file-trigger-button\"\n            variant=\"outline\"\n            className={className}\n          >\n            {label}\n          </Button>\n        )}\n      </AriaFileTrigger>\n    </InputContext>\n  );\n}\n"
+    }
+  ]
+}

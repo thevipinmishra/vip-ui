@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-ecdf",
+  "type": "registry:block",
+  "title": "Cumulative distribution",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartEcdf /> from components/charts/chart-ecdf.tsx. Preview: https://vip-ui.dev/charts#chart-ecdf",
+  "meta": {
+    "entry": {
+      "component": "ChartEcdf",
+      "file": "chart-ecdf.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0", "d3-shape@^3.2.1"],
+  "devDependencies": ["@types/d3-shape@^3.2.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-ecdf.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-ecdf.tsx",
+      "content": "\"use client\";\n\nimport { defineChart, lineY } from \"@tanstack/charts\";\nimport { d3Curve } from \"@tanstack/charts/d3/shape\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport { cumulative } from \"@tanstack/charts/transform/cumulative\";\nimport { normalize } from \"@tanstack/charts/transform/normalize\";\nimport { curveStepAfter } from \"d3-shape\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartLegend,\n  ChartLegendItem,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst tiers = [\n  { label: \"Free\", color: \"var(--ts-chart-3)\", base: 180, spread: 260 },\n  { label: \"Pro\", color: \"var(--ts-chart-2)\", base: 120, spread: 160 },\n  { label: \"Enterprise\", color: \"var(--ts-chart-1)\", base: 80, spread: 90 },\n];\n\nconst noise = (seed: number) => {\n  const value = Math.sin(seed * 39.3468) * 43758.5453;\n  return value - Math.floor(value);\n};\n\nconst rows = tiers.flatMap((tier, tierIndex) =>\n  Array.from({ length: 20 }, (_, index) => ({\n    id: `${tier.label}-${index}`,\n    tier: tier.label,\n    latency: Math.round(\n      tier.base + noise(tierIndex * 40 + index + 1) ** 2 * tier.spread,\n    ),\n  })),\n);\n\nconst running = cumulative(rows, {\n  by: \"tier\",\n  orderBy: \"latency\",\n  outputs: { seen: { reduce: \"count\" } },\n});\n\nconst points = normalize(running, {\n  value: \"seen\",\n  by: \"tier\",\n  basis: \"max\",\n  as: \"share\",\n}).sort((a, b) =>\n  a.tier === b.tier ? a.latency - b.latency : a.tier.localeCompare(b.tier),\n);\n\nconst formatPercent = new Intl.NumberFormat(\"en-US\", {\n  style: \"percent\",\n  maximumFractionDigits: 0,\n}).format;\nconst formatLatency = (value: number) => `${value} ms`;\n\nconst percentile = (tier: string, share: number) =>\n  points.find((point) => point.tier === tier && point.share >= share)\n    ?.latency ?? 0;\n\nconst definition = defineChart({\n  marks: [\n    lineY(points, {\n      x: \"latency\",\n      y: \"share\",\n      z: \"tier\",\n      key: \"id\",\n      color: \"tier\",\n      curve: d3Curve(curveStepAfter),\n      strokeWidth: 2,\n    }),\n  ],\n  scales: {\n    x: {\n      scale: scaleLinear().domain([0, 500]),\n      grid: true,\n      axis: {\n        label: \"Request latency\",\n        ticks: { count: 5, format: formatLatency },\n      },\n    },\n    y: {\n      scale: scaleLinear().domain([0, 1]),\n      grid: true,\n      axis: { ticks: { count: 4, format: formatPercent } },\n    },\n  },\n  color: {\n    domain: tiers.map((tier) => tier.label),\n    range: tiers.map((tier) => tier.color),\n  },\n  focus: \"nearest\",\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: point.datum.tier,\n      rows: [\n        {\n          label: `At or under ${formatLatency(point.datum.latency)}`,\n          value: formatPercent(point.datum.share),\n          color: point.color,\n        },\n      ],\n    }),\n  },\n});\n\nexport function ChartEcdf() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Latency by plan</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={240}\n        initialWidth={520}\n        ariaLabel={`Cumulative distribution of request latency for three plans. Enterprise reaches 90% at ${formatLatency(percentile(\"Enterprise\", 0.9))}, Free at ${formatLatency(percentile(\"Free\", 0.9))}.`}\n      />\n      <ChartLegend>\n        {tiers.map((tier) => (\n          <ChartLegendItem key={tier.label} color={tier.color} swatch=\"line\">\n            {tier.label}\n          </ChartLegendItem>\n        ))}\n      </ChartLegend>\n      <ChartTable\n        caption=\"Request latency percentiles by plan\"\n        columns={[\"Plan\", \"Median\", \"90th percentile\", \"Slowest\"]}\n        rows={tiers.map((tier) => [\n          tier.label,\n          formatLatency(percentile(tier.label, 0.5)),\n          formatLatency(percentile(tier.label, 0.9)),\n          formatLatency(percentile(tier.label, 1)),\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

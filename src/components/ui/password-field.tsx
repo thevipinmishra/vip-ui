@@ -1,9 +1,8 @@
 "use client";
 
 import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react";
-import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
-import { duration, easeOut } from "@/lib/motion";
+import { cn } from "@/lib/utils";
 import {
   InputGroup,
   InputGroupAddon,
@@ -33,11 +32,9 @@ export function PasswordField({
 }: PasswordFieldProps) {
   const [visible, setVisible] = useState(false);
   const [pointerReveal, setPointerReveal] = useState(false);
-  const reduceMotion = useReducedMotion();
-  const iconTransition = {
-    duration: reduceMotion || !pointerReveal ? 0 : duration.fast,
-    ease: easeOut,
-  };
+  const iconTransition =
+    pointerReveal &&
+    "transition-[opacity,scale] duration-150 ease-out-quint motion-reduce:duration-0";
 
   return (
     <TextField
@@ -69,22 +66,24 @@ export function PasswordField({
               className="relative grid size-5 place-items-center"
               aria-hidden="true"
             >
-              <motion.span
-                className="col-start-1 row-start-1"
-                initial={false}
-                animate={{ opacity: visible ? 0 : 1, scale: visible ? 0.9 : 1 }}
-                transition={iconTransition}
+              <span
+                className={cn(
+                  "col-start-1 row-start-1",
+                  visible ? "opacity-0 scale-90" : "opacity-100 scale-100",
+                  iconTransition,
+                )}
               >
                 <EyeIcon />
-              </motion.span>
-              <motion.span
-                className="col-start-1 row-start-1"
-                initial={false}
-                animate={{ opacity: visible ? 1 : 0, scale: visible ? 1 : 0.9 }}
-                transition={iconTransition}
+              </span>
+              <span
+                className={cn(
+                  "col-start-1 row-start-1",
+                  visible ? "opacity-100 scale-100" : "opacity-0 scale-90",
+                  iconTransition,
+                )}
               >
                 <EyeSlashIcon />
-              </motion.span>
+              </span>
             </span>
           </InputGroupButton>
         </InputGroupAddon>

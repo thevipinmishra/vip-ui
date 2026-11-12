@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "native-select",
+  "type": "registry:ui",
+  "title": "Native Select",
+  "description": "Selects one option with the native HTML select element.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["forms"],
+  "dependencies": ["@phosphor-icons/react@^2.1.10"],
+  "registryDependencies": [
+    "https://vip-ui.dev/r/field-styles.json",
+    "https://vip-ui.dev/r/size.json",
+    "https://vip-ui.dev/r/utils.json"
+  ],
+  "cssVars": {
+    "theme": {
+      "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+    },
+    "light": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+    },
+    "dark": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+    }
+  },
+  "files": [
+    {
+      "path": "src/components/ui/native-select.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/native-select.tsx",
+      "content": "\"use client\";\n\nimport { CaretDownIcon } from \"@phosphor-icons/react\";\nimport { type ComponentProps, useId } from \"react\";\nimport { cn } from \"./utils\";\nimport {\n  fieldDescriptionStyles,\n  fieldErrorStyles,\n  fieldHeight,\n  fieldLabelStyles,\n  fieldRadius,\n  fieldSizeStyles,\n  fieldText,\n} from \"./field-styles\";\nimport type { Size } from \"./size\";\n\nexport interface NativeSelectProps\n  extends Omit<ComponentProps<\"select\">, \"size\"> {\n  label: string;\n  size?: Size;\n  description?: string;\n  error?: string;\n  placeholder?: string;\n  isInvalid?: boolean;\n  containerClassName?: string;\n}\n\nexport function NativeSelect({\n  label,\n  description,\n  error,\n  placeholder,\n  isInvalid,\n  size,\n  containerClassName,\n  className,\n  children,\n  id,\n  \"aria-describedby\": describedBy,\n  \"aria-invalid\": ariaInvalid,\n  ...props\n}: NativeSelectProps) {\n  const generatedId = useId();\n  const selectId = id ?? generatedId;\n  const descriptionId = description ? `${selectId}-description` : undefined;\n  const errorId = error ? `${selectId}-error` : undefined;\n\n  return (\n    <div\n      data-slot=\"native-select\"\n      data-size={size}\n      className={cn(\n        \"grid w-full min-w-0 grid-cols-1 gap-2\",\n        size && fieldSizeStyles[size],\n        containerClassName,\n      )}\n    >\n      <label\n        htmlFor={selectId}\n        data-slot=\"native-select-label\"\n        className={fieldLabelStyles}\n      >\n        {label}\n      </label>\n      <div className=\"relative min-w-0\">\n        <select\n          {...props}\n          id={selectId}\n          data-slot=\"native-select-input\"\n          aria-invalid={\n            ariaInvalid ?? (isInvalid || Boolean(error) || undefined)\n          }\n          aria-describedby={\n            [describedBy, descriptionId, errorId].filter(Boolean).join(\" \") ||\n            undefined\n          }\n          className={cn(\n            fieldHeight,\n            fieldRadius,\n            fieldText,\n            \"peer w-full min-w-0 cursor-pointer appearance-none truncate border border-input bg-card ps-[var(--field-px,0.875rem)] pe-[calc(var(--field-px,0.875rem)+var(--field-icon,1rem)+0.625rem)] text-foreground shadow-[var(--shadow-card)] outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-out-quint hover:border-primary/45 focus:border-ring focus:ring-1 focus:ring-ring aria-invalid:border-destructive aria-invalid:hover:border-destructive aria-invalid:focus:border-destructive aria-invalid:focus:ring-destructive disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 disabled:hover:border-input\",\n            className,\n          )}\n        >\n          {placeholder && <option value=\"\">{placeholder}</option>}\n          {children}\n        </select>\n        <CaretDownIcon\n          data-slot=\"native-select-chevron\"\n          aria-hidden=\"true\"\n          className=\"pointer-events-none absolute top-1/2 end-[var(--field-px,0.875rem)] size-[var(--field-icon,1rem)] -translate-y-1/2 text-muted-foreground peer-disabled:opacity-60\"\n        />\n      </div>\n      {description && (\n        <p\n          id={descriptionId}\n          data-slot=\"native-select-description\"\n          className={fieldDescriptionStyles}\n        >\n          {description}\n        </p>\n      )}\n      {error && (\n        <p\n          id={errorId}\n          data-slot=\"native-select-error\"\n          className={fieldErrorStyles}\n        >\n          {error}\n        </p>\n      )}\n    </div>\n  );\n}\n"
+    }
+  ]
+}

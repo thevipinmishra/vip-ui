@@ -54,7 +54,7 @@ export function buildComponentMarkdown({
     `- [Installation](${site}/components/installation)`,
   );
   lines.push(
-    `- [Registry item](${cliUrl ?? `${site}/r/vip-${slug}.json`})`,
+    `- [Registry item](${cliUrl ?? `${site}/r/${slug}.json`})`,
     "",
     "## Installation",
     "",

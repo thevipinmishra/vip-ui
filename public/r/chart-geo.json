@@ -1,0 +1,30 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-geo",
+  "type": "registry:block",
+  "title": "Floor plan",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartGeo /> from components/charts/chart-geo.tsx. Preview: https://vip-ui.dev/charts#chart-geo",
+  "meta": {
+    "entry": {
+      "component": "ChartGeo",
+      "file": "chart-geo.tsx"
+    }
+  },
+  "dependencies": [
+    "@tanstack/charts@^1.5.0",
+    "d3-geo@^3.1.2",
+    "d3-scale@^4.0.3"
+  ],
+  "devDependencies": ["@types/d3-geo@^3.1.1", "@types/d3-scale@^4.0.9"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-geo.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-geo.tsx",
+      "content": "\"use client\";\n\nimport { defineChart } from \"@tanstack/charts\";\nimport { geoShape } from \"@tanstack/charts/geo\";\nimport { colorLegend } from \"@tanstack/charts/legend\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport { geoIdentity } from \"d3-geo\";\nimport { scaleThreshold } from \"d3-scale\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst room = (\n  id: string,\n  name: string,\n  occupancy: number,\n  [x1, y1, x2, y2]: readonly [number, number, number, number],\n) => ({\n  type: \"Feature\" as const,\n  id,\n  properties: { name, occupancy },\n  geometry: {\n    type: \"Polygon\" as const,\n    coordinates: [\n      [\n        [x1, y1],\n        [x2, y1],\n        [x2, y2],\n        [x1, y2],\n        [x1, y1],\n      ],\n    ],\n  },\n});\n\nconst rooms = [\n  room(\"lobby\", \"Lobby\", 34, [0, 0, 40, 30]),\n  room(\"focus\", \"Focus room\", 92, [40, 0, 60, 30]),\n  room(\"studio\", \"Studio\", 71, [60, 0, 100, 30]),\n  room(\"open\", \"Open desks\", 83, [0, 30, 60, 60]),\n  room(\"board\", \"Boardroom\", 58, [60, 30, 100, 45]),\n  room(\"cafe\", \"Café\", 47, [60, 45, 100, 60]),\n];\n\nconst plan = { type: \"FeatureCollection\" as const, features: rooms };\n\nconst levels = [\n  {\n    label: \"Under 50%\",\n    color: \"color-mix(in oklab, var(--ts-chart-2) 30%, var(--card))\",\n  },\n  {\n    label: \"50–75%\",\n    color: \"color-mix(in oklab, var(--ts-chart-2) 60%, var(--card))\",\n  },\n  { label: \"75–90%\", color: \"var(--ts-chart-2)\" },\n  { label: \"Over 90%\", color: \"var(--ts-chart-5)\" },\n];\n\nconst formatPercent = (value: number) => `${value}%`;\n\nconst definition = defineChart({\n  marks: [\n    geoShape(rooms, {\n      key: (feature) => feature.id,\n      projection: { type: geoIdentity, fit: plan, inset: 4 },\n      color: (feature) => feature.properties.occupancy,\n      stroke: \"var(--card)\",\n      strokeWidth: 3,\n    }),\n  ],\n  scales: { x: null, y: null },\n  color: {\n    scale: scaleThreshold<number, string>()\n      .domain([50, 75, 90])\n      .range(levels.map((level) => level.color)),\n    legend: colorLegend({\n      label: \"Occupancy\",\n      placement: \"bottom\",\n      format: formatPercent,\n    }),\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: point.datum.properties.name,\n      rows: [\n        {\n          label: \"Occupancy\",\n          value: formatPercent(point.datum.properties.occupancy),\n          color: point.color,\n        },\n      ],\n    }),\n  },\n});\n\nexport function ChartGeo() {\n  const busiest = [...rooms].sort(\n    (a, b) => b.properties.occupancy - a.properties.occupancy,\n  )[0];\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Floor occupancy</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={280}\n        initialWidth={520}\n        ariaLabel={`Floor plan of six rooms colored by occupancy. ${busiest.properties.name} is busiest at ${formatPercent(busiest.properties.occupancy)}.`}\n      />\n      <ChartTable\n        caption=\"Room occupancy\"\n        columns={[\"Room\", \"Occupancy\"]}\n        rows={rooms.map((feature) => [\n          feature.properties.name,\n          formatPercent(feature.properties.occupancy),\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

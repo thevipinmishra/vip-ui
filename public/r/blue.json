@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "blue",
+  "type": "registry:theme",
+  "title": "Blue",
+  "description": "Links, focus, and primary actions.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["colors"],
+  "docs": "The scale adds --blue-1 to --blue-12 for light and dark mode. Classes such as bg-blue-3 work after the install.",
+  "dependencies": [],
+  "files": [],
+  "cssVars": {
+    "theme": {
+      "color-blue-1": "var(--blue-1)",
+      "color-blue-2": "var(--blue-2)",
+      "color-blue-3": "var(--blue-3)",
+      "color-blue-4": "var(--blue-4)",
+      "color-blue-5": "var(--blue-5)",
+      "color-blue-6": "var(--blue-6)",
+      "color-blue-7": "var(--blue-7)",
+      "color-blue-8": "var(--blue-8)",
+      "color-blue-9": "var(--blue-9)",
+      "color-blue-10": "var(--blue-10)",
+      "color-blue-11": "var(--blue-11)",
+      "color-blue-12": "var(--blue-12)"
+    },
+    "light": {
+      "blue-1": "oklch(0.987 0.009 258)",
+      "blue-2": "oklch(0.969 0.016 258)",
+      "blue-3": "oklch(0.944 0.027 258)",
+      "blue-4": "oklch(0.919 0.038 258)",
+      "blue-5": "oklch(0.894 0.049 258)",
+      "blue-6": "oklch(0.866 0.063 258)",
+      "blue-7": "oklch(0.820 0.086 258)",
+      "blue-8": "oklch(0.755 0.119 258)",
+      "blue-9": "oklch(0.558 0.180 258)",
+      "blue-10": "oklch(0.523 0.176 258)",
+      "blue-11": "oklch(0.505 0.112 258)",
+      "blue-12": "oklch(0.285 0.054 258)"
+    },
+    "dark": {
+      "blue-1": "oklch(0.185 0.032 258)",
+      "blue-2": "oklch(0.215 0.045 258)",
+      "blue-3": "oklch(0.243 0.058 258)",
+      "blue-4": "oklch(0.268 0.068 258)",
+      "blue-5": "oklch(0.293 0.077 258)",
+      "blue-6": "oklch(0.322 0.086 258)",
+      "blue-7": "oklch(0.365 0.101 258)",
+      "blue-8": "oklch(0.430 0.122 258)",
+      "blue-9": "oklch(0.700 0.180 258)",
+      "blue-10": "oklch(0.740 0.175 258)",
+      "blue-11": "oklch(0.735 0.122 258)",
+      "blue-12": "oklch(0.930 0.050 258)"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-scrubber",
+  "type": "registry:block",
+  "title": "Scrubber",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartScrubber /> from components/charts/chart-scrubber.tsx. Preview: https://vip-ui.dev/charts#chart-scrubber",
+  "meta": {
+    "entry": {
+      "component": "ChartScrubber",
+      "file": "chart-scrubber.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-scrubber.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-scrubber.tsx",
+      "content": "\"use client\";\n\nimport { areaY, defineChart, lineY } from \"@tanstack/charts\";\nimport {\n  type HandleXChange,\n  handleX,\n} from \"@tanstack/charts/interaction/handle\";\nimport { controlledSignal } from \"@tanstack/charts/interaction/signal\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { scaleUtc } from \"@tanstack/charts/scales/time\";\nimport { useMemo, useState } from \"react\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartDescription,\n  ChartFrame,\n  ChartTable,\n  ChartTitle,\n  ChartValue,\n} from \"../vip-ui/chart\";\n\nconst hourly = [\n  182, 141, 118, 104, 112, 168, 296, 512, 784, 936, 1012, 1048, 986, 1034, 1102,\n  1068, 982, 864, 702, 588, 472, 391, 306, 231,\n];\n\nconst rows = hourly.map((requests, hour) => ({\n  time: new Date(Date.UTC(2026, 9, 14, hour)),\n  requests,\n}));\n\nconst times = rows.map((row) => row.time);\n\nconst hourFormat = new Intl.DateTimeFormat(\"en-US\", {\n  hour: \"numeric\",\n  timeZone: \"UTC\",\n});\nconst timeFormat = new Intl.DateTimeFormat(\"en-US\", {\n  hour: \"numeric\",\n  minute: \"2-digit\",\n  timeZone: \"UTC\",\n});\nconst countFormat = new Intl.NumberFormat(\"en-US\");\n\nconst formatHour = (date: Date) => hourFormat.format(date);\nconst formatTime = (date: Date) => timeFormat.format(date);\nconst formatCount = (value: number) => countFormat.format(value);\nconst requestsAt = (time: Date) =>\n  rows.find((row) => row.time.getTime() === time.getTime())?.requests ?? 0;\n\nexport function ChartScrubber() {\n  const [time, setTime] = useState(times[14]);\n  const definition = useMemo(\n    () =>\n      defineChart({\n        marks: [\n          areaY(rows, {\n            x: \"time\",\n            y: \"requests\",\n            fill: \"var(--ts-chart-1)\",\n            fillOpacity: 0.1,\n          }),\n          lineY(rows, {\n            x: \"time\",\n            y: \"requests\",\n            stroke: \"var(--ts-chart-1)\",\n            strokeWidth: 2,\n          }),\n        ],\n        scales: {\n          x: {\n            scale: scaleUtc,\n            axis: { ticks: { count: 6, format: formatHour } },\n          },\n          y: {\n            scale: scaleLinear().domain([0, 1200]),\n            grid: true,\n            axis: { ticks: { count: 3, format: formatCount } },\n          },\n        },\n        margin: { top: 32 },\n        controls: [\n          handleX({\n            value: controlledSignal<Date, HandleXChange<Date>>(time, (next) =>\n              setTime(next),\n            ),\n            values: times,\n            cross: { edge: \"top\", offset: 16 },\n            trackStyle: { stroke: \"var(--border)\", strokeWidth: 2 },\n            ruleStyle: { stroke: \"var(--ts-chart-1)\", strokeOpacity: 0.4 },\n            handleStyle: {\n              fill: \"var(--ts-chart-1)\",\n              stroke: \"var(--card)\",\n              strokeWidth: 2,\n            },\n            ariaLabel: \"Hour\",\n            format: (date) =>\n              `${formatTime(date)}, ${formatCount(requestsAt(date))} requests`,\n          }),\n        ],\n        tooltip: false,\n        keyboard: false,\n        pointer: false,\n      }),\n    [time],\n  );\n\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Requests per hour</ChartTitle>\n        <ChartValue>{formatCount(requestsAt(time))}</ChartValue>\n        <ChartDescription>\n          October 14, 2026 at {formatTime(time)} UTC\n        </ChartDescription>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={220}\n        initialWidth={520}\n        ariaLabel=\"Requests per hour on October 14, 2026, with a handle to choose an hour\"\n      />\n      <ChartTable\n        caption=\"Requests per hour, October 14, 2026, UTC\"\n        columns={[\"Hour\", \"Requests\"]}\n        rows={rows.map((row) => [\n          formatTime(row.time),\n          formatCount(row.requests),\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

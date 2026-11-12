@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "accordion",
+  "type": "registry:ui",
+  "title": "Accordion",
+  "description": "Shows a set of sections that expand and collapse.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["display-layout"],
+  "dependencies": [
+    "@phosphor-icons/react@^2.1.10",
+    "react-aria-components@^1.22.1",
+    "tailwindcss-react-aria-components@^2.2.0"
+  ],
+  "registryDependencies": [
+    "https://vip-ui.dev/r/collapsible-panel.json",
+    "https://vip-ui.dev/r/utils.json"
+  ],
+  "cssVars": {
+    "theme": {
+      "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+    },
+    "light": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+    },
+    "dark": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+    }
+  },
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
+  "files": [
+    {
+      "path": "src/components/ui/accordion.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/accordion.tsx",
+      "content": "\"use client\";\n\nimport { CaretDownIcon } from \"@phosphor-icons/react\";\nimport {\n  type ComponentProps,\n  createContext,\n  type ReactNode,\n  useContext,\n} from \"react\";\nimport {\n  Button,\n  type ButtonProps,\n  composeRenderProps,\n  Disclosure,\n  DisclosureGroup,\n  type DisclosureGroupProps,\n  type DisclosureProps,\n  Heading,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\nimport {\n  CollapsiblePanel,\n  collapsibleChevronStyles,\n} from \"./collapsible-panel\";\n\nexport type AccordionVariant = \"card\" | \"divided\";\n\nconst AccordionVariantContext = createContext<AccordionVariant>(\"card\");\n\nexport function Accordion({\n  variant = \"card\",\n  className,\n  ...props\n}: DisclosureGroupProps &\n  React.RefAttributes<HTMLDivElement> & { variant?: AccordionVariant }) {\n  return (\n    <AccordionVariantContext.Provider value={variant}>\n      <DisclosureGroup\n        {...props}\n        data-slot=\"accordion\"\n        data-variant={variant}\n        className={composeRenderProps(className, (className) =>\n          cn(\n            \"grid min-w-0\",\n            variant === \"divided\" ? \"divide-y divide-border/70\" : \"gap-2\",\n            className,\n          ),\n        )}\n      />\n    </AccordionVariantContext.Provider>\n  );\n}\n\nexport interface AccordionItemProps extends Omit<DisclosureProps, \"children\"> {\n  ref?: React.Ref<HTMLDivElement>;\n  title?: string;\n  children: ReactNode;\n}\n\nexport function AccordionItem({\n  title,\n  children,\n  className,\n  ...props\n}: AccordionItemProps) {\n  const variant = useContext(AccordionVariantContext);\n  return (\n    <Disclosure\n      {...props}\n      data-slot=\"accordion-item\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"min-w-0\",\n          variant === \"card\" &&\n            \"overflow-hidden rounded-lg bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70 forced-colors:border\",\n          className,\n        ),\n      )}\n    >\n      {title ? (\n        <>\n          <AccordionTrigger>{title}</AccordionTrigger>\n          <AccordionContent>{children}</AccordionContent>\n        </>\n      ) : (\n        children\n      )}\n    </Disclosure>\n  );\n}\n\nexport function AccordionTrigger({\n  className,\n  children,\n  ...props\n}: Omit<ButtonProps, \"children\"> & { children: ReactNode }) {\n  const variant = useContext(AccordionVariantContext);\n  return (\n    <Heading className=\"m-0 text-sm font-medium\">\n      <Button\n        {...props}\n        data-slot=\"accordion-trigger\"\n        slot=\"trigger\"\n        className={composeRenderProps(className, (className) =>\n          cn(\n            \"group/trigger flex min-h-12 w-full cursor-pointer items-center justify-between gap-4 py-3 text-start text-foreground transition-[background-color,outline-color,outline-offset] duration-150 ease-out-quint disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-ring\",\n            variant === \"card\"\n              ? \"rounded-lg px-4 hover:bg-muted/60 focus-visible:-outline-offset-2 aria-expanded:rounded-b-none\"\n              : \"rounded-sm px-0 decoration-muted-foreground/60 underline-offset-4 outline-offset-4 outline-transparent hover:underline focus-visible:outline-offset-2 motion-reduce:outline-offset-2\",\n            className,\n          ),\n        )}\n      >\n        <span className=\"min-w-0 [overflow-wrap:anywhere]\">{children}</span>\n        <span aria-hidden=\"true\" className={collapsibleChevronStyles}>\n          <CaretDownIcon size={16} />\n        </span>\n      </Button>\n    </Heading>\n  );\n}\n\nexport function AccordionContent({\n  className,\n  children,\n  ...props\n}: ComponentProps<typeof CollapsiblePanel>) {\n  const variant = useContext(AccordionVariantContext);\n  return (\n    <CollapsiblePanel\n      {...props}\n      data-slot=\"accordion-content\"\n      className={composeRenderProps(className, (className) =>\n        cn(\"text-sm leading-6 text-muted-foreground\", className),\n      )}\n    >\n      <div\n        className={cn(\n          \"[overflow-wrap:anywhere]\",\n          variant === \"card\" ? \"border-t border-border/70 px-4 py-3\" : \"pb-3\",\n        )}\n      >\n        {children}\n      </div>\n    </CollapsiblePanel>\n  );\n}\n"
+    }
+  ]
+}

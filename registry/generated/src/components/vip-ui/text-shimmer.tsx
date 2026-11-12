@@ -1,17 +1,18 @@
 "use client";
 
-import { motion, type Transition, useReducedMotion } from "motion/react";
-import { type ComponentProps, useEffect, useRef, useState } from "react";
+import {
+  type ComponentProps,
+  type CSSProperties,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { loop } from "./motion";
 import { cn } from "./utils";
 
 export interface TextShimmerProps extends ComponentProps<"span"> {
   duration?: number;
   active?: boolean;
-}
-
-function sweep(from: number, to: number) {
-  return [`translateX(${from}%)`, `translateX(${to}%)`, `translateX(${to}%)`];
 }
 
 export function TextShimmer({
@@ -21,7 +22,6 @@ export function TextShimmer({
   className,
   ...props
 }: TextShimmerProps) {
-  const reduceMotion = useReducedMotion();
   const root = useRef<HTMLSpanElement>(null);
   const [direction, setDirection] = useState(0);
 
@@ -31,12 +31,6 @@ export function TextShimmer({
   }, []);
 
   const travel = 65 * direction;
-  const transition: Transition = {
-    duration: duration / 0.75,
-    times: [0, 0.75, 1],
-    ease: "easeInOut",
-    repeat: Infinity,
-  };
 
   return (
     <span
@@ -49,23 +43,30 @@ export function TextShimmer({
       )}
     >
       {children}
-      {direction !== 0 && active && !reduceMotion && (
-        <motion.span
+      {direction !== 0 && active && (
+        <span
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 select-none overflow-clip [mask-image:linear-gradient(to_right,transparent_35%,black_50%,transparent_65%)] forced-colors:hidden"
-          initial={{ transform: `translateX(${-travel}%)` }}
-          animate={{ transform: sweep(-travel, travel) }}
-          transition={transition}
+          className="pointer-events-none absolute inset-0 select-none overflow-clip [mask-image:linear-gradient(to_right,transparent_35%,black_50%,transparent_65%)] forced-colors:hidden motion-reduce:hidden motion-safe:animate-text-shimmer"
+          style={
+            {
+              "--shimmer-from": `${-travel}%`,
+              "--shimmer-to": `${travel}%`,
+              "--text-shimmer-duration": `${duration / 0.75}s`,
+            } as CSSProperties
+          }
         >
-          <motion.span
-            className="absolute inset-0 text-(--text-shimmer-highlight,var(--color-foreground))"
-            initial={{ transform: `translateX(${travel}%)` }}
-            animate={{ transform: sweep(travel, -travel) }}
-            transition={transition}
+          <span
+            className="absolute inset-0 text-(--text-shimmer-highlight,var(--color-foreground)) motion-safe:animate-text-shimmer"
+            style={
+              {
+                "--shimmer-from": `${travel}%`,
+                "--shimmer-to": `${-travel}%`,
+              } as CSSProperties
+            }
           >
             {children}
-          </motion.span>
-        </motion.span>
+          </span>
+        </span>
       )}
     </span>
   );

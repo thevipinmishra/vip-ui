@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-bar-horizontal",
+  "type": "registry:block",
+  "title": "Horizontal bar",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartBarHorizontal /> from components/charts/chart-bar-horizontal.tsx. Preview: https://vip-ui.dev/charts#chart-bar-horizontal",
+  "meta": {
+    "entry": {
+      "component": "ChartBarHorizontal",
+      "file": "chart-bar-horizontal.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-bar-horizontal.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-bar-horizontal.tsx",
+      "content": "\"use client\";\n\nimport { barX, defineChart } from \"@tanstack/charts\";\nimport { scaleBand } from \"@tanstack/charts/scales/band\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst rows = [\n  { page: \"/\", views: 18420 },\n  { page: \"/pricing\", views: 9860 },\n  { page: \"/docs/getting-started\", views: 7315 },\n  { page: \"/blog/release-notes-2-0\", views: 5120 },\n  { page: \"/docs/components/data-table\", views: 4690 },\n  { page: \"/changelog\", views: 3240 },\n];\n\nconst totalViews = 61_870;\n\nconst formatCompact = new Intl.NumberFormat(\"en-US\", {\n  notation: \"compact\",\n}).format;\nconst formatShare = new Intl.NumberFormat(\"en-US\", {\n  style: \"percent\",\n  maximumFractionDigits: 1,\n}).format;\n\nconst definition = defineChart({\n  marks: [\n    barX(rows, {\n      x: \"views\",\n      y: \"page\",\n      fill: \"var(--ts-chart-2)\",\n      inset: 3,\n      radius: { end: 4 },\n    }),\n  ],\n  scales: {\n    x: {\n      scale: scaleLinear().domain([0, 20000]),\n      grid: true,\n      axis: { ticks: { count: 4, format: formatCompact } },\n    },\n    y: { scale: () => scaleBand().padding(0.12) },\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: point.datum.page,\n      rows: [\n        {\n          label: \"Views\",\n          value: point.datum.views.toLocaleString(\"en-US\"),\n          color: point.color,\n        },\n        {\n          label: \"Of all views\",\n          value: formatShare(point.datum.views / totalViews),\n        },\n      ],\n    }),\n  },\n});\n\nexport function ChartBarHorizontal() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Top pages</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={240}\n        initialWidth={520}\n        ariaLabel=\"Page views for the six most visited pages in the last 30 days\"\n      />\n      <ChartTable\n        caption=\"Page views for the top pages, last 30 days\"\n        columns={[\"Page\", \"Views\"]}\n        rows={rows.map((row) => [row.page, row.views])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

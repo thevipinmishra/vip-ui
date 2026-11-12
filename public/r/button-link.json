@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-link",
+  "type": "registry:ui",
+  "title": "Button Link",
+  "description": "Shows a navigation link with button styles, for any router.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["actions"],
+  "dependencies": [],
+  "registryDependencies": [
+    "https://vip-ui.dev/r/button-styles.json",
+    "https://vip-ui.dev/r/size.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/button-link.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/button-link.tsx",
+      "content": "import type { ComponentProps, ElementType } from \"react\";\nimport {\n  type ButtonVariant,\n  buttonLabel,\n  buttonLinkStyles,\n} from \"./button-styles\";\nimport type { Size } from \"./size\";\n\ntype ButtonLinkProps = Omit<ComponentProps<\"a\">, \"href\"> & {\n  href: string;\n  as?: ElementType;\n  variant?: ButtonVariant;\n  size?: Size;\n  iconOnly?: boolean;\n};\n\nexport function ButtonLink({\n  children,\n  className,\n  as: Element = \"a\",\n  variant = \"default\",\n  size = \"md\",\n  iconOnly = false,\n  ...props\n}: ButtonLinkProps) {\n  return (\n    <Element\n      {...props}\n      data-slot=\"button-link\"\n      data-variant={variant}\n      data-size={size}\n      data-icon-only={iconOnly || undefined}\n      className={buttonLinkStyles({ variant, size, iconOnly, className })}\n    >\n      {buttonLabel(children)}\n    </Element>\n  );\n}\n"
+    }
+  ]
+}

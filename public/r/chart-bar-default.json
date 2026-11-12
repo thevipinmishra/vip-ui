@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-bar-default",
+  "type": "registry:block",
+  "title": "Bar",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartBarDefault /> from components/charts/chart-bar-default.tsx. Preview: https://vip-ui.dev/charts#chart-bar-default",
+  "meta": {
+    "entry": {
+      "component": "ChartBarDefault",
+      "file": "chart-bar-default.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-bar-default.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-bar-default.tsx",
+      "content": "\"use client\";\n\nimport { barY, defineChart } from \"@tanstack/charts\";\nimport { scaleBand } from \"@tanstack/charts/scales/band\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst rows = [\n  { month: \"2025-10\", revenue: 158300 },\n  { month: \"2025-11\", revenue: 171900 },\n  { month: \"2025-12\", revenue: 176400 },\n  { month: \"2026-01\", revenue: 182400 },\n  { month: \"2026-02\", revenue: 189700 },\n  { month: \"2026-03\", revenue: 201300 },\n  { month: \"2026-04\", revenue: 198600 },\n  { month: \"2026-05\", revenue: 212900 },\n  { month: \"2026-06\", revenue: 219400 },\n  { month: \"2026-07\", revenue: 216800 },\n  { month: \"2026-08\", revenue: 228500 },\n  { month: \"2026-09\", revenue: 236200 },\n];\n\nconst monthFormat = new Intl.DateTimeFormat(\"en-US\", {\n  month: \"short\",\n  timeZone: \"UTC\",\n});\nconst monthYearFormat = new Intl.DateTimeFormat(\"en-US\", {\n  month: \"long\",\n  year: \"numeric\",\n  timeZone: \"UTC\",\n});\nconst formatMonth = (month: string) => monthFormat.format(new Date(month));\nconst formatMonthYear = (month: string) =>\n  monthYearFormat.format(new Date(month));\nconst formatCompact = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n  notation: \"compact\",\n}).format;\nconst formatMoney = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n  maximumFractionDigits: 0,\n}).format;\n\nconst definition = defineChart({\n  marks: [\n    barY(rows, {\n      x: \"month\",\n      y: \"revenue\",\n      fill: \"var(--ts-chart-1)\",\n      inset: 3,\n      radius: { end: 4 },\n    }),\n  ],\n  scales: {\n    x: {\n      scale: () => scaleBand().padding(0.15),\n      axis: {\n        ticks: { format: formatMonth },\n        tickLabels: {\n          thin: false,\n          opacity: ({ index, bandwidth }) =>\n            bandwidth < 30 && index % 2 === 1 ? 0 : undefined,\n        },\n      },\n    },\n    y: {\n      scale: scaleLinear().domain([0, 250000]),\n      grid: true,\n      axis: { ticks: { count: 5, format: formatCompact } },\n    },\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: formatMonthYear(point.datum.month),\n      rows: [\n        {\n          label: \"Revenue\",\n          value: formatMoney(point.datum.revenue),\n          color: point.color,\n        },\n      ],\n    }),\n  },\n});\n\nexport function ChartBarDefault() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Monthly revenue</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={220}\n        initialWidth={520}\n        ariaLabel=\"Monthly revenue in dollars, October 2025 to September 2026\"\n      />\n      <ChartTable\n        caption=\"Monthly revenue, in dollars\"\n        columns={[\"Month\", \"Revenue\"]}\n        rows={rows.map((row) => [formatMonthYear(row.month), row.revenue])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

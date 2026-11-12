@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "context-menu",
+  "type": "registry:ui",
+  "title": "Context Menu",
+  "description": "Opens actions for an item on right-click, long press, or keyboard.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["actions"],
+  "dependencies": [
+    "react-aria-components@^1.22.1",
+    "tailwindcss-react-aria-components@^2.2.0"
+  ],
+  "registryDependencies": ["https://vip-ui.dev/r/menu.json"],
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
+  "files": [
+    {
+      "path": "src/components/ui/context-menu.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/context-menu.tsx",
+      "content": "\"use client\";\n\nimport {\n  MenuTrigger as AriaMenuTrigger,\n  type MenuTriggerProps,\n} from \"react-aria-components\";\n\nexport {\n  Menu as ContextMenu,\n  MenuContent as ContextMenuContent,\n  MenuItem as ContextMenuItem,\n  MenuPopover as ContextMenuPopover,\n  MenuSection as ContextMenuSection,\n  MenuSeparator as ContextMenuSeparator,\n} from \"./menu\";\n\nexport function ContextMenuTrigger(props: Omit<MenuTriggerProps, \"trigger\">) {\n  return <AriaMenuTrigger {...props} trigger=\"contextMenu\" />;\n}\n"
+    }
+  ]
+}

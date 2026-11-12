@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-box-plot",
+  "type": "registry:block",
+  "title": "Box plot",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartBoxPlot /> from components/charts/chart-box-plot.tsx. Preview: https://vip-ui.dev/charts#chart-box-plot",
+  "meta": {
+    "entry": {
+      "component": "ChartBoxPlot",
+      "file": "chart-box-plot.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-box-plot.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-box-plot.tsx",
+      "content": "\"use client\";\n\nimport { boxRows, boxY, defineChart } from \"@tanstack/charts\";\nimport { scaleBand } from \"@tanstack/charts/scales/band\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst samples = {\n  \"us-east-1\": [\n    61, 64, 66, 68, 70, 71, 73, 74, 76, 77, 79, 81, 84, 88, 93, 141,\n  ],\n  \"eu-west-1\": [\n    82, 88, 91, 94, 96, 97, 99, 101, 104, 106, 109, 113, 118, 124, 164,\n  ],\n  \"ap-south-1\": [\n    118, 124, 131, 137, 142, 146, 151, 155, 162, 168, 176, 189, 238,\n  ],\n};\n\nconst rows = Object.entries(samples).flatMap(([region, values]) =>\n  values.map((ms, index) => ({ id: `${region}-${index}`, region, ms })),\n);\n\nconst summaries = boxRows(rows, { category: \"region\", value: \"ms\" }).flatMap(\n  (row) => (row.kind === \"summary\" ? [row] : []),\n);\n\nconst definition = defineChart({\n  marks: [\n    boxY(rows, {\n      x: \"region\",\n      y: \"ms\",\n      key: \"id\",\n      fill: \"color-mix(in oklab, var(--ts-chart-1) 22%, var(--card))\",\n      stroke: \"var(--ts-chart-1)\",\n      inset: 24,\n      r: 3.5,\n    }),\n  ],\n  scales: {\n    x: { scale: () => scaleBand().padding(0.2) },\n    y: {\n      scale: scaleLinear().domain([0, 250]),\n      grid: true,\n      axis: {\n        label: \"Latency\",\n        ticks: { count: 5, format: (value: number) => `${value} ms` },\n      },\n    },\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) =>\n      point.datum.kind === \"summary\"\n        ? {\n            title: `${point.datum.category}`,\n            rows: [\n              { label: \"Median\", value: `${point.datum.median} ms` },\n              {\n                label: \"Middle half\",\n                value: `${point.datum.q1}–${point.datum.q3} ms`,\n              },\n              { label: \"Requests\", value: `${point.datum.count}` },\n            ],\n          }\n        : {\n            title: `${point.datum.category}`,\n            rows: [{ label: \"Outlier\", value: `${point.datum.value} ms` }],\n          },\n  },\n});\n\nexport function ChartBoxPlot() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Latency by region</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={240}\n        initialWidth={520}\n        ariaLabel=\"Box plots of request latency in milliseconds for the us-east-1, eu-west-1 and ap-south-1 regions\"\n      />\n      <ChartTable\n        caption=\"Request latency by region, in milliseconds\"\n        columns={[\n          \"Region\",\n          \"Lowest\",\n          \"First quartile\",\n          \"Median\",\n          \"Third quartile\",\n          \"Highest\",\n        ]}\n        rows={summaries.map((row) => [\n          `${row.category}`,\n          row.whiskerLow,\n          row.q1,\n          row.median,\n          row.q3,\n          row.whiskerHigh,\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

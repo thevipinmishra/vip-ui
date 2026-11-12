@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-color-legend",
+  "type": "registry:block",
+  "title": "Interactive legend",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartColorLegend /> from components/charts/chart-color-legend.tsx. Preview: https://vip-ui.dev/charts#chart-color-legend",
+  "meta": {
+    "entry": {
+      "component": "ChartColorLegend",
+      "file": "chart-color-legend.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-color-legend.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-color-legend.tsx",
+      "content": "\"use client\";\n\nimport { defineChart, lineY } from \"@tanstack/charts\";\nimport { controlledSignal } from \"@tanstack/charts/interaction/signal\";\nimport { interactiveColorLegend } from \"@tanstack/charts/legend\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { scaleOrdinal } from \"@tanstack/charts/scales/ordinal\";\nimport { scalePoint } from \"@tanstack/charts/scales/point\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport { fold } from \"@tanstack/charts/transform/fold\";\nimport { useMemo, useState } from \"react\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst packages = [\"core\", \"react\", \"vue\"] as const;\nconst labels: Record<string, string> = {\n  core: \"Core\",\n  react: \"React\",\n  vue: \"Vue\",\n};\n\nconst weeks = [\n  { week: \"W36\", core: 182, react: 141, vue: 38 },\n  { week: \"W37\", core: 191, react: 149, vue: 41 },\n  { week: \"W38\", core: 204, react: 158, vue: 43 },\n  { week: \"W39\", core: 198, react: 160, vue: 47 },\n  { week: \"W40\", core: 221, react: 172, vue: 52 },\n  { week: \"W41\", core: 236, react: 181, vue: 55 },\n  { week: \"W42\", core: 249, react: 194, vue: 61 },\n  { week: \"W43\", core: 262, react: 203, vue: 66 },\n];\n\nconst rows = fold(weeks, {\n  fields: packages,\n  as: { key: \"package\", value: \"downloads\" },\n});\n\nconst formatDownloads = (value: number) => `${value}k`;\n\nexport function ChartColorLegend() {\n  const [visible, setVisible] = useState<readonly string[]>([...packages]);\n\n  const definition = useMemo(\n    () =>\n      defineChart({\n        marks: [\n          lineY(rows, {\n            x: \"week\",\n            y: \"downloads\",\n            color: \"package\",\n            strokeWidth: 2,\n          }),\n        ],\n        scales: {\n          x: { scale: scalePoint },\n          y: {\n            scale: scaleLinear().domain([0, 280]),\n            grid: true,\n            axis: { ticks: { count: 4, format: formatDownloads } },\n          },\n        },\n        color: {\n          scale: scaleOrdinal<string, string>()\n            .domain([...packages])\n            .range([\n              \"var(--ts-chart-1)\",\n              \"var(--ts-chart-2)\",\n              \"var(--ts-chart-3)\",\n            ]),\n          legend: interactiveColorLegend<string>({\n            visible: controlledSignal(visible, (next) => setVisible(next)),\n            placement: \"bottom\",\n            ariaLabel: \"Package visibility\",\n            hover: \"series\",\n            format: (value) => labels[value] ?? value,\n          }),\n        },\n        focus: \"group-x\",\n        tooltip: {\n          use: tooltip,\n          content: (points, { primaryPoint }) => ({\n            title: points[0].datum.week,\n            rows: points.map((point) => ({\n              label: labels[point.datum.package],\n              value: formatDownloads(point.datum.downloads),\n              color: point.color,\n              active: point === primaryPoint,\n            })),\n          }),\n        },\n      }),\n    [visible],\n  );\n\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Weekly downloads</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={260}\n        initialWidth={520}\n        ariaLabel={`Weekly downloads for the core, React and Vue packages. Showing ${visible.length} of ${packages.length}.`}\n      />\n      <ChartTable\n        caption=\"Weekly downloads by package, in thousands\"\n        columns={[\"Week\", ...packages.map((item) => labels[item])]}\n        rows={weeks.map((row) => [\n          row.week,\n          ...packages.map((item) => formatDownloads(row[item])),\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

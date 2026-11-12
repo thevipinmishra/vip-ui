@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-contour",
+  "type": "registry:block",
+  "title": "Contour",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartContour /> from components/charts/chart-contour.tsx. Preview: https://vip-ui.dev/charts#chart-contour",
+  "meta": {
+    "entry": {
+      "component": "ChartContour",
+      "file": "chart-contour.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-contour.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-contour.tsx",
+      "content": "\"use client\";\n\nimport { defineChart, dot } from \"@tanstack/charts\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { contour } from \"@tanstack/charts/spatial/contour\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartDescription,\n  ChartFrame,\n  ChartLegend,\n  ChartLegendItem,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst floor = { width: 40, depth: 24 };\nconst columns = 41;\nconst rowCount = 25;\n\nconst accessPoints = [\n  { name: \"Lobby\", x: 7, y: 6, power: -31 },\n  { name: \"Open office\", x: 22, y: 15, power: -30 },\n  { name: \"Meeting rooms\", x: 34, y: 5, power: -33 },\n];\n\nconst signalAt = (x: number, y: number) =>\n  Math.max(\n    ...accessPoints.map(\n      (point) =>\n        point.power -\n        20 * Math.log10(Math.max(1, Math.hypot(point.x - x, point.y - y))),\n    ),\n  );\n\nconst grid = Array.from({ length: columns * rowCount }, (_, index) => ({\n  signal: signalAt(\n    ((index % columns) / (columns - 1)) * floor.width,\n    (Math.floor(index / columns) / (rowCount - 1)) * floor.depth,\n  ),\n}));\n\nconst levels = [\n  {\n    label: \"Weak\",\n    min: -60,\n    color: \"color-mix(in oklab, var(--ts-chart-2) 22%, var(--card))\",\n  },\n  {\n    label: \"Fair\",\n    min: -56,\n    color: \"color-mix(in oklab, var(--ts-chart-2) 45%, var(--card))\",\n  },\n  {\n    label: \"Good\",\n    min: -52,\n    color: \"color-mix(in oklab, var(--ts-chart-2) 70%, var(--card))\",\n  },\n  { label: \"Strong\", min: -48, color: \"var(--ts-chart-2)\" },\n];\n\nconst levelFor = (signal: number) =>\n  levels.findLast((level) => signal >= level.min)?.label ?? \"No signal\";\n\nconst share = (label: string) => {\n  const cells = grid.filter((cell) => levelFor(cell.signal) === label).length;\n  return `${Math.round((cells / grid.length) * 100)}%`;\n};\n\nconst definition = defineChart({\n  marks: [\n    contour(grid, {\n      width: columns,\n      height: rowCount,\n      value: \"signal\",\n      thresholds: levels.map((level) => level.min),\n      color: (level) => levelFor(level.value),\n    }),\n    dot(accessPoints, {\n      x: \"x\",\n      y: \"y\",\n      key: \"name\",\n      r: 5,\n      fill: \"var(--ts-chart-1)\",\n      stroke: \"var(--card)\",\n      strokeWidth: 2,\n    }),\n  ],\n  scales: {\n    x: {\n      scale: scaleLinear().domain([0, floor.width]),\n      axis: { ticks: { count: 4, format: (value: number) => `${value} m` } },\n    },\n    y: {\n      scale: scaleLinear().domain([0, floor.depth]),\n      axis: { ticks: { count: 3, format: (value: number) => `${value} m` } },\n    },\n  },\n  color: {\n    domain: levels.map((level) => level.label),\n    range: levels.map((level) => level.color),\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: point.datum.name,\n      rows: [\n        {\n          label: \"Access point\",\n          value: `${point.datum.x} m, ${point.datum.y} m`,\n        },\n      ],\n    }),\n  },\n});\n\nexport function ChartContour() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Wi-Fi coverage</ChartTitle>\n        <ChartDescription>Signal strength on the second floor</ChartDescription>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={240}\n        initialWidth={520}\n        ariaLabel=\"Wi-Fi signal strength across a 40 by 24 meter floor with three access points\"\n      />\n      <ChartLegend>\n        {levels.map((level) => (\n          <ChartLegendItem key={level.label} color={level.color}>\n            {level.label}\n          </ChartLegendItem>\n        ))}\n        <ChartLegendItem color=\"var(--ts-chart-1)\">\n          Access point\n        </ChartLegendItem>\n      </ChartLegend>\n      <ChartTable\n        caption=\"Share of the floor at each signal level\"\n        columns={[\"Level\", \"Minimum signal\", \"Floor share\"]}\n        rows={levels.map((level) => [\n          level.label,\n          `${level.min} dBm`,\n          share(level.label),\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

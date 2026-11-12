@@ -1,0 +1,45 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toggle-button",
+  "type": "registry:ui",
+  "title": "Toggle Button",
+  "description": "Switches a button between selected and unselected states.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["actions"],
+  "dependencies": [
+    "motion@^14.10.1",
+    "react-aria-components@^1.22.1",
+    "tailwind-variants@^4.0.1",
+    "tailwindcss-react-aria-components@^2.2.0"
+  ],
+  "registryDependencies": [
+    "https://vip-ui.dev/r/button-styles.json",
+    "https://vip-ui.dev/r/motion.json",
+    "https://vip-ui.dev/r/size.json",
+    "https://vip-ui.dev/r/utils.json"
+  ],
+  "cssVars": {
+    "theme": {
+      "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+    },
+    "light": {
+      "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+    },
+    "dark": {
+      "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+    }
+  },
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
+  "files": [
+    {
+      "path": "src/components/ui/toggle-button.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/toggle-button.tsx",
+      "content": "\"use client\";\n\nimport { motion, useReducedMotion } from \"motion/react\";\nimport { useContext } from \"react\";\nimport {\n  ToggleButton as AriaToggleButton,\n  composeRenderProps,\n  type ToggleButtonProps,\n  ToggleGroupStateContext,\n} from \"react-aria-components\";\nimport { tv, type VariantProps } from \"tailwind-variants\";\nimport { springLayout, transitionFor } from \"./motion\";\nimport { cn } from \"./utils\";\nimport { buttonLabel, touchTarget } from \"./button-styles\";\nimport { type Size, useSize } from \"./size\";\n\nconst toggleButtonStyles = tv({\n  base: \"inline-flex min-h-11 max-w-full shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md px-4 text-sm font-medium [&_svg:not([class*='size-'])]:size-4 outline-offset-4 outline-transparent transition-[color,background-color,border-color,box-shadow,scale,outline-color,outline-offset] duration-150 ease-out-quint motion-safe:pressed:scale-[0.96] disabled:cursor-default disabled:opacity-50 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 [&_svg]:pointer-events-none [&_svg]:shrink-0\",\n  variants: {\n    variant: {\n      default:\n        \"border border-border bg-card text-foreground shadow-[var(--shadow-card)] hover:bg-muted pressed:bg-muted selected:border-primary/40 selected:bg-accent selected:text-accent-foreground\",\n      segmented:\n        \"border border-transparent bg-transparent px-3 text-muted-foreground shadow-none hover:bg-card/70 in-data-[item-highlight=under]:not-selected:hover:bg-transparent hover:text-foreground pressed:bg-card/70 selected:border-border selected:bg-card selected:text-foreground selected:shadow-[var(--shadow-card)]\",\n      ghost:\n        \"border border-transparent bg-transparent text-foreground hover:bg-muted in-data-[item-highlight=under]:not-selected:hover:bg-transparent pressed:bg-muted selected:bg-accent selected:text-accent-foreground\",\n    },\n    size: {\n      xs: `min-h-7 gap-1.5 rounded-sm px-2 text-xs [&_svg:not([class*='size-'])]:size-3.5 ${touchTarget}`,\n      sm: `min-h-9 px-3 ${touchTarget}`,\n      md: \"min-h-11 px-4\",\n      lg: \"min-h-12 px-5\",\n      xl: \"min-h-14 gap-2.5 rounded-lg px-6 text-base [&_svg:not([class*='size-'])]:size-5\",\n    },\n    adaptive: {\n      true: \"sm:min-h-9\",\n    },\n    iconOnly: {\n      true: \"w-11 px-0 [&_svg:not([class*='size-'])]:size-4.5\",\n    },\n  },\n  compoundVariants: [\n    {\n      size: \"xs\",\n      iconOnly: true,\n      class: \"w-7 [&_svg:not([class*='size-'])]:size-3.5\",\n    },\n    {\n      size: \"sm\",\n      iconOnly: true,\n      class: \"w-9 [&_svg:not([class*='size-'])]:size-4\",\n    },\n    {\n      adaptive: true,\n      iconOnly: true,\n      class: \"sm:w-9 sm:[&_svg:not([class*='size-'])]:size-4\",\n    },\n    {\n      size: \"lg\",\n      iconOnly: true,\n      class: \"w-12 [&_svg:not([class*='size-'])]:size-5\",\n    },\n    {\n      size: \"xl\",\n      iconOnly: true,\n      class: \"w-14 [&_svg:not([class*='size-'])]:size-6\",\n    },\n  ],\n  defaultVariants: { variant: \"default\" },\n});\n\nexport interface ToggleButtonStyleProps extends ToggleButtonProps {\n  variant?: NonNullable<VariantProps<typeof toggleButtonStyles>[\"variant\"]>;\n  size?: Size;\n  iconOnly?: boolean;\n}\n\nexport function ToggleButton({\n  className,\n  children,\n  variant = \"default\",\n  size: sizeProp,\n  iconOnly = false,\n  ...props\n}: ToggleButtonStyleProps) {\n  const reduceMotion = useReducedMotion();\n  const size = useSize(sizeProp);\n  const groupedSelection =\n    useContext(ToggleGroupStateContext)?.selectionMode === \"single\" &&\n    variant === \"segmented\";\n  return (\n    <AriaToggleButton\n      {...props}\n      data-slot=\"toggle-button\"\n      data-variant={variant}\n      data-size={size}\n      data-icon-only={iconOnly || undefined}\n      className={composeRenderProps(className, (className) =>\n        toggleButtonStyles({\n          variant,\n          size,\n          adaptive: variant === \"segmented\" && !size,\n          iconOnly,\n          className: cn(\n            groupedSelection &&\n              \"relative isolate selected:border-transparent selected:bg-transparent selected:shadow-none\",\n            className,\n          ),\n        }),\n      )}\n    >\n      {composeRenderProps(children, (content, { isSelected }) => (\n        <>\n          {groupedSelection && isSelected && (\n            <motion.span\n              layoutId=\"toggle-group-selection\"\n              initial={false}\n              aria-hidden=\"true\"\n              transition={transitionFor(reduceMotion, springLayout)}\n              className=\"pointer-events-none absolute inset-0 -z-10 rounded-[inherit] border border-border bg-card shadow-[var(--shadow-card)] forced-colors:border-[Highlight]\"\n            />\n          )}\n          {buttonLabel(content)}\n        </>\n      ))}\n    </AriaToggleButton>\n  );\n}\n"
+    }
+  ]
+}

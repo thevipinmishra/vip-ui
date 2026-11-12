@@ -63,7 +63,10 @@ export default function ReactAriaPage() {
             Date, time, number, and calendar components use the locale to format
             values.
           </li>
-          <li>Components get the reading direction from the locale.</li>
+          <li>
+            Components get the keyboard direction from the locale. See{" "}
+            <TextLink href="/components/rtl">RTL</TextLink>.
+          </li>
           <li>
             <Code>I18nProvider</Code> does not change validation messages. They
             use the browser language.

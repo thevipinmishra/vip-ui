@@ -39,11 +39,6 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: "/r/vip-drawer.json",
-        destination: "/r/vip-sheet.json",
-        permanent: true,
-      },
-      {
         source: "/components/password-strength-meter",
         destination: "/components/password-field",
         permanent: true,
@@ -56,11 +51,6 @@ const nextConfig: NextConfig = {
       {
         source: "/components/password-strength-meter/markdown",
         destination: "/components/password-field/markdown",
-        permanent: true,
-      },
-      {
-        source: "/r/vip-password-strength-meter.json",
-        destination: "/r/vip-password-field.json",
         permanent: true,
       },
       {
@@ -84,7 +74,14 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/r/:path*",
-        headers: robotsTag("noindex, nofollow"),
+        headers: [
+          ...robotsTag("noindex, nofollow"),
+          {
+            key: "Cache-Control",
+            value:
+              "public, max-age=0, must-revalidate, s-maxage=86400, stale-while-revalidate=604800",
+          },
+        ],
       },
       {
         source: "/components/:slug/markdown",

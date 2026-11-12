@@ -58,7 +58,7 @@ export const calendarHeaderCellStyles =
 export const calendarCellBaseClass =
   "relative grid in-data-[months]:outside-month:invisible aspect-square w-full cursor-pointer place-items-center text-sm tabular-nums outline-none transition-colors duration-150 ease-out-quint data-today:after:absolute data-today:after:bottom-1 data-today:after:size-1 data-today:after:rounded-full data-today:after:bg-primary selected:data-today:after:bg-current outside-month:text-muted-foreground/50 unavailable:cursor-not-allowed unavailable:text-muted-foreground unavailable:line-through disabled:cursor-default disabled:text-muted-foreground/50 focus-visible:outline-2 focus-visible:outline-solid focus-visible:z-10 focus-visible:outline-offset-2 focus-visible:outline-ring forced-colors:border-2 forced-colors:border-[Canvas] forced-colors:data-today:after:bg-[CanvasText] forced-colors:outside-month:text-[GrayText] forced-colors:disabled:text-[GrayText]";
 
-export const calendarCellClass = `${calendarCellBaseClass} rounded-md transition-[color,background-color,scale] motion-safe:pressed:scale-90 selected:bg-primary selected:text-primary-foreground invalid:selected:bg-destructive invalid:selected:text-destructive-foreground forced-colors:selected:border-[Highlight]`;
+export const calendarCellClass = `${calendarCellBaseClass} rounded-md transition-[color,background-color,scale] motion-safe:pressed:scale-90 selected:bg-primary selected:text-primary-foreground invalid:selected:bg-destructive invalid:selected:text-background forced-colors:selected:border-[Highlight]`;
 
 export function Calendar<T extends DateValue>({
   className,

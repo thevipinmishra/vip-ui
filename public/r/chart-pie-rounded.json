@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-pie-rounded",
+  "type": "registry:block",
+  "title": "Rounded donut",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartPieRounded /> from components/charts/chart-pie-rounded.tsx. Preview: https://vip-ui.dev/charts#chart-pie-rounded",
+  "meta": {
+    "entry": {
+      "component": "ChartPieRounded",
+      "file": "chart-pie-rounded.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-pie-rounded.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-pie-rounded.tsx",
+      "content": "\"use client\";\n\nimport { defineChart } from \"@tanstack/charts\";\nimport { pie, polar, radialArc } from \"@tanstack/charts/polar\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartLegend,\n  ChartLegendItem,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst rows = [\n  { service: \"Compute\", cost: 4820 },\n  { service: \"Database\", cost: 2960 },\n  { service: \"Storage\", cost: 1450 },\n  { service: \"Network\", cost: 730 },\n  { service: \"Other\", cost: 310 },\n];\n\nconst total = rows.reduce((sum, row) => sum + row.cost, 0);\n\nconst series = rows.map((row, index) => ({\n  label: row.service,\n  color: `var(--ts-chart-${index + 1})`,\n}));\n\nconst formatMoney = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n  maximumFractionDigits: 0,\n}).format;\nconst formatShare = new Intl.NumberFormat(\"en-US\", {\n  style: \"percent\",\n  maximumFractionDigits: 1,\n}).format;\n\nconst definition = defineChart({\n  marks: [\n    polar({\n      radiusRatio: 0.8,\n      marks: [\n        radialArc(pie(rows, { value: \"cost\", gapAngle: 0.06 }), {\n          color: \"service\",\n          key: \"service\",\n          innerRadius: ({ radius }) => radius * 0.5,\n          cornerRadius: 6,\n        }),\n      ],\n      scales: { angle: null, radius: null },\n    }),\n  ],\n  scales: { x: null, y: null },\n  color: {\n    domain: series.map((item) => item.label),\n    range: series.map((item) => item.color),\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: point.datum.service,\n      rows: [\n        {\n          label: \"Cost\",\n          value: formatMoney(point.datum.cost),\n          color: point.color,\n        },\n        { label: \"Share\", value: formatShare(point.datum.cost / total) },\n      ],\n    }),\n  },\n});\n\nexport function ChartPieRounded() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Cloud costs</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={220}\n        initialWidth={520}\n        ariaLabel={`Cloud costs of ${formatMoney(total)} in September, by service: compute, database, storage, network and other`}\n      />\n      <ChartLegend>\n        {series.map((item) => (\n          <ChartLegendItem key={item.label} color={item.color}>\n            {item.label}\n          </ChartLegendItem>\n        ))}\n      </ChartLegend>\n      <ChartTable\n        caption=\"Cloud costs in September, by service, in dollars\"\n        columns={[\"Service\", \"Cost\", \"Share\"]}\n        rows={rows.map((row) => [\n          row.service,\n          row.cost,\n          formatShare(row.cost / total),\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

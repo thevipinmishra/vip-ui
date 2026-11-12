@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-group",
+  "type": "registry:ui",
+  "title": "Button Group",
+  "description": "Joins related buttons, or a button and its menu, into one row or column.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["actions"],
+  "dependencies": [],
+  "registryDependencies": [
+    "https://vip-ui.dev/r/button.json",
+    "https://vip-ui.dev/r/size.json",
+    "https://vip-ui.dev/r/utils.json"
+  ],
+  "cssVars": {
+    "light": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+    },
+    "dark": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+    }
+  },
+  "files": [
+    {
+      "path": "src/components/ui/button-group.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/button-group.tsx",
+      "content": "\"use client\";\n\nimport type { ComponentProps } from \"react\";\nimport { cn } from \"./utils\";\nimport { type Size, SizeProvider, useSize } from \"./size\";\n\nexport interface ButtonGroupProps extends ComponentProps<\"div\"> {\n  orientation?: \"horizontal\" | \"vertical\";\n  size?: Size;\n}\n\nexport function ButtonGroup({\n  orientation = \"horizontal\",\n  size: sizeProp,\n  className,\n  ...props\n}: ButtonGroupProps) {\n  const size = useSize(sizeProp);\n  return (\n    <SizeProvider size={size}>\n      {/* biome-ignore lint/a11y/useSemanticElements: Independent actions do not belong in a fieldset. */}\n      <div\n        {...props}\n        role=\"group\"\n        data-slot=\"button-group\"\n        data-orientation={orientation}\n        data-size={size}\n        className={cn(\n          \"inline-flex w-fit max-w-full items-stretch rounded-lg border border-border bg-card shadow-[var(--shadow-card)] data-[size=xs]:rounded-md data-[size=xl]:rounded-xl\",\n          \"[&>:not(output)]:relative [&>:not(output)]:min-w-0 [&>:not(output)]:shrink [&>:not(output)]:rounded-none [&>:not(output)]:border-0 [&>:not(output)]:shadow-none [&>[data-icon-only]]:shrink-0 [&>:focus-visible]:z-10\",\n          \"data-[orientation=horizontal]:[&>:not(output)~:not(output)]:border-s data-[orientation=horizontal]:[&>:nth-child(1_of_:not(output))]:rounded-s-[inherit] data-[orientation=horizontal]:[&>:nth-last-child(1_of_:not(output))]:rounded-e-[inherit]\",\n          \"data-[orientation=vertical]:flex-col data-[orientation=vertical]:[--touch-target:100%] data-[orientation=vertical]:[&>:not(output)~:not(output)]:border-t data-[orientation=vertical]:[&>:nth-child(1_of_:not(output))]:rounded-t-[inherit] data-[orientation=vertical]:[&>:nth-last-child(1_of_:not(output))]:rounded-b-[inherit]\",\n          \"[&>:not(output)~:not(output)]:border-border\",\n          className,\n        )}\n      />\n    </SizeProvider>\n  );\n}\n"
+    }
+  ]
+}

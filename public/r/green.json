@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "green",
+  "type": "registry:theme",
+  "title": "Green",
+  "description": "Success and confirmation.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["colors"],
+  "docs": "The scale adds --green-1 to --green-12 for light and dark mode. Classes such as bg-green-3 work after the install.",
+  "dependencies": [],
+  "files": [],
+  "cssVars": {
+    "theme": {
+      "color-green-1": "var(--green-1)",
+      "color-green-2": "var(--green-2)",
+      "color-green-3": "var(--green-3)",
+      "color-green-4": "var(--green-4)",
+      "color-green-5": "var(--green-5)",
+      "color-green-6": "var(--green-6)",
+      "color-green-7": "var(--green-7)",
+      "color-green-8": "var(--green-8)",
+      "color-green-9": "var(--green-9)",
+      "color-green-10": "var(--green-10)",
+      "color-green-11": "var(--green-11)",
+      "color-green-12": "var(--green-12)"
+    },
+    "light": {
+      "green-1": "oklch(0.987 0.008 152)",
+      "green-2": "oklch(0.969 0.014 152)",
+      "green-3": "oklch(0.944 0.024 152)",
+      "green-4": "oklch(0.919 0.034 152)",
+      "green-5": "oklch(0.894 0.043 152)",
+      "green-6": "oklch(0.866 0.056 152)",
+      "green-7": "oklch(0.820 0.077 152)",
+      "green-8": "oklch(0.755 0.106 152)",
+      "green-9": "oklch(0.531 0.160 152)",
+      "green-10": "oklch(0.496 0.157 152)",
+      "green-11": "oklch(0.505 0.099 152)",
+      "green-12": "oklch(0.285 0.048 152)"
+    },
+    "dark": {
+      "green-1": "oklch(0.185 0.029 152)",
+      "green-2": "oklch(0.215 0.040 152)",
+      "green-3": "oklch(0.243 0.051 152)",
+      "green-4": "oklch(0.268 0.061 152)",
+      "green-5": "oklch(0.293 0.069 152)",
+      "green-6": "oklch(0.322 0.077 152)",
+      "green-7": "oklch(0.365 0.090 152)",
+      "green-8": "oklch(0.430 0.109 152)",
+      "green-9": "oklch(0.700 0.160 152)",
+      "green-10": "oklch(0.740 0.155 152)",
+      "green-11": "oklch(0.735 0.109 152)",
+      "green-12": "oklch(0.930 0.045 152)"
+    }
+  }
+}

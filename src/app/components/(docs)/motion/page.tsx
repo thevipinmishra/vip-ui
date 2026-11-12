@@ -4,11 +4,11 @@ import type { ReactNode } from "react";
 import { CodeBlock } from "@/components/docs/code-block";
 import {
   Code,
-  ExternalLink,
   GuidePage,
   GuideSection,
   guideMetadata,
   List,
+  TextLink,
 } from "@/components/docs/guide";
 import { MotionHighlightDemo } from "@/components/docs/motion-highlight-demo";
 import { MotionReducedDemo } from "@/components/docs/motion-reduced-demo";
@@ -225,9 +225,9 @@ export function Notice() {
   );
 }`;
 
-const loopUsage = `<motion.svg
-  animate={{ transform: ["rotate(0deg)", "rotate(360deg)"] }}
-  transition={{ duration: loop.spin, ease: "linear", repeat: Infinity }}
+const loopUsage = `<span
+  aria-hidden="true"
+  className="size-full animate-spin [animation-duration:0.75s] motion-reduce:animate-none"
 />`;
 
 export default function MotionPage() {
@@ -306,10 +306,11 @@ export default function MotionPage() {
           Most state motion is CSS. React Aria sets a data attribute for each
           state, such as <Code>data-pressed</Code>, <Code>data-selected</Code>,{" "}
           <Code>data-entering</Code>, and <Code>data-exiting</Code>. Tailwind
-          variants read these attributes. A nested part reads the state of its
-          parent with a group variant, such as{" "}
-          <Code>group-selected/switch:</Code>. Components do not copy state into
-          React to animate it.
+          variants read these attributes. See{" "}
+          <TextLink href="/components/styling#states">Style states</TextLink>. A
+          nested part reads the state of its parent with a group variant, such
+          as <Code>group-selected/switch:</Code>. Components do not copy state
+          into React to animate it.
         </p>
         <CodeBlock code={cssUsage} filename="popover.tsx" />
         <p>
@@ -331,11 +332,6 @@ export default function MotionPage() {
           <li>Gestures: a sheet follows a swipe.</li>
         </List>
         <CodeBlock code={jsUsage} filename="notice.tsx" />
-        <p>
-          <ExternalLink href="https://react-aria.adobe.com/styling">
-            React Aria styling guide
-          </ExternalLink>
-        </p>
       </GuideSection>
 
       <GuideSection id="item-highlight" title="Item highlight">
@@ -373,26 +369,26 @@ export default function MotionPage() {
       <GuideSection id="loops" title="Loops">
         <TokenList tokens={loops} />
         <p>
-          A loader is visible when the main thread is busy. Thus a loop must not
-          need the main thread.
+          A loader is visible when the main thread is busy, so a loop must not
+          need the main thread. Kit loops are CSS keyframes that animate one{" "}
+          <Code>transform</Code>, and they run on the compositor.
         </p>
+        <CodeBlock code={loopUsage} filename="spinner.tsx" />
+        <p>A loop that needs Motion follows these rules:</p>
         <List>
           <li>
             Animate one <Code>transform</Code> string, not <Code>x</Code>,{" "}
-            <Code>y</Code>, <Code>rotate</Code>, or <Code>scale</Code>. Motion
-            then gives the animation to the browser, and it runs on the
-            compositor.
+            <Code>y</Code>, <Code>rotate</Code>, or <Code>scale</Code>.
           </li>
           <li>
             Give the first keyframe, such as <Code>rotate(0deg)</Code>. Without
-            it, Motion starts from a matrix and the spin does not turn.
+            it, the animation starts from a matrix and the spin does not turn.
           </li>
           <li>
             Animate an HTML element or the root <Code>{"<svg>"}</Code>, not an
             SVG child.
           </li>
         </List>
-        <CodeBlock code={loopUsage} filename="spinner.tsx" />
       </GuideSection>
 
       <GuideSection id="reduced-motion" title="Reduced motion">

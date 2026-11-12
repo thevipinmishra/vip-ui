@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-area-horizontal",
+  "type": "registry:block",
+  "title": "Horizontal area",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartAreaHorizontal /> from components/charts/chart-area-horizontal.tsx. Preview: https://vip-ui.dev/charts#chart-area-horizontal",
+  "meta": {
+    "entry": {
+      "component": "ChartAreaHorizontal",
+      "file": "chart-area-horizontal.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-area-horizontal.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-area-horizontal.tsx",
+      "content": "\"use client\";\n\nimport { areaX, defineChart, lineX } from \"@tanstack/charts\";\nimport { scaleBand } from \"@tanstack/charts/scales/band\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartDescription,\n  ChartFrame,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst rows = [\n  { team: \"Platform\", tickets: 82 },\n  { team: \"Billing\", tickets: 64 },\n  { team: \"Mobile\", tickets: 47 },\n  { team: \"Integrations\", tickets: 38 },\n  { team: \"Growth\", tickets: 21 },\n];\n\nconst formatCount = new Intl.NumberFormat(\"en-US\").format;\n\nconst definition = defineChart({\n  marks: [\n    areaX(rows, {\n      x: \"tickets\",\n      y: \"team\",\n      fill: \"var(--ts-chart-1)\",\n      fillOpacity: 0.22,\n    }),\n    lineX(rows, {\n      x: \"tickets\",\n      y: \"team\",\n      stroke: \"var(--ts-chart-1)\",\n      strokeWidth: 2,\n    }),\n  ],\n  scales: {\n    x: {\n      scale: scaleLinear().domain([0, 100]),\n      grid: true,\n      axis: {\n        label: \"Open tickets\",\n        ticks: { count: 4, format: formatCount },\n      },\n    },\n    y: { scale: () => scaleBand().padding(0.1) },\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: `${point.datum.team} team`,\n      rows: [\n        {\n          label: \"Open tickets\",\n          value: formatCount(point.datum.tickets),\n          color: point.color,\n        },\n      ],\n    }),\n  },\n});\n\nexport function ChartAreaHorizontal() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Support backlog</ChartTitle>\n        <ChartDescription>\n          Open tickets older than 7 days, by team\n        </ChartDescription>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={220}\n        initialWidth={520}\n        ariaLabel=\"Weekly support backlog by team, from 82 open tickets for Platform to 21 for Growth\"\n      />\n      <ChartTable\n        caption=\"Weekly support backlog by team\"\n        columns={[\"Team\", \"Open tickets\"]}\n        rows={rows.map((row) => [row.team, formatCount(row.tickets)])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

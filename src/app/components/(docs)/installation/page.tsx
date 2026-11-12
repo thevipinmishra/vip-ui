@@ -47,6 +47,8 @@ export default async function InstallationPage() {
     "utf8",
   );
   const buttonUrl = registryUrl("button");
+  const themeUrl = registryUrl("theme-blue");
+  const scaleUrl = registryUrl("blue");
   const namespaceUrl = registryNamespaceUrl();
   const shared = await Promise.all(
     (Object.keys(sharedFiles) as SharedFileSlug[]).map(async (slug) => ({
@@ -64,6 +66,10 @@ export default async function InstallationPage() {
           <li>TypeScript</li>
           <li>Tailwind CSS v4.1 or later</li>
           <li>A shadcn/ui theme that uses CSS variables</li>
+          <li>
+            shadcn CLI 4.7.0 or later. An older CLI puts files in the wrong
+            folder.
+          </li>
         </List>
         <Alert variant="warning" title="Not supported">
           Tailwind CSS v3, JavaScript projects, and projects that set{" "}
@@ -104,22 +110,30 @@ export default async function InstallationPage() {
           <Code>--primary</Code> and <Code>--border</Code>. Your current theme
           works with no changes.
         </p>
-        <p>To use the vip/ui colors:</p>
-        <List>
-          <li>
-            Open <TextLink href="/themes">Themes</TextLink> and select a theme.
-          </li>
-          <li>
-            Copy its CSS into your global CSS file, after the <Code>:root</Code>{" "}
-            and <Code>.dark</Code> rules.
-          </li>
-        </List>
+        <p>
+          To use the vip/ui colors, open{" "}
+          <TextLink href="/themes">Themes</TextLink> and select a theme. Run the
+          command that it shows, or copy its CSS into your global CSS file.
+        </p>
+        {themeUrl ? (
+          <PackageManagerCommand
+            action="run"
+            args={`shadcn@latest add ${themeUrl}`}
+          />
+        ) : null}
         <p>
           Each theme sets the color tokens to steps of the{" "}
-          <TextLink href="/colors">color scales</TextLink>. To use the scales in
-          your own styles, such as <Code>bg-blue-3</Code>, copy their CSS from
-          Colors.
+          <TextLink href="/colors">color scales</TextLink>. To use a scale in
+          your own styles, such as <Code>bg-blue-3</Code>, add it.
         </p>
+        {scaleUrl ? (
+          <PackageManagerCommand
+            action="run"
+            args={`shadcn@latest add ${scaleUrl}`}
+          />
+        ) : (
+          <p>Copy the scale CSS from Colors.</p>
+        )}
       </GuideSection>
 
       <GuideSection id="add-component" title="Add a component">
@@ -174,12 +188,10 @@ export default async function InstallationPage() {
             filename="components.json"
             language="json"
           />
-          <p>
-            Then add items by name. Item names start with <Code>vip-</Code>.
-          </p>
+          <p>Then add items by name.</p>
           <PackageManagerCommand
             action="run"
-            args={`shadcn@latest add ${registryNamespace}/vip-button`}
+            args={`shadcn@latest add ${registryNamespace}/button`}
           />
         </GuideSection>
       ) : null}
@@ -196,7 +208,7 @@ export default async function InstallationPage() {
               <Code>selected:</Code> and <Code>pressed:</Code>.
             </p>
             <PackageManagerCommand
-              action="add-dev"
+              action="add"
               args="tailwindcss-react-aria-components"
             />
           </InstallStep>

@@ -2,6 +2,8 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { CodeFrame } from "@/components/docs/code-frame";
 import { CodeSnippet } from "@/components/docs/code-snippet";
+import { PackageManagerCommand } from "@/components/docs/package-manager-command";
+import { registryUrl } from "@/lib/registry-docs";
 import { type Theme, themeCss } from "./themes";
 
 export function Step({
@@ -39,20 +41,43 @@ export const textLink =
 
 export function ThemeInstall({ theme }: { theme: Theme }) {
   const css = themeCss(theme);
+  const cliUrl = registryUrl(`theme-${theme.slug}`);
 
   return (
     <ol className="grid gap-12">
-      <Step number={1} title="Add the theme">
+      <Step number={1} title="Install the theme">
         <p>
-          Paste the CSS after the <code className={inlineCode}>:root</code> and{" "}
-          <code className={inlineCode}>.dark</code> rules in your global CSS
-          file. It sets every shadcn/ui color, including the sidebar and chart
-          colors, and the success and warning colors that vip/ui uses. For a new
-          project, start with the{" "}
+          The CLI adds the colors and the Tailwind color mappings to your global
+          CSS file. For a new project, start with the{" "}
           <Link href="/components/installation" className={textLink}>
             installation guide
           </Link>
           .
+        </p>
+        {cliUrl ? (
+          <PackageManagerCommand
+            action="run"
+            args={`shadcn@latest add ${cliUrl}`}
+          />
+        ) : (
+          <p className="text-[13px] leading-6 text-muted-foreground">
+            The CLI command shows when the registry has a public URL. Use the
+            paste step below.
+          </p>
+        )}
+      </Step>
+      <Step number={2} title="Or paste the CSS">
+        <p>
+          Paste the CSS after the <code className={inlineCode}>:root</code> and{" "}
+          <code className={inlineCode}>.dark</code> rules in your global CSS
+          file. It sets every shadcn/ui color, including the sidebar and chart
+          colors, and the success and warning colors that vip/ui uses.
+        </p>
+        <p>
+          The paste sets colors only. It does not add the Tailwind color
+          mappings. Classes such as{" "}
+          <code className={inlineCode}>bg-success</code> work after the CLI
+          install, or after you install one vip/ui component.
         </p>
         <CodeFrame
           code={css}
@@ -63,7 +88,7 @@ export function ThemeInstall({ theme }: { theme: Theme }) {
           <CodeSnippet code={css} language="css" />
         </CodeFrame>
       </Step>
-      <Step number={2} title="Check the details">
+      <Step number={3} title="Check the details">
         <ul className="grid list-disc gap-2 pl-5 marker:text-border">
           <li>
             Each value is a step of a{" "}

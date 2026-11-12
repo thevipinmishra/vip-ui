@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-pie-donut",
+  "type": "registry:block",
+  "title": "Donut with total",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartPieDonut /> from components/charts/chart-pie-donut.tsx. Preview: https://vip-ui.dev/charts#chart-pie-donut",
+  "meta": {
+    "entry": {
+      "component": "ChartPieDonut",
+      "file": "chart-pie-donut.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-pie-donut.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-pie-donut.tsx",
+      "content": "\"use client\";\n\nimport { defineChart } from \"@tanstack/charts\";\nimport { pie, polar, radialArc } from \"@tanstack/charts/polar\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartCenter,\n  ChartDescription,\n  ChartFrame,\n  ChartLegend,\n  ChartLegendItem,\n  ChartTable,\n  ChartTitle,\n  ChartValue,\n} from \"../vip-ui/chart\";\n\nconst rows = [\n  { plan: \"Starter\", subscriptions: 1482, price: 12 },\n  { plan: \"Pro\", subscriptions: 864, price: 49 },\n  { plan: \"Business\", subscriptions: 311, price: 149 },\n  { plan: \"Enterprise\", subscriptions: 47, price: 990 },\n];\n\nconst total = rows.reduce((sum, row) => sum + row.subscriptions, 0);\n\nconst series = rows.map((row, index) => ({\n  label: row.plan,\n  color: `var(--ts-chart-${index + 1})`,\n}));\n\nconst formatShare = new Intl.NumberFormat(\"en-US\", {\n  style: \"percent\",\n  maximumFractionDigits: 1,\n}).format;\nconst formatMoney = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n  maximumFractionDigits: 0,\n}).format;\n\nconst definition = defineChart({\n  marks: [\n    polar({\n      radiusRatio: 0.8,\n      marks: [\n        radialArc(pie(rows, { value: \"subscriptions\", gapAngle: 0.025 }), {\n          color: \"plan\",\n          key: \"plan\",\n          innerRadius: ({ radius }) => radius * 0.66,\n          cornerRadius: 4,\n        }),\n      ],\n      scales: { angle: null, radius: null },\n    }),\n  ],\n  scales: { x: null, y: null },\n  color: {\n    domain: series.map((item) => item.label),\n    range: series.map((item) => item.color),\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: `${point.datum.plan}, ${formatMoney(point.datum.price)} a month`,\n      rows: [\n        {\n          label: \"Subscriptions\",\n          value: point.datum.subscriptions.toLocaleString(\"en-US\"),\n          color: point.color,\n        },\n        {\n          label: \"Share\",\n          value: formatShare(point.datum.subscriptions / total),\n        },\n      ],\n    }),\n  },\n});\n\nexport function ChartPieDonut() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Subscriptions</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={220}\n        initialWidth={520}\n        ariaLabel={`${total.toLocaleString(\"en-US\")} active subscriptions across the Starter, Pro, Business and Enterprise plans`}\n      >\n        <ChartCenter aria-hidden=\"true\">\n          <ChartValue>{total.toLocaleString(\"en-US\")}</ChartValue>\n          <ChartDescription>Active</ChartDescription>\n        </ChartCenter>\n      </Chart>\n      <ChartLegend>\n        {series.map((item) => (\n          <ChartLegendItem key={item.label} color={item.color}>\n            {item.label}\n          </ChartLegendItem>\n        ))}\n      </ChartLegend>\n      <ChartTable\n        caption=\"Active subscriptions by plan\"\n        columns={[\"Plan\", \"Monthly price\", \"Subscriptions\"]}\n        rows={rows.map((row) => [\n          row.plan,\n          formatMoney(row.price),\n          row.subscriptions,\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

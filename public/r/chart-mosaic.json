@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-mosaic",
+  "type": "registry:block",
+  "title": "Mosaic",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartMosaic /> from components/charts/chart-mosaic.tsx. Preview: https://vip-ui.dev/charts#chart-mosaic",
+  "meta": {
+    "entry": {
+      "component": "ChartMosaic",
+      "file": "chart-mosaic.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-mosaic.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-mosaic.tsx",
+      "content": "\"use client\";\n\nimport { defineChart, groupBy, mosaicY, rect } from \"@tanstack/charts\";\nimport { colorLegend } from \"@tanstack/charts/legend\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartDescription,\n  ChartFrame,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst questions = [\"Onboarding\", \"Docs\", \"Support\", \"Pricing\"];\nconst levels = [\n  { label: \"Disagree\", color: \"var(--ts-chart-5)\" },\n  { label: \"Neutral\", color: \"var(--muted-foreground)\" },\n  { label: \"Agree\", color: \"var(--ts-chart-2)\" },\n  { label: \"Strongly agree\", color: \"var(--ts-chart-1)\" },\n];\n\nconst tallies: Record<string, number[]> = {\n  Onboarding: [6, 9, 15, 10],\n  Docs: [3, 6, 12, 21],\n  Support: [8, 7, 10, 5],\n  Pricing: [12, 8, 5, 3],\n};\n\nconst responses = questions.flatMap((question) =>\n  levels.flatMap((level, levelIndex) =>\n    Array.from({ length: tallies[question][levelIndex] }, (_, index) => ({\n      id: `${question}-${level.label}-${index}`,\n      question,\n      response: level.label,\n    })),\n  ),\n);\n\nconst counts = groupBy(responses, {\n  by: { question: \"question\", response: \"response\" },\n  outputs: { count: { reduce: \"count\" } },\n});\n\nconst cells = mosaicY(counts, {\n  x: \"question\",\n  y: \"response\",\n  value: \"count\",\n  yOrder: levels.map((level) => level.label),\n});\n\nconst formatPercent = new Intl.NumberFormat(\"en-US\", {\n  style: \"percent\",\n  maximumFractionDigits: 0,\n}).format;\n\nconst definition = defineChart({\n  marks: [\n    rect(cells, {\n      x: \"x\",\n      x1: \"x1\",\n      x2: \"x2\",\n      y: \"y\",\n      y1: \"y1\",\n      y2: \"y2\",\n      color: \"yValue\",\n      inset: 1,\n      radius: 2,\n    }),\n  ],\n  scales: {\n    x: {\n      scale: scaleLinear().domain([0, 1]),\n      axis: { ticks: { count: 5, format: formatPercent } },\n    },\n    y: {\n      scale: scaleLinear().domain([0, 1]),\n      axis: { ticks: { count: 3, format: formatPercent } },\n    },\n  },\n  color: {\n    domain: levels.map((level) => level.label),\n    range: levels.map((level) => level.color),\n    legend: colorLegend({ placement: \"bottom\" }),\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: `${point.datum.question} · ${point.datum.response}`,\n      rows: [\n        {\n          label: \"Share of answers\",\n          value: formatPercent(point.datum.value / point.datum.total),\n          color: point.color,\n        },\n        { label: \"Responses\", value: `${point.datum.value}` },\n      ],\n    }),\n  },\n});\n\nexport function ChartMosaic() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Survey sentiment</ChartTitle>\n        <ChartDescription>\n          Column width shows how many people answered.\n        </ChartDescription>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={280}\n        initialWidth={520}\n        ariaLabel=\"Mosaic chart of survey answers for onboarding, docs, support and pricing. Docs has the most strong agreement; pricing has the most disagreement.\"\n      />\n      <ChartTable\n        caption=\"Survey answers by topic\"\n        columns={[\"Topic\", ...levels.map((level) => level.label)]}\n        rows={questions.map((question) => [\n          question,\n          ...tallies[question].map((count) => count),\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-line-default",
+  "type": "registry:block",
+  "title": "Line",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartLineDefault /> from components/charts/chart-line-default.tsx. Preview: https://vip-ui.dev/charts#chart-line-default",
+  "meta": {
+    "entry": {
+      "component": "ChartLineDefault",
+      "file": "chart-line-default.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-line-default.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-line-default.tsx",
+      "content": "\"use client\";\n\nimport { defineChart, lineY } from \"@tanstack/charts\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { scalePoint } from \"@tanstack/charts/scales/point\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartDescription,\n  ChartFrame,\n  ChartTable,\n  ChartTitle,\n  ChartValue,\n} from \"../vip-ui/chart\";\n\nconst rows = [\n  { month: \"2025-10\", mrr: 64400 },\n  { month: \"2025-11\", mrr: 72550 },\n  { month: \"2025-12\", mrr: 69350 },\n  { month: \"2026-01\", mrr: 85250 },\n  { month: \"2026-02\", mrr: 94950 },\n  { month: \"2026-03\", mrr: 106250 },\n  { month: \"2026-04\", mrr: 104400 },\n  { month: \"2026-05\", mrr: 112000 },\n  { month: \"2026-06\", mrr: 125200 },\n  { month: \"2026-07\", mrr: 120450 },\n  { month: \"2026-08\", mrr: 131350 },\n  { month: \"2026-09\", mrr: 145650 },\n];\n\nconst latest = rows[rows.length - 1].mrr;\nconst previous = rows[rows.length - 2].mrr;\n\nconst monthFormat = new Intl.DateTimeFormat(\"en-US\", {\n  month: \"short\",\n  timeZone: \"UTC\",\n});\nconst monthYearFormat = new Intl.DateTimeFormat(\"en-US\", {\n  month: \"long\",\n  year: \"numeric\",\n  timeZone: \"UTC\",\n});\nconst formatMonth = (month: string) => monthFormat.format(new Date(month));\nconst formatMonthYear = (month: string) =>\n  monthYearFormat.format(new Date(month));\nconst formatMoney = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n  maximumFractionDigits: 0,\n}).format;\nconst formatCompact = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n  notation: \"compact\",\n}).format;\nconst formatChange = new Intl.NumberFormat(\"en-US\", {\n  style: \"percent\",\n  maximumFractionDigits: 1,\n  signDisplay: \"always\",\n}).format;\n\nconst definition = defineChart({\n  marks: [\n    lineY(rows, {\n      x: \"month\",\n      y: \"mrr\",\n      stroke: \"var(--ts-chart-1)\",\n      strokeWidth: 2,\n    }),\n  ],\n  scales: {\n    x: { scale: scalePoint, axis: { ticks: { format: formatMonth } } },\n    y: {\n      scale: scaleLinear().domain([0, 160000]),\n      grid: true,\n      axis: { ticks: { count: 4, format: formatCompact } },\n    },\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: formatMonthYear(point.datum.month),\n      rows: [\n        {\n          label: \"MRR\",\n          value: formatMoney(point.datum.mrr),\n          color: point.color,\n        },\n      ],\n    }),\n  },\n});\n\nexport function ChartLineDefault() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Monthly recurring revenue</ChartTitle>\n        <ChartValue>{formatMoney(latest)}</ChartValue>\n        <ChartDescription>\n          {formatChange((latest - previous) / previous)} from August\n        </ChartDescription>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={220}\n        initialWidth={520}\n        ariaLabel=\"Monthly recurring revenue in dollars, October 2025 to September 2026\"\n      />\n      <ChartTable\n        caption=\"Monthly recurring revenue, in dollars\"\n        columns={[\"Month\", \"MRR\"]}\n        rows={rows.map((row) => [formatMonthYear(row.month), row.mrr])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

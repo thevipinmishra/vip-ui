@@ -34,6 +34,8 @@ jobs:
 
       - run: pnpm lint
 
+      - run: pnpm test:registry
+
       - run: pnpm exec next typegen
 
       - run: pnpm exec tsc --noEmit

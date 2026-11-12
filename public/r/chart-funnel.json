@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-funnel",
+  "type": "registry:block",
+  "title": "Funnel",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartFunnel /> from components/charts/chart-funnel.tsx. Preview: https://vip-ui.dev/charts#chart-funnel",
+  "meta": {
+    "entry": {
+      "component": "ChartFunnel",
+      "file": "chart-funnel.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-funnel.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-funnel.tsx",
+      "content": "\"use client\";\n\nimport { barX, defineChart, text } from \"@tanstack/charts\";\nimport { decorative } from \"@tanstack/charts/mark/decorative\";\nimport { scaleBand } from \"@tanstack/charts/scales/band\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst rows = [\n  { stage: \"Viewed product\", users: 48210 },\n  { stage: \"Added to cart\", users: 9870 },\n  { stage: \"Started checkout\", users: 4312 },\n  { stage: \"Added payment\", users: 3058 },\n  { stage: \"Purchased\", users: 2641 },\n];\n\nconst first = rows[0].users;\nconst formatPercent = new Intl.NumberFormat(\"en-US\", {\n  style: \"percent\",\n  maximumFractionDigits: 1,\n}).format;\nconst percent = (users: number) => formatPercent(users / first);\nconst fitsInside = (users: number) => users / first > 0.3;\nconst stepRate = (index: number) =>\n  index === 0 ? \"—\" : formatPercent(rows[index].users / rows[index - 1].users);\n\nconst definition = defineChart({\n  marks: [\n    barX(rows, {\n      x1: (row) => -row.users / 2,\n      x2: (row) => row.users / 2,\n      y: \"stage\",\n      fill: \"var(--ts-chart-1)\",\n      inset: 3,\n      radius: 4,\n    }),\n    decorative(\n      text(rows, {\n        x: (row) => (fitsInside(row.users) ? 0 : row.users / 2),\n        y: \"stage\",\n        dx: (row) => (fitsInside(row.users) ? 0 : 6),\n        text: (row) => percent(row.users),\n        anchor: (row) => (fitsInside(row.users) ? \"middle\" : \"start\"),\n        fill: (row) =>\n          fitsInside(row.users) ? \"var(--card)\" : \"var(--foreground)\",\n        fontSize: 12,\n        fontWeight: 600,\n      }),\n    ),\n  ],\n  scales: {\n    x: { scale: scaleLinear().domain([-first / 2, first / 2]), axis: false },\n    y: {\n      scale: () =>\n        scaleBand<string>()\n          .domain(rows.map((row) => row.stage))\n          .padding(0.08),\n    },\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: point.datum.stage,\n      rows: [\n        {\n          label: \"Users\",\n          value: point.datum.users.toLocaleString(\"en-US\"),\n          color: point.color,\n        },\n        { label: \"Of viewers\", value: percent(point.datum.users) },\n        {\n          label: \"From last step\",\n          value: stepRate(\n            rows.findIndex((row) => row.stage === point.datum.stage),\n          ),\n        },\n      ],\n    }),\n  },\n});\n\nexport function ChartFunnel() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Checkout funnel</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={220}\n        initialWidth={520}\n        ariaLabel={`Checkout funnel from ${first.toLocaleString(\"en-US\")} product views to ${rows[rows.length - 1].users.toLocaleString(\"en-US\")} purchases in the last 30 days`}\n      />\n      <ChartTable\n        caption=\"Users at each checkout step\"\n        columns={[\"Step\", \"Users\", \"Of viewers\", \"From last step\"]}\n        rows={rows.map((row, index) => [\n          row.stage,\n          row.users,\n          percent(row.users),\n          stepRate(index),\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

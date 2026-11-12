@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-ridgeline",
+  "type": "registry:block",
+  "title": "Ridgeline",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartRidgeline /> from components/charts/chart-ridgeline.tsx. Preview: https://vip-ui.dev/charts#chart-ridgeline",
+  "meta": {
+    "entry": {
+      "component": "ChartRidgeline",
+      "file": "chart-ridgeline.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-ridgeline.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-ridgeline.tsx",
+      "content": "\"use client\";\n\nimport { binX, defineChart } from \"@tanstack/charts\";\nimport { ridgelineY } from \"@tanstack/charts/ridgeline\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { scalePoint } from \"@tanstack/charts/scales/point\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport { normalize } from \"@tanstack/charts/transform/normalize\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartDescription,\n  ChartFrame,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst seasons = [\n  { label: \"Season 1\", center: 7.9, spread: 1.4 },\n  { label: \"Season 2\", center: 8.4, spread: 1.1 },\n  { label: \"Season 3\", center: 7.2, spread: 1.8 },\n  { label: \"Season 4\", center: 6.4, spread: 2 },\n];\n\nconst noise = (seed: number) => {\n  const value = Math.sin(seed * 78.233) * 43758.5453;\n  return value - Math.floor(value);\n};\n\nconst rows = seasons.flatMap((season, seasonIndex) =>\n  Array.from({ length: 30 }, (_, index) => {\n    const seed = seasonIndex * 50 + index + 1;\n    const offset = noise(seed) + noise(seed + 0.3) + noise(seed + 0.7) - 1.5;\n    const rating = season.center + offset * season.spread;\n    return {\n      season: season.label,\n      rating: Math.min(10, Math.max(3, Math.round(rating * 10) / 10)),\n    };\n  }),\n);\n\nconst bins = binX(rows, {\n  value: \"rating\",\n  by: \"season\",\n  thresholds: [3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10],\n  outputs: { count: { reduce: \"count\" } },\n});\n\nconst profiles = normalize(bins, {\n  value: \"count\",\n  by: \"season\",\n  basis: \"max\",\n  as: \"height\",\n});\n\nconst formatRating = new Intl.NumberFormat(\"en-US\", {\n  minimumFractionDigits: 1,\n  maximumFractionDigits: 1,\n}).format;\n\nconst summary = seasons.map((season) => {\n  const values = rows\n    .filter((row) => row.season === season.label)\n    .map((row) => row.rating);\n  return {\n    season: season.label,\n    mean: values.reduce((total, value) => total + value, 0) / values.length,\n    low: Math.min(...values),\n    high: Math.max(...values),\n  };\n});\n\nconst definition = defineChart({\n  marks: [\n    ridgelineY(profiles, {\n      x: \"x\",\n      y: \"season\",\n      height: \"height\",\n      overlap: 0.85,\n      fill: \"var(--ts-chart-1)\",\n      fillOpacity: 0.22,\n      stroke: \"var(--ts-chart-1)\",\n      strokeWidth: 1.5,\n    }),\n  ],\n  scales: {\n    x: {\n      scale: scaleLinear().domain([3, 10]),\n      grid: true,\n      axis: { label: \"Episode rating\", ticks: { count: 7 } },\n    },\n    y: {\n      scale: () =>\n        scalePoint<string>()\n          .domain(seasons.map((season) => season.label))\n          .padding(0.9),\n      reverse: true,\n    },\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: point.datum.season,\n      rows: [\n        {\n          label: \"Ratings\",\n          value: `${formatRating(point.datum.x1)}–${formatRating(point.datum.x2)}`,\n          color: point.color,\n        },\n        { label: \"Episodes\", value: `${point.datum.count}` },\n      ],\n    }),\n  },\n});\n\nexport function ChartRidgeline() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Ratings by season</ChartTitle>\n        <ChartDescription>\n          Each profile is scaled to its own peak.\n        </ChartDescription>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={260}\n        initialWidth={520}\n        ariaLabel=\"Ridgeline plot of episode ratings for four seasons. Ratings peak in season 2 and spread lower in season 4.\"\n      />\n      <ChartTable\n        caption=\"Episode ratings by season\"\n        columns={[\"Season\", \"Mean rating\", \"Lowest\", \"Highest\"]}\n        rows={summary.map((item) => [\n          item.season,\n          formatRating(item.mean),\n          formatRating(item.low),\n          formatRating(item.high),\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

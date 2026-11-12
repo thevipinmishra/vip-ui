@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-heatmap-calendar",
+  "type": "registry:block",
+  "title": "Calendar heatmap",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartHeatmapCalendar /> from components/charts/chart-heatmap-calendar.tsx. Preview: https://vip-ui.dev/charts#chart-heatmap-calendar",
+  "meta": {
+    "entry": {
+      "component": "ChartHeatmapCalendar",
+      "file": "chart-heatmap-calendar.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-heatmap-calendar.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-heatmap-calendar.tsx",
+      "content": "\"use client\";\n\nimport { cell, defineChart } from \"@tanstack/charts\";\nimport { scaleBand } from \"@tanstack/charts/scales/band\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartLegend,\n  ChartLegendItem,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst firstMonday = Date.UTC(2026, 6, 27);\nconst oneDay = 24 * 60 * 60 * 1000;\n\nconst deploysPerDay = [\n  7, 6, 8, 7, 7, 0, 0, 5, 3, 6, 2, 2, 0, 2, 1, 6, 1, 6, 4, 0, 0, 4, 6, 4, 7, 3,\n  2, 0, 0, 8, 5, 1, 3, 0, 1, 2, 6, 7, 4, 2, 2, 1, 5, 5, 3, 5, 2, 0, 0, 3, 1, 5,\n  5, 1, 1, 1, 6, 4, 7, 5, 4, 1, 1, 5, 5, 5, 3, 3, 2, 1, 2, 7, 1, 3, 4, 1, 1, 4,\n];\n\nconst days = [\"Mon\", \"Tue\", \"Wed\", \"Thu\", \"Fri\", \"Sat\", \"Sun\"];\nconst isoDate = (time: number) => new Date(time).toISOString().slice(0, 10);\n\nconst rows = deploysPerDay.map((deploys, index) => ({\n  date: isoDate(firstMonday + index * oneDay),\n  week: isoDate(firstMonday + Math.floor(index / 7) * 7 * oneDay),\n  day: days[index % 7],\n  deploys,\n}));\n\nconst weeks = [...new Set(rows.map((row) => row.week))];\n\nconst levels = [\n  { label: \"0\", max: 0, color: \"var(--muted)\" },\n  {\n    label: \"1–2\",\n    max: 2,\n    color: \"color-mix(in oklch, var(--ts-chart-2) 30%, var(--muted))\",\n  },\n  {\n    label: \"3–4\",\n    max: 4,\n    color: \"color-mix(in oklch, var(--ts-chart-2) 55%, var(--muted))\",\n  },\n  {\n    label: \"5–6\",\n    max: 6,\n    color: \"color-mix(in oklch, var(--ts-chart-2) 80%, var(--muted))\",\n  },\n  { label: \"7+\", max: Number.POSITIVE_INFINITY, color: \"var(--ts-chart-2)\" },\n];\n\nconst level = (deploys: number) =>\n  levels.find((item) => deploys <= item.max)?.label ?? \"0\";\n\nconst monthFormat = new Intl.DateTimeFormat(\"en-US\", {\n  month: \"short\",\n  timeZone: \"UTC\",\n});\nconst dateFormat = new Intl.DateTimeFormat(\"en-US\", {\n  weekday: \"long\",\n  month: \"short\",\n  day: \"numeric\",\n  timeZone: \"UTC\",\n});\nconst weekFormat = new Intl.DateTimeFormat(\"en-US\", {\n  month: \"short\",\n  day: \"numeric\",\n  timeZone: \"UTC\",\n});\n\nconst monthStarts = weeks.filter((week) => new Date(week).getUTCDate() <= 7);\n\nconst definition = defineChart({\n  marks: [\n    cell(rows, {\n      x: \"week\",\n      y: \"day\",\n      color: (row) => level(row.deploys),\n      key: \"date\",\n      inset: 1.5,\n      radius: 3,\n    }),\n  ],\n  scales: {\n    x: {\n      scale: () => scaleBand<string>().domain(weeks),\n      axis: {\n        ticks: {\n          values: monthStarts,\n          format: (week: string) => monthFormat.format(new Date(week)),\n        },\n      },\n    },\n    y: { scale: () => scaleBand<string>().domain(days) },\n  },\n  color: {\n    domain: levels.map((item) => item.label),\n    range: levels.map((item) => item.color),\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: dateFormat.format(new Date(point.datum.date)),\n      rows: [\n        {\n          label: \"Deploys\",\n          value: `${point.datum.deploys}`,\n          color: point.color,\n        },\n      ],\n    }),\n  },\n});\n\nexport function ChartHeatmapCalendar() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Deploys</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={220}\n        initialWidth={520}\n        ariaLabel={`Calendar heatmap of production deploys per day for the last ${weeks.length} weeks`}\n      />\n      <ChartLegend>\n        {levels.map((item) => (\n          <ChartLegendItem key={item.label} color={item.color}>\n            {item.label}\n          </ChartLegendItem>\n        ))}\n      </ChartLegend>\n      <ChartTable\n        caption=\"Production deploys per day\"\n        columns={[\"Week of\", ...days]}\n        rows={weeks.map((week) => [\n          weekFormat.format(new Date(week)),\n          ...days.map(\n            (day) =>\n              rows.find((row) => row.week === week && row.day === day)\n                ?.deploys ?? \"\",\n          ),\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

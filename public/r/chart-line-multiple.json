@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-line-multiple",
+  "type": "registry:block",
+  "title": "Multiple lines",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartLineMultiple /> from components/charts/chart-line-multiple.tsx. Preview: https://vip-ui.dev/charts#chart-line-multiple",
+  "meta": {
+    "entry": {
+      "component": "ChartLineMultiple",
+      "file": "chart-line-multiple.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-line-multiple.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-line-multiple.tsx",
+      "content": "\"use client\";\n\nimport { defineChart, lineY } from \"@tanstack/charts\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { scalePoint } from \"@tanstack/charts/scales/point\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartLegend,\n  ChartLegendItem,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst hours = [\n  { hour: \"00:00\", p50: 41, p95: 118, p99: 262 },\n  { hour: \"01:00\", p50: 39, p95: 112, p99: 248 },\n  { hour: \"02:00\", p50: 38, p95: 109, p99: 241 },\n  { hour: \"03:00\", p50: 38, p95: 111, p99: 255 },\n  { hour: \"04:00\", p50: 40, p95: 116, p99: 260 },\n  { hour: \"05:00\", p50: 42, p95: 124, p99: 281 },\n  { hour: \"06:00\", p50: 47, p95: 138, p99: 302 },\n  { hour: \"07:00\", p50: 53, p95: 152, p99: 331 },\n  { hour: \"08:00\", p50: 58, p95: 168, p99: 356 },\n  { hour: \"09:00\", p50: 61, p95: 177, p99: 372 },\n  { hour: \"10:00\", p50: 63, p95: 181, p99: 384 },\n  { hour: \"11:00\", p50: 62, p95: 179, p99: 377 },\n  { hour: \"12:00\", p50: 60, p95: 174, p99: 369 },\n  { hour: \"13:00\", p50: 64, p95: 186, p99: 402 },\n  { hour: \"14:00\", p50: 71, p95: 214, p99: 518 },\n  { hour: \"15:00\", p50: 66, p95: 193, p99: 428 },\n  { hour: \"16:00\", p50: 62, p95: 178, p99: 381 },\n  { hour: \"17:00\", p50: 59, p95: 169, p99: 362 },\n  { hour: \"18:00\", p50: 55, p95: 158, p99: 339 },\n  { hour: \"19:00\", p50: 51, p95: 147, p99: 318 },\n  { hour: \"20:00\", p50: 48, p95: 139, p99: 301 },\n  { hour: \"21:00\", p50: 46, p95: 131, p99: 287 },\n  { hour: \"22:00\", p50: 44, p95: 125, p99: 274 },\n  { hour: \"23:00\", p50: 42, p95: 120, p99: 266 },\n];\n\nconst percentiles = [\n  { key: \"p50\", label: \"p50\", color: \"var(--ts-chart-1)\" },\n  { key: \"p95\", label: \"p95\", color: \"var(--ts-chart-2)\" },\n  { key: \"p99\", label: \"p99\", color: \"var(--ts-chart-3)\" },\n] as const;\n\nconst rows = hours.flatMap((row) =>\n  percentiles.map((percentile) => ({\n    hour: row.hour,\n    percentile: percentile.label,\n    ms: row[percentile.key],\n  })),\n);\n\nconst ticks = hours\n  .filter((_, index) => index % 4 === 0)\n  .map((row) => row.hour);\n\nconst definition = defineChart({\n  marks: [\n    lineY(rows, {\n      x: \"hour\",\n      y: \"ms\",\n      z: \"percentile\",\n      color: \"percentile\",\n      strokeWidth: 2,\n    }),\n  ],\n  scales: {\n    x: { scale: scalePoint, axis: { ticks: { values: ticks } } },\n    y: {\n      scale: scaleLinear().domain([0, 600]),\n      grid: true,\n      axis: { ticks: { count: 4, format: (value: number) => `${value} ms` } },\n    },\n  },\n  color: {\n    domain: percentiles.map((percentile) => percentile.label),\n    range: percentiles.map((percentile) => percentile.color),\n  },\n  focus: \"group-x\",\n  tooltip: {\n    use: tooltip,\n    sort: \"color-domain\",\n    content: (points, { primaryPoint }) => ({\n      title: `${points[0].datum.hour} UTC`,\n      rows: points.map((point) => ({\n        label: point.groupLabel,\n        value: `${point.datum.ms} ms`,\n        color: point.color,\n        active: point === primaryPoint,\n      })),\n    }),\n  },\n});\n\nexport function ChartLineMultiple() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>API latency</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={220}\n        initialWidth={520}\n        ariaLabel=\"Hourly API response time at the 50th, 95th and 99th percentiles for the last 24 hours, in milliseconds\"\n      />\n      <ChartLegend>\n        {percentiles.map((item) => (\n          <ChartLegendItem key={item.label} color={item.color} swatch=\"line\">\n            {item.label}\n          </ChartLegendItem>\n        ))}\n      </ChartLegend>\n      <ChartTable\n        caption=\"Hourly API response time percentiles, in milliseconds\"\n        columns={[\"Hour (UTC)\", \"p50\", \"p95\", \"p99\"]}\n        rows={hours.map((row) => [row.hour, row.p50, row.p95, row.p99])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

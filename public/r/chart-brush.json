@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-brush",
+  "type": "registry:block",
+  "title": "Brush",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartBrush /> from components/charts/chart-brush.tsx. Preview: https://vip-ui.dev/charts#chart-brush",
+  "meta": {
+    "entry": {
+      "component": "ChartBrush",
+      "file": "chart-brush.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": [
+    "https://vip-ui.dev/r/button.json",
+    "https://vip-ui.dev/r/chart.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-brush.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-brush.tsx",
+      "content": "\"use client\";\n\nimport { defineChart, lineY } from \"@tanstack/charts\";\nimport {\n  type BrushRange,\n  type BrushXChange,\n  brushX,\n} from \"@tanstack/charts/interaction/brush\";\nimport { controlledSignal } from \"@tanstack/charts/interaction/signal\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { useMemo, useState } from \"react\";\nimport { Button } from \"../vip-ui/button\";\nimport {\n  Chart,\n  ChartAction,\n  ChartCaption,\n  ChartDescription,\n  ChartFrame,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst rows = [\n  { week: 1, signups: 214 },\n  { week: 2, signups: 236 },\n  { week: 3, signups: 268 },\n  { week: 4, signups: 255 },\n  { week: 5, signups: 302 },\n  { week: 6, signups: 338 },\n  { week: 7, signups: 356 },\n  { week: 8, signups: 329 },\n  { week: 9, signups: 391 },\n  { week: 10, signups: 428 },\n  { week: 11, signups: 446 },\n  { week: 12, signups: 487 },\n];\n\nconst weeks = rows.map((row) => row.week);\nconst initialRange: BrushRange<number> = { start: 3, end: 8 };\n\nconst countFormat = new Intl.NumberFormat(\"en-US\");\n\nconst formatCount = (value: number) => countFormat.format(value);\nconst formatWeekTick = (week: number) => `W${week}`;\n\nexport function ChartBrush() {\n  const [range, setRange] = useState<BrushRange<number>>(initialRange);\n  const definition = useMemo(\n    () =>\n      defineChart({\n        marks: [\n          lineY(rows, {\n            x: \"week\",\n            y: \"signups\",\n            points: true,\n            stroke: \"var(--ts-chart-1)\",\n            strokeWidth: 2,\n          }),\n        ],\n        scales: {\n          x: {\n            scale: scaleLinear().domain([1, 12]),\n            axis: { ticks: { count: 6, format: formatWeekTick } },\n          },\n          y: {\n            scale: scaleLinear().domain([0, 550]),\n            grid: true,\n            axis: { ticks: { count: 4, format: formatCount } },\n          },\n        },\n        controls: [\n          brushX({\n            range: controlledSignal<BrushRange<number>, BrushXChange<number>>(\n              range,\n              (next, { reason }) => {\n                if (reason.type === \"commit\") setRange(next);\n              },\n            ),\n            values: weeks,\n            format: (week) => `Week ${week}`,\n            ariaLabel: \"Reporting range\",\n            startAriaLabel: \"Range start\",\n            endAriaLabel: \"Range end\",\n            selectionStyle: {\n              fill: \"var(--ts-chart-1)\",\n              fillOpacity: 0.08,\n              stroke: \"var(--ts-chart-1)\",\n              strokeOpacity: 0.4,\n              strokeWidth: 1,\n            },\n            handleStyle: { fill: \"var(--ts-chart-1)\", fillOpacity: 0 },\n          }),\n        ],\n      }),\n    [range],\n  );\n\n  const selectedWeeks = rows.filter(\n    (row) => row.week >= range.start && row.week <= range.end,\n  );\n  const signups = selectedWeeks.reduce((sum, row) => sum + row.signups, 0);\n  const isInitial =\n    range.start === initialRange.start && range.end === initialRange.end;\n\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Weekly signups</ChartTitle>\n        <ChartDescription>\n          Twelve weeks of new accounts. Drag the handles to choose a reporting\n          range.\n        </ChartDescription>\n      </ChartCaption>\n      <ChartAction>\n        <Button\n          variant=\"outline\"\n          size=\"sm\"\n          isDisabled={isInitial}\n          onPress={() => setRange(initialRange)}\n        >\n          Reset range\n        </Button>\n      </ChartAction>\n      <Chart\n        definition={definition}\n        height={260}\n        initialWidth={520}\n        ariaLabel={`Weekly signups for 12 weeks with a reporting range from week ${range.start} to week ${range.end}`}\n      />\n      <p\n        role=\"status\"\n        aria-live=\"polite\"\n        className=\"mt-3 text-xs text-muted-foreground\"\n      >\n        Week {range.start} to week {range.end}\n        <span aria-hidden=\"true\"> · </span>\n        {selectedWeeks.length} weeks\n        <span aria-hidden=\"true\"> · </span>\n        {formatCount(signups)} signups\n      </p>\n      <ChartTable\n        caption=\"Weekly signups\"\n        columns={[\"Week\", \"Signups\"]}\n        rows={rows.map((row) => [`Week ${row.week}`, formatCount(row.signups)])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

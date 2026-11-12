@@ -64,7 +64,7 @@ export default function StylingPage() {
           .
         </p>
         <p>
-          To use the vip/ui colors, copy a theme from{" "}
+          To use the vip/ui colors, add a theme from{" "}
           <TextLink href="/themes">Themes</TextLink>. Each theme uses the{" "}
           <TextLink href="#color-scales">color scales</TextLink>.
         </p>
@@ -86,6 +86,10 @@ export default function StylingPage() {
             <Code>--ease-out-quint</Code> and <Code>--ease-spring</Code> for
             transitions.
           </li>
+          <li>
+            <Code>--chart-6</Code> for a sixth chart color. Charts use{" "}
+            <Code>--foreground</Code> when it is not set.
+          </li>
         </List>
         <p>
           The CLI adds only the tokens that a component uses. For a manual
@@ -99,10 +103,11 @@ export default function StylingPage() {
 
       <GuideSection id="color-scales" title="Color scales">
         <p>
-          vip/ui has ten color scales with 12 steps each. Get the CSS from{" "}
-          <TextLink href="/colors">Colors</TextLink>. It sets variables such as{" "}
-          <Code>--blue-1</Code> to <Code>--blue-12</Code> in <Code>:root</Code>{" "}
-          and <Code>.dark</Code>.
+          vip/ui has ten color scales with 12 steps each. Add a scale with the{" "}
+          <TextLink href="/components/installation#theme">CLI</TextLink>, or
+          copy its CSS from <TextLink href="/colors">Colors</TextLink>. A scale
+          sets variables such as <Code>--blue-1</Code> to <Code>--blue-12</Code>{" "}
+          in <Code>:root</Code> and <Code>.dark</Code>.
         </p>
         <p>Use each step for one purpose:</p>
         <List>

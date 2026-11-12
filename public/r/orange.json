@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "orange",
+  "type": "registry:theme",
+  "title": "Orange",
+  "description": "Warnings and urgent accents that must not look like errors.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["colors"],
+  "docs": "The scale adds --orange-1 to --orange-12 for light and dark mode. Classes such as bg-orange-3 work after the install.",
+  "dependencies": [],
+  "files": [],
+  "cssVars": {
+    "theme": {
+      "color-orange-1": "var(--orange-1)",
+      "color-orange-2": "var(--orange-2)",
+      "color-orange-3": "var(--orange-3)",
+      "color-orange-4": "var(--orange-4)",
+      "color-orange-5": "var(--orange-5)",
+      "color-orange-6": "var(--orange-6)",
+      "color-orange-7": "var(--orange-7)",
+      "color-orange-8": "var(--orange-8)",
+      "color-orange-9": "var(--orange-9)",
+      "color-orange-10": "var(--orange-10)",
+      "color-orange-11": "var(--orange-11)",
+      "color-orange-12": "var(--orange-12)"
+    },
+    "light": {
+      "orange-1": "oklch(0.987 0.009 58)",
+      "orange-2": "oklch(0.969 0.015 58)",
+      "orange-3": "oklch(0.944 0.026 58)",
+      "orange-4": "oklch(0.919 0.036 58)",
+      "orange-5": "oklch(0.894 0.046 58)",
+      "orange-6": "oklch(0.866 0.059 58)",
+      "orange-7": "oklch(0.820 0.082 58)",
+      "orange-8": "oklch(0.755 0.112 58)",
+      "orange-9": "oklch(0.565 0.170 58)",
+      "orange-10": "oklch(0.530 0.167 58)",
+      "orange-11": "oklch(0.505 0.105 58)",
+      "orange-12": "oklch(0.285 0.051 58)"
+    },
+    "dark": {
+      "orange-1": "oklch(0.185 0.031 58)",
+      "orange-2": "oklch(0.215 0.043 58)",
+      "orange-3": "oklch(0.243 0.054 58)",
+      "orange-4": "oklch(0.268 0.065 58)",
+      "orange-5": "oklch(0.293 0.073 58)",
+      "orange-6": "oklch(0.322 0.082 58)",
+      "orange-7": "oklch(0.365 0.095 58)",
+      "orange-8": "oklch(0.430 0.116 58)",
+      "orange-9": "oklch(0.700 0.170 58)",
+      "orange-10": "oklch(0.740 0.165 58)",
+      "orange-11": "oklch(0.735 0.116 58)",
+      "orange-12": "oklch(0.930 0.048 58)"
+    }
+  }
+}

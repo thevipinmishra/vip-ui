@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-line-step",
+  "type": "registry:block",
+  "title": "Step line",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartLineStep /> from components/charts/chart-line-step.tsx. Preview: https://vip-ui.dev/charts#chart-line-step",
+  "meta": {
+    "entry": {
+      "component": "ChartLineStep",
+      "file": "chart-line-step.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0", "d3-shape@^3.2.1"],
+  "devDependencies": ["@types/d3-shape@^3.2.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-line-step.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-line-step.tsx",
+      "content": "\"use client\";\n\nimport { defineChart, lineY } from \"@tanstack/charts\";\nimport { d3Curve } from \"@tanstack/charts/d3/shape\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport { curveStepAfter } from \"d3-shape\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst changes = [\n  { date: \"2026-09-14\", percent: 1, note: \"Staff only\" },\n  { date: \"2026-09-16\", percent: 5, note: \"First customers\" },\n  { date: \"2026-09-21\", percent: 25, note: \"Increased\" },\n  { date: \"2026-09-23\", percent: 10, note: \"Rolled back for payment errors\" },\n  { date: \"2026-09-28\", percent: 25, note: \"Fix released\" },\n  { date: \"2026-10-02\", percent: 50, note: \"Increased\" },\n  { date: \"2026-10-07\", percent: 100, note: \"All users\" },\n  { date: \"2026-10-12\", percent: 100, note: \"Current\" },\n];\n\nconst rows = changes.map((change) => ({\n  ...change,\n  time: Date.parse(change.date),\n}));\n\nconst dayFormat = new Intl.DateTimeFormat(\"en-US\", {\n  month: \"short\",\n  day: \"numeric\",\n  timeZone: \"UTC\",\n});\nconst formatDay = (time: number) => dayFormat.format(time);\n\nconst week = 7 * 24 * 60 * 60 * 1000;\nconst start = rows[0].time;\nconst end = rows[rows.length - 1].time;\nconst weeklyTicks = Array.from(\n  { length: Math.floor((end - start) / week) + 1 },\n  (_, index) => start + index * week,\n);\n\nconst definition = defineChart({\n  marks: [\n    lineY(rows, {\n      x: \"time\",\n      y: \"percent\",\n      stroke: \"var(--ts-chart-4)\",\n      strokeWidth: 2,\n      curve: d3Curve(curveStepAfter),\n      points: true,\n    }),\n  ],\n  scales: {\n    x: {\n      scale: scaleLinear().domain([start, end]),\n      axis: { ticks: { values: weeklyTicks, format: formatDay } },\n    },\n    y: {\n      scale: scaleLinear().domain([0, 100]),\n      grid: true,\n      axis: { ticks: { count: 4, format: (value: number) => `${value}%` } },\n    },\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: formatDay(point.datum.time),\n      rows: [\n        {\n          label: \"Users\",\n          value: `${point.datum.percent}%`,\n          color: point.color,\n        },\n        { label: \"Note\", value: point.datum.note },\n      ],\n    }),\n  },\n});\n\nexport function ChartLineStep() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>New checkout rollout</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={220}\n        initialWidth={520}\n        ariaLabel=\"Rollout of the new checkout from 1 percent of users on September 14 to all users on October 7, with a rollback on September 23\"\n      />\n      <ChartTable\n        caption=\"Share of users with the new checkout\"\n        columns={[\"Date\", \"Users\", \"Note\"]}\n        rows={rows.map((row) => [\n          formatDay(row.time),\n          `${row.percent}%`,\n          row.note,\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

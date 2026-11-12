@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { ItemHighlight } from "@/components/ui/item-highlight";
 import { catalogGroups } from "@/lib/catalog";
 import { springLayout } from "@/lib/motion";
-import { docsGuides } from "@/lib/navigation";
+import { guideGroups } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 
 function revealInScrollParent(element: HTMLElement) {
@@ -77,12 +77,14 @@ export function DocsNav({
       className="relative isolate grid gap-7"
     >
       <ItemHighlight placement="under" items="a" className="bg-muted/70" />
-      <div className="grid gap-0.5">
-        <p className="mb-1.5 px-3 text-xs font-medium text-muted-foreground">
-          Get started
-        </p>
-        {docsGuides.map(renderLink)}
-      </div>
+      {guideGroups.map((group) => (
+        <div key={group.title} className="grid gap-0.5">
+          <p className="mb-1.5 px-3 text-xs font-medium text-muted-foreground">
+            {group.title}
+          </p>
+          {group.guides.map(renderLink)}
+        </div>
+      ))}
       {catalogGroups.map((group) => (
         <div key={group.title} className="grid gap-0.5">
           <p className="mb-1.5 px-3 text-xs font-medium text-muted-foreground">

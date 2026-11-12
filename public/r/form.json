@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "form",
+  "type": "registry:ui",
+  "title": "Form",
+  "description": "Groups fields and handles validation and submission.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["forms"],
+  "dependencies": [
+    "react-aria-components@^1.22.1",
+    "tailwindcss-react-aria-components@^2.2.0"
+  ],
+  "registryDependencies": ["https://vip-ui.dev/r/utils.json"],
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
+  "files": [
+    {
+      "path": "src/components/ui/form.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/form.tsx",
+      "content": "\"use client\";\n\nimport { Form as AriaForm, type FormProps } from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport function Form({\n  className,\n  ...props\n}: FormProps & React.RefAttributes<HTMLFormElement>) {\n  return (\n    <AriaForm\n      {...props}\n      data-slot=\"form\"\n      className={cn(\"grid gap-4\", className)}\n    />\n  );\n}\n"
+    }
+  ]
+}

@@ -1,12 +1,10 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
 import {
   ColorThumb as AriaColorThumb,
   type ColorThumbProps,
   composeRenderProps,
 } from "react-aria-components";
-import { duration, easeOut } from "./motion";
 import { cn } from "./utils";
 
 export function ColorThumb({ className, ...props }: ColorThumbProps) {
@@ -20,20 +18,13 @@ export function ColorThumb({ className, ...props }: ColorThumbProps) {
         ),
       )}
     >
-      {({ isDragging }) => <ThumbDragRing isDragging={isDragging} />}
+      {({ isDragging }) => (
+        <span
+          aria-hidden="true"
+          data-dragging={isDragging || undefined}
+          className="pointer-events-none absolute -inset-1 rounded-full ring-2 ring-primary/60 opacity-0 scale-85 transition-[opacity,scale] duration-150 ease-out-quint motion-reduce:duration-0 data-dragging:opacity-100 data-dragging:scale-100"
+        />
+      )}
     </AriaColorThumb>
-  );
-}
-
-function ThumbDragRing({ isDragging }: { isDragging: boolean }) {
-  const reduceMotion = useReducedMotion();
-  return (
-    <motion.span
-      aria-hidden="true"
-      className="pointer-events-none absolute -inset-1 rounded-full ring-2 ring-primary/60"
-      initial={false}
-      animate={{ opacity: isDragging ? 1 : 0, scale: isDragging ? 1 : 0.85 }}
-      transition={{ duration: reduceMotion ? 0 : duration.fast, ease: easeOut }}
-    />
   );
 }

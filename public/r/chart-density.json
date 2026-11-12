@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-density",
+  "type": "registry:block",
+  "title": "Density contours",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartDensity /> from components/charts/chart-density.tsx. Preview: https://vip-ui.dev/charts#chart-density",
+  "meta": {
+    "entry": {
+      "component": "ChartDensity",
+      "file": "chart-density.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-density.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-density.tsx",
+      "content": "\"use client\";\n\nimport { defineChart, dot } from \"@tanstack/charts\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { densityContour } from \"@tanstack/charts/spatial/density\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst noise = (seed: number) => {\n  const value = Math.sin(seed * 93.9898 + 1.618) * 43758.5453;\n  return value - Math.floor(value);\n};\n\nconst clusters = [\n  { label: \"Browsers\", spend: 18, conversion: 1.4, size: 70 },\n  { label: \"Planners\", spend: 46, conversion: 3.6, size: 55 },\n  { label: \"Loyalists\", spend: 74, conversion: 5.2, size: 35 },\n];\n\nconst campaigns = clusters.flatMap((cluster, clusterIndex) =>\n  Array.from({ length: cluster.size }, (_, index) => {\n    const seed = clusterIndex * 200 + index + 1;\n    const dx = noise(seed) + noise(seed + 0.4) - 1;\n    const dy = noise(seed + 0.8) + noise(seed + 0.2) - 1;\n    return {\n      id: `${cluster.label}-${index}`,\n      cluster: cluster.label,\n      spend: Math.round((cluster.spend + dx * 16) * 10) / 10,\n      conversion: Math.round((cluster.conversion + dy * 1.4) * 100) / 100,\n    };\n  }),\n);\n\nconst formatSpend = (value: number) => `$${Math.round(value)}k`;\nconst formatRate = (value: number) => `${value.toFixed(1)}%`;\n\nconst summary = clusters.map((cluster) => {\n  const items = campaigns.filter((row) => row.cluster === cluster.label);\n  const mean = (values: number[]) =>\n    values.reduce((total, value) => total + value, 0) / values.length;\n  return {\n    label: cluster.label,\n    count: items.length,\n    spend: mean(items.map((row) => row.spend)),\n    conversion: mean(items.map((row) => row.conversion)),\n  };\n});\n\nconst definition = defineChart({\n  marks: [\n    densityContour(campaigns, {\n      x: \"spend\",\n      y: \"conversion\",\n      bandwidth: 22,\n      thresholds: 6,\n      fill: \"var(--ts-chart-1)\",\n      fillOpacity: 0.1,\n      stroke: \"var(--ts-chart-1)\",\n      strokeOpacity: 0.5,\n      strokeWidth: 1,\n    }),\n    dot(campaigns, {\n      x: \"spend\",\n      y: \"conversion\",\n      key: \"id\",\n      r: 2,\n      fill: \"var(--foreground)\",\n      fillOpacity: 0.45,\n    }),\n  ],\n  scales: {\n    x: {\n      scale: scaleLinear().domain([0, 100]),\n      grid: true,\n      axis: { label: \"Spend\", ticks: { count: 5, format: formatSpend } },\n    },\n    y: {\n      scale: scaleLinear().domain([0, 7]),\n      grid: true,\n      axis: {\n        label: \"Conversion\",\n        ticks: { count: 4, format: formatRate },\n      },\n    },\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: point.datum.cluster,\n      rows: [\n        { label: \"Spend\", value: formatSpend(point.datum.spend) },\n        { label: \"Conversion\", value: formatRate(point.datum.conversion) },\n      ],\n    }),\n  },\n});\n\nexport function ChartDensity() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Campaign clusters</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={280}\n        initialWidth={520}\n        ariaLabel={`Density contours over ${campaigns.length} campaigns by spend and conversion rate, forming three clusters`}\n      />\n      <ChartTable\n        caption=\"Campaign clusters by spend and conversion\"\n        columns={[\"Cluster\", \"Campaigns\", \"Mean spend\", \"Mean conversion\"]}\n        rows={summary.map((item) => [\n          item.label,\n          item.count,\n          formatSpend(item.spend),\n          formatRate(item.conversion),\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

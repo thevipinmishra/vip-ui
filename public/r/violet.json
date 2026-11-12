@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "violet",
+  "type": "registry:theme",
+  "title": "Violet",
+  "description": "Accents and categories that must look different from blue.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["colors"],
+  "docs": "The scale adds --violet-1 to --violet-12 for light and dark mode. Classes such as bg-violet-3 work after the install.",
+  "dependencies": [],
+  "files": [],
+  "cssVars": {
+    "theme": {
+      "color-violet-1": "var(--violet-1)",
+      "color-violet-2": "var(--violet-2)",
+      "color-violet-3": "var(--violet-3)",
+      "color-violet-4": "var(--violet-4)",
+      "color-violet-5": "var(--violet-5)",
+      "color-violet-6": "var(--violet-6)",
+      "color-violet-7": "var(--violet-7)",
+      "color-violet-8": "var(--violet-8)",
+      "color-violet-9": "var(--violet-9)",
+      "color-violet-10": "var(--violet-10)",
+      "color-violet-11": "var(--violet-11)",
+      "color-violet-12": "var(--violet-12)"
+    },
+    "light": {
+      "violet-1": "oklch(0.987 0.010 297)",
+      "violet-2": "oklch(0.969 0.017 297)",
+      "violet-3": "oklch(0.944 0.028 297)",
+      "violet-4": "oklch(0.919 0.040 297)",
+      "violet-5": "oklch(0.894 0.051 297)",
+      "violet-6": "oklch(0.866 0.066 297)",
+      "violet-7": "oklch(0.820 0.091 297)",
+      "violet-8": "oklch(0.755 0.125 297)",
+      "violet-9": "oklch(0.573 0.190 297)",
+      "violet-10": "oklch(0.538 0.186 297)",
+      "violet-11": "oklch(0.505 0.118 297)",
+      "violet-12": "oklch(0.285 0.057 297)"
+    },
+    "dark": {
+      "violet-1": "oklch(0.185 0.034 297)",
+      "violet-2": "oklch(0.215 0.048 297)",
+      "violet-3": "oklch(0.243 0.061 297)",
+      "violet-4": "oklch(0.268 0.072 297)",
+      "violet-5": "oklch(0.293 0.082 297)",
+      "violet-6": "oklch(0.322 0.091 297)",
+      "violet-7": "oklch(0.365 0.106 297)",
+      "violet-8": "oklch(0.430 0.129 297)",
+      "violet-9": "oklch(0.700 0.190 297)",
+      "violet-10": "oklch(0.740 0.184 297)",
+      "violet-11": "oklch(0.735 0.129 297)",
+      "violet-12": "oklch(0.930 0.053 297)"
+    }
+  }
+}

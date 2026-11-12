@@ -1,0 +1,30 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "press-button",
+  "type": "registry:ui",
+  "title": "Press Button",
+  "description": "Handles press interactions for shared button controls.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["shared"],
+  "dependencies": [
+    "react-aria-components@^1.22.1",
+    "tailwindcss-react-aria-components@^2.2.0"
+  ],
+  "registryDependencies": ["https://vip-ui.dev/r/utils.json"],
+  "cssVars": {
+    "theme": {
+      "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+    }
+  },
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
+  "files": [
+    {
+      "path": "src/components/ui/press-button.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/press-button.tsx",
+      "content": "\"use client\";\n\nimport {\n  Button,\n  type ButtonProps,\n  composeRenderProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport function PressButton({ className, ...props }: ButtonProps) {\n  return (\n    <Button\n      data-slot=\"press-button\"\n      {...props}\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"transition-[scale] duration-150 ease-out-quint motion-safe:pressed:scale-[0.96]\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n"
+    }
+  ]
+}

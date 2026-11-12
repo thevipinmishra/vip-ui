@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-radial-progress",
+  "type": "registry:block",
+  "title": "Radial progress",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartRadialProgress /> from components/charts/chart-radial-progress.tsx. Preview: https://vip-ui.dev/charts#chart-radial-progress",
+  "meta": {
+    "entry": {
+      "component": "ChartRadialProgress",
+      "file": "chart-radial-progress.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-radial-progress.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-radial-progress.tsx",
+      "content": "\"use client\";\n\nimport { defineChart } from \"@tanstack/charts\";\nimport { decorative } from \"@tanstack/charts/mark/decorative\";\nimport { polar, radialBarAngle } from \"@tanstack/charts/polar\";\nimport { scaleBand } from \"@tanstack/charts/scales/band\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartCenter,\n  ChartDescription,\n  ChartFrame,\n  ChartTable,\n  ChartTitle,\n  ChartValue,\n} from \"../vip-ui/chart\";\n\nconst quota = 100;\nconst used = 72.4;\nconst percent = Math.round((used / quota) * 100);\n\nconst rows = [\n  { status: \"Used\", gigabytes: used },\n  { status: \"Free\", gigabytes: quota - used },\n];\n\nconst formatGigabytes = (value: number) =>\n  `${value.toLocaleString(\"en-US\", { maximumFractionDigits: 1 })} GB`;\n\nconst storage = [{ disk: \"Storage\", used }];\n\nconst layout = {\n  radiusRatio: 0.9,\n  startAngle: -Math.PI * 0.75,\n  endAngle: Math.PI * 0.75,\n  scales: {\n    angle: { scale: scaleLinear().domain([0, quota]) },\n    radius: {\n      scale: () => scaleBand<string>(),\n      range: [\n        ({ radius }: { radius: number }) => radius * 0.8,\n        ({ radius }: { radius: number }) => radius,\n      ] as const,\n    },\n  },\n};\n\nconst definition = defineChart({\n  marks: [\n    decorative(\n      polar({\n        ...layout,\n        marks: [\n          radialBarAngle(storage, {\n            radius: \"disk\",\n            angle: () => quota,\n            fill: \"var(--muted)\",\n            key: \"disk\",\n            cornerRadius: \"full\",\n          }),\n        ],\n      }),\n    ),\n    polar({\n      ...layout,\n      marks: [\n        radialBarAngle(storage, {\n          radius: \"disk\",\n          angle: \"used\",\n          fill: \"var(--ts-chart-1)\",\n          key: \"disk\",\n          cornerRadius: \"full\",\n        }),\n      ],\n    }),\n  ],\n  scales: { x: null, y: null },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: \"Storage\",\n      rows: [\n        {\n          label: \"Used\",\n          value: formatGigabytes(point.datum.used),\n          color: point.color,\n        },\n        { label: \"Free\", value: formatGigabytes(quota - point.datum.used) },\n      ],\n    }),\n  },\n});\n\nexport function ChartRadialProgress() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Storage</ChartTitle>\n        <ChartDescription>\n          {formatGigabytes(used)} of {formatGigabytes(quota)} used\n        </ChartDescription>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={240}\n        initialWidth={520}\n        ariaLabel={`${formatGigabytes(used)} of ${formatGigabytes(quota)} storage used, ${percent} percent`}\n      >\n        <ChartCenter aria-hidden=\"true\">\n          <ChartValue className=\"text-3xl\">{percent}%</ChartValue>\n          <ChartDescription>Used</ChartDescription>\n        </ChartCenter>\n      </Chart>\n      <ChartTable\n        caption=\"Storage use, in gigabytes\"\n        columns={[\"Status\", \"Space\"]}\n        rows={rows.map((row) => [row.status, formatGigabytes(row.gigabytes)])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

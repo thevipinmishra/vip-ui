@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-beeswarm",
+  "type": "registry:block",
+  "title": "Beeswarm",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartBeeswarm /> from components/charts/chart-beeswarm.tsx. Preview: https://vip-ui.dev/charts#chart-beeswarm",
+  "meta": {
+    "entry": {
+      "component": "ChartBeeswarm",
+      "file": "chart-beeswarm.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-beeswarm.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-beeswarm.tsx",
+      "content": "\"use client\";\n\nimport { defineChart, dodgeY, dot } from \"@tanstack/charts\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartLegend,\n  ChartLegendItem,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst sizes = [\n  4.2, 5.8, 6.5, 7.9, 8.4, 9.1, 9.6, 10.8, 11.5, 12.2, 12.9, 13.4, 14.1, 14.8,\n  15.2, 16.4, 17.3, 17.9, 18.6, 19.2, 20.5, 21.8, 22.4, 23.9, 24.6, 26.1, 27.8,\n  29.4, 31.2, 33.5, 36.8, 38.4, 42.6, 47.9, 55.3, 64.8,\n];\n\nconst segments = [\n  { label: \"Small business\", max: 15, color: \"var(--ts-chart-1)\" },\n  { label: \"Mid-market\", max: 40, color: \"var(--ts-chart-2)\" },\n  {\n    label: \"Enterprise\",\n    max: Number.POSITIVE_INFINITY,\n    color: \"var(--ts-chart-4)\",\n  },\n];\n\nconst segment = (value: number) =>\n  segments.find((item) => value < item.max)?.label ?? \"Enterprise\";\n\nconst rows = sizes.map((value, index) => ({\n  id: `DL-${2041 + index}`,\n  value,\n  segment: segment(value),\n}));\n\nconst money = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n  maximumFractionDigits: 0,\n}).format;\nconst formatMoney = (thousands: number) => money(thousands * 1000);\nconst formatCompact = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n  notation: \"compact\",\n}).format;\n\nconst definition = defineChart({\n  marks: [\n    dot(rows, {\n      x: \"value\",\n      key: \"id\",\n      r: 5,\n      color: \"segment\",\n      fillOpacity: 0.9,\n      layout: dodgeY({ anchor: \"middle\", padding: 1.5 }),\n    }),\n  ],\n  scales: {\n    x: {\n      scale: scaleLinear().domain([0, 70]),\n      grid: true,\n      axis: {\n        label: \"Annual contract value\",\n        ticks: {\n          count: 7,\n          format: (value: number) => formatCompact(value * 1000),\n        },\n      },\n    },\n    y: null,\n  },\n  color: {\n    domain: segments.map((item) => item.label),\n    range: segments.map((item) => item.color),\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: point.datum.id,\n      rows: [\n        {\n          label: point.datum.segment,\n          value: formatMoney(point.datum.value),\n          color: point.color,\n        },\n      ],\n    }),\n  },\n});\n\nexport function ChartBeeswarm() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Closed deals</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={140}\n        initialWidth={520}\n        ariaLabel={`Beeswarm of ${rows.length} closed deals by annual contract value, by customer segment`}\n      />\n      <ChartLegend>\n        {segments.map((item) => (\n          <ChartLegendItem key={item.label} color={item.color}>\n            {item.label}\n          </ChartLegendItem>\n        ))}\n      </ChartLegend>\n      <ChartTable\n        caption=\"Closed deals in the third quarter\"\n        columns={[\"Deal\", \"Segment\", \"Annual contract value\"]}\n        rows={rows.map((row) => [row.id, row.segment, formatMoney(row.value)])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

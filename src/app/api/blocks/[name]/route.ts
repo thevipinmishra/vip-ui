@@ -43,7 +43,7 @@ export async function GET(
   const installUrl = registryUrl(name);
   const source: BlockSource = {
     files,
-    command: `npx shadcn@latest add ${installUrl ?? `${registryNamespace}/vip-${name}`}`,
+    command: `npx shadcn@latest add ${installUrl ?? `${registryNamespace}/${name}`}`,
     entry: {
       component: entry.component,
       path: `components/blocks/${name}/${entry.file}`,

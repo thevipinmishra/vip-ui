@@ -10,8 +10,9 @@
     "build": "next build",
     "palette:build": "node scripts/generate-palettes.mjs && biome format --write src/lib/palette-data.ts",
     "registry:build": "node scripts/generate-registry.mjs && biome format --write public/r registry.json",
-    "test:registry": "node --test scripts/generate-registry.test.mjs",
+    "test:registry": "node --test \"scripts/*.test.mjs\"",
     "test:registry:cli": "node scripts/test-registry-cli.mjs",
+    "test:a11y": "node scripts/axe-a11y.mjs",
     "test:dialog": "playwright test tests/dialog.spec.ts",
     "seo:audit": "node scripts/seo-audit.mjs",
     "start": "next start",
@@ -40,6 +41,7 @@
     "tailwind-variants": "^4.0.1"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
     "@biomejs/biome": "2.6.6",
     "@playwright/test": "1.65.0",
     "@tailwindcss/postcss": "^4.3.5",

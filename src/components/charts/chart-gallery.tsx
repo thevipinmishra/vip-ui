@@ -4,6 +4,7 @@ import Link from "next/link";
 import { CategoryTabs } from "@/components/docs/category-tabs";
 import { CodeFrame } from "@/components/docs/code-frame";
 import { CodeSnippet } from "@/components/docs/code-snippet";
+import { CopyButton } from "@/components/docs/copy-button";
 import { PackageManagerCommand } from "@/components/docs/package-manager-command";
 import {
   PageActions,
@@ -13,6 +14,7 @@ import {
 } from "@/components/docs/page-header";
 import { ButtonLink } from "@/components/ui/button-link";
 import { getComponent } from "@/lib/catalog";
+import { registryUrl } from "@/lib/registry-docs";
 import {
   type ChartCategory,
   type ChartExample,
@@ -132,7 +134,10 @@ function ChartCategoryContent({ category }: { category: ChartCategory }) {
               <span className="truncate text-[13px] font-medium text-muted-foreground">
                 {example.name}
               </span>
-              <ChartExampleSource example={example} />
+              <div className="flex items-center gap-0.5">
+                <ChartExampleInstall example={example} />
+                <ChartExampleSource example={example} />
+              </div>
             </div>
           </div>
         ))}
@@ -141,7 +146,21 @@ function ChartCategoryContent({ category }: { category: ChartCategory }) {
   );
 }
 
+function ChartExampleInstall({ example }: { example: ChartExample }) {
+  const cliUrl = registryUrl(example.file);
+  if (!cliUrl) return null;
+  return (
+    <CopyButton
+      code={`pnpm dlx shadcn@latest add ${cliUrl}`}
+      label={`Copy install command for ${example.name}`}
+      iconOnly
+      variant="minimal"
+    />
+  );
+}
+
 async function ChartExampleSource({ example }: { example: ChartExample }) {
+  const cliUrl = registryUrl(example.file);
   const source = (
     await readFile(
       path.join(
@@ -174,12 +193,20 @@ async function ChartExampleSource({ example }: { example: ChartExample }) {
 
   return (
     <ChartSourceSheet title={example.name}>
+      {cliUrl ? (
+        <div className="space-y-3 px-5 pt-1">
+          <PackageManagerCommand
+            action="run"
+            args={`shadcn@latest add ${cliUrl}`}
+          />
+        </div>
+      ) : null}
       {(components.length > 0 || packages.length > 0) && (
         <div className="space-y-3 px-5 pt-1">
-          {components.length > 0 && (
-            <p className="text-[13px] leading-6 text-muted-foreground">
-              Also install{" "}
-              {components.map((slug, index) => (
+          <p className="text-[13px] leading-6 text-muted-foreground">
+            For a manual install, add{" "}
+            {components.length > 0 &&
+              components.map((slug, index) => (
                 <span key={slug}>
                   {index > 0 && " and "}
                   <Link
@@ -190,9 +217,9 @@ async function ChartExampleSource({ example }: { example: ChartExample }) {
                   </Link>
                 </span>
               ))}
-              .
-            </p>
-          )}
+            {components.length > 0 && packages.length > 0 && " and "}
+            {packages.length > 0 && "the packages below"}.
+          </p>
           {packages.length > 0 && (
             <PackageManagerCommand action="add" args={packages.join(" ")} />
           )}

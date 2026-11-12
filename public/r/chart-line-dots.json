@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-line-dots",
+  "type": "registry:block",
+  "title": "Line with dots",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartLineDots /> from components/charts/chart-line-dots.tsx. Preview: https://vip-ui.dev/charts#chart-line-dots",
+  "meta": {
+    "entry": {
+      "component": "ChartLineDots",
+      "file": "chart-line-dots.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-line-dots.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-line-dots.tsx",
+      "content": "\"use client\";\n\nimport { defineChart, dot, lineY, ruleY } from \"@tanstack/charts\";\nimport { decorative } from \"@tanstack/charts/mark/decorative\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { scalePoint } from \"@tanstack/charts/scales/point\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartDescription,\n  ChartFrame,\n  ChartLegend,\n  ChartLegendItem,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst target = 99.9;\n\nconst rows = [\n  { date: \"2026-09-29\", uptime: 100 },\n  { date: \"2026-09-30\", uptime: 100 },\n  { date: \"2026-10-01\", uptime: 99.98 },\n  { date: \"2026-10-02\", uptime: 100 },\n  { date: \"2026-10-03\", uptime: 99.95 },\n  { date: \"2026-10-04\", uptime: 100 },\n  { date: \"2026-10-05\", uptime: 100 },\n  { date: \"2026-10-06\", uptime: 99.72 },\n  { date: \"2026-10-07\", uptime: 99.99 },\n  { date: \"2026-10-08\", uptime: 100 },\n  { date: \"2026-10-09\", uptime: 99.86 },\n  { date: \"2026-10-10\", uptime: 100 },\n  { date: \"2026-10-11\", uptime: 100 },\n  { date: \"2026-10-12\", uptime: 99.97 },\n];\n\nconst status = [\n  { label: \"Met target\", color: \"var(--ts-chart-2)\" },\n  { label: \"Missed target\", color: \"var(--ts-chart-5)\" },\n];\n\nconst dayFormat = new Intl.DateTimeFormat(\"en-US\", {\n  month: \"short\",\n  day: \"numeric\",\n  timeZone: \"UTC\",\n});\nconst formatDay = (date: string) => dayFormat.format(new Date(date));\nconst formatUptime = (value: number) => `${value.toFixed(2)}%`;\nconst downtime = (uptime: number) => {\n  const seconds = Math.round(((100 - uptime) / 100) * 24 * 60 * 60);\n  if (seconds < 60) return `${seconds} s`;\n  return `${Math.floor(seconds / 60)} min ${seconds % 60} s`;\n};\n\nconst ticks = rows\n  .filter((_, index) => (rows.length - 1 - index) % 2 === 0)\n  .map((row) => row.date);\n\nconst definition = defineChart({\n  marks: [\n    decorative(\n      ruleY([target], {\n        stroke: \"var(--muted-foreground)\",\n        strokeDasharray: \"4 4\",\n      }),\n    ),\n    decorative(\n      lineY(rows, {\n        x: \"date\",\n        y: \"uptime\",\n        stroke: \"var(--border)\",\n        strokeWidth: 2,\n      }),\n    ),\n    dot(rows, {\n      x: \"date\",\n      y: \"uptime\",\n      color: (row) => (row.uptime < target ? status[1].label : status[0].label),\n      r: 4.5,\n    }),\n  ],\n  scales: {\n    x: {\n      scale: scalePoint,\n      axis: { ticks: { values: ticks, format: formatDay } },\n    },\n    y: {\n      scale: scaleLinear().domain([99.6, 100]),\n      grid: true,\n      axis: { ticks: { count: 4, format: (value: number) => `${value}%` } },\n    },\n  },\n  color: {\n    domain: status.map((item) => item.label),\n    range: status.map((item) => item.color),\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: formatDay(point.datum.date),\n      rows: [\n        {\n          label: \"Uptime\",\n          value: formatUptime(point.datum.uptime),\n          color: point.color,\n        },\n        { label: \"Downtime\", value: downtime(point.datum.uptime) },\n      ],\n    }),\n  },\n});\n\nexport function ChartLineDots() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Uptime</ChartTitle>\n        <ChartDescription>\n          Daily uptime, last 14 days. The dashed line is the {target}% target.\n        </ChartDescription>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={220}\n        initialWidth={520}\n        ariaLabel={`Daily uptime for the last 14 days, with a ${target} percent target`}\n      />\n      <ChartLegend>\n        {status.map((item) => (\n          <ChartLegendItem key={item.label} color={item.color}>\n            {item.label}\n          </ChartLegendItem>\n        ))}\n      </ChartLegend>\n      <ChartTable\n        caption=\"Daily uptime and downtime\"\n        columns={[\"Date\", \"Uptime\", \"Downtime\"]}\n        rows={rows.map((row) => [\n          formatDay(row.date),\n          formatUptime(row.uptime),\n          downtime(row.uptime),\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

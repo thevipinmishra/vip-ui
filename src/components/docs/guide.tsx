@@ -154,6 +154,14 @@ export function DocsPager({
 const guideSeoDescriptions: Partial<Record<Guide["href"], string>> = {
   "/components/installation":
     "Add vip/ui components with the shadcn CLI, or copy the files manually. Requires React 19, TypeScript, and Tailwind CSS v4.1 or later.",
+  "/components/from-shadcn":
+    "Install vip/ui beside shadcn/ui. Keep your theme and your components/ui folder, and map each shadcn component name to its vip/ui name.",
+  "/components/ai-and-mcp":
+    "Use the shadcn MCP server, llms.txt, the Markdown pages, and the CLI to build with vip/ui components through AI tools.",
+  "/components/updating":
+    "Compare an installed vip/ui component with the registry, then overwrite it. Find what changed in the changelog.",
+  "/components/rtl":
+    "vip/ui components use logical CSS classes, so right-to-left layouts work with no transform. What the CLI rtl option changes, and the components that set left or right on purpose.",
 };
 
 export function guideMetadata(href: Guide["href"]): Metadata {

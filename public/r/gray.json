@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gray",
+  "type": "registry:theme",
+  "title": "Gray",
+  "description": "Surfaces, borders, and text. It has no chroma, so it does not tint other hues.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["colors"],
+  "docs": "The scale adds --gray-1 to --gray-12 for light and dark mode. Classes such as bg-gray-3 work after the install.",
+  "dependencies": [],
+  "files": [],
+  "cssVars": {
+    "theme": {
+      "color-gray-1": "var(--gray-1)",
+      "color-gray-2": "var(--gray-2)",
+      "color-gray-3": "var(--gray-3)",
+      "color-gray-4": "var(--gray-4)",
+      "color-gray-5": "var(--gray-5)",
+      "color-gray-6": "var(--gray-6)",
+      "color-gray-7": "var(--gray-7)",
+      "color-gray-8": "var(--gray-8)",
+      "color-gray-9": "var(--gray-9)",
+      "color-gray-10": "var(--gray-10)",
+      "color-gray-11": "var(--gray-11)",
+      "color-gray-12": "var(--gray-12)"
+    },
+    "light": {
+      "gray-1": "oklch(0.987 0 0)",
+      "gray-2": "oklch(0.969 0 0)",
+      "gray-3": "oklch(0.944 0 0)",
+      "gray-4": "oklch(0.919 0 0)",
+      "gray-5": "oklch(0.894 0 0)",
+      "gray-6": "oklch(0.866 0 0)",
+      "gray-7": "oklch(0.820 0 0)",
+      "gray-8": "oklch(0.755 0 0)",
+      "gray-9": "oklch(0.420 0 0)",
+      "gray-10": "oklch(0.385 0 0)",
+      "gray-11": "oklch(0.505 0 0)",
+      "gray-12": "oklch(0.285 0 0)"
+    },
+    "dark": {
+      "gray-1": "oklch(0.185 0 0)",
+      "gray-2": "oklch(0.215 0 0)",
+      "gray-3": "oklch(0.243 0 0)",
+      "gray-4": "oklch(0.268 0 0)",
+      "gray-5": "oklch(0.293 0 0)",
+      "gray-6": "oklch(0.322 0 0)",
+      "gray-7": "oklch(0.365 0 0)",
+      "gray-8": "oklch(0.430 0 0)",
+      "gray-9": "oklch(0.700 0 0)",
+      "gray-10": "oklch(0.740 0 0)",
+      "gray-11": "oklch(0.735 0 0)",
+      "gray-12": "oklch(0.930 0 0)"
+    }
+  }
+}

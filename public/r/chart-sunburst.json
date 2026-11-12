@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-sunburst",
+  "type": "registry:block",
+  "title": "Sunburst",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartSunburst /> from components/charts/chart-sunburst.tsx. Preview: https://vip-ui.dev/charts#chart-sunburst",
+  "meta": {
+    "entry": {
+      "component": "ChartSunburst",
+      "file": "chart-sunburst.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-sunburst.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-sunburst.tsx",
+      "content": "\"use client\";\n\nimport { defineChart } from \"@tanstack/charts\";\nimport { sunburst } from \"@tanstack/charts/hierarchy/sunburst\";\nimport { polar } from \"@tanstack/charts/polar\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartDescription,\n  ChartFrame,\n  ChartLegend,\n  ChartLegendItem,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst regions = [\"Americas\", \"Europe\", \"Asia\"];\n\nconst rows = [\n  { path: \"Revenue/Americas/Business\", region: \"Americas\", revenue: 210 },\n  { path: \"Revenue/Americas/Pro\", region: \"Americas\", revenue: 140 },\n  { path: \"Revenue/Americas/Starter\", region: \"Americas\", revenue: 20 },\n  { path: \"Revenue/Europe/Business\", region: \"Europe\", revenue: 160 },\n  { path: \"Revenue/Europe/Pro\", region: \"Europe\", revenue: 90 },\n  { path: \"Revenue/Europe/Starter\", region: \"Europe\", revenue: 15 },\n  { path: \"Revenue/Asia/Business\", region: \"Asia\", revenue: 85 },\n  { path: \"Revenue/Asia/Pro\", region: \"Asia\", revenue: 70 },\n  { path: \"Revenue/Asia/Starter\", region: \"Asia\", revenue: 10 },\n];\n\nconst total = rows.reduce((sum, row) => sum + row.revenue, 0);\n\nconst regionColor = (region: string) =>\n  `var(--ts-chart-${regions.indexOf(region) + 1})`;\n\nconst definition = defineChart({\n  marks: [\n    polar({\n      radiusRatio: 0.9,\n      marks: [\n        sunburst(rows, {\n          path: \"path\",\n          value: \"revenue\",\n          innerRadius: ({ radius }) => radius * 0.3,\n          ringPadding: 2,\n          fill: (node) =>\n            node.depth === 1\n              ? regionColor(node.name)\n              : `color-mix(in oklab, ${regionColor(node.data?.region ?? \"\")} 55%, var(--card))`,\n          stroke: \"var(--card)\",\n          strokeWidth: 1.5,\n        }),\n      ],\n      scales: { angle: null, radius: null },\n    }),\n  ],\n  scales: { x: null, y: null },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: point.datum.data\n        ? `${point.datum.data.region}, ${point.datum.name}`\n        : point.datum.name,\n      rows: [\n        {\n          label: \"Revenue\",\n          value: `$${point.datum.value}k`,\n          color: point.color,\n        },\n        {\n          label: \"Share\",\n          value: `${Math.round((point.datum.value / total) * 100)}%`,\n        },\n      ],\n    }),\n  },\n});\n\nexport function ChartSunburst() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Revenue mix</ChartTitle>\n        <ChartDescription>Region inside, plan outside</ChartDescription>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={240}\n        initialWidth={520}\n        ariaLabel=\"Sunburst of revenue by region, then by plan, in thousands of dollars\"\n      />\n      <ChartLegend>\n        {regions.map((region) => (\n          <ChartLegendItem key={region} color={regionColor(region)}>\n            {region}\n          </ChartLegendItem>\n        ))}\n      </ChartLegend>\n      <ChartTable\n        caption=\"Revenue by region and plan, in thousands of dollars\"\n        columns={[\"Region\", \"Plan\", \"Revenue ($k)\"]}\n        rows={rows.map((row) => [\n          row.region,\n          row.path.split(\"/\").at(-1) ?? row.path,\n          row.revenue,\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

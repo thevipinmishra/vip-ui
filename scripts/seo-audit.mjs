@@ -289,7 +289,7 @@ if (componentRobots && !componentRobots.includes("noindex")) {
 }
 
 for (const [path, expected] of [
-  ["/r/vip-button.json", "noindex"],
+  ["/r/button.json", "noindex"],
   ["/components/button/markdown", "noindex"],
   ["/components/button.md", "noindex"],
   ["/llms.txt", "noindex"],

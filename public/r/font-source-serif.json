@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "font-source-serif",
+  "type": "registry:font",
+  "title": "Source Serif 4",
+  "description": "The Source Serif 4 font for the typography presets.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["fonts"],
+  "dependencies": [],
+  "files": [],
+  "font": {
+    "family": "'Source Serif 4 Variable', serif",
+    "provider": "google",
+    "import": "Source_Serif_4",
+    "variable": "--font-source-serif",
+    "subsets": ["latin"],
+    "dependency": "@fontsource-variable/source-serif-4"
+  }
+}

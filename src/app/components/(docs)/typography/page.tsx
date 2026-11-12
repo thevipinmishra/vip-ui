@@ -62,7 +62,7 @@ const dark = `.dark .typography-reading {
 export default function TypographyGuidePage() {
   return (
     <GuidePage href="/components/typography">
-      <GuideSection id="install" title="Install">
+      <GuideSection id="installation" title="Installation">
         <TypographyInstall />
       </GuideSection>
 

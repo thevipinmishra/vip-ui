@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-group",
+  "type": "registry:ui",
+  "title": "Input Group",
+  "description": "Joins an input with a prefix, suffix, or action.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["forms"],
+  "dependencies": [
+    "react-aria-components@^1.22.1",
+    "tailwindcss-react-aria-components@^2.2.0"
+  ],
+  "registryDependencies": [
+    "https://vip-ui.dev/r/button.json",
+    "https://vip-ui.dev/r/field-styles.json",
+    "https://vip-ui.dev/r/size.json",
+    "https://vip-ui.dev/r/utils.json"
+  ],
+  "cssVars": {
+    "light": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+    },
+    "dark": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+    }
+  },
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
+  "files": [
+    {
+      "path": "src/components/ui/input-group.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/input-group.tsx",
+      "content": "\"use client\";\n\nimport {\n  Group as AriaGroup,\n  Input as AriaInput,\n  TextArea as AriaTextArea,\n  composeRenderProps,\n  type GroupProps,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\nimport { Button, type ButtonProps } from \"./button\";\nimport {\n  fieldActionStyles,\n  fieldHeight,\n  fieldInnerHeight,\n  fieldRadius,\n  fieldSizeStyles,\n  fieldText,\n  fieldTriggerStyles,\n} from \"./field-styles\";\nimport type { Size } from \"./size\";\n\nexport interface InputGroupProps extends GroupProps {\n  size?: Size;\n  ref?: React.Ref<HTMLDivElement>;\n}\n\nexport function InputGroup({ size, className, ...props }: InputGroupProps) {\n  return (\n    <AriaGroup\n      {...props}\n      data-slot=\"input-group\"\n      data-size={size}\n      className={composeRenderProps(className, (className) =>\n        cn(\n          fieldHeight,\n          fieldRadius,\n          \"flex w-full min-w-0 items-center gap-x-2 border border-input bg-card ps-[var(--field-px,0.875rem)] pe-[var(--field-px,0.875rem)] text-foreground shadow-[var(--shadow-card)] hover:border-primary/45 data-[focus-within]:border-ring data-[focus-within]:ring-1 data-[focus-within]:ring-ring data-[invalid]:border-destructive data-[invalid]:hover:border-destructive data-[invalid]:data-[focus-within]:border-destructive data-[invalid]:data-[focus-within]:ring-destructive data-[disabled]:bg-muted data-[disabled]:opacity-60 data-[disabled]:shadow-none data-[disabled]:hover:border-input has-[>[data-align=block-end]]:flex-wrap has-[>[data-align=inline]:first-child_button]:ps-[var(--field-inset,0.25rem)] has-[>[data-align=inline]:last-child_button]:pe-[var(--field-inset,0.25rem)]\",\n          size && fieldSizeStyles[size],\n          className,\n        ),\n      )}\n    />\n  );\n}\n\nexport function InputGroupInput({\n  className,\n  ...props\n}: React.ComponentProps<typeof AriaInput>) {\n  return (\n    <AriaInput\n      {...props}\n      data-slot=\"input-group-input\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          fieldInnerHeight,\n          fieldText,\n          \"min-w-[min(8rem,50%)] flex-1 cursor-text bg-transparent leading-6 text-foreground outline-none [&::placeholder]:text-muted-foreground/80 disabled:cursor-not-allowed [&::-webkit-search-cancel-button]:hidden\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n\nexport function InputGroupTextArea({\n  className,\n  ...props\n}: React.ComponentProps<typeof AriaTextArea>) {\n  return (\n    <AriaTextArea\n      {...props}\n      data-slot=\"input-group-text-area\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          fieldText,\n          \"min-h-28 min-w-0 basis-full resize-y bg-transparent py-3 leading-6 text-foreground outline-none [&::placeholder]:text-muted-foreground/80 disabled:cursor-not-allowed\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n\nexport function InputGroupAddon({\n  align = \"inline\",\n  className,\n  children,\n  ...props\n}: React.ComponentPropsWithRef<\"span\"> & { align?: \"inline\" | \"block-end\" }) {\n  return (\n    <span\n      {...props}\n      data-slot=\"input-group-addon\"\n      data-align={align}\n      className={cn(\n        \"inline-flex min-w-0 items-center gap-2 text-sm text-muted-foreground [&_svg]:shrink-0 [&>svg:not([class*='size-'])]:size-[var(--field-icon,1rem)]\",\n        align === \"block-end\" &&\n          \"w-full justify-end border-t border-border/70 py-2\",\n        className,\n      )}\n    >\n      {typeof children === \"string\" ? (\n        <span className=\"min-w-0 truncate\">{children}</span>\n      ) : (\n        children\n      )}\n    </span>\n  );\n}\n\nexport function InputGroupButton({\n  variant = \"ghost\",\n  iconOnly = false,\n  className,\n  ...props\n}: ButtonProps) {\n  return (\n    <Button\n      {...props}\n      variant={variant}\n      iconOnly={iconOnly}\n      data-slot=\"input-group-button\"\n      className={composeRenderProps(className, (className) =>\n        cn(iconOnly ? fieldTriggerStyles : fieldActionStyles, className),\n      )}\n    />\n  );\n}\n"
+    }
+  ]
+}

@@ -1,9 +1,7 @@
 "use client";
 
 import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react";
-import { motion, useReducedMotion } from "motion/react";
 import type { ComponentProps } from "react";
-import { easeInOut, loop } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 export type AgentStatusState = "thinking" | "working" | "complete" | "error";
@@ -29,7 +27,6 @@ export function AgentStatus({
   className,
   ...props
 }: AgentStatusProps) {
-  const reduceMotion = useReducedMotion() === true;
   const active = state === "thinking" || state === "working";
 
   return (
@@ -55,32 +52,10 @@ export function AgentStatus({
         {active ? (
           <span className="flex items-center gap-0.5">
             {[0, 1, 2].map((index) => (
-              <motion.span
+              <span
                 key={index}
-                className="size-1 rounded-full bg-current forced-colors:bg-[CanvasText]"
-                initial={false}
-                animate={
-                  reduceMotion
-                    ? { opacity: 1, transform: "translateY(0px)" }
-                    : {
-                        opacity: [0.35, 1, 0.35],
-                        transform: [
-                          "translateY(0px)",
-                          "translateY(-2px)",
-                          "translateY(0px)",
-                        ],
-                      }
-                }
-                transition={
-                  reduceMotion
-                    ? { duration: 0 }
-                    : {
-                        duration: loop.pulse,
-                        delay: index * 0.13,
-                        repeat: Infinity,
-                        ease: easeInOut,
-                      }
-                }
+                className="size-1 rounded-full bg-current forced-colors:bg-[CanvasText] motion-safe:animate-agent-status motion-reduce:animate-none"
+                style={{ animationDelay: `${index * 0.13}s` }}
               />
             ))}
           </span>

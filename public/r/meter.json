@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "meter",
+  "type": "registry:ui",
+  "title": "Meter",
+  "description": "Shows a measured value within a known range.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["feedback"],
+  "dependencies": [
+    "react-aria-components@^1.22.1",
+    "tailwindcss-react-aria-components@^2.2.0"
+  ],
+  "registryDependencies": ["https://vip-ui.dev/r/utils.json"],
+  "cssVars": {
+    "theme": {
+      "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+    },
+    "light": {
+      "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.045)"
+    },
+    "dark": {
+      "shadow-inset": "inset 0 1px 2px oklch(0 0 0 / 0.15)"
+    }
+  },
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
+  "files": [
+    {
+      "path": "src/components/ui/meter.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/meter.tsx",
+      "content": "\"use client\";\n\nimport {\n  Meter as AriaMeter,\n  type MeterProps as AriaMeterProps,\n  composeRenderProps,\n  Label,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\n\nexport interface MeterProps\n  extends Omit<AriaMeterProps, \"className\" | \"children\"> {\n  label?: string;\n  ref?: React.Ref<HTMLDivElement>;\n  className?: AriaMeterProps[\"className\"];\n  children?: AriaMeterProps[\"children\"];\n}\n\nexport function Meter({ label, className, children, ...props }: MeterProps) {\n  return (\n    <AriaMeter\n      {...props}\n      data-slot=\"meter\"\n      className={composeRenderProps(className, (className) =>\n        cn(\"grid w-full gap-2\", className),\n      )}\n    >\n      {children ??\n        (({ percentage, valueText }) => (\n          <>\n            <div className=\"flex items-baseline gap-3 text-sm\">\n              {label && (\n                <Label\n                  data-slot=\"meter-label\"\n                  className=\"min-w-0 flex-1 font-medium [overflow-wrap:anywhere]\"\n                >\n                  {label}\n                </Label>\n              )}\n              <span\n                data-slot=\"meter-value\"\n                className=\"ms-auto max-w-1/2 shrink-0 text-end font-mono tabular-nums text-muted-foreground [overflow-wrap:anywhere]\"\n              >\n                {valueText}\n              </span>\n            </div>\n            <div\n              data-slot=\"meter-track\"\n              className=\"h-2 overflow-hidden rounded-full bg-secondary shadow-[var(--shadow-inset)] forced-colors:border rtl:-scale-x-100\"\n            >\n              <div\n                data-slot=\"meter-fill\"\n                className=\"h-full w-full origin-left rounded-full bg-primary forced-colors:bg-[Highlight] transition-[scale] duration-200 ease-out-quint motion-reduce:duration-0\"\n                style={{ scale: `${percentage / 100} 1` }}\n              />\n            </div>\n          </>\n        ))}\n    </AriaMeter>\n  );\n}\n"
+    }
+  ]
+}

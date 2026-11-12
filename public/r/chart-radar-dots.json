@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-radar-dots",
+  "type": "registry:block",
+  "title": "Radar dots",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartRadarDots /> from components/charts/chart-radar-dots.tsx. Preview: https://vip-ui.dev/charts#chart-radar-dots",
+  "meta": {
+    "entry": {
+      "component": "ChartRadarDots",
+      "file": "chart-radar-dots.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-radar-dots.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-radar-dots.tsx",
+      "content": "\"use client\";\n\nimport { defineChart } from \"@tanstack/charts\";\nimport {\n  angleGrid,\n  polar,\n  radialDot,\n  radialGrid,\n} from \"@tanstack/charts/polar\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { scalePoint } from \"@tanstack/charts/scales/point\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst rows = [\n  { direction: \"N\", name: \"North\", hours: 9 },\n  { direction: \"NE\", name: \"Northeast\", hours: 6 },\n  { direction: \"E\", name: \"East\", hours: 5 },\n  { direction: \"SE\", name: \"Southeast\", hours: 8 },\n  { direction: \"S\", name: \"South\", hours: 14 },\n  { direction: \"SW\", name: \"Southwest\", hours: 24 },\n  { direction: \"W\", name: \"West\", hours: 21 },\n  { direction: \"NW\", name: \"Northwest\", hours: 13 },\n];\n\nconst definition = defineChart({\n  marks: [\n    polar({\n      radiusRatio: 0.66,\n      scales: {\n        angle: {\n          scale: scalePoint<string>().domain(rows.map((row) => row.direction)),\n          wrap: true,\n        },\n        radius: { scale: scaleLinear().domain([0, 30]) },\n      },\n      guides: [\n        radialGrid({\n          values: [10, 20, 30],\n          shape: \"circle\",\n          stroke: \"var(--border)\",\n          labels: true,\n          format: (value) => `${value}%`,\n          labelAngle: Math.PI / 8,\n          labelAnchor: \"start\",\n          labelBaseline: \"auto\",\n          labelDx: 2,\n          labelDy: -2,\n          labelFill: \"var(--muted-foreground)\",\n          labelFontSize: 10,\n        }),\n        angleGrid({\n          labels: true,\n          stroke: \"var(--border)\",\n          labelFill: \"var(--muted-foreground)\",\n        }),\n      ],\n      marks: [\n        radialDot(rows, {\n          angle: \"direction\",\n          radius: \"hours\",\n          fill: \"var(--ts-chart-2)\",\n          r: 5,\n        }),\n      ],\n    }),\n  ],\n  scales: { x: null, y: null },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: point.datum.name,\n      rows: [\n        {\n          label: \"Share of hours\",\n          value: `${point.datum.hours}%`,\n          color: point.color,\n        },\n      ],\n    }),\n  },\n});\n\nexport function ChartRadarDots() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Wind direction</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={240}\n        initialWidth={520}\n        ariaLabel=\"Share of hours the wind came from each of eight compass directions in September 2026. Most wind came from the southwest and west.\"\n      />\n      <ChartTable\n        caption=\"Share of hours by wind direction, in percent\"\n        columns={[\"Direction\", \"Share of hours (%)\"]}\n        rows={rows.map((row) => [row.name, row.hours])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}
