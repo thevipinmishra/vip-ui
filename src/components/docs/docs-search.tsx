@@ -1,6 +1,9 @@
 "use client";
 
 import {
+  ArrowsClockwiseIcon,
+  ArrowsHorizontalIcon,
+  ArrowsLeftRightIcon,
   AtomIcon,
   ChartBarIcon,
   CubeIcon,
@@ -9,6 +12,7 @@ import {
   MagnifyingGlassIcon,
   PaintBrushIcon,
   PaletteIcon,
+  RobotIcon,
   SquaresFourIcon,
   SwatchesIcon,
   TerminalWindowIcon,
@@ -31,10 +35,14 @@ const shortcutTakenByDemo = new Set(["/components/command-palette"]);
 
 const guideIcons: Record<Guide["href"], Icon> = {
   "/components/installation": TerminalWindowIcon,
+  "/components/from-shadcn": ArrowsLeftRightIcon,
   "/components/styling": PaintBrushIcon,
   "/components/typography": TextAaIcon,
   "/components/react-aria": AtomIcon,
   "/components/motion": WaveSineIcon,
+  "/components/ai-and-mcp": RobotIcon,
+  "/components/updating": ArrowsClockwiseIcon,
+  "/components/rtl": ArrowsHorizontalIcon,
 };
 
 const pages = [

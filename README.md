@@ -22,6 +22,8 @@ Accessible React components that you copy into your project through a shadcn-com
 - React 19 and TypeScript
 - Tailwind CSS v4.1 or later
 - A shadcn theme that uses CSS variables
+- shadcn CLI 4.7.0 or later
+- Icons from `@phosphor-icons/react`. The CLI installs it as a dependency.
 
 ## Installation
 
@@ -32,7 +34,7 @@ Accessible React components that you copy into your project through a shadcn-com
 3. Add a component:
 
    ```bash
-   pnpm dlx shadcn@latest add https://vip-ui.dev/r/vip-button.json
+   pnpm dlx shadcn@latest add https://vip-ui.dev/r/button.json
    ```
 
 The CLI writes the files to a `vip-ui/` folder in your components alias. It does not change the files in your shadcn `components/ui/` folder.
@@ -49,10 +51,10 @@ Add vip/ui to `registries` in your `components.json`:
 }
 ```
 
-Then add items by name. Item names start with `vip-`.
+Then add items by name:
 
 ```bash
-pnpm dlx shadcn@latest add @vip-ui/vip-button
+pnpm dlx shadcn@latest add @vip-ui/button
 ```
 
 ### Install manually

@@ -63,9 +63,17 @@ To change a color scale, edit its hue or chroma in `scripts/generate-palettes.mj
 
 On Windows, `pnpm registry:build` can fail to write to `public/r` while `pnpm dev` runs. If this occurs, stop the dev server, run the build, then start the server again.
 
+## Release a version
+
+1. Run `pnpm lint`, `pnpm exec tsc --noEmit`, and `pnpm registry:build`; commit the generated files.
+2. In `CHANGELOG.md`, replace `## Unreleased` with `## vX.Y.Z - YYYY-MM-DD` and add an empty `## Unreleased` section above it.
+3. Keep the `Breaking:` prefix on every breaking entry in the released section.
+4. Tag the commit and push the tag: `git tag vX.Y.Z && git push origin vX.Y.Z`.
+5. List the changed items in the release notes. The registry URL always serves the newest source; the changelog is the only way a user can see what a re-add will bring.
+
 ## Add a component
 
-Use a kebab-case slug, for example `date-field`. The registry item name is `vip-<slug>`.
+Use a kebab-case slug, for example `date-field`. The registry item name is the slug.
 
 1. Write the component in `src/components/ui/<slug>.tsx`. Import other components with relative paths, such as `./field-styles`. From `src/lib`, import only `@/lib/utils` and `@/lib/motion`. The generator stops on other `@/` imports.
 2. Add an item to the correct group in `src/lib/catalog.json`, with `slug`, `name`, and `description`. Write the description as one sentence that starts with a third-person verb, for example "Selects one option from a list in a popover." The catalog, the component page, the Markdown export, `llms.txt`, and the registry all show this text. If the component wraps a React Aria component, add its docs link to `reactAriaDocs` in `src/lib/catalog.ts`.
