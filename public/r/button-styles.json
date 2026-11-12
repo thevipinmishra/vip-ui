@@ -6,7 +6,7 @@
   "description": "Sets the variants and sizes of buttons and button links.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["shared"],
-  "dependencies": ["tailwind-variants@^4.0.1"],
+  "dependencies": ["tailwind-variants@^4.0.2"],
   "cssVars": {
     "theme": {
       "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"

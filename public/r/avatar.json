@@ -6,7 +6,7 @@
   "description": "Shows an image or initials for a person.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["display-layout"],
-  "dependencies": ["@phosphor-icons/react@^2.1.10", "tailwind-variants@^4.0.1"],
+  "dependencies": ["@phosphor-icons/react@^2.1.10", "tailwind-variants@^4.0.2"],
   "registryDependencies": ["https://vip-ui.dev/r/utils.json"],
   "files": [
     {

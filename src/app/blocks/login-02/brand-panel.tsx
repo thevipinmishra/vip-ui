@@ -1,9 +1,10 @@
 import { QuotesIcon } from "@phosphor-icons/react/ssr";
+import { Avatar } from "@/components/ui/avatar";
 
 const facts = [
-  { value: "4,200", label: "teams" },
-  { value: "99.98%", label: "uptime" },
-  { value: "38", label: "countries" },
+  { value: "4,200", label: "Teams" },
+  { value: "99.98%", label: "Uptime" },
+  { value: "38", label: "Countries" },
 ];
 
 export function BrandPanel() {
@@ -23,14 +24,21 @@ export function BrandPanel() {
           We moved our whole support desk to Northwind in one week. Our team now
           answers in half the time.
         </blockquote>
-        <figcaption className="text-sm opacity-80">
-          Priya Raman, Head of Support at Lumen
+        <figcaption className="flex items-center gap-3">
+          <Avatar
+            name="Priya Raman"
+            className="bg-primary-foreground/15 text-primary-foreground ring-primary-foreground/25"
+          />
+          <span className="grid text-sm">
+            <span className="font-medium">Priya Raman</span>
+            <span className="opacity-75">Head of Support, Lumen</span>
+          </span>
         </figcaption>
         <dl className="mt-4 grid grid-cols-3 gap-4 border-t border-primary-foreground/20 pt-6">
           {facts.map((fact) => (
-            <div key={fact.label}>
+            <div key={fact.label} className="flex flex-col-reverse gap-1">
               <dt className="text-xs opacity-75">{fact.label}</dt>
-              <dd className="mt-1 text-xl font-semibold tabular-nums tracking-[-0.03em]">
+              <dd className="text-xl font-semibold tabular-nums tracking-[-0.03em]">
                 {fact.value}
               </dd>
             </div>

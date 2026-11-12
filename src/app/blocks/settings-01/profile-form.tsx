@@ -1,220 +1,71 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useEffect, useState } from "react";
+import { CheckCircleIcon, WarningCircleIcon } from "@phosphor-icons/react";
+import { useEffect, useId, useRef, useState } from "react";
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ComboBox } from "@/components/ui/combo-box";
 import { FileTrigger } from "@/components/ui/file-trigger";
 import { Form } from "@/components/ui/form";
+import { IconSwap } from "@/components/ui/icon-swap";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
+import { Presence } from "@/components/ui/presence";
+import { Select } from "@/components/ui/select";
+import { Spinner } from "@/components/ui/spinner";
 import { TextArea } from "@/components/ui/text-area";
 import {
   TextField,
   TextFieldDescription,
+  TextFieldError,
   TextFieldLabel,
 } from "@/components/ui/text-field";
+import { TextSwap } from "@/components/ui/text-swap";
+import { ToggleButton } from "@/components/ui/toggle-button";
+import { ToggleButtonGroup } from "@/components/ui/toggle-button-group";
+import { cn } from "@/lib/utils";
+import { timezones } from "./timezones";
 
 interface Profile {
   name: string;
+  title: string;
   username: string;
-  email: string;
   bio: string;
+  email: string;
+  language: string;
   timezone: string;
+  timeFormat: string;
 }
 
 const initialProfile: Profile = {
-  name: "Maya Chen",
-  username: "maya",
-  email: "maya@northwind.com",
-  bio: "Product designer. I work on billing and onboarding.",
+  name: "Nadia Okafor",
+  title: "Head of data",
+  username: "nadia",
+  bio: "I own the metrics, the alerts, and the warehouse sync.",
+  email: "nadia@kestrel.app",
+  language: "en-us",
   timezone: "europe-berlin",
+  timeFormat: "24",
 };
 
-const timezones = [
-  {
-    id: "america-los-angeles",
-    name: "Los Angeles, United States",
-    description: "Pacific Time",
-  },
-  {
-    id: "america-denver",
-    name: "Denver, United States",
-    description: "Mountain Time",
-  },
-  {
-    id: "america-chicago",
-    name: "Chicago, United States",
-    description: "Central Time",
-  },
-  {
-    id: "america-new-york",
-    name: "New York, United States",
-    description: "Eastern Time",
-  },
-  {
-    id: "america-toronto",
-    name: "Toronto, Canada",
-    description: "Eastern Time",
-  },
-  {
-    id: "america-mexico-city",
-    name: "Mexico City, Mexico",
-    description: "Central Time",
-  },
-  {
-    id: "america-sao-paulo",
-    name: "São Paulo, Brazil",
-    description: "Brasília Time",
-  },
-  {
-    id: "america-buenos-aires",
-    name: "Buenos Aires, Argentina",
-    description: "Argentina Time",
-  },
-  {
-    id: "europe-london",
-    name: "London, United Kingdom",
-    description: "Greenwich Mean Time",
-  },
-  {
-    id: "europe-dublin",
-    name: "Dublin, Ireland",
-    description: "Greenwich Mean Time",
-  },
-  {
-    id: "europe-lisbon",
-    name: "Lisbon, Portugal",
-    description: "Western European Time",
-  },
-  {
-    id: "europe-paris",
-    name: "Paris, France",
-    description: "Central European Time",
-  },
-  {
-    id: "europe-berlin",
-    name: "Berlin, Germany",
-    description: "Central European Time",
-  },
-  {
-    id: "europe-amsterdam",
-    name: "Amsterdam, Netherlands",
-    description: "Central European Time",
-  },
-  {
-    id: "europe-stockholm",
-    name: "Stockholm, Sweden",
-    description: "Central European Time",
-  },
-  {
-    id: "europe-warsaw",
-    name: "Warsaw, Poland",
-    description: "Central European Time",
-  },
-  {
-    id: "europe-athens",
-    name: "Athens, Greece",
-    description: "Eastern European Time",
-  },
-  {
-    id: "europe-istanbul",
-    name: "Istanbul, Türkiye",
-    description: "Türkiye Time",
-  },
-  {
-    id: "africa-lagos",
-    name: "Lagos, Nigeria",
-    description: "West Africa Time",
-  },
-  {
-    id: "africa-cairo",
-    name: "Cairo, Egypt",
-    description: "Eastern European Time",
-  },
-  {
-    id: "africa-nairobi",
-    name: "Nairobi, Kenya",
-    description: "East Africa Time",
-  },
-  {
-    id: "africa-johannesburg",
-    name: "Johannesburg, South Africa",
-    description: "South Africa Time",
-  },
-  {
-    id: "asia-dubai",
-    name: "Dubai, United Arab Emirates",
-    description: "Gulf Time",
-  },
-  {
-    id: "asia-karachi",
-    name: "Karachi, Pakistan",
-    description: "Pakistan Time",
-  },
-  {
-    id: "asia-kolkata",
-    name: "Kolkata, India",
-    description: "India Standard Time",
-  },
-  {
-    id: "asia-dhaka",
-    name: "Dhaka, Bangladesh",
-    description: "Bangladesh Time",
-  },
-  {
-    id: "asia-bangkok",
-    name: "Bangkok, Thailand",
-    description: "Indochina Time",
-  },
-  {
-    id: "asia-jakarta",
-    name: "Jakarta, Indonesia",
-    description: "Western Indonesia Time",
-  },
-  {
-    id: "asia-singapore",
-    name: "Singapore",
-    description: "Singapore Time",
-  },
-  {
-    id: "asia-shanghai",
-    name: "Shanghai, China",
-    description: "China Standard Time",
-  },
-  {
-    id: "asia-seoul",
-    name: "Seoul, South Korea",
-    description: "Korean Standard Time",
-  },
-  {
-    id: "asia-tokyo",
-    name: "Tokyo, Japan",
-    description: "Japan Standard Time",
-  },
-  {
-    id: "australia-perth",
-    name: "Perth, Australia",
-    description: "Australian Western Time",
-  },
-  {
-    id: "australia-sydney",
-    name: "Sydney, Australia",
-    description: "Australian Eastern Time",
-  },
-  {
-    id: "pacific-auckland",
-    name: "Auckland, New Zealand",
-    description: "New Zealand Time",
-  },
+const languages = [
+  { id: "en-us", name: "English (United States)" },
+  { id: "en-gb", name: "English (United Kingdom)" },
+  { id: "de", name: "Deutsch" },
+  { id: "es", name: "Español" },
+  { id: "fr", name: "Français" },
+  { id: "ja", name: "日本語" },
 ];
 
+const takenUsernames = new Set(["admin", "ana", "kestrel", "leo", "support"]);
+const usernamePattern = /^[a-z0-9](?:[a-z0-9-]{1,28}[a-z0-9])$/;
 const bioLimit = 160;
+
+type UsernameCheck = "idle" | "checking" | "available" | "taken";
 
 function Section({
   title,
@@ -226,14 +77,14 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section className="grid gap-5 md:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] md:gap-10">
+    <section className="grid gap-4 xl:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] xl:gap-10">
       <div>
         <h2 className="text-base font-semibold tracking-[-0.025em]">{title}</h2>
         <p className="mt-1 text-sm leading-6 text-muted-foreground">
           {description}
         </p>
       </div>
-      <Card className="grid gap-5 p-5">{children}</Card>
+      <Card className="grid gap-4 p-5">{children}</Card>
     </section>
   );
 }
@@ -241,94 +92,190 @@ function Section({
 export function ProfileForm() {
   const [saved, setSaved] = useState(initialProfile);
   const [draft, setDraft] = useState(initialProfile);
+  const [savedPhoto, setSavedPhoto] = useState<string | undefined>();
   const [photo, setPhoto] = useState<string | undefined>();
-  const [notice, setNotice] = useState("");
-  const reduceMotion = useReducedMotion();
-  const dirty = (Object.keys(saved) as (keyof Profile)[]).some(
-    (key) => saved[key] !== draft[key],
+  const [check, setCheck] = useState<UsernameCheck>("idle");
+  const [pending, setPending] = useState(false);
+  const [justSaved, setJustSaved] = useState(false);
+  const savedTimer = useRef<number | undefined>(undefined);
+  const checkTimer = useRef<number | undefined>(undefined);
+  const timeFormatLabel = useId();
+  const dirty =
+    photo !== savedPhoto ||
+    (Object.keys(saved) as (keyof Profile)[]).some(
+      (key) => saved[key] !== draft[key],
+    );
+
+  useEffect(
+    () => () => {
+      window.clearTimeout(checkTimer.current);
+      window.clearTimeout(savedTimer.current);
+    },
+    [],
   );
 
-  useEffect(() => {
-    return () => {
-      if (photo) URL.revokeObjectURL(photo);
-    };
-  }, [photo]);
-
-  useEffect(() => {
-    if (!notice) return;
-    const timeout = window.setTimeout(() => setNotice(""), 3000);
-    return () => window.clearTimeout(timeout);
-  }, [notice]);
-
   function update(field: keyof Profile) {
-    return (value: string) => {
-      setNotice("");
+    return (value: string) =>
       setDraft((current) => ({ ...current, [field]: value }));
-    };
+  }
+
+  function changeUsername(value: string) {
+    const username = value.toLowerCase();
+    update("username")(username);
+    window.clearTimeout(checkTimer.current);
+    if (username === saved.username || !usernamePattern.test(username)) {
+      setCheck("idle");
+      return;
+    }
+    setCheck("checking");
+    checkTimer.current = window.setTimeout(
+      () => setCheck(takenUsernames.has(username) ? "taken" : "available"),
+      600,
+    );
+  }
+
+  function changePhoto(next: string | undefined) {
+    if (photo && photo !== savedPhoto) URL.revokeObjectURL(photo);
+    setPhoto(next);
+  }
+
+  function discard() {
+    window.clearTimeout(checkTimer.current);
+    setCheck("idle");
+    setDraft(saved);
+    changePhoto(savedPhoto);
   }
 
   return (
     <Form
-      className="gap-10 pb-24"
+      className="gap-8"
       onSubmit={(event) => {
         event.preventDefault();
-        setSaved(draft);
-        setNotice("Your profile is saved.");
+        if (check === "checking" || check === "taken") return;
+        setPending(true);
+        window.setTimeout(() => {
+          if (savedPhoto && savedPhoto !== photo)
+            URL.revokeObjectURL(savedPhoto);
+          setSaved(draft);
+          setSavedPhoto(photo);
+          setCheck("idle");
+          setPending(false);
+          setJustSaved(true);
+          window.clearTimeout(savedTimer.current);
+          savedTimer.current = window.setTimeout(
+            () => setJustSaved(false),
+            2400,
+          );
+        }, 700);
       }}
     >
       <Section
-        title="Profile"
-        description="Other people in your workspace see this information."
+        title="Public profile"
+        description="Other people in Kestrel Insights see this information."
       >
         <div className="flex flex-wrap items-center gap-4">
-          <Avatar name={draft.name || "?"} src={photo} className="size-16" />
-          <div className="flex flex-wrap gap-2">
-            <FileTrigger
-              acceptedFileTypes={["image/png", "image/jpeg"]}
-              onSelect={(files) => {
-                const file = files?.[0];
-                if (file) setPhoto(URL.createObjectURL(file));
-              }}
-            >
-              <Button variant="outline" size="sm">
-                Change photo
-              </Button>
-            </FileTrigger>
-            {photo && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onPress={() => setPhoto(undefined)}
+          <Avatar
+            name={draft.name || "?"}
+            src={photo}
+            className="size-16 text-base"
+          />
+          <div className="grid gap-2">
+            <div className="flex flex-wrap gap-2">
+              <FileTrigger
+                acceptedFileTypes={["image/png", "image/jpeg"]}
+                onSelect={(files) => {
+                  const file = files?.[0];
+                  if (file) changePhoto(URL.createObjectURL(file));
+                }}
               >
-                Remove
-              </Button>
-            )}
+                <Button variant="outline" size="sm">
+                  {photo ? "Change photo" : "Upload photo"}
+                </Button>
+              </FileTrigger>
+              {photo && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onPress={() => changePhoto(undefined)}
+                >
+                  Remove
+                </Button>
+              )}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              PNG or JPG, at least 256 px wide.
+            </p>
           </div>
         </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <TextField
+            size="sm"
+            label="Display name"
+            name="name"
+            autoComplete="name"
+            value={draft.name}
+            onChange={update("name")}
+            isRequired
+          />
+          <TextField
+            size="sm"
+            label="Job title"
+            name="title"
+            autoComplete="organization-title"
+            value={draft.title}
+            onChange={update("title")}
+          />
+        </div>
         <TextField
-          label="Display name"
-          name="name"
-          autoComplete="name"
-          value={draft.name}
-          onChange={update("name")}
-          isRequired
-        />
-        <TextField
+          size="sm"
           name="username"
           value={draft.username}
-          onChange={update("username")}
+          onChange={changeUsername}
+          validate={(value) =>
+            usernamePattern.test(value)
+              ? null
+              : "Use 3 to 30 lowercase letters, numbers, or hyphens."
+          }
+          isInvalid={check === "taken" || undefined}
           isRequired
         >
           <TextFieldLabel>Username</TextFieldLabel>
           <InputGroup>
-            <InputGroupAddon>northwind.app/</InputGroupAddon>
-            <InputGroupInput autoComplete="username" />
+            <InputGroupAddon>kestrel.app/</InputGroupAddon>
+            <InputGroupInput autoComplete="username" spellCheck="false" />
+            {check !== "idle" && (
+              <InputGroupAddon>
+                <IconSwap contentKey={check}>
+                  {check === "checking" ? (
+                    <Spinner size="sm" decorative />
+                  ) : check === "available" ? (
+                    <CheckCircleIcon
+                      size={18}
+                      weight="fill"
+                      className="text-success"
+                    />
+                  ) : (
+                    <WarningCircleIcon
+                      size={18}
+                      weight="fill"
+                      className="text-destructive"
+                    />
+                  )}
+                </IconSwap>
+              </InputGroupAddon>
+            )}
           </InputGroup>
           <TextFieldDescription>
-            Use letters, numbers, and hyphens.
+            {check === "available"
+              ? `kestrel.app/${draft.username} is available.`
+              : "Your profile address. Old links stop working when you change it."}
           </TextFieldDescription>
+          <TextFieldError>
+            {check === "taken" ? "This username is taken." : undefined}
+          </TextFieldError>
         </TextField>
         <TextArea
+          size="sm"
           label="Bio"
           name="bio"
           rows={3}
@@ -339,66 +286,119 @@ export function ProfileForm() {
         />
       </Section>
       <Section
-        title="Contact and region"
-        description="We use these for sign-in emails and for dates and times."
+        title="Contact"
+        description="We use this address for sign-in and for notification emails."
       >
         <TextField
+          size="sm"
           label="Email"
           name="email"
           type="email"
           autoComplete="email"
           value={draft.email}
           onChange={update("email")}
-          description="We send a link to confirm a new address."
+          description={
+            draft.email === saved.email
+              ? "This address is confirmed."
+              : "We send a link to confirm the new address."
+          }
           isRequired
         />
-        <ComboBox
-          label="Time zone"
-          name="timezone"
-          formValue="key"
-          placeholder="Search for a city"
-          options={timezones}
-          value={draft.timezone}
-          onValueChange={(value) => {
-            if (value) update("timezone")(value);
-          }}
-        />
+      </Section>
+      <Section
+        title="Language and region"
+        description="These settings change how Kestrel shows text, dates, and times."
+      >
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Select
+            size="sm"
+            label="Language"
+            name="language"
+            options={languages}
+            value={draft.language}
+            onValueChange={update("language")}
+          />
+          <ComboBox
+            size="sm"
+            label="Time zone"
+            name="timezone"
+            formValue="key"
+            placeholder="Search for a city"
+            options={timezones}
+            value={draft.timezone}
+            onValueChange={(value) => {
+              if (value) update("timezone")(value);
+            }}
+          />
+        </div>
+        <div className="grid justify-items-start gap-2">
+          <span id={timeFormatLabel} className="text-sm font-medium">
+            Time format
+          </span>
+          <ToggleButtonGroup
+            size="sm"
+            aria-labelledby={timeFormatLabel}
+            selectionMode="single"
+            disallowEmptySelection
+            selectedKeys={new Set([draft.timeFormat])}
+            onSelectionChange={(keys) => {
+              const next = Array.from(keys)[0];
+              if (next) update("timeFormat")(String(next));
+            }}
+          >
+            <ToggleButton id="12" variant="segmented">
+              2:30 PM
+            </ToggleButton>
+            <ToggleButton id="24" variant="segmented">
+              14:30
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </div>
       </Section>
       <output aria-live="polite" className="sr-only">
-        {notice}
+        {justSaved ? "Your profile is saved." : ""}
       </output>
-      <AnimatePresence>
-        {(dirty || notice) && (
-          <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
-            transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
-            className="fixed inset-x-0 bottom-4 z-30 mx-auto flex w-[calc(100%-2rem)] max-w-xl flex-wrap items-center justify-between gap-3 rounded-xl bg-popover px-4 py-3 text-popover-foreground shadow-[var(--shadow-float)] ring-1 ring-border/70"
-          >
-            <p className="text-sm font-medium">
-              {dirty ? "You have changes that are not saved." : notice}
-            </p>
-            {dirty && (
-              <div className="flex gap-2">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onPress={() => {
-                    setDraft(saved);
-                    setNotice("");
-                  }}
-                >
-                  Discard
-                </Button>
-                <Button type="submit" size="sm">
-                  Save changes
-                </Button>
-              </div>
+      <Presence show={dirty || justSaved} className="sticky bottom-4 z-20">
+        <div className="mx-auto flex min-h-14 w-full max-w-xl flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-xl bg-popover py-2.5 ps-4 pe-2.5 text-popover-foreground shadow-[var(--shadow-float)] ring-1 ring-border/70">
+          <p className="flex items-center gap-2 text-sm font-medium">
+            {!dirty && (
+              <CheckCircleIcon
+                size={18}
+                weight="fill"
+                aria-hidden="true"
+                className="text-success"
+              />
             )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <TextSwap
+              value={
+                dirty
+                  ? "You have changes that are not saved."
+                  : "Your profile is saved."
+              }
+            />
+          </p>
+          <div
+            className={cn("flex gap-2 max-sm:ms-auto", !dirty && "invisible")}
+          >
+            <Button
+              variant="ghost"
+              size="sm"
+              isDisabled={pending}
+              onPress={discard}
+            >
+              Discard
+            </Button>
+            <Button
+              type="submit"
+              size="sm"
+              isDisabled={pending || check === "checking" || check === "taken"}
+            >
+              {pending && <Spinner size="sm" decorative />}
+              Save changes
+            </Button>
+          </div>
+        </div>
+      </Presence>
     </Form>
   );
 }

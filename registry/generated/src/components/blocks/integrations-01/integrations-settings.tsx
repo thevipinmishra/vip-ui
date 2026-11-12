@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  CaretRightIcon,
   ChartLineUpIcon,
   CheckIcon,
   FigmaLogoIcon,
@@ -42,9 +41,10 @@ import {
   SheetHeader,
   SheetTitle,
 } from "../../vip-ui/sheet";
-import { Switch } from "../../vip-ui/switch";
+import { Spinner } from "../../vip-ui/spinner";
 import { Tab, TabList, TabPanel, Tabs } from "../../vip-ui/tabs";
 import { showToast } from "../../vip-ui/toast";
+import { cn } from "../../vip-ui/utils";
 import { SettingsShell } from "./settings-shell";
 
 const categories = [
@@ -228,6 +228,7 @@ export function IntegrationsSettings() {
   const [figmaAlert, setFigmaAlert] = useState(true);
   const [sheetId, setSheetId] = useState<string | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [connecting, setConnecting] = useState<string | null>(null);
   const searchRef = useRef<HTMLDivElement>(null);
 
   const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
@@ -241,30 +242,52 @@ export function IntegrationsSettings() {
   });
   const sheetApp = apps.find((app) => app.id === sheetId) ?? null;
 
-  function setConnected(id: string, connected: boolean) {
+  function connect(id: string) {
     const app = apps.find((item) => item.id === id);
+    setConnecting(id);
+    window.setTimeout(() => {
+      setConnecting(null);
+      setApps((current) =>
+        current.map((item) =>
+          item.id === id
+            ? {
+                ...item,
+                connected: true,
+                needsAttention: false,
+                connectedBy: "Nadia Okafor",
+                connectedOn: "Nov 3, 2026",
+                lastSync: "just now",
+              }
+            : item,
+        ),
+      );
+      if (app) {
+        showToast({
+          title: `${app.name} is connected`,
+          description: "The first sync starts in a few seconds.",
+          variant: "success",
+        });
+      }
+    }, 900);
+  }
+
+  function disconnect(id: string) {
+    const app = apps.find((item) => item.id === id);
+    const snapshot = apps;
     setApps((current) =>
       current.map((item) =>
         item.id === id
-          ? {
-              ...item,
-              connected,
-              needsAttention: connected ? false : item.needsAttention,
-              lastSync: connected ? "Just now" : "Paused",
-            }
+          ? { ...item, connected: false, needsAttention: false }
           : item,
       ),
     );
-    if (connected) {
-      setFigmaAlert((visible) => (id === "figma" ? false : visible));
-    }
+    if (id === "figma") setFigmaAlert(false);
+    setSheetOpen(false);
     if (app) {
       showToast({
-        title: `${app.name} is ${connected ? "connected" : "disconnected"}`,
-        description: connected
-          ? "Kestrel can now share data with this app."
-          : "Kestrel stops sending data to this app.",
-        variant: connected ? "success" : "warning",
+        title: `${app.name} is disconnected`,
+        description: "Kestrel no longer shares data with this app.",
+        action: { label: "Undo", onAction: () => setApps(snapshot) },
       });
     }
   }
@@ -402,60 +425,81 @@ export function IntegrationsSettings() {
                           <app.icon size={20} />
                         </span>
                         <div className="min-w-0 flex-1">
-                          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                          <div className="flex min-h-6 flex-wrap items-center gap-x-2 gap-y-1">
                             <p className="truncate text-[15px] font-semibold">
                               {app.name}
                             </p>
-                            {app.beta && (
-                              <Badge
-                                variant="accent"
-                                className="min-h-5 py-0 text-[11px]"
-                              >
-                                Beta
-                              </Badge>
-                            )}
+                            {app.beta && <Badge variant="accent">Beta</Badge>}
                             {app.needsAttention && (
-                              <Badge
-                                variant="warning"
-                                className="min-h-5 py-0 text-[11px]"
-                              >
-                                Sign in
-                              </Badge>
+                              <Badge variant="warning">Sign in</Badge>
                             )}
                           </div>
                           <p className="mt-0.5 truncate text-xs text-muted-foreground">
                             {app.tagline}
                           </p>
                         </div>
-                        <div className="shrink-0">
-                          <Switch
-                            aria-label={`${app.connected ? "Disconnect" : "Connect"} ${app.name}`}
-                            checked={app.connected}
-                            onCheckedChange={(connected) =>
-                              setConnected(app.id, connected)
-                            }
-                          />
-                        </div>
                       </div>
-                      <div className="mt-3 flex items-center justify-between gap-2 border-t border-border/60 pt-3">
-                        <span className="text-xs text-muted-foreground">
-                          {app.permissions.length}{" "}
-                          {app.permissions.length === 1
-                            ? "permission"
-                            : "permissions"}
+                      <div className="mt-3 flex min-h-9 items-center justify-between gap-3 border-t border-border/60 pt-3">
+                        <span className="flex min-w-0 items-center gap-1.5 text-xs text-muted-foreground">
+                          {app.connected && (
+                            <span
+                              aria-hidden="true"
+                              className={cn(
+                                "size-1.5 shrink-0 rounded-full",
+                                app.needsAttention
+                                  ? "bg-warning"
+                                  : "bg-success",
+                              )}
+                            />
+                          )}
+                          <span className="truncate">
+                            {app.needsAttention
+                              ? "Sync is paused"
+                              : app.connected
+                                ? `Synced ${app.lastSync}`
+                                : app.publisher}
+                          </span>
                         </span>
-                        <Button
-                          variant="minimal"
-                          size="xs"
-                          aria-label={`Details for ${app.name}`}
-                          onPress={() => {
-                            setSheetId(app.id);
-                            setSheetOpen(true);
-                          }}
-                        >
-                          Details
-                          <CaretRightIcon size={12} aria-hidden="true" />
-                        </Button>
+                        <div className="flex shrink-0 gap-1.5">
+                          {app.connected && (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              aria-label={`Manage ${app.name}`}
+                              onPress={() => {
+                                setSheetId(app.id);
+                                setSheetOpen(true);
+                              }}
+                            >
+                              Manage
+                            </Button>
+                          )}
+                          {app.needsAttention ? (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              aria-label={`Reconnect ${app.name}`}
+                              onPress={() => reconnect(app.id)}
+                            >
+                              Reconnect
+                            </Button>
+                          ) : (
+                            !app.connected && (
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                aria-label={`Connect ${app.name}`}
+                                isDisabled={connecting === app.id}
+                                onPress={() => connect(app.id)}
+                              >
+                                {connecting === app.id && (
+                                  <Spinner size="sm" decorative />
+                                )}
+                                Connect
+                              </Button>
+                            )
+                          )}
+                        </div>
                       </div>
                     </GridListItem>
                   ))}
@@ -560,26 +604,16 @@ export function IntegrationsSettings() {
               </DescriptionList>
             </SheetBody>
             <SheetFooter>
-              {sheetApp.connected ? (
+              {sheetApp.connected && (
                 <Button
-                  size="sm"
                   variant="outline"
-                  className="border-destructive/40 text-destructive hover:bg-destructive/10 hover:text-destructive"
-                  onPress={() => setConnected(sheetApp.id, false)}
+                  className="border-destructive/40 text-destructive hover:bg-destructive/10 pressed:bg-destructive/10 sm:me-auto"
+                  onPress={() => disconnect(sheetApp.id)}
                 >
                   Disconnect
                 </Button>
-              ) : (
-                <Button
-                  size="sm"
-                  onPress={() => setConnected(sheetApp.id, true)}
-                >
-                  Connect
-                </Button>
               )}
-              <SheetClose variant="outline" size="sm">
-                Done
-              </SheetClose>
+              <SheetClose variant="default">Done</SheetClose>
             </SheetFooter>
           </>
         )}
