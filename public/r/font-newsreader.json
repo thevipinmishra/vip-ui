@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "font-newsreader",
+  "type": "registry:font",
+  "title": "Newsreader",
+  "description": "The Newsreader font for the typography presets.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["fonts"],
+  "dependencies": [],
+  "files": [],
+  "font": {
+    "family": "'Newsreader Variable', serif",
+    "provider": "google",
+    "import": "Newsreader",
+    "variable": "--font-newsreader",
+    "subsets": ["latin"],
+    "dependency": "@fontsource-variable/newsreader"
+  }
+}

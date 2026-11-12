@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-waffle",
+  "type": "registry:block",
+  "title": "Waffle",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartWaffle /> from components/charts/chart-waffle.tsx. Preview: https://vip-ui.dev/charts#chart-waffle",
+  "meta": {
+    "entry": {
+      "component": "ChartWaffle",
+      "file": "chart-waffle.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-waffle.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-waffle.tsx",
+      "content": "\"use client\";\n\nimport { defineChart, waffleY } from \"@tanstack/charts\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartDescription,\n  ChartFrame,\n  ChartLegend,\n  ChartLegendItem,\n  ChartTable,\n  ChartTitle,\n  ChartValue,\n} from \"../vip-ui/chart\";\n\nconst answers = [\n  {\n    group: \"Promoters\",\n    scores: \"9–10\",\n    people: 239,\n    color: \"var(--ts-chart-2)\",\n  },\n  {\n    group: \"Passives\",\n    scores: \"7–8\",\n    people: 111,\n    color: \"var(--muted-foreground)\",\n  },\n  {\n    group: \"Detractors\",\n    scores: \"0–6\",\n    people: 62,\n    color: \"var(--ts-chart-5)\",\n  },\n];\n\nconst total = answers.reduce((sum, row) => sum + row.people, 0);\n\nconst rows = answers.map((row) => ({\n  ...row,\n  percent: Math.round((row.people / total) * 100),\n}));\n\nconst score = rows[0].percent - rows[2].percent;\n\nconst series = rows.map((row) => ({ label: row.group, color: row.color }));\n\nconst definition = defineChart({\n  marks: [\n    waffleY(rows, {\n      y: \"percent\",\n      color: \"group\",\n      key: \"group\",\n      columns: 20,\n      gap: 3,\n      radius: 3,\n    }),\n  ],\n  scales: { x: null, y: null },\n  color: {\n    domain: series.map((item) => item.label),\n    range: series.map((item) => item.color),\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: `${point.datum.group}, scores ${point.datum.scores}`,\n      rows: [\n        {\n          label: \"Share\",\n          value: `${point.datum.percent}%`,\n          color: point.color,\n        },\n        { label: \"People\", value: `${point.datum.people}` },\n      ],\n    }),\n  },\n});\n\nexport function ChartWaffle() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Net Promoter Score</ChartTitle>\n        <ChartValue>{score > 0 ? `+${score}` : score}</ChartValue>\n        <ChartDescription>One square is 1% of answers.</ChartDescription>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={150}\n        initialWidth={520}\n        ariaLabel={`Waffle chart of ${total} survey answers: ${rows.map((row) => `${row.percent}% ${row.group.toLowerCase()}`).join(\", \")}. Net Promoter Score ${score}.`}\n      />\n      <ChartLegend>\n        {series.map((item) => (\n          <ChartLegendItem key={item.label} color={item.color}>\n            {item.label}\n          </ChartLegendItem>\n        ))}\n      </ChartLegend>\n      <ChartTable\n        caption=\"Survey answers by group\"\n        columns={[\"Group\", \"Scores\", \"People\", \"Share\"]}\n        rows={rows.map((row) => [\n          row.group,\n          row.scores,\n          row.people,\n          `${row.percent}%`,\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

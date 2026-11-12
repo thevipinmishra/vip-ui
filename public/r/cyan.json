@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "cyan",
+  "type": "registry:theme",
+  "title": "Cyan",
+  "description": "Cool accents and information.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["colors"],
+  "docs": "The scale adds --cyan-1 to --cyan-12 for light and dark mode. Classes such as bg-cyan-3 work after the install.",
+  "dependencies": [],
+  "files": [],
+  "cssVars": {
+    "theme": {
+      "color-cyan-1": "var(--cyan-1)",
+      "color-cyan-2": "var(--cyan-2)",
+      "color-cyan-3": "var(--cyan-3)",
+      "color-cyan-4": "var(--cyan-4)",
+      "color-cyan-5": "var(--cyan-5)",
+      "color-cyan-6": "var(--cyan-6)",
+      "color-cyan-7": "var(--cyan-7)",
+      "color-cyan-8": "var(--cyan-8)",
+      "color-cyan-9": "var(--cyan-9)",
+      "color-cyan-10": "var(--cyan-10)",
+      "color-cyan-11": "var(--cyan-11)",
+      "color-cyan-12": "var(--cyan-12)"
+    },
+    "light": {
+      "cyan-1": "oklch(0.987 0.007 205)",
+      "cyan-2": "oklch(0.969 0.012 205)",
+      "cyan-3": "oklch(0.944 0.019 205)",
+      "cyan-4": "oklch(0.919 0.027 205)",
+      "cyan-5": "oklch(0.894 0.035 205)",
+      "cyan-6": "oklch(0.866 0.045 205)",
+      "cyan-7": "oklch(0.820 0.062 205)",
+      "cyan-8": "oklch(0.755 0.086 205)",
+      "cyan-9": "oklch(0.526 0.130 205)",
+      "cyan-10": "oklch(0.491 0.127 205)",
+      "cyan-11": "oklch(0.505 0.081 205)",
+      "cyan-12": "oklch(0.285 0.039 205)"
+    },
+    "dark": {
+      "cyan-1": "oklch(0.185 0.023 205)",
+      "cyan-2": "oklch(0.215 0.033 205)",
+      "cyan-3": "oklch(0.243 0.042 205)",
+      "cyan-4": "oklch(0.268 0.049 205)",
+      "cyan-5": "oklch(0.293 0.056 205)",
+      "cyan-6": "oklch(0.322 0.062 205)",
+      "cyan-7": "oklch(0.365 0.073 205)",
+      "cyan-8": "oklch(0.430 0.088 205)",
+      "cyan-9": "oklch(0.700 0.130 205)",
+      "cyan-10": "oklch(0.740 0.126 205)",
+      "cyan-11": "oklch(0.735 0.088 205)",
+      "cyan-12": "oklch(0.930 0.036 205)"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-scatter-default",
+  "type": "registry:block",
+  "title": "Scatter",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartScatterDefault /> from components/charts/chart-scatter-default.tsx. Preview: https://vip-ui.dev/charts#chart-scatter-default",
+  "meta": {
+    "entry": {
+      "component": "ChartScatterDefault",
+      "file": "chart-scatter-default.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-scatter-default.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-scatter-default.tsx",
+      "content": "\"use client\";\n\nimport { defineChart, dot, ruleY } from \"@tanstack/charts\";\nimport { decorative } from \"@tanstack/charts/mark/decorative\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartDescription,\n  ChartFrame,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst target = 2.5;\n\nconst rows = [\n  { page: \"/\", kilobytes: 1480, lcp: 2.4 },\n  { page: \"/pricing\", kilobytes: 920, lcp: 2.3 },\n  { page: \"/docs\", kilobytes: 760, lcp: 1.5 },\n  { page: \"/docs/installation\", kilobytes: 690, lcp: 1.4 },\n  { page: \"/docs/components/table\", kilobytes: 1180, lcp: 2.2 },\n  { page: \"/docs/components/chart\", kilobytes: 1640, lcp: 2.2 },\n  { page: \"/blog\", kilobytes: 1320, lcp: 2.3 },\n  { page: \"/blog/release-notes-2-0\", kilobytes: 2240, lcp: 3.6 },\n  { page: \"/blog/design-tokens\", kilobytes: 1870, lcp: 2.4 },\n  { page: \"/changelog\", kilobytes: 840, lcp: 1.6 },\n  { page: \"/about\", kilobytes: 1050, lcp: 1.4 },\n  { page: \"/careers\", kilobytes: 1410, lcp: 1.7 },\n  { page: \"/contact\", kilobytes: 610, lcp: 1.2 },\n  { page: \"/login\", kilobytes: 480, lcp: 1.6 },\n  { page: \"/signup\", kilobytes: 560, lcp: 1.3 },\n  { page: \"/dashboard\", kilobytes: 1960, lcp: 3.9 },\n  { page: \"/dashboard/settings\", kilobytes: 1220, lcp: 2.1 },\n  { page: \"/templates\", kilobytes: 2580, lcp: 3.4 },\n  { page: \"/showcase\", kilobytes: 3120, lcp: 4.8 },\n  { page: \"/legal/privacy\", kilobytes: 390, lcp: 0.9 },\n];\n\nconst formatSize = (kilobytes: number) =>\n  `${(kilobytes / 1000).toLocaleString(\"en-US\", { maximumFractionDigits: 2 })} MB`;\n\nconst definition = defineChart({\n  marks: [\n    decorative(\n      ruleY([target], {\n        stroke: \"var(--muted-foreground)\",\n        strokeDasharray: \"4 4\",\n      }),\n    ),\n    dot(rows, {\n      x: \"kilobytes\",\n      y: \"lcp\",\n      key: \"page\",\n      r: 4.5,\n      fill: \"var(--ts-chart-1)\",\n      fillOpacity: 0.8,\n    }),\n  ],\n  scales: {\n    x: {\n      scale: scaleLinear().domain([0, 3500]),\n      grid: true,\n      axis: {\n        label: \"Page weight\",\n        ticks: { count: 4, format: formatSize },\n      },\n    },\n    y: {\n      scale: scaleLinear().domain([0, 6]),\n      grid: true,\n      axis: {\n        label: \"LCP\",\n        ticks: { count: 4, format: (value: number) => `${value} s` },\n      },\n    },\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: point.datum.page,\n      rows: [\n        {\n          label: \"LCP\",\n          value: `${point.datum.lcp.toFixed(1)} s`,\n          color: point.color,\n        },\n        { label: \"Page weight\", value: formatSize(point.datum.kilobytes) },\n      ],\n    }),\n  },\n});\n\nexport function ChartScatterDefault() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Page weight and load time</ChartTitle>\n        <ChartDescription>\n          Largest contentful paint (LCP) for 20 pages. The dashed line is the{\" \"}\n          {target} s target.\n        </ChartDescription>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={240}\n        initialWidth={520}\n        ariaLabel={`Largest contentful paint against page weight for ${rows.length} pages, with a ${target} second target`}\n      />\n      <ChartTable\n        caption=\"Page weight and largest contentful paint\"\n        columns={[\"Page\", \"Page weight\", \"LCP (s)\"]}\n        rows={rows.map((row) => [row.page, formatSize(row.kilobytes), row.lcp])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

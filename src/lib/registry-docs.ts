@@ -70,7 +70,7 @@ function packageName(dependency: string) {
 export async function readRegistryItem(slug: string): Promise<RegistryItem> {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug))
     throw new Error("Invalid component slug");
-  const item = await readItemFile(`vip-${slug}`);
+  const item = await readItemFile(slug);
   const files = new Map<string, RegistryFile>();
   const packages = new Map<string, string>();
   const devPackages = new Map<string, string>();
@@ -83,7 +83,7 @@ export async function readRegistryItem(slug: string): Promise<RegistryItem> {
     for (const dependency of current.devDependencies ?? [])
       devPackages.set(packageName(dependency), dependency);
     for (const url of current.registryDependencies ?? []) {
-      const name = url.match(/\/r\/(vip-[a-z0-9-]+)\.json$/)?.[1];
+      const name = url.match(/\/r\/([a-z0-9-]+)\.json$/)?.[1];
       if (!name) throw new Error(`Unknown registry dependency ${url}`);
       if (visited.has(name)) continue;
       visited.add(name);
@@ -113,7 +113,7 @@ function registryOrigin() {
 
 export function registryUrl(slug: string) {
   const origin = registryOrigin();
-  return origin ? `${origin}/r/vip-${slug}.json` : null;
+  return origin ? `${origin}/r/${slug}.json` : null;
 }
 
 export function registryNamespaceUrl() {

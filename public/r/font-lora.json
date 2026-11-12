@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "font-lora",
+  "type": "registry:font",
+  "title": "Lora",
+  "description": "The Lora font for the typography presets.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["fonts"],
+  "dependencies": [],
+  "files": [],
+  "font": {
+    "family": "'Lora Variable', serif",
+    "provider": "google",
+    "import": "Lora",
+    "variable": "--font-lora",
+    "subsets": ["latin"],
+    "dependency": "@fontsource-variable/lora"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-radar-multiple",
+  "type": "registry:block",
+  "title": "Multiple radar",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartRadarMultiple /> from components/charts/chart-radar-multiple.tsx. Preview: https://vip-ui.dev/charts#chart-radar-multiple",
+  "meta": {
+    "entry": {
+      "component": "ChartRadarMultiple",
+      "file": "chart-radar-multiple.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0", "d3-shape@^3.2.1"],
+  "devDependencies": ["@types/d3-shape@^3.2.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-radar-multiple.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-radar-multiple.tsx",
+      "content": "\"use client\";\n\nimport { defineChart } from \"@tanstack/charts\";\nimport {\n  angleGrid,\n  focusGroupAngle,\n  polar,\n  radialGrid,\n  radialLine,\n} from \"@tanstack/charts/polar\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { scalePoint } from \"@tanstack/charts/scales/point\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport { curveLinearClosed } from \"d3-shape\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartLegend,\n  ChartLegendItem,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst metrics = [\n  { metric: \"Performance\", mobile: 64, desktop: 94 },\n  { metric: \"Accessibility\", mobile: 93, desktop: 97 },\n  { metric: \"Best practices\", mobile: 92, desktop: 100 },\n  { metric: \"SEO\", mobile: 91, desktop: 100 },\n];\n\nconst rows = metrics.flatMap(({ metric, mobile, desktop }) => [\n  { metric, device: \"Mobile\", score: mobile },\n  { metric, device: \"Desktop\", score: desktop },\n]);\n\nconst series = [\n  { label: \"Mobile\", color: \"var(--ts-chart-3)\" },\n  { label: \"Desktop\", color: \"var(--ts-chart-1)\" },\n];\n\nconst definition = defineChart({\n  marks: [\n    polar({\n      radiusRatio: 0.66,\n      scales: {\n        angle: {\n          scale: scalePoint<string>().domain(metrics.map((row) => row.metric)),\n          wrap: true,\n        },\n        radius: { scale: scaleLinear().domain([0, 100]) },\n      },\n      guides: [\n        radialGrid({\n          values: [25, 50, 75, 100],\n          shape: \"polygon\",\n          stroke: \"var(--border)\",\n        }),\n        angleGrid({\n          labels: true,\n          stroke: \"var(--border)\",\n          labelFill: \"var(--muted-foreground)\",\n        }),\n      ],\n      marks: [\n        radialLine(rows, {\n          angle: \"metric\",\n          radius: \"score\",\n          curve: curveLinearClosed,\n          z: \"device\",\n          color: \"device\",\n          strokeWidth: 2.5,\n        }),\n      ],\n    }),\n  ],\n  scales: { x: null, y: null },\n  color: {\n    domain: series.map((item) => item.label),\n    range: series.map((item) => item.color),\n  },\n  focus: focusGroupAngle,\n  tooltip: {\n    use: tooltip,\n    sort: \"color-domain\",\n    content: (points, { primaryPoint }) => ({\n      title: points[0].datum.metric,\n      rows: points.map((point) => ({\n        label: point.groupLabel,\n        value: `${point.datum.score} / 100`,\n        color: point.color,\n        active: point === primaryPoint,\n      })),\n    }),\n  },\n});\n\nexport function ChartRadarMultiple() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Lighthouse scores</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={240}\n        initialWidth={520}\n        ariaLabel=\"Lighthouse scores out of 100 for the home page on mobile and desktop: performance, accessibility, best practices and SEO\"\n      />\n      <ChartLegend>\n        {series.map((item) => (\n          <ChartLegendItem key={item.label} color={item.color}>\n            {item.label}\n          </ChartLegendItem>\n        ))}\n      </ChartLegend>\n      <ChartTable\n        caption=\"Lighthouse scores for the home page, out of 100\"\n        columns={[\"Category\", \"Mobile\", \"Desktop\"]}\n        rows={metrics.map((row) => [row.metric, row.mobile, row.desktop])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

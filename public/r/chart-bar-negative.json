@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-bar-negative",
+  "type": "registry:block",
+  "title": "Negative bar",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartBarNegative /> from components/charts/chart-bar-negative.tsx. Preview: https://vip-ui.dev/charts#chart-bar-negative",
+  "meta": {
+    "entry": {
+      "component": "ChartBarNegative",
+      "file": "chart-bar-negative.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-bar-negative.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-bar-negative.tsx",
+      "content": "\"use client\";\n\nimport { barY, defineChart, ruleY } from \"@tanstack/charts\";\nimport { decorative } from \"@tanstack/charts/mark/decorative\";\nimport { scaleBand } from \"@tanstack/charts/scales/band\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartLegend,\n  ChartLegendItem,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst rows = [\n  { month: \"2025-10\", change: 12400 },\n  { month: \"2025-11\", change: 8150 },\n  { month: \"2025-12\", change: -3200 },\n  { month: \"2026-01\", change: 15900 },\n  { month: \"2026-02\", change: 9700 },\n  { month: \"2026-03\", change: 11300 },\n  { month: \"2026-04\", change: -1850 },\n  { month: \"2026-05\", change: 7600 },\n  { month: \"2026-06\", change: 13200 },\n  { month: \"2026-07\", change: -4750 },\n  { month: \"2026-08\", change: 10900 },\n  { month: \"2026-09\", change: 14300 },\n];\n\nconst gain = \"var(--ts-chart-2)\";\nconst loss = \"var(--ts-chart-5)\";\n\nconst monthFormat = new Intl.DateTimeFormat(\"en-US\", {\n  month: \"short\",\n  timeZone: \"UTC\",\n});\nconst monthYearFormat = new Intl.DateTimeFormat(\"en-US\", {\n  month: \"long\",\n  year: \"numeric\",\n  timeZone: \"UTC\",\n});\nconst formatMonth = (month: string) => monthFormat.format(new Date(month));\nconst formatMonthYear = (month: string) =>\n  monthYearFormat.format(new Date(month));\nconst formatCompact = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n  notation: \"compact\",\n}).format;\nconst formatChange = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n  maximumFractionDigits: 0,\n  signDisplay: \"exceptZero\",\n}).format;\n\nconst definition = defineChart({\n  marks: [\n    barY(rows, {\n      x: \"month\",\n      y: \"change\",\n      fill: (row) => (row.change < 0 ? loss : gain),\n      inset: 3,\n      radius: { end: 4 },\n    }),\n    decorative(ruleY([0], { stroke: \"var(--muted-foreground)\" })),\n  ],\n  scales: {\n    x: {\n      scale: () => scaleBand().padding(0.15),\n      axis: {\n        ticks: { format: formatMonth },\n        tickLabels: {\n          thin: false,\n          opacity: ({ index, bandwidth }) =>\n            bandwidth < 30 && index % 2 === 1 ? 0 : undefined,\n        },\n      },\n    },\n    y: {\n      scale: scaleLinear().domain([-10000, 20000]),\n      grid: true,\n      axis: { ticks: { count: 4, format: formatCompact } },\n    },\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: formatMonthYear(point.datum.month),\n      rows: [\n        {\n          label: \"Net new MRR\",\n          value: formatChange(point.datum.change),\n          color: point.color,\n        },\n      ],\n    }),\n  },\n});\n\nexport function ChartBarNegative() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Net new MRR</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={220}\n        initialWidth={520}\n        ariaLabel=\"Monthly net new recurring revenue in dollars, October 2025 to September 2026, with gains above zero and losses below\"\n      />\n      <ChartLegend>\n        <ChartLegendItem color={gain}>Gain</ChartLegendItem>\n        <ChartLegendItem color={loss}>Loss</ChartLegendItem>\n      </ChartLegend>\n      <ChartTable\n        caption=\"Net new monthly recurring revenue, in dollars\"\n        columns={[\"Month\", \"Net new MRR\"]}\n        rows={rows.map((row) => [\n          formatMonthYear(row.month),\n          formatChange(row.change),\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

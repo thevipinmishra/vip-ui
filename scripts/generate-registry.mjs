@@ -1,10 +1,13 @@
 import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
+import { stripTypeScriptTypes } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   reactAriaPlugin,
   referencedVars,
   setupCss,
+  themeTokens,
+  themeVars,
 } from "./registry-theme.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -33,13 +36,18 @@ const styleSources = new Map(
 const packageJson = JSON.parse(
   await readFile(path.join(root, "package.json"), "utf8"),
 );
+const chartExamplesDirectory = path.join(
+  root,
+  "src/components/charts/examples",
+);
 const registryOrigin = (
   process.env.NEXT_PUBLIC_REGISTRY_URL || "https://vip-ui.dev"
 ).replace(/\/$/, "");
+const catalogGroups = JSON.parse(
+  await readFile(path.join(root, "src/lib/catalog.json"), "utf8"),
+).groups;
 const catalogDescriptions = new Map(
-  JSON.parse(
-    await readFile(path.join(root, "src/lib/catalog.json"), "utf8"),
-  ).groups.flatMap((group) =>
+  catalogGroups.flatMap((group) =>
     group.items.map((item) => {
       if (typeof item.description !== "string" || !item.description.trim())
         throw new Error(
@@ -49,6 +57,22 @@ const catalogDescriptions = new Map(
     }),
   ),
 );
+const catalogCategories = new Map(
+  catalogGroups.flatMap((group) =>
+    group.items.map((item) => [
+      item.slug,
+      group.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+    ]),
+  ),
+);
+const internalCategories = {
+  "button-link": "actions",
+  chart: "charts",
+  typography: "typography",
+};
+export const registryAuthor =
+  "thevipinmishra <https://github.com/thevipinmishra>";
+export const reservedNames = ["registry"];
 const internalDescriptions = JSON.parse(
   await readFile(path.join(root, "src/lib/internal-descriptions.json"), "utf8"),
 );
@@ -98,27 +122,64 @@ export function dependencyName(dependency) {
   return at === -1 ? dependency : dependency.slice(0, at);
 }
 
-function styleSetup(contents, dependencies) {
-  const setup = {};
+function styleSetup(contents, dependencies, ownCss = {}) {
+  const usesReactAria = dependencies.has("react-aria-components");
   const cssVars = { theme: {}, light: {}, dark: {} };
+  const css = usesReactAria ? { [`@plugin ${reactAriaPlugin}`]: {} } : {};
   for (const content of contents) {
     const vars = referencedVars(content);
     if (!vars) continue;
     Object.assign(cssVars.theme, vars.theme);
     Object.assign(cssVars.light, vars.light);
     Object.assign(cssVars.dark, vars.dark);
+    Object.assign(css, vars.css);
   }
-  if (dependencies.has("react-aria-components")) {
-    setup.devDependencies = [versioned(reactAriaPlugin)];
-    setup.css = { [`@plugin ${reactAriaPlugin}`]: {} };
+  for (const [key, value] of Object.entries(ownCss)) {
+    if (Object.hasOwn(css, key)) throw new Error(`Repeated CSS block ${key}`);
+    css[key] = value;
   }
   if (!Object.keys(cssVars.theme).length) delete cssVars.theme;
   if (!Object.keys(cssVars.light).length) {
     delete cssVars.light;
     delete cssVars.dark;
   }
-  if (Object.keys(cssVars).length) setup.cssVars = cssVars;
-  return setup;
+  return {
+    dependencies: [...dependencies, ...(usesReactAria ? [reactAriaPlugin] : [])]
+      .sort()
+      .map(versioned),
+    ...(Object.keys(cssVars).length ? { cssVars } : {}),
+    ...(Object.keys(css).length ? { css } : {}),
+  };
+}
+
+export function itemCategory(name) {
+  return (
+    catalogCategories.get(name) ??
+    (Object.hasOwn(internalCategories, name)
+      ? internalCategories[name]
+      : "shared")
+  );
+}
+
+export function docsUrl(name) {
+  if (name === "chart") return `${registryOrigin}/charts#documentation`;
+  if (catalogCategories.has(name) || name === "typography")
+    return `${registryOrigin}/components/${name}`;
+  return undefined;
+}
+
+const setupNotes = {
+  chart:
+    "Chart puts a frame around a TanStack Charts chart. It does not use the shadcn/ui chart API.",
+  toast: "Render <ToastViewport /> one time, near the root of your app.",
+  typography:
+    "Add the typography class to an element that contains HTML content.",
+};
+
+function itemDocs(name) {
+  return Object.hasOwn(setupNotes, name)
+    ? { docs: `${setupNotes[name]} Docs: ${docsUrl(name)}` }
+    : {};
 }
 
 export function packageName(specifier) {
@@ -129,7 +190,22 @@ export function packageName(specifier) {
 }
 
 export function itemUrl(name) {
-  return `${registryOrigin}/r/vip-${name}.json`;
+  return `${registryOrigin}/r/${name}.json`;
+}
+
+export function checkItemNames(items) {
+  const names = new Set();
+  for (const { name } of items) {
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(name))
+      throw new Error(`Registry item name ${name} is not kebab-case`);
+    if (names.has(name))
+      throw new Error(`Two registry items have the name ${name}`);
+    if (reservedNames.includes(name))
+      throw new Error(
+        `Registry item name ${name} is reserved: /r/${name}.json is the registry index`,
+      );
+    names.add(name);
+  }
 }
 
 function titleFor(name) {
@@ -180,15 +256,21 @@ export function createLibItem(name) {
     new Map(),
   );
   const content = portableSource(source);
+  const { dependencies: packages, ...setup } = styleSetup(
+    [content],
+    dependencies,
+  );
   return {
     $schema: "https://ui.shadcn.com/schema/registry-item.json",
-    name: `vip-${name}`,
+    name,
     type: "registry:lib",
     title: titleFor(name),
     description: componentDescription(name),
-    dependencies: [...dependencies].sort().map(versioned),
+    author: registryAuthor,
+    categories: [itemCategory(name)],
+    dependencies: packages,
     ...linkedItems(registryDependencies),
-    ...styleSetup([content], dependencies),
+    ...setup,
     files: [
       {
         path: `src/lib/${name}.ts`,
@@ -249,16 +331,22 @@ export function cssObject(source) {
 export function createStyleItem(name) {
   const source = styleSources.get(name);
   if (source === undefined) throw new Error(`Missing stylesheet ${name}`);
-  const { cssVars } = styleSetup([source], new Set());
+  const { dependencies, ...setup } = styleSetup(
+    [source],
+    new Set(),
+    cssObject(source),
+  );
   return {
     $schema: "https://ui.shadcn.com/schema/registry-item.json",
-    name: `vip-${name}`,
+    name,
     type: "registry:item",
     title: titleFor(name),
     description: componentDescription(name),
-    dependencies: [],
-    ...(cssVars ? { cssVars } : {}),
-    css: cssObject(source),
+    author: registryAuthor,
+    categories: [itemCategory(name)],
+    ...itemDocs(name),
+    dependencies,
+    ...setup,
     files: [],
   };
 }
@@ -284,15 +372,22 @@ export function createItem(name, sources) {
       content,
     },
   ];
+  const { dependencies: packages, ...setup } = styleSetup(
+    [content],
+    dependencies,
+  );
   return {
     $schema: "https://ui.shadcn.com/schema/registry-item.json",
-    name: `vip-${name}`,
+    name,
     type: "registry:ui",
     title: titleFor(name),
     description: componentDescription(name),
-    dependencies: [...dependencies].sort().map(versioned),
+    author: registryAuthor,
+    categories: [itemCategory(name)],
+    ...itemDocs(name),
+    dependencies: packages,
     ...linkedItems(registryDependencies),
-    ...styleSetup([content], dependencies),
+    ...setup,
     files,
   };
 }
@@ -363,13 +458,14 @@ function blockFilesItem(name, sources, blockFiles) {
       content,
     });
   }
+  const { dependencies: packages, ...setup } = styleSetup(
+    files.map((file) => file.content),
+    dependencies,
+  );
   return {
-    dependencies: [...dependencies].sort().map(versioned),
+    dependencies: packages,
     ...linkedItems(registryDependencies),
-    ...styleSetup(
-      files.map((file) => file.content),
-      dependencies,
-    ),
+    ...setup,
     files,
   };
 }
@@ -378,11 +474,13 @@ export function createBlockItem(block, sources, blockFiles) {
   const entry = blockEntry(block, blockFiles);
   return {
     $schema: "https://ui.shadcn.com/schema/registry-item.json",
-    name: `vip-${block.name}`,
+    name: block.name,
     type: "registry:block",
     title: titleFor(block.name),
     description: block.description,
+    author: registryAuthor,
     categories: [block.category],
+    docs: `Render <${entry.component} /> from components/blocks/${block.name}/${entry.file}. Preview: ${registryOrigin}/blocks/${block.name}`,
     meta: { entry },
     ...blockFilesItem(block.name, sources, blockFiles),
   };
@@ -407,6 +505,448 @@ export async function readBlockFiles(directory, prefix = "") {
     }
   }
   return files;
+}
+
+const siteModuleImports = {
+  "src/lib/palettes.ts": { '"./palette-data"': "src/lib/palette-data.ts" },
+  "src/app/themes/themes.ts": {
+    '"@/lib/palettes"': "src/lib/palettes.ts",
+  },
+};
+const siteModuleCache = new Map();
+async function siteModule(relative) {
+  const cached = siteModuleCache.get(relative);
+  if (cached) return cached;
+  let code = stripTypeScriptTypes(
+    (await readFile(path.join(root, relative), "utf8")).replace(/\r\n/g, "\n"),
+    { mode: "strip" },
+  );
+  for (const [specifier, target] of Object.entries(
+    siteModuleImports[relative] ?? {},
+  ))
+    code = code.replaceAll(
+      specifier,
+      JSON.stringify((await siteModule(target)).url),
+    );
+  const module = {
+    url: `data:text/javascript;base64,${Buffer.from(code).toString("base64")}`,
+  };
+  siteModuleCache.set(relative, module);
+  return module;
+}
+
+export async function loadSiteModule(relative) {
+  return import((await siteModule(relative)).url);
+}
+
+export function themeColorMappings(colors) {
+  return Object.fromEntries(
+    colors.map((name) => [`color-${name}`, `var(--${name})`]),
+  );
+}
+
+function cssDeclarations(source, selector) {
+  const start = source.indexOf(selector);
+  if (start === -1) throw new Error(`No ${selector} block in the source`);
+  const end = source.indexOf("\n}", start);
+  const declarations = new Map();
+  for (const [, name, value] of source
+    .slice(source.indexOf("{", start) + 1, end)
+    .matchAll(/--([\w-]+):\s*([^;]+);/g))
+    declarations.set(name, value.replace(/\s+/g, " "));
+  if (!declarations.size)
+    throw new Error(`The ${selector} block has no declarations`);
+  return declarations;
+}
+
+function sameKeys(left, right) {
+  if (left.size !== right.size) return false;
+  for (const name of left.keys()) if (!right.has(name)) return false;
+  return true;
+}
+
+export function createThemeItem(theme, themeCss) {
+  const css = themeCss.replace(/\r\n/g, "\n");
+  const light = cssDeclarations(css, ":root {");
+  const dark = cssDeclarations(css, ".dark {");
+  if (!sameKeys(light, dark))
+    throw new Error(
+      `Theme ${theme.slug} has different tokens for light and dark`,
+    );
+  const colors = [...light.keys()];
+  return {
+    $schema: "https://ui.shadcn.com/schema/registry-item.json",
+    name: `theme-${theme.slug}`,
+    type: "registry:theme",
+    title: theme.name,
+    description: theme.description,
+    author: registryAuthor,
+    categories: ["themes"],
+    docs: "The theme sets colors only. Your fonts, radius, and shadows do not change.",
+    dependencies: [],
+    files: [],
+    cssVars: {
+      theme: themeColorMappings(colors),
+      light: Object.fromEntries(light),
+      dark: Object.fromEntries(dark),
+    },
+  };
+}
+
+export async function themeItems() {
+  const { themes, themeCss } = await loadSiteModule("src/app/themes/themes.ts");
+  return themes.map((theme) => createThemeItem(theme, themeCss(theme)));
+}
+
+export function createColorScaleItem(palette) {
+  const steps = (mode) =>
+    Object.fromEntries(
+      palette[mode].map((value, index) => [
+        `${palette.slug}-${index + 1}`,
+        value,
+      ]),
+    );
+  const light = steps("light");
+  const dark = steps("dark");
+  return {
+    $schema: "https://ui.shadcn.com/schema/registry-item.json",
+    name: palette.slug,
+    type: "registry:theme",
+    title: palette.name,
+    description: palette.description,
+    author: registryAuthor,
+    categories: ["colors"],
+    docs: `The scale adds --${palette.slug}-1 to --${palette.slug}-12 for light and dark mode. Classes such as bg-${palette.slug}-3 work after the install.`,
+    dependencies: [],
+    files: [],
+    cssVars: {
+      theme: themeColorMappings(Object.keys(light)),
+      light,
+      dark,
+    },
+  };
+}
+
+export async function colorScaleItems() {
+  const { palettes } = await loadSiteModule("src/lib/palettes.ts");
+  return palettes.map(createColorScaleItem);
+}
+
+const baseTokens = [
+  "background",
+  "foreground",
+  "card",
+  "card-foreground",
+  "popover",
+  "popover-foreground",
+  "primary",
+  "primary-foreground",
+  "secondary",
+  "secondary-foreground",
+  "muted",
+  "muted-foreground",
+  "accent",
+  "accent-foreground",
+  "highlight",
+  "destructive",
+  "destructive-foreground",
+  "border",
+  "input",
+  "ring",
+  "success",
+  "success-subtle",
+  "success-foreground",
+  "warning",
+  "warning-subtle",
+  "warning-foreground",
+  "chart-1",
+  "chart-2",
+  "chart-3",
+  "chart-4",
+  "chart-5",
+  "chart-6",
+  "shadow-card",
+  "shadow-float",
+  "shadow-inset",
+];
+
+const siteOnlyTokens = new Set([
+  "radius",
+  "code",
+  "code-foreground",
+  "scrollbar-thumb",
+  "scrollbar-thumb-hover",
+]);
+
+export async function readSiteTheme() {
+  const site = (
+    await readFile(path.join(root, "src/app/globals.css"), "utf8")
+  ).replace(/\r\n/g, "\n");
+  const modes = {
+    light: cssDeclarations(site, ":root {"),
+    dark: cssDeclarations(site, ".dark {"),
+  };
+  for (const [mode, declarations] of Object.entries(modes)) {
+    for (const name of baseTokens) {
+      if (!declarations.has(name))
+        throw new Error(`globals.css has no --${name} for ${mode}`);
+      const value = declarations.get(name);
+      const reference = value.match(/^var\(--([\w-]+)\)$/);
+      if (reference) {
+        const target = declarations.get(reference[1]);
+        if (target === undefined)
+          throw new Error(
+            `globals.css --${name} for ${mode} references missing --${reference[1]}`,
+          );
+        declarations.set(name, target);
+      }
+    }
+    for (const name of declarations.keys())
+      if (
+        !baseTokens.includes(name) &&
+        !siteOnlyTokens.has(name) &&
+        !name.startsWith("sage-")
+      )
+        throw new Error(
+          `globals.css declares unexpected --${name} for ${mode}`,
+        );
+    for (const [name, value] of Object.entries(themeVars[mode])) {
+      if (declarations.get(name) !== value)
+        throw new Error(
+          `globals.css --${name} for ${mode} does not match the registry token`,
+        );
+    }
+  }
+  return {
+    light: Object.fromEntries(
+      baseTokens.map((name) => [name, modes.light.get(name)]),
+    ),
+    dark: Object.fromEntries(
+      baseTokens.map((name) => [name, modes.dark.get(name)]),
+    ),
+  };
+}
+
+export function createBaseItem(siteTheme) {
+  const colors = baseTokens.filter((name) => !name.startsWith("shadow-"));
+  return {
+    $schema: "https://ui.shadcn.com/schema/registry-item.json",
+    name: "base",
+    type: "registry:base",
+    title: "Base",
+    description:
+      "Sets up a project with the vip/ui theme, the shadow tokens, and the easing tokens.",
+    author: registryAuthor,
+    categories: ["setup"],
+    docs: "Run after shadcn init and before a theme item. The base sets the sage theme colors, the shadow and easing tokens, and the Tailwind React Aria plugin. A theme item installed after it replaces the colors.",
+    dependencies: [versioned(reactAriaPlugin)],
+    files: [],
+    cssVars: {
+      theme: {
+        ...themeColorMappings(colors),
+        ...themeTokens,
+      },
+      light: siteTheme.light,
+      dark: siteTheme.dark,
+    },
+    css: { [`@plugin ${reactAriaPlugin}`]: {} },
+  };
+}
+
+const fontFamilies = {
+  geist: "Geist Variable",
+  "geist-mono": "Geist Mono Variable",
+  inter: "Inter Variable",
+  "ibm-plex-sans": "IBM Plex Sans Variable",
+  "source-serif": "Source Serif 4 Variable",
+  newsreader: "Newsreader Variable",
+  lora: "Lora Variable",
+  "jetbrains-mono": "JetBrains Mono Variable",
+  "ibm-plex-mono": "IBM Plex Mono",
+};
+const fontImports = {
+  geist: "Geist",
+  "geist-mono": "Geist_Mono",
+};
+const fontWeights = {
+  "ibm-plex-sans": ["400", "500", "600"],
+  "ibm-plex-mono": ["400", "500"],
+};
+const fontDependencies = {
+  geist: "@fontsource-variable/geist",
+  "geist-mono": "@fontsource-variable/geist-mono",
+  inter: "@fontsource-variable/inter",
+  "ibm-plex-sans": "@fontsource-variable/ibm-plex-sans",
+  "source-serif": "@fontsource-variable/source-serif-4",
+  newsreader: "@fontsource-variable/newsreader",
+  lora: "@fontsource-variable/lora",
+  "jetbrains-mono": "@fontsource-variable/jetbrains-mono",
+  "ibm-plex-mono": "@fontsource/ibm-plex-mono",
+};
+const kindStacks = {
+  sans: "sans-serif",
+  serif: "serif",
+  mono: "monospace",
+};
+
+export function createFontItem(font) {
+  const family = fontFamilies[font.id];
+  const weight = fontWeights[font.id];
+  const dependency = fontDependencies[font.id];
+  if (!family || !dependency)
+    throw new Error(`No fontsource package for ${font.id}`);
+  return {
+    $schema: "https://ui.shadcn.com/schema/registry-item.json",
+    name: `font-${font.id}`,
+    type: "registry:font",
+    title: font.name,
+    description: `The ${font.name} font for the typography presets.`,
+    author: registryAuthor,
+    categories: ["fonts"],
+    dependencies: [],
+    files: [],
+    font: {
+      family: `'${family}', ${kindStacks[font.kind]}`,
+      provider: "google",
+      import: fontImports[font.id] ?? font.loader,
+      variable: font.variable,
+      subsets: ["latin"],
+      ...(weight ? { weight } : {}),
+      dependency,
+    },
+  };
+}
+
+export async function fontItems() {
+  const { fontOptions } = await loadSiteModule("src/app/typography/fonts.ts");
+  return fontOptions.map(createFontItem);
+}
+
+const chartCatalogPattern =
+  /\bslug: "([\w-]+)"|\bfile: "([\w-]+)",\s*name: "([^"]+)"/g;
+
+export async function readChartCatalog() {
+  const source = await readFile(
+    path.join(root, "src/components/charts/catalog.tsx"),
+    "utf8",
+  );
+  const catalog = new Map();
+  let category;
+  for (const match of source
+    .replace(/\r\n/g, "\n")
+    .matchAll(chartCatalogPattern)) {
+    if (match[1]) category = match[1];
+    else if (category) catalog.set(match[2], { name: match[3], category });
+  }
+  const files = (await readdir(chartExamplesDirectory))
+    .filter((file) => file.endsWith(".tsx"))
+    .map((file) => file.slice(0, -4));
+  for (const file of files)
+    if (!catalog.has(file))
+      throw new Error(
+        `src/components/charts/catalog.tsx does not list chart example ${file}`,
+      );
+  for (const file of catalog.keys())
+    if (!files.includes(file))
+      throw new Error(`catalog lists missing chart example ${file}`);
+  return catalog;
+}
+
+const typePackages = {
+  "d3-geo": "@types/d3-geo",
+  "d3-scale": "@types/d3-scale",
+  "d3-shape": "@types/d3-shape",
+};
+
+export function createChartExampleItem(name, source, catalog, sources) {
+  const example = catalog.get(name);
+  if (!example) throw new Error(`No catalog entry for chart example ${name}`);
+  const exported = [...source.matchAll(/export function (\w+)\(/g)];
+  if (exported.length !== 1)
+    throw new Error(`${name} must export one component`);
+  const component = exported[0][1];
+  const location = `src/components/charts/${name}.tsx`;
+  const dependencies = new Set();
+  const devDependencies = new Set();
+  const registryDependencies = new Set();
+  let content = source.replace(/\r\n/g, "\n");
+  for (const specifier of importsFrom(content)) {
+    if (specifier.startsWith("@/components/ui/")) {
+      const slug = specifier.slice("@/components/ui/".length);
+      if (!sources.has(slug))
+        throw new Error(`${location} imports missing component ${slug}`);
+      registryDependencies.add(slug);
+      content = content.replaceAll(
+        specifier,
+        relativeImport(location, `src/components/vip-ui/${slug}`),
+      );
+    } else if (specifier === "react") {
+    } else if (specifier.startsWith("@tanstack/charts")) {
+      dependencies.add("@tanstack/charts");
+    } else if (specifier.startsWith("@/lib/")) {
+      const lib = specifier.replace(/^@\/lib\//, "");
+      if (!libSources.has(lib))
+        throw new Error(`Unhandled import in ${location}: ${specifier}`);
+      registryDependencies.add(lib);
+      content = content.replaceAll(
+        specifier,
+        relativeImport(location, `src/components/vip-ui/${lib}`),
+      );
+    } else if (packageJson.dependencies?.[packageName(specifier)]) {
+      dependencies.add(packageName(specifier));
+      const types = typePackages[packageName(specifier)];
+      if (types) devDependencies.add(types);
+    } else {
+      throw new Error(`Unhandled import in ${location}: ${specifier}`);
+    }
+  }
+  const { dependencies: packages, ...setup } = styleSetup(
+    [content],
+    dependencies,
+  );
+  return {
+    $schema: "https://ui.shadcn.com/schema/registry-item.json",
+    name,
+    type: "registry:block",
+    title: example.name,
+    author: registryAuthor,
+    categories: ["charts"],
+    docs: `Render <${component} /> from components/charts/${name}.tsx. Preview: ${registryOrigin}/charts#${name}`,
+    meta: { entry: { component, file: `${name}.tsx` } },
+    dependencies: packages,
+    ...(devDependencies.size
+      ? { devDependencies: [...devDependencies].sort().map(versioned) }
+      : {}),
+    ...linkedItems(registryDependencies),
+    ...setup,
+    files: [
+      {
+        path: `src/components/charts/examples/${name}.tsx`,
+        type: "registry:file",
+        target: `@components/charts/${name}.tsx`,
+        content,
+      },
+    ],
+  };
+}
+
+export async function chartExampleItems(sources) {
+  const catalog = await readChartCatalog();
+  const items = [];
+  for (const [name] of catalog) {
+    items.push(
+      createChartExampleItem(
+        name,
+        await readFile(
+          path.join(chartExamplesDirectory, `${name}.tsx`),
+          "utf8",
+        ),
+        catalog,
+        sources,
+      ),
+    );
+  }
+  return items;
 }
 
 const blocksDirectory = path.join(root, "src/app/blocks");
@@ -485,13 +1025,6 @@ export async function generate() {
       );
     }
   }
-  await mkdir(outputDirectory, { recursive: true });
-  for (const filename of await readdir(outputDirectory)) {
-    if (filename === "registry.json" || /^vip-.*\.json$/.test(filename)) {
-      await rm(path.join(outputDirectory, filename));
-    }
-  }
-  await rm(sourceDirectory, { recursive: true, force: true });
   for (const slug of Object.keys(internalDescriptions)) {
     if (!sources.has(slug) && !libSources.has(slug) && !styleSources.has(slug))
       throw new Error(
@@ -499,21 +1032,15 @@ export async function generate() {
       );
   }
   const items = [];
-  for (const name of libSources.keys()) {
-    if (sources.has(name))
-      throw new Error(`Component ${name} has the name of a shared library`);
-    items.push(createLibItem(name));
-  }
+  for (const name of libSources.keys()) items.push(createLibItem(name));
   for (const name of sources.keys()) items.push(createItem(name, sources));
-  for (const name of styleSources.keys()) {
-    if (sources.has(name) || libSources.has(name))
-      throw new Error(`Stylesheet ${name} has the name of another item`);
-    items.push(createStyleItem(name));
-  }
+  for (const name of styleSources.keys()) items.push(createStyleItem(name));
+  const themes = await themeItems();
+  const scales = await colorScaleItems();
+  const base = createBaseItem(await readSiteTheme());
+  const fonts = await fontItems();
   const blocks = await readBlockCatalog();
   for (const block of blocks) {
-    if (sources.has(block.name) || libSources.has(block.name))
-      throw new Error(`Block ${block.name} has the name of another item`);
     items.push(
       createBlockItem(
         block,
@@ -522,11 +1049,20 @@ export async function generate() {
       ),
     );
   }
+  const examples = await chartExampleItems(sources);
+  items.push(...themes, ...scales, base, ...fonts, ...examples);
+  checkItemNames(items);
   checkRegistryDependencies(items);
-  const catalogItems = [];
   const registrySources = new Map();
+  const catalogItems = items.map((item) => catalogItem(item, registrySources));
+  await mkdir(outputDirectory, { recursive: true });
+  for (const filename of await readdir(outputDirectory)) {
+    if (filename.endsWith(".json")) {
+      await rm(path.join(outputDirectory, filename));
+    }
+  }
+  await rm(sourceDirectory, { recursive: true, force: true });
   for (const item of items) {
-    catalogItems.push(catalogItem(item, registrySources));
     await writeFile(
       path.join(outputDirectory, `${item.name}.json`),
       `${JSON.stringify(item, null, 2)}\n`,
@@ -548,7 +1084,7 @@ export async function generate() {
   await writeFile(path.join(outputDirectory, "registry.json"), json);
   await writeFile(path.join(outputDirectory, "setup.css"), setupCss());
   console.log(
-    `Generated ${libSources.size} libraries, ${sources.size} components, ${styleSources.size} stylesheets, and ${blocks.length} blocks in public/r`,
+    `Generated ${libSources.size} libraries, ${sources.size} components, ${styleSources.size} stylesheets, ${themes.length} themes, ${scales.length} color scales, ${fonts.length} fonts, ${blocks.length} blocks, ${examples.length} chart examples, and 1 base in public/r`,
   );
 }
 

@@ -1,16 +1,16 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
 import {
   createContext,
   type HTMLAttributes,
   type ReactNode,
   useContext,
-  useId,
+  useLayoutEffect,
+  useRef,
 } from "react";
 import { Link as AriaLink, type LinkProps } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { springLayout } from "@/lib/motion";
+import { springLayout, springSnappyEasing } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { buttonLabel, touchTarget } from "./button-styles";
 import { ItemHighlight } from "./item-highlight";
@@ -41,7 +41,13 @@ const ellipsisSizeStyles = {
   xl: "min-h-14 min-w-9 text-base",
 } satisfies Record<Size, string>;
 
-const PaginationIdContext = createContext<string | null>(null);
+const PaginationFrameContext =
+  createContext<React.RefObject<HTMLElement | null> | null>(null);
+
+const flipTiming = {
+  duration: springLayout.duration * 1000,
+  easing: springSnappyEasing.easing,
+} satisfies KeyframeAnimationOptions;
 
 export function Pagination({
   className,
@@ -50,10 +56,10 @@ export function Pagination({
   ...props
 }: HTMLAttributes<HTMLElement> & { size?: Size }) {
   const size = useSize(sizeProp);
-  const id = useId();
+  const frame = useRef<HTMLElement | null>(null);
   return (
     <SizeProvider size={size}>
-      <PaginationIdContext.Provider value={id}>
+      <PaginationFrameContext.Provider value={frame}>
         <nav
           aria-label="Pagination"
           data-slot="pagination"
@@ -70,7 +76,7 @@ export function Pagination({
           />
           {children}
         </nav>
-      </PaginationIdContext.Provider>
+      </PaginationFrameContext.Provider>
     </SizeProvider>
   );
 }
@@ -120,8 +126,29 @@ export function PaginationLink({
   ...props
 }: PaginationLinkProps) {
   const size = useSize(sizeProp) ?? "md";
-  const groupId = useContext(PaginationIdContext);
-  const reduceMotion = useReducedMotion();
+  const frame = useContext(PaginationFrameContext);
+  const indicatorRef = useRef<HTMLSpanElement>(null);
+
+  useLayoutEffect(() => {
+    if (!isCurrent) return;
+    const indicator = indicatorRef.current;
+    const link = indicator?.parentElement;
+    if (!indicator || !link) return;
+    const previous = frame?.current ?? null;
+    if (frame) frame.current = link;
+    if (!previous || previous === link || !previous.isConnected) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const box = link.getBoundingClientRect();
+    const from = previous.getBoundingClientRect();
+    const x = from.x - box.x;
+    const y = from.y - box.y;
+    if (!x && !y) return;
+    indicator.animate(
+      { transform: [`translate(${x}px, ${y}px)`, "translate(0px, 0px)"] },
+      flipTiming,
+    );
+  }, [isCurrent, frame]);
+
   return (
     <AriaLink
       {...props}
@@ -131,11 +158,10 @@ export function PaginationLink({
       className={paginationLinkStyles({ isCurrent, size, className })}
     >
       {isCurrent && (
-        <motion.span
+        <span
           aria-hidden="true"
+          ref={indicatorRef}
           data-slot="pagination-current"
-          layoutId={groupId ? `pagination-current-${groupId}` : undefined}
-          transition={reduceMotion ? { duration: 0 } : springLayout}
           className="absolute inset-0 -z-10 rounded-[inherit] bg-card shadow-[var(--shadow-card)] ring-1 ring-primary/25"
         />
       )}

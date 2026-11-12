@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-error-bars",
+  "type": "registry:block",
+  "title": "Error bars",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartErrorBars /> from components/charts/chart-error-bars.tsx. Preview: https://vip-ui.dev/charts#chart-error-bars",
+  "meta": {
+    "entry": {
+      "component": "ChartErrorBars",
+      "file": "chart-error-bars.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-error-bars.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-error-bars.tsx",
+      "content": "\"use client\";\n\nimport { defineChart, dot, link, ruleY, tickY } from \"@tanstack/charts\";\nimport { decorative } from \"@tanstack/charts/mark/decorative\";\nimport { scaleBand } from \"@tanstack/charts/scales/band\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartLegend,\n  ChartLegendItem,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst target = 72;\n\nconst regions = [\n  { region: \"North\", estimate: 78, low: 73, high: 83 },\n  { region: \"South\", estimate: 69, low: 62, high: 76 },\n  { region: \"East\", estimate: 74, low: 70, high: 78 },\n  { region: \"West\", estimate: 66, low: 58, high: 74 },\n  { region: \"Central\", estimate: 81, low: 77, high: 85 },\n  { region: \"Coastal\", estimate: 71, low: 64, high: 78 },\n];\n\nconst formatScore = (value: number) => `${value}`;\n\nconst definition = defineChart({\n  marks: [\n    decorative(\n      ruleY([target], {\n        stroke: \"var(--muted-foreground)\",\n        strokeDasharray: \"4 4\",\n        strokeOpacity: 0.8,\n      }),\n    ),\n    decorative(\n      link(regions, {\n        x1: \"region\",\n        x2: \"region\",\n        y1: \"low\",\n        y2: \"high\",\n        stroke: \"var(--ts-chart-1)\",\n        strokeWidth: 1.5,\n      }),\n    ),\n    decorative(\n      tickY(regions, {\n        x: \"region\",\n        y: \"low\",\n        length: 12,\n        stroke: \"var(--ts-chart-1)\",\n      }),\n    ),\n    decorative(\n      tickY(regions, {\n        x: \"region\",\n        y: \"high\",\n        length: 12,\n        stroke: \"var(--ts-chart-1)\",\n      }),\n    ),\n    dot(regions, {\n      x: \"region\",\n      y: \"estimate\",\n      key: \"region\",\n      r: 4.5,\n      fill: \"var(--ts-chart-1)\",\n      stroke: \"var(--card)\",\n      strokeWidth: 1.5,\n    }),\n  ],\n  scales: {\n    x: {\n      scale: () =>\n        scaleBand<string>()\n          .domain(regions.map((row) => row.region))\n          .padding(0.4),\n    },\n    y: {\n      scale: scaleLinear().domain([50, 90]),\n      grid: true,\n      axis: { label: \"Satisfaction score\", ticks: { count: 4 } },\n    },\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: point.datum.region,\n      rows: [\n        {\n          label: \"Estimate\",\n          value: formatScore(point.datum.estimate),\n          color: point.color,\n        },\n        {\n          label: \"95% interval\",\n          value: `${point.datum.low}–${point.datum.high}`,\n        },\n        {\n          label: \"Versus target\",\n          value:\n            point.datum.low > target\n              ? \"Above\"\n              : point.datum.high < target\n                ? \"Below\"\n                : \"Overlaps\",\n        },\n      ],\n    }),\n  },\n});\n\nexport function ChartErrorBars() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Satisfaction by region</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={240}\n        initialWidth={520}\n        ariaLabel={`Satisfaction estimates with 95% intervals for six regions against a target of ${target}. North and Central sit above the target.`}\n      />\n      <ChartLegend>\n        <ChartLegendItem color=\"var(--ts-chart-1)\">\n          Estimate and 95% interval\n        </ChartLegendItem>\n        <ChartLegendItem color=\"var(--muted-foreground)\" swatch=\"dashed\">\n          Target\n        </ChartLegendItem>\n      </ChartLegend>\n      <ChartTable\n        caption=\"Satisfaction estimates by region\"\n        columns={[\"Region\", \"Estimate\", \"Low\", \"High\"]}\n        rows={regions.map((row) => [\n          row.region,\n          row.estimate,\n          row.low,\n          row.high,\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

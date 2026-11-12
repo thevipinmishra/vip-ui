@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-pie-default",
+  "type": "registry:block",
+  "title": "Pie",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartPieDefault /> from components/charts/chart-pie-default.tsx. Preview: https://vip-ui.dev/charts#chart-pie-default",
+  "meta": {
+    "entry": {
+      "component": "ChartPieDefault",
+      "file": "chart-pie-default.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-pie-default.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-pie-default.tsx",
+      "content": "\"use client\";\n\nimport { defineChart } from \"@tanstack/charts\";\nimport { pie, polar, radialArc } from \"@tanstack/charts/polar\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartLegend,\n  ChartLegendItem,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst rows = [\n  { browser: \"Chrome\", visitors: 31840 },\n  { browser: \"Safari\", visitors: 11920 },\n  { browser: \"Edge\", visitors: 3610 },\n  { browser: \"Firefox\", visitors: 1880 },\n  { browser: \"Samsung Internet\", visitors: 1240 },\n  { browser: \"Other\", visitors: 1117 },\n];\n\nconst total = rows.reduce((sum, row) => sum + row.visitors, 0);\n\nconst series = rows.map((row, index) => ({\n  label: row.browser,\n  color: `var(--ts-chart-${index + 1})`,\n}));\n\nconst formatShare = new Intl.NumberFormat(\"en-US\", {\n  style: \"percent\",\n  maximumFractionDigits: 1,\n}).format;\n\nconst definition = defineChart({\n  marks: [\n    polar({\n      radiusRatio: 0.8,\n      marks: [\n        radialArc(pie(rows, { value: \"visitors\", gapAngle: 0.02 }), {\n          color: \"browser\",\n          key: \"browser\",\n          stroke: \"var(--card)\",\n          strokeWidth: 2,\n        }),\n      ],\n      scales: { angle: null, radius: null },\n    }),\n  ],\n  scales: { x: null, y: null },\n  color: {\n    domain: series.map((item) => item.label),\n    range: series.map((item) => item.color),\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: point.datum.browser,\n      rows: [\n        {\n          label: \"Visitors\",\n          value: point.datum.visitors.toLocaleString(\"en-US\"),\n          color: point.color,\n        },\n        { label: \"Share\", value: formatShare(point.datum.visitors / total) },\n      ],\n    }),\n  },\n});\n\nexport function ChartPieDefault() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Browsers</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={220}\n        initialWidth={520}\n        ariaLabel=\"Share of visitors by browser for the last 30 days: Chrome, Safari, Edge, Firefox, Samsung Internet and other\"\n      />\n      <ChartLegend>\n        {series.map((item) => (\n          <ChartLegendItem key={item.label} color={item.color}>\n            {item.label}\n          </ChartLegendItem>\n        ))}\n      </ChartLegend>\n      <ChartTable\n        caption=\"Visitors by browser, last 30 days\"\n        columns={[\"Browser\", \"Visitors\", \"Share\"]}\n        rows={rows.map((row) => [\n          row.browser,\n          row.visitors,\n          formatShare(row.visitors / total),\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

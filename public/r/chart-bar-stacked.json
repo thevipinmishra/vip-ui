@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-bar-stacked",
+  "type": "registry:block",
+  "title": "Stacked bar",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartBarStacked /> from components/charts/chart-bar-stacked.tsx. Preview: https://vip-ui.dev/charts#chart-bar-stacked",
+  "meta": {
+    "entry": {
+      "component": "ChartBarStacked",
+      "file": "chart-bar-stacked.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-bar-stacked.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-bar-stacked.tsx",
+      "content": "\"use client\";\n\nimport { barY, defineChart, stack } from \"@tanstack/charts\";\nimport { scaleBand } from \"@tanstack/charts/scales/band\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartLegend,\n  ChartLegendItem,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst days = [\n  { date: \"2026-09-29\", urgent: 3, high: 14, normal: 46 },\n  { date: \"2026-09-30\", urgent: 2, high: 12, normal: 51 },\n  { date: \"2026-10-01\", urgent: 5, high: 16, normal: 48 },\n  { date: \"2026-10-02\", urgent: 2, high: 11, normal: 39 },\n  { date: \"2026-10-03\", urgent: 1, high: 3, normal: 11 },\n  { date: \"2026-10-04\", urgent: 0, high: 2, normal: 8 },\n  { date: \"2026-10-05\", urgent: 4, high: 15, normal: 55 },\n  { date: \"2026-10-06\", urgent: 6, high: 18, normal: 49 },\n  { date: \"2026-10-07\", urgent: 3, high: 13, normal: 47 },\n  { date: \"2026-10-08\", urgent: 2, high: 12, normal: 44 },\n  { date: \"2026-10-09\", urgent: 1, high: 10, normal: 41 },\n  { date: \"2026-10-10\", urgent: 0, high: 4, normal: 12 },\n  { date: \"2026-10-11\", urgent: 1, high: 2, normal: 9 },\n  { date: \"2026-10-12\", urgent: 3, high: 14, normal: 52 },\n];\n\nconst priorities = [\n  { key: \"urgent\", label: \"Urgent\", color: \"var(--ts-chart-5)\" },\n  { key: \"high\", label: \"High\", color: \"var(--ts-chart-3)\" },\n  { key: \"normal\", label: \"Normal\", color: \"var(--ts-chart-1)\" },\n] as const;\n\nconst rows = days.flatMap((day) =>\n  priorities.map((priority) => ({\n    date: day.date,\n    priority: priority.label,\n    tickets: day[priority.key],\n  })),\n);\n\nconst dayFormat = new Intl.DateTimeFormat(\"en-US\", {\n  month: \"short\",\n  day: \"numeric\",\n  timeZone: \"UTC\",\n});\nconst weekdayFormat = new Intl.DateTimeFormat(\"en-US\", {\n  weekday: \"long\",\n  month: \"short\",\n  day: \"numeric\",\n  timeZone: \"UTC\",\n});\nconst formatDay = (date: string) => dayFormat.format(new Date(date));\nconst formatWeekday = (date: string) => weekdayFormat.format(new Date(date));\n\nconst ticks = days\n  .filter((_, index) => (days.length - 1 - index) % 2 === 0)\n  .map((day) => day.date);\n\nconst definition = defineChart({\n  marks: [\n    barY(rows, {\n      x: \"date\",\n      y: \"tickets\",\n      z: \"priority\",\n      color: \"priority\",\n      layout: stack(),\n      inset: 2,\n      radius: { end: 3, stack: \"outer\" },\n    }),\n  ],\n  scales: {\n    x: {\n      scale: () => scaleBand().padding(0.15),\n      axis: { ticks: { values: ticks, format: formatDay } },\n    },\n    y: {\n      scale: scaleLinear().domain([0, 80]),\n      grid: true,\n      axis: { ticks: { count: 4 } },\n    },\n  },\n  color: {\n    domain: priorities.map((priority) => priority.label),\n    range: priorities.map((priority) => priority.color),\n  },\n  focus: \"group-x\",\n  tooltip: {\n    use: tooltip,\n    sort: \"color-domain\",\n    content: (points, { primaryPoint }) => ({\n      title: formatWeekday(points[0].datum.date),\n      rows: points.map((point) => ({\n        label: point.groupLabel,\n        value: `${point.datum.tickets}`,\n        color: point.color,\n        active: point === primaryPoint,\n      })),\n    }),\n  },\n});\n\nexport function ChartBarStacked() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>New tickets</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={220}\n        initialWidth={520}\n        ariaLabel=\"New support tickets per day by priority for the last 14 days, stacked\"\n      />\n      <ChartLegend>\n        {priorities.map((item) => (\n          <ChartLegendItem key={item.label} color={item.color}>\n            {item.label}\n          </ChartLegendItem>\n        ))}\n      </ChartLegend>\n      <ChartTable\n        caption=\"New support tickets per day, by priority\"\n        columns={[\"Date\", ...priorities.map((priority) => priority.label)]}\n        rows={days.map((day) => [\n          formatDay(day.date),\n          ...priorities.map((priority) => day[priority.key]),\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

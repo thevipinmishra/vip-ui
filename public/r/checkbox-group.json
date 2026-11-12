@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox-group",
+  "type": "registry:ui",
+  "title": "Checkbox Group",
+  "description": "Groups checkboxes to select one or more options.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["forms"],
+  "dependencies": [
+    "react-aria-components@^1.22.1",
+    "tailwindcss-react-aria-components@^2.2.0"
+  ],
+  "registryDependencies": [
+    "https://vip-ui.dev/r/field-styles.json",
+    "https://vip-ui.dev/r/utils.json"
+  ],
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
+  "files": [
+    {
+      "path": "src/components/ui/checkbox-group.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/checkbox-group.tsx",
+      "content": "\"use client\";\n\nimport type { HTMLAttributes, ReactNode } from \"react\";\nimport {\n  CheckboxGroup as AriaCheckboxGroup,\n  type CheckboxGroupProps as AriaCheckboxGroupProps,\n  composeRenderProps,\n  FieldError,\n  Label,\n  Text,\n  type ValidationResult,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\nimport { fieldDescriptionStyles, fieldErrorStyles } from \"./field-styles\";\n\nexport interface CheckboxGroupProps\n  extends Omit<AriaCheckboxGroupProps, \"children\"> {\n  ref?: React.Ref<HTMLDivElement>;\n  label?: ReactNode;\n  description?: ReactNode;\n  errorMessage?: string | ((validation: ValidationResult) => string);\n  orientation?: \"horizontal\" | \"vertical\";\n  children: ReactNode;\n}\n\nexport function CheckboxGroup({\n  className,\n  label,\n  description,\n  errorMessage,\n  orientation = \"vertical\",\n  children,\n  ...props\n}: CheckboxGroupProps) {\n  return (\n    <AriaCheckboxGroup\n      {...props}\n      data-slot=\"checkbox-group\"\n      data-orientation={orientation}\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"group/checkbox-group flex min-w-0 flex-col gap-1 data-[orientation=horizontal]:flex-row data-[orientation=horizontal]:flex-wrap data-[orientation=horizontal]:gap-x-6\",\n          className,\n        ),\n      )}\n    >\n      {label != null && <CheckboxGroupLabel>{label}</CheckboxGroupLabel>}\n      {description != null && (\n        <CheckboxGroupDescription>{description}</CheckboxGroupDescription>\n      )}\n      {children}\n      {(label != null || description != null || errorMessage != null) && (\n        <CheckboxGroupError>{errorMessage}</CheckboxGroupError>\n      )}\n    </AriaCheckboxGroup>\n  );\n}\n\nexport function CheckboxGroupLabel({\n  className,\n  ...props\n}: React.ComponentProps<typeof Label>) {\n  return (\n    <Label\n      {...props}\n      data-slot=\"checkbox-group-label\"\n      className={cn(\n        \"w-full pb-1 text-sm font-semibold text-foreground [overflow-wrap:anywhere]\",\n        className,\n      )}\n    />\n  );\n}\n\nexport function CheckboxGroupItems({\n  className,\n  ...props\n}: HTMLAttributes<HTMLDivElement>) {\n  return (\n    <div\n      {...props}\n      data-slot=\"checkbox-group-items\"\n      className={cn(\n        \"flex w-full flex-col gap-1 group-data-[orientation=horizontal]/checkbox-group:flex-row group-data-[orientation=horizontal]/checkbox-group:flex-wrap group-data-[orientation=horizontal]/checkbox-group:gap-x-6\",\n        className,\n      )}\n    />\n  );\n}\n\nexport function CheckboxGroupDescription({\n  className,\n  ...props\n}: React.ComponentProps<typeof Text>) {\n  return (\n    <Text\n      {...props}\n      slot=\"description\"\n      data-slot=\"checkbox-group-description\"\n      className={cn(\n        fieldDescriptionStyles,\n        \"w-full pb-1 [[data-slot=checkbox-group-label]+&]:-mt-1\",\n        className,\n      )}\n    />\n  );\n}\n\nexport function CheckboxGroupError({\n  className,\n  ...props\n}: React.ComponentProps<typeof FieldError>) {\n  return (\n    <FieldError\n      {...props}\n      data-slot=\"checkbox-group-error\"\n      className={cn(fieldErrorStyles, \"w-full\", className)}\n    />\n  );\n}\n"
+    }
+  ]
+}

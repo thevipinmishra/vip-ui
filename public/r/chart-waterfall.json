@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-waterfall",
+  "type": "registry:block",
+  "title": "Waterfall",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartWaterfall /> from components/charts/chart-waterfall.tsx. Preview: https://vip-ui.dev/charts#chart-waterfall",
+  "meta": {
+    "entry": {
+      "component": "ChartWaterfall",
+      "file": "chart-waterfall.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-waterfall.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-waterfall.tsx",
+      "content": "\"use client\";\n\nimport { barY, defineChart, ruleY } from \"@tanstack/charts\";\nimport { decorative } from \"@tanstack/charts/mark/decorative\";\nimport { scaleBand } from \"@tanstack/charts/scales/band\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport { waterfall } from \"@tanstack/charts/transform/waterfall\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartLegend,\n  ChartLegendItem,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst changes = [\n  { item: \"Revenue\", amount: 642000 },\n  { item: \"Cost of sales\", amount: -186000 },\n  { item: \"Payroll\", amount: -248000 },\n  { item: \"Marketing\", amount: -74000 },\n  { item: \"Software\", amount: -39000 },\n  { item: \"Interest\", amount: 8000 },\n];\n\nconst rows = waterfall(changes, { value: \"amount\", total: true });\nconst profit = rows.at(-1)?.end ?? 0;\n\nconst series = [\n  { key: \"increase\", label: \"Increase\", color: \"var(--ts-chart-2)\" },\n  { key: \"decrease\", label: \"Decrease\", color: \"var(--ts-chart-5)\" },\n  { key: \"total\", label: \"Total\", color: \"var(--ts-chart-1)\" },\n];\n\nconst money = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n  maximumFractionDigits: 0,\n}).format;\nconst compactMoney = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n  notation: \"compact\",\n}).format;\n\nconst definition = defineChart({\n  marks: [\n    barY(rows, {\n      x: (row) => (row.kind === \"total\" ? \"Net profit\" : row.item),\n      y1: \"start\",\n      y2: \"end\",\n      color: \"kind\",\n      inset: 5,\n      radius: 3,\n    }),\n    decorative(ruleY([0], { stroke: \"var(--border)\" })),\n  ],\n  scales: {\n    x: { scale: () => scaleBand().padding(0.1) },\n    y: {\n      scale: scaleLinear().domain([0, 700000]),\n      grid: true,\n      axis: { ticks: { count: 4, format: compactMoney } },\n    },\n  },\n  color: {\n    domain: series.map((item) => item.key),\n    range: series.map((item) => item.color),\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: point.datum.kind === \"total\" ? \"Net profit\" : point.datum.item,\n      rows: [\n        {\n          label: point.datum.kind === \"total\" ? \"Total\" : point.datum.kind,\n          value: money(point.datum.delta),\n          color: point.color,\n        },\n        { label: \"Running total\", value: money(point.datum.end) },\n      ],\n    }),\n  },\n});\n\nexport function ChartWaterfall() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Profit bridge</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={240}\n        initialWidth={520}\n        ariaLabel={`Waterfall from ${money(changes[0].amount)} revenue to ${money(profit)} net profit in the third quarter of 2026`}\n      />\n      <ChartLegend>\n        {series.map((item) => (\n          <ChartLegendItem key={item.key} color={item.color}>\n            {item.label}\n          </ChartLegendItem>\n        ))}\n      </ChartLegend>\n      <ChartTable\n        caption=\"Revenue to net profit, third quarter of 2026\"\n        columns={[\"Item\", \"Change\", \"Running total\"]}\n        rows={rows.map((row) => [\n          row.kind === \"total\" ? \"Net profit\" : row.item,\n          money(row.delta),\n          money(row.end),\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-time-bins",
+  "type": "registry:block",
+  "title": "Time bins",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartTimeBins /> from components/charts/chart-time-bins.tsx. Preview: https://vip-ui.dev/charts#chart-time-bins",
+  "meta": {
+    "entry": {
+      "component": "ChartTimeBins",
+      "file": "chart-time-bins.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-time-bins.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-time-bins.tsx",
+      "content": "\"use client\";\n\nimport { defineChart, rect } from \"@tanstack/charts\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { scaleUtc } from \"@tanstack/charts/scales/time\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport { binTimeX } from \"@tanstack/charts/transform/bin-time\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartDescription,\n  ChartFrame,\n  ChartTable,\n  ChartTitle,\n  ChartValue,\n} from \"../vip-ui/chart\";\n\nconst hour = 3_600_000;\n\nconst utcHour = {\n  floor: (date: Date) => new Date(Math.floor(date.getTime() / hour) * hour),\n  offset: (date: Date, step = 1) => new Date(date.getTime() + step * hour),\n  range: (start: Date, stop: Date, step = 1) => {\n    const dates: Date[] = [];\n    for (\n      let time = Math.ceil(start.getTime() / hour) * hour;\n      time < stop.getTime();\n      time += step * hour\n    )\n      dates.push(new Date(time));\n    return dates;\n  },\n};\n\nconst ordersPerHour = [\n  4, 2, 1, 1, 0, 2, 5, 11, 19, 26, 31, 34, 38, 33, 29, 27, 30, 36, 42, 39, 28,\n  19, 11, 6,\n];\n\nconst start = new Date(Date.UTC(2026, 10, 2));\nconst end = new Date(Date.UTC(2026, 10, 3));\n\nconst orders = ordersPerHour.flatMap((count, hourIndex) =>\n  Array.from({ length: count }, (_, index) => ({\n    id: `${hourIndex}-${index}`,\n    placedAt: new Date(\n      start.getTime() +\n        hourIndex * hour +\n        Math.floor(((index * 37 + hourIndex * 11) % 60) * 60_000),\n    ),\n  })),\n);\n\nconst bins = binTimeX(orders, {\n  value: \"placedAt\",\n  interval: utcHour,\n  domain: [start, end],\n});\n\nconst hourFormat = new Intl.DateTimeFormat(\"en-US\", {\n  hour: \"numeric\",\n  timeZone: \"UTC\",\n});\nconst formatHour = (date: Date) => hourFormat.format(date);\nconst formatRange = (bin: (typeof bins)[number]) =>\n  `${formatHour(bin.x1)} to ${formatHour(bin.x2)}`;\n\nconst definition = defineChart({\n  marks: [\n    rect(bins, {\n      x1: \"x1\",\n      x2: \"x2\",\n      y1: () => 0,\n      y2: \"value\",\n      key: (bin) => bin.x1.toISOString(),\n      fill: \"var(--ts-chart-1)\",\n      inset: 1,\n      radius: [3, 3, 0, 0],\n    }),\n  ],\n  scales: {\n    x: {\n      scale: scaleUtc().domain([start, end]),\n      axis: {\n        ticks: {\n          values: utcHour.range(start, end, 3),\n          format: formatHour,\n        },\n      },\n    },\n    y: {\n      scale: scaleLinear().domain([0, 45]),\n      grid: true,\n      axis: { ticks: { count: 3 } },\n    },\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: formatRange(point.datum),\n      rows: [\n        { label: \"Orders\", value: `${point.datum.value}`, color: point.color },\n      ],\n    }),\n  },\n});\n\nexport function ChartTimeBins() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Orders per hour</ChartTitle>\n        <ChartValue>{orders.length}</ChartValue>\n        <ChartDescription>November 2, 2026, UTC</ChartDescription>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={220}\n        initialWidth={520}\n        ariaLabel=\"Orders per hour on November 2, 2026\"\n      />\n      <ChartTable\n        caption=\"Orders per hour, November 2, 2026, UTC\"\n        columns={[\"Hour\", \"Orders\"]}\n        rows={bins.map((bin) => [formatRange(bin), bin.value])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

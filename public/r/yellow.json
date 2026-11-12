@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "yellow",
+  "type": "registry:theme",
+  "title": "Yellow",
+  "description": "Highlights and attention. Text on step 9 is dark in both modes.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["colors"],
+  "docs": "The scale adds --yellow-1 to --yellow-12 for light and dark mode. Classes such as bg-yellow-3 work after the install.",
+  "dependencies": [],
+  "files": [],
+  "cssVars": {
+    "theme": {
+      "color-yellow-1": "var(--yellow-1)",
+      "color-yellow-2": "var(--yellow-2)",
+      "color-yellow-3": "var(--yellow-3)",
+      "color-yellow-4": "var(--yellow-4)",
+      "color-yellow-5": "var(--yellow-5)",
+      "color-yellow-6": "var(--yellow-6)",
+      "color-yellow-7": "var(--yellow-7)",
+      "color-yellow-8": "var(--yellow-8)",
+      "color-yellow-9": "var(--yellow-9)",
+      "color-yellow-10": "var(--yellow-10)",
+      "color-yellow-11": "var(--yellow-11)",
+      "color-yellow-12": "var(--yellow-12)"
+    },
+    "light": {
+      "yellow-1": "oklch(0.990 0.008 92)",
+      "yellow-2": "oklch(0.975 0.014 92)",
+      "yellow-3": "oklch(0.955 0.024 92)",
+      "yellow-4": "oklch(0.935 0.034 92)",
+      "yellow-5": "oklch(0.915 0.043 92)",
+      "yellow-6": "oklch(0.890 0.056 92)",
+      "yellow-7": "oklch(0.865 0.077 92)",
+      "yellow-8": "oklch(0.835 0.106 92)",
+      "yellow-9": "oklch(0.800 0.160 92)",
+      "yellow-10": "oklch(0.765 0.157 92)",
+      "yellow-11": "oklch(0.520 0.099 92)",
+      "yellow-12": "oklch(0.300 0.048 92)"
+    },
+    "dark": {
+      "yellow-1": "oklch(0.185 0.029 92)",
+      "yellow-2": "oklch(0.215 0.040 92)",
+      "yellow-3": "oklch(0.243 0.051 92)",
+      "yellow-4": "oklch(0.268 0.061 92)",
+      "yellow-5": "oklch(0.293 0.069 92)",
+      "yellow-6": "oklch(0.322 0.077 92)",
+      "yellow-7": "oklch(0.365 0.090 92)",
+      "yellow-8": "oklch(0.430 0.109 92)",
+      "yellow-9": "oklch(0.700 0.160 92)",
+      "yellow-10": "oklch(0.740 0.155 92)",
+      "yellow-11": "oklch(0.735 0.109 92)",
+      "yellow-12": "oklch(0.930 0.045 92)"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge",
+  "type": "registry:ui",
+  "title": "Badge",
+  "description": "Labels an item with a short status or count.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["feedback"],
+  "dependencies": ["tailwind-variants@^4.0.1"],
+  "registryDependencies": ["https://vip-ui.dev/r/utils.json"],
+  "cssVars": {
+    "light": {
+      "success": "oklch(0.43 0.12 155)",
+      "success-subtle": "oklch(0.955 0.035 155)",
+      "success-foreground": "oklch(0.32 0.09 155)",
+      "warning": "oklch(0.54 0.13 75)",
+      "warning-subtle": "oklch(0.965 0.045 85)",
+      "warning-foreground": "oklch(0.36 0.09 75)",
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+    },
+    "dark": {
+      "success": "oklch(0.74 0.13 155)",
+      "success-subtle": "oklch(0.24 0.045 155)",
+      "success-foreground": "oklch(0.86 0.085 155)",
+      "warning": "oklch(0.78 0.11 75)",
+      "warning-subtle": "oklch(0.27 0.045 75)",
+      "warning-foreground": "oklch(0.89 0.07 75)",
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+    }
+  },
+  "files": [
+    {
+      "path": "src/components/ui/badge.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/badge.tsx",
+      "content": "import { Children, type HTMLAttributes, type ReactNode } from \"react\";\nimport { tv, type VariantProps } from \"tailwind-variants\";\nimport { cn } from \"./utils\";\n\nconst badgeStyles = tv({\n  base: \"inline-flex min-h-6 w-fit min-w-0 max-w-full shrink-0 items-center gap-1.5 overflow-hidden whitespace-nowrap rounded-full px-2.5 py-0.5 text-xs font-medium leading-4 tracking-normal shadow-[var(--shadow-card)] ring-1 forced-colors:border [&_svg]:pointer-events-none [&_svg]:shrink-0\",\n  variants: {\n    variant: {\n      neutral: \"bg-secondary text-secondary-foreground ring-border\",\n      accent: \"bg-accent text-accent-foreground ring-primary/15\",\n      success: \"bg-success-subtle text-success-foreground ring-success/15\",\n      warning: \"bg-warning-subtle text-warning-foreground ring-warning/20\",\n      error: \"bg-card text-destructive ring-destructive/25\",\n      outline: \"bg-transparent text-foreground ring-border\",\n    },\n  },\n  defaultVariants: { variant: \"neutral\" },\n});\n\nexport interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {\n  variant?: NonNullable<VariantProps<typeof badgeStyles>[\"variant\"]>;\n  dot?: boolean;\n}\n\nfunction badgeLabel(children: ReactNode): ReactNode {\n  const parts: ReactNode[] = [];\n  let text = \"\";\n  const flush = () => {\n    if (text.trim()) {\n      parts.push(\n        <span\n          key={`label-${parts.length}`}\n          data-slot=\"badge-label\"\n          className=\"min-w-0 truncate\"\n        >\n          {text}\n        </span>,\n      );\n    }\n    text = \"\";\n  };\n  for (const child of Children.toArray(children)) {\n    if (typeof child === \"string\" || typeof child === \"number\") {\n      text += child;\n    } else {\n      flush();\n      parts.push(child);\n    }\n  }\n  flush();\n  return parts;\n}\n\nexport function Badge({\n  variant = \"neutral\",\n  dot = false,\n  className,\n  children,\n  ...props\n}: BadgeProps) {\n  return (\n    <span\n      data-slot=\"badge\"\n      data-variant={variant}\n      className={badgeStyles({ variant, className })}\n      {...props}\n    >\n      {dot && <BadgeDot />}\n      {badgeLabel(children)}\n    </span>\n  );\n}\n\nexport function BadgeDot({\n  className,\n  ...props\n}: HTMLAttributes<HTMLSpanElement>) {\n  return (\n    <span\n      aria-hidden=\"true\"\n      {...props}\n      data-slot=\"badge-dot\"\n      className={cn(\n        \"size-1.5 shrink-0 rounded-full bg-current forced-colors:bg-[CanvasText]\",\n        className,\n      )}\n    />\n  );\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-area",
+  "type": "registry:ui",
+  "title": "Text Area",
+  "description": "Accepts multiple lines of text.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["forms"],
+  "dependencies": [
+    "react-aria-components@^1.22.1",
+    "tailwindcss-react-aria-components@^2.2.0"
+  ],
+  "registryDependencies": [
+    "https://vip-ui.dev/r/field-styles.json",
+    "https://vip-ui.dev/r/size.json",
+    "https://vip-ui.dev/r/utils.json"
+  ],
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
+  "files": [
+    {
+      "path": "src/components/ui/text-area.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/text-area.tsx",
+      "content": "\"use client\";\n\nimport {\n  TextArea as AriaTextArea,\n  TextField as AriaTextField,\n  type TextFieldProps as AriaTextFieldProps,\n  composeRenderProps,\n  FieldError,\n  Label,\n  Text,\n} from \"react-aria-components\";\nimport { cn } from \"./utils\";\nimport {\n  fieldDescriptionStyles,\n  fieldErrorStyles,\n  fieldInputStyles,\n  fieldLabelStyles,\n  fieldPaddingX,\n  fieldSizeStyles,\n} from \"./field-styles\";\nimport type { Size } from \"./size\";\n\nexport interface TextAreaProps\n  extends Omit<AriaTextFieldProps, \"className\" | \"children\"> {\n  label?: string;\n  description?: string;\n  placeholder?: string;\n  rows?: number;\n  size?: Size;\n  ref?: React.Ref<HTMLDivElement>;\n  className?: AriaTextFieldProps[\"className\"];\n  children?: AriaTextFieldProps[\"children\"];\n}\n\nexport function TextArea({\n  label,\n  description,\n  placeholder,\n  rows = 4,\n  size,\n  className,\n  children,\n  ...props\n}: TextAreaProps) {\n  return (\n    <AriaTextField\n      {...props}\n      data-slot=\"text-area\"\n      data-size={size}\n      className={composeRenderProps(className, (className) =>\n        cn(\n          \"flex w-full min-w-0 flex-col gap-2\",\n          size && fieldSizeStyles[size],\n          className,\n        ),\n      )}\n    >\n      {children ?? (\n        <>\n          {label && <TextAreaLabel>{label}</TextAreaLabel>}\n          <TextAreaInput rows={rows} placeholder={placeholder} />\n          {description && (\n            <TextAreaDescription>{description}</TextAreaDescription>\n          )}\n          <TextAreaError />\n        </>\n      )}\n    </AriaTextField>\n  );\n}\n\nexport function TextAreaLabel({\n  className,\n  ...props\n}: React.ComponentProps<typeof Label>) {\n  return (\n    <Label\n      {...props}\n      data-slot=\"text-area-label\"\n      className={cn(fieldLabelStyles, className)}\n    />\n  );\n}\n\nexport function TextAreaInput({\n  className,\n  ...props\n}: React.ComponentProps<typeof AriaTextArea>) {\n  return (\n    <AriaTextArea\n      {...props}\n      data-slot=\"text-area-input\"\n      className={composeRenderProps(className, (className) =>\n        cn(\n          fieldInputStyles,\n          fieldPaddingX,\n          \"min-h-28 resize-y py-3 leading-6\",\n          className,\n        ),\n      )}\n    />\n  );\n}\n\nexport function TextAreaDescription({\n  className,\n  ...props\n}: React.ComponentProps<typeof Text>) {\n  return (\n    <Text\n      {...props}\n      slot=\"description\"\n      data-slot=\"text-area-description\"\n      className={cn(fieldDescriptionStyles, className)}\n    />\n  );\n}\n\nexport function TextAreaError({\n  className,\n  ...props\n}: React.ComponentProps<typeof FieldError>) {\n  return (\n    <FieldError\n      {...props}\n      data-slot=\"text-area-error\"\n      className={cn(fieldErrorStyles, className)}\n    />\n  );\n}\n"
+    }
+  ]
+}

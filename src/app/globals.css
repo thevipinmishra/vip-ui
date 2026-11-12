@@ -182,6 +182,59 @@
       opacity: 0.25;
     }
   }
+  --animate-skeleton: skeleton-sweep 1.6s linear infinite;
+  @keyframes skeleton-sweep {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
+  --animate-progress-indeterminate: progress-sweep 1.6s linear infinite;
+  @keyframes progress-sweep {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(300%);
+    }
+  }
+  --animate-agent-status: agent-status-pulse 1.1s
+    cubic-bezier(0.77, 0, 0.175, 1) infinite;
+  @keyframes agent-status-pulse {
+    0%,
+    100% {
+      opacity: 0.35;
+      transform: translateY(0px);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+  }
+  --animate-border-beam: border-beam-spin 6s linear infinite;
+  @keyframes border-beam-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  --animate-text-shimmer: text-shimmer-sweep
+    var(--text-shimmer-duration, 2.1333s) ease-in-out infinite;
+  @keyframes text-shimmer-sweep {
+    0% {
+      transform: translateX(var(--shimmer-from, -65%));
+    }
+    75% {
+      transform: translateX(var(--shimmer-to, 65%));
+    }
+    100% {
+      transform: translateX(var(--shimmer-to, 65%));
+    }
+  }
   --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-spring: linear(
     0,
@@ -204,6 +257,48 @@
 .theme-switching *::after {
   /* biome-ignore lint/complexity/noImportantStyles: Beat component transitions for one theme-flip frame. */
   transition: none !important;
+}
+
+[data-sheet-scroll][data-sheet-unsnapped] {
+  /* biome-ignore lint/complexity/noImportantStyles: Beat the scroll snap the sheet sets inline while a tween moves it. */
+  scroll-snap-type: none !important;
+}
+
+@keyframes vip-edge-start {
+  from {
+    border-top-color: transparent;
+  }
+  to {
+    border-top-color: var(--color-border);
+  }
+}
+
+@keyframes vip-edge-end {
+  from {
+    border-bottom-color: var(--color-border);
+  }
+  to {
+    border-bottom-color: transparent;
+  }
+}
+
+@keyframes vip-sheet-backdrop {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes vip-sheet-stack {
+  from {
+    transform: translate(0px, 0px) scale(1);
+  }
+  to {
+    transform: translate(var(--sheet-stack-x, 0px), var(--sheet-stack-y, 0px))
+      scale(var(--sheet-stack-scale, 0.94));
+  }
 }
 
 @layer base {

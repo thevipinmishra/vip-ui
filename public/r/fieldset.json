@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "fieldset",
+  "type": "registry:ui",
+  "title": "Fieldset",
+  "description": "Groups related native form controls under a legend.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["forms"],
+  "dependencies": [],
+  "registryDependencies": ["https://vip-ui.dev/r/utils.json"],
+  "cssVars": {
+    "light": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+    },
+    "dark": {
+      "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+    }
+  },
+  "files": [
+    {
+      "path": "src/components/ui/fieldset.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/fieldset.tsx",
+      "content": "import type { FieldsetHTMLAttributes, HTMLAttributes } from \"react\";\nimport { cn } from \"./utils\";\n\nexport function Fieldset({\n  className,\n  ...props\n}: FieldsetHTMLAttributes<HTMLFieldSetElement>) {\n  return (\n    <fieldset\n      {...props}\n      data-slot=\"fieldset\"\n      className={cn(\n        \"min-w-0 rounded-xl bg-card p-4 shadow-[var(--shadow-card)] ring-1 ring-border/70 disabled:opacity-60\",\n        className,\n      )}\n    />\n  );\n}\n\nexport function FieldsetLegend({\n  className,\n  ...props\n}: HTMLAttributes<HTMLLegendElement>) {\n  return (\n    <legend\n      {...props}\n      data-slot=\"fieldset-legend\"\n      className={cn(\n        \"float-left mb-1 w-full text-sm font-semibold text-foreground [overflow-wrap:anywhere] [&+*]:clear-both\",\n        className,\n      )}\n    />\n  );\n}\n\nexport function FieldsetDescription({\n  className,\n  ...props\n}: HTMLAttributes<HTMLParagraphElement>) {\n  return (\n    <p\n      {...props}\n      data-slot=\"fieldset-description\"\n      className={cn(\n        \"text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]\",\n        className,\n      )}\n    />\n  );\n}\n"
+    }
+  ]
+}

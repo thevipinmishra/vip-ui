@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-hexbin",
+  "type": "registry:block",
+  "title": "Hexbin",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartHexbin /> from components/charts/chart-hexbin.tsx. Preview: https://vip-ui.dev/charts#chart-hexbin",
+  "meta": {
+    "entry": {
+      "component": "ChartHexbin",
+      "file": "chart-hexbin.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0", "d3-scale@^4.0.3"],
+  "devDependencies": ["@types/d3-scale@^4.0.9"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-hexbin.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-hexbin.tsx",
+      "content": "\"use client\";\n\nimport { defineChart } from \"@tanstack/charts\";\nimport { colorLegend } from \"@tanstack/charts/legend\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { hexbin } from \"@tanstack/charts/spatial/hexbin\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport { scaleThreshold } from \"d3-scale\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst noise = (seed: number) => {\n  const value = Math.sin(seed * 12.9898 + 4.1414) * 43758.5453;\n  return value - Math.floor(value);\n};\n\nconst requests = Array.from({ length: 180 }, (_, index) => {\n  const hour = Math.round(noise(index + 1) * 240) / 10;\n  const load = Math.exp(-((hour - 14) ** 2) / 18);\n  const jitter = noise(index + 500) + noise(index + 900) - 1;\n  return {\n    id: index,\n    hour,\n    latency: Math.round(110 + load * 160 + jitter * 70),\n  };\n});\n\nconst steps = [3, 6, 9];\nconst ramp = [\n  \"color-mix(in oklab, var(--ts-chart-1) 22%, var(--card))\",\n  \"color-mix(in oklab, var(--ts-chart-1) 48%, var(--card))\",\n  \"color-mix(in oklab, var(--ts-chart-1) 74%, var(--card))\",\n  \"var(--ts-chart-1)\",\n];\n\nconst formatHour = (value: number) =>\n  `${String(Math.floor(value)).padStart(2, \"0\")}:00`;\nconst formatLatency = (value: number) => `${Math.round(value)} ms`;\n\nconst blocks = [0, 6, 12, 18].map((start) => {\n  const items = requests.filter(\n    (row) => row.hour >= start && row.hour < start + 6,\n  );\n  const latencies = items.map((row) => row.latency).sort((a, b) => a - b);\n  return {\n    label: `${formatHour(start)}–${formatHour(start + 6)}`,\n    requests: items.length,\n    median: latencies[Math.floor(latencies.length / 2)] ?? 0,\n  };\n});\n\nconst definition = defineChart({\n  marks: [\n    hexbin(requests, {\n      x: \"hour\",\n      y: \"latency\",\n      binWidth: 18,\n      color: \"count\",\n      stroke: \"var(--card)\",\n      strokeWidth: 1,\n    }),\n  ],\n  scales: {\n    x: {\n      scale: scaleLinear().domain([0, 24]),\n      axis: { label: \"Hour (UTC)\", ticks: { count: 6, format: formatHour } },\n    },\n    y: {\n      scale: scaleLinear().domain([0, 360]),\n      grid: true,\n      axis: {\n        label: \"Latency\",\n        ticks: { count: 4, format: formatLatency },\n      },\n    },\n  },\n  color: {\n    scale: scaleThreshold<number, string>().domain(steps).range(ramp),\n    legend: colorLegend({\n      label: \"Requests per cell\",\n      placement: \"bottom\",\n      format: (value) => `${value}`,\n    }),\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: `Around ${formatHour(point.datum.x)}`,\n      rows: [\n        {\n          label: \"Requests\",\n          value: `${point.datum.count}`,\n          color: point.color,\n        },\n        { label: \"Latency\", value: `≈ ${formatLatency(point.datum.y)}` },\n      ],\n    }),\n  },\n});\n\nexport function ChartHexbin() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Request latency by hour</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={280}\n        initialWidth={520}\n        ariaLabel={`Hexagonal bins of ${requests.length} requests by hour and latency. Latency rises in the afternoon peak.`}\n      />\n      <ChartTable\n        caption=\"Requests and median latency by time of day\"\n        columns={[\"Time (UTC)\", \"Requests\", \"Median latency\"]}\n        rows={blocks.map((block) => [\n          block.label,\n          block.requests,\n          formatLatency(block.median),\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

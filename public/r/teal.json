@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "teal",
+  "type": "registry:theme",
+  "title": "Teal",
+  "description": "Calm accents and data.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["colors"],
+  "docs": "The scale adds --teal-1 to --teal-12 for light and dark mode. Classes such as bg-teal-3 work after the install.",
+  "dependencies": [],
+  "files": [],
+  "cssVars": {
+    "theme": {
+      "color-teal-1": "var(--teal-1)",
+      "color-teal-2": "var(--teal-2)",
+      "color-teal-3": "var(--teal-3)",
+      "color-teal-4": "var(--teal-4)",
+      "color-teal-5": "var(--teal-5)",
+      "color-teal-6": "var(--teal-6)",
+      "color-teal-7": "var(--teal-7)",
+      "color-teal-8": "var(--teal-8)",
+      "color-teal-9": "var(--teal-9)",
+      "color-teal-10": "var(--teal-10)",
+      "color-teal-11": "var(--teal-11)",
+      "color-teal-12": "var(--teal-12)"
+    },
+    "light": {
+      "teal-1": "oklch(0.987 0.007 178)",
+      "teal-2": "oklch(0.969 0.013 178)",
+      "teal-3": "oklch(0.944 0.021 178)",
+      "teal-4": "oklch(0.919 0.029 178)",
+      "teal-5": "oklch(0.894 0.038 178)",
+      "teal-6": "oklch(0.866 0.049 178)",
+      "teal-7": "oklch(0.820 0.067 178)",
+      "teal-8": "oklch(0.755 0.092 178)",
+      "teal-9": "oklch(0.522 0.140 178)",
+      "teal-10": "oklch(0.487 0.137 178)",
+      "teal-11": "oklch(0.505 0.087 178)",
+      "teal-12": "oklch(0.285 0.042 178)"
+    },
+    "dark": {
+      "teal-1": "oklch(0.185 0.025 178)",
+      "teal-2": "oklch(0.215 0.035 178)",
+      "teal-3": "oklch(0.243 0.045 178)",
+      "teal-4": "oklch(0.268 0.053 178)",
+      "teal-5": "oklch(0.293 0.060 178)",
+      "teal-6": "oklch(0.322 0.067 178)",
+      "teal-7": "oklch(0.365 0.078 178)",
+      "teal-8": "oklch(0.430 0.095 178)",
+      "teal-9": "oklch(0.700 0.140 178)",
+      "teal-10": "oklch(0.740 0.136 178)",
+      "teal-11": "oklch(0.735 0.095 178)",
+      "teal-12": "oklch(0.930 0.039 178)"
+    }
+  }
+}

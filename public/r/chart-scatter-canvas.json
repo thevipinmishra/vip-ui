@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-scatter-canvas",
+  "type": "registry:block",
+  "title": "Canvas scatter",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartScatterCanvas /> from components/charts/chart-scatter-canvas.tsx. Preview: https://vip-ui.dev/charts#chart-scatter-canvas",
+  "meta": {
+    "entry": {
+      "component": "ChartScatterCanvas",
+      "file": "chart-scatter-canvas.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-scatter-canvas.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-scatter-canvas.tsx",
+      "content": "\"use client\";\n\nimport { defineChart, dot } from \"@tanstack/charts\";\nimport { canvasChartRenderer } from \"@tanstack/charts/canvas\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartDescription,\n  ChartFrame,\n  ChartLegend,\n  ChartLegendItem,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst devices = [\n  { label: \"Desktop\", color: \"var(--ts-chart-1)\", base: 1.2, slope: 0.012 },\n  { label: \"Mobile\", color: \"var(--ts-chart-2)\", base: 2.1, slope: 0.02 },\n];\n\nconst noise = (seed: number) => {\n  const value = Math.sin(seed * 17.231 + 0.577) * 43758.5453;\n  return value - Math.floor(value);\n};\n\nconst sessions = Array.from({ length: 2400 }, (_, index) => {\n  const device = devices[index % 2];\n  const size = Math.round(40 + noise(index + 1) ** 1.4 * 460);\n  const jitter = noise(index + 5000) + noise(index + 9000) - 1;\n  return {\n    id: index,\n    device: device.label,\n    size,\n    seconds:\n      Math.round(\n        Math.max(0.3, device.base + size * device.slope * 0.1 + jitter * 1.2) *\n          100,\n      ) / 100,\n  };\n});\n\nconst formatSeconds = (value: number) => `${value.toFixed(1)} s`;\nconst formatSize = (value: number) => `${value} KB`;\n\nconst summary = devices.map((device) => {\n  const items = sessions.filter((row) => row.device === device.label);\n  const sorted = items.map((row) => row.seconds).sort((a, b) => a - b);\n  return {\n    label: device.label,\n    count: items.length,\n    median: sorted[Math.floor(sorted.length / 2)],\n    p95: sorted[Math.floor(sorted.length * 0.95)],\n  };\n});\n\nconst definition = defineChart({\n  marks: [\n    dot(sessions, {\n      x: \"size\",\n      y: \"seconds\",\n      key: \"id\",\n      color: \"device\",\n      r: 1.75,\n      fillOpacity: 0.5,\n    }),\n  ],\n  scales: {\n    x: {\n      scale: scaleLinear().domain([0, 500]),\n      grid: true,\n      axis: { label: \"Page weight\", ticks: { count: 5, format: formatSize } },\n    },\n    y: {\n      scale: scaleLinear().domain([0, 5]),\n      grid: true,\n      axis: { label: \"Load time\", ticks: { count: 4, format: formatSeconds } },\n    },\n  },\n  color: {\n    domain: devices.map((device) => device.label),\n    range: devices.map((device) => device.color),\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: point.datum.device,\n      rows: [\n        {\n          label: \"Load time\",\n          value: formatSeconds(point.datum.seconds),\n          color: point.color,\n        },\n        { label: \"Page weight\", value: formatSize(point.datum.size) },\n      ],\n    }),\n  },\n});\n\nexport function ChartScatterCanvas() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Load time by page weight</ChartTitle>\n        <ChartDescription>\n          {sessions.length.toLocaleString(\"en-US\")} sessions on Canvas.\n        </ChartDescription>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        renderer={canvasChartRenderer}\n        height={260}\n        initialWidth={520}\n        ariaLabel={`Scatterplot of ${sessions.length} sessions by page weight and load time. Mobile loads are slower at every page weight.`}\n      />\n      <ChartLegend>\n        {devices.map((device) => (\n          <ChartLegendItem key={device.label} color={device.color}>\n            {device.label}\n          </ChartLegendItem>\n        ))}\n      </ChartLegend>\n      <ChartTable\n        caption=\"Load time by device\"\n        columns={[\"Device\", \"Sessions\", \"Median\", \"95th percentile\"]}\n        rows={summary.map((item) => [\n          item.label,\n          item.count,\n          formatSeconds(item.median),\n          formatSeconds(item.p95),\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

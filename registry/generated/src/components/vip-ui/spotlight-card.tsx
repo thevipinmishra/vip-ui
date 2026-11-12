@@ -1,11 +1,11 @@
 "use client";
 
-import { useInView } from "motion/react";
 import {
   type ComponentPropsWithRef,
   type CSSProperties,
   useEffect,
   useRef,
+  useState,
 } from "react";
 import { cn } from "./utils";
 import { Card } from "./card";
@@ -22,7 +22,18 @@ export function SpotlightCard({
   ...props
 }: ComponentPropsWithRef<"div">) {
   const local = useRef<HTMLDivElement | null>(null);
-  const inView = useInView(local, { margin: "120px" });
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const node = local.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { rootMargin: "120px" },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const node = local.current;

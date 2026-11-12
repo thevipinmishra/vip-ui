@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-heatmap-matrix",
+  "type": "registry:block",
+  "title": "Heatmap matrix",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartHeatmapMatrix /> from components/charts/chart-heatmap-matrix.tsx. Preview: https://vip-ui.dev/charts#chart-heatmap-matrix",
+  "meta": {
+    "entry": {
+      "component": "ChartHeatmapMatrix",
+      "file": "chart-heatmap-matrix.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-heatmap-matrix.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-heatmap-matrix.tsx",
+      "content": "\"use client\";\n\nimport { cell, defineChart, text } from \"@tanstack/charts\";\nimport { decorative } from \"@tanstack/charts/mark/decorative\";\nimport { scaleBand } from \"@tanstack/charts/scales/band\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartLegend,\n  ChartLegendItem,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst cohorts = [\n  { cohort: \"2026-04\", signups: 1240, retained: [64, 52, 47, 44, 42] },\n  { cohort: \"2026-05\", signups: 1385, retained: [66, 54, 49, 45] },\n  { cohort: \"2026-06\", signups: 1312, retained: [63, 51, 46] },\n  { cohort: \"2026-07\", signups: 1478, retained: [68, 56] },\n  { cohort: \"2026-08\", signups: 1590, retained: [70] },\n];\n\nconst months = [\"Month 1\", \"Month 2\", \"Month 3\", \"Month 4\", \"Month 5\"];\n\nconst monthFormat = new Intl.DateTimeFormat(\"en-US\", {\n  month: \"short\",\n  year: \"numeric\",\n  timeZone: \"UTC\",\n});\nconst formatCohort = (cohort: string) => monthFormat.format(new Date(cohort));\n\nconst rows = cohorts.flatMap(({ cohort, signups, retained }) =>\n  retained.map((percent, index) => ({\n    cohort: formatCohort(cohort),\n    month: months[index],\n    percent,\n    users: Math.round((signups * percent) / 100),\n  })),\n);\n\nconst levels = [\n  {\n    label: \"Below 45%\",\n    min: 0,\n    color: \"color-mix(in oklab, var(--ts-chart-1) 14%, var(--muted))\",\n    text: \"var(--foreground)\",\n  },\n  {\n    label: \"45–54%\",\n    min: 45,\n    color: \"color-mix(in oklab, var(--ts-chart-1) 36%, var(--muted))\",\n    text: \"var(--foreground)\",\n  },\n  {\n    label: \"55–64%\",\n    min: 55,\n    color: \"color-mix(in oklab, var(--ts-chart-1) 70%, var(--muted))\",\n    text: \"var(--card)\",\n  },\n  {\n    label: \"65% and above\",\n    min: 65,\n    color: \"var(--ts-chart-1)\",\n    text: \"var(--card)\",\n  },\n];\n\nconst level = (percent: number) =>\n  levels.findLast((item) => percent >= item.min) ?? levels[0];\n\nconst definition = defineChart({\n  marks: [\n    cell(rows, {\n      x: \"month\",\n      y: \"cohort\",\n      color: (row) => level(row.percent).label,\n      key: (row) => `${row.cohort}-${row.month}`,\n      inset: 2,\n      radius: 4,\n    }),\n    decorative(\n      text(rows, {\n        x: \"month\",\n        y: \"cohort\",\n        text: (row) => `${row.percent}%`,\n        fill: (row) => level(row.percent).text,\n        fontSize: 12,\n        fontWeight: 600,\n      }),\n    ),\n  ],\n  scales: {\n    x: { scale: () => scaleBand<string>().domain(months) },\n    y: {\n      scale: () =>\n        scaleBand<string>().domain(\n          cohorts.map((row) => formatCohort(row.cohort)),\n        ),\n    },\n  },\n  color: {\n    domain: levels.map((item) => item.label),\n    range: levels.map((item) => item.color),\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: `${point.datum.cohort} signups, ${point.datum.month.toLowerCase()}`,\n      rows: [\n        {\n          label: \"Still active\",\n          value: `${point.datum.percent}%`,\n          color: point.color,\n        },\n        { label: \"Users\", value: point.datum.users.toLocaleString(\"en-US\") },\n      ],\n    }),\n  },\n});\n\nexport function ChartHeatmapMatrix() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Retention by signup month</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={220}\n        initialWidth={520}\n        ariaLabel=\"Cohort retention for users who signed up from April to August 2026, in percent, for each month after signup\"\n      />\n      <ChartLegend>\n        {levels.map((item) => (\n          <ChartLegendItem key={item.label} color={item.color}>\n            {item.label}\n          </ChartLegendItem>\n        ))}\n      </ChartLegend>\n      <ChartTable\n        caption=\"Users still active, in percent, by signup month\"\n        columns={[\"Signup month\", \"Signups\", ...months]}\n        rows={cohorts.map((row) => [\n          formatCohort(row.cohort),\n          row.signups,\n          ...months.map((_, index) => row.retained[index] ?? \"\"),\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

@@ -37,7 +37,8 @@ export function ChartSourceSheet({
           <div>
             <SheetTitle>{title}</SheetTitle>
             <SheetDescription>
-              Install Chart. Then copy this file into your app.
+              One command installs the chart, the packages, and this example. Or
+              copy the file into your app.
             </SheetDescription>
           </div>
           <SheetClose />

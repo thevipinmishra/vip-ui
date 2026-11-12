@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-export",
+  "type": "registry:block",
+  "title": "Export",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartExport /> from components/charts/chart-export.tsx. Preview: https://vip-ui.dev/charts#chart-export",
+  "meta": {
+    "entry": {
+      "component": "ChartExport",
+      "file": "chart-export.tsx"
+    }
+  },
+  "dependencies": ["@phosphor-icons/react@^2.1.10", "@tanstack/charts@^1.5.0"],
+  "registryDependencies": [
+    "https://vip-ui.dev/r/button.json",
+    "https://vip-ui.dev/r/chart.json",
+    "https://vip-ui.dev/r/menu.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-export.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-export.tsx",
+      "content": "\"use client\";\n\nimport { DownloadSimpleIcon } from \"@phosphor-icons/react\";\nimport { areaY, defineChart, lineY } from \"@tanstack/charts\";\nimport { downloadChartImage, downloadChartSvg } from \"@tanstack/charts/export\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { scalePoint } from \"@tanstack/charts/scales/point\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport { type Key, useRef } from \"react\";\nimport { Button } from \"../vip-ui/button\";\nimport {\n  Chart,\n  ChartAction,\n  ChartCaption,\n  ChartDescription,\n  ChartFrame,\n  ChartTable,\n  ChartTitle,\n  ChartValue,\n} from \"../vip-ui/chart\";\nimport {\n  MenuContent,\n  MenuItem,\n  MenuPopover,\n  MenuTrigger,\n} from \"../vip-ui/menu\";\n\nconst rows = [\n  { week: \"2026-07-06\", signups: 1240 },\n  { week: \"2026-07-13\", signups: 1315 },\n  { week: \"2026-07-20\", signups: 1290 },\n  { week: \"2026-07-27\", signups: 1420 },\n  { week: \"2026-08-03\", signups: 1385 },\n  { week: \"2026-08-10\", signups: 1510 },\n  { week: \"2026-08-17\", signups: 1605 },\n  { week: \"2026-08-24\", signups: 1570 },\n  { week: \"2026-08-31\", signups: 1690 },\n  { week: \"2026-09-07\", signups: 1760 },\n  { week: \"2026-09-14\", signups: 1835 },\n  { week: \"2026-09-21\", signups: 1910 },\n];\n\nconst weekFormat = new Intl.DateTimeFormat(\"en-US\", {\n  month: \"short\",\n  day: \"numeric\",\n  timeZone: \"UTC\",\n});\nconst fullWeekFormat = new Intl.DateTimeFormat(\"en-US\", {\n  month: \"long\",\n  day: \"numeric\",\n  year: \"numeric\",\n  timeZone: \"UTC\",\n});\nconst countFormat = new Intl.NumberFormat(\"en-US\");\n\nconst formatWeek = (week: string) => weekFormat.format(new Date(week));\nconst formatFullWeek = (week: string) =>\n  `Week of ${fullWeekFormat.format(new Date(week))}`;\nconst formatCount = (value: number) => countFormat.format(value);\n\nconst total = rows.reduce((sum, row) => sum + row.signups, 0);\n\nconst definition = defineChart({\n  marks: [\n    areaY(rows, {\n      x: \"week\",\n      y: \"signups\",\n      key: \"week\",\n      fill: \"var(--ts-chart-1)\",\n      fillOpacity: 0.12,\n    }),\n    lineY(rows, {\n      x: \"week\",\n      y: \"signups\",\n      key: \"week\",\n      stroke: \"var(--ts-chart-1)\",\n      strokeWidth: 2,\n    }),\n  ],\n  scales: {\n    x: {\n      scale: scalePoint<string>().domain(rows.map((row) => row.week)),\n      axis: {\n        ticks: {\n          values: rows\n            .filter((_, index) => index % 3 === 0)\n            .map((row) => row.week),\n          format: formatWeek,\n        },\n      },\n    },\n    y: {\n      scale: scaleLinear().domain([0, 2000]),\n      grid: true,\n      axis: { ticks: { count: 4, format: formatCount } },\n    },\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: formatFullWeek(point.datum.week),\n      rows: [\n        {\n          label: \"Sign-ups\",\n          value: formatCount(point.datum.signups),\n          color: point.color,\n        },\n      ],\n    }),\n  },\n});\n\nexport function ChartExport() {\n  const frame = useRef<HTMLElement>(null);\n\n  function download(format: Key) {\n    const target = frame.current;\n    if (!target) return;\n    if (format === \"svg\") {\n      downloadChartSvg(target, \"weekly-sign-ups.svg\");\n      return;\n    }\n    void downloadChartImage(target, \"weekly-sign-ups.png\", {\n      scale: 2,\n      background: getComputedStyle(target).getPropertyValue(\"--card\"),\n    });\n  }\n\n  return (\n    <ChartFrame ref={frame}>\n      <ChartCaption>\n        <ChartTitle>Weekly sign-ups</ChartTitle>\n        <ChartValue>{formatCount(total)}</ChartValue>\n        <ChartDescription>July 6 to September 27, 2026</ChartDescription>\n      </ChartCaption>\n      <ChartAction>\n        <MenuTrigger>\n          <Button variant=\"outline\" size=\"sm\">\n            <DownloadSimpleIcon size={16} aria-hidden=\"true\" />\n            Export\n          </Button>\n          <MenuPopover placement=\"bottom end\">\n            <MenuContent aria-label=\"Export format\" onAction={download}>\n              <MenuItem id=\"png\">PNG image</MenuItem>\n              <MenuItem id=\"svg\">SVG image</MenuItem>\n            </MenuContent>\n          </MenuPopover>\n        </MenuTrigger>\n      </ChartAction>\n      <Chart\n        definition={definition}\n        height={220}\n        initialWidth={520}\n        ariaLabel=\"Weekly sign-ups from July 6 to September 27, 2026\"\n      />\n      <ChartTable\n        caption=\"Weekly sign-ups, July to September 2026\"\n        columns={[\"Week\", \"Sign-ups\"]}\n        rows={rows.map((row) => [\n          formatFullWeek(row.week),\n          formatCount(row.signups),\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

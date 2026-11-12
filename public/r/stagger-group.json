@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stagger-group",
+  "type": "registry:ui",
+  "title": "Stagger Group",
+  "description": "Reveals a group of items one after another when it enters the viewport.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["motion-effects"],
+  "dependencies": ["motion@^14.10.1"],
+  "registryDependencies": [
+    "https://vip-ui.dev/r/motion.json",
+    "https://vip-ui.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/stagger-group.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/stagger-group.tsx",
+      "content": "\"use client\";\n\nimport { motion, useReducedMotion } from \"motion/react\";\nimport type { HTMLAttributes, ReactNode } from \"react\";\nimport {\n  duration,\n  easeOut,\n  maxStagger,\n  offset,\n  transitionFor,\n} from \"./motion\";\nimport { cn } from \"./utils\";\n\ntype StaggerAttributes = Omit<\n  HTMLAttributes<HTMLElement>,\n  | \"onDrag\"\n  | \"onDragStart\"\n  | \"onDragEnd\"\n  | \"onAnimationStart\"\n  | \"onAnimationEnd\"\n  | \"onAnimationIteration\"\n>;\n\nexport interface StaggerGroupProps extends StaggerAttributes {\n  children: ReactNode;\n  as?: \"div\" | \"ul\" | \"ol\";\n  trigger?: \"mount\" | \"in-view\";\n  stagger?: number;\n}\n\nexport function StaggerGroup({\n  as = \"div\",\n  trigger = \"in-view\",\n  stagger = 0.08,\n  children,\n  className,\n  ...props\n}: StaggerGroupProps) {\n  const reducedMotion = useReducedMotion();\n  const Element =\n    as === \"ul\" ? motion.ul : as === \"ol\" ? motion.ol : motion.div;\n  const variants = {\n    hidden: {},\n    visible: {\n      transition: {\n        delayChildren: (index: number, total: number) =>\n          reducedMotion\n            ? 0\n            : index * Math.min(stagger, maxStagger / Math.max(total - 1, 1)),\n      },\n    },\n  };\n\n  return (\n    <Element\n      {...props}\n      data-slot=\"stagger-group\"\n      className={cn(className)}\n      variants={variants}\n      initial=\"hidden\"\n      animate={trigger === \"mount\" || reducedMotion ? \"visible\" : undefined}\n      whileInView={trigger === \"in-view\" ? \"visible\" : undefined}\n      viewport={{ once: true, amount: \"some\" }}\n    >\n      {children}\n    </Element>\n  );\n}\n\nexport interface StaggerItemProps extends StaggerAttributes {\n  children: ReactNode;\n  as?: \"div\" | \"li\";\n}\n\nconst itemVariants = {\n  hidden: { opacity: 0, y: offset.lg },\n  visible: { opacity: 1, y: 0 },\n};\n\nexport function StaggerItem({\n  as = \"div\",\n  children,\n  className,\n  ...props\n}: StaggerItemProps) {\n  const reducedMotion = useReducedMotion();\n  const Element = as === \"li\" ? motion.li : motion.div;\n  return (\n    <Element\n      {...props}\n      data-slot=\"stagger-item\"\n      className={cn(className)}\n      variants={itemVariants}\n      transition={transitionFor(reducedMotion, {\n        duration: duration.reveal,\n        ease: easeOut,\n      })}\n    >\n      {children}\n    </Element>\n  );\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "border-beam",
+  "type": "registry:ui",
+  "title": "Border Beam",
+  "description": "Moves a short light around the border of a surface.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["motion-effects"],
+  "dependencies": [],
+  "registryDependencies": ["https://vip-ui.dev/r/utils.json"],
+  "cssVars": {
+    "theme": {
+      "animate-border-beam": "border-beam-spin 6s linear infinite"
+    }
+  },
+  "css": {
+    "@keyframes border-beam-spin": {
+      "from": {
+        "transform": "rotate(0deg)"
+      },
+      "to": {
+        "transform": "rotate(360deg)"
+      }
+    }
+  },
+  "files": [
+    {
+      "path": "src/components/ui/border-beam.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/border-beam.tsx",
+      "content": "\"use client\";\n\nimport type { ComponentProps } from \"react\";\nimport { cn } from \"./utils\";\n\nexport interface BorderBeamProps\n  extends Omit<ComponentProps<\"span\">, \"children\"> {\n  duration?: number;\n  active?: boolean;\n}\n\nconst ring = \"linear-gradient(#000 0 0), linear-gradient(#000 0 0)\";\n\nexport function BorderBeam({\n  duration = 6,\n  active = true,\n  className,\n  style,\n  ...props\n}: BorderBeamProps) {\n  if (!active) return null;\n\n  return (\n    <span\n      aria-hidden=\"true\"\n      {...props}\n      data-slot=\"border-beam\"\n      className={cn(\n        \"pointer-events-none absolute inset-[calc(var(--border-beam-width,1px)*-1)] rounded-[inherit] p-[var(--border-beam-width,1px)] [container-type:size] forced-colors:hidden\",\n        className,\n      )}\n      style={{\n        maskImage: ring,\n        WebkitMaskImage: ring,\n        maskClip: \"content-box, border-box\",\n        WebkitMaskClip: \"content-box, border-box\",\n        maskComposite: \"exclude\",\n        WebkitMaskComposite: \"xor\",\n        ...style,\n      }}\n    >\n      <span\n        className=\"absolute top-1/2 left-1/2 -mt-[calc(50cqw+50cqh)] -ml-[calc(50cqw+50cqh)] size-[calc(100cqw+100cqh)] bg-[conic-gradient(transparent_0turn,transparent_0.62turn,color-mix(in_oklab,var(--border-beam-color,var(--color-foreground))_35%,transparent)_0.84turn,var(--border-beam-color,var(--color-foreground))_0.97turn,transparent_1turn)] motion-safe:animate-border-beam motion-reduce:hidden\"\n        style={{ animationDuration: `${duration}s` }}\n      />\n    </span>\n  );\n}\n"
+    }
+  ]
+}

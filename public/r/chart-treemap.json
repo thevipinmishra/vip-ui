@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-treemap",
+  "type": "registry:block",
+  "title": "Treemap",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartTreemap /> from components/charts/chart-treemap.tsx. Preview: https://vip-ui.dev/charts#chart-treemap",
+  "meta": {
+    "entry": {
+      "component": "ChartTreemap",
+      "file": "chart-treemap.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-treemap.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-treemap.tsx",
+      "content": "\"use client\";\n\nimport { defineChart } from \"@tanstack/charts\";\nimport { treemap } from \"@tanstack/charts/hierarchy/treemap\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartLegend,\n  ChartLegendItem,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst rows = [\n  { path: \"Storage/Media/Video\", folder: \"Media\", gigabytes: 182 },\n  { path: \"Storage/Media/Photos\", folder: \"Media\", gigabytes: 96 },\n  { path: \"Storage/Media/Audio\", folder: \"Media\", gigabytes: 31 },\n  { path: \"Storage/Backups/Daily\", folder: \"Backups\", gigabytes: 120 },\n  { path: \"Storage/Backups/Weekly\", folder: \"Backups\", gigabytes: 64 },\n  { path: \"Storage/Documents/Contracts\", folder: \"Documents\", gigabytes: 38 },\n  { path: \"Storage/Documents/Reports\", folder: \"Documents\", gigabytes: 27 },\n  { path: \"Storage/Documents/Slides\", folder: \"Documents\", gigabytes: 19 },\n  { path: \"Storage/Code/Builds\", folder: \"Code\", gigabytes: 44 },\n  { path: \"Storage/Code/Packages\", folder: \"Code\", gigabytes: 23 },\n];\n\nconst series = [\n  { label: \"Media\", color: \"var(--ts-chart-1)\", ink: \"var(--card)\" },\n  {\n    label: \"Backups\",\n    color: \"var(--ts-chart-2)\",\n    ink: \"color-mix(in oklab, var(--ts-chart-2) 30%, black)\",\n  },\n  {\n    label: \"Documents\",\n    color: \"var(--ts-chart-3)\",\n    ink: \"color-mix(in oklab, var(--ts-chart-3) 30%, black)\",\n  },\n  {\n    label: \"Code\",\n    color: \"var(--ts-chart-4)\",\n    ink: \"white\",\n  },\n];\n\nconst labelInk = (folder?: string) =>\n  series.find((item) => item.label === folder)?.ink ?? \"var(--card)\";\n\nconst definition = defineChart({\n  marks: [\n    treemap(rows, {\n      path: \"path\",\n      value: \"gigabytes\",\n      color: (node) => node.data?.folder,\n      label: \"name\",\n      labelFill: (node) => labelInk(node.data?.folder),\n      labelFontWeight: 600,\n      paddingInner: 2,\n      sort: (left, right) => right.value - left.value,\n      radius: 4,\n    }),\n  ],\n  scales: { x: null, y: null },\n  color: {\n    domain: series.map((item) => item.label),\n    range: series.map((item) => item.color),\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: point.datum.name,\n      rows: [\n        {\n          label: point.datum.data?.folder ?? \"Folder\",\n          value: `${point.datum.value} GB`,\n          color: point.color,\n        },\n      ],\n    }),\n  },\n});\n\nexport function ChartTreemap() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Storage</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={240}\n        initialWidth={520}\n        ariaLabel=\"Treemap of storage used by folder, in gigabytes\"\n      />\n      <ChartLegend>\n        {series.map((item) => (\n          <ChartLegendItem key={item.label} color={item.color}>\n            {item.label}\n          </ChartLegendItem>\n        ))}\n      </ChartLegend>\n      <ChartTable\n        caption=\"Storage used by folder, in gigabytes\"\n        columns={[\"Folder\", \"Subfolder\", \"Gigabytes\"]}\n        rows={rows.map((row) => [\n          row.folder,\n          row.path.split(\"/\").at(-1) ?? row.path,\n          row.gigabytes,\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

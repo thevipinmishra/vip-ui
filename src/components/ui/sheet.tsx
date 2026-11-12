@@ -44,18 +44,19 @@ type Axis = "x" | "y";
 type Position = SheetRenderProps["position"];
 type SwipeDirection = SheetRenderProps["swipeDirection"];
 
-const sheetStack =
-  "translate(var(--sheet-stack-x,0px),var(--sheet-stack-y,0px)) scale(var(--sheet-stack-scale,0.94))";
-
 const sheetDuration = { enter: 0.32, exit: 0.24, settle: 0.3 } as const;
 
-const scrollEdgeCss =
-  "@keyframes vip-edge-start{from{border-top-color:transparent}to{border-top-color:var(--color-border)}}@keyframes vip-edge-end{from{border-bottom-color:var(--color-border)}to{border-bottom-color:transparent}}@supports (animation-timeline:scroll()){[data-scroll-edges]{animation:vip-edge-start linear both,vip-edge-end linear both;animation-timeline:scroll(self),scroll(self);animation-range:0px 1rem,calc(100% - 1rem) 100%}}";
+const scrollEdgeClasses =
+  "supports-[animation-timeline:scroll()]:[animation-name:vip-edge-start,vip-edge-end] supports-[animation-timeline:scroll()]:[animation-timing-function:linear] supports-[animation-timeline:scroll()]:[animation-fill-mode:both] supports-[animation-timeline:scroll()]:[animation-timeline:scroll(self),scroll(self)] supports-[animation-timeline:scroll()]:[animation-range:0px_1rem,calc(100%_-_1rem)_100%]";
 
-const sheetCss = `@keyframes vip-sheet-backdrop{from{opacity:0}to{opacity:1}}@keyframes vip-sheet-stack{from{transform:translate(0px,0px) scale(1)}to{transform:${sheetStack}}}[data-sheet-scroll][data-sheet-unsnapped]{scroll-snap-type:none!important}@supports not (animation-timeline:view()){[data-slot=sheet]{transition:transform ${sheetDuration.enter}s cubic-bezier(${easeSheet.join(",")})}[data-slot=sheet][data-has-descendants]{transform:${sheetStack}}}@media (prefers-reduced-motion:reduce){[data-slot=sheet]{transition:none}}`;
+const sheetFallbackClasses =
+  "supports-[not_(animation-timeline:view())]:transition-[transform] supports-[not_(animation-timeline:view())]:duration-320 supports-[not_(animation-timeline:view())]:ease-[cubic-bezier(0.32,0.72,0,1)] supports-[not_(animation-timeline:view())]:data-[has-descendants]:[transform:translate(var(--sheet-stack-x,0px),var(--sheet-stack-y,0px))_scale(var(--sheet-stack-scale,0.94))] motion-reduce:transition-none";
 
 const sheetSurfaceStyles = tv({
-  base: "flex max-h-[var(--visual-viewport-height,100dvh)] min-w-0 max-w-full flex-col overflow-clip bg-card text-card-foreground [overflow-wrap:anywhere] shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70 data-[has-descendants]:rounded-xl",
+  base: [
+    "flex max-h-[var(--visual-viewport-height,100dvh)] min-w-0 max-w-full flex-col overflow-clip bg-card text-card-foreground [overflow-wrap:anywhere] shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70 data-[has-descendants]:rounded-xl",
+    sheetFallbackClasses,
+  ],
   variants: {
     position: {
       bottom:
@@ -387,63 +388,55 @@ export function Sheet({
   ...props
 }: SheetProps) {
   return (
-    <>
-      <style href="vip-sheet" precedence="default">
-        {sheetCss}
-      </style>
-      <style href="vip-scroll-edges" precedence="default">
-        {scrollEdgeCss}
-      </style>
-      <SheetOverlay
-        data-slot="sheet-overlay"
-        className="z-50"
-        position={position}
-        swipeDirection={swipeDirection}
-        snapPoints={snapPoints}
-        preventDismissal={preventDismissal}
-        isOpen={isOpen}
-        defaultOpen={defaultOpen}
-        onOpenChange={onOpenChange}
+    <SheetOverlay
+      data-slot="sheet-overlay"
+      className="z-50"
+      position={position}
+      swipeDirection={swipeDirection}
+      snapPoints={snapPoints}
+      preventDismissal={preventDismissal}
+      isOpen={isOpen}
+      defaultOpen={defaultOpen}
+      onOpenChange={onOpenChange}
+    >
+      <SheetBackdrop
+        data-slot="sheet-backdrop"
+        swipeAnimation="vip-sheet-backdrop"
+        className={({ stackIndex }) =>
+          stackIndex > 0
+            ? "pointer-events-none bg-black/25 dark:bg-black/35"
+            : "pointer-events-none bg-black/45 backdrop-blur-[2px] dark:bg-black/55 motion-reduce:backdrop-blur-none"
+        }
+      />
+      <AriaSheet
+        data-slot="sheet"
+        data-size={size}
+        stackAnimation="vip-sheet-stack"
+        className={composeRenderProps(className, (className, render) =>
+          sheetSurfaceStyles({
+            position: render.position,
+            size,
+            inset,
+            className,
+          }),
+        )}
       >
-        <SheetBackdrop
-          data-slot="sheet-backdrop"
-          swipeAnimation="vip-sheet-backdrop"
-          className={({ stackIndex }) =>
-            stackIndex > 0
-              ? "pointer-events-none bg-black/25 dark:bg-black/35"
-              : "pointer-events-none bg-black/45 backdrop-blur-[2px] dark:bg-black/55 motion-reduce:backdrop-blur-none"
-          }
-        />
-        <AriaSheet
-          data-slot="sheet"
-          data-size={size}
-          stackAnimation="vip-sheet-stack"
-          className={composeRenderProps(className, (className, render) =>
-            sheetSurfaceStyles({
-              position: render.position,
-              size,
-              inset,
-              className,
-            }),
-          )}
-        >
-          {({ position, swipeDirection, isEntering, isExpanded }) => (
-            <SheetFrame
-              {...props}
-              position={position}
-              size={size}
-              swipeDirection={swipeDirection}
-              isEntering={isEntering}
-              isExpanded={isExpanded}
-              hasSnapPoints={!!snapPoints?.length}
-              preventDismissal={preventDismissal}
-            >
-              <SizeProvider size={undefined}>{children}</SizeProvider>
-            </SheetFrame>
-          )}
-        </AriaSheet>
-      </SheetOverlay>
-    </>
+        {({ position, swipeDirection, isEntering, isExpanded }) => (
+          <SheetFrame
+            {...props}
+            position={position}
+            size={size}
+            swipeDirection={swipeDirection}
+            isEntering={isEntering}
+            isExpanded={isExpanded}
+            hasSnapPoints={!!snapPoints?.length}
+            preventDismissal={preventDismissal}
+          >
+            <SizeProvider size={undefined}>{children}</SizeProvider>
+          </SheetFrame>
+        )}
+      </AriaSheet>
+    </SheetOverlay>
   );
 }
 
@@ -858,6 +851,7 @@ export function SheetBody({
       data-scroll-edges=""
       className={cn(
         "min-h-0 flex-1 overflow-y-auto overscroll-contain border-y border-transparent px-5 py-2",
+        scrollEdgeClasses,
         sheet?.hasSnapPoints && !sheet.isExpanded && "overflow-y-hidden",
         className,
       )}

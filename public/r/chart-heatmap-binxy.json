@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-heatmap-binxy",
+  "type": "registry:block",
+  "title": "Binned heatmap",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartHeatmapBinxy /> from components/charts/chart-heatmap-binxy.tsx. Preview: https://vip-ui.dev/charts#chart-heatmap-binxy",
+  "meta": {
+    "entry": {
+      "component": "ChartHeatmapBinxy",
+      "file": "chart-heatmap-binxy.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0", "d3-scale@^4.0.3"],
+  "devDependencies": ["@types/d3-scale@^4.0.9"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-heatmap-binxy.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-heatmap-binxy.tsx",
+      "content": "\"use client\";\n\nimport { defineChart, rect } from \"@tanstack/charts\";\nimport { colorGradientLegend } from \"@tanstack/charts/legend\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport { binXY } from \"@tanstack/charts/transform/bin-xy\";\nimport { scaleSequential } from \"d3-scale\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst noise = (seed: number) => {\n  const value = Math.sin(seed * 45.164 + 2.5) * 43758.5453;\n  return value - Math.floor(value);\n};\n\nconst orders = Array.from({ length: 220 }, (_, index) => {\n  const value = 10 + noise(index + 1) ** 1.6 * 190;\n  const days = 1 + (value / 200) * 4 + (noise(index + 300) - 0.3) * 3;\n  return {\n    id: index,\n    orderValue: Math.round(value),\n    deliveryDays: Math.min(9.9, Math.max(0.5, Math.round(days * 10) / 10)),\n  };\n});\n\nconst cells = binXY(orders, {\n  x: \"orderValue\",\n  y: \"deliveryDays\",\n  xThresholds: [0, 25, 50, 75, 100, 125, 150, 175, 200],\n  yThresholds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],\n  outputs: { count: { reduce: \"count\" } },\n}).filter((cell) => cell.count > 0);\n\nconst ramp = (t: number) =>\n  `color-mix(in oklab, var(--ts-chart-1) ${Math.round(12 + t * 88)}%, var(--card))`;\n\nconst formatMoney = (value: number) => `$${value}`;\nconst formatDays = (value: number) => `${value} d`;\n\nconst bands = [0, 50, 100, 150].map((start) => {\n  const items = orders.filter(\n    (row) => row.orderValue >= start && row.orderValue < start + 50,\n  );\n  return {\n    label: `${formatMoney(start)}–${formatMoney(start + 50)}`,\n    orders: items.length,\n    days:\n      items.reduce((total, row) => total + row.deliveryDays, 0) /\n      Math.max(1, items.length),\n  };\n});\n\nconst definition = defineChart({\n  marks: [\n    rect(cells, {\n      x1: \"x1\",\n      x2: \"x2\",\n      y1: \"y1\",\n      y2: \"y2\",\n      color: \"count\",\n      inset: 0.5,\n      radius: 2,\n    }),\n  ],\n  scales: {\n    x: {\n      scale: scaleLinear().domain([0, 200]),\n      axis: {\n        label: \"Order value\",\n        ticks: { count: 4, format: formatMoney },\n      },\n    },\n    y: {\n      scale: scaleLinear().domain([0, 10]),\n      axis: { label: \"Delivery time\", ticks: { count: 5, format: formatDays } },\n    },\n  },\n  color: {\n    scale: () => scaleSequential(ramp),\n    legend: colorGradientLegend({\n      label: \"Orders\",\n      placement: \"bottom\",\n      width: 180,\n      format: (value) => `${Math.round(value)}`,\n    }),\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: `${formatMoney(point.datum.x1)}–${formatMoney(point.datum.x2)}`,\n      rows: [\n        {\n          label: \"Orders\",\n          value: `${point.datum.count}`,\n          color: point.color,\n        },\n        {\n          label: \"Delivery\",\n          value: `${point.datum.y1}–${formatDays(point.datum.y2)}`,\n        },\n      ],\n    }),\n  },\n});\n\nexport function ChartHeatmapBinxy() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Order value and delivery time</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={280}\n        initialWidth={520}\n        ariaLabel={`Two-dimensional histogram of ${orders.length} orders by value and delivery time. Larger orders take longer to arrive.`}\n      />\n      <ChartTable\n        caption=\"Orders and mean delivery time by order value\"\n        columns={[\"Order value\", \"Orders\", \"Mean delivery\"]}\n        rows={bands.map((band) => [\n          band.label,\n          band.orders,\n          formatDays(Math.round(band.days * 10) / 10),\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

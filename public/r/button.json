@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button",
+  "type": "registry:ui",
+  "title": "Button",
+  "description": "Triggers an action with primary, secondary, or destructive emphasis.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["actions"],
+  "dependencies": [
+    "react-aria-components@^1.22.1",
+    "tailwindcss-react-aria-components@^2.2.0"
+  ],
+  "registryDependencies": [
+    "https://vip-ui.dev/r/button-styles.json",
+    "https://vip-ui.dev/r/size.json"
+  ],
+  "css": {
+    "@plugin tailwindcss-react-aria-components": {}
+  },
+  "files": [
+    {
+      "path": "src/components/ui/button.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/button.tsx",
+      "content": "\"use client\";\n\nimport {\n  Button as AriaButton,\n  type ButtonProps as AriaButtonProps,\n  composeRenderProps,\n} from \"react-aria-components\";\nimport { type ButtonVariant, buttonLabel, buttonStyles } from \"./button-styles\";\nimport { type Size, useSize } from \"./size\";\n\nexport interface ButtonProps extends AriaButtonProps {\n  ref?: React.Ref<HTMLButtonElement>;\n  variant?: ButtonVariant;\n  size?: Size;\n  iconOnly?: boolean;\n  static?: boolean;\n}\n\nconst pressStyles = \"motion-safe:pressed:not-aria-expanded:scale-[0.96]\";\n\nexport function Button({\n  className,\n  children,\n  variant = \"default\",\n  size: sizeProp,\n  iconOnly = false,\n  static: isStatic = false,\n  ...props\n}: ButtonProps) {\n  const size = useSize(sizeProp) ?? \"md\";\n  return (\n    <AriaButton\n      data-slot=\"button\"\n      data-variant={variant}\n      data-size={size}\n      data-icon-only={iconOnly || undefined}\n      className={composeRenderProps(className, (className) =>\n        buttonStyles({\n          variant,\n          size,\n          iconOnly,\n          className: [!isStatic && pressStyles, className],\n        }),\n      )}\n      {...props}\n    >\n      {composeRenderProps(children, buttonLabel)}\n    </AriaButton>\n  );\n}\n"
+    }
+  ]
+}

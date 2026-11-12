@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pink",
+  "type": "registry:theme",
+  "title": "Pink",
+  "description": "Tags, highlights, and expressive accents.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["colors"],
+  "docs": "The scale adds --pink-1 to --pink-12 for light and dark mode. Classes such as bg-pink-3 work after the install.",
+  "dependencies": [],
+  "files": [],
+  "cssVars": {
+    "theme": {
+      "color-pink-1": "var(--pink-1)",
+      "color-pink-2": "var(--pink-2)",
+      "color-pink-3": "var(--pink-3)",
+      "color-pink-4": "var(--pink-4)",
+      "color-pink-5": "var(--pink-5)",
+      "color-pink-6": "var(--pink-6)",
+      "color-pink-7": "var(--pink-7)",
+      "color-pink-8": "var(--pink-8)",
+      "color-pink-9": "var(--pink-9)",
+      "color-pink-10": "var(--pink-10)",
+      "color-pink-11": "var(--pink-11)",
+      "color-pink-12": "var(--pink-12)"
+    },
+    "light": {
+      "pink-1": "oklch(0.987 0.010 348)",
+      "pink-2": "oklch(0.969 0.018 348)",
+      "pink-3": "oklch(0.944 0.030 348)",
+      "pink-4": "oklch(0.919 0.042 348)",
+      "pink-5": "oklch(0.894 0.054 348)",
+      "pink-6": "oklch(0.866 0.070 348)",
+      "pink-7": "oklch(0.820 0.096 348)",
+      "pink-8": "oklch(0.755 0.132 348)",
+      "pink-9": "oklch(0.580 0.200 348)",
+      "pink-10": "oklch(0.545 0.196 348)",
+      "pink-11": "oklch(0.505 0.124 348)",
+      "pink-12": "oklch(0.285 0.060 348)"
+    },
+    "dark": {
+      "pink-1": "oklch(0.185 0.036 348)",
+      "pink-2": "oklch(0.215 0.050 348)",
+      "pink-3": "oklch(0.243 0.064 348)",
+      "pink-4": "oklch(0.268 0.076 348)",
+      "pink-5": "oklch(0.293 0.086 348)",
+      "pink-6": "oklch(0.322 0.096 348)",
+      "pink-7": "oklch(0.365 0.112 348)",
+      "pink-8": "oklch(0.430 0.136 348)",
+      "pink-9": "oklch(0.700 0.200 348)",
+      "pink-10": "oklch(0.740 0.194 348)",
+      "pink-11": "oklch(0.735 0.136 348)",
+      "pink-12": "oklch(0.930 0.056 348)"
+    }
+  }
+}

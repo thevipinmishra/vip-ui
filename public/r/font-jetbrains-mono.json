@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "font-jetbrains-mono",
+  "type": "registry:font",
+  "title": "JetBrains Mono",
+  "description": "The JetBrains Mono font for the typography presets.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["fonts"],
+  "dependencies": [],
+  "files": [],
+  "font": {
+    "family": "'JetBrains Mono Variable', monospace",
+    "provider": "google",
+    "import": "JetBrains_Mono",
+    "variable": "--font-jetbrains-mono",
+    "subsets": ["latin"],
+    "dependency": "@fontsource-variable/jetbrains-mono"
+  }
+}

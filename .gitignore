@@ -13,7 +13,8 @@
 
 /.agents/
 /.claude/
-/skills/
+/skills/*
+!/skills/vip-ui/
 /skills-lock.json
 /graphify-out/
 /.audit/
@@ -24,12 +25,13 @@
 !/CONTRIBUTING.md
 !/SECURITY.md
 !/.github/**
+!/skills/vip-ui/**
 /docs/
 
 /tests/
 /playwright.config.ts
-/scripts/*.test.mjs
-/scripts/test-registry-cli.mjs
+/scripts/check-skills.mjs
+/*.txt
 
 /.next/
 /out/

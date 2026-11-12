@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-radial-rings",
+  "type": "registry:block",
+  "title": "Radial rings",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartRadialRings /> from components/charts/chart-radial-rings.tsx. Preview: https://vip-ui.dev/charts#chart-radial-rings",
+  "meta": {
+    "entry": {
+      "component": "ChartRadialRings",
+      "file": "chart-radial-rings.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-radial-rings.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-radial-rings.tsx",
+      "content": "\"use client\";\n\nimport { defineChart } from \"@tanstack/charts\";\nimport { decorative } from \"@tanstack/charts/mark/decorative\";\nimport { polar, radialBarAngle } from \"@tanstack/charts/polar\";\nimport { scaleBand } from \"@tanstack/charts/scales/band\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartLegend,\n  ChartLegendItem,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst rows = [\n  { goal: \"Ship the mobile app\", current: 9, target: 11, unit: \"features\" },\n  { goal: \"Hire six engineers\", current: 4, target: 6, unit: \"hires\" },\n  { goal: \"Close 40 enterprise deals\", current: 29, target: 40, unit: \"deals\" },\n].map((row) => ({\n  ...row,\n  complete: Math.round((row.current / row.target) * 100),\n}));\n\nconst series = rows.map((row, index) => ({\n  label: `${row.goal}, ${row.complete}%`,\n  color: `var(--ts-chart-${index + 1})`,\n}));\n\nconst layout = {\n  radiusRatio: 0.92,\n  startAngle: -Math.PI * 0.75,\n  endAngle: Math.PI * 0.75,\n  scales: {\n    angle: { scale: scaleLinear().domain([0, 100]) },\n    radius: {\n      scale: () => scaleBand<string>().padding(0.24),\n      range: [\n        ({ radius }: { radius: number }) => radius * 0.42,\n        ({ radius }: { radius: number }) => radius,\n      ] as const,\n    },\n  },\n};\n\nconst definition = defineChart({\n  marks: [\n    decorative(\n      polar({\n        ...layout,\n        marks: [\n          radialBarAngle(rows, {\n            radius: \"goal\",\n            angle: () => 100,\n            fill: \"var(--muted)\",\n            key: \"goal\",\n            cornerRadius: \"full\",\n          }),\n        ],\n      }),\n    ),\n    polar({\n      ...layout,\n      marks: [\n        radialBarAngle(rows, {\n          radius: \"goal\",\n          angle: \"complete\",\n          color: \"goal\",\n          key: \"goal\",\n          cornerRadius: \"full\",\n        }),\n      ],\n    }),\n  ],\n  scales: { x: null, y: null },\n  color: {\n    domain: rows.map((row) => row.goal),\n    range: series.map((item) => item.color),\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: point.datum.goal,\n      rows: [\n        {\n          label: \"Complete\",\n          value: `${point.datum.complete}%`,\n          color: point.color,\n        },\n        {\n          label: \"Progress\",\n          value: `${point.datum.current} of ${point.datum.target} ${point.datum.unit}`,\n        },\n      ],\n    }),\n  },\n});\n\nexport function ChartRadialRings() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Q4 goals</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={240}\n        initialWidth={520}\n        ariaLabel=\"Progress to three fourth-quarter goals, in percent\"\n      />\n      <ChartLegend>\n        {series.map((item) => (\n          <ChartLegendItem key={item.label} color={item.color}>\n            {item.label}\n          </ChartLegendItem>\n        ))}\n      </ChartLegend>\n      <ChartTable\n        caption=\"Progress to fourth-quarter goals\"\n        columns={[\"Goal\", \"Progress\", \"Complete (%)\"]}\n        rows={rows.map((row) => [\n          row.goal,\n          `${row.current} of ${row.target} ${row.unit}`,\n          row.complete,\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

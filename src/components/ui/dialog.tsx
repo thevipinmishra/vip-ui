@@ -24,8 +24,8 @@ import { SizeProvider } from "./size";
 
 const CloseContext = createContext<(() => void) | null>(null);
 
-const scrollEdgeCss =
-  "@keyframes vip-edge-start{from{border-top-color:transparent}to{border-top-color:var(--color-border)}}@keyframes vip-edge-end{from{border-bottom-color:var(--color-border)}to{border-bottom-color:transparent}}@supports (animation-timeline:scroll()){[data-scroll-edges]{animation:vip-edge-start linear both,vip-edge-end linear both;animation-timeline:scroll(self),scroll(self);animation-range:0px 1rem,calc(100% - 1rem) 100%}}";
+const scrollEdgeClasses =
+  "supports-[animation-timeline:scroll()]:[animation-name:vip-edge-start,vip-edge-end] supports-[animation-timeline:scroll()]:[animation-timing-function:linear] supports-[animation-timeline:scroll()]:[animation-fill-mode:both] supports-[animation-timeline:scroll()]:[animation-timeline:scroll(self),scroll(self)] supports-[animation-timeline:scroll()]:[animation-range:0px_1rem,calc(100%_-_1rem)_100%]";
 
 const dialogModalStyles = tv({
   base: [
@@ -193,20 +193,16 @@ export function DialogBody({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <>
-      <style href="vip-scroll-edges" precedence="default">
-        {scrollEdgeCss}
-      </style>
-      <div
-        {...props}
-        data-slot="dialog-body"
-        data-scroll-edges=""
-        className={cn(
-          "-mx-5 mt-3 min-h-0 flex-1 overflow-y-auto overscroll-contain border-y border-transparent px-5 py-2 sm:-mx-6 sm:px-6",
-          className,
-        )}
-      />
-    </>
+    <div
+      {...props}
+      data-slot="dialog-body"
+      data-scroll-edges=""
+      className={cn(
+        "-mx-5 mt-3 min-h-0 flex-1 overflow-y-auto overscroll-contain border-y border-transparent px-5 py-2 sm:-mx-6 sm:px-6",
+        scrollEdgeClasses,
+        className,
+      )}
+    />
   );
 }
 

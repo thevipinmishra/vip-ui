@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "red",
+  "type": "registry:theme",
+  "title": "Red",
+  "description": "Errors and destructive actions.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["colors"],
+  "docs": "The scale adds --red-1 to --red-12 for light and dark mode. Classes such as bg-red-3 work after the install.",
+  "dependencies": [],
+  "files": [],
+  "cssVars": {
+    "theme": {
+      "color-red-1": "var(--red-1)",
+      "color-red-2": "var(--red-2)",
+      "color-red-3": "var(--red-3)",
+      "color-red-4": "var(--red-4)",
+      "color-red-5": "var(--red-5)",
+      "color-red-6": "var(--red-6)",
+      "color-red-7": "var(--red-7)",
+      "color-red-8": "var(--red-8)",
+      "color-red-9": "var(--red-9)",
+      "color-red-10": "var(--red-10)",
+      "color-red-11": "var(--red-11)",
+      "color-red-12": "var(--red-12)"
+    },
+    "light": {
+      "red-1": "oklch(0.987 0.010 27)",
+      "red-2": "oklch(0.969 0.017 27)",
+      "red-3": "oklch(0.944 0.028 27)",
+      "red-4": "oklch(0.919 0.040 27)",
+      "red-5": "oklch(0.894 0.051 27)",
+      "red-6": "oklch(0.866 0.066 27)",
+      "red-7": "oklch(0.820 0.091 27)",
+      "red-8": "oklch(0.755 0.125 27)",
+      "red-9": "oklch(0.576 0.190 27)",
+      "red-10": "oklch(0.541 0.186 27)",
+      "red-11": "oklch(0.505 0.118 27)",
+      "red-12": "oklch(0.285 0.057 27)"
+    },
+    "dark": {
+      "red-1": "oklch(0.185 0.034 27)",
+      "red-2": "oklch(0.215 0.048 27)",
+      "red-3": "oklch(0.243 0.061 27)",
+      "red-4": "oklch(0.268 0.072 27)",
+      "red-5": "oklch(0.293 0.082 27)",
+      "red-6": "oklch(0.322 0.091 27)",
+      "red-7": "oklch(0.365 0.106 27)",
+      "red-8": "oklch(0.430 0.129 27)",
+      "red-9": "oklch(0.700 0.190 27)",
+      "red-10": "oklch(0.740 0.184 27)",
+      "red-11": "oklch(0.735 0.129 27)",
+      "red-12": "oklch(0.930 0.053 27)"
+    }
+  }
+}

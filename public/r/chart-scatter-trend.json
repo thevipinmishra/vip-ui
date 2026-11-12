@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-scatter-trend",
+  "type": "registry:block",
+  "title": "Scatter with trend",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartScatterTrend /> from components/charts/chart-scatter-trend.tsx. Preview: https://vip-ui.dev/charts#chart-scatter-trend",
+  "meta": {
+    "entry": {
+      "component": "ChartScatterTrend",
+      "file": "chart-scatter-trend.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-scatter-trend.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-scatter-trend.tsx",
+      "content": "\"use client\";\n\nimport { defineChart, dot, linearRegressionY } from \"@tanstack/charts\";\nimport { decorative } from \"@tanstack/charts/mark/decorative\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartLegend,\n  ChartLegendItem,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst rows = [\n  { week: \"2026-07-06\", spend: 6.2, signups: 184 },\n  { week: \"2026-07-13\", spend: 8.9, signups: 236 },\n  { week: \"2026-07-20\", spend: 12.4, signups: 229 },\n  { week: \"2026-07-27\", spend: 14.8, signups: 347 },\n  { week: \"2026-08-03\", spend: 17.5, signups: 318 },\n  { week: \"2026-08-10\", spend: 21.3, signups: 412 },\n  { week: \"2026-08-17\", spend: 23.6, signups: 386 },\n  { week: \"2026-08-24\", spend: 27.1, signups: 503 },\n  { week: \"2026-08-31\", spend: 30.4, signups: 462 },\n  { week: \"2026-09-07\", spend: 33.8, signups: 571 },\n  { week: \"2026-09-14\", spend: 37.9, signups: 604 },\n  { week: \"2026-09-21\", spend: 41.6, signups: 588 },\n];\n\nconst weekFormat = new Intl.DateTimeFormat(\"en-US\", {\n  month: \"short\",\n  day: \"numeric\",\n  timeZone: \"UTC\",\n});\nconst formatWeek = (week: string) =>\n  `Week of ${weekFormat.format(new Date(week))}`;\nconst formatMoney = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n  maximumFractionDigits: 0,\n}).format;\nconst formatCompact = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n  notation: \"compact\",\n}).format;\n\nconst definition = defineChart({\n  marks: [\n    decorative(\n      linearRegressionY(rows, {\n        x: \"spend\",\n        y: \"signups\",\n        stroke: \"var(--ts-chart-3)\",\n        strokeWidth: 2,\n        fillOpacity: 0.14,\n      }),\n    ),\n    dot(rows, {\n      x: \"spend\",\n      y: \"signups\",\n      key: \"week\",\n      r: 4.5,\n      fill: \"var(--ts-chart-1)\",\n    }),\n  ],\n  scales: {\n    x: {\n      scale: scaleLinear().domain([0, 45]),\n      grid: true,\n      axis: {\n        label: \"Ad spend\",\n        ticks: {\n          count: 5,\n          format: (value: number) => formatCompact(value * 1000),\n        },\n      },\n    },\n    y: {\n      scale: scaleLinear().domain([0, 700]),\n      grid: true,\n      axis: { label: \"Signups\" },\n    },\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: formatWeek(point.datum.week),\n      rows: [\n        {\n          label: \"Signups\",\n          value: `${point.datum.signups}`,\n          color: point.color,\n        },\n        { label: \"Ad spend\", value: formatMoney(point.datum.spend * 1000) },\n        {\n          label: \"Cost per signup\",\n          value: formatMoney((point.datum.spend * 1000) / point.datum.signups),\n        },\n      ],\n    }),\n  },\n});\n\nexport function ChartScatterTrend() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Ad spend and signups</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={240}\n        initialWidth={520}\n        ariaLabel=\"Weekly signups against ad spend for 12 weeks, with a rising linear trend line\"\n      />\n      <ChartLegend>\n        <ChartLegendItem color=\"var(--ts-chart-1)\">Week</ChartLegendItem>\n        <ChartLegendItem color=\"var(--ts-chart-3)\" swatch=\"line\">\n          Trend, 95% band\n        </ChartLegendItem>\n      </ChartLegend>\n      <ChartTable\n        caption=\"Weekly ad spend and signups\"\n        columns={[\"Week\", \"Ad spend\", \"Signups\"]}\n        rows={rows.map((row) => [\n          formatWeek(row.week),\n          formatMoney(row.spend * 1000),\n          row.signups,\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

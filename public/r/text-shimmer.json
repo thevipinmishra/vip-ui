@@ -1,0 +1,46 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-shimmer",
+  "type": "registry:ui",
+  "title": "Text Shimmer",
+  "description": "Moves a soft highlight across text to show that work is in progress.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["motion-effects"],
+  "dependencies": [],
+  "registryDependencies": [
+    "https://vip-ui.dev/r/motion.json",
+    "https://vip-ui.dev/r/utils.json"
+  ],
+  "cssVars": {
+    "theme": {
+      "animate-text-shimmer": "text-shimmer-sweep var(--text-shimmer-duration, 2.1333s) ease-in-out infinite"
+    },
+    "light": {
+      "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)"
+    },
+    "dark": {
+      "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)"
+    }
+  },
+  "css": {
+    "@keyframes text-shimmer-sweep": {
+      "0%": {
+        "transform": "translateX(var(--shimmer-from, -65%))"
+      },
+      "75%": {
+        "transform": "translateX(var(--shimmer-to, 65%))"
+      },
+      "100%": {
+        "transform": "translateX(var(--shimmer-to, 65%))"
+      }
+    }
+  },
+  "files": [
+    {
+      "path": "src/components/ui/text-shimmer.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/text-shimmer.tsx",
+      "content": "\"use client\";\n\nimport {\n  type ComponentProps,\n  type CSSProperties,\n  useEffect,\n  useRef,\n  useState,\n} from \"react\";\nimport { loop } from \"./motion\";\nimport { cn } from \"./utils\";\n\nexport interface TextShimmerProps extends ComponentProps<\"span\"> {\n  duration?: number;\n  active?: boolean;\n}\n\nexport function TextShimmer({\n  duration = loop.sweep,\n  active = true,\n  children,\n  className,\n  ...props\n}: TextShimmerProps) {\n  const root = useRef<HTMLSpanElement>(null);\n  const [direction, setDirection] = useState(0);\n\n  useEffect(() => {\n    const node = root.current;\n    if (node) setDirection(getComputedStyle(node).direction === \"rtl\" ? -1 : 1);\n  }, []);\n\n  const travel = 65 * direction;\n\n  return (\n    <span\n      {...props}\n      ref={root}\n      data-slot=\"text-shimmer\"\n      className={cn(\n        \"relative inline-block max-w-full text-muted-foreground\",\n        className,\n      )}\n    >\n      {children}\n      {direction !== 0 && active && (\n        <span\n          aria-hidden=\"true\"\n          className=\"pointer-events-none absolute inset-0 select-none overflow-clip [mask-image:linear-gradient(to_right,transparent_35%,black_50%,transparent_65%)] forced-colors:hidden motion-reduce:hidden motion-safe:animate-text-shimmer\"\n          style={\n            {\n              \"--shimmer-from\": `${-travel}%`,\n              \"--shimmer-to\": `${travel}%`,\n              \"--text-shimmer-duration\": `${duration / 0.75}s`,\n            } as CSSProperties\n          }\n        >\n          <span\n            className=\"absolute inset-0 text-(--text-shimmer-highlight,var(--color-foreground)) motion-safe:animate-text-shimmer\"\n            style={\n              {\n                \"--shimmer-from\": `${travel}%`,\n                \"--shimmer-to\": `${-travel}%`,\n              } as CSSProperties\n            }\n          >\n            {children}\n          </span>\n        </span>\n      )}\n    </span>\n  );\n}\n"
+    }
+  ]
+}

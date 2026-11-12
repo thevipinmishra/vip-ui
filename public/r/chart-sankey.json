@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-sankey",
+  "type": "registry:block",
+  "title": "Sankey",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartSankey /> from components/charts/chart-sankey.tsx. Preview: https://vip-ui.dev/charts#chart-sankey",
+  "meta": {
+    "entry": {
+      "component": "ChartSankey",
+      "file": "chart-sankey.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0", "d3-shape@^3.2.1"],
+  "devDependencies": ["@types/d3-shape@^3.2.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-sankey.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-sankey.tsx",
+      "content": "\"use client\";\n\nimport { defineChart, link, rect, text } from \"@tanstack/charts\";\nimport { d3Curve } from \"@tanstack/charts/d3/shape\";\nimport { decorative } from \"@tanstack/charts/mark/decorative\";\nimport { sankeyDiagram } from \"@tanstack/charts/network/sankey\";\nimport { curveBumpX } from \"d3-shape\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartLegend,\n  ChartLegendItem,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst nodes = [\n  { id: \"visits\", label: \"Visits\", lost: false },\n  { id: \"signups\", label: \"Signed up\", lost: false },\n  { id: \"bounced\", label: \"Left\", lost: true },\n  { id: \"trial\", label: \"Trial\", lost: false },\n  { id: \"free\", label: \"Free plan\", lost: false },\n  { id: \"paid\", label: \"Paid\", lost: false },\n  { id: \"canceled\", label: \"Canceled\", lost: true },\n];\n\nconst links = [\n  { source: \"visits\", target: \"signups\", users: 3200 },\n  { source: \"visits\", target: \"bounced\", users: 6800 },\n  { source: \"signups\", target: \"trial\", users: 1900 },\n  { source: \"signups\", target: \"free\", users: 1300 },\n  { source: \"trial\", target: \"paid\", users: 1100 },\n  { source: \"trial\", target: \"canceled\", users: 800 },\n];\n\nconst kept = \"var(--ts-chart-1)\";\nconst lost = \"var(--ts-chart-5)\";\nconst label = (id: string) => nodes.find((node) => node.id === id)?.label ?? id;\n\nconst definition = defineChart({\n  marks: [\n    decorative(\n      sankeyDiagram({\n        nodes,\n        links,\n        nodeKey: \"id\",\n        source: \"source\",\n        target: \"target\",\n        value: \"users\",\n        nodeWidth: 10,\n        nodePadding: 14,\n        marks: ({ nodes: layoutNodes, links: layoutLinks }) =>\n          [\n            link(layoutLinks, {\n              x1: \"x1\",\n              y1: \"y1\",\n              x2: \"x2\",\n              y2: \"y2\",\n              key: \"key\",\n              curve: d3Curve(curveBumpX),\n              stroke: (flow) => (flow.targetNode.data.lost ? lost : kept),\n              strokeOpacity: 0.3,\n              strokeWidth: (flow) => Math.max(1, flow.width),\n              lineCap: \"butt\",\n            }),\n            rect(layoutNodes, {\n              x1: \"x0\",\n              x2: \"x1\",\n              y1: \"y0\",\n              y2: \"y1\",\n              key: \"key\",\n              color: (node) => (node.data.lost ? \"Lost\" : \"Kept\"),\n              inset: 0,\n              radius: 2,\n            }),\n            text(layoutNodes, {\n              x: (node) => (node.layer === 0 ? node.x1 + 6 : node.x0 - 6),\n              y: \"y\",\n              text: (node) =>\n                `${node.data.label} ${node.value.toLocaleString(\"en-US\")}`,\n              anchor: (node) => (node.layer === 0 ? \"start\" : \"end\"),\n              key: \"key\",\n              fill: \"var(--foreground)\",\n              fontSize: 11,\n              fontWeight: 500,\n            }),\n          ] as const,\n      }),\n    ),\n  ],\n  scales: { x: null, y: null },\n  guides: false,\n  color: { domain: [\"Kept\", \"Lost\"], range: [kept, lost] },\n  keyboard: false,\n});\n\nexport function ChartSankey() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Signup flow</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={240}\n        initialWidth={520}\n        ariaLabel=\"Sankey diagram of 10,000 visits flowing to signups, trials and paid plans\"\n      />\n      <ChartLegend>\n        <ChartLegendItem color={kept}>Continued</ChartLegendItem>\n        <ChartLegendItem color={lost}>Left</ChartLegendItem>\n      </ChartLegend>\n      <ChartTable\n        caption=\"Users moving between steps\"\n        columns={[\"From\", \"To\", \"Users\"]}\n        rows={links.map((row) => [\n          label(row.source),\n          label(row.target),\n          row.users,\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

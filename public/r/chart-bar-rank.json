@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-bar-rank",
+  "type": "registry:block",
+  "title": "Ranked bar",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartBarRank /> from components/charts/chart-bar-rank.tsx. Preview: https://vip-ui.dev/charts#chart-bar-rank",
+  "meta": {
+    "entry": {
+      "component": "ChartBarRank",
+      "file": "chart-bar-rank.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-bar-rank.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-bar-rank.tsx",
+      "content": "\"use client\";\n\nimport { barX, defineChart, text } from \"@tanstack/charts\";\nimport { decorative } from \"@tanstack/charts/mark/decorative\";\nimport { scaleBand } from \"@tanstack/charts/scales/band\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport { rank } from \"@tanstack/charts/transform/rank\";\nimport {\n  Chart,\n  ChartAction,\n  ChartCaption,\n  ChartFrame,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst rows = [\n  { channel: \"Organic search\", conversion: 0.078, sessions: 128_400 },\n  { channel: \"Paid search\", conversion: 0.064, sessions: 94_200 },\n  { channel: \"Email\", conversion: 0.058, sessions: 38_100 },\n  { channel: \"Direct\", conversion: 0.051, sessions: 76_400 },\n  { channel: \"Referral\", conversion: 0.044, sessions: 21_600 },\n  { channel: \"Social\", conversion: 0.038, sessions: 58_900 },\n  { channel: \"Affiliate\", conversion: 0.031, sessions: 17_300 },\n  { channel: \"Display\", conversion: 0.024, sessions: 48_200 },\n  { channel: \"Video\", conversion: 0.019, sessions: 12_500 },\n];\n\nconst ranked = rank(rows, { value: \"conversion\", order: \"descending\" });\nconst top = [...ranked].sort((a, b) => a.rank - b.rank).slice(0, 6);\n\nconst formatPercent = new Intl.NumberFormat(\"en-US\", {\n  style: \"percent\",\n  maximumFractionDigits: 1,\n}).format;\nconst formatCount = new Intl.NumberFormat(\"en-US\").format;\n\nconst definition = defineChart({\n  motion: {\n    transition: { type: \"tween\", duration: 420, easing: \"ease-out\" },\n  },\n  marks: [\n    barX(top, {\n      x: \"conversion\",\n      y: \"channel\",\n      fill: \"var(--ts-chart-1)\",\n      inset: 3,\n      radius: { end: 4 },\n      key: \"channel\",\n      motion: (context) => ({\n        delay: context.phase === \"enter\" ? context.datumIndex * 30 : 0,\n      }),\n    }),\n    decorative(\n      text(top, {\n        x: \"conversion\",\n        y: \"channel\",\n        text: (row) => formatPercent(row.conversion),\n        dx: 6,\n        anchor: \"start\",\n        fill: \"var(--foreground)\",\n        fontSize: 12,\n        fontWeight: 600,\n      }),\n    ),\n  ],\n  scales: {\n    x: {\n      scale: scaleLinear().domain([0, 0.09]),\n      grid: true,\n      axis: {\n        label: \"Conversion rate\",\n        ticks: { count: 3, format: formatPercent },\n      },\n    },\n    y: {\n      scale: () =>\n        scaleBand<string>()\n          .domain(top.map((row) => row.channel))\n          .padding(0.12),\n    },\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: point.datum.channel,\n      rows: [\n        {\n          label: \"Conversion\",\n          value: formatPercent(point.datum.conversion),\n          color: point.color,\n        },\n        { label: \"Sessions\", value: formatCount(point.datum.sessions) },\n        { label: \"Rank\", value: `#${point.datum.rank}` },\n      ],\n    }),\n  },\n});\n\nexport function ChartBarRank() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Acquisition channels</ChartTitle>\n      </ChartCaption>\n      <ChartAction>\n        <span className=\"text-xs text-muted-foreground\">\n          Top 6 of 9 channels by conversion\n        </span>\n      </ChartAction>\n      <Chart\n        definition={definition}\n        height={240}\n        initialWidth={520}\n        ariaLabel={`Conversion rate for the top six acquisition channels, led by ${top[0].channel} at ${formatPercent(top[0].conversion)}`}\n      />\n      <ChartTable\n        caption=\"Acquisition channels ranked by conversion rate\"\n        columns={[\"Channel\", \"Conversion rate\", \"Sessions\", \"Rank\"]}\n        rows={top.map((row) => [\n          row.channel,\n          formatPercent(row.conversion),\n          formatCount(row.sessions),\n          row.rank,\n        ])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

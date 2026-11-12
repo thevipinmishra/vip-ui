@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-bar-multiple",
+  "type": "registry:block",
+  "title": "Grouped bar",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartBarMultiple /> from components/charts/chart-bar-multiple.tsx. Preview: https://vip-ui.dev/charts#chart-bar-multiple",
+  "meta": {
+    "entry": {
+      "component": "ChartBarMultiple",
+      "file": "chart-bar-multiple.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-bar-multiple.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-bar-multiple.tsx",
+      "content": "\"use client\";\n\nimport { barY, defineChart, group } from \"@tanstack/charts\";\nimport { scaleBand } from \"@tanstack/charts/scales/band\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartLegend,\n  ChartLegendItem,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst months = [\n  { month: \"Jan\", lastYear: 141200, thisYear: 182400 },\n  { month: \"Feb\", lastYear: 146900, thisYear: 189700 },\n  { month: \"Mar\", lastYear: 155800, thisYear: 201300 },\n  { month: \"Apr\", lastYear: 152300, thisYear: 198600 },\n  { month: \"May\", lastYear: 163100, thisYear: 212900 },\n  { month: \"Jun\", lastYear: 168400, thisYear: 219400 },\n  { month: \"Jul\", lastYear: 166000, thisYear: 216800 },\n  { month: \"Aug\", lastYear: 172900, thisYear: 228500 },\n  { month: \"Sep\", lastYear: 178100, thisYear: 236200 },\n];\n\nconst series = [\n  {\n    label: \"2025\",\n    color: \"color-mix(in oklab, var(--ts-chart-1) 40%, var(--card))\",\n  },\n  { label: \"2026\", color: \"var(--ts-chart-1)\" },\n];\n\nconst rows = months.flatMap(({ month, lastYear, thisYear }) => [\n  { month, year: \"2025\", revenue: lastYear },\n  { month, year: \"2026\", revenue: thisYear },\n]);\n\nconst formatCompact = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n  notation: \"compact\",\n}).format;\nconst formatMoney = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n  maximumFractionDigits: 0,\n}).format;\nconst formatChange = new Intl.NumberFormat(\"en-US\", {\n  style: \"percent\",\n  maximumFractionDigits: 1,\n  signDisplay: \"always\",\n}).format;\n\nconst definition = defineChart({\n  marks: [\n    barY(rows, {\n      x: \"month\",\n      y: \"revenue\",\n      z: \"year\",\n      color: \"year\",\n      layout: group({ padding: 0.1 }),\n      inset: 1,\n      radius: { end: 3 },\n    }),\n  ],\n  scales: {\n    x: { scale: () => scaleBand().padding(0.2) },\n    y: {\n      scale: scaleLinear().domain([0, 250000]),\n      grid: true,\n      axis: { ticks: { count: 5, format: formatCompact } },\n    },\n  },\n  color: {\n    domain: series.map((item) => item.label),\n    range: series.map((item) => item.color),\n  },\n  focus: \"group-x\",\n  tooltip: {\n    use: tooltip,\n    sort: \"color-domain\",\n    content: (points, { primaryPoint }) => {\n      const month = months.find((row) => row.month === points[0].datum.month);\n      return {\n        title: points[0].datum.month,\n        rows: [\n          ...points.map((point) => ({\n            label: point.groupLabel,\n            value: formatMoney(point.datum.revenue),\n            color: point.color,\n            active: point === primaryPoint,\n          })),\n          ...(month\n            ? [\n                {\n                  label: \"Change\",\n                  value: formatChange(\n                    (month.thisYear - month.lastYear) / month.lastYear,\n                  ),\n                },\n              ]\n            : []),\n        ],\n      };\n    },\n  },\n});\n\nexport function ChartBarMultiple() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Revenue, year over year</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={220}\n        initialWidth={520}\n        ariaLabel=\"Monthly revenue in dollars for 2025 and 2026, January to September\"\n      />\n      <ChartLegend>\n        {series.map((item) => (\n          <ChartLegendItem key={item.label} color={item.color}>\n            {item.label}\n          </ChartLegendItem>\n        ))}\n      </ChartLegend>\n      <ChartTable\n        caption=\"Monthly revenue in 2025 and 2026, in dollars\"\n        columns={[\"Month\", \"2025\", \"2026\"]}\n        rows={months.map((row) => [row.month, row.lastYear, row.thisYear])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

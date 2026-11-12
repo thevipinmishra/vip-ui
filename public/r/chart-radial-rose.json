@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-radial-rose",
+  "type": "registry:block",
+  "title": "Radial bars",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["charts"],
+  "docs": "Render <ChartRadialRose /> from components/charts/chart-radial-rose.tsx. Preview: https://vip-ui.dev/charts#chart-radial-rose",
+  "meta": {
+    "entry": {
+      "component": "ChartRadialRose",
+      "file": "chart-radial-rose.tsx"
+    }
+  },
+  "dependencies": ["@tanstack/charts@^1.5.0"],
+  "registryDependencies": ["https://vip-ui.dev/r/chart.json"],
+  "files": [
+    {
+      "path": "src/components/charts/examples/chart-radial-rose.tsx",
+      "type": "registry:file",
+      "target": "@components/charts/chart-radial-rose.tsx",
+      "content": "\"use client\";\n\nimport { defineChart } from \"@tanstack/charts\";\nimport { polar, radialBarRadius } from \"@tanstack/charts/polar\";\nimport { scaleBand } from \"@tanstack/charts/scales/band\";\nimport { scaleLinear } from \"@tanstack/charts/scales/linear\";\nimport { tooltip } from \"@tanstack/charts/tooltip\";\nimport {\n  Chart,\n  ChartCaption,\n  ChartFrame,\n  ChartLegend,\n  ChartLegendItem,\n  ChartTable,\n  ChartTitle,\n} from \"../vip-ui/chart\";\n\nconst rows = [\n  { region: \"North America\", revenue: 412000 },\n  { region: \"Europe\", revenue: 286000 },\n  { region: \"Asia Pacific\", revenue: 194000 },\n  { region: \"Latin America\", revenue: 78000 },\n  { region: \"Middle East and Africa\", revenue: 41000 },\n];\n\nconst series = rows.map((row, index) => ({\n  label: row.region,\n  color: `var(--ts-chart-${index + 1})`,\n}));\n\nconst formatMoney = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n  maximumFractionDigits: 0,\n}).format;\n\nconst definition = defineChart({\n  marks: [\n    polar({\n      radiusRatio: 0.94,\n      scales: {\n        angle: { scale: () => scaleBand<string>().padding(0.14) },\n        radius: {\n          scale: scaleLinear().domain([0, 450000]),\n          range: [({ radius }) => radius * 0.25, ({ radius }) => radius],\n        },\n      },\n      marks: [\n        radialBarRadius(rows, {\n          angle: \"region\",\n          radius1: () => 0,\n          radius2: \"revenue\",\n          color: \"region\",\n          key: \"region\",\n          cornerRadius: 5,\n        }),\n      ],\n    }),\n  ],\n  scales: { x: null, y: null },\n  color: {\n    domain: series.map((item) => item.label),\n    range: series.map((item) => item.color),\n  },\n  tooltip: {\n    use: tooltip,\n    content: ([point]) => ({\n      title: point.datum.region,\n      rows: [\n        {\n          label: \"Revenue\",\n          value: formatMoney(point.datum.revenue),\n          color: point.color,\n        },\n      ],\n    }),\n  },\n});\n\nexport function ChartRadialRose() {\n  return (\n    <ChartFrame>\n      <ChartCaption>\n        <ChartTitle>Revenue by region</ChartTitle>\n      </ChartCaption>\n      <Chart\n        definition={definition}\n        height={240}\n        initialWidth={520}\n        ariaLabel=\"Revenue by region in the third quarter of 2026: North America, Europe, Asia Pacific, Latin America, and Middle East and Africa\"\n      />\n      <ChartLegend>\n        {series.map((item) => (\n          <ChartLegendItem key={item.label} color={item.color}>\n            {item.label}\n          </ChartLegendItem>\n        ))}\n      </ChartLegend>\n      <ChartTable\n        caption=\"Revenue by region, third quarter of 2026, in dollars\"\n        columns={[\"Region\", \"Revenue\"]}\n        rows={rows.map((row) => [row.region, row.revenue])}\n      />\n    </ChartFrame>\n  );\n}\n"
+    }
+  ]
+}

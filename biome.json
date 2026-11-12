@@ -36,6 +36,20 @@
       "react": "recommended"
     }
   },
+  "overrides": [
+    {
+      "includes": ["public/r/setup.css"],
+      "linter": {
+        "rules": {
+          "complexity": { "noImportantStyles": "off" }
+        }
+      }
+    },
+    {
+      "includes": ["skills/**/*.md"],
+      "formatter": { "enabled": false }
+    }
+  ],
   "assist": {
     "actions": {
       "source": {
