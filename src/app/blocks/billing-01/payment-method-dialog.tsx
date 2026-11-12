@@ -52,7 +52,7 @@ function validateExpiry(value: string) {
   const month = Number(match[1]);
   const year = 2000 + Number(match[2]);
   if (month < 1 || month > 12) return "Enter a month from 01 to 12.";
-  if (year < 2026 || (year === 2026 && month < 10))
+  if (year < 2026 || (year === 2026 && month < 11))
     return "This card has expired.";
   return null;
 }
@@ -98,7 +98,7 @@ export function PaymentMethodDialog({
                   name="name"
                   label="Name on card"
                   autoComplete="cc-name"
-                  defaultValue="Maya Chen"
+                  defaultValue="Nadia Okafor"
                   isRequired
                 />
                 <TextField

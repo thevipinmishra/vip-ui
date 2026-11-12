@@ -6,7 +6,7 @@
   "description": "Shows the current step and the steps already complete.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["feedback"],
-  "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.10.1"],
+  "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.12.0"],
   "registryDependencies": [
     "https://vip-ui.dev/r/motion.json",
     "https://vip-ui.dev/r/utils.json"

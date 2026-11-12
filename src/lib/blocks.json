@@ -131,7 +131,7 @@
       "title": "Two-step code",
       "description": "Two-step code check with a resend timer and recovery code.",
       "category": "authentication",
-      "height": 589
+      "height": 720
     },
     {
       "name": "reset-01",
@@ -157,51 +157,51 @@
     {
       "name": "settings-01",
       "title": "Profile settings",
-      "description": "A profile form with a save bar for unsaved changes.",
+      "description": "A profile form with a username check and a save bar.",
       "category": "settings",
-      "height": 1088
+      "height": 1079
     },
     {
       "name": "settings-02",
       "title": "Notification settings",
-      "description": "Notification settings for each event and channel.",
+      "description": "Notification channels for each event, with quiet hours and autosave.",
       "category": "settings",
-      "height": 900
+      "height": 1232
     },
     {
       "name": "billing-01",
       "title": "Billing",
-      "description": "A plan picker with usage meters and a payment method.",
+      "description": "A plan picker with prorated cost, usage meters, and invoices.",
       "category": "settings",
-      "height": 890
+      "height": 966
     },
     {
       "name": "security-01",
       "title": "Security settings",
-      "description": "Password, two-step sign-in, and session settings.",
+      "description": "Password, two-step sign-in, sessions, and account deletion.",
       "category": "settings",
-      "height": 1210
+      "height": 1396
     },
     {
       "name": "appearance-01",
       "title": "Appearance settings",
       "description": "Theme, accent color, font, and motion settings.",
       "category": "settings",
-      "height": 1250
+      "height": 1363
     },
     {
       "name": "api-keys-01",
       "title": "API keys",
       "description": "API key list with scopes, expiry dates, and revoke actions.",
       "category": "settings",
-      "height": 760
+      "height": 729
     },
     {
       "name": "integrations-01",
       "title": "Connected apps",
-      "description": "App directory with categories, connections, and access review.",
+      "description": "App directory with connect, sync status, and access review.",
       "category": "settings",
-      "height": 1105
+      "height": 1116
     },
     {
       "name": "landing-01",

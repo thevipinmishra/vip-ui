@@ -6,7 +6,7 @@
   "description": "Shows an inline message about a status or event.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["feedback"],
-  "dependencies": ["@phosphor-icons/react@^2.1.10", "tailwind-variants@^4.0.1"],
+  "dependencies": ["@phosphor-icons/react@^2.1.10", "tailwind-variants@^4.0.2"],
   "registryDependencies": [
     "https://vip-ui.dev/r/button.json",
     "https://vip-ui.dev/r/utils.json"

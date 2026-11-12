@@ -10,7 +10,7 @@
       "description": "Merges class names with tailwind-variants.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["shared"],
-      "dependencies": ["tailwind-variants@^4.0.1"],
+      "dependencies": ["tailwind-variants@^4.0.2"],
       "files": [
         {
           "path": "registry/generated/src/components/vip-ui/utils.ts",
@@ -126,7 +126,7 @@
       "categories": ["feedback"],
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "tailwind-variants@^4.0.1"
+        "tailwind-variants@^4.0.2"
       ],
       "registryDependencies": [
         "https://vip-ui.dev/r/button.json",
@@ -167,7 +167,7 @@
       "description": "Counts to a new number or slides the digits that change.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["motion-effects"],
-      "dependencies": ["motion@^14.10.1"],
+      "dependencies": ["motion@^14.12.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/utils.json"
@@ -187,7 +187,7 @@
       "description": "Shows the name, size, preview, and upload state of a file.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["forms"],
-      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.10.1"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.12.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/button.json",
         "https://vip-ui.dev/r/motion.json",
@@ -247,7 +247,7 @@
       "categories": ["display-layout"],
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "tailwind-variants@^4.0.1"
+        "tailwind-variants@^4.0.2"
       ],
       "registryDependencies": ["https://vip-ui.dev/r/utils.json"],
       "files": [
@@ -265,7 +265,7 @@
       "description": "Labels an item with a short status or count.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["feedback"],
-      "dependencies": ["tailwind-variants@^4.0.1"],
+      "dependencies": ["tailwind-variants@^4.0.2"],
       "registryDependencies": ["https://vip-ui.dev/r/utils.json"],
       "cssVars": {
         "light": {
@@ -412,7 +412,7 @@
       "description": "Sets the variants and sizes of buttons and button links.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["shared"],
-      "dependencies": ["tailwind-variants@^4.0.1"],
+      "dependencies": ["tailwind-variants@^4.0.2"],
       "cssVars": {
         "theme": {
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
@@ -607,7 +607,7 @@
       "categories": ["forms"],
       "dependencies": [
         "react-aria-components@^1.22.1",
-        "tailwind-variants@^4.0.1",
+        "tailwind-variants@^4.0.2",
         "tailwindcss-react-aria-components@^2.2.0"
       ],
       "registryDependencies": [
@@ -948,7 +948,7 @@
       "categories": ["actions"],
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "motion@^14.10.1",
+        "motion@^14.12.0",
         "react-aria-components@^1.22.1",
         "tailwindcss-react-aria-components@^2.2.0"
       ],
@@ -1156,7 +1156,7 @@
         "@phosphor-icons/react@^2.1.10",
         "react-aria@^3.53.1",
         "react-aria-components@^1.22.1",
-        "tailwind-variants@^4.0.1",
+        "tailwind-variants@^4.0.2",
         "tailwindcss-react-aria-components@^2.2.0"
       ],
       "registryDependencies": [
@@ -1440,7 +1440,7 @@
       "description": "Draws a highlight, underline, or circle on a phrase when it comes into view.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["motion-effects"],
-      "dependencies": ["motion@^14.10.1"],
+      "dependencies": ["motion@^14.12.0"],
       "registryDependencies": ["https://vip-ui.dev/r/utils.json"],
       "cssVars": {
         "theme": {
@@ -1462,7 +1462,7 @@
       "description": "Swaps one icon for another with a short scale and blur.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["motion-effects"],
-      "dependencies": ["motion@^14.10.1"],
+      "dependencies": ["motion@^14.12.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/utils.json"
@@ -1608,7 +1608,7 @@
       "description": "Crossfades new content and animates the container to its new size.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["motion-effects"],
-      "dependencies": ["motion@^14.10.1"],
+      "dependencies": ["motion@^14.12.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/utils.json"
@@ -1695,7 +1695,7 @@
       "description": "Loops a row of content with a built-in pause control.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["motion-effects"],
-      "dependencies": ["motion@^14.10.1"],
+      "dependencies": ["motion@^14.12.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/button.json",
         "https://vip-ui.dev/r/utils.json"
@@ -1881,7 +1881,7 @@
       "categories": ["navigation"],
       "dependencies": [
         "react-aria-components@^1.22.1",
-        "tailwind-variants@^4.0.1",
+        "tailwind-variants@^4.0.2",
         "tailwindcss-react-aria-components@^2.2.0"
       ],
       "registryDependencies": [
@@ -1985,7 +1985,7 @@
       "description": "Animates list items when you add, remove, or move them.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["motion-effects"],
-      "dependencies": ["motion@^14.10.1"],
+      "dependencies": ["motion@^14.12.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/utils.json"
@@ -2005,7 +2005,7 @@
       "description": "Animates content in when it appears and out before it unmounts.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["motion-effects"],
-      "dependencies": ["motion@^14.10.1"],
+      "dependencies": ["motion@^14.12.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/utils.json"
@@ -2097,7 +2097,7 @@
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["feedback"],
       "dependencies": [
-        "motion@^14.10.1",
+        "motion@^14.12.0",
         "react-aria@^3.53.1",
         "react-aria-components@^1.22.1",
         "tailwindcss-react-aria-components@^2.2.0"
@@ -2183,7 +2183,7 @@
       "categories": ["forms"],
       "dependencies": [
         "react-aria-components@^1.22.1",
-        "tailwind-variants@^4.0.1",
+        "tailwind-variants@^4.0.2",
         "tailwindcss-react-aria-components@^2.2.0"
       ],
       "registryDependencies": [
@@ -2221,7 +2221,7 @@
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["date-color"],
       "dependencies": [
-        "motion@^14.10.1",
+        "motion@^14.12.0",
         "react-aria-components@^1.22.1",
         "tailwindcss-react-aria-components@^2.2.0"
       ],
@@ -2257,7 +2257,7 @@
       "description": "Sets a star rating with radio controls.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["forms"],
-      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.10.1"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.12.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/radio-group.json",
@@ -2447,7 +2447,7 @@
       "categories": ["display-layout"],
       "dependencies": [
         "react-aria-components@^1.22.1",
-        "tailwind-variants@^4.0.1",
+        "tailwind-variants@^4.0.2",
         "tailwindcss-react-aria-components@^2.2.0"
       ],
       "css": {
@@ -2470,10 +2470,10 @@
       "categories": ["overlays"],
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "motion@^14.10.1",
+        "motion@^14.12.0",
         "react-aria@^3.53.1",
         "react-aria-components@^1.22.1",
-        "tailwind-variants@^4.0.1",
+        "tailwind-variants@^4.0.2",
         "tailwindcss-react-aria-components@^2.2.0"
       ],
       "registryDependencies": [
@@ -2668,7 +2668,7 @@
       "description": "Shows a loading indicator for a task with no known end time.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["feedback"],
-      "dependencies": ["tailwind-variants@^4.0.1"],
+      "dependencies": ["tailwind-variants@^4.0.2"],
       "cssVars": {
         "theme": {
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
@@ -2714,7 +2714,7 @@
       "description": "Reveals a group of items one after another when it enters the viewport.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["motion-effects"],
-      "dependencies": ["motion@^14.10.1"],
+      "dependencies": ["motion@^14.12.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/utils.json"
@@ -2765,7 +2765,7 @@
       "description": "Shows the current step and the steps already complete.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["feedback"],
-      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.10.1"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.12.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/utils.json"
@@ -2874,7 +2874,7 @@
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["navigation"],
       "dependencies": [
-        "motion@^14.10.1",
+        "motion@^14.12.0",
         "react-aria-components@^1.22.1",
         "tailwindcss-react-aria-components@^2.2.0"
       ],
@@ -2920,7 +2920,7 @@
       "categories": ["collections"],
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "motion@^14.10.1",
+        "motion@^14.12.0",
         "react-aria-components@^1.22.1",
         "tailwindcss-react-aria-components@^2.2.0"
       ],
@@ -3014,7 +3014,7 @@
       "description": "Cycles through a list of words on a timer.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["motion-effects"],
-      "dependencies": ["motion@^14.10.1"],
+      "dependencies": ["motion@^14.12.0"],
       "registryDependencies": ["https://vip-ui.dev/r/text-swap.json"],
       "files": [
         {
@@ -3031,7 +3031,7 @@
       "description": "Reveals text word by word or character by character.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["motion-effects"],
-      "dependencies": ["motion@^14.10.1"],
+      "dependencies": ["motion@^14.12.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/utils.json"
@@ -3051,7 +3051,7 @@
       "description": "Scrambles characters and resolves them into new text when its value changes.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["motion-effects"],
-      "dependencies": ["motion@^14.10.1"],
+      "dependencies": ["motion@^14.12.0"],
       "registryDependencies": ["https://vip-ui.dev/r/utils.json"],
       "files": [
         {
@@ -3112,7 +3112,7 @@
       "description": "Swaps text with a short fade when its value changes.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["motion-effects"],
-      "dependencies": ["motion@^14.10.1"],
+      "dependencies": ["motion@^14.12.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/utils.json"
@@ -3181,7 +3181,7 @@
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
         "react-aria-components@^1.22.1",
-        "tailwind-variants@^4.0.1",
+        "tailwind-variants@^4.0.2",
         "tailwindcss-react-aria-components@^2.2.0"
       ],
       "registryDependencies": [
@@ -3223,7 +3223,7 @@
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["actions"],
       "dependencies": [
-        "motion@^14.10.1",
+        "motion@^14.12.0",
         "react-aria-components@^1.22.1",
         "tailwindcss-react-aria-components@^2.2.0"
       ],
@@ -3260,9 +3260,9 @@
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["actions"],
       "dependencies": [
-        "motion@^14.10.1",
+        "motion@^14.12.0",
         "react-aria-components@^1.22.1",
-        "tailwind-variants@^4.0.1",
+        "tailwind-variants@^4.0.2",
         "tailwindcss-react-aria-components@^2.2.0"
       ],
       "registryDependencies": [
@@ -3342,7 +3342,7 @@
       "categories": ["ai"],
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "motion@^14.10.1",
+        "motion@^14.12.0",
         "react-aria-components@^1.22.1",
         "tailwindcss-react-aria-components@^2.2.0"
       ],
@@ -3457,7 +3457,7 @@
       "categories": ["collections"],
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "motion@^14.10.1",
+        "motion@^14.12.0",
         "react-aria-components@^1.22.1",
         "tailwindcss-react-aria-components@^2.2.0"
       ],
@@ -4447,12 +4447,16 @@
       "dependencies": ["@phosphor-icons/react@^2.1.10"],
       "registryDependencies": [
         "https://vip-ui.dev/r/alert.json",
+        "https://vip-ui.dev/r/avatar.json",
         "https://vip-ui.dev/r/button.json",
         "https://vip-ui.dev/r/card.json",
         "https://vip-ui.dev/r/checkbox.json",
         "https://vip-ui.dev/r/form.json",
+        "https://vip-ui.dev/r/icon-swap.json",
+        "https://vip-ui.dev/r/layout-morph.json",
         "https://vip-ui.dev/r/link.json",
         "https://vip-ui.dev/r/password-field.json",
+        "https://vip-ui.dev/r/presence.json",
         "https://vip-ui.dev/r/separator.json",
         "https://vip-ui.dev/r/spinner.json",
         "https://vip-ui.dev/r/text-field.json"
@@ -4486,12 +4490,17 @@
       },
       "dependencies": ["@phosphor-icons/react@^2.1.10"],
       "registryDependencies": [
+        "https://vip-ui.dev/r/avatar.json",
         "https://vip-ui.dev/r/button.json",
         "https://vip-ui.dev/r/form.json",
+        "https://vip-ui.dev/r/icon-swap.json",
+        "https://vip-ui.dev/r/layout-morph.json",
         "https://vip-ui.dev/r/link.json",
+        "https://vip-ui.dev/r/presence.json",
         "https://vip-ui.dev/r/separator.json",
         "https://vip-ui.dev/r/spinner.json",
-        "https://vip-ui.dev/r/text-field.json"
+        "https://vip-ui.dev/r/text-field.json",
+        "https://vip-ui.dev/r/text-swap.json"
       ],
       "cssVars": {
         "theme": {
@@ -4536,20 +4545,17 @@
         "https://vip-ui.dev/r/card.json",
         "https://vip-ui.dev/r/checkbox.json",
         "https://vip-ui.dev/r/form.json",
+        "https://vip-ui.dev/r/layout-morph.json",
         "https://vip-ui.dev/r/link.json",
+        "https://vip-ui.dev/r/meter.json",
         "https://vip-ui.dev/r/password-field.json",
+        "https://vip-ui.dev/r/presence.json",
         "https://vip-ui.dev/r/select.json",
         "https://vip-ui.dev/r/spinner.json",
-        "https://vip-ui.dev/r/text-field.json"
+        "https://vip-ui.dev/r/text-field.json",
+        "https://vip-ui.dev/r/text-swap.json",
+        "https://vip-ui.dev/r/toast.json"
       ],
-      "cssVars": {
-        "light": {
-          "success": "oklch(0.43 0.12 155)"
-        },
-        "dark": {
-          "success": "oklch(0.74 0.13 155)"
-        }
-      },
       "files": [
         {
           "path": "registry/generated/src/components/blocks/signup-01/signup-form.tsx",
@@ -4582,30 +4588,37 @@
         "https://vip-ui.dev/r/alert.json",
         "https://vip-ui.dev/r/avatar.json",
         "https://vip-ui.dev/r/button.json",
+        "https://vip-ui.dev/r/checkbox.json",
         "https://vip-ui.dev/r/form.json",
+        "https://vip-ui.dev/r/layout-morph.json",
         "https://vip-ui.dev/r/link.json",
-        "https://vip-ui.dev/r/separator.json",
         "https://vip-ui.dev/r/spinner.json",
         "https://vip-ui.dev/r/text-field.json",
         "https://vip-ui.dev/r/text-swap.json",
-        "https://vip-ui.dev/r/toast.json"
+        "https://vip-ui.dev/r/toast.json",
+        "https://vip-ui.dev/r/utils.json"
       ],
       "cssVars": {
         "theme": {
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)",
           "success": "oklch(0.43 0.12 155)",
-          "success-subtle": "oklch(0.955 0.035 155)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+          "success-subtle": "oklch(0.955 0.035 155)"
         },
         "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)",
           "success": "oklch(0.74 0.13 155)",
-          "success-subtle": "oklch(0.24 0.045 155)",
-          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+          "success-subtle": "oklch(0.24 0.045 155)"
         }
       },
       "files": [
+        {
+          "path": "registry/generated/src/components/blocks/verify-01/code-input.tsx",
+          "type": "registry:file",
+          "target": "@components/blocks/verify-01/code-input.tsx"
+        },
         {
           "path": "registry/generated/src/components/blocks/verify-01/verify-screen.tsx",
           "type": "registry:file",
@@ -4629,13 +4642,14 @@
       },
       "dependencies": ["@phosphor-icons/react@^2.1.10"],
       "registryDependencies": [
-        "https://vip-ui.dev/r/alert.json",
         "https://vip-ui.dev/r/button.json",
         "https://vip-ui.dev/r/form.json",
+        "https://vip-ui.dev/r/layout-morph.json",
         "https://vip-ui.dev/r/link.json",
-        "https://vip-ui.dev/r/presence.json",
         "https://vip-ui.dev/r/spinner.json",
         "https://vip-ui.dev/r/text-field.json",
+        "https://vip-ui.dev/r/text-swap.json",
+        "https://vip-ui.dev/r/timeline.json",
         "https://vip-ui.dev/r/toast.json"
       ],
       "cssVars": {
@@ -4785,7 +4799,7 @@
       "name": "settings-01",
       "type": "registry:block",
       "title": "Settings 01",
-      "description": "A profile form with a save bar for unsaved changes.",
+      "description": "A profile form with a username check and a save bar.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["settings"],
       "docs": "Render <SettingsPage /> from components/blocks/settings-01/settings-page.tsx. Preview: https://vip-ui.dev/blocks/settings-01",
@@ -4795,27 +4809,41 @@
           "file": "settings-page.tsx"
         }
       },
-      "dependencies": ["motion@^14.10.1"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10"],
       "registryDependencies": [
         "https://vip-ui.dev/r/avatar.json",
+        "https://vip-ui.dev/r/badge.json",
         "https://vip-ui.dev/r/button.json",
         "https://vip-ui.dev/r/card.json",
         "https://vip-ui.dev/r/combo-box.json",
         "https://vip-ui.dev/r/file-trigger.json",
         "https://vip-ui.dev/r/form.json",
+        "https://vip-ui.dev/r/icon-swap.json",
         "https://vip-ui.dev/r/input-group.json",
+        "https://vip-ui.dev/r/presence.json",
+        "https://vip-ui.dev/r/scroll-fade.json",
+        "https://vip-ui.dev/r/select.json",
+        "https://vip-ui.dev/r/spinner.json",
         "https://vip-ui.dev/r/text-area.json",
-        "https://vip-ui.dev/r/text-field.json"
+        "https://vip-ui.dev/r/text-field.json",
+        "https://vip-ui.dev/r/text-swap.json",
+        "https://vip-ui.dev/r/toggle-button.json",
+        "https://vip-ui.dev/r/toggle-button-group.json",
+        "https://vip-ui.dev/r/utils.json"
       ],
       "cssVars": {
         "theme": {
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)"
+          "success": "oklch(0.43 0.12 155)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.1), 0 8px 18px -9px oklch(0 0 0 / 0.11)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
         "dark": {
-          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)"
+          "success": "oklch(0.74 0.13 155)",
+          "shadow-float": "0 2px 4px -2px oklch(0 0 0 / 0.3), 0 8px 18px -9px oklch(0 0 0 / 0.34)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
         }
       },
       "files": [
@@ -4828,6 +4856,16 @@
           "path": "registry/generated/src/components/blocks/settings-01/settings-page.tsx",
           "type": "registry:file",
           "target": "@components/blocks/settings-01/settings-page.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/blocks/settings-01/settings-shell.tsx",
+          "type": "registry:file",
+          "target": "@components/blocks/settings-01/settings-shell.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/blocks/settings-01/timezones.ts",
+          "type": "registry:file",
+          "target": "@components/blocks/settings-01/timezones.ts"
         }
       ]
     },
@@ -4835,7 +4873,7 @@
       "name": "settings-02",
       "type": "registry:block",
       "title": "Settings 02",
-      "description": "Notification settings for each event and channel.",
+      "description": "Notification channels for each event, with quiet hours and autosave.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["settings"],
       "docs": "Render <NotificationsPage /> from components/blocks/settings-02/notifications-page.tsx. Preview: https://vip-ui.dev/blocks/settings-02",
@@ -4845,14 +4883,38 @@
           "file": "notifications-page.tsx"
         }
       },
-      "dependencies": [],
+      "dependencies": [
+        "@internationalized/date@^3.12.4",
+        "@phosphor-icons/react@^2.1.10"
+      ],
       "registryDependencies": [
-        "https://vip-ui.dev/r/button.json",
+        "https://vip-ui.dev/r/avatar.json",
+        "https://vip-ui.dev/r/badge.json",
         "https://vip-ui.dev/r/card.json",
         "https://vip-ui.dev/r/checkbox.json",
+        "https://vip-ui.dev/r/icon-swap.json",
+        "https://vip-ui.dev/r/presence.json",
         "https://vip-ui.dev/r/radio-group.json",
-        "https://vip-ui.dev/r/switch.json"
+        "https://vip-ui.dev/r/scroll-fade.json",
+        "https://vip-ui.dev/r/spinner.json",
+        "https://vip-ui.dev/r/switch.json",
+        "https://vip-ui.dev/r/text-swap.json",
+        "https://vip-ui.dev/r/time-field.json",
+        "https://vip-ui.dev/r/utils.json"
       ],
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        },
+        "light": {
+          "success": "oklch(0.43 0.12 155)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "success": "oklch(0.74 0.13 155)",
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/blocks/settings-02/notification-settings.tsx",
@@ -4863,6 +4925,11 @@
           "path": "registry/generated/src/components/blocks/settings-02/notifications-page.tsx",
           "type": "registry:file",
           "target": "@components/blocks/settings-02/notifications-page.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/blocks/settings-02/settings-shell.tsx",
+          "type": "registry:file",
+          "target": "@components/blocks/settings-02/settings-shell.tsx"
         }
       ]
     },
@@ -4870,7 +4937,7 @@
       "name": "billing-01",
       "type": "registry:block",
       "title": "Billing 01",
-      "description": "A plan picker with usage meters and a payment method.",
+      "description": "A plan picker with prorated cost, usage meters, and invoices.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["settings"],
       "docs": "Render <BillingPage /> from components/blocks/billing-01/billing-page.tsx. Preview: https://vip-ui.dev/blocks/billing-01",
@@ -4883,17 +4950,33 @@
       "dependencies": ["@phosphor-icons/react@^2.1.10"],
       "registryDependencies": [
         "https://vip-ui.dev/r/alert.json",
+        "https://vip-ui.dev/r/animated-number.json",
+        "https://vip-ui.dev/r/avatar.json",
         "https://vip-ui.dev/r/badge.json",
         "https://vip-ui.dev/r/button.json",
         "https://vip-ui.dev/r/card.json",
         "https://vip-ui.dev/r/dialog.json",
         "https://vip-ui.dev/r/form.json",
         "https://vip-ui.dev/r/meter.json",
+        "https://vip-ui.dev/r/presence.json",
         "https://vip-ui.dev/r/radio-group.json",
+        "https://vip-ui.dev/r/scroll-fade.json",
         "https://vip-ui.dev/r/table.json",
         "https://vip-ui.dev/r/text-field.json",
-        "https://vip-ui.dev/r/toast.json"
+        "https://vip-ui.dev/r/toast.json",
+        "https://vip-ui.dev/r/utils.json"
       ],
+      "cssVars": {
+        "theme": {
+          "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
+        },
+        "light": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
+        },
+        "dark": {
+          "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
+        }
+      },
       "files": [
         {
           "path": "registry/generated/src/components/blocks/billing-01/billing-page.tsx",
@@ -4914,6 +4997,11 @@
           "path": "registry/generated/src/components/blocks/billing-01/payment-method-dialog.tsx",
           "type": "registry:file",
           "target": "@components/blocks/billing-01/payment-method-dialog.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/blocks/billing-01/settings-shell.tsx",
+          "type": "registry:file",
+          "target": "@components/blocks/billing-01/settings-shell.tsx"
         }
       ]
     },
@@ -4921,7 +5009,7 @@
       "name": "security-01",
       "type": "registry:block",
       "title": "Security 01",
-      "description": "Password, two-step sign-in, and session settings.",
+      "description": "Password, two-step sign-in, sessions, and account deletion.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["settings"],
       "docs": "Render <SecuritySettings /> from components/blocks/security-01/security-settings.tsx. Preview: https://vip-ui.dev/blocks/security-01",
@@ -4934,20 +5022,27 @@
       "dependencies": ["@phosphor-icons/react@^2.1.10"],
       "registryDependencies": [
         "https://vip-ui.dev/r/alert.json",
+        "https://vip-ui.dev/r/animated-number.json",
         "https://vip-ui.dev/r/avatar.json",
         "https://vip-ui.dev/r/badge.json",
         "https://vip-ui.dev/r/button.json",
         "https://vip-ui.dev/r/card.json",
+        "https://vip-ui.dev/r/checkbox.json",
         "https://vip-ui.dev/r/copy-button.json",
         "https://vip-ui.dev/r/dialog.json",
         "https://vip-ui.dev/r/form.json",
         "https://vip-ui.dev/r/kbd-code.json",
+        "https://vip-ui.dev/r/layout-morph.json",
         "https://vip-ui.dev/r/menu.json",
+        "https://vip-ui.dev/r/meter.json",
         "https://vip-ui.dev/r/password-field.json",
+        "https://vip-ui.dev/r/presence.json",
+        "https://vip-ui.dev/r/scroll-fade.json",
         "https://vip-ui.dev/r/spinner.json",
         "https://vip-ui.dev/r/switch.json",
         "https://vip-ui.dev/r/table.json",
         "https://vip-ui.dev/r/text-field.json",
+        "https://vip-ui.dev/r/text-swap.json",
         "https://vip-ui.dev/r/toast.json",
         "https://vip-ui.dev/r/utils.json"
       ],
@@ -4956,22 +5051,39 @@
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
         },
         "light": {
+          "success": "oklch(0.43 0.12 155)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
         "dark": {
+          "success": "oklch(0.74 0.13 155)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
         }
       },
       "files": [
+        {
+          "path": "registry/generated/src/components/blocks/security-01/password-card.tsx",
+          "type": "registry:file",
+          "target": "@components/blocks/security-01/password-card.tsx"
+        },
         {
           "path": "registry/generated/src/components/blocks/security-01/security-settings.tsx",
           "type": "registry:file",
           "target": "@components/blocks/security-01/security-settings.tsx"
         },
         {
+          "path": "registry/generated/src/components/blocks/security-01/sessions-card.tsx",
+          "type": "registry:file",
+          "target": "@components/blocks/security-01/sessions-card.tsx"
+        },
+        {
           "path": "registry/generated/src/components/blocks/security-01/settings-shell.tsx",
           "type": "registry:file",
           "target": "@components/blocks/security-01/settings-shell.tsx"
+        },
+        {
+          "path": "registry/generated/src/components/blocks/security-01/two-step-card.tsx",
+          "type": "registry:file",
+          "target": "@components/blocks/security-01/two-step-card.tsx"
         }
       ]
     },
@@ -5003,12 +5115,11 @@
         "https://vip-ui.dev/r/color-picker.json",
         "https://vip-ui.dev/r/color-swatch-picker.json",
         "https://vip-ui.dev/r/radio-group.json",
+        "https://vip-ui.dev/r/scroll-fade.json",
         "https://vip-ui.dev/r/size.json",
         "https://vip-ui.dev/r/slider.json",
         "https://vip-ui.dev/r/switch.json",
         "https://vip-ui.dev/r/toast.json",
-        "https://vip-ui.dev/r/toggle-button.json",
-        "https://vip-ui.dev/r/toggle-button-group.json",
         "https://vip-ui.dev/r/utils.json"
       ],
       "cssVars": {
@@ -5078,6 +5189,7 @@
         "https://vip-ui.dev/r/form.json",
         "https://vip-ui.dev/r/kbd-code.json",
         "https://vip-ui.dev/r/menu.json",
+        "https://vip-ui.dev/r/scroll-fade.json",
         "https://vip-ui.dev/r/search-field.json",
         "https://vip-ui.dev/r/select.json",
         "https://vip-ui.dev/r/spinner.json",
@@ -5114,7 +5226,7 @@
       "name": "integrations-01",
       "type": "registry:block",
       "title": "Integrations 01",
-      "description": "App directory with categories, connections, and access review.",
+      "description": "App directory with connect, sync status, and access review.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["settings"],
       "docs": "Render <IntegrationsSettings /> from components/blocks/integrations-01/integrations-settings.tsx. Preview: https://vip-ui.dev/blocks/integrations-01",
@@ -5133,9 +5245,10 @@
         "https://vip-ui.dev/r/description-list.json",
         "https://vip-ui.dev/r/empty-state.json",
         "https://vip-ui.dev/r/grid-list.json",
+        "https://vip-ui.dev/r/scroll-fade.json",
         "https://vip-ui.dev/r/search-field.json",
         "https://vip-ui.dev/r/sheet.json",
-        "https://vip-ui.dev/r/switch.json",
+        "https://vip-ui.dev/r/spinner.json",
         "https://vip-ui.dev/r/tabs.json",
         "https://vip-ui.dev/r/toast.json",
         "https://vip-ui.dev/r/utils.json"
@@ -5146,10 +5259,12 @@
         },
         "light": {
           "success": "oklch(0.43 0.12 155)",
+          "warning": "oklch(0.54 0.13 75)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"
         },
         "dark": {
           "success": "oklch(0.74 0.13 155)",
+          "warning": "oklch(0.78 0.11 75)",
           "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.24), 0 3px 8px -4px oklch(0 0 0 / 0.25)"
         }
       },

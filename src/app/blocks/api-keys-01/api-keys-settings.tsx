@@ -500,7 +500,7 @@ export function ApiKeysSettings() {
                                   ? "accent"
                                   : "neutral"
                               }
-                              className="min-h-5 py-0 text-[11px] capitalize"
+                              className="capitalize"
                             >
                               {key.environment}
                             </Badge>
@@ -514,11 +514,7 @@ export function ApiKeysSettings() {
                     <Cell>
                       <div className="flex max-w-full flex-wrap gap-1">
                         {key.scopes.map((scope) => (
-                          <Badge
-                            key={scope}
-                            variant="outline"
-                            className="min-h-5 px-2 py-0 text-[11px] shadow-none"
-                          >
+                          <Badge key={scope} variant="outline">
                             {scopeLabel(scope)}
                           </Badge>
                         ))}
@@ -533,7 +529,7 @@ export function ApiKeysSettings() {
                     <Cell>
                       <Badge
                         variant={statusBadge[key.status]}
-                        className="min-h-5 py-0 capitalize"
+                        className="capitalize"
                         dot={key.status === "active"}
                       >
                         {key.status}
@@ -544,14 +540,10 @@ export function ApiKeysSettings() {
                         <Button
                           variant="ghost"
                           iconOnly
-                          size="xs"
+                          size="sm"
                           aria-label={`Actions for ${key.name}`}
                         >
-                          <DotsThreeIcon
-                            size={16}
-                            weight="bold"
-                            aria-hidden="true"
-                          />
+                          <DotsThreeIcon weight="bold" aria-hidden="true" />
                         </Button>
                         <MenuPopover placement="bottom end">
                           <MenuContent aria-label={`Actions for ${key.name}`}>
@@ -637,11 +629,7 @@ export function ApiKeysSettings() {
               </div>
               <div className="flex flex-wrap items-center gap-2">
                 {secretScopes.map((scope) => (
-                  <Badge
-                    key={scope}
-                    variant="outline"
-                    className="min-h-5 px-2 py-0 text-[11px] shadow-none"
-                  >
+                  <Badge key={scope} variant="outline">
                     {scopeLabel(scope)}
                   </Badge>
                 ))}

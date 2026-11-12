@@ -6,7 +6,7 @@
   "description": "Scrambles characters and resolves them into new text when its value changes.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["motion-effects"],
-  "dependencies": ["motion@^14.10.1"],
+  "dependencies": ["motion@^14.12.0"],
   "registryDependencies": ["https://vip-ui.dev/r/utils.json"],
   "files": [
     {

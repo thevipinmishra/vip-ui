@@ -132,7 +132,6 @@ const motionAllowlist = new Set([
   "progress-ring",
   "range-calendar",
   "rating-input",
-  "settings-01",
   "sheet",
   "stagger-group",
   "stepper",
