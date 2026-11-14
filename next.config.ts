@@ -34,6 +34,26 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/components/motion",
+        destination: "/components/styling",
+        permanent: true,
+      },
+      {
+        source: "/components/from-shadcn",
+        destination: "/components/installation",
+        permanent: true,
+      },
+      {
+        source: "/components/typography",
+        destination: "/typography",
+        permanent: true,
+      },
+      {
+        source: "/components/updating",
+        destination: "/components/installation#update",
+        permanent: true,
+      },
+      {
         source: "/examples/:path*",
         destination: "/blocks",
         permanent: true,

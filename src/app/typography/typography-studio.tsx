@@ -211,11 +211,9 @@ function Step({
 export function TypographyStudio({
   samples,
   install,
-  guide,
 }: {
   samples: Record<SampleId, ReactNode>;
   install: ReactNode;
-  guide: ReactNode;
 }) {
   const [presetId, setPresetId] = useState<PresetId | null>("docs");
   const [settings, setSettings] = useState<TypographySettings>({
@@ -460,7 +458,6 @@ export function TypographyStudio({
             </CodeFrame>
           </Step>
         </ol>
-        {guide}
       </aside>
     </div>
   );

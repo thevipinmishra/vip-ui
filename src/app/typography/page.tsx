@@ -1,4 +1,3 @@
-import { TextLink } from "@/components/docs/guide";
 import { TypographyInstall } from "@/components/docs/typography-install";
 import { pageMetadata } from "@/lib/seo";
 import { ArticleSample, ChatSample, DocsSample } from "./samples";
@@ -21,13 +20,6 @@ export default function TypographyPage() {
         article: <ArticleSample />,
       }}
       install={<TypographyInstall />}
-      guide={
-        <p className="text-sm leading-6 text-muted-foreground">
-          Read the{" "}
-          <TextLink href="/components/typography">typography guide</TextLink>{" "}
-          for presets, wide tables, and streaming.
-        </p>
-      }
     />
   );
 }
