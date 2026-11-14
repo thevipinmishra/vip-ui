@@ -48,7 +48,7 @@ These shadcn components have no vip/ui counterpart. Do not invent substitutes; u
 aspect-ratio, bubble, carousel, code-block, direction, hover-card, input-otp, item, label, marker, menubar, message-scroller, navigation-menu, questionnaire, resizable, scroll-area, sidebar, trace
 
 - For labels, use the label part of the field (`TextFieldLabel`, `SelectLabel`, …) or `Label` from `react-aria-components`.
-- `Typography` (the shadcn Typeset CSS system) corresponds to the vip/ui Typography CSS presets (`typography` class with preset classes), documented at https://vip-ui.dev/components/typography. It is CSS, not a component.
+- `Typography` (the shadcn Typeset CSS system) corresponds to the vip/ui Typography CSS presets (`typography` class with preset classes), documented at https://vip-ui.dev/typography. It is CSS, not a component.
 
 ## API differences from shadcn/ui
 

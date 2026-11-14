@@ -11,7 +11,7 @@ const topics = [
   { id: "forms", name: "Forms", href: "/components/text-field" },
   { id: "overlays", name: "Overlays", href: "/components/dialog" },
   { id: "collections", name: "Collections", href: "/components/table" },
-  { id: "motion", name: "Motion", href: "/components/motion" },
+  { id: "feedback", name: "Feedback", href: "/components/toast" },
 ];
 
 export function TagGroupLinksDemo() {

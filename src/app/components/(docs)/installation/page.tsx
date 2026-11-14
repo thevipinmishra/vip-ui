@@ -164,7 +164,11 @@ export default async function InstallationPage() {
             <Code>utils.ts</Code> and <Code>popover.tsx</Code>. Components share
             one copy of each file.
           </li>
-          <li>Installs the npm packages that the component uses.</li>
+          <li>
+            Installs the npm packages that the component uses. Icons come from{" "}
+            <Code>@phosphor-icons/react</Code>, also in a project that uses
+            Lucide.
+          </li>
           <li>
             Adds the Tailwind plugin and the theme variables to your global CSS
             file.
@@ -245,6 +249,30 @@ export default async function InstallationPage() {
           Demo code imports from <Code>@/components/vip-ui/</Code>. If your
           alias is different, change the import paths. A demo can use other
           vip/ui components. Add those components too.
+        </Alert>
+      </GuideSection>
+
+      <GuideSection id="update" title="Update a component">
+        <p>
+          Run the add command again with <Code>--overwrite</Code>. The CLI
+          replaces your file with the newest version.
+        </p>
+        <PackageManagerCommand
+          action="run"
+          args={`shadcn@latest add ${registryNamespace}/button --overwrite`}
+        />
+        <p>
+          To see the changes first, use <Code>--diff</Code> in place of{" "}
+          <Code>--overwrite</Code>. The{" "}
+          <ExternalLink href="https://github.com/thevipinmishra/vip-ui/blob/main/CHANGELOG.md">
+            changelog
+          </ExternalLink>{" "}
+          lists breaking changes.
+        </p>
+        <Alert variant="warning" title="Your edits are replaced">
+          <Code>--overwrite</Code> also replaces shared files, such as{" "}
+          <Code>utils.ts</Code>. Commit your work first, then add your edits
+          again.
         </Alert>
       </GuideSection>
 

@@ -151,11 +151,6 @@ export function ArticleSample() {
         </li>
         <li>Code and tables use the same spacing as paragraphs.</li>
       </ul>
-      <hr />
-      <p>
-        Read the <a href="/components/typography">typography guide</a> to add
-        these styles to your app.
-      </p>
     </article>
   );
 }

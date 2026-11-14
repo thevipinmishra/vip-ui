@@ -1,19 +1,21 @@
 ---
 name: vip-ui
-description: Build UI with vip/ui (vip-ui.dev) React Aria components and blocks. Use when a task mentions vip/ui, the @vip-ui registry, vip-ui.dev, or vip/ui components; when installing or generating components, blocks, or charts with the shadcn CLI from vip/ui; or when migrating shadcn/ui code to vip/ui names and APIs.
+description: Build UI with vip/ui (vip-ui.dev), a shadcn registry of React Aria components, blocks, and charts. Use when a task mentions vip/ui, vip-ui.dev, or the @vip-ui registry; when installing vip/ui items with the shadcn CLI; or when moving shadcn/ui code to vip/ui.
 ---
 
 # vip/ui
 
-vip/ui is a registry of accessible React components on React Aria Components, Tailwind CSS v4, tailwind-variants, and Motion. Items install as source files with the shadcn CLI and stay editable.
+vip/ui is a shadcn registry of React components built on React Aria Components, Tailwind CSS v4, and Motion. Items install as editable source files.
 
-Docs: https://vip-ui.dev — every component page has a Markdown copy at `https://vip-ui.dev/components/<name>.md`. Full component list: https://vip-ui.dev/llms.txt.
+- Component list: https://vip-ui.dev/llms.txt
+- Component docs as Markdown: `https://vip-ui.dev/components/<name>.md`
+- Chart examples: https://vip-ui.dev/charts
 
-## Install
+## 1. Set up the project
 
-Requires shadcn CLI 4.7.0 or later, React 19, TypeScript, Tailwind CSS v4.1+, and a shadcn theme with CSS variables.
+Requires React 19, TypeScript, Tailwind CSS v4.1+, a shadcn theme with CSS variables, and shadcn CLI 4.7.0+.
 
-Add the namespace to `components.json`, then add items by name:
+Add the namespace to `components.json`:
 
 ```json
 {
@@ -23,19 +25,21 @@ Add the namespace to `components.json`, then add items by name:
 }
 ```
 
+## 2. Add items
+
 ```bash
-pnpm dlx shadcn@latest add @vip-ui/button
-pnpm dlx shadcn@latest add @vip-ui/toast @vip-ui/dialog
+pnpm dlx shadcn@latest add @vip-ui/button @vip-ui/dialog
 ```
 
-- Component files land in `components/vip-ui/<name>.tsx`. Import from `@/components/vip-ui/<name>`. Never write files into shadcn's `components/ui/`.
-- Blocks land in `components/blocks/<name>/` and render as one component, such as `<Dashboard />`. The block's code panel names the entry component.
-- Items print their docs after install; follow reminders such as rendering `<ToastViewport />` once near the app root.
-- Preview before installing: `shadcn view @vip-ui/button`, `shadcn add @vip-ui/button --dry-run`, or `--diff` against an installed file.
+- Preview first with `shadcn view @vip-ui/<name>` or `shadcn add @vip-ui/<name> --dry-run`.
+- Components go to `components/vip-ui/<name>.tsx`. Import from `@/components/vip-ui/<name>`.
+- Blocks go to `components/blocks/<name>/` and render as one component, such as `<Dashboard />`.
+- Never write vip/ui files into `components/ui/`.
+- Follow the notes the CLI prints after install. For example, render `<ToastViewport />` once near the app root.
 
-## Component names
+## 3. Use vip/ui names
 
-Most names match shadcn/ui. Read [references/name-map.md](references/name-map.md) for the complete map (same name, renamed, not available) and the API differences. Common renames:
+Most names match shadcn/ui. Common renames:
 
 | shadcn        | vip/ui                        |
 | ------------- | ----------------------------- |
@@ -56,36 +60,43 @@ Most names match shadcn/ui. Read [references/name-map.md](references/name-map.md
 | field         | fieldset                      |
 | kbd           | kbd-code                      |
 
-Charts differ: vip/ui frames TanStack Charts with `ChartFrame` and `Chart`. There is no Recharts `ChartContainer`. Copy examples from https://vip-ui.dev/charts instead of porting shadcn chart code.
+For the full map, missing components, and API differences, read [references/name-map.md](references/name-map.md).
 
-## Sizes
+Charts use TanStack Charts (`ChartFrame`, `Chart`), not Recharts. Copy from https://vip-ui.dev/charts. Do not port shadcn chart code.
 
-One size scale gives every control the same height per size name: `xs` 28px, `sm` 36px, `md` 44px, `lg` 48px, `xl` 56px. Buttons and toggles default to `md`, fields to `lg`. Groups (`Toolbar`, `ButtonGroup`, `TabsList`, `TagGroup`) take one `size` and pass it to their items. Do not shrink controls to fake density; use spacing instead. Icons inside controls take their size from the control, so drop explicit `size={n}` on those icons.
+## 4. Write the code
 
-## Motion
+- Use `onPress`, not `onClick`. Use `isDisabled`, not `disabled`.
+- Collection items (`Select`, `ComboBox`, `Menu`, `ListBox`, `Table`, `Tree`) take an `id`. The id is the value.
+- There is no `asChild`. The trigger part holds the trigger and the overlay, for example `MenuTrigger` holds a `Button` and a `MenuPopover`. Use the `render` prop to change the element.
+- Build fields from their parts: `TextFieldLabel`, `TextFieldInput`, `TextFieldDescription`, `TextFieldError`. Do not add a separate label component.
+- Wrap fields in `Form`. Validate with `isRequired`, `validate`, and `validationErrors`.
+- Use icons from `@phosphor-icons/react`.
+- Use logical classes: `ms-1`, `pe-2`, `rounded-s-md`, `text-start`. Keep `data-slot` on every part.
 
-Tokens live in the installed `motion.ts` (`@/components/vip-ui/motion`). Use its values; do not invent timings. Full tables: [references/motion.md](references/motion.md).
+## 5. Sizes and colors
 
-- State motion is CSS on React Aria data attributes: `pressed:`, `selected:`, `hovered:`, `focus-visible:` variants, `duration-150`/`duration-200`, `ease-out-quint`.
-- Overlays open and close with CSS on `entering:`/`exiting:`. Do not drive open/close with JS animation.
-- Use Motion only for layout (`layoutId`), presence exit, counted values, and gestures. Always gate it: `transitionFor(useReducedMotion(), transition)`.
-- Every animation must respect reduced motion. CSS travel gets `motion-safe:`/`motion-reduce:`; short fades and color changes may stay.
-- Infinite loops (loaders, marquee) animate one whole `transform` string with an explicit first keyframe, on an HTML element or the root `<svg>` — never `x`/`y`/`rotate`/`scale` and never an SVG child — so the browser runs them on the compositor while the main thread is busy.
-- Exits are shorter than entrances (about 0.7×). Lists glint with one shared highlight layer; never add `hover:bg-*` to items of a kit list.
+- Sizes: `xs` 28px, `sm` 36px, `md` 44px, `lg` 48px, `xl` 56px. Buttons default to `md`, fields to `lg`.
+- Set `size` once on a group (`Toolbar`, `ButtonGroup`, `TabsList`, `TagGroup`). Its items follow.
+- Do not make controls smaller to save space. Reduce the spacing.
+- Do not set `size` on icons inside controls.
+- Use theme tokens only, such as `bg-primary`, `text-muted-foreground`, `border-border`. No hex or arbitrary colors.
+- vip/ui adds `success`, `warning`, `highlight`, shadow, and ease tokens. The CLI writes the ones a component needs.
 
-## Colors and tokens
+## 6. Motion
 
-Use theme tokens only: `bg-primary`, `text-muted-foreground`, `border-border`, `bg-accent`, `bg-destructive`, and so on. No raw hex or arbitrary color values. vip/ui adds tokens that a shadcn theme does not have: `--success`/`--warning` (each with `-subtle` and `-foreground`), `--highlight`, `--shadow-card`/`--shadow-float`/`--shadow-inset`, `--ease-out-quint`/`--ease-spring`, `--chart-6`, and the OKLCH color scales (`bg-blue-3` … step 12). Use the CLI add; it writes only the tokens the component uses.
+Use the tokens in `@/components/vip-ui/motion`. Do not invent timings. For the full tables and rules, read [references/motion.md](references/motion.md).
 
-## Composition rules
+- Animate state with CSS on React Aria variants: `pressed:`, `selected:`, `hovered:`, `focus-visible:`.
+- Animate overlays with CSS on `entering:` and `exiting:`. Do not open or close them with JS.
+- Use Motion only for layout, exit, counting, and gestures. Wrap the transition in `transitionFor(useReducedMotion(), transition)`.
+- Respect reduced motion. Put travel behind `motion-safe:`.
+- Before you animate a loop, such as a loader, read the loop rules in the reference.
+- Do not add `hover:bg-*` to items in a vip/ui list. The list has its own highlight.
 
-- Press handlers are `onPress` (not `onClick`); disabled is `isDisabled` (not `disabled`).
-- Collection items (`Select`, `ComboBox`, `Menu`, `ListBox`, `Table`, `Tree`) take an `id`; the id is the value. `Select` also accepts `value`/`defaultValue`/`onValueChange`.
-- There is no `asChild`. Triggers wrap their content (a `MenuTrigger` holds the button and the popover). Use the React Aria `render` prop to render a component as another element.
-- Fields own their parts: `TextFieldLabel`, `TextFieldInput`, `TextFieldDescription`, `TextFieldError`. Compose them instead of adding a separate label component. Wrap fields in `Form` for `isRequired`, `validate`, and server `validationErrors`.
-- Keep `data-slot` on every part when you build on the source, and prefer logical direction classes (`ms-1`, `pe-2`, `rounded-s-md`, `text-start`) over physical ones (`ml-1`, `pr-2`, `rounded-l-md`).
-- Icons come from `@phosphor-icons/react`.
+## 7. Check your work
 
-## Verify
-
-After generating code: install any missing items with the CLI, keep imports pointing at `@/components/vip-ui/`, run the project's type check, and check the keyboard path and reduced-motion behavior for anything animated.
+- Install missing items with the CLI.
+- Keep imports on `@/components/vip-ui/`.
+- Run the type check.
+- Test keyboard use and reduced motion.

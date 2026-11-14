@@ -35,10 +35,7 @@ All notable changes to vip/ui are documented in this file. The format is based o
 #### Documentation
 
 - Colors page at `/colors` with ten color scales: Gray, Red, Orange, Yellow, Green, Teal, Cyan, Blue, Violet, and Pink. Each scale has 12 OKLCH steps for light and dark mode. The page shows the purpose of each step and the contrast of the text steps. It copies the CSS for one scale or all scales, and a Tailwind `@theme` block that adds classes such as `bg-blue-3`.
-- Motion guide at `/components/motion`. It shows the motion tokens, springs, loops, tuned timings, and the reduced motion rules, with live demos.
-- From shadcn/ui guide at `/components/from-shadcn`. It shows how vip/ui installs beside shadcn/ui, maps each shadcn component name to its vip/ui name, and lists the React Aria API differences.
-- AI and MCP guide at `/components/ai-and-mcp`. It covers the shadcn MCP server setup for the `@vip-ui` namespace, `llms.txt`, the Markdown pages, CLI commands for agents, and the vip/ui agent skill.
-- Updating guide at `/components/updating`. It shows how to compare an installed component with the registry, overwrite it, and keep local edits.
+- AI and MCP guide at `/components/ai-and-mcp`. It covers the shadcn MCP server setup for the `@vip-ui` namespace, `llms.txt`, the Markdown pages, CLI commands for agents, and a one-command install of the vip/ui agent skill.
 - RTL guide at `/components/rtl`. It covers the logical classes, the CLI `rtl` option, and the components that set left or right on purpose.
 - Agent skill at `skills/vip-ui/` in the repository. It teaches coding agents the shadcn name map, the size scale, the motion rules, and the color and token rules.
 - The charts page has 27 new examples for the TanStack Charts API, and two new tabs: Spatial and Interactive. A coverage table links each API area to its examples.

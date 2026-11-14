@@ -28,101 +28,87 @@ export default function AiAndMcpPage() {
     <GuidePage href="/components/ai-and-mcp">
       <GuideSection id="mcp" title="Use the MCP server">
         <p>
-          The shadcn MCP server lets an AI assistant browse registries and
-          install items in your project. Run the setup command for your client,
-          then restart it. The{" "}
+          The shadcn MCP server lets an AI assistant find and install vip/ui
+          components. It reads registries from your <Code>components.json</Code>
+          , so{" "}
+          <TextLink href="/components/installation#namespace">
+            add the namespace
+          </TextLink>{" "}
+          first.
+        </p>
+        <p>
+          Run the setup command for your client, then restart the client. See
+          the{" "}
           <ExternalLink href="https://ui.shadcn.com/docs/mcp">
             shadcn MCP guide
           </ExternalLink>{" "}
-          covers Claude Code, Cursor, VS Code, Codex, and OpenCode.
+          for other clients.
         </p>
         <PackageManagerCommand
           action="run"
           args="shadcn@latest mcp init --client claude"
         />
-        <p>
-          The MCP server reads its registries from your{" "}
-          <Code>components.json</Code>.{" "}
-          <TextLink href="/components/installation#namespace">
-            Add the namespace
-          </TextLink>{" "}
-          first.
-        </p>
-        <p>Then ask for items by name, for example:</p>
+        <p>Or add the server to your MCP config by hand:</p>
+        <CodeBlock code={mcpJson} filename=".mcp.json" language="json" />
+        <p>Then ask for items by name:</p>
         <List>
           <li>Add @vip-ui/button and @vip-ui/dialog to my project.</li>
           <li>Show me the files in @vip-ui/toast before you install it.</li>
           <li>Build a settings page with vip/ui components.</li>
         </List>
-        <p>
-          To configure the server by hand instead, add it to your MCP client
-          config:
-        </p>
-        <CodeBlock code={mcpJson} filename=".mcp.json" language="json" />
       </GuideSection>
 
       <GuideSection id="sources" title="Machine-readable sources">
         <List>
           <li>
-            <Code>{`${site}/llms.txt`}</Code> lists the guides and every
-            component with its description.
+            <Code>{`${site}/llms.txt`}</Code> lists the guides and all
+            components.
           </li>
           <li>
-            Each component page has a Markdown copy. Append <Code>.md</Code> to
-            the URL, for example <Code>{`${site}/components/button.md`}</Code>.
-            The copy has the same description, installation files, usage source,
-            examples, and API tables as the page.
+            Add <Code>.md</Code> to a component URL to get the page as Markdown,
+            for example <Code>{`${site}/components/button.md`}</Code>. Guides
+            have no Markdown copy.
           </li>
           <li>
-            <Code>{`${site}/r/registry.json`}</Code> is the registry index for
-            tools. Each item lives at <Code>{`${site}/r/<name>.json`}</Code>.
+            <Code>{`${site}/r/registry.json`}</Code> is the registry index. Each
+            item is at <Code>{`${site}/r/<name>.json`}</Code>.
           </li>
         </List>
-        <p>
-          Guides such as this one are HTML pages. They have no <Code>.md</Code>{" "}
-          copy.
-        </p>
       </GuideSection>
 
-      <GuideSection id="cli" title="CLI commands for agents">
+      <GuideSection id="cli" title="Use the CLI">
         <p>
-          An agent uses the same{" "}
+          Agents can use the{" "}
           <ExternalLink href="https://ui.shadcn.com/docs/cli">
             shadcn CLI
-          </ExternalLink>{" "}
-          commands as you. <Code>shadcn view @vip-ui/button</Code> prints an
-          item, with its dependencies, files, and source, and does not change
-          your project.
-        </p>
-        <p>
-          To compare an installed file with the registry before an overwrite,
-          see <TextLink href="/components/updating">Updating</TextLink>.
+          </ExternalLink>
+          . <Code>shadcn view @vip-ui/button</Code> shows an item&apos;s
+          dependencies, files, and source without changing your project. To
+          compare a local file with the registry, see{" "}
+          <TextLink href="/components/installation#update">
+            Update a component
+          </TextLink>
+          .
         </p>
       </GuideSection>
 
       <GuideSection id="skill" title="Install the vip/ui skill">
         <p>
-          vip/ui publishes an agent skill for building UI with the components.
-          It carries the shadcn name map, the size scale, the motion rules, and
-          the color and token rules. An agent that loads it generates UI that
-          follows the system.
+          The vip/ui agent skill tells an agent which components exist and how
+          to use them: names, sizes, motion, and color tokens. It does not
+          install components.
         </p>
-        <List>
-          <li>
-            Get the folder <Code>skills/vip-ui/</Code> from the{" "}
-            <ExternalLink href="https://github.com/thevipinmishra/vip-ui">
-              vip/ui repository
-            </ExternalLink>
-            .
-          </li>
-          <li>
-            Copy it into the skills folder of your agent, such as{" "}
-            <Code>.claude/skills/vip-ui/</Code> in your project.
-          </li>
-        </List>
+        <PackageManagerCommand
+          action="run"
+          args="skills add thevipinmishra/vip-ui --skill vip-ui"
+        />
         <p>
-          The skill does not install components. It tells the agent which
-          components exist and how to use them.
+          The command asks which agents to install the skill for. The skill
+          source is in{" "}
+          <ExternalLink href="https://github.com/thevipinmishra/vip-ui/tree/main/skills/vip-ui">
+            skills/vip-ui
+          </ExternalLink>
+          .
         </p>
       </GuideSection>
     </GuidePage>
