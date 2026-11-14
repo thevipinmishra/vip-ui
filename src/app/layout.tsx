@@ -2,11 +2,13 @@ import { Analytics } from "@vercel/analytics/next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import { JsonLd } from "@/components/seo/json-ld";
 import { defaultMetadata, site, themeColor } from "@/lib/seo";
+import { SiteThemeSync } from "./site-theme";
 import { AppToastViewport } from "./toast-viewport";
 import "./globals.css";
+
+const themeScript = `try{var theme=localStorage.getItem("vip-ui-theme");if(theme==="dark"||(!theme&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.classList.add("dark");}catch{}`;
 
 export const metadata: Metadata = defaultMetadata;
 
@@ -57,6 +59,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
       className={`${GeistSans.variable} ${GeistMono.variable} h-full antialiased`}
     >
+      <head>
+        <script
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: theme must apply before first paint
+          dangerouslySetInnerHTML={{ __html: themeScript }}
+        />
+      </head>
       <body className="min-h-full flex flex-col">
         <JsonLd data={structuredData} />
         <div className="flex min-h-full flex-1 flex-col bg-background">
@@ -64,9 +72,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </div>
         <AppToastViewport />
         <Analytics />
-        <Script id="theme-init" strategy="beforeInteractive">
-          {`try{var theme=localStorage.getItem("vip-ui-theme");if(theme==="dark"||(!theme&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.classList.add("dark");}catch{}`}
-        </Script>
+        <SiteThemeSync />
       </body>
     </html>
   );
