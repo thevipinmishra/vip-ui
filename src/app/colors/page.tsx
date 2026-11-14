@@ -86,7 +86,7 @@ export default function ColorsPage() {
           <div className="grid max-w-2xl gap-3">
             <h2
               id="install-title"
-              className="text-3xl font-semibold leading-tight tracking-[-0.05em] sm:text-4xl"
+              className="text-3xl font-semibold leading-tight tracking-tighter sm:text-4xl"
             >
               Use the colors
             </h2>

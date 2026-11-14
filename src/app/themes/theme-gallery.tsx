@@ -219,12 +219,12 @@ export function ThemeGallery() {
             {group.examples.map(({ title, Demo }) => (
               <figure
                 key={title}
-                className="relative mb-4 break-inside-avoid overflow-hidden rounded-xl bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70"
+                className="relative mb-4 break-inside-avoid overflow-hidden rounded-xl bg-card shadow-(--shadow-card) ring-1 ring-border/70"
               >
                 <figcaption className="border-b border-border/70 px-4 py-2.5 text-xs font-medium text-muted-foreground">
                   {title}
                 </figcaption>
-                <div className="flex min-h-32 min-w-0 items-center justify-center overflow-x-auto p-5 [&>*]:min-w-0 [&>*]:max-w-full [&>[data-slot=chart-frame]]:w-full [&>[data-slot=chart-frame]]:bg-transparent [&>[data-slot=chart-frame]]:p-0">
+                <div className="flex min-h-32 min-w-0 items-center justify-center overflow-x-auto p-5 *:min-w-0 *:max-w-full *:data-[slot=chart-frame]:w-full *:data-[slot=chart-frame]:bg-transparent *:data-[slot=chart-frame]:p-0">
                   <Demo />
                 </div>
               </figure>

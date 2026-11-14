@@ -47,14 +47,14 @@ type SwipeDirection = SheetRenderProps["swipeDirection"];
 const sheetDuration = { enter: 0.32, exit: 0.24, settle: 0.3 } as const;
 
 const scrollEdgeClasses =
-  "supports-[animation-timeline:scroll()]:[animation-name:vip-edge-start,vip-edge-end] supports-[animation-timeline:scroll()]:[animation-timing-function:linear] supports-[animation-timeline:scroll()]:[animation-fill-mode:both] supports-[animation-timeline:scroll()]:[animation-timeline:scroll(self),scroll(self)] supports-[animation-timeline:scroll()]:[animation-range:0px_1rem,calc(100%_-_1rem)_100%]";
+  "supports-[animation-timeline:scroll()]:[animation-name:vip-edge-start,vip-edge-end] supports-[animation-timeline:scroll()]:[animation-timing-function:linear] supports-[animation-timeline:scroll()]:[animation-fill-mode:both] supports-[animation-timeline:scroll()]:[animation-timeline:scroll(self),scroll(self)] supports-[animation-timeline:scroll()]:[animation-range:0px_1rem,calc(100%-1rem)_100%]";
 
 const sheetFallbackClasses =
-  "supports-[not_(animation-timeline:view())]:transition-[transform] supports-[not_(animation-timeline:view())]:duration-320 supports-[not_(animation-timeline:view())]:ease-[cubic-bezier(0.32,0.72,0,1)] supports-[not_(animation-timeline:view())]:data-[has-descendants]:[transform:translate(var(--sheet-stack-x,0px),var(--sheet-stack-y,0px))_scale(var(--sheet-stack-scale,0.94))] motion-reduce:transition-none";
+  "supports-[not_(animation-timeline:view())]:transition-[transform] supports-[not_(animation-timeline:view())]:duration-320 supports-[not_(animation-timeline:view())]:ease-[cubic-bezier(0.32,0.72,0,1)] supports-[not_(animation-timeline:view())]:data-has-descendants:transform-[translate(var(--sheet-stack-x,0px),var(--sheet-stack-y,0px))_scale(var(--sheet-stack-scale,0.94))] motion-reduce:transition-none";
 
 const sheetSurfaceStyles = tv({
   base: [
-    "flex max-h-[var(--visual-viewport-height,100dvh)] min-w-0 max-w-full flex-col overflow-clip bg-card text-card-foreground [overflow-wrap:anywhere] shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70 data-[has-descendants]:rounded-xl",
+    "flex max-h-(--visual-viewport-height,100dvh) min-w-0 max-w-full flex-col overflow-clip bg-card text-card-foreground wrap-anywhere shadow-(--shadow-float) outline-none ring-1 ring-border/70 data-has-descendants:rounded-xl",
     sheetFallbackClasses,
   ],
   variants: {
@@ -62,9 +62,9 @@ const sheetSurfaceStyles = tv({
       bottom:
         "max-h-[calc(var(--visual-viewport-height,100dvh)-2.5rem)] w-full max-w-(--sheet-edge-size) origin-top rounded-t-xl [--sheet-stack-y:-0.5rem]",
       top: "max-h-[min(26rem,calc(var(--visual-viewport-height,100dvh)-3.5rem))] w-full max-w-(--sheet-edge-size) origin-bottom rounded-b-xl [--sheet-stack-y:0.5rem]",
-      left: "h-[var(--visual-viewport-height,100dvh)] w-(--sheet-side-size) max-w-[var(--visual-viewport-width,100vw)] origin-right rounded-r-xl [--sheet-stack-scale:0.96] [--sheet-stack-x:0.75rem]",
+      left: "h-(--visual-viewport-height,100dvh) w-(--sheet-side-size) max-w-(--visual-viewport-width,100vw) origin-right rounded-r-xl [--sheet-stack-scale:0.96] [--sheet-stack-x:0.75rem]",
       right:
-        "h-[var(--visual-viewport-height,100dvh)] w-(--sheet-side-size) max-w-[var(--visual-viewport-width,100vw)] origin-left rounded-l-xl [--sheet-stack-scale:0.96] [--sheet-stack-x:-0.75rem]",
+        "h-(--visual-viewport-height,100dvh) w-(--sheet-side-size) max-w-(--visual-viewport-width,100vw) origin-left rounded-l-xl [--sheet-stack-scale:0.96] [--sheet-stack-x:-0.75rem]",
       center:
         "max-h-[calc(var(--visual-viewport-height,100dvh)-2rem)] w-[calc(100%-2rem)] max-w-(--sheet-center-size) rounded-xl",
     },
@@ -82,7 +82,7 @@ const sheetSurfaceStyles = tv({
       size: "full",
       position: ["top", "bottom", "center"],
       class:
-        "h-[var(--visual-viewport-height,100dvh)] max-h-[var(--visual-viewport-height,100dvh)]",
+        "h-(--visual-viewport-height,100dvh) max-h-(--visual-viewport-height,100dvh)",
     },
     { size: "full", position: "center", class: "w-full" },
     {
@@ -818,7 +818,7 @@ export function SheetTitle({ className, ...props }: HeadingProps) {
       slot="title"
       data-slot="sheet-title"
       className={cn(
-        "min-w-0 text-xl font-semibold tracking-[-0.04em] [overflow-wrap:anywhere]",
+        "min-w-0 text-xl font-semibold tracking-[-0.04em] wrap-anywhere",
         className,
       )}
     />
@@ -832,7 +832,7 @@ export function SheetDescription({ className, ...props }: TextProps) {
       slot="description"
       data-slot="sheet-description"
       className={cn(
-        "mt-2 block text-sm leading-6 text-muted-foreground [overflow-wrap:anywhere]",
+        "mt-2 block text-sm leading-6 text-muted-foreground wrap-anywhere",
         className,
       )}
     />

@@ -126,7 +126,7 @@ export function ProgressRing({
             {showValue && (
               <span
                 className={cn(
-                  "absolute inset-[15%] grid place-items-center text-center font-semibold leading-tight tabular-nums [overflow-wrap:anywhere]",
+                  "absolute inset-[15%] grid place-items-center text-center font-semibold leading-tight tabular-nums wrap-anywhere",
                   size === "lg"
                     ? "text-base tracking-tight"
                     : size === "sm"

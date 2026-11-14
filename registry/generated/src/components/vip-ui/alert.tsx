@@ -11,7 +11,7 @@ import { cn } from "./utils";
 import { Button } from "./button";
 
 const alertStyles = tv({
-  base: "group/alert flex min-w-0 items-start gap-2.5 rounded-xl px-4 py-3 shadow-[var(--shadow-card)] ring-1 ring-inset forced-colors:border",
+  base: "group/alert flex min-w-0 items-start gap-2.5 rounded-xl px-4 py-3 shadow-(--shadow-card) ring-1 ring-inset forced-colors:border",
   variants: {
     variant: {
       info: "bg-accent text-accent-foreground ring-primary/12",
@@ -162,7 +162,7 @@ export function AlertTitle({
       {...props}
       data-slot="alert-title"
       className={cn(
-        "text-sm font-semibold tracking-[-0.015em] [overflow-wrap:anywhere]",
+        "text-sm font-semibold tracking-[-0.015em] wrap-anywhere",
         className,
       )}
     />
@@ -177,10 +177,7 @@ export function AlertDescription({
     <div
       {...props}
       data-slot="alert-description"
-      className={cn(
-        "mt-0.5 text-sm leading-6 [overflow-wrap:anywhere]",
-        className,
-      )}
+      className={cn("mt-0.5 text-sm leading-6 wrap-anywhere", className)}
     />
   );
 }

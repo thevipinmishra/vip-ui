@@ -407,7 +407,7 @@ function StepHeading({
       <h2
         data-step-heading=""
         tabIndex={-1}
-        className="rounded-sm text-base font-semibold tracking-[-0.025em] outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+        className="rounded-sm text-base font-semibold tracking-tight outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
       >
         {title}
       </h2>

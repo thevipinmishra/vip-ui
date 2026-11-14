@@ -2,7 +2,7 @@ import type { ComponentProps } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const spinnerStyles = tv({
-  base: "relative inline-grid shrink-0 place-items-center align-middle text-current transition-opacity duration-200 ease-out-quint starting:opacity-0 [&>*]:col-start-1 [&>*]:row-start-1",
+  base: "relative inline-grid shrink-0 place-items-center align-middle text-current transition-opacity duration-200 ease-out-quint starting:opacity-0 *:col-start-1 *:row-start-1",
   variants: {
     size: {
       xs: "size-3.5 [--spinner-stroke:1.75px]",
@@ -49,15 +49,15 @@ export function Spinner({
         <>
           <span
             aria-hidden="true"
-            className="size-full rounded-full border-[length:var(--spinner-stroke)] border-current opacity-15"
+            className="size-full rounded-full border-(length:--spinner-stroke) border-current opacity-15"
           />
           <span
             aria-hidden="true"
             className="relative size-full animate-spin [animation-duration:0.75s] motion-reduce:animate-none"
           >
-            <span className="absolute inset-0 rounded-full bg-[conic-gradient(from_0deg,transparent_15%,currentColor)] [mask-image:radial-gradient(farthest-side,transparent_calc(100%-var(--spinner-stroke)-0.5px),#000_calc(100%-var(--spinner-stroke)))] forced-colors:hidden" />
-            <span className="absolute inset-0 hidden rounded-full border-[length:var(--spinner-stroke)] border-transparent border-t-[CanvasText] forced-colors:block" />
-            <span className="absolute start-1/2 top-0 size-[var(--spinner-stroke)] -translate-x-1/2 rtl:translate-x-1/2 rounded-full bg-current forced-colors:bg-[CanvasText]" />
+            <span className="absolute inset-0 rounded-full bg-[conic-gradient(from_0deg,transparent_15%,currentColor)] mask-[radial-gradient(farthest-side,transparent_calc(100%-var(--spinner-stroke)-0.5px),#000_calc(100%-var(--spinner-stroke)))] forced-colors:hidden" />
+            <span className="absolute inset-0 hidden rounded-full border-(length:--spinner-stroke) border-transparent border-t-[CanvasText] forced-colors:block" />
+            <span className="absolute inset-s-1/2 top-0 size-(--spinner-stroke) -translate-x-1/2 rtl:translate-x-1/2 rounded-full bg-current forced-colors:bg-[CanvasText]" />
           </span>
         </>
       )}

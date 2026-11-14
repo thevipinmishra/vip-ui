@@ -146,7 +146,7 @@ export function ReasoningTrigger({
       <span className="flex min-w-0 items-center gap-2">
         <span
           aria-hidden="true"
-          className="grid shrink-0 place-items-center [&>*]:col-start-1 [&>*]:row-start-1"
+          className="grid shrink-0 place-items-center *:col-start-1 *:row-start-1"
         >
           <BrainIcon
             size={16}
@@ -237,7 +237,7 @@ export function ReasoningPanel({
         data-slot="reasoning-content"
         tabIndex={scrollable ? 0 : undefined}
         className={cn(
-          "px-4 pb-3 [overflow-wrap:anywhere] outline-none",
+          "px-4 pb-3 wrap-anywhere outline-none",
           scrollable &&
             "max-h-64 overflow-y-auto overscroll-contain rounded-b-lg focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring focus-visible:-outline-offset-2",
         )}

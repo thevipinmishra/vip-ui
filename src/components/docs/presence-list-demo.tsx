@@ -44,9 +44,7 @@ export function PresenceListDemo() {
       >
         {(item) => (
           <span className="flex min-w-0 items-center gap-2 rounded-lg border border-border bg-card px-3 py-2 text-sm">
-            <span className="min-w-0 flex-1 [overflow-wrap:anywhere]">
-              {item.title}
-            </span>
+            <span className="min-w-0 flex-1 wrap-anywhere">{item.title}</span>
             <Button
               ref={control(`up-${item.id}`)}
               variant="ghost"

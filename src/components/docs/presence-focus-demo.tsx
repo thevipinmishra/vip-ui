@@ -28,7 +28,7 @@ export function PresenceFocusDemo() {
       <Presence
         show={show}
         id="presence-focus-note"
-        className="w-full rounded-xl border border-border bg-card p-4 shadow-[var(--shadow-card)]"
+        className="w-full rounded-xl border border-border bg-card p-4 shadow-(--shadow-card)"
       >
         <p className="text-sm font-medium">
           Drag files into the editor to attach them.

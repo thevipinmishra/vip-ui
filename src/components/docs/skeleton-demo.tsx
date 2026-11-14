@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function SkeletonDemo() {
   return (
-    <output className="block w-full max-w-sm rounded-xl bg-card p-4 shadow-[var(--shadow-card)] ring-1 ring-border/70">
+    <output className="block w-full max-w-sm rounded-xl bg-card p-4 shadow-(--shadow-card) ring-1 ring-border/70">
       <span className="sr-only">Loading project details</span>
       <div className="flex items-center gap-3">
         <Skeleton className="size-10 shrink-0 rounded-full" />

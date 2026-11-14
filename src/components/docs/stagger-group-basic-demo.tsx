@@ -7,7 +7,7 @@ export function StaggerGroupBasicDemo() {
     <StaggerGroup
       as="ol"
       aria-label="Project tasks"
-      className="w-full max-w-sm divide-y divide-border rounded-xl border border-border bg-card shadow-[var(--shadow-card)]"
+      className="w-full max-w-sm divide-y divide-border rounded-xl border border-border bg-card shadow-(--shadow-card)"
     >
       {tasks.map((task, index) => (
         <StaggerItem
@@ -21,7 +21,7 @@ export function StaggerGroupBasicDemo() {
           >
             0{index + 1}
           </span>
-          <span className="min-w-0 [overflow-wrap:anywhere]">{task}</span>
+          <span className="min-w-0 wrap-anywhere">{task}</span>
         </StaggerItem>
       ))}
     </StaggerGroup>

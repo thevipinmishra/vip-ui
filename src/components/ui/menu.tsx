@@ -94,7 +94,7 @@ export function MenuContent<T extends object>({
       data-slot="menu-content"
       render={withItemHighlight(render, { ring: true })}
       className={composeRenderProps(className, (className) =>
-        cn("grid gap-1 outline-none [overflow-wrap:anywhere]", className),
+        cn("grid gap-1 outline-none wrap-anywhere", className),
       )}
     />
   );
@@ -120,7 +120,7 @@ export function MenuItem<T extends object>({
       data-variant={variant}
       className={composeRenderProps(className, (className) =>
         cn(
-          "group/item flex min-h-11 cursor-pointer items-center gap-2.5 rounded-md px-3 py-2 text-sm text-foreground outline-none transition-colors duration-150 ease-out-quint open:bg-muted selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&>[data-slot=kbd]]:ms-auto",
+          "group/item flex min-h-11 cursor-pointer items-center gap-2.5 rounded-md px-3 py-2 text-sm text-foreground outline-none transition-colors duration-150 ease-out-quint open:bg-muted selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 *:data-[slot=kbd]:ms-auto",
           variant === "destructive" &&
             "text-destructive [&>svg]:text-destructive",
           itemHighlightRing,

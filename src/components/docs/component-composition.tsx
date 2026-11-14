@@ -17,7 +17,7 @@ function CompositionBranch({
       className={cn(
         "relative col-span-full grid grid-cols-subgrid",
         depth > 0 &&
-          "before:pointer-events-none before:absolute before:inset-y-1 before:start-[calc((var(--depth)-1)*1.25rem+0.5rem)] before:w-px before:bg-border",
+          "before:pointer-events-none before:absolute before:inset-y-1 before:inset-s-[calc((var(--depth)-1)*1.25rem+0.5rem)] before:w-px before:bg-border",
       )}
       style={{ "--depth": depth } as CSSProperties}
     >
@@ -25,7 +25,7 @@ function CompositionBranch({
         <li key={part} className="col-span-full grid grid-cols-subgrid">
           <div className="col-span-full grid grid-cols-subgrid items-baseline gap-y-0.5 py-1 ps-[calc(var(--depth)*1.25rem)]">
             <div className="min-w-0 ps-2">
-              <code className="break-words font-mono text-[13px] font-medium leading-6 text-foreground">
+              <code className="wrap-break-word font-mono text-[13px] font-medium leading-6 text-foreground">
                 {part}
               </code>
               {optional && <span className={flag}>Optional</span>}

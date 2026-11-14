@@ -78,7 +78,7 @@ export function NativeSelect({
             fieldHeight,
             fieldRadius,
             fieldText,
-            "peer w-full min-w-0 cursor-pointer appearance-none truncate border border-input bg-card ps-[var(--field-px,0.875rem)] pe-[calc(var(--field-px,0.875rem)+var(--field-icon,1rem)+0.625rem)] text-foreground shadow-[var(--shadow-card)] outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-out-quint hover:border-primary/45 focus:border-ring focus:ring-1 focus:ring-ring aria-invalid:border-destructive aria-invalid:hover:border-destructive aria-invalid:focus:border-destructive aria-invalid:focus:ring-destructive disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 disabled:hover:border-input",
+            "peer w-full min-w-0 cursor-pointer appearance-none truncate border border-input bg-card ps-(--field-px,0.875rem) pe-[calc(var(--field-px,0.875rem)+var(--field-icon,1rem)+0.625rem)] text-foreground shadow-(--shadow-card) outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-out-quint hover:border-primary/45 focus:border-ring focus:ring-1 focus:ring-ring aria-invalid:border-destructive aria-invalid:hover:border-destructive aria-invalid:focus:border-destructive aria-invalid:focus:ring-destructive disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60 disabled:hover:border-input",
             className,
           )}
         >
@@ -88,7 +88,7 @@ export function NativeSelect({
         <CaretDownIcon
           data-slot="native-select-chevron"
           aria-hidden="true"
-          className="pointer-events-none absolute top-1/2 end-[var(--field-px,0.875rem)] size-[var(--field-icon,1rem)] -translate-y-1/2 text-muted-foreground peer-disabled:opacity-60"
+          className="pointer-events-none absolute top-1/2 inset-e-(--field-px,0.875rem) size-(--field-icon,1rem) -translate-y-1/2 text-muted-foreground peer-disabled:opacity-60"
         />
       </div>
       {description && (

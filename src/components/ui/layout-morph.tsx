@@ -43,7 +43,7 @@ function MorphContent({
       ref={ref}
       data-slot="layout-morph-content"
       className={
-        isPresent ? "w-(--morph-width,100%)" : "absolute start-0 top-0"
+        isPresent ? "w-(--morph-width,100%)" : "absolute inset-s-0 top-0"
       }
       inert={!isPresent}
       aria-hidden={!isPresent || undefined}

@@ -61,7 +61,7 @@ function NumberSpecimen({ play }: { play: number }) {
     <AnimatedNumber
       variant="slide"
       value={1284 + (play % 40) * 125}
-      className="text-3xl font-semibold tracking-[-0.05em]"
+      className="text-3xl font-semibold tracking-tighter"
     />
   );
 }
@@ -143,7 +143,7 @@ function MotionTile({
 
   return (
     <li
-      className="group/tile relative flex min-w-0 flex-col rounded-xl bg-card text-card-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70 transition-[box-shadow] duration-200 ease-out-quint hover:shadow-[var(--shadow-float)] forced-colors:border"
+      className="group/tile relative flex min-w-0 flex-col rounded-xl bg-card text-card-foreground shadow-(--shadow-card) ring-1 ring-border/70 transition-shadow duration-200 ease-out-quint hover:shadow-(--shadow-float) forced-colors:border"
       onPointerEnter={(event) => {
         if (event.pointerType === "mouse") replay();
       }}

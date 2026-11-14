@@ -15,7 +15,7 @@ export function TextLoopPauseDemo() {
   const [paused, setPaused] = useState(false);
 
   return (
-    <div className="flex w-full max-w-sm items-center gap-3 rounded-xl border border-border bg-card p-2 ps-4 shadow-[var(--shadow-card)]">
+    <div className="flex w-full max-w-sm items-center gap-3 rounded-xl border border-border bg-card p-2 ps-4 shadow-(--shadow-card)">
       <p className="min-w-0 flex-1 text-sm">
         <TextLoop values={tips} interval={4} active={!paused} />
       </p>

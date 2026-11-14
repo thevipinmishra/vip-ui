@@ -40,7 +40,7 @@ import { ItemHighlight, itemHighlightRing } from "./item-highlight";
 import { Spinner } from "./spinner";
 
 const cellFocusStyles =
-  "outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-[-2px] focus-visible:outline-ring";
+  "outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring";
 
 const controlCellStyles = "w-11 min-w-11 px-2 py-1 text-center";
 
@@ -53,7 +53,7 @@ export function TableContainer({
       {...props}
       data-slot="table-container"
       className={cn(
-        "relative w-full min-w-0 overflow-auto overscroll-x-contain rounded-lg border border-border bg-card shadow-[var(--shadow-card)] [scrollbar-width:thin]",
+        "relative w-full min-w-0 overflow-auto overscroll-x-contain rounded-lg border border-border bg-card shadow-(--shadow-card) scrollbar-thin",
         className,
       )}
     />
@@ -207,7 +207,7 @@ function SortIndicator() {
     <span
       aria-hidden="true"
       data-slot="table-sort-indicator"
-      className="grid shrink-0 place-items-center text-muted-foreground/70 transition-colors duration-150 ease-out-quint group-hover/column:text-foreground group-sort-ascending/column:text-foreground group-sort-descending/column:text-foreground [&>*]:col-start-1 [&>*]:row-start-1"
+      className="grid shrink-0 place-items-center text-muted-foreground/70 transition-colors duration-150 ease-out-quint group-hover/column:text-foreground group-sort-ascending/column:text-foreground group-sort-descending/column:text-foreground *:col-start-1 *:row-start-1"
     >
       <ArrowsDownUpIcon
         size={14}
@@ -229,7 +229,7 @@ export function ColumnResizer({ className, ...props }: ColumnResizerProps) {
       data-slot="table-column-resizer"
       className={composeRenderProps(className, (className) =>
         cn(
-          "absolute inset-y-0 end-0 z-10 w-3 cursor-col-resize touch-none outline-none ltr:translate-x-1/2 rtl:-translate-x-1/2 after:absolute after:inset-y-2 after:start-1/2 after:w-px after:-translate-x-1/2 after:rounded-full after:bg-border after:transition-[background-color,width] after:duration-150 after:ease-out-quint hover:after:w-0.5 hover:after:bg-foreground/50 focus-visible:after:w-0.5 focus-visible:after:bg-ring data-[resizing]:after:inset-y-0 data-[resizing]:after:w-0.5 data-[resizing]:after:bg-primary forced-colors:after:bg-[ButtonBorder] forced-colors:data-[resizing]:after:bg-[Highlight]",
+          "absolute inset-y-0 inset-e-0 z-10 w-3 cursor-col-resize touch-none outline-none ltr:translate-x-1/2 rtl:-translate-x-1/2 after:absolute after:inset-y-2 after:inset-s-1/2 after:w-px after:-translate-x-1/2 after:rounded-full after:bg-border after:transition-[background-color,width] after:duration-150 after:ease-out-quint hover:after:w-0.5 hover:after:bg-foreground/50 focus-visible:after:w-0.5 focus-visible:after:bg-ring resizing:after:inset-y-0 resizing:after:w-0.5 resizing:after:bg-primary forced-colors:after:bg-[ButtonBorder] forced-colors:resizing:after:bg-[Highlight]",
           className,
         ),
       )}
@@ -252,7 +252,7 @@ export function Row<T extends object>({
       data-slot="table-row"
       className={composeRenderProps(className, (className) =>
         cn(
-          "outline-none transition-[background-color,opacity] duration-150 ease-out-quint selected:bg-accent disabled:cursor-default disabled:opacity-50 dragging:opacity-50 drop-target:bg-accent data-[href]:cursor-pointer forced-colors:selected:*:relative forced-colors:selected:*:before:pointer-events-none forced-colors:selected:*:before:absolute forced-colors:selected:*:before:inset-0 forced-colors:selected:*:before:border-y-2 forced-colors:selected:*:before:border-[Highlight] forced-colors:selected:*:first:before:border-s-2 forced-colors:selected:*:last:before:border-e-2",
+          "outline-none transition-[background-color,opacity] duration-150 ease-out-quint selected:bg-accent disabled:cursor-default disabled:opacity-50 dragging:opacity-50 drop-target:bg-accent data-href:cursor-pointer forced-colors:selected:*:relative forced-colors:selected:*:before:pointer-events-none forced-colors:selected:*:before:absolute forced-colors:selected:*:before:inset-0 forced-colors:selected:*:before:border-y-2 forced-colors:selected:*:before:border-[Highlight] forced-colors:selected:*:first:before:border-s-2 forced-colors:selected:*:last:before:border-e-2",
           itemHighlightRing,
           className,
         ),
@@ -362,7 +362,7 @@ export function TableDropIndicator({
       data-slot="table-drop-indicator"
       className={composeRenderProps(className, (className) =>
         cn(
-          "relative z-20 [transform:translateZ(0)] outline-none drop-target:outline-2 drop-target:outline-solid drop-target:outline-primary forced-colors:drop-target:outline-[Highlight]",
+          "relative z-20 transform-[translateZ(0)] outline-none drop-target:outline-2 drop-target:outline-solid drop-target:outline-primary forced-colors:drop-target:outline-[Highlight]",
           className,
         ),
       )}

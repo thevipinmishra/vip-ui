@@ -18,7 +18,7 @@ export function SelectInvalidDemo() {
       value={selected}
       onValueChange={setSelected}
       isInvalid={!selected}
-      className="w-full max-w-[340px]"
+      className="w-full max-w-85"
     >
       <SelectLabel>Workspace</SelectLabel>
       <SelectTrigger />

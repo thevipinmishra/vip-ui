@@ -225,7 +225,7 @@ export function ToastViewport({
       }
       className={composeRenderProps(className, (className) =>
         cn(
-          "fixed inset-x-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-60 outline-none [--toast-expanded:0] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-solid focus-visible:outline-ring has-focus-visible:[--toast-expanded:1] data-hovered:[--toast-expanded:1] sm:inset-x-auto sm:end-4 sm:w-96",
+          "fixed inset-x-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-60 outline-none [--toast-expanded:0] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-solid focus-visible:outline-ring has-focus-visible:[--toast-expanded:1] data-hovered:[--toast-expanded:1] sm:inset-x-auto sm:inset-e-4 sm:w-96",
           className,
         ),
       )}
@@ -407,7 +407,7 @@ export function Toast({
         }}
         className={composeRenderProps(className, (className) =>
           cn(
-            "group/toast absolute inset-x-0 bottom-0 origin-top touch-pan-y overflow-clip rounded-xl bg-popover text-popover-foreground opacity-[var(--toast-swipe-fade,1)] shadow-[var(--shadow-float)] ring-1 ring-border/70 outline-none transition-[translate,scale,height,opacity] duration-350 ease-spring [scale:var(--toast-scale)] [translate:var(--toast-swipe,0px)_var(--toast-y)] focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring starting:opacity-0 starting:[translate:0_100%] data-swiping:transition-none data-closing:pointer-events-none data-closing:opacity-0 data-closing:duration-200 data-closing:ease-out-quint data-closing:[scale:calc(var(--toast-scale)*0.96)] motion-reduce:transition-opacity motion-reduce:duration-200 motion-reduce:ease-out-quint forced-colors:border",
+            "group/toast absolute inset-x-0 bottom-0 origin-top touch-pan-y overflow-clip rounded-xl bg-popover text-popover-foreground opacity-(--toast-swipe-fade,1) shadow-(--shadow-float) ring-1 ring-border/70 outline-none transition-[translate,scale,height,opacity] duration-350 ease-spring scale-(--toast-scale) [translate:var(--toast-swipe,0px)_var(--toast-y)] focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring starting:opacity-0 starting:[translate:0_100%] data-swiping:transition-none data-closing:pointer-events-none data-closing:opacity-0 data-closing:duration-200 data-closing:ease-out-quint data-closing:scale-[calc(var(--toast-scale)*0.96)] motion-reduce:transition-opacity motion-reduce:duration-200 motion-reduce:ease-out-quint forced-colors:border",
             className,
           ),
         )}
@@ -488,7 +488,7 @@ export function ToastTitle({
       slot="title"
       data-slot="toast-title"
       className={cn(
-        "block text-sm leading-5 font-medium tracking-[-0.01em] [overflow-wrap:anywhere]",
+        "block text-sm leading-5 font-medium tracking-[-0.01em] wrap-anywhere",
         className,
       )}
     />
@@ -505,7 +505,7 @@ export function ToastDescription({
       slot="description"
       data-slot="toast-description"
       className={cn(
-        "mt-0.5 block text-sm leading-5 text-muted-foreground [overflow-wrap:anywhere]",
+        "mt-0.5 block text-sm leading-5 text-muted-foreground wrap-anywhere",
         className,
       )}
     />

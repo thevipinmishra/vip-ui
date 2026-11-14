@@ -204,9 +204,9 @@ export function InlineEdit({
               fieldHeight,
               fieldRadius,
               fieldText,
-              "group/read flex w-full min-w-0 cursor-pointer items-center gap-2 border border-transparent ps-[var(--field-px,0.875rem)] pe-[var(--field-inset,0.25rem)] text-start text-foreground outline-offset-4 outline-transparent transition-[background-color,border-color,box-shadow,outline-color,outline-offset] duration-200 ease-out-quint hover:bg-muted pressed:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-60 disabled:hover:bg-transparent motion-reduce:outline-offset-2 forced-colors:border-[ButtonBorder]",
+              "group/read flex w-full min-w-0 cursor-pointer items-center gap-2 border border-transparent ps-(--field-px,0.875rem) pe-(--field-inset,0.25rem) text-start text-foreground outline-offset-4 outline-transparent transition-[background-color,border-color,box-shadow,outline-color,outline-offset] duration-200 ease-out-quint hover:bg-muted pressed:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-60 disabled:hover:bg-transparent motion-reduce:outline-offset-2 forced-colors:border-[ButtonBorder]",
               hasEdited &&
-                "starting:border-input starting:bg-card starting:shadow-[var(--shadow-card)]",
+                "starting:border-input starting:bg-card starting:shadow-(--shadow-card)",
             )}
           >
             <span
@@ -219,7 +219,7 @@ export function InlineEdit({
             </span>
             <span
               aria-hidden="true"
-              className="grid size-[calc(var(--field-h,3rem)-2px-2*var(--field-inset,0.25rem))] shrink-0 place-items-center text-muted-foreground [&>*]:col-start-1 [&>*]:row-start-1"
+              className="grid size-[calc(var(--field-h,3rem)-2px-2*var(--field-inset,0.25rem))] shrink-0 place-items-center text-muted-foreground *:col-start-1 *:row-start-1"
             >
               <PencilSimpleIcon
                 size={16}

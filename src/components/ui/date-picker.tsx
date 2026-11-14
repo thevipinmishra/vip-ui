@@ -57,7 +57,7 @@ export function DatePicker<T extends DateValue>({
       data-size={size}
       className={composeRenderProps(className, (className) =>
         cn(
-          "group grid gap-2 data-[focus-visible]:outline-none",
+          "group grid gap-2 data-focus-visible:outline-none",
           size && fieldSizeStyles[size],
           className,
         ),
@@ -104,11 +104,7 @@ export function DatePickerGroup({
       {...props}
       data-slot="date-picker-group"
       className={composeRenderProps(className, (className) =>
-        cn(
-          segmentedFieldStyles,
-          "data-[focus-visible]:outline-none",
-          className,
-        ),
+        cn(segmentedFieldStyles, "data-focus-visible:outline-none", className),
       )}
     >
       {children ?? (
@@ -132,7 +128,7 @@ export function DatePickerInput({
       className={composeRenderProps(className, (className) =>
         cn(
           fieldText,
-          "min-w-0 flex-1 px-[calc(var(--field-px,0.875rem)-0.25rem)] py-[clamp(0px,calc((var(--field-h,3rem)-2rem)/2),0.5rem)] data-[focus-visible]:outline-none",
+          "min-w-0 flex-1 px-[calc(var(--field-px,0.875rem)-0.25rem)] py-[clamp(0px,calc((var(--field-h,3rem)-2rem)/2),0.5rem)] data-focus-visible:outline-none",
           className,
         ),
       )}
@@ -155,7 +151,7 @@ export function DatePickerTrigger({
       variant="ghost"
       iconOnly
       className={composeRenderProps(className, (className) =>
-        cn(fieldTriggerStyles, "me-[var(--field-inset,0.25rem)]", className),
+        cn(fieldTriggerStyles, "me-(--field-inset,0.25rem)", className),
       )}
     >
       {children ?? <CalendarBlankIcon aria-hidden="true" />}

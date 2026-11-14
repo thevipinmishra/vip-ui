@@ -26,7 +26,7 @@ const frameworks = [
 
 export function ComboBoxDemo() {
   return (
-    <ComboBox className="w-full max-w-[340px]">
+    <ComboBox className="w-full max-w-85">
       <ComboBoxLabel>Framework</ComboBoxLabel>
       <ComboBoxControl>
         <ComboBoxInput placeholder="Search frameworks" />

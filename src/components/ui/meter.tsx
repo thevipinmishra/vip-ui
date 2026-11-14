@@ -32,21 +32,21 @@ export function Meter({ label, className, children, ...props }: MeterProps) {
               {label && (
                 <Label
                   data-slot="meter-label"
-                  className="min-w-0 flex-1 font-medium [overflow-wrap:anywhere]"
+                  className="min-w-0 flex-1 font-medium wrap-anywhere"
                 >
                   {label}
                 </Label>
               )}
               <span
                 data-slot="meter-value"
-                className="ms-auto max-w-1/2 shrink-0 text-end font-mono tabular-nums text-muted-foreground [overflow-wrap:anywhere]"
+                className="ms-auto max-w-1/2 shrink-0 text-end font-mono tabular-nums text-muted-foreground wrap-anywhere"
               >
                 {valueText}
               </span>
             </div>
             <div
               data-slot="meter-track"
-              className="h-2 overflow-hidden rounded-full bg-secondary shadow-[var(--shadow-inset)] forced-colors:border rtl:-scale-x-100"
+              className="h-2 overflow-hidden rounded-full bg-secondary shadow-(--shadow-inset) forced-colors:border rtl:-scale-x-100"
             >
               <div
                 data-slot="meter-fill"

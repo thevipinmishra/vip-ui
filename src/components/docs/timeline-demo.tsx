@@ -10,7 +10,7 @@ export function TimelineDemo() {
   return (
     <Timeline
       aria-label="Project activity"
-      className="max-w-md rounded-xl border border-border bg-card p-4 shadow-[var(--shadow-card)] sm:p-5"
+      className="max-w-md rounded-xl border border-border bg-card p-4 shadow-(--shadow-card) sm:p-5"
     >
       <TimelineItem status="latest">
         <TimelineTitle>Design approved</TimelineTitle>

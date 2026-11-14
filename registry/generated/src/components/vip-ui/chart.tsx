@@ -46,16 +46,16 @@ const chartStyle = {
 } as CSSProperties;
 
 const chartSurfaceClass = cn(
-  "[&_.ts-chart:is(:focus):not(:focus-visible)]:outline-none [&_.ts-chart:focus-visible]:outline-2 [&_.ts-chart:focus-visible]:outline-ring [&_.ts-chart:focus-visible]:outline-offset-2 [&_.ts-chart-tooltip]:w-max [&_.ts-chart-tooltip]:min-w-36 [&_.ts-chart-tooltip]:[overflow-wrap:normal]!",
+  "[&_.ts-chart:is(:focus):not(:focus-visible)]:outline-none [&_.ts-chart:focus-visible]:outline-2 [&_.ts-chart:focus-visible]:outline-ring [&_.ts-chart:focus-visible]:outline-offset-2 [&_.ts-chart-tooltip]:w-max [&_.ts-chart-tooltip]:min-w-36 [&_.ts-chart-tooltip]:wrap-normal!",
   String.raw`[&_.ts-chart-tooltip\_\_title]:text-xs [&_.ts-chart-tooltip\_\_title]:text-muted-foreground [&_.ts-chart-tooltip\_\_rows]:grid [&_.ts-chart-tooltip\_\_rows]:gap-0.5 [&_.ts-chart-tooltip\_\_row]:-mx-1.5 [&_.ts-chart-tooltip\_\_row]:gap-x-3! [&_.ts-chart-tooltip\_\_row]:px-1.5 [&_.ts-chart-tooltip\_\_row]:py-0.5 [&_.ts-chart-tooltip\_\_row>span:nth-child(2)]:text-muted-foreground [&_.ts-chart-tooltip\_\_row>span:last-child]:font-semibold`,
-  String.raw`[&_.ts-chart\_\_interactive-legend_button]:rounded-md! [&_.ts-chart\_\_interactive-legend_button]:border-transparent! [&_.ts-chart\_\_interactive-legend_button]:bg-transparent! [&_.ts-chart\_\_interactive-legend_button]:px-2.5! [&_.ts-chart\_\_interactive-legend_button]:[font-family:inherit]! [&_.ts-chart\_\_interactive-legend_button]:text-xs! [&_.ts-chart\_\_interactive-legend_button]:leading-none! [&_.ts-chart\_\_interactive-legend_button]:font-medium! [&_.ts-chart\_\_interactive-legend_button]:text-muted-foreground! [&_.ts-chart\_\_interactive-legend_button]:transition-colors [&_.ts-chart\_\_interactive-legend_button]:duration-150 [&_.ts-chart\_\_interactive-legend_button[aria-pressed=true]]:text-foreground! [&_.ts-chart\_\_interactive-legend_button:hover]:bg-accent! [&_.ts-chart\_\_interactive-legend_button:focus-visible]:outline-2 [&_.ts-chart\_\_interactive-legend_button:focus-visible]:outline-solid [&_.ts-chart\_\_interactive-legend_button:focus-visible]:outline-offset-0 [&_.ts-chart\_\_interactive-legend_button:focus-visible]:outline-ring`,
+  String.raw`[&_.ts-chart\_\_interactive-legend_button]:rounded-md! [&_.ts-chart\_\_interactive-legend_button]:border-transparent! [&_.ts-chart\_\_interactive-legend_button]:bg-transparent! [&_.ts-chart\_\_interactive-legend_button]:px-2.5! [&_.ts-chart\_\_interactive-legend_button]:font-[inherit]! [&_.ts-chart\_\_interactive-legend_button]:text-xs! [&_.ts-chart\_\_interactive-legend_button]:leading-none! [&_.ts-chart\_\_interactive-legend_button]:font-medium! [&_.ts-chart\_\_interactive-legend_button]:text-muted-foreground! [&_.ts-chart\_\_interactive-legend_button]:transition-colors [&_.ts-chart\_\_interactive-legend_button]:duration-150 [&_.ts-chart\_\_interactive-legend_button[aria-pressed=true]]:text-foreground! [&_.ts-chart\_\_interactive-legend_button:hover]:bg-accent! [&_.ts-chart\_\_interactive-legend_button:focus-visible]:outline-2 [&_.ts-chart\_\_interactive-legend_button:focus-visible]:outline-solid [&_.ts-chart\_\_interactive-legend_button:focus-visible]:outline-offset-0 [&_.ts-chart\_\_interactive-legend_button:focus-visible]:outline-ring`,
 );
 
 const ChartFrameContext = createContext(false);
 
 const frameVariants = {
   default: "rounded-xl bg-card p-4 text-card-foreground sm:p-5",
-  card: "rounded-xl bg-card p-4 text-card-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70 sm:p-5 forced-colors:border",
+  card: "rounded-xl bg-card p-4 text-card-foreground shadow-(--shadow-card) ring-1 ring-border/70 sm:p-5 forced-colors:border",
   plain: "",
 };
 

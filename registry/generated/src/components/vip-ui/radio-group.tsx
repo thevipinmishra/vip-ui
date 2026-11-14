@@ -72,7 +72,7 @@ export function RadioGroup({
       }}
       className={composeRenderProps(className, (className) =>
         cn(
-          "group/radio-group flex min-w-0 flex-col gap-1 data-[orientation=horizontal]:flex-row data-[orientation=horizontal]:flex-wrap data-[orientation=horizontal]:gap-x-6",
+          "group/radio-group flex min-w-0 flex-col gap-1 orientation-horizontal:flex-row orientation-horizontal:flex-wrap orientation-horizontal:gap-x-6",
           className,
         ),
       )}
@@ -98,7 +98,7 @@ export function RadioGroupLabel({
       {...props}
       data-slot="radio-group-label"
       className={cn(
-        "w-full pb-1 text-sm font-semibold text-foreground [overflow-wrap:anywhere]",
+        "w-full pb-1 text-sm font-semibold text-foreground wrap-anywhere",
         className,
       )}
     />
@@ -132,7 +132,7 @@ export function RadioGroupItems({
       {...props}
       data-slot="radio-group-items"
       className={cn(
-        "flex w-full flex-col gap-1 group-data-[orientation=horizontal]/radio-group:flex-row group-data-[orientation=horizontal]/radio-group:flex-wrap group-data-[orientation=horizontal]/radio-group:gap-x-6",
+        "flex w-full flex-col gap-1 group-orientation-horizontal/radio-group:flex-row group-orientation-horizontal/radio-group:flex-wrap group-orientation-horizontal/radio-group:gap-x-6",
         className,
       )}
     />
@@ -231,7 +231,7 @@ export function RadioIndicator({
       aria-hidden="true"
       data-slot="radio-indicator"
       className={cn(
-        "grid size-5 shrink-0 place-items-center rounded-full border border-muted-foreground/75 bg-card shadow-[var(--shadow-inset)] transition-[background-color,border-color,box-shadow,outline-color,outline-offset,scale] duration-150 ease-out-quint group-hover/radio:border-primary motion-safe:group-pressed/radio:scale-90 group-selected/radio:border-primary group-selected/radio:bg-primary group-selected/radio:shadow-none group-invalid/radio:border-destructive group-invalid/radio:group-hover/radio:border-destructive group-invalid/radio:group-selected/radio:bg-destructive forced-colors:border-[ButtonText] forced-colors:group-selected/radio:border-[Highlight] forced-colors:group-selected/radio:bg-[Highlight] forced-colors:group-disabled/radio:border-[GrayText] forced-colors:group-disabled/radio:bg-[Canvas]",
+        "grid size-5 shrink-0 place-items-center rounded-full border border-muted-foreground/75 bg-card shadow-(--shadow-inset) transition-[background-color,border-color,box-shadow,outline-color,outline-offset,scale] duration-150 ease-out-quint group-hover/radio:border-primary motion-safe:group-pressed/radio:scale-90 group-selected/radio:border-primary group-selected/radio:bg-primary group-selected/radio:shadow-none group-invalid/radio:border-destructive group-invalid/radio:group-hover/radio:border-destructive group-invalid/radio:group-selected/radio:bg-destructive forced-colors:border-[ButtonText] forced-colors:group-selected/radio:border-[Highlight] forced-colors:group-selected/radio:bg-[Highlight] forced-colors:group-disabled/radio:border-[GrayText] forced-colors:group-disabled/radio:bg-[Canvas]",
         variant === "default" &&
           "outline-offset-4 outline-transparent group-focus-visible/radio:outline-2 group-focus-visible/radio:outline-offset-2 group-focus-visible/radio:outline-ring motion-reduce:outline-offset-2",
         className,
@@ -250,7 +250,7 @@ export function RadioLabel({
     <span
       {...props}
       data-slot="radio-label"
-      className={cn("min-w-0 font-medium [overflow-wrap:anywhere]", className)}
+      className={cn("min-w-0 font-medium wrap-anywhere", className)}
     />
   );
 }

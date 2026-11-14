@@ -127,7 +127,7 @@ export function IconSwapPreview({ active }: CatalogPreviewProps) {
   return (
     <div
       ref={ref}
-      className="grid size-16 place-items-center rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]"
+      className="grid size-16 place-items-center rounded-2xl border border-border bg-card shadow-(--shadow-card)"
     >
       <IconSwap contentKey={copied ? "copied" : "copy"} className="text-2xl">
         {copied ? <CheckIcon /> : <CopyIcon />}
@@ -147,7 +147,7 @@ export function PresencePreview({ active }: CatalogPreviewProps) {
       </span>
       <Presence
         show={show}
-        className="w-full rounded-xl border border-border bg-card p-4 shadow-[var(--shadow-card)]"
+        className="w-full rounded-xl border border-border bg-card p-4 shadow-(--shadow-card)"
       >
         <p className="text-lg font-medium tracking-tight">
           Keep the good ideas close.
@@ -171,7 +171,7 @@ export function PresenceListPreview({ active }: CatalogPreviewProps) {
     <div ref={ref} className="grid min-h-40 content-start">
       <PresenceList items={items} getKey={(item) => item.id} aria-label="Tasks">
         {(item) => (
-          <span className="flex items-center gap-3 rounded-xl border border-border bg-card px-3 py-2.5 text-sm shadow-[var(--shadow-card)]">
+          <span className="flex items-center gap-3 rounded-xl border border-border bg-card px-3 py-2.5 text-sm shadow-(--shadow-card)">
             <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-accent font-mono text-xs font-semibold text-accent-foreground">
               {String(tasks.indexOf(item) + 1).padStart(2, "0")}
             </span>
@@ -194,7 +194,7 @@ export function StaggerGroupPreview({ active }: CatalogPreviewProps) {
         {tiles.map((word) => (
           <StaggerItem
             key={word}
-            className="grid min-h-28 min-w-0 content-between rounded-xl border border-border bg-card p-3 shadow-[var(--shadow-card)]"
+            className="grid min-h-28 min-w-0 content-between rounded-xl border border-border bg-card p-3 shadow-(--shadow-card)"
           >
             <span className="h-1 w-7 rounded-full bg-primary" />
             <span className="text-lg font-semibold tracking-tight">{word}</span>
@@ -222,7 +222,7 @@ export function LayoutMorphPreview({ active }: CatalogPreviewProps) {
     <div ref={ref} className="grid min-h-40 content-start">
       <LayoutMorph
         contentKey={tick % captions.length}
-        className="rounded-xl border border-border bg-card px-5 py-4 shadow-[var(--shadow-card)]"
+        className="rounded-xl border border-border bg-card px-5 py-4 shadow-(--shadow-card)"
       >
         <p className="text-xl font-semibold tracking-tight">{caption.title}</p>
         <p className="mt-2 text-sm leading-6 text-muted-foreground">
@@ -241,7 +241,7 @@ export function MarqueePreview() {
       {disciplines.map((discipline, index) => (
         <span
           key={discipline}
-          className="inline-flex items-center gap-3 whitespace-nowrap rounded-xl border border-border bg-card px-4 py-3 text-sm font-medium shadow-[var(--shadow-card)]"
+          className="inline-flex items-center gap-3 whitespace-nowrap rounded-xl border border-border bg-card px-4 py-3 text-sm font-medium shadow-(--shadow-card)"
         >
           <span className="font-mono text-xs text-primary">0{index + 1}</span>
           {discipline}

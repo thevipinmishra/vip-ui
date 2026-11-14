@@ -139,7 +139,7 @@ export function TokenFieldInput<T extends TokenFieldValue = TokenFieldValue>({
             fieldRadius,
             fieldPaddingX,
             fieldText,
-            "cursor-text border border-input bg-card py-[max(0px,calc((var(--field-h,3rem)-1.75rem-2px)/2))] leading-[min(1.75rem,calc(var(--field-h,3rem)-2px))] text-foreground shadow-[var(--shadow-card)] outline-none [overflow-wrap:anywhere] transition-[color,background-color,border-color,box-shadow] duration-150 ease-out-quint [&:empty]:before:pointer-events-none [&:empty]:before:text-muted-foreground/80 [&:empty]:before:content-[attr(data-placeholder)] data-[focused]:border-ring data-[focused]:ring-1 data-[focused]:ring-ring data-[readonly]:bg-muted/40 data-[disabled]:cursor-not-allowed data-[disabled]:bg-muted data-[disabled]:opacity-60",
+            "cursor-text border border-input bg-card py-[max(0px,calc((var(--field-h,3rem)-1.75rem-2px)/2))] leading-[min(1.75rem,calc(var(--field-h,3rem)-2px))] text-foreground shadow-(--shadow-card) outline-none wrap-anywhere transition-[color,background-color,border-color,box-shadow] duration-150 ease-out-quint [&:empty]:before:pointer-events-none [&:empty]:before:text-muted-foreground/80 [&:empty]:before:content-[attr(data-placeholder)] data-focused:border-ring data-focused:ring-1 data-focused:ring-ring data-readonly:bg-muted/40 data-disabled:cursor-not-allowed data-disabled:bg-muted data-disabled:opacity-60",
             isHovered && !isDisabled && !isReadOnly && "border-primary/45",
             className,
           ),
@@ -171,7 +171,7 @@ export function Token({ className, ...props }: TokenProps) {
       data-slot="token"
       className={composeRenderProps(className, (className) =>
         cn(
-          "mx-0.5 inline-block max-w-full rounded-md bg-accent px-2 py-0.5 text-xs font-medium text-accent-foreground transition-[color,background-color] duration-150 ease-out-quint data-[selected]:bg-primary data-[selected]:text-primary-foreground",
+          "mx-0.5 inline-block max-w-full rounded-md bg-accent px-2 py-0.5 text-xs font-medium text-accent-foreground transition-[color,background-color] duration-150 ease-out-quint selected:bg-primary selected:text-primary-foreground",
           className,
         ),
       )}

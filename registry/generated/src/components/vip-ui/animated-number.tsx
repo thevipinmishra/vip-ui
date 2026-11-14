@@ -49,10 +49,7 @@ export function AnimatedNumber({
       {...props}
       data-slot="animated-number"
       data-variant={variant}
-      className={cn(
-        "min-w-fit tabular-nums [overflow-wrap:anywhere]",
-        className,
-      )}
+      className={cn("min-w-fit tabular-nums wrap-anywhere", className)}
     >
       {variant === "slide" ? (
         <SlidingNumber
@@ -125,7 +122,7 @@ function SlidingDigit({
   return (
     <span
       data-slot="animated-number-digit"
-      className="-mx-[0.06em] -my-[0.15em] inline-grid overflow-hidden px-[0.06em] py-[0.15em] align-baseline [mask-image:linear-gradient(to_bottom,transparent,black_0.15em,black_calc(100%-0.15em),transparent)]"
+      className="mx-[-0.06em] my-[-0.15em] inline-grid overflow-hidden px-[0.06em] py-[0.15em] align-baseline mask-[linear-gradient(to_bottom,transparent,black_0.15em,black_calc(100%-0.15em),transparent)]"
     >
       <AnimatePresence initial={false} custom={direction}>
         <motion.span

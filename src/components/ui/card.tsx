@@ -13,7 +13,7 @@ export function Card({ className, ...props }: ComponentPropsWithRef<"div">) {
     <div
       data-slot="card"
       className={cn(
-        "relative min-w-0 rounded-xl bg-card text-card-foreground break-words shadow-[var(--shadow-card)] ring-1 ring-border/70 outline-offset-4 outline-transparent transition-[box-shadow,translate,outline-color,outline-offset] duration-200 ease-out-quint forced-colors:border has-[[data-slot=card-link][data-hovered]]:shadow-[0_1px_2px_rgb(0_0_0/0.04),0_8px_24px_-8px_rgb(0_0_0/0.16)] has-[[data-slot=card-link][data-hovered]]:ring-border motion-safe:has-[[data-slot=card-link][data-hovered]]:-translate-y-0.5 motion-safe:has-[[data-slot=card-link][data-pressed]]:translate-y-0 has-[[data-slot=card-link][data-focus-visible]]:outline-2 has-[[data-slot=card-link][data-focus-visible]]:outline-offset-2 has-[[data-slot=card-link][data-focus-visible]]:outline-ring motion-reduce:outline-offset-2",
+        "relative min-w-0 rounded-xl bg-card text-card-foreground wrap-break-word shadow-(--shadow-card) ring-1 ring-border/70 outline-offset-4 outline-transparent transition-[box-shadow,translate,outline-color,outline-offset] duration-200 ease-out-quint forced-colors:border has-[[data-slot=card-link][data-hovered]]:shadow-[0_1px_2px_rgb(0_0_0/0.04),0_8px_24px_-8px_rgb(0_0_0/0.16)] has-[[data-slot=card-link][data-hovered]]:ring-border motion-safe:has-[[data-slot=card-link][data-hovered]]:-translate-y-0.5 motion-safe:has-[[data-slot=card-link][data-pressed]]:translate-y-0 has-[[data-slot=card-link][data-focus-visible]]:outline-2 has-[[data-slot=card-link][data-focus-visible]]:outline-offset-2 has-[[data-slot=card-link][data-focus-visible]]:outline-ring motion-reduce:outline-offset-2",
         className,
       )}
       {...props}
@@ -46,7 +46,7 @@ export function CardTitle({
     <Heading
       data-slot="card-title"
       className={cn(
-        "text-base font-semibold tracking-[-0.025em] [overflow-wrap:anywhere]",
+        "text-base font-semibold tracking-tight wrap-anywhere",
         className,
       )}
       {...props}
@@ -93,7 +93,7 @@ export function CardDescription({
     <p
       data-slot="card-description"
       className={cn(
-        "text-sm leading-6 text-muted-foreground [overflow-wrap:anywhere]",
+        "text-sm leading-6 text-muted-foreground wrap-anywhere",
         className,
       )}
       {...props}

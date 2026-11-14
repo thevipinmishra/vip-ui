@@ -260,7 +260,7 @@ export function AvailabilityPage() {
       </header>
 
       <Presence show={dirty}>
-        <div className="sticky top-16 z-30 border-b border-border/70 bg-popover/95 px-4 py-2.5 shadow-[var(--shadow-card)] backdrop-blur">
+        <div className="sticky top-16 z-30 border-b border-border/70 bg-popover/95 px-4 py-2.5 shadow-(--shadow-card) backdrop-blur">
           <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3">
             <p className="text-sm font-medium">
               You have changes that are not saved.
@@ -389,7 +389,7 @@ export function AvailabilityPage() {
                                   }}
                                   size="sm"
                                   hourCycle={24}
-                                  className="min-w-0 max-w-[7.25rem] grow shrink basis-[5.5rem]"
+                                  className="min-w-0 max-w-29 grow shrink basis-22"
                                 />
                                 <span
                                   aria-hidden="true"
@@ -413,7 +413,7 @@ export function AvailabilityPage() {
                                   }}
                                   size="sm"
                                   hourCycle={24}
-                                  className="min-w-0 max-w-[7.25rem] grow shrink basis-[5.5rem]"
+                                  className="min-w-0 max-w-29 grow shrink basis-22"
                                 />
                                 {day.ranges.length > 1 && (
                                   <Button

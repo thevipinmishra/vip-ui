@@ -10,7 +10,7 @@ export function TimelineProcessDemo() {
   return (
     <Timeline
       aria-label="Order progress"
-      className="max-w-md rounded-xl border border-border bg-card p-4 shadow-[var(--shadow-card)] sm:p-5"
+      className="max-w-md rounded-xl border border-border bg-card p-4 shadow-(--shadow-card) sm:p-5"
     >
       <TimelineItem>
         <TimelineTitle>Order placed</TimelineTitle>

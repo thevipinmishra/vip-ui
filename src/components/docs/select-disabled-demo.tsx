@@ -4,7 +4,7 @@ import { Select } from "@/components/ui/select";
 
 export function SelectDisabledDemo() {
   return (
-    <div className="w-full max-w-[340px]">
+    <div className="w-full max-w-85">
       <Select
         label="Archived workspace"
         description="This workspace is no longer available."

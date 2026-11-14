@@ -43,7 +43,7 @@ export function TableReorderDemo() {
         aria-label="Launch checklist"
         selectionMode="multiple"
         dragAndDropHooks={dragAndDropHooks}
-        className="min-w-[28rem]"
+        className="min-w-md"
       >
         <TableHeader>
           <Column id="name" isRowHeader>

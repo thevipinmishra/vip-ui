@@ -16,7 +16,7 @@ export function ProgressiveBlurHeaderDemo() {
     <section
       // biome-ignore lint/a11y/noNoninteractiveTabindex: Keyboard users must be able to scroll the list.
       tabIndex={0}
-      className="h-72 w-full max-w-sm overflow-y-auto rounded-xl border border-border bg-card shadow-[var(--shadow-card)]"
+      className="h-72 w-full max-w-sm overflow-y-auto rounded-xl border border-border bg-card shadow-(--shadow-card)"
       aria-label="Launch thread"
     >
       <header className="sticky top-0 z-10 px-4 py-3">

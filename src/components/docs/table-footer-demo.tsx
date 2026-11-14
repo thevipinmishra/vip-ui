@@ -29,7 +29,7 @@ export function TableFooterDemo() {
 
   return (
     <TableContainer className="max-w-2xl">
-      <Table aria-label="Invoice lines" className="min-w-[28rem]">
+      <Table aria-label="Invoice lines" className="min-w-md">
         <TableHeader>
           <Column id="item" isRowHeader>
             Item

@@ -99,7 +99,7 @@ export function PackageManagerTabs({
                           initial={false}
                           aria-hidden="true"
                           transition={transitionFor(reduceMotion, springLayout)}
-                          className="pointer-events-none absolute inset-0 -z-10 rounded-[inherit] bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70 forced-colors:border forced-colors:border-[Highlight]"
+                          className="pointer-events-none absolute inset-0 -z-10 rounded-[inherit] bg-card shadow-(--shadow-card) ring-1 ring-border/70 forced-colors:border forced-colors:border-[Highlight]"
                         />
                       )}
                       {manager}

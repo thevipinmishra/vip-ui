@@ -170,7 +170,7 @@ export function Stepper({
               <div className="min-w-0 pe-3 pt-2.5">
                 <span
                   className={cn(
-                    "block text-sm font-medium leading-5 transition-[color] duration-200 ease-out-quint [overflow-wrap:anywhere]",
+                    "block text-sm font-medium leading-5 transition-[color] duration-200 ease-out-quint wrap-anywhere",
                     active || completed
                       ? "text-foreground"
                       : "text-muted-foreground",
@@ -180,7 +180,7 @@ export function Stepper({
                   {step.label}
                 </span>
                 {step.description && (
-                  <span className="mt-0.5 block text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]">
+                  <span className="mt-0.5 block text-xs leading-5 text-muted-foreground wrap-anywhere">
                     {step.description}
                   </span>
                 )}

@@ -30,7 +30,7 @@ export function FileTriggerDemo() {
       >
         <Button variant="outline">Add images</Button>
       </FileTrigger>
-      <output className="max-w-full text-sm text-muted-foreground [overflow-wrap:anywhere]">
+      <output className="max-w-full text-sm text-muted-foreground wrap-anywhere">
         {files.length ? files.join(", ") : "No images selected"}
         {skipped > 0 && (
           <span className="block">

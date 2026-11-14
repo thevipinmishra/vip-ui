@@ -2,7 +2,7 @@ import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 
 export function ProgressiveBlurCaptionDemo() {
   return (
-    <figure className="relative aspect-[4/3] w-full max-w-sm overflow-clip rounded-xl bg-[repeating-conic-gradient(from_45deg,var(--chart-2)_0_25%,var(--chart-3)_0_50%)] bg-[length:2.5rem_2.5rem] shadow-[var(--shadow-card)]">
+    <figure className="relative aspect-4/3 w-full max-w-sm overflow-clip rounded-xl bg-[repeating-conic-gradient(from_45deg,var(--chart-2)_0_25%,var(--chart-3)_0_50%)] bg-size-[2.5rem_2.5rem] shadow-(--shadow-card)">
       <div className="absolute inset-[18%] rounded-full bg-[repeating-radial-gradient(circle,var(--chart-4)_0_0.75rem,var(--chart-5)_0.75rem_1.5rem)]" />
       <ProgressiveBlur
         blur={24}

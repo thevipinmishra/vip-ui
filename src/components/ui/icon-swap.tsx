@@ -25,7 +25,7 @@ export function IconSwap({
       {...props}
       data-slot="icon-swap"
       className={cn(
-        "inline-grid shrink-0 place-items-center align-middle [&>*]:col-start-1 [&>*]:row-start-1",
+        "inline-grid shrink-0 place-items-center align-middle *:col-start-1 *:row-start-1",
         className,
       )}
     >

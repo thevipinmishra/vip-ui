@@ -52,7 +52,7 @@ export function DisclosureHeader({
           ),
         )}
       >
-        <span className="min-w-0 [overflow-wrap:anywhere]">{children}</span>
+        <span className="min-w-0 wrap-anywhere">{children}</span>
         <span aria-hidden="true" className={collapsibleChevronStyles}>
           <CaretDownIcon size={16} />
         </span>
@@ -74,7 +74,7 @@ export function DisclosurePanel({
         cn("text-sm leading-6 text-muted-foreground", className),
       )}
     >
-      <div className="px-4 pb-3 [overflow-wrap:anywhere]">{children}</div>
+      <div className="px-4 pb-3 wrap-anywhere">{children}</div>
     </CollapsiblePanel>
   );
 }

@@ -57,7 +57,7 @@ export function ComboBoxAsyncDemo() {
       items={list.items}
       inputValue={list.filterText}
       onInputChange={list.setFilterText}
-      className="w-full max-w-[340px]"
+      className="w-full max-w-85"
     >
       <ComboBoxLabel>Assignee</ComboBoxLabel>
       <ComboBoxControl>

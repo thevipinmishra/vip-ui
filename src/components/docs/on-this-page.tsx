@@ -56,7 +56,7 @@ export function OnThisPage() {
 
   return (
     <nav aria-label="On this page">
-      <p className="mb-2 ps-[calc(1.25rem+1px)] text-xs font-medium text-muted-foreground">
+      <p className="mb-2 ps-5.25 text-xs font-medium text-muted-foreground">
         On this page
       </p>
       <div ref={containerRef} className="relative">
@@ -70,7 +70,7 @@ export function OnThisPage() {
                 ? { duration: 0 }
                 : { type: "spring", duration: 0.36, bounce: 0.16 }
             }
-            className="pointer-events-none absolute top-0 start-0 w-px bg-foreground"
+            className="pointer-events-none absolute top-0 inset-s-0 w-px bg-foreground"
           />
         )}
         <ul className="grid gap-0.5">
@@ -88,7 +88,7 @@ export function OnThisPage() {
                   aria-current={isCurrent ? "location" : undefined}
                   onClick={() => setCurrentId(section.id)}
                   className={cn(
-                    "relative flex items-start rounded-sm py-1 ps-[calc(1.25rem+1px)] pe-2 text-[13px] leading-5 transition-[color] duration-150 ease-out-quint hover:text-foreground",
+                    "relative flex items-start rounded-sm py-1 ps-5.25 pe-2 text-[13px] leading-5 transition-[color] duration-150 ease-out-quint hover:text-foreground",
                     isHighlighted ? "text-foreground" : "text-muted-foreground",
                   )}
                 >

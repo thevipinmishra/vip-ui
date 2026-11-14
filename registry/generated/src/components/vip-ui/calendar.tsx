@@ -56,7 +56,7 @@ export const calendarHeaderCellStyles =
   "pb-1 text-xs font-medium text-muted-foreground";
 
 export const calendarCellBaseClass =
-  "relative grid in-data-[months]:outside-month:invisible aspect-square w-full cursor-pointer place-items-center text-sm tabular-nums outline-none transition-colors duration-150 ease-out-quint data-today:after:absolute data-today:after:bottom-1 data-today:after:size-1 data-today:after:rounded-full data-today:after:bg-primary selected:data-today:after:bg-current outside-month:text-muted-foreground/50 unavailable:cursor-not-allowed unavailable:text-muted-foreground unavailable:line-through disabled:cursor-default disabled:text-muted-foreground/50 focus-visible:outline-2 focus-visible:outline-solid focus-visible:z-10 focus-visible:outline-offset-2 focus-visible:outline-ring forced-colors:border-2 forced-colors:border-[Canvas] forced-colors:data-today:after:bg-[CanvasText] forced-colors:outside-month:text-[GrayText] forced-colors:disabled:text-[GrayText]";
+  "relative grid in-data-months:outside-month:invisible aspect-square w-full cursor-pointer place-items-center text-sm tabular-nums outline-none transition-colors duration-150 ease-out-quint data-today:after:absolute data-today:after:bottom-1 data-today:after:size-1 data-today:after:rounded-full data-today:after:bg-primary selected:data-today:after:bg-current outside-month:text-muted-foreground/50 unavailable:cursor-not-allowed unavailable:text-muted-foreground unavailable:line-through disabled:cursor-default disabled:text-muted-foreground/50 focus-visible:outline-2 focus-visible:outline-solid focus-visible:z-10 focus-visible:outline-offset-2 focus-visible:outline-ring forced-colors:border-2 forced-colors:border-[Canvas] forced-colors:data-today:after:bg-[CanvasText] forced-colors:outside-month:text-[GrayText] forced-colors:disabled:text-[GrayText]";
 
 export const calendarCellClass = `${calendarCellBaseClass} rounded-md transition-[color,background-color,scale] motion-safe:pressed:scale-90 selected:bg-primary selected:text-primary-foreground invalid:selected:bg-destructive invalid:selected:text-background forced-colors:selected:border-[Highlight]`;
 
@@ -239,7 +239,7 @@ export function CalendarHeader({
         <CalendarHeading
           ref={headingRef}
           offset={offset ? { months: offset } : undefined}
-          className="min-w-0 text-center text-sm font-semibold [overflow-wrap:anywhere] [text-wrap:balance]"
+          className="min-w-0 text-center text-sm font-semibold wrap-anywhere text-balance"
         />
       )}
       {next ? (
@@ -440,7 +440,7 @@ export function CalendarPresets({
       items={presets.map((preset) => ({ id: preset }))}
       render={withItemHighlight(undefined, { ring: true })}
       className={cn(
-        "flex shrink-0 gap-1 border-border/70 outline-none max-sm:-mx-3 max-sm:-mt-3 max-sm:mb-3 max-sm:w-0 max-sm:min-w-[calc(100%+1.5rem)] max-sm:overflow-x-auto max-sm:overscroll-x-contain max-sm:border-b max-sm:p-1.5 max-sm:[scrollbar-width:none] sm:-my-3 sm:-ms-3 sm:me-3 sm:w-40 sm:flex-col sm:border-e sm:p-1.5",
+        "flex shrink-0 gap-1 border-border/70 outline-none max-sm:-mx-3 max-sm:-mt-3 max-sm:mb-3 max-sm:w-0 max-sm:min-w-[calc(100%+1.5rem)] max-sm:overflow-x-auto max-sm:overscroll-x-contain max-sm:border-b max-sm:p-1.5 max-sm:scrollbar-none sm:-my-3 sm:-ms-3 sm:me-3 sm:w-40 sm:flex-col sm:border-e sm:p-1.5",
         className,
       )}
     >

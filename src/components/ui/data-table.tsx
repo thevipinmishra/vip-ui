@@ -222,12 +222,12 @@ export function DataTable<T extends RowData>({
     <div
       data-slot="data-table"
       className={cn(
-        "w-full min-w-0 overflow-hidden rounded-xl border border-border bg-card text-card-foreground shadow-[var(--shadow-card)]",
+        "w-full min-w-0 overflow-hidden rounded-xl border border-border bg-card text-card-foreground shadow-(--shadow-card)",
         className,
       )}
     >
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-4 py-3 sm:px-5">
-        <p className="min-w-0 text-base font-semibold tracking-tight text-foreground [overflow-wrap:anywhere]">
+        <p className="min-w-0 text-base font-semibold tracking-tight text-foreground wrap-anywhere">
           {label}
         </p>
         {selectable && showClearSelection && selectedCount > 0 && (
@@ -308,7 +308,7 @@ export function DataTable<T extends RowData>({
       <TableContainer className="@container rounded-none border-0 bg-transparent shadow-none">
         <Table
           aria-label={label}
-          className="min-w-[640px]"
+          className="min-w-160"
           disabledKeys={disabledKeys}
           onRowAction={onRowAction}
           selectionMode={selectable ? "multiple" : "none"}
@@ -345,7 +345,7 @@ export function DataTable<T extends RowData>({
           <TableBody
             items={pageRows}
             renderEmptyState={() => (
-              <div className="sticky start-0 w-[100cqw] px-4 py-8 text-center">
+              <div className="sticky inset-s-0 w-[100cqw] px-4 py-8 text-center">
                 <p className="text-sm font-medium text-foreground">
                   {hasFilters ? "No matching rows" : "No rows yet"}
                 </p>

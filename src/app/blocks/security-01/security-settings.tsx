@@ -499,7 +499,7 @@ export function SecuritySettings() {
             <TableContainer className="rounded-none border-x-0 border-b-0">
               <Table
                 aria-label="Active sessions"
-                className="min-w-[48rem] text-[13px] [width:100%]!"
+                className="min-w-3xl text-[13px] w-full!"
               >
                 <TableHeader>
                   <Column isRowHeader width={280}>

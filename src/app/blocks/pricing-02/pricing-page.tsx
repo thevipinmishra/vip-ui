@@ -33,7 +33,7 @@ function PlanCard({
   return (
     <div
       className={cn(
-        "relative flex min-w-0 flex-col rounded-2xl bg-card p-5 shadow-[var(--shadow-card)] ring-1 ring-border/70",
+        "relative flex min-w-0 flex-col rounded-2xl bg-card p-5 shadow-(--shadow-card) ring-1 ring-border/70",
         plan.popular && "ring-2 ring-primary lg:-my-3 lg:py-8",
       )}
     >
@@ -50,7 +50,7 @@ function PlanCard({
         <AnimatedNumber
           value={price}
           formatOptions={currencyFormat}
-          className="text-3xl font-semibold tracking-[-0.05em]"
+          className="text-3xl font-semibold tracking-tighter"
         />
         <span className="text-sm text-muted-foreground">
           {price === 0 ? "forever" : "/ seat / month"}
@@ -141,13 +141,13 @@ function Calculator({
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:items-start lg:gap-12">
       <div className="min-w-0">
-        <h2 className="text-balance text-2xl font-semibold tracking-[-0.05em] sm:text-3xl">
+        <h2 className="text-balance text-2xl font-semibold tracking-tighter sm:text-3xl">
           Estimate your bill.
         </h2>
         <p className="mt-3 max-w-lg text-sm leading-6 text-muted-foreground">
           Move the slider to see the monthly cost for each plan.
         </p>
-        <div className="mt-7 rounded-xl bg-card p-5 shadow-[var(--shadow-card)] ring-1 ring-border/70 sm:p-6">
+        <div className="mt-7 rounded-xl bg-card p-5 shadow-(--shadow-card) ring-1 ring-border/70 sm:p-6">
           <Slider
             label="Seats"
             minValue={1}
@@ -193,7 +193,7 @@ function Calculator({
           </p>
         </div>
       </div>
-      <div className="rounded-xl bg-card p-5 shadow-[var(--shadow-card)] ring-1 ring-border/70 sm:p-6">
+      <div className="rounded-xl bg-card p-5 shadow-(--shadow-card) ring-1 ring-border/70 sm:p-6">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <p className="text-sm font-semibold">Team</p>
           <Badge variant={teamAvailable ? "outline" : "warning"}>
@@ -271,13 +271,13 @@ export function PricingPage() {
             className="pointer-events-none absolute inset-0 -z-10"
           >
             <div
-              className="absolute left-1/2 top-[-24rem] h-[38rem] w-[60rem] -translate-x-1/2 rounded-full blur-2xl"
+              className="absolute left-1/2 -top-96 h-152 w-240 -translate-x-1/2 rounded-full blur-2xl"
               style={{
                 background:
                   "radial-gradient(closest-side, color-mix(in oklab, var(--primary) 12%, transparent), transparent)",
               }}
             />
-            <div className="absolute inset-0 opacity-[0.3] [background-image:linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:radial-gradient(ellipse_at_top,black,transparent_75%)]" />
+            <div className="absolute inset-0 opacity-[0.3] bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-size-[64px_64px] mask-[radial-gradient(ellipse_at_top,black,transparent_75%)]" />
           </div>
           <div className="mx-auto w-full max-w-6xl px-4 pb-10 pt-12 sm:px-6 sm:pt-16 lg:px-8 lg:pb-14">
             <div className="mx-auto max-w-2xl text-center">
@@ -332,7 +332,7 @@ export function PricingPage() {
         >
           <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-2xl">
-              <h2 className="text-balance text-2xl font-semibold tracking-[-0.05em] sm:text-3xl">
+              <h2 className="text-balance text-2xl font-semibold tracking-tighter sm:text-3xl">
                 Every detail, side by side.
               </h2>
               <p className="mt-3 text-sm leading-6 text-muted-foreground">
@@ -353,7 +353,7 @@ export function PricingPage() {
         <section id="faq" className="scroll-mt-20 py-12 sm:py-16">
           <div className="mx-auto grid w-full max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-14 lg:px-8">
             <div>
-              <h2 className="text-balance text-2xl font-semibold tracking-[-0.05em] sm:text-3xl">
+              <h2 className="text-balance text-2xl font-semibold tracking-tighter sm:text-3xl">
                 Billing questions, answered.
               </h2>
               <p className="mt-3 text-sm leading-6 text-muted-foreground">

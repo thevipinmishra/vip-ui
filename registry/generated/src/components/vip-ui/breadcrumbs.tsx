@@ -92,7 +92,7 @@ export function Breadcrumb({
             <span
               aria-current="page"
               data-slot="breadcrumb-current"
-              className="min-w-0 font-medium text-foreground [overflow-wrap:anywhere]"
+              className="min-w-0 font-medium text-foreground wrap-anywhere"
             >
               {children}
             </span>
@@ -100,7 +100,7 @@ export function Breadcrumb({
             <Link
               {...linkProps}
               data-slot="breadcrumb-link"
-              className="min-w-0 cursor-pointer rounded-sm text-muted-foreground underline-offset-4 [overflow-wrap:anywhere] decoration-transparent transition-[color,background-color,box-shadow,text-decoration-color] duration-150 ease-out-quint underline hover:text-foreground hover:decoration-current focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-transparent disabled:cursor-default disabled:text-muted-foreground/60 disabled:no-underline"
+              className="min-w-0 cursor-pointer rounded-sm text-muted-foreground underline-offset-4 wrap-anywhere decoration-transparent transition-[color,background-color,box-shadow,text-decoration-color] duration-150 ease-out-quint underline hover:text-foreground hover:decoration-current focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-transparent disabled:cursor-default disabled:text-muted-foreground/60 disabled:no-underline"
             >
               {children}
             </Link>

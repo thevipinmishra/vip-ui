@@ -19,7 +19,7 @@ export function SpinnerOverlayDemo() {
       <section
         aria-label="Weekly traffic"
         aria-busy={isLoading}
-        className="relative overflow-hidden rounded-xl bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70"
+        className="relative overflow-hidden rounded-xl bg-card shadow-(--shadow-card) ring-1 ring-border/70"
       >
         <dl
           className={`grid grid-cols-3 divide-x divide-border/70 transition-[opacity,filter] duration-300 ease-out-quint ${isLoading ? "opacity-40 blur-[1px]" : ""}`}
@@ -35,7 +35,7 @@ export function SpinnerOverlayDemo() {
         </dl>
         {isLoading && (
           <div className="absolute inset-0 grid place-items-center transition-opacity duration-200 ease-out-quint starting:opacity-0">
-            <span className="flex items-center gap-2 rounded-full bg-card px-3 py-1.5 text-sm font-medium shadow-[var(--shadow-card)] ring-1 ring-border/70">
+            <span className="flex items-center gap-2 rounded-full bg-card px-3 py-1.5 text-sm font-medium shadow-(--shadow-card) ring-1 ring-border/70">
               <Spinner size="sm" decorative />
               Refreshing
             </span>

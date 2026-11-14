@@ -43,7 +43,7 @@ function ScaleOption({
   return (
     <AriaRadio
       value={palette.slug}
-      className="cursor-pointer rounded-lg border border-transparent px-2 py-2 text-muted-foreground outline-offset-4 outline-transparent transition-[outline-color,outline-offset] duration-150 ease-out-quint hover:text-foreground selected:border-border selected:bg-card selected:text-foreground selected:shadow-[var(--shadow-card)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 sm:py-1.5"
+      className="cursor-pointer rounded-lg border border-transparent px-2 py-2 text-muted-foreground outline-offset-4 outline-transparent transition-[outline-color,outline-offset] duration-150 ease-out-quint hover:text-foreground selected:border-border selected:bg-card selected:text-foreground selected:shadow-(--shadow-card) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 sm:py-1.5"
     >
       <span className={rowGrid}>
         <span className="col-span-12 mb-1.5 truncate text-sm font-medium sm:col-span-1 sm:mb-0">

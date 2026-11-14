@@ -8,7 +8,7 @@ const variants = [
 
 export function SpinnerDemo() {
   return (
-    <ul className="grid w-full max-w-lg grid-cols-3 divide-x divide-border/70 rounded-xl bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70">
+    <ul className="grid w-full max-w-lg grid-cols-3 divide-x divide-border/70 rounded-xl bg-card shadow-(--shadow-card) ring-1 ring-border/70">
       {variants.map(({ variant, name }) => (
         <li
           key={variant}

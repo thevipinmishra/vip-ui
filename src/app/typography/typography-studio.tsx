@@ -43,7 +43,7 @@ import {
 const panelClass =
   "docs-tab-panel mt-4 min-w-0 rounded-none bg-transparent p-0 shadow-none ring-0";
 const surfaceClass =
-  "rounded-2xl bg-card shadow-[var(--shadow-card)] ring-1 ring-border/60";
+  "rounded-2xl bg-card shadow-(--shadow-card) ring-1 ring-border/60";
 const controlsSticky =
   "lg:sticky lg:top-[calc(var(--header-height)+1rem)] lg:max-h-[calc(100dvh-var(--header-height)-2rem)] lg:self-start lg:overflow-y-auto lg:overscroll-contain";
 const codeSticky =

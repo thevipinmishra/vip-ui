@@ -113,7 +113,7 @@ function ThemeOption({ theme }: { theme: Theme }) {
       <span data-specimen={theme.slug} className="flex items-center gap-2">
         <span
           aria-hidden="true"
-          className="size-4 rounded-full bg-[var(--primary)] shadow-[inset_0_0_0_1px_oklch(0_0_0/0.12),inset_0_1px_1px_oklch(1_0_0/0.25)]"
+          className="size-4 rounded-full bg-(--primary) shadow-[inset_0_0_0_1px_oklch(0_0_0/0.12),inset_0_1px_1px_oklch(1_0_0/0.25)]"
         />
         {theme.name}
       </span>
@@ -236,7 +236,7 @@ export function ThemeStudio({
               items: "label",
               className: "rounded-full bg-muted/70",
             })}
-            className="flex w-fit max-w-full min-w-0 items-center gap-0.5 overflow-x-auto rounded-full bg-card/60 p-1 shadow-[var(--shadow-card)] ring-1 ring-border/60 backdrop-blur-xl max-[880px]:px-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-[880px]:[mask-image:linear-gradient(to_right,transparent,black_12px,black_calc(100%-12px),transparent)]"
+            className="flex w-fit max-w-full min-w-0 items-center gap-0.5 overflow-x-auto rounded-full bg-card/60 p-1 shadow-(--shadow-card) ring-1 ring-border/60 backdrop-blur-xl max-[880px]:px-3 scrollbar-none [&::-webkit-scrollbar]:hidden max-[880px]:mask-[linear-gradient(to_right,transparent,black_12px,black_calc(100%-12px),transparent)]"
           >
             {themes.map((option) => (
               <ThemeOption key={option.slug} theme={option} />
@@ -277,7 +277,7 @@ export function ThemeStudio({
           <div className="grid max-w-2xl gap-3">
             <h2
               id="install-title"
-              className="text-3xl font-semibold leading-tight tracking-[-0.05em] sm:text-4xl"
+              className="text-3xl font-semibold leading-tight tracking-tighter sm:text-4xl"
             >
               Use {theme.name} in your app
             </h2>

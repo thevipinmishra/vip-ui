@@ -25,11 +25,11 @@ import { SizeProvider } from "./size";
 const CloseContext = createContext<(() => void) | null>(null);
 
 const scrollEdgeClasses =
-  "supports-[animation-timeline:scroll()]:[animation-name:vip-edge-start,vip-edge-end] supports-[animation-timeline:scroll()]:[animation-timing-function:linear] supports-[animation-timeline:scroll()]:[animation-fill-mode:both] supports-[animation-timeline:scroll()]:[animation-timeline:scroll(self),scroll(self)] supports-[animation-timeline:scroll()]:[animation-range:0px_1rem,calc(100%_-_1rem)_100%]";
+  "supports-[animation-timeline:scroll()]:[animation-name:vip-edge-start,vip-edge-end] supports-[animation-timeline:scroll()]:[animation-timing-function:linear] supports-[animation-timeline:scroll()]:[animation-fill-mode:both] supports-[animation-timeline:scroll()]:[animation-timeline:scroll(self),scroll(self)] supports-[animation-timeline:scroll()]:[animation-range:0px_1rem,calc(100%-1rem)_100%]";
 
 const dialogModalStyles = tv({
   base: [
-    "relative flex max-h-[calc(var(--visual-viewport-height,100dvh)-1rem)] w-full min-w-0 max-w-full flex-col overflow-clip rounded-t-2xl bg-card text-card-foreground [overflow-wrap:anywhere] shadow-[var(--shadow-float)] outline-none ring-1 ring-border/70 forced-colors:border sm:max-h-[calc(var(--visual-viewport-height,100dvh)-2rem)] sm:rounded-xl",
+    "relative flex max-h-[calc(var(--visual-viewport-height,100dvh)-1rem)] w-full min-w-0 max-w-full flex-col overflow-clip rounded-t-2xl bg-card text-card-foreground wrap-anywhere shadow-(--shadow-float) outline-none ring-1 ring-border/70 forced-colors:border sm:max-h-[calc(var(--visual-viewport-height,100dvh)-2rem)] sm:rounded-xl",
     "transition-[opacity,translate,scale] duration-260 ease-out-quint max-sm:duration-320 max-sm:ease-[cubic-bezier(0.32,0.72,0,1)]",
     "entering:opacity-0 motion-safe:max-sm:entering:translate-y-full motion-safe:sm:entering:translate-y-3 motion-safe:sm:entering:scale-96",
     "exiting:opacity-0 exiting:duration-180 max-sm:exiting:duration-240 motion-safe:max-sm:exiting:translate-y-full motion-safe:sm:exiting:translate-y-1.5 motion-safe:sm:exiting:scale-[0.985]",
@@ -40,7 +40,7 @@ const dialogModalStyles = tv({
       md: "sm:max-w-md",
       lg: "sm:max-w-xl",
       xl: "sm:max-w-3xl",
-      full: "h-[var(--visual-viewport-height,100dvh)] max-h-[var(--visual-viewport-height,100dvh)] rounded-none sm:h-[calc(var(--visual-viewport-height,100dvh)-2rem)] sm:max-w-none",
+      full: "h-(--visual-viewport-height,100dvh) max-h-(--visual-viewport-height,100dvh) rounded-none sm:h-[calc(var(--visual-viewport-height,100dvh)-2rem)] sm:max-w-none",
     },
   },
   defaultVariants: { size: "md" },
@@ -103,7 +103,7 @@ export function DialogContent({
       }}
       className={composeRenderProps(overlayProps?.className, (className) =>
         cn(
-          "fixed inset-x-0 top-0 z-50 grid h-[var(--visual-viewport-height,100dvh)] items-end overflow-clip bg-foreground/40 backdrop-blur-sm transition-[background-color,backdrop-filter] duration-240 ease-out-quint dark:bg-foreground/20 sm:place-items-center sm:p-4",
+          "fixed inset-x-0 top-0 z-50 grid h-(--visual-viewport-height,100dvh) items-end overflow-clip bg-foreground/40 backdrop-blur-sm transition-[background-color,backdrop-filter] duration-240 ease-out-quint dark:bg-foreground/20 sm:place-items-center sm:p-4",
           "entering:bg-transparent entering:backdrop-blur-none exiting:bg-transparent exiting:backdrop-blur-none exiting:duration-160",
           className,
         ),
@@ -167,7 +167,7 @@ export function DialogTitle({ className, ...props }: HeadingProps) {
       slot="title"
       data-slot="dialog-title"
       className={cn(
-        "min-w-0 text-xl font-semibold tracking-[-0.04em] [overflow-wrap:anywhere]",
+        "min-w-0 text-xl font-semibold tracking-[-0.04em] wrap-anywhere",
         className,
       )}
     />
@@ -181,7 +181,7 @@ export function DialogDescription({ className, ...props }: TextProps) {
       slot="description"
       data-slot="dialog-description"
       className={cn(
-        "mt-2 block text-sm leading-6 text-muted-foreground [overflow-wrap:anywhere]",
+        "mt-2 block text-sm leading-6 text-muted-foreground wrap-anywhere",
         className,
       )}
     />

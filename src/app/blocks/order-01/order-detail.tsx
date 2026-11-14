@@ -140,7 +140,7 @@ export function OrderDetail() {
 
   return (
     <div className="min-h-svh bg-muted/40 px-4 py-8 sm:px-6 lg:px-8">
-      <div className="mx-auto grid w-full max-w-[1120px] gap-6">
+      <div className="mx-auto grid w-full max-w-280 gap-6">
         <nav aria-label="Breadcrumbs">
           <Breadcrumbs>
             <Breadcrumb href="/blocks/orders-01">Orders</Breadcrumb>

@@ -30,7 +30,7 @@ export function EmptyStateSearchDemo() {
         onChange={setQuery}
       />
       {matches.length > 0 ? (
-        <ul className="grid min-h-56 content-start divide-y divide-border/70 rounded-xl border border-border bg-card px-4 text-sm shadow-[var(--shadow-card)]">
+        <ul className="grid min-h-56 content-start divide-y divide-border/70 rounded-xl border border-border bg-card px-4 text-sm shadow-(--shadow-card)">
           {matches.map((project) => (
             <li key={project} className="py-2.5">
               {project}

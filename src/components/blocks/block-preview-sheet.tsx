@@ -166,14 +166,14 @@ function PreviewContent({
       <TabPanel
         id="preview"
         shouldForceMount
-        className="mt-0 flex min-h-0 flex-1 flex-col overflow-hidden rounded-none bg-muted/40 p-0 shadow-none ring-0 [&[inert]]:hidden"
+        className="mt-0 flex min-h-0 flex-1 flex-col overflow-hidden rounded-none bg-muted/40 p-0 shadow-none ring-0 [[inert]]:hidden"
       >
         {hasPreview && (
           <div className="flex min-h-0 flex-1 justify-center overflow-hidden">
             <div
               className={cn(
                 "relative h-full min-h-0 bg-background ring-1 ring-border/70 motion-safe:transition-[width] motion-safe:duration-300 motion-safe:ease-out-quint",
-                viewport !== "desktop" && "shadow-[var(--shadow-float)]",
+                viewport !== "desktop" && "shadow-(--shadow-float)",
               )}
               style={{ width: current.width ?? "100%", maxWidth: "100%" }}
             >

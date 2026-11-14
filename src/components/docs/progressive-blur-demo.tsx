@@ -12,7 +12,7 @@ const notes = [
 
 export function ProgressiveBlurDemo() {
   return (
-    <div className="relative w-full max-w-sm overflow-clip rounded-xl border border-border bg-card shadow-[var(--shadow-card)]">
+    <div className="relative w-full max-w-sm overflow-clip rounded-xl border border-border bg-card shadow-(--shadow-card)">
       <section
         // biome-ignore lint/a11y/noNoninteractiveTabindex: Keyboard users must be able to scroll the list.
         tabIndex={0}

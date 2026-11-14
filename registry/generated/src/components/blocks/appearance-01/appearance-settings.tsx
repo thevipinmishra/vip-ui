@@ -72,7 +72,7 @@ const fonts = [
     id: "system",
     label: "System",
     note: "Device font",
-    className: "[font-family:ui-sans-serif,system-ui,sans-serif]",
+    className: "font-[ui-sans-serif,system-ui,sans-serif]",
   },
 ] as const;
 

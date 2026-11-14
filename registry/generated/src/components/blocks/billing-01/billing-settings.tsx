@@ -184,7 +184,7 @@ export function BillingSettings() {
                   value={item.value}
                   maxValue={item.max}
                   valueLabel={`${item.value} of ${item.max} ${item.unit}`}
-                  className="[&_[data-slot=meter-value]]:text-xs"
+                  className="**:data-[slot=meter-value]:text-xs"
                 />
               ))}
             </CardContent>
@@ -224,7 +224,7 @@ export function BillingSettings() {
           <CardTitle as="h2">Invoices</CardTitle>
         </CardHeader>
         <div className="overflow-x-auto">
-          <Table aria-label="Invoices" className="min-w-[480px]">
+          <Table aria-label="Invoices" className="min-w-120">
             <TableHeader>
               <Column isRowHeader className="ps-5">
                 Invoice

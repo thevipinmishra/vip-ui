@@ -39,7 +39,7 @@ export function CheckboxGroup({
       data-orientation={orientation}
       className={composeRenderProps(className, (className) =>
         cn(
-          "group/checkbox-group flex min-w-0 flex-col gap-1 data-[orientation=horizontal]:flex-row data-[orientation=horizontal]:flex-wrap data-[orientation=horizontal]:gap-x-6",
+          "group/checkbox-group flex min-w-0 flex-col gap-1 orientation-horizontal:flex-row orientation-horizontal:flex-wrap orientation-horizontal:gap-x-6",
           className,
         ),
       )}
@@ -65,7 +65,7 @@ export function CheckboxGroupLabel({
       {...props}
       data-slot="checkbox-group-label"
       className={cn(
-        "w-full pb-1 text-sm font-semibold text-foreground [overflow-wrap:anywhere]",
+        "w-full pb-1 text-sm font-semibold text-foreground wrap-anywhere",
         className,
       )}
     />
@@ -81,7 +81,7 @@ export function CheckboxGroupItems({
       {...props}
       data-slot="checkbox-group-items"
       className={cn(
-        "flex w-full flex-col gap-1 group-data-[orientation=horizontal]/checkbox-group:flex-row group-data-[orientation=horizontal]/checkbox-group:flex-wrap group-data-[orientation=horizontal]/checkbox-group:gap-x-6",
+        "flex w-full flex-col gap-1 group-orientation-horizontal/checkbox-group:flex-row group-orientation-horizontal/checkbox-group:flex-wrap group-orientation-horizontal/checkbox-group:gap-x-6",
         className,
       )}
     />

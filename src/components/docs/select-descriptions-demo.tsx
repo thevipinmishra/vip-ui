@@ -17,7 +17,7 @@ const frameworks = [
 
 export function SelectDescriptionsDemo() {
   return (
-    <div className="w-full max-w-[340px]">
+    <div className="w-full max-w-85">
       <Select defaultValue="next">
         <SelectLabel>Framework</SelectLabel>
         <SelectTrigger />

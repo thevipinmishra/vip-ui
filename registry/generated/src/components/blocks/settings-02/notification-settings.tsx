@@ -72,7 +72,7 @@ export function NotificationSettings() {
           Pause all notifications
         </Switch>
         <div className="-mx-5 overflow-x-auto px-5">
-          <table className="w-full min-w-[420px] border-separate border-spacing-0 text-sm">
+          <table className="w-full min-w-105 border-separate border-spacing-0 text-sm">
             <caption className="sr-only">
               Notification channels for each event
             </caption>

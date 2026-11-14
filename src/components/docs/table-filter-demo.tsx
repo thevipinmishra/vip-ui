@@ -111,8 +111,8 @@ export function TableFilterDemo() {
       <output className="block text-xs text-muted-foreground">
         {results.length} of {invoices.length} invoices
       </output>
-      <div className="overflow-x-auto rounded-lg border border-border bg-card shadow-[var(--shadow-card)]">
-        <Table aria-label="Filtered invoices" className="min-w-[540px]">
+      <div className="overflow-x-auto rounded-lg border border-border bg-card shadow-(--shadow-card)">
+        <Table aria-label="Filtered invoices" className="min-w-135">
           <TableHeader>
             <Column id="invoice" isRowHeader>
               Invoice

@@ -61,13 +61,13 @@ function Hero() {
         className="pointer-events-none absolute inset-0 -z-10"
       >
         <div
-          className="absolute left-1/2 top-[-22rem] h-[42rem] w-[64rem] -translate-x-1/2 rounded-full blur-2xl"
+          className="absolute left-1/2 -top-88 h-168 w-5xl -translate-x-1/2 rounded-full blur-2xl"
           style={{
             background:
               "radial-gradient(closest-side, color-mix(in oklab, var(--primary) 14%, transparent), transparent)",
           }}
         />
-        <div className="absolute inset-0 opacity-[0.35] [background-image:linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:radial-gradient(ellipse_at_top,black,transparent_72%)]" />
+        <div className="absolute inset-0 opacity-[0.35] bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-size-[64px_64px] mask-[radial-gradient(ellipse_at_top,black,transparent_72%)]" />
       </div>
       <div className="mx-auto grid w-full max-w-6xl gap-10 px-4 pb-14 pt-12 sm:px-6 sm:pt-16 lg:grid-cols-[minmax(0,1.04fr)_minmax(0,0.96fr)] lg:items-center lg:gap-10 lg:px-8 lg:pb-20">
         <div className="min-w-0">
@@ -145,7 +145,7 @@ function Hero() {
           </div>
         </div>
         <div className="relative min-w-0">
-          <div className="rounded-2xl bg-card p-4 shadow-[var(--shadow-float)] ring-1 ring-border/70 sm:p-5">
+          <div className="rounded-2xl bg-card p-4 shadow-(--shadow-float) ring-1 ring-border/70 sm:p-5">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <p className="text-sm font-semibold">Checkout journey</p>

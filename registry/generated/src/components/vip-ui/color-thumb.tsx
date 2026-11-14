@@ -13,7 +13,7 @@ export function ColorThumb({ className, ...props }: ColorThumbProps) {
       {...props}
       className={composeRenderProps(className, (className) =>
         cn(
-          "size-6 cursor-grab rounded-full border-2 border-white shadow-[var(--shadow-card)] ring-1 ring-black/50 outline-none outline-offset-4 outline-transparent transition-[outline-color,outline-offset] duration-150 ease-out-quint dragging:cursor-grabbing disabled:cursor-default focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2",
+          "size-6 cursor-grab rounded-full border-2 border-white shadow-(--shadow-card) ring-1 ring-black/50 outline-none outline-offset-4 outline-transparent transition-[outline-color,outline-offset] duration-150 ease-out-quint dragging:cursor-grabbing disabled:cursor-default focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2",
           className,
         ),
       )}
@@ -22,7 +22,7 @@ export function ColorThumb({ className, ...props }: ColorThumbProps) {
         <span
           aria-hidden="true"
           data-dragging={isDragging || undefined}
-          className="pointer-events-none absolute -inset-1 rounded-full ring-2 ring-primary/60 opacity-0 scale-85 transition-[opacity,scale] duration-150 ease-out-quint motion-reduce:duration-0 data-dragging:opacity-100 data-dragging:scale-100"
+          className="pointer-events-none absolute -inset-1 rounded-full ring-2 ring-primary/60 opacity-0 scale-85 transition-[opacity,scale] duration-150 ease-out-quint motion-reduce:duration-0 dragging:opacity-100 dragging:scale-100"
         />
       )}
     </AriaColorThumb>

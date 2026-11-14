@@ -158,7 +158,7 @@ export function SliderRail({
       aria-hidden="true"
       data-slot="slider-rail"
       className={cn(
-        "pointer-events-none absolute rounded-full bg-muted-foreground/20 shadow-[var(--shadow-inset)] forced-colors:bg-[ButtonBorder]",
+        "pointer-events-none absolute rounded-full bg-muted-foreground/20 shadow-(--shadow-inset) forced-colors:bg-[ButtonBorder]",
         vertical
           ? "-inset-y-2.5 left-1/2 w-1.5 -translate-x-1/2 py-2.5"
           : "-inset-x-2.5 top-1/2 h-1.5 -translate-y-1/2 px-2.5",
@@ -209,7 +209,7 @@ export function SliderHandle({
         <>
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 rounded-full bg-card shadow-[var(--shadow-card)] ring-1 ring-input transition-[scale,box-shadow] duration-350 ease-spring group-hover/thumb:scale-106 group-hover/thumb:ring-primary/60 group-dragging/thumb:scale-114 group-dragging/thumb:shadow-[var(--shadow-float)] group-dragging/thumb:ring-primary/60 motion-reduce:transition-[box-shadow] forced-colors:bg-[ButtonText]"
+            className="pointer-events-none absolute inset-0 rounded-full bg-card shadow-(--shadow-card) ring-1 ring-input transition-[scale,box-shadow] duration-350 ease-spring group-hover/thumb:scale-106 group-hover/thumb:ring-primary/60 group-dragging/thumb:scale-114 group-dragging/thumb:shadow-(--shadow-float) group-dragging/thumb:ring-primary/60 motion-reduce:transition-shadow forced-colors:bg-[ButtonText]"
           />
           {content}
         </>
@@ -272,7 +272,7 @@ export function SliderMarks({
               "absolute whitespace-nowrap leading-4 transition-colors duration-150 ease-out-quint data-active:text-foreground",
               vertical
                 ? cn(
-                    "start-0",
+                    "inset-s-0",
                     edge === "start" && "-mb-2.5",
                     edge === "end" && "mb-2.5 translate-y-full",
                     !edge && "translate-y-1/2",

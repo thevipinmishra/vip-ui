@@ -70,7 +70,7 @@ export function TextSwap({ value, className, ...props }: TextSwapProps) {
       ref={root}
       data-slot="text-swap"
       className={cn(
-        "relative -mx-[0.1em] inline-grid min-w-0 max-w-[calc(100%+0.2em)] overflow-x-clip align-baseline",
+        "relative mx-[-0.1em] inline-grid min-w-0 max-w-[calc(100%+0.2em)] overflow-x-clip align-baseline",
         className,
       )}
     >
@@ -79,7 +79,7 @@ export function TextSwap({ value, className, ...props }: TextSwapProps) {
         <motion.span
           key={value}
           aria-hidden="true"
-          className="min-w-(--text-swap-width,0px) overflow-x-clip text-ellipsis px-[0.1em] [overflow-wrap:anywhere]"
+          className="min-w-(--text-swap-width,0px) overflow-x-clip text-ellipsis px-[0.1em] wrap-anywhere"
           initial={
             reduceMotion
               ? false

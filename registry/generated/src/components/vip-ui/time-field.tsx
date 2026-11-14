@@ -42,7 +42,7 @@ export function TimeField<T extends TimeValue>({
       data-size={size}
       className={composeRenderProps(className, (className) =>
         cn(
-          "group grid gap-2 data-[focus-visible]:outline-none",
+          "group grid gap-2 data-focus-visible:outline-none",
           size && fieldSizeStyles[size],
           className,
         ),
@@ -60,7 +60,7 @@ export function TimeField<T extends TimeValue>({
             className={cn(
               segmentedFieldStyles,
               fieldText,
-              "block content-center px-[calc(var(--field-px,0.875rem)-0.25rem)] py-[clamp(0px,calc((var(--field-h,3rem)-2rem)/2),0.5rem)] data-[focus-visible]:outline-none",
+              "block content-center px-[calc(var(--field-px,0.875rem)-0.25rem)] py-[clamp(0px,calc((var(--field-h,3rem)-2rem)/2),0.5rem)] data-focus-visible:outline-none",
             )}
           >
             {(segment) => <DateSegment segment={segment} />}

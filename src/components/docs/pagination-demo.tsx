@@ -48,7 +48,7 @@ export function PaginationDemo() {
   return (
     <RouterProvider navigate={navigate}>
       <div className="grid w-full max-w-md gap-5">
-        <ul className="divide-y divide-border rounded-lg border border-border bg-card px-4 text-sm shadow-[var(--shadow-card)]">
+        <ul className="divide-y divide-border rounded-lg border border-border bg-card px-4 text-sm shadow-(--shadow-card)">
           {projects.slice((page - 1) * 3, page * 3).map((project) => (
             <li className="flex min-h-12 items-center" key={project}>
               {project}

@@ -59,7 +59,7 @@ export function DateRangePicker<T extends DateValue>({
       data-size={size}
       className={composeRenderProps(className, (className) =>
         cn(
-          "group grid gap-2 data-[focus-visible]:outline-none",
+          "group grid gap-2 data-focus-visible:outline-none",
           size && fieldSizeStyles[size],
           className,
         ),
@@ -79,7 +79,7 @@ export function DateRangePicker<T extends DateValue>({
             data-slot="date-range-picker-group"
             className={cn(
               segmentedFieldStyles,
-              "data-[focus-visible]:outline-none",
+              "data-focus-visible:outline-none",
             )}
           >
             <div
@@ -92,7 +92,7 @@ export function DateRangePicker<T extends DateValue>({
                 <DateInput
                   slot="start"
                   data-slot="date-range-picker-start"
-                  className="min-w-0 data-[focus-visible]:outline-none"
+                  className="min-w-0 data-focus-visible:outline-none"
                 >
                   {(segment) => <DateSegment segment={segment} />}
                 </DateInput>

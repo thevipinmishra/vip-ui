@@ -21,7 +21,7 @@ export function PresenceDemo() {
       <Presence
         show={show}
         id="presence-preview-note"
-        className="w-full rounded-xl border border-border bg-card p-4 shadow-[var(--shadow-card)]"
+        className="w-full rounded-xl border border-border bg-card p-4 shadow-(--shadow-card)"
       >
         <p className="text-sm font-medium">
           Autosave now runs every 30 seconds.

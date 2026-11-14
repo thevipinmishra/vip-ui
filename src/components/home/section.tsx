@@ -46,7 +46,7 @@ export function SectionHeading({
     >
       <h2
         id={`${id}-title`}
-        className="text-[clamp(1.875rem,1.4rem+2vw,2.75rem)] leading-[1.1] font-semibold tracking-[-0.04em] text-balance sm:tracking-[-0.05em]"
+        className="text-[clamp(1.875rem,1.4rem+2vw,2.75rem)] leading-[1.1] font-semibold tracking-[-0.04em] text-balance sm:tracking-tighter"
       >
         {title}
       </h2>

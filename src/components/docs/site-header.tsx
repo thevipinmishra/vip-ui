@@ -23,7 +23,7 @@ export function SiteHeader({
     <>
       <a
         href="#main"
-        className="sr-only fixed start-4 top-2 z-50 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground focus:not-sr-only"
+        className="sr-only fixed inset-s-4 top-2 z-50 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground focus:not-sr-only"
       >
         Skip to content
       </a>
@@ -83,7 +83,7 @@ export function SiteHeader({
               title="GitHub"
               className="hidden size-10 shrink-0 place-items-center rounded-md text-muted-foreground outline-offset-4 outline-transparent transition-[color,background-color,outline-color,outline-offset] duration-150 ease-out-quint hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 sm:grid"
             >
-              <GitHubMark className="size-[17px]" />
+              <GitHubMark className="size-4.25" />
             </a>
             <ThemeToggle />
             <MobileNav />

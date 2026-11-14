@@ -67,10 +67,10 @@ export function BlockCard({ block }: { block: Block }) {
   };
 
   return (
-    <article className="group relative isolate flex w-full min-w-0 flex-col rounded-2xl bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70 outline-offset-2 outline-transparent transition-[box-shadow,outline-color] duration-300 ease-out-quint hover:shadow-[var(--shadow-float)] has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-ring has-[button:focus-visible]:outline-2 has-[button:focus-visible]:outline-ring">
+    <article className="group relative isolate flex w-full min-w-0 flex-col rounded-2xl bg-card shadow-(--shadow-card) ring-1 ring-border/70 outline-offset-2 outline-transparent transition-[box-shadow,outline-color] duration-300 ease-out-quint hover:shadow-(--shadow-float) has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-ring has-[button:focus-visible]:outline-2 has-[button:focus-visible]:outline-ring">
       <div
         ref={stageRef}
-        className="relative aspect-[16/10] overflow-hidden rounded-t-2xl bg-muted/50"
+        className="relative aspect-16/10 overflow-hidden rounded-t-2xl bg-muted/50"
       >
         <div
           inert
@@ -85,7 +85,7 @@ export function BlockCard({ block }: { block: Block }) {
           {mounted && scale > 0 && (
             <div
               className={cn(
-                "absolute start-0 top-0 origin-top-left transition-opacity duration-500 ease-out-quint rtl:origin-top-right",
+                "absolute inset-s-0 top-0 origin-top-left transition-opacity duration-500 ease-out-quint rtl:origin-top-right",
                 loaded ? "opacity-100" : "opacity-0",
               )}
               style={{
@@ -113,7 +113,7 @@ export function BlockCard({ block }: { block: Block }) {
         >
           <span
             aria-hidden="true"
-            className="inline-flex items-center gap-1.5 rounded-full bg-background/90 px-3 py-1.5 text-xs font-medium text-foreground opacity-0 shadow-[var(--shadow-card)] ring-1 ring-border/70 backdrop-blur-sm transition-opacity duration-200 ease-out-quint group-focus-within:opacity-100 group-hover:opacity-100"
+            className="inline-flex items-center gap-1.5 rounded-full bg-background/90 px-3 py-1.5 text-xs font-medium text-foreground opacity-0 shadow-(--shadow-card) ring-1 ring-border/70 backdrop-blur-sm transition-opacity duration-200 ease-out-quint group-focus-within:opacity-100 group-hover:opacity-100"
           >
             <ArrowsOutSimpleIcon size={14} />
             Preview

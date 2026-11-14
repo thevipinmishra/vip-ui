@@ -13,7 +13,7 @@ const activity = [
 
 export function ScrollFadeDemo() {
   return (
-    <div className="w-full max-w-sm rounded-xl border border-border bg-card shadow-[var(--shadow-card)]">
+    <div className="w-full max-w-sm rounded-xl border border-border bg-card shadow-(--shadow-card)">
       <p className="border-b border-border px-4 py-3 text-sm font-medium">
         Activity
       </p>

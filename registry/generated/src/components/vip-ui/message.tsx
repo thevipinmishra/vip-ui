@@ -40,7 +40,7 @@ export function Message({
       <div
         className={cn(
           "min-w-0 max-w-[88%] sm:max-w-[75%]",
-          side === "incoming" && avatar && "max-w-[calc(100%_-_3rem)]",
+          side === "incoming" && avatar && "max-w-[calc(100%-3rem)]",
           side === "system" && "max-w-full text-center",
         )}
       >
@@ -48,7 +48,7 @@ export function Message({
           <p
             data-slot="message-sender"
             className={cn(
-              "mb-0.5 px-1 text-xs font-medium text-muted-foreground [overflow-wrap:anywhere]",
+              "mb-0.5 px-1 text-xs font-medium text-muted-foreground wrap-anywhere",
               side === "outgoing" && "text-end",
             )}
           >
@@ -58,11 +58,11 @@ export function Message({
         <div
           data-slot="message-content"
           className={cn(
-            "min-w-0 whitespace-pre-wrap [overflow-wrap:anywhere] rounded-2xl px-3.5 py-2 text-sm leading-6",
+            "min-w-0 whitespace-pre-wrap wrap-anywhere rounded-2xl px-3.5 py-2 text-sm leading-6",
             side === "outgoing" &&
               "rounded-se-md bg-accent text-accent-foreground",
             side === "incoming" &&
-              "rounded-ss-md border border-border bg-card text-card-foreground shadow-[var(--shadow-card)]",
+              "rounded-ss-md border border-border bg-card text-card-foreground shadow-(--shadow-card)",
             side === "system" && "bg-muted/70 text-muted-foreground",
           )}
         >

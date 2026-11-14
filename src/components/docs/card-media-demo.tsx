@@ -13,7 +13,7 @@ const bars = [38, 52, 46, 64, 58, 72, 68, 84, 76, 92];
 export function CardMediaDemo() {
   return (
     <Card className="w-full max-w-sm">
-      <CardMedia className="aspect-[16/9] bg-[radial-gradient(120%_90%_at_100%_0%,var(--accent),transparent_60%),linear-gradient(var(--muted),var(--card))]">
+      <CardMedia className="aspect-video bg-[radial-gradient(120%_90%_at_100%_0%,var(--accent),transparent_60%),linear-gradient(var(--muted),var(--card))]">
         <div
           aria-hidden="true"
           className="absolute inset-x-6 bottom-0 flex h-3/4 items-end gap-1.5"

@@ -97,7 +97,7 @@ export function Highlighter({
       <span
         {...shared}
         className={cn(
-          "-mx-[0.12em] rounded-[0.2em] bg-no-repeat px-[0.12em] [background-position:left_center] [background-size:0%_100%] transition-[background-size] duration-[600ms] ease-out-quint data-drawn:[background-size:100%_100%] motion-reduce:transition-none rtl:[background-position:right_center] forced-colors:bg-[Mark] forced-colors:bg-none! forced-colors:text-[MarkText] forced-colors:forced-color-adjust-none",
+          "mx-[-0.12em] rounded-[0.2em] bg-no-repeat px-[0.12em] bg-position-[left_center] bg-size-[0%_100%] transition-[background-size] duration-600 ease-out-quint data-drawn:bg-size-[100%_100%] motion-reduce:transition-none rtl:bg-position-[right_center] forced-colors:bg-[Mark] forced-colors:bg-none! forced-colors:text-[MarkText] forced-colors:forced-color-adjust-none",
           className,
         )}
         style={{
@@ -136,7 +136,7 @@ export function Highlighter({
           "pointer-events-none absolute overflow-visible",
           variant === "underline"
             ? "top-[calc(100%-0.05em)] left-0 h-[0.3em] w-full"
-            : "-top-[0.3em] -left-[0.3em] h-[calc(100%+0.6em)] w-[calc(100%+0.6em)]",
+            : "top-[-0.3em] left-[-0.3em] h-[calc(100%+0.6em)] w-[calc(100%+0.6em)]",
         )}
       >
         {path && (
@@ -146,7 +146,7 @@ export function Highlighter({
             strokeWidth={box?.stroke}
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="[stroke:var(--highlighter-color,var(--chart-3))] [stroke-dasharray:1_2] [stroke-dashoffset:1.01] transition-[stroke-dashoffset] duration-[600ms] ease-out-quint group-data-drawn/highlighter:[stroke-dashoffset:0] motion-reduce:transition-none forced-colors:[stroke:CanvasText]"
+            className="stroke-(--highlighter-color,var(--chart-3)) [stroke-dasharray:1_2] [stroke-dashoffset:1.01] transition-[stroke-dashoffset] duration-600 ease-out-quint group-data-drawn/highlighter:[stroke-dashoffset:0] motion-reduce:transition-none forced-colors:stroke-[CanvasText]"
             style={{ transitionDelay: `${delay}s` }}
           />
         )}
