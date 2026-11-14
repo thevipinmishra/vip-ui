@@ -57,11 +57,11 @@ export default async function ComponentsPage({
             aria-hidden="true"
             className="flex h-7 items-center gap-1.5 opacity-90"
           >
-            <span className="flex h-4 w-7 items-center rounded-full bg-[var(--chart-2)] p-0.5">
+            <span className="flex h-4 w-7 items-center rounded-full bg-(--chart-2) p-0.5">
               <span className="ms-auto size-3 rounded-full bg-background" />
             </span>
-            <span className="size-4 rounded-[5px] bg-[var(--chart-3)]" />
-            <span className="h-4 w-6 rounded-full bg-[var(--chart-5)]" />
+            <span className="size-4 rounded-[5px] bg-(--chart-3)" />
+            <span className="h-4 w-6 rounded-full bg-(--chart-5)" />
           </span>
           <PageHeaderHeading size="lg">
             Components, crafted with intention.

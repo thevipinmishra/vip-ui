@@ -191,12 +191,12 @@ export function AssistantChat() {
       : [];
 
   return (
-    <div className="flex h-svh min-h-[34rem] flex-col bg-background text-foreground">
+    <div className="flex h-svh min-h-136 flex-col bg-background text-foreground">
       <header className="shrink-0 border-b border-border/70">
         <div className="mx-auto flex w-full max-w-3xl items-center gap-3 px-4 py-3 sm:px-6">
           <span
             aria-hidden="true"
-            className="grid size-9 shrink-0 place-items-center rounded-xl bg-primary text-primary-foreground shadow-[var(--shadow-card)]"
+            className="grid size-9 shrink-0 place-items-center rounded-xl bg-primary text-primary-foreground shadow-(--shadow-card)"
           >
             <SparkleIcon size={18} weight="fill" />
           </span>
@@ -266,7 +266,7 @@ export function AssistantChat() {
               <div className="flex items-start gap-3">
                 <span
                   aria-hidden="true"
-                  className="grid size-8 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground shadow-[var(--shadow-card)]"
+                  className="grid size-8 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground shadow-(--shadow-card)"
                 >
                   <SparkleIcon size={15} weight="fill" />
                 </span>

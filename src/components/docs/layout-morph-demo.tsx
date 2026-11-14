@@ -17,7 +17,7 @@ export function LayoutMorphDemo() {
       <LayoutMorph
         aria-live="polite"
         contentKey={index}
-        className="rounded-xl border border-border bg-card px-5 py-4 text-sm leading-6 shadow-[var(--shadow-card)]"
+        className="rounded-xl border border-border bg-card px-5 py-4 text-sm leading-6 shadow-(--shadow-card)"
       >
         {updates[index]}
       </LayoutMorph>

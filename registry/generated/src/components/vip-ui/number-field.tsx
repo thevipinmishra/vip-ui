@@ -125,7 +125,7 @@ export function NumberFieldGroup({
         cn(
           segmentedFieldStyles,
           fieldIcon,
-          "gap-[var(--field-inset,0.25rem)] px-[var(--field-inset,0.25rem)]",
+          "gap-(--field-inset,0.25rem) px-(--field-inset,0.25rem)",
           className,
         ),
       )}

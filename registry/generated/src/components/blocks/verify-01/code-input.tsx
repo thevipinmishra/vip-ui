@@ -51,7 +51,7 @@ export function CodeInput({
             <span
               key={slot}
               className={cn(
-                "grid h-12 place-items-center rounded-lg border border-input bg-card font-mono text-lg font-medium tabular-nums text-foreground shadow-[var(--shadow-card)] transition-[border-color,box-shadow] duration-150 ease-out-quint group-invalid/code:border-destructive",
+                "grid h-12 place-items-center rounded-lg border border-input bg-card font-mono text-lg font-medium tabular-nums text-foreground shadow-(--shadow-card) transition-[border-color,box-shadow] duration-150 ease-out-quint group-invalid/code:border-destructive",
                 slot === active &&
                   "group-has-[:focus]/code:border-ring group-has-[:focus]/code:ring-1 group-has-[:focus]/code:ring-ring group-invalid/code:group-has-[:focus]/code:border-destructive group-invalid/code:group-has-[:focus]/code:ring-destructive",
               )}

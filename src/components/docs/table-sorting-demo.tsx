@@ -44,7 +44,7 @@ export function TableSortingDemo() {
   );
 
   return (
-    <div className="w-full max-w-2xl overflow-x-auto rounded-lg border border-border bg-card shadow-[var(--shadow-card)]">
+    <div className="w-full max-w-2xl overflow-x-auto rounded-lg border border-border bg-card shadow-(--shadow-card)">
       <Table
         aria-label="Project backlog"
         sortDescriptor={sortDescriptor}

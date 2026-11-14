@@ -54,7 +54,7 @@ export function TextReveal({
     return (
       <span
         key={key}
-        className="-mx-[0.1em] -my-[0.2em] inline-block overflow-hidden px-[0.1em] py-[0.2em] align-bottom"
+        className="mx-[-0.1em] my-[-0.2em] inline-block overflow-hidden px-[0.1em] py-[0.2em] align-bottom"
       >
         <motion.span
           className="inline-block"
@@ -77,7 +77,7 @@ export function TextReveal({
       {...props}
       ref={ref}
       data-slot="text-reveal"
-      className={cn("whitespace-pre-wrap [overflow-wrap:anywhere]", className)}
+      className={cn("whitespace-pre-wrap wrap-anywhere", className)}
     >
       <span className="sr-only">{text}</span>
       <span aria-hidden="true">

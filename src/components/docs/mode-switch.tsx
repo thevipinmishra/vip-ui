@@ -30,7 +30,7 @@ export function ModeSwitch({
       size={pill ? "sm" : undefined}
       className={cn(
         pill &&
-          "gap-0.5 rounded-full border-0 bg-card/60 shadow-[var(--shadow-card)] ring-1 ring-border/60 backdrop-blur-xl *:rounded-full",
+          "gap-0.5 rounded-full border-0 bg-card/60 shadow-(--shadow-card) ring-1 ring-border/60 backdrop-blur-xl *:rounded-full",
         className,
       )}
     >

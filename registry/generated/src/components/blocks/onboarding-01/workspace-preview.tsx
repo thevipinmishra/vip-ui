@@ -26,7 +26,7 @@ export function WorkspacePreview({
       <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
         Preview
       </p>
-      <div className="overflow-hidden rounded-xl bg-card shadow-[var(--shadow-float)] ring-1 ring-border/70">
+      <div className="overflow-hidden rounded-xl bg-card shadow-(--shadow-float) ring-1 ring-border/70">
         <div className="flex items-center gap-2 border-b border-border/70 bg-muted/60 px-3 py-2">
           <span aria-hidden="true" className="flex gap-1.5">
             <span className="size-2 rounded-full bg-border" />
@@ -41,7 +41,7 @@ export function WorkspacePreview({
           <div className="flex min-w-0 items-center gap-3">
             <span
               aria-hidden="true"
-              className="grid size-9 shrink-0 place-items-center rounded-lg text-sm font-semibold text-white shadow-[var(--shadow-card)]"
+              className="grid size-9 shrink-0 place-items-center rounded-lg text-sm font-semibold text-white shadow-(--shadow-card)"
               style={{ backgroundColor: color }}
             >
               {initial}

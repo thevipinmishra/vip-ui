@@ -42,8 +42,7 @@ export function CodeFrame({
       data-slot="code-frame"
       className={cn(
         "code-frame min-w-0 overflow-hidden bg-code text-code-foreground",
-        !embedded &&
-          "rounded-2xl shadow-[var(--shadow-card)] ring-1 ring-border/60",
+        !embedded && "rounded-2xl shadow-(--shadow-card) ring-1 ring-border/60",
       )}
     >
       <div className="flex min-h-12 flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-border/70 px-3 py-2 sm:px-4">

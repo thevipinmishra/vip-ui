@@ -121,7 +121,7 @@ export function Marquee({
   }
 
   const copyClassName = cn(
-    "flex shrink-0 items-center gap-[var(--marquee-gap)] pe-[var(--marquee-gap)] motion-reduce:flex-wrap motion-reduce:pe-0",
+    "flex shrink-0 items-center gap-(--marquee-gap) pe-(--marquee-gap) motion-reduce:flex-wrap motion-reduce:pe-0",
     isStatic && "flex-wrap pe-0",
   );
 
@@ -136,7 +136,7 @@ export function Marquee({
         className={cn(
           "-my-2 min-w-0 overflow-clip py-2",
           !isStatic &&
-            "[mask-image:linear-gradient(to_right,transparent,black_2rem,black_calc(100%-2rem),transparent)] motion-reduce:[mask-image:none]",
+            "mask-[linear-gradient(to_right,transparent,black_2rem,black_calc(100%-2rem),transparent)] motion-reduce:mask-none",
         )}
         onPointerEnter={() => setHovered(true)}
         onPointerLeave={() => setHovered(false)}

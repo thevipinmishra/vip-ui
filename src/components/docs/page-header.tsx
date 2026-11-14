@@ -11,7 +11,7 @@ export const sectionTitleClass =
 
 const headingSizes = {
   default: pageTitleSize,
-  lg: "text-[clamp(2.125rem,1.4rem+2.35vw,3.25rem)] leading-[1.08] tracking-[-0.04em] sm:tracking-[-0.05em]",
+  lg: "text-[clamp(2.125rem,1.4rem+2.35vw,3.25rem)] leading-[1.08] tracking-[-0.04em] sm:tracking-tighter",
 };
 
 export function PageHeader({ className, ...props }: ComponentProps<"header">) {

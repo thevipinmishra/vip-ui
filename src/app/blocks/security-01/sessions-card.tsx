@@ -166,7 +166,7 @@ export function SessionsCard({
         </CardAction>
       </CardHeader>
       <TableContainer className="rounded-none border-x-0 border-b-0 shadow-none">
-        <Table aria-label="Sessions" className="min-w-[44rem] [width:100%]!">
+        <Table aria-label="Sessions" className="min-w-176 w-full!">
           <TableHeader>
             <Column isRowHeader width={280}>
               Device

@@ -17,7 +17,7 @@ export function FileTriggerBasicDemo() {
       >
         <Button variant="outline">Choose image</Button>
       </FileTrigger>
-      <output className="max-w-full text-sm text-muted-foreground [overflow-wrap:anywhere]">
+      <output className="max-w-full text-sm text-muted-foreground wrap-anywhere">
         {filename}
       </output>
     </div>

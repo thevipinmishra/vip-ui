@@ -72,7 +72,7 @@ export function AccordionItem({
         cn(
           "min-w-0",
           variant === "card" &&
-            "overflow-hidden rounded-lg bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70 forced-colors:border",
+            "overflow-hidden rounded-lg bg-card shadow-(--shadow-card) ring-1 ring-border/70 forced-colors:border",
           className,
         ),
       )}
@@ -111,7 +111,7 @@ export function AccordionTrigger({
           ),
         )}
       >
-        <span className="min-w-0 [overflow-wrap:anywhere]">{children}</span>
+        <span className="min-w-0 wrap-anywhere">{children}</span>
         <span aria-hidden="true" className={collapsibleChevronStyles}>
           <CaretDownIcon size={16} />
         </span>
@@ -136,7 +136,7 @@ export function AccordionContent({
     >
       <div
         className={cn(
-          "[overflow-wrap:anywhere]",
+          "wrap-anywhere",
           variant === "card" ? "border-t border-border/70 px-4 py-3" : "pb-3",
         )}
       >

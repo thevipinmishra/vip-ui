@@ -19,7 +19,7 @@ export function Skeleton({
       )}
     >
       {children}
-      <div className="pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-card/60 to-transparent rtl:-scale-x-100 dark:via-foreground/[0.06] motion-safe:animate-skeleton motion-reduce:hidden" />
+      <div className="pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-card/60 to-transparent rtl:-scale-x-100 dark:via-foreground/6 motion-safe:animate-skeleton motion-reduce:hidden" />
     </div>
   );
 }

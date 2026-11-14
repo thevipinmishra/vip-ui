@@ -55,7 +55,7 @@ export function ApiReference({
           <dl className="divide-y divide-border/70 rounded-xl border border-border/70 bg-card/50">
             {part.props.map((prop) => (
               <div key={prop.name} className="px-4 py-3 sm:px-5">
-                <dt className="font-mono text-[13px] leading-6 text-muted-foreground [overflow-wrap:anywhere]">
+                <dt className="font-mono text-[13px] leading-6 text-muted-foreground wrap-anywhere">
                   <span className="font-medium text-foreground">
                     {prop.name}
                   </span>

@@ -60,7 +60,7 @@ export function OrderSummary({
   }, [applied]);
 
   return (
-    <div className="grid gap-4 rounded-xl bg-card p-4 shadow-[var(--shadow-card)] ring-1 ring-border/70 sm:p-5">
+    <div className="grid gap-4 rounded-xl bg-card p-4 shadow-(--shadow-card) ring-1 ring-border/70 sm:p-5">
       <div className="flex items-baseline justify-between gap-3">
         <h2 className="text-base font-semibold tracking-[-0.02em]">
           Order summary

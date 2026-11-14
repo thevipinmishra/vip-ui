@@ -140,7 +140,7 @@ function VelaLogo() {
     >
       <span
         aria-hidden="true"
-        className="grid size-8 place-items-center rounded-lg bg-primary text-primary-foreground shadow-[var(--shadow-card)]"
+        className="grid size-8 place-items-center rounded-lg bg-primary text-primary-foreground shadow-(--shadow-card)"
       >
         <svg
           viewBox="0 0 24 24"
@@ -237,7 +237,7 @@ export function NotFoundPage() {
               </div>
             </div>
 
-            <h1 className="mt-8 text-balance text-3xl font-semibold tracking-[-0.05em] sm:text-4xl">
+            <h1 className="mt-8 text-balance text-3xl font-semibold tracking-tighter sm:text-4xl">
               We cannot find that page.
             </h1>
             <p className="mt-3 max-w-lg text-base leading-7 text-muted-foreground">

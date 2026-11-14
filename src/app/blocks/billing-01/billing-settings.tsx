@@ -251,7 +251,7 @@ export function BillingSettings() {
                     value={item.value}
                     maxValue={item.max}
                     valueLabel={`${compact.format(item.value)} of ${compact.format(item.max)}`}
-                    className="[&_[data-slot=meter-value]]:font-sans"
+                    className="**:data-[slot=meter-value]:font-sans"
                   />
                 ))}
               </CardContent>
@@ -294,10 +294,7 @@ export function BillingSettings() {
             </CardDescription>
           </CardHeader>
           <TableContainer className="rounded-none border-x-0 border-b-0 shadow-none">
-            <Table
-              aria-label="Invoices"
-              className="min-w-[46rem] [width:100%]!"
-            >
+            <Table aria-label="Invoices" className="min-w-184 w-full!">
               <TableHeader>
                 <Column isRowHeader width={120}>
                   Invoice

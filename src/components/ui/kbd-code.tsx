@@ -28,7 +28,7 @@ export function InlineCode({ className, ...props }: ComponentProps<"code">) {
     <code
       data-slot="inline-code"
       className={cn(
-        "rounded-sm bg-muted px-1.5 py-0.5 font-mono text-[0.85em] text-foreground [overflow-wrap:anywhere] box-decoration-clone",
+        "rounded-sm bg-muted px-1.5 py-0.5 font-mono text-[0.85em] text-foreground wrap-anywhere box-decoration-clone",
         className,
       )}
       {...props}

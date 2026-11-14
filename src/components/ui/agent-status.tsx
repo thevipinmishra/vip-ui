@@ -37,7 +37,7 @@ export function AgentStatus({
       aria-live="polite"
       aria-atomic="true"
       className={cn(
-        "flex min-w-0 items-start gap-3 rounded-xl border border-border bg-card px-3 py-2.5 text-sm shadow-[var(--shadow-card)]",
+        "flex min-w-0 items-start gap-3 rounded-xl border border-border bg-card px-3 py-2.5 text-sm shadow-(--shadow-card)",
         className,
       )}
     >
@@ -67,11 +67,11 @@ export function AgentStatus({
       </span>
       <span className="flex min-w-0 flex-1 flex-wrap items-baseline gap-x-3 gap-y-0.5">
         <span className="flex min-h-8 min-w-0 flex-[1_1_10rem] flex-col justify-center">
-          <span className="font-medium text-foreground [overflow-wrap:anywhere]">
+          <span className="font-medium text-foreground wrap-anywhere">
             {label}
           </span>
           {detail && (
-            <span className="mt-0.5 text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]">
+            <span className="mt-0.5 text-xs leading-5 text-muted-foreground wrap-anywhere">
               {detail}
             </span>
           )}

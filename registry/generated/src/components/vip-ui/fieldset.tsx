@@ -10,7 +10,7 @@ export function Fieldset({
       {...props}
       data-slot="fieldset"
       className={cn(
-        "min-w-0 rounded-xl bg-card p-4 shadow-[var(--shadow-card)] ring-1 ring-border/70 disabled:opacity-60",
+        "min-w-0 rounded-xl bg-card p-4 shadow-(--shadow-card) ring-1 ring-border/70 disabled:opacity-60",
         className,
       )}
     />
@@ -26,7 +26,7 @@ export function FieldsetLegend({
       {...props}
       data-slot="fieldset-legend"
       className={cn(
-        "float-left mb-1 w-full text-sm font-semibold text-foreground [overflow-wrap:anywhere] [&+*]:clear-both",
+        "float-left mb-1 w-full text-sm font-semibold text-foreground wrap-anywhere [&+*]:clear-both",
         className,
       )}
     />
@@ -42,7 +42,7 @@ export function FieldsetDescription({
       {...props}
       data-slot="fieldset-description"
       className={cn(
-        "text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]",
+        "text-xs leading-5 text-muted-foreground wrap-anywhere",
         className,
       )}
     />

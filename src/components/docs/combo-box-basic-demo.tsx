@@ -4,7 +4,7 @@ import { ComboBox } from "@/components/ui/combo-box";
 
 export function ComboBoxBasicDemo() {
   return (
-    <div className="w-full max-w-[340px]">
+    <div className="w-full max-w-85">
       <ComboBox
         label="Framework"
         placeholder="Search frameworks"

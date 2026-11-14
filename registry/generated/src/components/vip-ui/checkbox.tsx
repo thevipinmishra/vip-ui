@@ -151,7 +151,7 @@ export function CheckboxIndicator({
       aria-hidden="true"
       data-slot="checkbox-indicator"
       className={cn(
-        "grid size-5 shrink-0 place-items-center rounded-sm border border-muted-foreground/75 bg-card shadow-[var(--shadow-inset)] transition-[background-color,border-color,box-shadow,outline-color,outline-offset,scale] duration-150 ease-out-quint group-hover/checkbox:border-primary motion-safe:group-pressed/checkbox:scale-90 group-selected/checkbox:border-primary group-selected/checkbox:bg-primary group-selected/checkbox:shadow-none group-indeterminate/checkbox:border-primary group-indeterminate/checkbox:bg-primary group-indeterminate/checkbox:shadow-none group-invalid/checkbox:border-destructive group-invalid/checkbox:group-hover/checkbox:border-destructive group-invalid/checkbox:group-selected/checkbox:bg-destructive group-invalid/checkbox:group-indeterminate/checkbox:bg-destructive forced-colors:border-[ButtonText] forced-colors:group-selected/checkbox:border-[Highlight] forced-colors:group-selected/checkbox:bg-[Highlight] forced-colors:group-indeterminate/checkbox:border-[Highlight] forced-colors:group-indeterminate/checkbox:bg-[Highlight] forced-colors:group-disabled/checkbox:border-[GrayText] forced-colors:group-disabled/checkbox:bg-[Canvas]",
+        "grid size-5 shrink-0 place-items-center rounded-sm border border-muted-foreground/75 bg-card shadow-(--shadow-inset) transition-[background-color,border-color,box-shadow,outline-color,outline-offset,scale] duration-150 ease-out-quint group-hover/checkbox:border-primary motion-safe:group-pressed/checkbox:scale-90 group-selected/checkbox:border-primary group-selected/checkbox:bg-primary group-selected/checkbox:shadow-none group-indeterminate/checkbox:border-primary group-indeterminate/checkbox:bg-primary group-indeterminate/checkbox:shadow-none group-invalid/checkbox:border-destructive group-invalid/checkbox:group-hover/checkbox:border-destructive group-invalid/checkbox:group-selected/checkbox:bg-destructive group-invalid/checkbox:group-indeterminate/checkbox:bg-destructive forced-colors:border-[ButtonText] forced-colors:group-selected/checkbox:border-[Highlight] forced-colors:group-selected/checkbox:bg-[Highlight] forced-colors:group-indeterminate/checkbox:border-[Highlight] forced-colors:group-indeterminate/checkbox:bg-[Highlight] forced-colors:group-disabled/checkbox:border-[GrayText] forced-colors:group-disabled/checkbox:bg-[Canvas]",
         variant === "default" &&
           "outline-offset-4 outline-transparent group-focus-visible/checkbox:outline-2 group-focus-visible/checkbox:outline-offset-2 group-focus-visible/checkbox:outline-ring motion-reduce:outline-offset-2",
         className,
@@ -201,7 +201,7 @@ export function CheckboxLabel({
     <span
       {...props}
       data-slot="checkbox-label"
-      className={cn("min-w-0 font-medium [overflow-wrap:anywhere]", className)}
+      className={cn("min-w-0 font-medium wrap-anywhere", className)}
     />
   );
 }

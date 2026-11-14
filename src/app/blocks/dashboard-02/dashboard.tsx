@@ -72,12 +72,12 @@ function ChartSkeleton() {
   return (
     <div className="grid gap-5">
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_320px]">
-        <div className="rounded-xl bg-card p-5 shadow-[var(--shadow-card)] ring-1 ring-border/70">
+        <div className="rounded-xl bg-card p-5 shadow-(--shadow-card) ring-1 ring-border/70">
           <Skeleton className="h-4 w-36" />
           <Skeleton className="mt-3 h-8 w-44" />
-          <Skeleton className="mt-5 h-[264px] w-full" />
+          <Skeleton className="mt-5 h-66 w-full" />
         </div>
-        <div className="rounded-xl bg-card p-5 shadow-[var(--shadow-card)] ring-1 ring-border/70">
+        <div className="rounded-xl bg-card p-5 shadow-(--shadow-card) ring-1 ring-border/70">
           <Skeleton className="h-4 w-24" />
           <div className="grid justify-items-center gap-3 py-4">
             <Skeleton className="size-24 rounded-full" />
@@ -91,9 +91,9 @@ function ChartSkeleton() {
           </div>
         </div>
       </div>
-      <div className="rounded-xl bg-card p-5 shadow-[var(--shadow-card)] ring-1 ring-border/70">
+      <div className="rounded-xl bg-card p-5 shadow-(--shadow-card) ring-1 ring-border/70">
         <Skeleton className="h-4 w-40" />
-        <Skeleton className="mt-4 h-[224px] w-full" />
+        <Skeleton className="mt-4 h-56 w-full" />
       </div>
     </div>
   );
@@ -418,7 +418,7 @@ export function AnalyticsDashboard() {
                   />
                   <Card className="grid content-start gap-4 p-5">
                     <div>
-                      <h3 className="text-base font-semibold tracking-[-0.025em]">
+                      <h3 className="text-base font-semibold tracking-tight">
                         MRR goal
                       </h3>
                       <p className="mt-1 text-sm text-muted-foreground">
@@ -501,7 +501,7 @@ export function AnalyticsDashboard() {
                     formatAxis={formatCount}
                   />
                   <Card className="grid content-start gap-4 p-5">
-                    <h3 className="text-base font-semibold tracking-[-0.025em]">
+                    <h3 className="text-base font-semibold tracking-tight">
                       Customer health
                     </h3>
                     <dl className="grid gap-3 text-sm">

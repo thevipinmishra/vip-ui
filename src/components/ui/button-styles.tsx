@@ -38,17 +38,17 @@ export const buttonStyles = tv({
   variants: {
     variant: {
       default:
-        "bg-primary text-primary-foreground shadow-[var(--shadow-card)] hover:bg-primary/90 pressed:bg-primary/90",
+        "bg-primary text-primary-foreground shadow-(--shadow-card) hover:bg-primary/90 pressed:bg-primary/90",
       secondary:
         "bg-secondary text-secondary-foreground hover:bg-border/70 pressed:bg-border/70",
       outline:
-        "border border-border bg-card text-foreground shadow-[var(--shadow-card)] hover:bg-muted pressed:bg-muted",
+        "border border-border bg-card text-foreground shadow-(--shadow-card) hover:bg-muted pressed:bg-muted",
       ghost:
-        "text-foreground hover:bg-muted in-data-[item-highlight=under]:hover:bg-transparent pressed:bg-muted aria-[pressed=true]:bg-accent aria-[pressed=true]:text-accent-foreground aria-[pressed=true]:hover:bg-accent",
+        "text-foreground hover:bg-muted in-data-[item-highlight=under]:hover:bg-transparent pressed:bg-muted aria-pressed:bg-accent aria-pressed:text-accent-foreground aria-pressed:hover:bg-accent",
       minimal:
         "text-muted-foreground hover:bg-muted in-data-[item-highlight=under]:hover:bg-transparent hover:text-foreground pressed:bg-muted pressed:text-foreground",
       destructive:
-        "bg-destructive text-background shadow-[var(--shadow-card)] hover:bg-destructive/90 pressed:bg-destructive/90",
+        "bg-destructive text-background shadow-(--shadow-card) hover:bg-destructive/90 pressed:bg-destructive/90",
     },
     size: {
       xs: `h-7 gap-1.5 rounded-sm px-2.5 text-xs [&_svg:not([class*='size-'])]:size-3.5 ${touchTarget}`,

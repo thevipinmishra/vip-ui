@@ -102,7 +102,7 @@ export function TextScramble({
     <span
       {...props}
       data-slot="text-scramble"
-      className={cn("font-mono [overflow-wrap:anywhere]", className)}
+      className={cn("font-mono wrap-anywhere", className)}
     >
       <span className="sr-only">{value}</span>
       <span aria-hidden="true">

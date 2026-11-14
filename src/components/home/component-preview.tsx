@@ -160,7 +160,7 @@ export function ProjectCard() {
       <BlockFooter className="justify-between border-t border-border/70 pt-4">
         <AvatarGroup
           aria-label="Owners"
-          className="-space-x-1 [&_[data-slot=avatar]]:ring-card"
+          className="-space-x-1 **:data-[slot=avatar]:ring-card"
         >
           {owners.map((name) => (
             <Avatar key={name} name={name} className="size-7 text-[0.625rem]" />
@@ -375,7 +375,7 @@ export function CommandCard() {
                 id={item.slug}
                 href={`/components/${item.slug}`}
                 textValue={item.name}
-                className="justify-start px-2 [&>[data-slot=selection-mark]]:hidden"
+                className="justify-start px-2 *:data-[slot=selection-mark]:hidden"
               >
                 <span
                   aria-hidden="true"

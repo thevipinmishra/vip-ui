@@ -68,7 +68,7 @@ export function RecentOrders() {
         </ToggleButtonGroup>
       </CardHeader>
       <div className="overflow-x-auto">
-        <Table aria-label="Recent orders" className="min-w-[560px]">
+        <Table aria-label="Recent orders" className="min-w-140">
           <TableHeader>
             <Column isRowHeader className="ps-5">
               Customer

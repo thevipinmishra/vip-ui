@@ -34,8 +34,8 @@ export function Tooltip({
       arrowBoundaryOffset={arrowBoundaryOffset}
       className={composeRenderProps(className, (className) =>
         cn(
-          "max-w-[min(14rem,calc(100vw-1.5rem))] overflow-auto overscroll-contain rounded-md bg-foreground px-3 py-2 text-xs leading-5 text-background [overflow-wrap:anywhere] shadow-[var(--shadow-float)] outline-none forced-colors:border",
-          "has-[[data-slot=tooltip-arrow]]:overflow-visible",
+          "max-w-[min(14rem,calc(100vw-1.5rem))] overflow-auto overscroll-contain rounded-md bg-foreground px-3 py-2 text-xs leading-5 text-background wrap-anywhere shadow-(--shadow-float) outline-none forced-colors:border",
+          "has-data-[slot=tooltip-arrow]:overflow-visible",
           // React Aria sets data-entering and data-exiting once the placement is
           // known, then waits for these transitions before it unmounts the tooltip.
           "origin-(--trigger-anchor-point) transition-[opacity,scale,translate] duration-180 ease-out-quint",

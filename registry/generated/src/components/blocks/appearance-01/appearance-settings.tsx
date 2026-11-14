@@ -68,7 +68,7 @@ const fonts = [
     id: "system",
     label: "System",
     note: "Device font",
-    className: "[font-family:ui-sans-serif,system-ui,sans-serif]",
+    className: "font-[ui-sans-serif,system-ui,sans-serif]",
   },
 ] as const;
 
@@ -137,7 +137,7 @@ function ThemeThumbnail({ mode }: { mode: ThemeMode }) {
   return (
     <span
       aria-hidden="true"
-      className="relative block aspect-[16/10] w-full overflow-hidden rounded-md ring-1 ring-border/70"
+      className="relative block aspect-16/10 w-full overflow-hidden rounded-md ring-1 ring-border/70"
     >
       {mode === "system" ? (
         <>

@@ -59,7 +59,7 @@ export function EmailLinkForm() {
           <Avatar name={passkeyAccount} size="lg" />
           <div className="grid gap-2">
             <ViewHeading focusOnMount>You are signed in</ViewHeading>
-            <p className="text-sm leading-6 text-muted-foreground [overflow-wrap:anywhere]">
+            <p className="text-sm leading-6 text-muted-foreground wrap-anywhere">
               {passkeyAccount}
             </p>
           </div>
@@ -76,7 +76,7 @@ export function EmailLinkForm() {
             <ViewHeading focusOnMount>Check your email</ViewHeading>
             <p className="text-sm leading-6 text-muted-foreground">
               We sent a sign-in link to{" "}
-              <span className="font-medium text-foreground [overflow-wrap:anywhere]">
+              <span className="font-medium text-foreground wrap-anywhere">
                 {email}
               </span>
               . The link expires in 10 minutes.

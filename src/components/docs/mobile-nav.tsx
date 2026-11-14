@@ -71,7 +71,7 @@ export function MobileNav() {
           <div className="relative flex shrink-0 items-center px-3">
             <SheetHandle />
             <SheetTitle className="sr-only">Menu</SheetTitle>
-            <SheetClose className="absolute end-3" />
+            <SheetClose className="absolute inset-e-3" />
           </div>
           <SheetBody className="grid content-start gap-4 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
             <nav

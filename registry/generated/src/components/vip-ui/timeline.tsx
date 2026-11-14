@@ -28,7 +28,7 @@ export function TimelineItem({
       data-slot="timeline-item"
       data-status={status}
       className={cn(
-        "group/timeline-item relative min-w-0 ps-9 pb-6 before:absolute before:start-[0.6875rem] before:top-7 before:bottom-1 before:w-px before:bg-primary/25 last:pb-0 last:before:hidden has-[+[data-status=upcoming]]:before:w-0 has-[+[data-status=upcoming]]:before:border-s has-[+[data-status=upcoming]]:before:border-dashed has-[+[data-status=upcoming]]:before:border-muted-foreground/45 has-[+[data-status=upcoming]]:before:bg-transparent data-[status=upcoming]:before:w-0 data-[status=upcoming]:before:border-s data-[status=upcoming]:before:border-dashed data-[status=upcoming]:before:border-muted-foreground/45 data-[status=upcoming]:before:bg-transparent forced-colors:before:bg-[CanvasText]",
+        "group/timeline-item relative min-w-0 ps-9 pb-6 before:absolute before:inset-s-2.75 before:top-7 before:bottom-1 before:w-px before:bg-primary/25 last:pb-0 last:before:hidden has-[+[data-status=upcoming]]:before:w-0 has-[+[data-status=upcoming]]:before:border-s has-[+[data-status=upcoming]]:before:border-dashed has-[+[data-status=upcoming]]:before:border-muted-foreground/45 has-[+[data-status=upcoming]]:before:bg-transparent data-[status=upcoming]:before:w-0 data-[status=upcoming]:before:border-s data-[status=upcoming]:before:border-dashed data-[status=upcoming]:before:border-muted-foreground/45 data-[status=upcoming]:before:bg-transparent forced-colors:before:bg-[CanvasText]",
         className,
       )}
     >
@@ -36,7 +36,7 @@ export function TimelineItem({
         aria-hidden="true"
         data-slot="timeline-marker"
         className={cn(
-          "absolute start-0 top-0 grid size-6 place-items-center rounded-full [&_svg:not([class*='size-'])]:size-3.5",
+          "absolute inset-s-0 top-0 grid size-6 place-items-center rounded-full [&_svg:not([class*='size-'])]:size-3.5",
           status === "complete" &&
             "bg-primary text-primary-foreground forced-colors:border",
           status === "latest" &&
@@ -73,7 +73,7 @@ export function TimelineTitle({
       {...props}
       data-slot="timeline-title"
       className={cn(
-        "text-sm font-semibold leading-6 tracking-[-0.01em] text-foreground [overflow-wrap:anywhere] group-data-[status=upcoming]/timeline-item:font-medium group-data-[status=upcoming]/timeline-item:text-muted-foreground",
+        "text-sm font-semibold leading-6 tracking-[-0.01em] text-foreground wrap-anywhere group-data-[status=upcoming]/timeline-item:font-medium group-data-[status=upcoming]/timeline-item:text-muted-foreground",
         className,
       )}
     />
@@ -102,7 +102,7 @@ export function TimelineDescription({
       {...props}
       data-slot="timeline-description"
       className={cn(
-        "mt-1 text-sm leading-6 text-muted-foreground [overflow-wrap:anywhere]",
+        "mt-1 text-sm leading-6 text-muted-foreground wrap-anywhere",
         className,
       )}
     />

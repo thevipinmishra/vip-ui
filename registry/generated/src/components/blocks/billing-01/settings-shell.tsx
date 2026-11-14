@@ -117,10 +117,10 @@ export function SettingsShell({
   return (
     <div className="min-h-svh bg-muted/30">
       <header className="sticky top-0 z-30 border-b border-border/70 bg-background/85 backdrop-blur-md">
-        <div className="mx-auto flex h-16 w-full max-w-[1280px] items-center gap-3 px-5 sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-16 w-full max-w-7xl items-center gap-3 px-5 sm:px-6 lg:px-8">
           <span
             aria-hidden="true"
-            className="grid size-9 shrink-0 place-items-center rounded-xl bg-primary text-base font-bold text-primary-foreground shadow-[var(--shadow-card)]"
+            className="grid size-9 shrink-0 place-items-center rounded-xl bg-primary text-base font-bold text-primary-foreground shadow-(--shadow-card)"
           >
             K
           </span>
@@ -144,13 +144,13 @@ export function SettingsShell({
           </div>
         </div>
       </header>
-      <div className="mx-auto grid w-full max-w-[1280px] gap-6 px-5 py-5 sm:px-6 md:py-8 lg:grid-cols-[14rem_minmax(0,1fr)] lg:items-start lg:gap-10 lg:px-8">
-        <aside className="min-w-0 lg:sticky lg:top-[5.5rem]">
+      <div className="mx-auto grid w-full max-w-7xl gap-6 px-5 py-5 sm:px-6 md:py-8 lg:grid-cols-[14rem_minmax(0,1fr)] lg:items-start lg:gap-10 lg:px-8">
+        <aside className="min-w-0 lg:sticky lg:top-22">
           <nav aria-label="Settings">
             <ScrollFade
               ref={scroller}
               orientation="horizontal"
-              className="-mx-5 px-5 [scrollbar-width:none] sm:-mx-6 sm:px-6 lg:hidden"
+              className="-mx-5 px-5 scrollbar-none sm:-mx-6 sm:px-6 lg:hidden"
             >
               <ul className="flex w-max gap-1.5 py-1">
                 {items.map((item) => (
@@ -184,7 +184,7 @@ export function SettingsShell({
               ))}
             </div>
           </nav>
-          <div className="mt-7 hidden rounded-xl bg-card p-3.5 shadow-[var(--shadow-card)] ring-1 ring-border/70 lg:block">
+          <div className="mt-7 hidden rounded-xl bg-card p-3.5 shadow-(--shadow-card) ring-1 ring-border/70 lg:block">
             <p className="text-xs font-medium text-muted-foreground">
               Workspace
             </p>

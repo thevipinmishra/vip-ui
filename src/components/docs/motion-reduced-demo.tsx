@@ -46,7 +46,7 @@ export function MotionReducedDemo() {
               data-open={on}
               aria-hidden={!on || undefined}
               className={cn(
-                "rounded-xl bg-card p-3 text-sm text-card-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70 transition-[opacity,translate,scale] duration-200 ease-out-quint data-[open=false]:opacity-0",
+                "rounded-xl bg-card p-3 text-sm text-card-foreground shadow-(--shadow-card) ring-1 ring-border/70 transition-[opacity,translate,scale] duration-200 ease-out-quint data-[open=false]:opacity-0",
                 column.panel,
               )}
             >

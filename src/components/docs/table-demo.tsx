@@ -46,7 +46,7 @@ export function TableDemo() {
           selectedKeys={selected}
           onSelectionChange={setSelected}
           disabledKeys={["orbit"]}
-          className="min-w-[30rem]"
+          className="min-w-120"
         >
           <TableHeader>
             <Column id="name" isRowHeader>

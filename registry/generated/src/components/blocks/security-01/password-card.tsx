@@ -119,7 +119,7 @@ export function PasswordCard({
                 value={strength}
                 maxValue={4}
                 valueLabel={strengthLabels[strength]}
-                className="pt-1 [&_[data-slot=meter-value]]:font-sans"
+                className="pt-1 **:data-[slot=meter-value]:font-sans"
               />
             </Presence>
           </div>

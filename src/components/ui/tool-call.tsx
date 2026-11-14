@@ -50,7 +50,7 @@ function ToolCallIcon({ status }: { status: ToolCallStatus }) {
       aria-hidden="true"
       data-slot="tool-call-icon"
       className={cn(
-        "grid size-8 shrink-0 place-items-center rounded-lg bg-accent text-primary transition-colors duration-200 ease-out-quint [&>*]:col-start-1 [&>*]:row-start-1",
+        "grid size-8 shrink-0 place-items-center rounded-lg bg-accent text-primary transition-colors duration-200 ease-out-quint *:col-start-1 *:row-start-1",
         status === "complete" && "bg-success-subtle text-success",
         status === "error" && "bg-destructive/10 text-destructive",
       )}
@@ -114,13 +114,13 @@ export function ToolCallTrigger({
           <span className="flex min-w-0 flex-wrap items-baseline gap-x-3 py-1.5">
             <span
               data-slot="tool-call-name"
-              className="min-w-0 flex-[1_1_8rem] text-start font-mono text-xs font-semibold leading-5 text-foreground [overflow-wrap:anywhere]"
+              className="min-w-0 flex-[1_1_8rem] text-start font-mono text-xs font-semibold leading-5 text-foreground wrap-anywhere"
             >
               {name}
             </span>
             <span
               data-slot="tool-call-status"
-              className="inline-grid text-xs font-normal leading-5 text-muted-foreground [&>*]:col-start-1 [&>*]:row-start-1"
+              className="inline-grid text-xs font-normal leading-5 text-muted-foreground *:col-start-1 *:row-start-1"
             >
               <AnimatePresence initial={false}>
                 <motion.span
@@ -147,7 +147,7 @@ export function ToolCallTrigger({
           {summary && (
             <span
               data-slot="tool-call-summary"
-              className="col-start-2 -mt-1 text-start text-xs font-normal leading-5 text-muted-foreground [overflow-wrap:anywhere]"
+              className="col-start-2 -mt-1 text-start text-xs font-normal leading-5 text-muted-foreground wrap-anywhere"
             >
               {summary}
             </span>
@@ -174,7 +174,7 @@ export function ToolCallPanel({
         cn("text-sm leading-6 text-foreground", className),
       )}
     >
-      <div className="grid min-w-0 gap-3 border-t border-border/70 px-3 pt-2.5 pb-3 [overflow-wrap:anywhere]">
+      <div className="grid min-w-0 gap-3 border-t border-border/70 px-3 pt-2.5 pb-3 wrap-anywhere">
         {children}
       </div>
     </CollapsiblePanel>

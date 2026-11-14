@@ -95,7 +95,7 @@ function Panel({
 
 export function ComponentShowcase() {
   return (
-    <div className="rounded-[1.75rem] bg-card p-2 shadow-[var(--shadow-card)] ring-1 ring-border/70 sm:p-3">
+    <div className="rounded-[1.75rem] bg-card p-2 shadow-(--shadow-card) ring-1 ring-border/70 sm:p-3">
       <div className="grid min-w-0 grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-6">
         <Panel className="md:col-span-2 lg:col-span-4 lg:row-span-2">
           <Calendar
@@ -148,8 +148,8 @@ export function ComponentShowcase() {
               <TableHeader>
                 <Column isRowHeader>Project</Column>
                 <Column className="@max-[30rem]:hidden">Status</Column>
-                <Column className="@max-[36rem]:hidden">Owner</Column>
-                <Column className="@max-[24rem]:hidden text-end">Budget</Column>
+                <Column className="@max-xl:hidden">Owner</Column>
+                <Column className="@max-sm:hidden text-end">Budget</Column>
               </TableHeader>
               <TableBody items={projects}>
                 {(project) => (
@@ -164,13 +164,13 @@ export function ComponentShowcase() {
                         {project.status}
                       </Badge>
                     </Cell>
-                    <Cell className="@max-[36rem]:hidden">
+                    <Cell className="@max-xl:hidden">
                       <span className="flex items-center gap-2">
                         <Avatar name={project.owner} size="xs" />
                         <span className="truncate">{project.owner}</span>
                       </span>
                     </Cell>
-                    <Cell className="@max-[24rem]:hidden text-end tabular-nums">
+                    <Cell className="@max-sm:hidden text-end tabular-nums">
                       {project.budget}
                     </Cell>
                   </Row>

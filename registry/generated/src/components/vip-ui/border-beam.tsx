@@ -26,7 +26,7 @@ export function BorderBeam({
       {...props}
       data-slot="border-beam"
       className={cn(
-        "pointer-events-none absolute inset-[calc(var(--border-beam-width,1px)*-1)] rounded-[inherit] p-[var(--border-beam-width,1px)] [container-type:size] forced-colors:hidden",
+        "pointer-events-none absolute -inset-(--border-beam-width,1px) rounded-[inherit] p-(--border-beam-width,1px) @container-size forced-colors:hidden",
         className,
       )}
       style={{

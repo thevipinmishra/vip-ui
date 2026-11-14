@@ -12,7 +12,7 @@ export function BrandPanel() {
     <aside className="relative hidden overflow-hidden bg-primary text-primary-foreground lg:flex lg:flex-col lg:justify-end">
       <div
         aria-hidden="true"
-        className="absolute inset-0 opacity-25 [background-image:linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_1px,transparent_1px)] [background-size:48px_48px] [mask-image:radial-gradient(ellipse_at_top_right,black,transparent_70%)]"
+        className="absolute inset-0 opacity-25 bg-[linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_1px,transparent_1px)] bg-size-[48px_48px] mask-[radial-gradient(ellipse_at_top_right,black,transparent_70%)]"
       />
       <div
         aria-hidden="true"

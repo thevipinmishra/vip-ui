@@ -98,7 +98,7 @@ function Section({
   return (
     <section className="grid gap-4 xl:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] xl:gap-10">
       <div>
-        <h2 className="text-base font-semibold tracking-[-0.025em]">{title}</h2>
+        <h2 className="text-base font-semibold tracking-tight">{title}</h2>
         <p className="mt-1 text-sm leading-6 text-muted-foreground">
           {description}
         </p>
@@ -194,7 +194,7 @@ export function NotificationSettings() {
                   <th
                     key={channel}
                     scope="col"
-                    className="w-14 pt-4 pb-1 text-center text-xs font-medium text-muted-foreground last:w-[4.75rem] last:pe-5 sm:w-18 sm:last:w-[5.75rem]"
+                    className="w-14 pt-4 pb-1 text-center text-xs font-medium text-muted-foreground last:w-19 last:pe-5 sm:w-18 sm:last:w-23"
                   >
                     {channel}
                   </th>

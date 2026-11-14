@@ -15,7 +15,7 @@ export const logotypes = [
   { name: "NORTHWIND", className: "text-sm font-semibold tracking-[0.22em]" },
   { name: "Kepler", className: "text-lg font-medium tracking-[-0.04em]" },
   { name: "OHM", className: "text-base font-bold tracking-[0.3em]" },
-  { name: "monarch", className: "text-lg font-semibold tracking-[-0.05em]" },
+  { name: "monarch", className: "text-lg font-semibold tracking-tighter" },
   { name: "Sable", className: "text-lg font-medium italic tracking-[-0.02em]" },
   { name: "LUMEN", className: "text-sm font-semibold tracking-[0.28em]" },
   { name: "Arbor", className: "text-lg font-semibold tracking-[-0.03em]" },

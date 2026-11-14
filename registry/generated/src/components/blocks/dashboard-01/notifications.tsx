@@ -63,13 +63,13 @@ export function Notifications() {
           {unread > 0 && (
             <span
               aria-hidden="true"
-              className="absolute end-2.5 top-2.5 size-2 rounded-full bg-destructive ring-2 ring-card"
+              className="absolute inset-e-2.5 top-2.5 size-2 rounded-full bg-destructive ring-2 ring-card"
             />
           )}
         </Button>
         <TooltipContent>Notifications</TooltipContent>
       </TooltipTrigger>
-      <Popover placement="bottom end" className="w-[22rem] p-0">
+      <Popover placement="bottom end" className="w-88 p-0">
         <PopoverDialog aria-label="Notifications">
           <div className="flex items-center justify-between gap-3 border-b border-border/70 py-2 pe-2 ps-4">
             <PopoverTitle>Notifications</PopoverTitle>

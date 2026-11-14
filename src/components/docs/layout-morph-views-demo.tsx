@@ -47,7 +47,7 @@ export function LayoutMorphViewsDemo() {
       <LayoutMorph
         aria-live="polite"
         contentKey={plan}
-        className="rounded-xl border border-border bg-card px-4 py-3 shadow-[var(--shadow-card)]"
+        className="rounded-xl border border-border bg-card px-4 py-3 shadow-(--shadow-card)"
       >
         <p className="text-lg font-semibold tracking-tight">{price}</p>
         <ul className="mt-3 grid gap-1.5 text-sm text-muted-foreground">

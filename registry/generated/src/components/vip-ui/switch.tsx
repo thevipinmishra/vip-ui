@@ -109,7 +109,7 @@ export function SwitchLabel({
       {...props}
       data-slot="switch-label"
       className={cn(
-        "me-4 min-w-0 font-medium [overflow-wrap:anywhere] [[data-slot=switch-control]+&]:ms-3 [[data-slot=switch-control]+&]:me-0",
+        "me-4 min-w-0 font-medium wrap-anywhere [[data-slot=switch-control]+&]:ms-3 [[data-slot=switch-control]+&]:me-0",
         className,
       )}
     />
@@ -163,7 +163,7 @@ export function SwitchControl({
       aria-hidden="true"
       data-slot="switch-control"
       className={cn(
-        "row-span-2 flex h-6 w-10 shrink-0 items-center rounded-full bg-muted-foreground/75 p-0.5 shadow-[var(--shadow-inset)] outline-offset-4 outline-transparent transition-[background-color,outline-color,outline-offset] duration-200 ease-out-quint motion-reduce:outline-offset-2 group-hover/switch:bg-muted-foreground group-selected/switch:bg-primary group-selected/switch:group-hover/switch:bg-primary/90 group-invalid/switch:ring-2 group-invalid/switch:ring-destructive group-focus-visible/switch:outline-2 group-focus-visible/switch:outline-solid group-focus-visible/switch:outline-offset-2 group-focus-visible/switch:outline-ring forced-colors:border forced-colors:border-[ButtonText] forced-colors:p-px forced-colors:group-selected/switch:border-[Highlight] forced-colors:group-disabled/switch:border-[GrayText]",
+        "row-span-2 flex h-6 w-10 shrink-0 items-center rounded-full bg-muted-foreground/75 p-0.5 shadow-(--shadow-inset) outline-offset-4 outline-transparent transition-[background-color,outline-color,outline-offset] duration-200 ease-out-quint motion-reduce:outline-offset-2 group-hover/switch:bg-muted-foreground group-selected/switch:bg-primary group-selected/switch:group-hover/switch:bg-primary/90 group-invalid/switch:ring-2 group-invalid/switch:ring-destructive group-focus-visible/switch:outline-2 group-focus-visible/switch:outline-solid group-focus-visible/switch:outline-offset-2 group-focus-visible/switch:outline-ring forced-colors:border forced-colors:border-[ButtonText] forced-colors:p-px forced-colors:group-selected/switch:border-[Highlight] forced-colors:group-disabled/switch:border-[GrayText]",
         className,
       )}
     />
@@ -180,7 +180,7 @@ export function SwitchThumb({
       aria-hidden="true"
       data-slot="switch-thumb"
       className={cn(
-        "size-5 shrink-0 rounded-full bg-card shadow-[var(--shadow-card)] transition-[translate,width,background-color] duration-350 ease-spring group-pressed/switch:w-6 group-selected/switch:translate-x-4 group-selected/switch:bg-primary-foreground group-selected/switch:group-pressed/switch:translate-x-3 rtl:group-selected/switch:-translate-x-4 rtl:group-selected/switch:group-pressed/switch:-translate-x-3 motion-reduce:transition-none forced-colors:bg-[ButtonText] forced-colors:group-selected/switch:bg-[Highlight] forced-colors:group-disabled/switch:bg-[GrayText]",
+        "size-5 shrink-0 rounded-full bg-card shadow-(--shadow-card) transition-[translate,width,background-color] duration-350 ease-spring group-pressed/switch:w-6 group-selected/switch:translate-x-4 group-selected/switch:bg-primary-foreground group-selected/switch:group-pressed/switch:translate-x-3 rtl:group-selected/switch:-translate-x-4 rtl:group-selected/switch:group-pressed/switch:-translate-x-3 motion-reduce:transition-none forced-colors:bg-[ButtonText] forced-colors:group-selected/switch:bg-[Highlight] forced-colors:group-disabled/switch:bg-[GrayText]",
         className,
       )}
     />

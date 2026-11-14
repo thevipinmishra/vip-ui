@@ -113,7 +113,7 @@ export function AiSearch() {
           />
           <span
             aria-hidden="true"
-            className="mx-auto grid size-11 place-items-center rounded-xl bg-primary text-primary-foreground shadow-[var(--shadow-float)]"
+            className="mx-auto grid size-11 place-items-center rounded-xl bg-primary text-primary-foreground shadow-(--shadow-float)"
           >
             <BookOpenIcon size={22} weight="fill" />
           </span>
@@ -156,7 +156,7 @@ export function AiSearch() {
                     );
                     if (suggestion) startSearch(suggestion.label);
                   }}
-                  className="max-h-72 shadow-[var(--shadow-float)]"
+                  className="max-h-72 shadow-(--shadow-float)"
                 >
                   {(item) => (
                     <ListBoxItem

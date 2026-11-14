@@ -29,7 +29,7 @@ const settings = [
 
 export function SwitchDemo() {
   return (
-    <div className="w-full max-w-sm divide-y divide-border rounded-xl border border-border bg-card px-4 shadow-[var(--shadow-card)]">
+    <div className="w-full max-w-sm divide-y divide-border rounded-xl border border-border bg-card px-4 shadow-(--shadow-card)">
       {settings.map((setting) => (
         <SwitchField
           key={setting.id}

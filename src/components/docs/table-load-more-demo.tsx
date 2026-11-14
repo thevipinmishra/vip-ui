@@ -60,7 +60,7 @@ export function TableLoadMoreDemo() {
 
   return (
     <TableContainer className="max-h-80 max-w-2xl">
-      <Table aria-label="Orders" className="min-w-[26rem]">
+      <Table aria-label="Orders" className="min-w-104">
         <TableHeader>
           <Column id="id" isRowHeader>
             Order

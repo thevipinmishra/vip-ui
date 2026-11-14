@@ -46,7 +46,7 @@ export function TextShimmer({
       {direction !== 0 && active && (
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 select-none overflow-clip [mask-image:linear-gradient(to_right,transparent_35%,black_50%,transparent_65%)] forced-colors:hidden motion-reduce:hidden motion-safe:animate-text-shimmer"
+          className="pointer-events-none absolute inset-0 select-none overflow-clip mask-[linear-gradient(to_right,transparent_35%,black_50%,transparent_65%)] forced-colors:hidden motion-reduce:hidden motion-safe:animate-text-shimmer"
           style={
             {
               "--shimmer-from": `${-travel}%`,

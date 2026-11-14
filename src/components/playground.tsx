@@ -24,7 +24,7 @@ export function Playground() {
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-[22px] border border-border bg-card text-card-foreground shadow-[var(--shadow-float)]",
+        "relative overflow-hidden rounded-[22px] border border-border bg-card text-card-foreground shadow-(--shadow-float)",
         isDark && "dark",
       )}
     >

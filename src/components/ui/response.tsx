@@ -82,7 +82,7 @@ export function ResponseContent({
       data-slot="response-content"
       aria-busy={streaming || undefined}
       className={cn(
-        "min-h-6 min-w-0 text-sm leading-6 [overflow-wrap:anywhere]",
+        "min-h-6 min-w-0 text-sm leading-6 wrap-anywhere",
         className,
       )}
     >
@@ -91,7 +91,7 @@ export function ResponseContent({
         <span
           aria-hidden="true"
           data-slot="response-caret"
-          className="ms-1 inline-block h-[1.05em] w-[0.45em] translate-y-[0.15em] rounded-[2px] bg-foreground/70 motion-safe:animate-caret forced-colors:bg-[CanvasText]"
+          className="ms-1 inline-block h-[1.05em] w-[0.45em] translate-y-[0.15em] rounded-xs bg-foreground/70 motion-safe:animate-caret forced-colors:bg-[CanvasText]"
         />
       )}
     </div>

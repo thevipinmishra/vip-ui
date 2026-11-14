@@ -58,7 +58,7 @@ export function Tree<T extends object>({
         render={withItemHighlight(render, { ring: true })}
         className={composeRenderProps(className, (className) =>
           cn(
-            "grid max-h-96 min-w-0 content-start gap-1 overflow-y-auto overscroll-contain rounded-lg border border-border bg-card p-2 text-sm shadow-[var(--shadow-card)] outline-none transition-[background-color,box-shadow] duration-150 ease-out-quint empty:min-h-24 empty:place-items-center empty:content-center empty:text-muted-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring drop-target:bg-accent/40 drop-target:inset-ring-2 drop-target:inset-ring-primary",
+            "grid max-h-96 min-w-0 content-start gap-1 overflow-y-auto overscroll-contain rounded-lg border border-border bg-card p-2 text-sm shadow-(--shadow-card) outline-none transition-[background-color,box-shadow] duration-150 ease-out-quint empty:min-h-24 empty:place-items-center empty:content-center empty:text-muted-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring drop-target:bg-accent/40 drop-target:inset-ring-2 drop-target:inset-ring-primary",
             className,
           ),
         )}
@@ -125,7 +125,7 @@ export function TreeItem({
       textValue={props.textValue ?? title}
       className={composeRenderProps(className, (className) =>
         cn(
-          "group/tree-item min-w-0 rounded-md text-foreground outline-none transition-[color,background-color,opacity] duration-150 ease-out-quint selected:bg-accent selected:text-accent-foreground selected:font-medium selected:ring-1 selected:ring-primary/15 disabled:opacity-50 dragging:opacity-50 drop-target:bg-accent drop-target:ring-2 drop-target:ring-primary data-[href]:cursor-pointer forced-colors:border-2 forced-colors:border-[Canvas] forced-colors:selected:border-[Highlight]",
+          "group/tree-item min-w-0 rounded-md text-foreground outline-none transition-[color,background-color,opacity] duration-150 ease-out-quint selected:bg-accent selected:text-accent-foreground selected:font-medium selected:ring-1 selected:ring-primary/15 disabled:opacity-50 dragging:opacity-50 drop-target:bg-accent drop-target:ring-2 drop-target:ring-primary data-href:cursor-pointer forced-colors:border-2 forced-colors:border-[Canvas] forced-colors:selected:border-[Highlight]",
           itemHighlightRing,
           className,
         ),

@@ -24,7 +24,7 @@ export function PresenceCollapseDemo() {
           </Alert>
         </div>
       </Presence>
-      <div className="grid justify-items-start gap-3 rounded-xl border border-border bg-card p-4 shadow-[var(--shadow-card)]">
+      <div className="grid justify-items-start gap-3 rounded-xl border border-border bg-card p-4 shadow-(--shadow-card)">
         <p className="text-sm">Team plan, 8 seats</p>
         <Button
           ref={restoreRef}

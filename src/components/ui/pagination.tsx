@@ -162,7 +162,7 @@ export function PaginationLink({
           aria-hidden="true"
           ref={indicatorRef}
           data-slot="pagination-current"
-          className="absolute inset-0 -z-10 rounded-[inherit] bg-card shadow-[var(--shadow-card)] ring-1 ring-primary/25"
+          className="absolute inset-0 -z-10 rounded-[inherit] bg-card shadow-(--shadow-card) ring-1 ring-primary/25"
         />
       )}
       {buttonLabel(children)}

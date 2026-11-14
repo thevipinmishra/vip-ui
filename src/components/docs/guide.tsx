@@ -112,7 +112,7 @@ export function DocsHeader({
 }
 
 const pagerLink =
-  "flex min-h-20 flex-col justify-center rounded-xl bg-card px-5 py-3 shadow-[var(--shadow-card)] ring-1 ring-border/70 outline-offset-4 outline-transparent transition-[background-color,outline-color,outline-offset] duration-150 ease-out-quint hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2";
+  "flex min-h-20 flex-col justify-center rounded-xl bg-card px-5 py-3 shadow-(--shadow-card) ring-1 ring-border/70 outline-offset-4 outline-transparent transition-[background-color,outline-color,outline-offset] duration-150 ease-out-quint hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2";
 
 export function DocsPager({
   previous,
@@ -183,7 +183,7 @@ export function GuidePage({
 }) {
   const { guide, previous, next } = guideNeighbors(href);
   return (
-    <article className="max-w-[670px]">
+    <article className="max-w-167.5">
       <DocsHeader title={guide.label} description={guide.description} />
       {children}
       <DocsPager previous={previous} next={next} />

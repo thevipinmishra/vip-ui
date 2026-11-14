@@ -26,10 +26,10 @@ const tabs = [
 ];
 
 const tiles = [
-  "row-span-2 bg-[var(--chart-3)]",
-  "col-span-2 bg-[var(--chart-2)]",
-  "bg-[var(--chart-4)]",
-  "bg-[var(--chart-5)]",
+  "row-span-2 bg-(--chart-3)",
+  "col-span-2 bg-(--chart-2)",
+  "bg-(--chart-4)",
+  "bg-(--chart-5)",
 ];
 
 export function BlocksGallery({ category }: { category: string | null }) {

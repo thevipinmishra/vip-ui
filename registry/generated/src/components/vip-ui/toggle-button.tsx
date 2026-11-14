@@ -19,9 +19,9 @@ const toggleButtonStyles = tv({
   variants: {
     variant: {
       default:
-        "border border-border bg-card text-foreground shadow-[var(--shadow-card)] hover:bg-muted pressed:bg-muted selected:border-primary/40 selected:bg-accent selected:text-accent-foreground",
+        "border border-border bg-card text-foreground shadow-(--shadow-card) hover:bg-muted pressed:bg-muted selected:border-primary/40 selected:bg-accent selected:text-accent-foreground",
       segmented:
-        "border border-transparent bg-transparent px-3 text-muted-foreground shadow-none hover:bg-card/70 in-data-[item-highlight=under]:not-selected:hover:bg-transparent hover:text-foreground pressed:bg-card/70 selected:border-border selected:bg-card selected:text-foreground selected:shadow-[var(--shadow-card)]",
+        "border border-transparent bg-transparent px-3 text-muted-foreground shadow-none hover:bg-card/70 in-data-[item-highlight=under]:not-selected:hover:bg-transparent hover:text-foreground pressed:bg-card/70 selected:border-border selected:bg-card selected:text-foreground selected:shadow-(--shadow-card)",
       ghost:
         "border border-transparent bg-transparent text-foreground hover:bg-muted in-data-[item-highlight=under]:not-selected:hover:bg-transparent pressed:bg-muted selected:bg-accent selected:text-accent-foreground",
     },
@@ -117,7 +117,7 @@ export function ToggleButton({
               initial={false}
               aria-hidden="true"
               transition={transitionFor(reduceMotion, springLayout)}
-              className="pointer-events-none absolute inset-0 -z-10 rounded-[inherit] border border-border bg-card shadow-[var(--shadow-card)] forced-colors:border-[Highlight]"
+              className="pointer-events-none absolute inset-0 -z-10 rounded-[inherit] border border-border bg-card shadow-(--shadow-card) forced-colors:border-[Highlight]"
             />
           )}
           {buttonLabel(content)}

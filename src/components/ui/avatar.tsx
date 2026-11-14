@@ -90,7 +90,7 @@ export function AvatarGroup({ className, ...props }: ComponentProps<"div">) {
       role="group"
       data-slot="avatar-group"
       className={cn(
-        "flex flex-wrap items-center gap-y-1 -space-x-2 [&_[data-slot=avatar]]:ring-2 [&_[data-slot=avatar]]:ring-background",
+        "flex flex-wrap items-center gap-y-1 -space-x-2 **:data-[slot=avatar]:ring-2 **:data-[slot=avatar]:ring-background",
         className,
       )}
       {...props}

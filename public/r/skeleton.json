@@ -28,7 +28,7 @@
       "path": "src/components/ui/skeleton.tsx",
       "type": "registry:file",
       "target": "@components/vip-ui/skeleton.tsx",
-      "content": "\"use client\";\n\nimport type { ComponentProps } from \"react\";\nimport { cn } from \"./utils\";\n\nexport function Skeleton({\n  className,\n  children,\n  ...props\n}: ComponentProps<\"div\">) {\n  return (\n    <div\n      {...props}\n      aria-hidden=\"true\"\n      data-slot=\"skeleton\"\n      className={cn(\n        \"relative isolate overflow-hidden rounded-md bg-muted forced-colors:bg-[GrayText]\",\n        className,\n      )}\n    >\n      {children}\n      <div className=\"pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-card/60 to-transparent rtl:-scale-x-100 dark:via-foreground/[0.06] motion-safe:animate-skeleton motion-reduce:hidden\" />\n    </div>\n  );\n}\n"
+      "content": "\"use client\";\n\nimport type { ComponentProps } from \"react\";\nimport { cn } from \"./utils\";\n\nexport function Skeleton({\n  className,\n  children,\n  ...props\n}: ComponentProps<\"div\">) {\n  return (\n    <div\n      {...props}\n      aria-hidden=\"true\"\n      data-slot=\"skeleton\"\n      className={cn(\n        \"relative isolate overflow-hidden rounded-md bg-muted forced-colors:bg-[GrayText]\",\n        className,\n      )}\n    >\n      {children}\n      <div className=\"pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-card/60 to-transparent rtl:-scale-x-100 dark:via-foreground/6 motion-safe:animate-skeleton motion-reduce:hidden\" />\n    </div>\n  );\n}\n"
     }
   ]
 }

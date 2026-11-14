@@ -82,7 +82,7 @@ export function TimeOffBlock() {
       <BlockBody className="@container grid-cols-1 justify-items-center">
         <RangeCalendar
           aria-label="Days away"
-          className="max-w-none max-sm:[--spacing:0.22rem] @max-[18rem]:[--spacing:0.22rem]"
+          className="max-w-none max-sm:[--spacing:0.22rem] @max-2xs:[--spacing:0.22rem]"
           value={range}
           onChange={setRange}
         />

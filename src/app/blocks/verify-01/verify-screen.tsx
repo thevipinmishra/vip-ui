@@ -151,7 +151,7 @@ export function VerifyScreen() {
               </div>
             ) : (
               <div className="grid gap-6">
-                <div className="flex min-w-0 items-center gap-3 rounded-xl bg-card p-3 shadow-[var(--shadow-card)] ring-1 ring-border/70">
+                <div className="flex min-w-0 items-center gap-3 rounded-xl bg-card p-3 shadow-(--shadow-card) ring-1 ring-border/70">
                   <Avatar name={account.name} size="sm" />
                   <span className="min-w-0 flex-1 truncate text-sm font-medium">
                     {account.email}

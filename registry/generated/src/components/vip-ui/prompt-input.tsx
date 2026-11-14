@@ -181,7 +181,7 @@ export function PromptInput({
       data-dragging={isDragging || undefined}
       className={composeRenderProps(className, (className) =>
         cn(
-          "relative flex w-full min-w-0 flex-col rounded-[var(--field-radius,var(--radius-lg))] border border-input bg-card text-foreground shadow-[var(--shadow-card)] outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-out-quint [&:hover]:border-primary/45 [&:focus-within]:border-ring [&:focus-within]:ring-1 [&:focus-within]:ring-ring [&:focus-within:hover]:border-ring data-[invalid]:border-destructive [&[data-invalid]:hover]:border-destructive [&[data-invalid]:focus-within]:border-destructive [&[data-invalid]:focus-within]:ring-destructive data-[readonly]:bg-muted/40 [&[data-readonly]:hover]:border-input data-[disabled]:bg-muted data-[disabled]:opacity-60 [&[data-disabled]:hover]:border-input data-[dragging]:border-primary/60",
+          "relative flex w-full min-w-0 flex-col rounded-(--field-radius,var(--radius-lg)) border border-input bg-card text-foreground shadow-(--shadow-card) outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-out-quint [&:hover]:border-primary/45 [&:focus-within]:border-ring [&:focus-within]:ring-1 [&:focus-within]:ring-ring [&:focus-within:hover]:border-ring data-invalid:border-destructive [&[data-invalid]:hover]:border-destructive [&[data-invalid]:focus-within]:border-destructive [&[data-invalid]:focus-within]:ring-destructive data-readonly:bg-muted/40 [&[data-readonly]:hover]:border-input data-disabled:bg-muted data-disabled:opacity-60 [&[data-disabled]:hover]:border-input dragging:border-primary/60",
           size && fieldSizeStyles[size],
           className,
         ),
@@ -237,7 +237,7 @@ function PromptInputDropOverlay({ label }: PromptInputDropOverlayProps) {
     <div
       data-slot="prompt-input-drop-overlay"
       role="presentation"
-      className="pointer-events-none absolute inset-0 z-10 grid place-items-center rounded-[var(--field-radius,var(--radius-lg))] border-2 border-dashed border-primary/60 bg-card/90 text-sm font-medium text-foreground transition-[opacity,scale] duration-150 ease-out-quint starting:scale-[0.98] starting:opacity-0 motion-reduce:transition-none"
+      className="pointer-events-none absolute inset-0 z-10 grid place-items-center rounded-(--field-radius,var(--radius-lg)) border-2 border-dashed border-primary/60 bg-card/90 text-sm font-medium text-foreground transition-[opacity,scale] duration-150 ease-out-quint starting:scale-[0.98] starting:opacity-0 motion-reduce:transition-none"
     >
       <span className="flex items-center gap-2">
         <ArrowDownIcon size={16} aria-hidden="true" />
@@ -387,7 +387,7 @@ export function PromptInputSubmit({
     >
       <span
         aria-hidden="true"
-        className="grid shrink-0 place-items-center [&>*]:col-start-1 [&>*]:row-start-1"
+        className="grid shrink-0 place-items-center *:col-start-1 *:row-start-1"
       >
         <PaperPlaneRightIcon
           weight="fill"

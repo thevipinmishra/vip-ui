@@ -18,7 +18,7 @@ import { Kbd, KbdGroup } from "@/components/ui/kbd-code";
 import { cn } from "@/lib/utils";
 
 const surface =
-  "rounded-xl bg-popover text-popover-foreground shadow-[var(--shadow-float)] ring-1 ring-border/70";
+  "rounded-xl bg-popover text-popover-foreground shadow-(--shadow-float) ring-1 ring-border/70";
 
 function Screen({
   children,
@@ -156,7 +156,7 @@ export function PopoverPreview() {
 export function TooltipPreview() {
   return (
     <div className="grid justify-items-center gap-2">
-      <span className="relative rounded-md bg-primary px-2.5 py-1.5 text-xs text-primary-foreground shadow-[var(--shadow-float)]">
+      <span className="relative rounded-md bg-primary px-2.5 py-1.5 text-xs text-primary-foreground shadow-(--shadow-float)">
         Keep changes private until you publish.
         <span className="absolute -bottom-1 left-1/2 size-2 -translate-x-1/2 rotate-45 bg-primary" />
       </span>
@@ -189,7 +189,7 @@ export function MenuPreview() {
 export function ContextMenuPreview() {
   return (
     <div className="relative h-44 w-80">
-      <div className="absolute start-0 top-2 flex w-44 items-center gap-3 rounded-xl bg-card p-3 ring-1 ring-border/70">
+      <div className="absolute inset-s-0 top-2 flex w-44 items-center gap-3 rounded-xl bg-card p-3 ring-1 ring-border/70">
         <span className="grid size-9 place-items-center rounded-lg bg-muted">
           <FileTextIcon size={18} className="text-muted-foreground" />
         </span>
@@ -201,9 +201,9 @@ export function ContextMenuPreview() {
       <CursorIcon
         size={18}
         weight="fill"
-        className="absolute start-32 top-11 text-foreground"
+        className="absolute inset-s-32 top-11 text-foreground"
       />
-      <div className={cn(surface, "absolute start-36 top-14 grid w-44 p-1")}>
+      <div className={cn(surface, "absolute inset-s-36 top-14 grid w-44 p-1")}>
         <MenuRow>Open</MenuRow>
         <MenuRow highlighted>Rename</MenuRow>
         <MenuRow className="text-destructive">Delete</MenuRow>

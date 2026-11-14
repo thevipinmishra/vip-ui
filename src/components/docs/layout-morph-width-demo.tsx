@@ -23,7 +23,7 @@ export function LayoutMorphWidthDemo() {
       <LayoutMorph
         aria-live="polite"
         contentKey={state}
-        className="w-fit max-w-full rounded-full border border-border bg-card px-3.5 py-1.5 text-sm shadow-[var(--shadow-card)]"
+        className="w-fit max-w-full rounded-full border border-border bg-card px-3.5 py-1.5 text-sm shadow-(--shadow-card)"
       >
         <span className="flex items-center gap-2 whitespace-nowrap">
           {state === "saved" && (

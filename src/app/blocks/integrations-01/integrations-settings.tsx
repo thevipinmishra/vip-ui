@@ -415,7 +415,7 @@ export function IntegrationsSettings() {
                       key={app.id}
                       id={app.id}
                       textValue={app.name}
-                      className="flex-col items-stretch gap-0 rounded-xl border border-border bg-card p-4 shadow-[var(--shadow-card)]"
+                      className="flex-col items-stretch gap-0 rounded-xl border border-border bg-card p-4 shadow-(--shadow-card)"
                     >
                       <div className="flex min-w-0 items-start gap-3">
                         <span

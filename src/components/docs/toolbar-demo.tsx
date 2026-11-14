@@ -61,7 +61,7 @@ export function ToolbarDemo() {
         </Button>
       </Toolbar>
       <p
-        className="w-full rounded-lg border border-border/70 bg-card px-4 py-3 text-sm leading-6 shadow-[var(--shadow-card)]"
+        className="w-full rounded-lg border border-border/70 bg-card px-4 py-3 text-sm leading-6 shadow-(--shadow-card)"
         style={{
           fontWeight: styles.has("bold") ? 700 : 400,
           fontStyle: styles.has("italic") ? "italic" : "normal",

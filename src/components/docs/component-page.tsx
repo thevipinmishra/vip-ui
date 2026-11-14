@@ -155,7 +155,7 @@ export async function ComponentPage({
           <SectionHeading section="usage" className="mb-5">
             Usage
           </SectionHeading>
-          <div className="grid max-w-[670px] gap-5">
+          <div className="grid max-w-167.5 gap-5">
             {usage.note && (
               <p className="text-sm leading-6 text-muted-foreground">
                 {usage.note}
@@ -188,7 +188,7 @@ export async function ComponentPage({
             {example.title}
           </SectionHeading>
           {(example.description || example.uses) && (
-            <p className="-mt-2 mb-5 max-w-[670px] text-sm leading-6 text-muted-foreground">
+            <p className="-mt-2 mb-5 max-w-167.5 text-sm leading-6 text-muted-foreground">
               {example.description && (
                 <ExampleDescription>{example.description}</ExampleDescription>
               )}
@@ -210,7 +210,7 @@ export async function ComponentPage({
           <SectionHeading section="accessibility" className="mb-5">
             Accessibility
           </SectionHeading>
-          <div className="grid max-w-[670px] gap-4 text-sm leading-7 text-muted-foreground">
+          <div className="grid max-w-167.5 gap-4 text-sm leading-7 text-muted-foreground">
             {accessibility}
           </div>
         </section>
@@ -222,7 +222,7 @@ export async function ComponentPage({
             API reference
           </SectionHeading>
           {reactAria && (
-            <p className="mb-5 max-w-[670px] text-sm leading-7 text-muted-foreground">
+            <p className="mb-5 max-w-167.5 text-sm leading-7 text-muted-foreground">
               {apiParts.length > 0
                 ? "vip/ui adds or changes the props below. For all other props, see "
                 : `${name} takes the props of `}

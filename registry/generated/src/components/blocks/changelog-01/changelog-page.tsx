@@ -86,13 +86,13 @@ export function ChangelogPage() {
             className="pointer-events-none absolute inset-0 -z-10"
           >
             <div
-              className="absolute left-1/2 top-[-24rem] h-[36rem] w-[56rem] -translate-x-1/2 rounded-full blur-2xl"
+              className="absolute left-1/2 -top-96 h-144 w-4xl -translate-x-1/2 rounded-full blur-2xl"
               style={{
                 background:
                   "radial-gradient(closest-side, color-mix(in oklab, var(--primary) 12%, transparent), transparent)",
               }}
             />
-            <div className="absolute inset-0 opacity-[0.3] [background-image:linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:radial-gradient(ellipse_at_top,black,transparent_75%)]" />
+            <div className="absolute inset-0 opacity-[0.3] bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-size-[64px_64px] mask-[radial-gradient(ellipse_at_top,black,transparent_75%)]" />
           </div>
           <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-14 lg:px-8 lg:py-16">
             <h1 className="max-w-2xl text-balance text-[2.5rem] font-semibold leading-[1.02] tracking-[-0.06em] sm:text-5xl lg:text-[3.5rem]">
@@ -123,7 +123,7 @@ export function ChangelogPage() {
               <div
                 ref={toolbarRef}
                 tabIndex={-1}
-                className="rounded-xl bg-card p-4 shadow-[var(--shadow-card)] ring-1 ring-border/70 outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                className="rounded-xl bg-card p-4 shadow-(--shadow-card) ring-1 ring-border/70 outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
               >
                 <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
                   <SearchField

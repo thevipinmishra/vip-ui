@@ -309,7 +309,7 @@ export function SupportInbox() {
   return (
     <div className="min-h-svh bg-background">
       <header className="border-b border-border/70 bg-card">
-        <div className="mx-auto flex h-14 max-w-[1440px] items-center gap-2.5 px-4 sm:px-6">
+        <div className="mx-auto flex h-14 max-w-360 items-center gap-2.5 px-4 sm:px-6">
           <span className="grid size-8 place-items-center rounded-lg bg-primary text-primary-foreground">
             <HeadsetIcon size={17} weight="fill" aria-hidden="true" />
           </span>
@@ -329,7 +329,7 @@ export function SupportInbox() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-[1440px] px-4 py-5 sm:px-6 lg:py-7">
+      <main className="mx-auto max-w-360 px-4 py-5 sm:px-6 lg:py-7">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <h1 className="text-2xl font-semibold tracking-[-0.04em]">Inbox</h1>
@@ -374,7 +374,7 @@ export function SupportInbox() {
           </ToggleButtonGroup>
         </div>
 
-        <div className="mt-5 grid overflow-hidden rounded-xl border border-border/70 bg-card shadow-[var(--shadow-card)] md:grid-cols-[320px_minmax(0,1fr)] xl:grid-cols-[380px_minmax(0,1fr)]">
+        <div className="mt-5 grid overflow-hidden rounded-xl border border-border/70 bg-card shadow-(--shadow-card) md:grid-cols-[320px_minmax(0,1fr)] xl:grid-cols-[380px_minmax(0,1fr)]">
           <section
             aria-label="Conversations"
             className={cn(

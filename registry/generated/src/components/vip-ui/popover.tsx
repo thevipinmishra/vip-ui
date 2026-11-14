@@ -40,8 +40,8 @@ export function Popover({
       arrowBoundaryOffset={arrowBoundaryOffset}
       className={composeRenderProps(className, (className) =>
         cn(
-          "group/popover max-w-[calc(100vw-2rem)] overflow-auto overscroll-contain rounded-xl border border-border bg-popover p-4 text-popover-foreground [overflow-wrap:anywhere] shadow-[var(--shadow-float)] outline-none",
-          "has-[[data-slot=popover-arrow]]:flex has-[[data-slot=popover-arrow]]:flex-col has-[[data-slot=popover-arrow]]:overflow-visible",
+          "group/popover max-w-[calc(100vw-2rem)] overflow-auto overscroll-contain rounded-xl border border-border bg-popover p-4 text-popover-foreground wrap-anywhere shadow-(--shadow-float) outline-none",
+          "has-data-[slot=popover-arrow]:flex has-data-[slot=popover-arrow]:flex-col has-data-[slot=popover-arrow]:overflow-visible",
           // React Aria sets data-entering and data-exiting once the placement is
           // known, then waits for these transitions before it unmounts the panel.
           "origin-(--trigger-anchor-point) transition-[opacity,scale,translate] duration-200 ease-out-quint",
@@ -56,7 +56,7 @@ export function Popover({
         <SizeProvider size={undefined}>
           <div
             data-slot="popover-viewport"
-            className="contents group-has-[[data-slot=popover-arrow]]/popover:block group-has-[[data-slot=popover-arrow]]/popover:min-h-0 group-has-[[data-slot=popover-arrow]]/popover:overflow-auto group-has-[[data-slot=popover-arrow]]/popover:overscroll-contain"
+            className="contents group-has-data-[slot=popover-arrow]/popover:block group-has-data-[slot=popover-arrow]/popover:min-h-0 group-has-data-[slot=popover-arrow]/popover:overflow-auto group-has-data-[slot=popover-arrow]/popover:overscroll-contain"
           >
             {children}
           </div>
@@ -108,7 +108,7 @@ export function PopoverTitle({ className, ...props }: HeadingProps) {
       slot="title"
       data-slot="popover-title"
       className={cn(
-        "text-sm font-semibold leading-5 tracking-[-0.01em] [overflow-wrap:anywhere]",
+        "text-sm font-semibold leading-5 tracking-[-0.01em] wrap-anywhere",
         className,
       )}
     />
@@ -122,7 +122,7 @@ export function PopoverDescription({ className, ...props }: TextProps) {
       slot="description"
       data-slot="popover-description"
       className={cn(
-        "mt-1 block text-sm leading-5 text-muted-foreground [overflow-wrap:anywhere]",
+        "mt-1 block text-sm leading-5 text-muted-foreground wrap-anywhere",
         className,
       )}
     />

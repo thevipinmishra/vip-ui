@@ -18,12 +18,12 @@ export function BrandMark({ className }: { className?: string }) {
       <span className="flex items-center gap-2.5">
         <span
           aria-hidden="true"
-          className="grid size-8 place-items-center rounded-lg bg-primary text-primary-foreground shadow-[var(--shadow-card)]"
+          className="grid size-8 place-items-center rounded-lg bg-primary text-primary-foreground shadow-(--shadow-card)"
         >
-          <span className="flex items-end gap-[3px]">
-            <span className="h-2 w-[3px] rounded-full bg-current" />
-            <span className="h-3.5 w-[3px] rounded-full bg-current" />
-            <span className="h-5 w-[3px] rounded-full bg-current" />
+          <span className="flex items-end gap-0.75">
+            <span className="h-2 w-0.75 rounded-full bg-current" />
+            <span className="h-3.5 w-0.75 rounded-full bg-current" />
+            <span className="h-5 w-0.75 rounded-full bg-current" />
           </span>
         </span>
         <span className="text-[17px] font-semibold tracking-[-0.04em]">

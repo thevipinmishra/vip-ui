@@ -102,7 +102,7 @@ export function SearchFieldControl({
     >
       <MagnifyingGlassIcon
         aria-hidden="true"
-        className="pointer-events-none absolute start-[var(--field-px,0.875rem)] text-muted-foreground transition-colors duration-150 ease-out-quint group-focus-within:text-foreground group-disabled:opacity-60"
+        className="pointer-events-none absolute inset-s-(--field-px,0.875rem) text-muted-foreground transition-colors duration-150 ease-out-quint group-focus-within:text-foreground group-disabled:opacity-60"
       />
       {children}
     </div>

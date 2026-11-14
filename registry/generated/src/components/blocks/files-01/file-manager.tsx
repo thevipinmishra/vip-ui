@@ -490,7 +490,7 @@ export function FileManager() {
         const next = [...keys][0];
         if (next) navigate(String(next));
       }}
-      className="max-h-none border-0 bg-transparent p-0 text-[13px] shadow-none [&_[data-slot=tree-item-content]]:min-h-9"
+      className="max-h-none border-0 bg-transparent p-0 text-[13px] shadow-none **:data-[slot=tree-item-content]:min-h-9"
     >
       {(node) =>
         node.id === "all" ? (
@@ -535,7 +535,7 @@ export function FileManager() {
   return (
     <div className="min-h-svh bg-background">
       <header className="border-b border-border/70 bg-card">
-        <div className="mx-auto flex h-14 max-w-[1440px] items-center gap-2.5 px-4 sm:px-6">
+        <div className="mx-auto flex h-14 max-w-360 items-center gap-2.5 px-4 sm:px-6">
           <span className="grid size-8 place-items-center rounded-lg bg-primary text-primary-foreground">
             <GridFourIcon size={17} weight="fill" aria-hidden="true" />
           </span>
@@ -555,7 +555,7 @@ export function FileManager() {
         </div>
       </header>
 
-      <div className="mx-auto grid max-w-[1440px] gap-5 px-4 py-5 sm:px-6 lg:grid-cols-[236px_minmax(0,1fr)] lg:py-7">
+      <div className="mx-auto grid max-w-360 gap-5 px-4 py-5 sm:px-6 lg:grid-cols-[236px_minmax(0,1fr)] lg:py-7">
         <aside className="hidden lg:block">
           <div className="sticky top-7 grid gap-5">
             <div>
@@ -570,7 +570,7 @@ export function FileManager() {
                 value={68}
                 maxValue={200}
                 aria-valuetext="68 GB of 200 GB used"
-                className="[&_[data-slot=progress-bar-label]]:text-xs [&_[data-slot=progress-bar-value]]:text-[11px]"
+                className="**:data-[slot=progress-bar-label]:text-xs **:data-[slot=progress-bar-value]:text-[11px]"
               />
               <p className="mt-2 text-xs leading-5 text-muted-foreground">
                 Each file can be up to 25 MB.

@@ -15,7 +15,7 @@ export function TimelineIconsDemo() {
   return (
     <Timeline
       aria-label="Release activity"
-      className="max-w-md rounded-xl border border-border bg-card p-4 shadow-[var(--shadow-card)] sm:p-5"
+      className="max-w-md rounded-xl border border-border bg-card p-4 shadow-(--shadow-card) sm:p-5"
     >
       <TimelineItem status="latest" icon={<RocketLaunchIcon weight="bold" />}>
         <TimelineTitle>Version 2.4 deployed</TimelineTitle>

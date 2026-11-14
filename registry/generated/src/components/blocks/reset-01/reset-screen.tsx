@@ -88,7 +88,7 @@ export function ResetScreen() {
                   <ViewHeading focusOnMount>Check your email</ViewHeading>
                   <p className="text-sm leading-6 text-muted-foreground">
                     If{" "}
-                    <span className="font-medium text-foreground [overflow-wrap:anywhere]">
+                    <span className="font-medium text-foreground wrap-anywhere">
                       {email.trim()}
                     </span>{" "}
                     has a Fernway account, a reset link is on its way. The link

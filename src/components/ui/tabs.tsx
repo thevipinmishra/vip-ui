@@ -61,7 +61,7 @@ export function Tabs({
         data-slot="tabs"
         className={composeRenderProps(className, (className) =>
           cn(
-            "w-full min-w-0 data-[orientation=vertical]:flex data-[orientation=vertical]:flex-wrap data-[orientation=vertical]:items-start data-[orientation=vertical]:gap-4 data-[orientation=vertical]:*:data-[slot=tabs-content]:mt-0 data-[orientation=vertical]:*:data-[slot=tabs-content]:grow data-[orientation=vertical]:*:data-[slot=tabs-content]:basis-48",
+            "w-full min-w-0 orientation-vertical:flex orientation-vertical:flex-wrap orientation-vertical:items-start orientation-vertical:gap-4 orientation-vertical:*:data-[slot=tabs-content]:mt-0 orientation-vertical:*:data-[slot=tabs-content]:grow orientation-vertical:*:data-[slot=tabs-content]:basis-48",
             className,
           ),
         )}
@@ -145,7 +145,7 @@ export function TabList({
         )}
         className={composeRenderProps(className, (className) =>
           cn(
-            "group/tab-list inline-flex min-w-0 max-w-full scroll-px-1 items-center gap-1 overflow-x-auto overflow-y-hidden rounded-xl bg-muted p-1 shadow-[var(--shadow-inset)] inset-ring inset-ring-border/70 [scrollbar-width:none] forced-colors:border data-[fade=both]:mask-x-from-[calc(100%-1.5rem)] data-[fade=left]:mask-l-from-[calc(100%-1.5rem)] data-[fade=right]:mask-r-from-[calc(100%-1.5rem)] data-[orientation=vertical]:shrink-0 data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-stretch data-[orientation=vertical]:overflow-x-hidden data-[orientation=vertical]:overflow-y-auto data-[size=xl]:rounded-2xl data-[size=xs]:gap-0.5 data-[size=xs]:rounded-lg data-[size=xs]:p-0.5 [&::-webkit-scrollbar]:hidden",
+            "group/tab-list inline-flex min-w-0 max-w-full scroll-px-1 items-center gap-1 overflow-x-auto overflow-y-hidden rounded-xl bg-muted p-1 shadow-(--shadow-inset) inset-ring inset-ring-border/70 scrollbar-none forced-colors:border data-[fade=both]:mask-x-from-[calc(100%-1.5rem)] data-[fade=left]:mask-l-from-[calc(100%-1.5rem)] data-[fade=right]:mask-r-from-[calc(100%-1.5rem)] orientation-vertical:shrink-0 orientation-vertical:flex-col orientation-vertical:items-stretch orientation-vertical:overflow-x-hidden orientation-vertical:overflow-y-auto data-[size=xl]:rounded-2xl data-[size=xs]:gap-0.5 data-[size=xs]:rounded-lg data-[size=xs]:p-0.5 [&::-webkit-scrollbar]:hidden",
             className,
           ),
         )}
@@ -170,7 +170,7 @@ export function Tab({
       data-size={size}
       className={composeRenderProps(className, (className) =>
         cn(
-          "relative isolate inline-flex min-h-11 min-w-0 max-w-full shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 text-sm font-medium leading-5 text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-out-quint hover:text-foreground motion-safe:pressed:scale-[0.96] selected:text-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-50 group-data-[orientation=vertical]/tab-list:justify-start [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+          "relative isolate inline-flex min-h-11 min-w-0 max-w-full shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 text-sm font-medium leading-5 text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-out-quint hover:text-foreground motion-safe:pressed:scale-[0.96] selected:text-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-50 group-orientation-vertical/tab-list:justify-start [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
           size ? tabSizeStyles[size] : "sm:min-h-9",
           className,
         ),
@@ -184,7 +184,7 @@ export function Tab({
               initial={false}
               aria-hidden="true"
               transition={transitionFor(reduceMotion, springLayout)}
-              className="pointer-events-none absolute inset-0 -z-10 rounded-[inherit] bg-card shadow-[var(--shadow-card)] ring-1 ring-border/70 forced-colors:border forced-colors:border-[Highlight]"
+              className="pointer-events-none absolute inset-0 -z-10 rounded-[inherit] bg-card shadow-(--shadow-card) ring-1 ring-border/70 forced-colors:border forced-colors:border-[Highlight]"
             />
           )}
           {buttonLabel(content)}
@@ -201,7 +201,7 @@ export function TabPanel({ className, ...props }: AriaTabPanelProps) {
       data-slot="tabs-content"
       className={composeRenderProps(className, (className) =>
         cn(
-          "mt-3 min-w-0 rounded-xl bg-card p-4 text-sm leading-6 text-foreground shadow-[var(--shadow-card)] ring-1 ring-border/70 outline-none [overflow-wrap:anywhere] focus-visible:shadow-[inset_3px_0_0_var(--ring),var(--shadow-card)] rtl:focus-visible:shadow-[inset_-3px_0_0_var(--ring),var(--shadow-card)] forced-colors:border forced-colors:focus-visible:outline-2 forced-colors:focus-visible:outline-solid forced-colors:focus-visible:-outline-offset-2 forced-colors:focus-visible:outline-[Highlight]",
+          "mt-3 min-w-0 rounded-xl bg-card p-4 text-sm leading-6 text-foreground shadow-(--shadow-card) ring-1 ring-border/70 outline-none wrap-anywhere focus-visible:shadow-[inset_3px_0_0_var(--ring),var(--shadow-card)] rtl:focus-visible:shadow-[inset_-3px_0_0_var(--ring),var(--shadow-card)] forced-colors:border forced-colors:focus-visible:outline-2 forced-colors:focus-visible:outline-solid forced-colors:focus-visible:-outline-offset-2 forced-colors:focus-visible:outline-[Highlight]",
           className,
         ),
       )}

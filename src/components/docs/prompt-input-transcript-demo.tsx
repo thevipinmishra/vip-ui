@@ -149,7 +149,7 @@ export function PromptInputTranscriptDemo() {
         ref={logRef}
         role="log"
         aria-label="Conversation"
-        className="grid max-h-96 min-h-44 content-start gap-3 overflow-y-auto rounded-lg border border-border bg-card p-3 shadow-[var(--shadow-card)]"
+        className="grid max-h-96 min-h-44 content-start gap-3 overflow-y-auto rounded-lg border border-border bg-card p-3 shadow-(--shadow-card)"
       >
         <Message sender="You" side="outgoing">
           {prompt}

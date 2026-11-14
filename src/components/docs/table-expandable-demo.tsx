@@ -73,7 +73,7 @@ export function TableExpandableDemo() {
         aria-label="Project tasks"
         treeColumn="name"
         defaultExpandedKeys={["launch"]}
-        className="min-w-[30rem]"
+        className="min-w-120"
       >
         <TableHeader>
           <Column id="name" isRowHeader>

@@ -22,7 +22,7 @@ export function SpotlightCardPreview() {
 
 export function BorderBeamPreview() {
   return (
-    <div className="relative w-full rounded-xl border border-border bg-card p-5 shadow-[var(--shadow-card)]">
+    <div className="relative w-full rounded-xl border border-border bg-card p-5 shadow-(--shadow-card)">
       <p className="text-sm font-medium">Pro plan</p>
       <p className="mt-1 text-2xl font-semibold tracking-tight">$24</p>
       <BorderBeam duration={4} />
@@ -32,7 +32,7 @@ export function BorderBeamPreview() {
 
 export function ProgressiveBlurPreview() {
   return (
-    <div className="relative h-36 w-full overflow-clip rounded-xl border border-border bg-card shadow-[var(--shadow-card)]">
+    <div className="relative h-36 w-full overflow-clip rounded-xl border border-border bg-card shadow-(--shadow-card)">
       <ul className="grid gap-2 p-4 text-sm">
         {["Version 2.4", "Version 2.3", "Version 2.2", "Version 2.1"].map(
           (item) => (

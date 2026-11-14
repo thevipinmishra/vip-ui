@@ -38,7 +38,7 @@ export function CommandPaletteItem<T extends object>({
       {...props}
       className={composeRenderProps(className, (className) =>
         cn(
-          "[&_svg]:text-muted-foreground [&_svg:not([class*='size-'])]:size-[1.125rem]",
+          "[&_svg]:text-muted-foreground [&_svg:not([class*='size-'])]:size-4.5",
           className,
         ),
       )}
@@ -110,7 +110,7 @@ function CommandPaletteList({
     <div
       ref={frameRef}
       data-slot="command-palette-list"
-      className="flex max-h-[min(20rem,calc(var(--visual-viewport-height,100dvh)-7rem))] min-h-0 shrink-0 flex-col overflow-clip transition-[height] duration-200 ease-out-quint max-sm:h-(--palette-list-min-height) max-sm:has-[[data-empty]]:justify-center sm:h-(--palette-list-height) motion-reduce:transition-none"
+      className="flex max-h-[min(20rem,calc(var(--visual-viewport-height,100dvh)-7rem))] min-h-0 shrink-0 flex-col overflow-clip transition-[height] duration-200 ease-out-quint max-sm:h-(--palette-list-min-height) max-sm:has-data-empty:justify-center sm:h-(--palette-list-height) motion-reduce:transition-none"
     >
       <MenuContent
         ref={listRef}
@@ -200,7 +200,7 @@ export function CommandPalette({
               <MagnifyingGlassIcon
                 size={18}
                 aria-hidden="true"
-                className="pointer-events-none absolute start-4 text-muted-foreground"
+                className="pointer-events-none absolute inset-s-4 text-muted-foreground"
               />
               <SearchFieldInput
                 placeholder={placeholder}

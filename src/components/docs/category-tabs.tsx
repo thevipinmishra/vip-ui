@@ -63,7 +63,7 @@ export function CategoryTabs({
       <div className="site-container">
         <ul
           ref={listRef}
-          className="relative isolate mx-auto flex w-fit max-w-full items-center gap-0.5 overflow-x-auto rounded-full bg-card/60 p-1 shadow-[var(--shadow-card)] ring-1 ring-border/60 backdrop-blur-xl max-[880px]:px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-[880px]:[mask-image:linear-gradient(to_right,transparent,black_16px,black_calc(100%-16px),transparent)]"
+          className="relative isolate mx-auto flex w-fit max-w-full items-center gap-0.5 overflow-x-auto rounded-full bg-card/60 p-1 shadow-(--shadow-card) ring-1 ring-border/60 backdrop-blur-xl max-[880px]:px-4 scrollbar-none [&::-webkit-scrollbar]:hidden max-[880px]:mask-[linear-gradient(to_right,transparent,black_16px,black_calc(100%-16px),transparent)]"
         >
           <ItemHighlight placement="under" items="a" className="bg-muted/70" />
           {tabs.map((tab) => {

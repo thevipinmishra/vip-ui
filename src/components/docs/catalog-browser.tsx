@@ -16,7 +16,7 @@ const CatalogCard = memo(function CatalogCard({
 
   return (
     <li
-      className="group/card relative flex flex-col rounded-2xl bg-card p-1 text-card-foreground shadow-[var(--shadow-card)] ring-1 ring-border/60 transition-[box-shadow,scale] duration-200 ease-out-quint hover:shadow-[var(--shadow-float)] hover:ring-border motion-safe:has-[a:active]:scale-[0.985] forced-colors:border"
+      className="group/card relative flex flex-col rounded-2xl bg-card p-1 text-card-foreground shadow-(--shadow-card) ring-1 ring-border/60 transition-[box-shadow,scale] duration-200 ease-out-quint hover:shadow-(--shadow-float) hover:ring-border motion-safe:has-[a:active]:scale-[0.985] forced-colors:border"
       onPointerEnter={(event) => {
         if (event.pointerType === "mouse") setHovered(true);
       }}

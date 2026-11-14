@@ -75,7 +75,7 @@ export function AppSidebar({ onNavigate }: { onNavigate?: () => void }) {
           label="Storage"
           value={68}
           valueLabel="6.8 of 10 GB"
-          className="gap-1.5 [&_[data-slot=progress-bar-label]]:text-xs [&_[data-slot=progress-bar-value]]:text-xs"
+          className="gap-1.5 **:data-[slot=progress-bar-label]:text-xs **:data-[slot=progress-bar-value]:text-xs"
         />
         <p className="mt-2 text-xs leading-5 text-muted-foreground">
           Upgrade to get 100 GB.
