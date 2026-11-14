@@ -22,7 +22,6 @@ import {
   SheetBody,
   SheetClose,
   SheetHandle,
-  SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
@@ -69,15 +68,15 @@ export function MobileNav() {
           <ListIcon size={20} aria-hidden="true" />
         </Button>
         <Sheet>
-          <SheetHandle />
-          <SheetHeader className="flex items-center justify-between gap-4 border-b border-border/70 pb-4">
-            <SheetTitle>Menu</SheetTitle>
-            <SheetClose />
-          </SheetHeader>
-          <SheetBody className="grid content-start gap-6 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
+          <div className="relative flex shrink-0 items-center px-3">
+            <SheetHandle />
+            <SheetTitle className="sr-only">Menu</SheetTitle>
+            <SheetClose className="absolute inset-e-3" />
+          </div>
+          <SheetBody className="grid content-start gap-4 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
             <nav
               aria-label="Main navigation"
-              className="relative isolate border-b border-border/70 pb-6"
+              className="relative isolate border-b border-border/70 pb-4"
             >
               <ItemHighlight placement="under" items="a" />
               <ul className="grid grid-cols-2 gap-1">

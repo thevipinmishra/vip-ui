@@ -6,7 +6,7 @@
   "description": "Sets a star rating with radio controls.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["forms"],
-  "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.10.1"],
+  "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.12.0"],
   "registryDependencies": [
     "https://vip-ui.dev/r/motion.json",
     "https://vip-ui.dev/r/radio-group.json",

@@ -6,6 +6,7 @@ import { decorative } from "@tanstack/charts/mark/decorative";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
+import { portal } from "@tanstack/charts/tooltip/portal";
 import { useMemo, useState } from "react";
 import { AnimatedNumber } from "@/components/ui/animated-number";
 import { Badge } from "@/components/ui/badge";
@@ -143,11 +144,11 @@ function Sparkline({
       },
       tooltip: {
         use: tooltip,
+        portal,
         content: ([point]) => ({
-          title: point.datum.day,
           rows: [
             {
-              label: metric.label,
+              label: point.datum.day,
               value: format.format(point.datum.value),
               color: point.color,
             },

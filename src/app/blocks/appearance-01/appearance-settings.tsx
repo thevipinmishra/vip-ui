@@ -4,8 +4,6 @@ import {
   ArrowCounterClockwiseIcon,
   DesktopIcon,
   MoonIcon,
-  PlayIcon,
-  SparkleIcon,
   SunIcon,
 } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
@@ -38,8 +36,6 @@ import { SizeProvider } from "@/components/ui/size";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { showToast } from "@/components/ui/toast";
-import { ToggleButton } from "@/components/ui/toggle-button";
-import { ToggleButtonGroup } from "@/components/ui/toggle-button-group";
 import { cn } from "@/lib/utils";
 import { SettingsShell } from "./settings-shell";
 import { updateSiteTheme } from "./site-theme";
@@ -78,6 +74,85 @@ const fonts = [
 
 type ThemeMode = "light" | "dark" | "system";
 type FontId = (typeof fonts)[number]["id"];
+
+const themes = [
+  { id: "light", label: "Light", icon: SunIcon },
+  { id: "dark", label: "Dark", icon: MoonIcon },
+  { id: "system", label: "System", icon: DesktopIcon },
+] as const;
+
+const thumbnailColors = {
+  light: { page: "#f4f5f4", panel: "#ffffff", line: "#dfe2df", ink: "#1a211e" },
+  dark: { page: "#151816", panel: "#1f2320", line: "#353a36", ink: "#eceeec" },
+};
+
+function ThemeWindow({
+  mode,
+  className,
+}: {
+  mode: "light" | "dark";
+  className?: string;
+}) {
+  const color = thumbnailColors[mode];
+  return (
+    <span
+      className={cn("absolute inset-0 flex gap-1.5 p-2", className)}
+      style={{ backgroundColor: color.page }}
+    >
+      <span className="grid w-1/4 content-start gap-1 pt-1">
+        {[0.9, 0.6, 0.6, 0.6].map((opacity, index) => (
+          <span
+            // biome-ignore lint/suspicious/noArrayIndexKey: static decoration.
+            key={index}
+            className="h-1 rounded-full"
+            style={{ backgroundColor: color.ink, opacity: opacity * 0.5 }}
+          />
+        ))}
+      </span>
+      <span
+        className="grid flex-1 content-start gap-1.5 rounded-[4px] p-1.5"
+        style={{
+          backgroundColor: color.panel,
+          boxShadow: `0 0 0 1px ${color.line}`,
+        }}
+      >
+        <span
+          className="h-1.5 w-2/3 rounded-full"
+          style={{ backgroundColor: color.ink, opacity: 0.8 }}
+        />
+        <span
+          className="h-1 w-full rounded-full"
+          style={{ backgroundColor: color.line }}
+        />
+        <span
+          className="h-1 w-5/6 rounded-full"
+          style={{ backgroundColor: color.line }}
+        />
+      </span>
+    </span>
+  );
+}
+
+function ThemeThumbnail({ mode }: { mode: ThemeMode }) {
+  return (
+    <span
+      aria-hidden="true"
+      className="relative block aspect-16/10 w-full overflow-hidden rounded-md ring-1 ring-border/70"
+    >
+      {mode === "system" ? (
+        <>
+          <ThemeWindow mode="light" />
+          <ThemeWindow
+            mode="dark"
+            className="[clip-path:polygon(100%_0,100%_100%,0_100%)]"
+          />
+        </>
+      ) : (
+        <ThemeWindow mode={mode} />
+      )}
+    </span>
+  );
+}
 
 function luminance(hex: string) {
   const value = Number.parseInt(hex.replace("#", ""), 16);
@@ -123,7 +198,6 @@ export function AppearanceSettings() {
   const [fontSize, setFontSize] = useState(16);
   const [radius, setRadius] = useState(10);
   const [reduceMotion, setReduceMotion] = useState(false);
-  const [previews, setPreviews] = useState(0);
 
   useEffect(() => {
     let stored: string | null = null;
@@ -176,55 +250,49 @@ export function AppearanceSettings() {
           <Card>
             <CardHeader>
               <CardTitle as="h2">Theme</CardTitle>
-              <CardDescription className="text-xs leading-5">
+              <CardDescription>
                 Select a theme for this browser.
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <ToggleButtonGroup
-                size="sm"
+              <RadioGroup
                 aria-label="Theme"
-                selectionMode="single"
-                selectedKeys={new Set([theme])}
-                disallowEmptySelection
-                onSelectionChange={(keys) => {
-                  const next = Array.from(keys)[0];
-                  if (next) pickTheme(next as ThemeMode);
-                }}
-                className="w-full sm:w-fit"
+                value={theme}
+                onValueChange={(value) => pickTheme(value as ThemeMode)}
               >
-                <ToggleButton
-                  id="light"
-                  variant="segmented"
-                  className="flex-1 sm:flex-none"
-                >
-                  <SunIcon aria-hidden="true" />
-                  Light
-                </ToggleButton>
-                <ToggleButton
-                  id="dark"
-                  variant="segmented"
-                  className="flex-1 sm:flex-none"
-                >
-                  <MoonIcon aria-hidden="true" />
-                  Dark
-                </ToggleButton>
-                <ToggleButton
-                  id="system"
-                  variant="segmented"
-                  className="flex-1 sm:flex-none"
-                >
-                  <DesktopIcon aria-hidden="true" />
-                  System
-                </ToggleButton>
-              </ToggleButtonGroup>
+                <RadioGroupItems className="grid grid-cols-3 gap-2 sm:gap-3">
+                  {themes.map((option) => (
+                    <RadioField
+                      key={option.id}
+                      value={option.id}
+                      variant="card"
+                      className="p-2 sm:p-2.5"
+                    >
+                      <RadioButton className="flex-col items-stretch gap-2.5">
+                        <ThemeThumbnail mode={option.id} />
+                        <span className="flex items-center gap-2">
+                          <RadioIndicator />
+                          <RadioLabel className="flex min-w-0 items-center gap-1.5">
+                            <option.icon
+                              size={15}
+                              aria-hidden="true"
+                              className="shrink-0 text-muted-foreground max-sm:hidden"
+                            />
+                            <span className="truncate">{option.label}</span>
+                          </RadioLabel>
+                        </span>
+                      </RadioButton>
+                    </RadioField>
+                  ))}
+                </RadioGroupItems>
+              </RadioGroup>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
               <CardTitle as="h2">Accent color</CardTitle>
-              <CardDescription className="text-xs leading-5">
+              <CardDescription>
                 The accent marks buttons, links, and selections.
               </CardDescription>
             </CardHeader>
@@ -266,7 +334,6 @@ export function AppearanceSettings() {
                     </p>
                     <Badge
                       variant={contrast.ratio >= 4.5 ? "success" : "warning"}
-                      className="min-h-5 py-0 text-[11px]"
                     >
                       {contrast.ratio >= 4.5 ? "AA" : "Large text"}
                     </Badge>
@@ -279,7 +346,7 @@ export function AppearanceSettings() {
           <Card>
             <CardHeader>
               <CardTitle as="h2">Type and shape</CardTitle>
-              <CardDescription className="text-xs leading-5">
+              <CardDescription>
                 Set the interface font and scale.
               </CardDescription>
             </CardHeader>
@@ -357,12 +424,17 @@ export function AppearanceSettings() {
           <Card>
             <CardHeader>
               <CardTitle as="h2">Motion</CardTitle>
-              <CardDescription className="text-xs leading-5">
-                Turn off entrance and hover animations.
+              <CardDescription>
+                Kestrel also follows the motion setting on your device.
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Switch checked={reduceMotion} onCheckedChange={setReduceMotion}>
+              <Switch
+                checked={reduceMotion}
+                onCheckedChange={setReduceMotion}
+                description="Turn off panel, chart, and hover animations."
+                className="w-full"
+              >
                 Reduce motion
               </Switch>
             </CardContent>
@@ -370,29 +442,17 @@ export function AppearanceSettings() {
         </div>
 
         <Card className="min-w-0 overflow-hidden xl:sticky xl:top-24">
-          <div className="flex items-center justify-between gap-3 border-b border-border/70 px-4 py-3">
-            <p className="flex items-center gap-2 text-sm font-semibold">
-              <SparkleIcon
-                size={16}
-                weight="fill"
-                aria-hidden="true"
-                className="text-muted-foreground"
-              />
-              Preview
-            </p>
-            <Button
-              size="xs"
-              variant="ghost"
-              onPress={() => setPreviews((count) => count + 1)}
-            >
-              <PlayIcon size={14} aria-hidden="true" />
-              Play preview
-            </Button>
+          <div className="border-b border-border/70 px-4 py-3">
+            <h2 className="text-sm font-semibold">Preview</h2>
           </div>
           <div className="p-4">
             <div className={cn("min-w-0", fontOption.className)}>
               <div
-                className="grid gap-3 border border-border/70 bg-card p-3.5"
+                className={cn(
+                  "grid gap-3 border border-border/70 bg-card p-3.5",
+                  !reduceMotion &&
+                    "transition-[border-radius,font-size] duration-200 ease-out-quint",
+                )}
                 style={{ borderRadius: radius, fontSize }}
               >
                 <div className="flex items-center gap-2.5">
@@ -415,17 +475,21 @@ export function AppearanceSettings() {
                 </div>
                 <div>
                   <div className="flex items-baseline justify-between gap-2">
-                    <p className="font-medium">Usage this month</p>
-                    <p className="text-[0.75em] text-muted-foreground">68%</p>
+                    <p className="font-medium">Events this month</p>
+                    <p className="text-[0.75em] text-muted-foreground">74%</p>
                   </div>
                   <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted">
                     <div
-                      className="h-full rounded-full"
-                      style={{ width: "68%", backgroundColor: accent }}
+                      className={cn(
+                        "h-full rounded-full",
+                        !reduceMotion &&
+                          "transition-[background-color] duration-200 ease-out-quint",
+                      )}
+                      style={{ width: "74%", backgroundColor: accent }}
                     />
                   </div>
                   <p className="mt-1.5 text-[0.75em] text-muted-foreground">
-                    6.8 of 10 GB
+                    1.48M of 2M
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -448,28 +512,6 @@ export function AppearanceSettings() {
                 </div>
               </div>
             </div>
-            {previews > 0 && (
-              <div
-                key={previews}
-                className={cn(
-                  "mt-3 flex items-start gap-2.5 rounded-lg bg-muted/60 px-3 py-2.5 ring-1 ring-border/70",
-                  !reduceMotion &&
-                    "transition-[opacity,translate] duration-300 ease-out-quint starting:opacity-0 motion-safe:starting:-translate-y-1",
-                )}
-              >
-                <span
-                  aria-hidden="true"
-                  className="mt-1 size-2 shrink-0 rounded-full"
-                  style={{ backgroundColor: accent }}
-                />
-                <div className="min-w-0">
-                  <p className="text-xs font-medium">New comment on Q4 plan</p>
-                  <p className="text-xs text-muted-foreground">
-                    Leo Park mentioned you 2 minutes ago.
-                  </p>
-                </div>
-              </div>
-            )}
           </div>
         </Card>
       </div>

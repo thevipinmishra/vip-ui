@@ -6,7 +6,7 @@
   "description": "Labels an item with a short status or count.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["feedback"],
-  "dependencies": ["tailwind-variants@^4.0.1"],
+  "dependencies": ["tailwind-variants@^4.0.2"],
   "registryDependencies": ["https://vip-ui.dev/r/utils.json"],
   "cssVars": {
     "light": {

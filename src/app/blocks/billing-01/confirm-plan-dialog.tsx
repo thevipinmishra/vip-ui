@@ -9,10 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import type { Plan } from "./billing-settings";
-
-const daysInPeriod = 31;
-const daysLeft = 18;
+import { daysInPeriod, daysLeft, type Plan } from "./billing-settings";
 
 const money = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -45,7 +42,7 @@ export function ConfirmPlanDialog({
         <DialogTitle>Change to {to.name}?</DialogTitle>
         <DialogDescription>
           {upgrade
-            ? `You pay ${money.format(difference)} today for the ${daysLeft} days left in this period. From Nov 1, you pay ${money.format(to.price)} each month.`
+            ? `We charge ${money.format(difference)} today for the ${daysLeft} days left in this period. From Dec 1, you pay ${money.format(to.price)} each month.`
             : `The change starts today. We add a credit of ${money.format(-difference)} to your next invoice.`}
         </DialogDescription>
       </DialogHeader>
