@@ -36,7 +36,7 @@ Kit springs have no bounce, except `springPop`. Its CSS equivalent is the `--eas
 | Token        | Value          | Use                                                                                   |
 | ------------ | -------------- | ------------------------------------------------------------------------------------- |
 | `loop.spin`  | 0.8s linear    | Spinner ring.                                                                         |
-| `loop.pulse` | 1.1s easeInOut | Spinner dots and segments, ToolCall, AgentStatus, the prompt caret (`animate-caret`). |
+| `loop.pulse` | 1.1s easeInOut | Spinner dots and segments, ToolCall, AgentSteps, the prompt caret (`animate-caret`). |
 | `loop.sweep` | 1.6s linear    | Skeleton shimmer, indeterminate ProgressBar.                                          |
 
 `maxStagger` is 0.6s: the total delay of a TextReveal or StaggerGroup never exceeds 0.6s. Exits run at about 0.7× their entrance.

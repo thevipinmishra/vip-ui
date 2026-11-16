@@ -13,8 +13,8 @@ const reactAriaDocs: Record<string, string> = {
   "command-palette": "https://react-aria.adobe.com/Menu",
   "text-field": "https://react-aria.adobe.com/TextField",
   "password-field": "https://react-aria.adobe.com/TextField",
+  "otp-input": "https://react-aria.adobe.com/TextField",
   "password-strength-meter": "https://react-aria.adobe.com/Meter",
-  "inline-edit": "https://react-aria.adobe.com/TextField",
   "input-group": "https://react-aria.adobe.com/Group",
   "text-area": "https://react-aria.adobe.com/TextField#textarea",
   "number-field": "https://react-aria.adobe.com/NumberField",
@@ -46,10 +46,11 @@ const reactAriaDocs: Record<string, string> = {
   disclosure: "https://react-aria.adobe.com/Disclosure",
   reasoning: "https://react-aria.adobe.com/Disclosure",
   "tool-call": "https://react-aria.adobe.com/Disclosure",
-  "source-link": "https://react-aria.adobe.com/Link",
   dialog: "https://react-aria.adobe.com/Modal",
   sheet: "https://react-aria.adobe.com/Sheet",
+  lightbox: "https://react-aria.adobe.com/Modal",
   popover: "https://react-aria.adobe.com/Popover",
+  tour: "https://react-aria.adobe.com/Popover",
   tooltip: "https://react-aria.adobe.com/Tooltip",
   toast: "https://react-aria.adobe.com/Toast",
   "progress-bar": "https://react-aria.adobe.com/ProgressBar",
@@ -67,8 +68,41 @@ const reactAriaDocs: Record<string, string> = {
   "data-table": "https://react-aria.adobe.com/Table",
 };
 
+const zagMachines: Record<string, { name: string; machine: string }> = {
+  "otp-input": { name: "Pin Input", machine: "pin-input" },
+  "inline-edit": { name: "Editable", machine: "editable" },
+  marquee: { name: "Marquee", machine: "marquee" },
+  pagination: { name: "Pagination", machine: "pagination" },
+  resizable: { name: "Splitter", machine: "splitter" },
+  "scroll-area": { name: "Scroll Area", machine: "scroll-area" },
+  "segmented-control": { name: "Radio Group", machine: "radio-group" },
+};
+
 function reactAriaLink(href: string | undefined) {
   return href ? { name: new URL(href).pathname.slice(1), href } : undefined;
+}
+
+export interface Primitive {
+  library: "React Aria" | "Zag.js";
+  name: string;
+  href: string;
+}
+
+function primitives(slug: string): Primitive[] {
+  const zag = zagMachines[slug];
+  const reactAria = reactAriaLink(reactAriaDocs[slug]);
+  return [
+    ...(zag
+      ? [
+          {
+            library: "Zag.js" as const,
+            name: zag.name,
+            href: `https://zagjs.com/components/react/${zag.machine}`,
+          },
+        ]
+      : []),
+    ...(reactAria ? [{ library: "React Aria" as const, ...reactAria }] : []),
+  ];
 }
 
 export interface CatalogComponent {
@@ -77,6 +111,7 @@ export interface CatalogComponent {
   group: string;
   description: string;
   reactAria?: { name: string; href: string };
+  primitives: Primitive[];
 }
 
 export interface CatalogGroup {
@@ -92,6 +127,7 @@ export const catalogGroups: CatalogGroup[] = catalog.groups.map((group) => ({
     ...item,
     group: group.title,
     reactAria: reactAriaLink(reactAriaDocs[item.slug]),
+    primitives: primitives(item.slug),
   })),
 }));
 

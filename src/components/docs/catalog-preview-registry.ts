@@ -83,6 +83,14 @@ export const catalogPreviews: Record<string, CatalogPreviewEntry> = {
         default: m.PasswordFieldBasicDemo,
       })),
   },
+  "otp-input": {
+    width: "22rem",
+    scale: 0.7,
+    load: () =>
+      import("./otp-input-demo").then((m) => ({
+        default: m.OtpInputDemo,
+      })),
+  },
   "inline-edit": {
     load: () =>
       import("./inline-edit-basic-demo").then((m) => ({
@@ -161,6 +169,12 @@ export const catalogPreviews: Record<string, CatalogPreviewEntry> = {
     load: () =>
       import("./radio-group-demo").then((m) => ({ default: m.RadioGroupDemo })),
   },
+  "segmented-control": {
+    load: () =>
+      import("./segmented-control-demo").then((m) => ({
+        default: m.SegmentedControlDemo,
+      })),
+  },
   "rating-input": {
     load: () =>
       import("./rating-input-demo").then((m) => ({
@@ -229,6 +243,14 @@ export const catalogPreviews: Record<string, CatalogPreviewEntry> = {
         default: m.DateRangePickerDemo,
       })),
   },
+  "event-calendar": {
+    width: "40rem",
+    scale: 0.35,
+    load: () =>
+      import("./event-calendar-demo").then((m) => ({
+        default: m.EventCalendarDemo,
+      })),
+  },
   "color-field": {
     load: () =>
       import("./color-field-demo").then((m) => ({ default: m.ColorFieldDemo })),
@@ -273,10 +295,35 @@ export const catalogPreviews: Record<string, CatalogPreviewEntry> = {
         default: m.SheetPreview,
       })),
   },
+  lightbox: {
+    scale: 0.85,
+    load: () =>
+      import("./catalog-preview-overlays").then((m) => ({
+        default: m.LightboxPreview,
+      })),
+  },
+  sidebar: {
+    width: "48rem",
+    scale: 0.3,
+    load: () =>
+      import("./sidebar-demo").then((m) => ({ default: m.SidebarDemo })),
+  },
+  resizable: {
+    width: "32rem",
+    scale: 0.4,
+    load: () =>
+      import("./resizable-demo").then((m) => ({ default: m.ResizableDemo })),
+  },
   popover: {
     load: () =>
       import("./catalog-preview-overlays").then((m) => ({
         default: m.PopoverPreview,
+      })),
+  },
+  tour: {
+    load: () =>
+      import("./catalog-preview-overlays").then((m) => ({
+        default: m.TourPreview,
       })),
   },
   tooltip: {
@@ -396,6 +443,12 @@ export const catalogPreviews: Record<string, CatalogPreviewEntry> = {
     load: () =>
       import("./card-basic-demo").then((m) => ({ default: m.CardBasicDemo })),
   },
+  carousel: {
+    width: "28rem",
+    scale: 0.44,
+    load: () =>
+      import("./carousel-demo").then((m) => ({ default: m.CarouselDemo })),
+  },
   accordion: {
     scale: 0.6,
     load: () =>
@@ -409,6 +462,11 @@ export const catalogPreviews: Record<string, CatalogPreviewEntry> = {
   separator: {
     load: () =>
       import("./separator-demo").then((m) => ({ default: m.SeparatorDemo })),
+  },
+  "scroll-area": {
+    scale: 0.7,
+    load: () =>
+      import("./scroll-area-demo").then((m) => ({ default: m.ScrollAreaDemo })),
   },
   "scroll-fade": {
     scale: 0.7,
@@ -440,6 +498,12 @@ export const catalogPreviews: Record<string, CatalogPreviewEntry> = {
     load: () =>
       import("./kbd-code-demo").then((m) => ({ default: m.KbdCodeDemo })),
   },
+  "code-block": {
+    width: "32rem",
+    scale: 0.44,
+    load: () =>
+      import("./code-block-demo").then((m) => ({ default: m.CodeBlockDemo })),
+  },
   message: {
     scale: 0.62,
     load: () =>
@@ -447,20 +511,16 @@ export const catalogPreviews: Record<string, CatalogPreviewEntry> = {
         default: m.MessageBasicDemo,
       })),
   },
-  "agent-status": {
+  "agent-steps": {
     load: () =>
-      import("./agent-status-demo").then((m) => ({
-        default: m.AgentStatusDemo,
+      import("./agent-steps-demo").then((m) => ({
+        default: m.AgentStepsDemo,
       })),
   },
   "tool-call": {
     scale: 0.52,
     load: () =>
       import("./tool-call-demo").then((m) => ({ default: m.ToolCallDemo })),
-  },
-  "source-link": {
-    load: () =>
-      import("./source-link-demo").then((m) => ({ default: m.SourceLinkDemo })),
   },
   "prompt-input": {
     load: () =>
@@ -477,6 +537,14 @@ export const catalogPreviews: Record<string, CatalogPreviewEntry> = {
     scale: 0.58,
     load: () =>
       import("./response-demo").then((m) => ({ default: m.ResponseDemo })),
+  },
+  conversation: {
+    width: "24rem",
+    scale: 0.4,
+    load: () =>
+      import("./conversation-demo").then((m) => ({
+        default: m.ConversationDemo,
+      })),
   },
   "text-swap": {
     load: () =>

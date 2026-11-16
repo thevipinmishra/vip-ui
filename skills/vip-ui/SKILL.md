@@ -41,24 +41,25 @@ pnpm dlx shadcn@latest add @vip-ui/button @vip-ui/dialog
 
 Most names match shadcn/ui. Common renames:
 
-| shadcn        | vip/ui                        |
-| ------------- | ----------------------------- |
-| input         | text-field                    |
-| textarea      | text-area                     |
-| combobox      | combo-box                     |
-| command       | command-palette               |
-| dropdown-menu | menu                          |
-| sonner        | toast                         |
-| drawer        | sheet                         |
-| alert-dialog  | dialog (`role="alertdialog"`) |
-| collapsible   | disclosure                    |
-| toggle        | toggle-button                 |
-| toggle-group  | toggle-button-group           |
-| breadcrumb    | breadcrumbs                   |
-| progress      | progress-bar                  |
-| empty         | empty-state                   |
-| field         | fieldset                      |
-| kbd           | kbd-code                      |
+| shadcn           | vip/ui                        |
+| ---------------- | ----------------------------- |
+| input            | text-field                    |
+| textarea         | text-area                     |
+| combobox         | combo-box                     |
+| command          | command-palette               |
+| dropdown-menu    | menu                          |
+| sonner           | toast                         |
+| drawer           | sheet                         |
+| alert-dialog     | dialog (`role="alertdialog"`) |
+| collapsible      | disclosure                    |
+| toggle           | toggle-button                 |
+| toggle-group     | toggle-button-group           |
+| breadcrumb       | breadcrumbs                   |
+| progress         | progress-bar                  |
+| empty            | empty-state                   |
+| field            | fieldset                      |
+| kbd              | kbd-code                      |
+| message-scroller | conversation                  |
 
 For the full map, missing components, and API differences, read [references/name-map.md](references/name-map.md).
 
@@ -70,6 +71,10 @@ Charts use TanStack Charts (`ChartFrame`, `Chart`), not Recharts. Copy from http
 - Collection items (`Select`, `ComboBox`, `Menu`, `ListBox`, `Table`, `Tree`) take an `id`. The id is the value.
 - There is no `asChild`. The trigger part holds the trigger and the overlay, for example `MenuTrigger` holds a `Button` and a `MenuPopover`. Use the `render` prop to change the element.
 - Build fields from their parts: `TextFieldLabel`, `TextFieldInput`, `TextFieldDescription`, `TextFieldError`. Do not add a separate label component.
+- Call `useConversation().scrollToLatest()` when the user sends a message into a `Conversation`.
+- Wrap each element that a `Tour` step points at in `TourTarget` with the step id, and start the tour from a button inside `Tour` with `useTour().start()`.
+- `EventCalendar` does not own events: update `events` in `onEventChange`, give it an `aria-label`, and set an event `label` when `renderEvent` shows extra content.
+- Render code with `CodeBlock` and pass highlighter output as the children of `CodeBlockBody`. The kit has no highlighter.
 - Wrap fields in `Form`. Validate with `isRequired`, `validate`, and `validationErrors`.
 - Use icons from `@phosphor-icons/react`.
 - Use logical classes: `ms-1`, `pe-2`, `rounded-s-md`, `text-start`. Keep `data-slot` on every part.

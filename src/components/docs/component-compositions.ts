@@ -12,6 +12,107 @@ export interface Composition {
 }
 
 export const compositions: Record<string, Composition> = {
+  "event-calendar": {
+    parts: [
+      {
+        part: "EventCalendar",
+        note: "Owns the visible date and view. Update events in onEventChange.",
+        children: [
+          { part: "EventCalendarHeader", optional: true },
+          { part: "EventCalendarGrid" },
+        ],
+      },
+    ],
+  },
+  carousel: {
+    parts: [
+      {
+        part: "Carousel",
+        note: "Owns the index. Pass Embla options and plugins to opts and plugins.",
+        children: [
+          {
+            part: "CarouselViewport",
+            children: [{ part: "CarouselSlide", repeats: true }],
+          },
+          { part: "CarouselPrevious", optional: true },
+          { part: "CarouselNext", optional: true },
+          { part: "CarouselIndicators", optional: true },
+          {
+            part: "CarouselThumbnails",
+            optional: true,
+            children: [{ part: "CarouselThumbnail", repeats: true }],
+          },
+          { part: "CarouselStatus", optional: true },
+        ],
+      },
+    ],
+    helper: {
+      part: "useCarousel",
+      note: "Returns the Embla api plus selectedIndex, snapCount, canScrollPrev, canScrollNext, scrollTo, scrollPrev, and scrollNext for a lightbox or a plugin control.",
+    },
+  },
+  lightbox: {
+    parts: [
+      {
+        part: "Lightbox",
+        note: "Owns the open state and the index. Returns focus to the trigger of the current image.",
+        children: [
+          {
+            part: "LightboxTrigger",
+            repeats: true,
+            note: "Needs aria-label. Its image is the zoom origin.",
+          },
+          {
+            part: "LightboxContent",
+            children: [
+              {
+                part: "Carousel",
+                note: "Install separately.",
+                children: [
+                  {
+                    part: "CarouselSlide",
+                    repeats: true,
+                    children: [{ part: "LightboxImage" }],
+                  },
+                ],
+              },
+              { part: "LightboxCount", optional: true },
+              { part: "LightboxClose" },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  "code-block": {
+    parts: [
+      {
+        part: "CodeBlock",
+        note: "Owns the code, the wrap state, and the expanded state.",
+        children: [
+          {
+            part: "CodeBlockHeader",
+            optional: true,
+            children: [
+              { part: "CodeBlockTitle", optional: true },
+              {
+                part: "CodeBlockActions",
+                optional: true,
+                children: [
+                  { part: "CodeBlockWrap", optional: true },
+                  { part: "CodeBlockCopy" },
+                ],
+              },
+            ],
+          },
+          {
+            part: "CodeBlockBody",
+            note: "Pass highlighter output as children. Without children, it shows the code as plain text.",
+          },
+        ],
+      },
+    ],
+  },
   "tool-call": {
     parts: [
       {
@@ -41,6 +142,11 @@ export const compositions: Record<string, Composition> = {
         note: "Owns the draft value, the submit key, and the file drop. Accepts TextField props for the value and validation.",
         children: [
           {
+            part: "PromptInputHeader",
+            optional: true,
+            note: "Holds attachments above the textarea.",
+          },
+          {
             part: "PromptInputTextArea",
             note: "Grows from minRows to maxRows, then scrolls.",
           },
@@ -50,6 +156,15 @@ export const compositions: Record<string, Composition> = {
             children: [{ part: "PromptInputSubmit" }],
           },
         ],
+      },
+    ],
+  },
+  "agent-steps": {
+    parts: [
+      {
+        part: "AgentSteps",
+        note: "Owns the open state. Its label is the summary that stays visible when the steps are closed.",
+        children: [{ part: "AgentStep", repeats: true }],
       },
     ],
   },
@@ -71,6 +186,216 @@ export const compositions: Record<string, Composition> = {
       },
     ],
   },
+  sidebar: {
+    parts: [
+      {
+        part: "SidebarProvider",
+        note: "Owns the collapsed state and the sheet state.",
+        children: [
+          {
+            part: "Sidebar",
+            children: [
+              { part: "SidebarHeader", optional: true },
+              {
+                part: "SidebarContent",
+                children: [
+                  {
+                    part: "SidebarGroup",
+                    repeats: true,
+                    children: [
+                      { part: "SidebarGroupLabel", optional: true },
+                      {
+                        part: "SidebarMenu",
+                        children: [{ part: "SidebarItem", repeats: true }],
+                      },
+                    ],
+                  },
+                ],
+              },
+              { part: "SidebarFooter", optional: true },
+            ],
+          },
+          {
+            part: "SidebarInset",
+            children: [
+              {
+                part: "SidebarTrigger",
+                note: "Put it in the inset header so it stays visible in the rail and on phones.",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    helper: {
+      part: "useSidebar",
+      note: "Returns isOpen, setOpen, toggle, isMobileOpen, setMobileOpen, and state for a custom trigger.",
+    },
+  },
+  resizable: {
+    parts: [
+      {
+        part: "ResizableGroup",
+        note: "Owns the layout. Save it in onLayoutEnd.",
+        children: [
+          {
+            part: "ResizablePanel",
+            repeats: true,
+            note: "An id names the panel in the group. Put padding on a child so a collapsed panel can reach zero.",
+          },
+          {
+            part: "ResizableHandle",
+            repeats: true,
+            note: "Put one between each pair of panels.",
+            children: [
+              {
+                part: "ResizableHandleIndicator",
+                optional: true,
+                note: "Uses the machine resize-trigger indicator.",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    helper: {
+      part: "ResizableContext",
+      note: "Renders a function with the splitter api. useResizable also returns the registered panels and handles.",
+    },
+  },
+  "scroll-area": {
+    parts: [
+      {
+        part: "ScrollAreaRoot",
+        note: "Owns the scrollbars. Set its height, then compose the parts. ScrollArea does this for you.",
+        children: [
+          {
+            part: "ScrollAreaViewport",
+            children: [{ part: "ScrollAreaContent" }],
+          },
+          {
+            part: "ScrollAreaScrollbar",
+            optional: true,
+            repeats: true,
+            children: [{ part: "ScrollAreaThumb" }],
+          },
+          { part: "ScrollAreaCorner", optional: true },
+        ],
+      },
+    ],
+    helper: {
+      part: "ScrollAreaContext",
+      note: "Renders a function with the full scroll-area api: position, overflow, progress, scrollbar state, and scroll methods. useScrollArea returns the same api.",
+    },
+  },
+  marquee: {
+    parts: [
+      {
+        part: "MarqueeRoot",
+        note: "Owns the motion. Marquee composes it with the default items and the pause button.",
+        children: [
+          {
+            part: "MarqueeViewport",
+            children: [
+              {
+                part: "MarqueeContent",
+                repeats: true,
+                note: "Draw one for each entry in api.contentCount. Copies are inert and hidden from screen readers.",
+                children: [{ part: "MarqueeItem", repeats: true }],
+              },
+            ],
+          },
+          { part: "MarqueeEdge", optional: true },
+          {
+            part: "MarqueePauseTrigger",
+            optional: true,
+            note: "Put it in the footer prop so it sits outside the frame.",
+          },
+        ],
+      },
+    ],
+    helper: {
+      part: "MarqueeContext",
+      note: "Renders a function with the marquee api: paused, orientation, multiplier, contentCount, pause, resume, togglePause, and restart.",
+    },
+  },
+  "inline-edit": {
+    parts: [
+      {
+        part: "InlineEdit",
+        note: "Owns the value and the save pipeline. Render the parts below for a custom field.",
+        children: [
+          { part: "InlineEditLabel", optional: true },
+          {
+            part: "InlineEditArea",
+            children: [
+              { part: "InlineEditPreview", optional: true },
+              { part: "InlineEditInput" },
+              { part: "InlineEditEditTrigger", optional: true },
+              { part: "InlineEditControl", optional: true },
+            ],
+          },
+        ],
+      },
+    ],
+    helper: {
+      part: "InlineEditContext",
+      note: "Renders a function with the editable api. useInlineEdit also returns the value, error, save state, and save.",
+    },
+  },
+  conversation: {
+    parts: [
+      {
+        part: "Conversation",
+        note: "Owns the pin state. Call scrollToLatest from useConversation when the user sends.",
+        children: [
+          {
+            part: "ConversationContent",
+            note: "The scroller. Give each message data-conversation-item; Message does it for you.",
+            children: [
+              { part: "ConversationLoadOlder", optional: true },
+              { part: "ConversationEmpty", optional: true },
+            ],
+          },
+          { part: "ConversationJump", optional: true },
+        ],
+      },
+    ],
+    helper: {
+      part: "useConversation",
+      note: "Returns isPinned, newCount, and scrollToLatest for the send button.",
+    },
+  },
+  "otp-input": {
+    parts: [
+      {
+        part: "OtpInput",
+        note: "Owns the value. Filters input with pattern and calls onComplete when the code is full.",
+        children: [
+          { part: "OtpInputLabel" },
+          {
+            part: "OtpInputSlots",
+            note: "Without children, it draws one slot for each character.",
+            children: [
+              {
+                part: "OtpInputGroup",
+                optional: true,
+                repeats: true,
+                children: [{ part: "OtpInputSlot", repeats: true }],
+              },
+              { part: "OtpInputSeparator", optional: true },
+            ],
+          },
+          { part: "OtpInputDescription", optional: true },
+          { part: "OtpInputError", optional: true },
+        ],
+      },
+    ],
+    helper: {
+      part: "OtpInputContext",
+      note: "Renders a function with the pin-input api. useOtpInput returns the api and the value for a custom row.",
+    },
+  },
   response: {
     parts: [
       {
@@ -83,10 +408,13 @@ export const compositions: Record<string, Composition> = {
           },
           {
             part: "ResponseNotice",
-            note: "Shows a marker for stopped and error.",
+            note: "Shows a notice for stopped and error.",
           },
           { part: "ResponseActions", note: "Row of buttons." },
-          { part: "ResponseFooter", note: "Row for sources and metadata." },
+          {
+            part: "ResponseFooter",
+            note: "Row for metadata, such as sources.",
+          },
         ],
       },
     ],
@@ -328,6 +656,25 @@ export const compositions: Record<string, Composition> = {
         ],
       },
     ],
+  },
+  tour: {
+    parts: [
+      {
+        part: "Tour",
+        note: "Owns the open state and the step. Renders the popover for you.",
+        children: [
+          {
+            part: "TourTarget",
+            repeats: true,
+            note: "Wrap the element each step points at. The id matches the step id.",
+          },
+        ],
+      },
+    ],
+    helper: {
+      part: "useTour",
+      note: "Returns isOpen, step, count, start, stop, next, and previous for a button inside the tour.",
+    },
   },
   toast: {
     parts: [
@@ -913,18 +1260,62 @@ export const compositions: Record<string, Composition> = {
                 part: "PaginationItem",
                 repeats: true,
                 children: [
+                  {
+                    part: "PaginationFirstTrigger",
+                    optional: true,
+                    note: "Uses the machine first-page trigger.",
+                  },
+                  {
+                    part: "PaginationPrevTrigger",
+                    optional: true,
+                  },
                   { part: "PaginationLink" },
                   {
                     part: "PaginationEllipsis",
                     note: "Use it in place of a link.",
                   },
+                  {
+                    part: "PaginationNextTrigger",
+                    optional: true,
+                  },
+                  {
+                    part: "PaginationLastTrigger",
+                    optional: true,
+                  },
                 ],
+              },
+              {
+                part: "PaginationPages",
+                note: "Renders the pages and ellipses from count.",
               },
             ],
           },
         ],
       },
     ],
+    helper: {
+      part: "PaginationContext",
+      note: "Renders a function with the pagination api for page ranges, totals, and programmatic changes.",
+    },
+  },
+  "segmented-control": {
+    parts: [
+      {
+        part: "SegmentedControl",
+        note: "Owns the value. The indicator follows the checked segment.",
+        children: [
+          {
+            part: "SegmentedControlItem",
+            repeats: true,
+            note: "One segment. Its value is the value that the control stores.",
+          },
+        ],
+      },
+    ],
+    helper: {
+      part: "SegmentedControlContext",
+      note: "Renders a function with the radio-group api: value, setValue, clearValue, focus, and getItemState.",
+    },
   },
   disclosure: {
     parts: [

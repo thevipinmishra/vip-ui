@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
-import { AgentStatusDemo } from "@/components/docs/agent-status-demo";
-import { AgentStatusStatesDemo } from "@/components/docs/agent-status-states-demo";
+import { AgentStepsAutoCollapseDemo } from "@/components/docs/agent-steps-auto-collapse-demo";
+import { AgentStepsContentDemo } from "@/components/docs/agent-steps-content-demo";
+import { AgentStepsDemo } from "@/components/docs/agent-steps-demo";
+import { AgentStepsStatesDemo } from "@/components/docs/agent-steps-states-demo";
 import { AnimatedNumberBasicDemo } from "@/components/docs/animated-number-basic-demo";
 import { AnimatedNumberFormatDemo } from "@/components/docs/animated-number-format-demo";
 import { AnimatedNumberSlideDemo } from "@/components/docs/animated-number-slide-demo";
@@ -30,11 +32,24 @@ import { CardBasicDemo } from "@/components/docs/card-basic-demo";
 import { CardDemo } from "@/components/docs/card-demo";
 import { CardLinkDemo } from "@/components/docs/card-link-demo";
 import { CardMediaDemo } from "@/components/docs/card-media-demo";
+import { CarouselAutoplayDemo } from "@/components/docs/carousel-autoplay-demo";
+import { CarouselDemo } from "@/components/docs/carousel-demo";
+import { CarouselRtlDemo } from "@/components/docs/carousel-rtl-demo";
+import { CarouselSeveralDemo } from "@/components/docs/carousel-several-demo";
+import { CarouselThumbnailsDemo } from "@/components/docs/carousel-thumbnails-demo";
+import { CarouselVerticalDemo } from "@/components/docs/carousel-vertical-demo";
+import { CarouselWidthsDemo } from "@/components/docs/carousel-widths-demo";
 import { CheckboxGroupDemo } from "@/components/docs/checkbox-group-demo";
 import { CheckboxGroupDisabledDemo } from "@/components/docs/checkbox-group-disabled-demo";
 import { CheckboxGroupHorizontalDemo } from "@/components/docs/checkbox-group-horizontal-demo";
 import { CheckboxGroupLayoutDemo } from "@/components/docs/checkbox-group-layout-demo";
 import { CheckboxGroupRequiredDemo } from "@/components/docs/checkbox-group-required-demo";
+import { CodeBlockCollapsedDemo } from "@/components/docs/code-block-collapsed-demo";
+import { CodeBlockDemo } from "@/components/docs/code-block-demo";
+import { CodeBlockHighlightDemo } from "@/components/docs/code-block-highlight-demo";
+import { CodeBlockStreamingDemo } from "@/components/docs/code-block-streaming-demo";
+import { CodeBlockSyntaxDemo } from "@/components/docs/code-block-syntax-demo";
+import { CodeBlockWrapDemo } from "@/components/docs/code-block-wrap-demo";
 import { ColorFieldChannelDemo } from "@/components/docs/color-field-channel-demo";
 import { ColorFieldControlledDemo } from "@/components/docs/color-field-controlled-demo";
 import { ColorFieldDemo } from "@/components/docs/color-field-demo";
@@ -58,10 +73,16 @@ import {
   ComponentPage,
   withExamplePreviews,
 } from "@/components/docs/component-page";
+import { ConversationDemo } from "@/components/docs/conversation-demo";
+import { ConversationEmptyDemo } from "@/components/docs/conversation-empty-demo";
+import { ConversationJumpDemo } from "@/components/docs/conversation-jump-demo";
+import { ConversationLoadOlderDemo } from "@/components/docs/conversation-load-older-demo";
+import { ConversationPromptDemo } from "@/components/docs/conversation-prompt-demo";
 import { DataTableColumnFiltersDemo } from "@/components/docs/data-table-column-filters-demo";
 import { DataTableDemo } from "@/components/docs/data-table-demo";
 import { DataTableFooterDemo } from "@/components/docs/data-table-footer-demo";
 import { DataTableResizableDemo } from "@/components/docs/data-table-resizable-demo";
+import { DataTableSelectionActionsDemo } from "@/components/docs/data-table-selection-actions-demo";
 import { DateFieldDemo } from "@/components/docs/date-field-demo";
 import { DateFieldDisabledDemo } from "@/components/docs/date-field-disabled-demo";
 import { DateFieldLimitsDemo } from "@/components/docs/date-field-limits-demo";
@@ -89,6 +110,13 @@ import { DropZoneDemo } from "@/components/docs/drop-zone-demo";
 import { EmptyStateDemo } from "@/components/docs/empty-state-demo";
 import { EmptyStateNoActionDemo } from "@/components/docs/empty-state-no-action-demo";
 import { EmptyStateSearchDemo } from "@/components/docs/empty-state-search-demo";
+import { EventCalendarCustomDemo } from "@/components/docs/event-calendar-custom-demo";
+import { EventCalendarDayDemo } from "@/components/docs/event-calendar-day-demo";
+import { EventCalendarDemo } from "@/components/docs/event-calendar-demo";
+import { EventCalendarEditDemo } from "@/components/docs/event-calendar-edit-demo";
+import { EventCalendarHoursDemo } from "@/components/docs/event-calendar-hours-demo";
+import { EventCalendarKeyboardDemo } from "@/components/docs/event-calendar-keyboard-demo";
+import { EventCalendarOverlapDemo } from "@/components/docs/event-calendar-overlap-demo";
 import { FieldsetDemo } from "@/components/docs/fieldset-demo";
 import { FileTriggerBasicDemo } from "@/components/docs/file-trigger-basic-demo";
 import { FileTriggerDemo } from "@/components/docs/file-trigger-demo";
@@ -105,6 +133,7 @@ import { IconSwapDemo } from "@/components/docs/icon-swap-demo";
 import { IconSwapLoadingDemo } from "@/components/docs/icon-swap-loading-demo";
 import { IconSwapToggleDemo } from "@/components/docs/icon-swap-toggle-demo";
 import { InlineEditBasicDemo } from "@/components/docs/inline-edit-basic-demo";
+import { InlineEditCompositionDemo } from "@/components/docs/inline-edit-composition-demo";
 import { InlineEditDemo } from "@/components/docs/inline-edit-demo";
 import { InlineEditDisabledDemo } from "@/components/docs/inline-edit-disabled-demo";
 import { InlineEditEmptyDemo } from "@/components/docs/inline-edit-empty-demo";
@@ -114,11 +143,16 @@ import { KbdCodeWrapDemo } from "@/components/docs/kbd-code-wrap-demo";
 import { LayoutMorphDemo } from "@/components/docs/layout-morph-demo";
 import { LayoutMorphViewsDemo } from "@/components/docs/layout-morph-views-demo";
 import { LayoutMorphWidthDemo } from "@/components/docs/layout-morph-width-demo";
+import { LightboxCaptionsDemo } from "@/components/docs/lightbox-captions-demo";
+import { LightboxControlledDemo } from "@/components/docs/lightbox-controlled-demo";
+import { LightboxDemo } from "@/components/docs/lightbox-demo";
+import { LightboxSingleDemo } from "@/components/docs/lightbox-single-demo";
 import { LinkDemo } from "@/components/docs/link-demo";
 import { LinkExternalDemo } from "@/components/docs/link-external-demo";
 import { ListBoxDemo } from "@/components/docs/list-box-demo";
 import { ListBoxDisabledDemo } from "@/components/docs/list-box-disabled-demo";
 import { ListBoxMultipleDemo } from "@/components/docs/list-box-multiple-demo";
+import { MarqueeCompositionDemo } from "@/components/docs/marquee-composition-demo";
 import { MarqueeDemo } from "@/components/docs/marquee-demo";
 import { MarqueeReverseDemo } from "@/components/docs/marquee-reverse-demo";
 import { MarqueeSpeedDemo } from "@/components/docs/marquee-speed-demo";
@@ -133,7 +167,16 @@ import { NumberFieldDisabledDemo } from "@/components/docs/number-field-disabled
 import { NumberFieldLimitsDemo } from "@/components/docs/number-field-limits-demo";
 import { NumberFieldSizesDemo } from "@/components/docs/number-field-sizes-demo";
 import { NumberFieldStackedDemo } from "@/components/docs/number-field-stacked-demo";
+import { OtpInputAlphanumericDemo } from "@/components/docs/otp-input-alphanumeric-demo";
+import { OtpInputContextDemo } from "@/components/docs/otp-input-context-demo";
+import { OtpInputDemo } from "@/components/docs/otp-input-demo";
+import { OtpInputDisabledDemo } from "@/components/docs/otp-input-disabled-demo";
+import { OtpInputGroupsDemo } from "@/components/docs/otp-input-groups-demo";
+import { OtpInputInvalidDemo } from "@/components/docs/otp-input-invalid-demo";
+import { OtpInputLengthDemo } from "@/components/docs/otp-input-length-demo";
+import { OtpInputSizesDemo } from "@/components/docs/otp-input-sizes-demo";
 import { PaginationBasicDemo } from "@/components/docs/pagination-basic-demo";
+import { PaginationContextDemo } from "@/components/docs/pagination-context-demo";
 import { PaginationDemo } from "@/components/docs/pagination-demo";
 import { PaginationEllipsisDemo } from "@/components/docs/pagination-ellipsis-demo";
 import { PaginationSizesDemo } from "@/components/docs/pagination-sizes-demo";
@@ -177,21 +220,44 @@ import { ReasoningAutoCollapseDemo } from "@/components/docs/reasoning-auto-coll
 import { ReasoningDemo } from "@/components/docs/reasoning-demo";
 import { ReasoningErrorDemo } from "@/components/docs/reasoning-error-demo";
 import { ReasoningLongDemo } from "@/components/docs/reasoning-long-demo";
+import { ResizableChatDemo } from "@/components/docs/resizable-chat-demo";
+import { ResizableCollapsibleDemo } from "@/components/docs/resizable-collapsible-demo";
+import { ResizableContextDemo } from "@/components/docs/resizable-context-demo";
+import { ResizableDemo } from "@/components/docs/resizable-demo";
+import { ResizableGripDemo } from "@/components/docs/resizable-grip-demo";
+import { ResizableNestedDemo } from "@/components/docs/resizable-nested-demo";
+import { ResizableSavedDemo } from "@/components/docs/resizable-saved-demo";
+import { ResizableVerticalDemo } from "@/components/docs/resizable-vertical-demo";
 import { ResponseActionsDemo } from "@/components/docs/response-actions-demo";
 import { ResponseDemo } from "@/components/docs/response-demo";
 import { ResponseErrorDemo } from "@/components/docs/response-error-demo";
-import { ResponseSourcesDemo } from "@/components/docs/response-sources-demo";
+import { ResponseReasoningDemo } from "@/components/docs/response-reasoning-demo";
 import { ResponseStoppedDemo } from "@/components/docs/response-stopped-demo";
+import { ScrollAreaBothDemo } from "@/components/docs/scroll-area-both-demo";
+import { ScrollAreaContextDemo } from "@/components/docs/scroll-area-context-demo";
+import { ScrollAreaDemo } from "@/components/docs/scroll-area-demo";
+import { ScrollAreaHorizontalDemo } from "@/components/docs/scroll-area-horizontal-demo";
+import { ScrollAreaToTopDemo } from "@/components/docs/scroll-area-to-top-demo";
 import { ScrollFadeDemo } from "@/components/docs/scroll-fade-demo";
 import { ScrollFadeHorizontalDemo } from "@/components/docs/scroll-fade-horizontal-demo";
 import { ScrollFadeSizeDemo } from "@/components/docs/scroll-fade-size-demo";
+import { SegmentedControlControlledDemo } from "@/components/docs/segmented-control-controlled-demo";
+import { SegmentedControlDemo } from "@/components/docs/segmented-control-demo";
+import { SegmentedControlDisabledDemo } from "@/components/docs/segmented-control-disabled-demo";
+import { SegmentedControlIconsDemo } from "@/components/docs/segmented-control-icons-demo";
+import { SegmentedControlSizesDemo } from "@/components/docs/segmented-control-sizes-demo";
+import { SegmentedControlVerticalDemo } from "@/components/docs/segmented-control-vertical-demo";
 import { SeparatorDemo } from "@/components/docs/separator-demo";
 import { SeparatorVerticalDemo } from "@/components/docs/separator-vertical-demo";
+import { SidebarDemo } from "@/components/docs/sidebar-demo";
+import { SidebarFooterDemo } from "@/components/docs/sidebar-footer-demo";
+import { SidebarMobileDemo } from "@/components/docs/sidebar-mobile-demo";
+import { SidebarRailDemo } from "@/components/docs/sidebar-rail-demo";
+import { SidebarSectionsDemo } from "@/components/docs/sidebar-sections-demo";
+import { SidebarShortcutDemo } from "@/components/docs/sidebar-shortcut-demo";
 import { SkeletonBasicDemo } from "@/components/docs/skeleton-basic-demo";
 import { SkeletonDemo } from "@/components/docs/skeleton-demo";
 import { SkeletonLoadingDemo } from "@/components/docs/skeleton-loading-demo";
-import { SourceLinkDemo } from "@/components/docs/source-link-demo";
-import { SourceLinkListDemo } from "@/components/docs/source-link-list-demo";
 import { SpinnerBasicDemo } from "@/components/docs/spinner-basic-demo";
 import { SpinnerColorDemo } from "@/components/docs/spinner-color-demo";
 import { SpinnerDemo } from "@/components/docs/spinner-demo";
@@ -262,6 +328,10 @@ import { ToolbarBasicDemo } from "@/components/docs/toolbar-basic-demo";
 import { ToolbarDemo } from "@/components/docs/toolbar-demo";
 import { ToolbarSizesDemo } from "@/components/docs/toolbar-sizes-demo";
 import { ToolbarVerticalDemo } from "@/components/docs/toolbar-vertical-demo";
+import { TourControlledDemo } from "@/components/docs/tour-controlled-demo";
+import { TourDemo } from "@/components/docs/tour-demo";
+import { TourFirstVisitDemo } from "@/components/docs/tour-first-visit-demo";
+import { TourNoSpotlightDemo } from "@/components/docs/tour-no-spotlight-demo";
 import { TreeBasicDemo } from "@/components/docs/tree-basic-demo";
 import { TreeDemo } from "@/components/docs/tree-demo";
 import { TreeDragDemo } from "@/components/docs/tree-drag-demo";
@@ -314,6 +384,7 @@ const entries: {
     name: "Separator",
     demo: <SeparatorDemo />,
   },
+  { slug: "scroll-area", name: "Scroll area", demo: <ScrollAreaDemo /> },
   { slug: "scroll-fade", name: "Scroll fade", demo: <ScrollFadeDemo /> },
   {
     slug: "progress-bar",
@@ -393,6 +464,11 @@ const entries: {
     demo: <PopoverDemo />,
   },
   {
+    slug: "tour",
+    name: "Tour",
+    demo: <TourDemo />,
+  },
+  {
     slug: "toolbar",
     name: "Toolbar",
     demo: <ToolbarDemo />,
@@ -401,6 +477,16 @@ const entries: {
     slug: "grid-list",
     name: "Grid list",
     demo: <GridListDemo />,
+  },
+  {
+    slug: "carousel",
+    name: "Carousel",
+    demo: <CarouselDemo />,
+  },
+  {
+    slug: "lightbox",
+    name: "Lightbox",
+    demo: <LightboxDemo />,
   },
   {
     slug: "color-field",
@@ -458,6 +544,11 @@ const entries: {
     demo: <DateRangePickerDemo />,
   },
   {
+    slug: "event-calendar",
+    name: "Event calendar",
+    demo: <EventCalendarDemo />,
+  },
+  {
     slug: "table",
     name: "Table",
     demo: <TableDemo />,
@@ -508,6 +599,26 @@ const entries: {
     demo: <PaginationDemo />,
   },
   {
+    slug: "segmented-control",
+    name: "Segmented control",
+    demo: <SegmentedControlDemo />,
+  },
+  {
+    slug: "sidebar",
+    name: "Sidebar",
+    demo: <SidebarDemo />,
+  },
+  {
+    slug: "resizable",
+    name: "Resizable",
+    demo: <ResizableDemo />,
+  },
+  {
+    slug: "otp-input",
+    name: "OTP input",
+    demo: <OtpInputDemo />,
+  },
+  {
     slug: "timeline",
     name: "Timeline",
     demo: <TimelineDemo />,
@@ -521,6 +632,11 @@ const entries: {
     slug: "kbd-code",
     name: "Kbd & code",
     demo: <KbdCodeDemo />,
+  },
+  {
+    slug: "code-block",
+    name: "Code block",
+    demo: <CodeBlockDemo />,
   },
   {
     slug: "stat",
@@ -560,9 +676,9 @@ const entries: {
     name: "Stepper",
     demo: <StepperDemo />,
   },
-  { slug: "agent-status", name: "Agent status", demo: <AgentStatusDemo /> },
+  { slug: "agent-steps", name: "Agent steps", demo: <AgentStepsDemo /> },
+  { slug: "conversation", name: "Conversation", demo: <ConversationDemo /> },
   { slug: "tool-call", name: "Tool call", demo: <ToolCallDemo /> },
-  { slug: "source-link", name: "Source link", demo: <SourceLinkDemo /> },
   { slug: "prompt-input", name: "Prompt input", demo: <PromptInputDemo /> },
   { slug: "reasoning", name: "Reasoning", demo: <ReasoningDemo /> },
   { slug: "response", name: "Response", demo: <ResponseDemo /> },
@@ -691,12 +807,15 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <BreadcrumbsFoldersDemo key="preview-1" />,
     <BreadcrumbsCollapsedDemo key="preview-2" />,
   ],
-  "agent-status": [<AgentStatusStatesDemo key="preview-1" />],
+  "agent-steps": [
+    <AgentStepsAutoCollapseDemo key="preview-1" />,
+    <AgentStepsContentDemo key="preview-2" />,
+    <AgentStepsStatesDemo key="preview-3" />,
+  ],
   "tool-call": [
     <ToolCallStatesDemo key="preview-1" />,
     <ToolCallSequenceDemo key="preview-2" />,
   ],
-  "source-link": [<SourceLinkListDemo key="preview-1" />],
   "animated-number": [
     <AnimatedNumberSlideDemo key="preview-1" />,
     <AnimatedNumberFormatDemo key="preview-2" />,
@@ -712,16 +831,58 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <CardLinkDemo key="preview-3" />,
     <CardDemo key="preview-4" />,
   ],
+  carousel: [
+    <CarouselSeveralDemo key="preview-1" />,
+    <CarouselThumbnailsDemo key="preview-2" />,
+    <CarouselAutoplayDemo key="preview-3" />,
+    <CarouselWidthsDemo key="preview-4" />,
+    <CarouselRtlDemo key="preview-5" />,
+    <CarouselVerticalDemo key="preview-6" />,
+  ],
+  lightbox: [
+    <LightboxCaptionsDemo key="preview-1" />,
+    <LightboxControlledDemo key="preview-2" />,
+    <LightboxSingleDemo key="preview-3" />,
+  ],
   "description-list": [<DescriptionListComponentsDemo key="preview-1" />],
   "kbd-code": [
     <KbdCodeGroupDemo key="preview-1" />,
     <KbdCodeWrapDemo key="preview-2" />,
+  ],
+  "code-block": [
+    <CodeBlockHighlightDemo key="preview-1" />,
+    <CodeBlockCollapsedDemo key="preview-2" />,
+    <CodeBlockWrapDemo key="preview-3" />,
+    <CodeBlockSyntaxDemo key="preview-4" />,
+    <CodeBlockStreamingDemo key="preview-5" />,
   ],
   skeleton: [
     <SkeletonDemo key="preview-1" />,
     <SkeletonLoadingDemo key="preview-2" />,
   ],
   separator: [<SeparatorVerticalDemo key="preview-1" />],
+  sidebar: [
+    <SidebarRailDemo key="preview-1" />,
+    <SidebarSectionsDemo key="preview-2" />,
+    <SidebarMobileDemo key="preview-3" />,
+    <SidebarFooterDemo key="preview-4" />,
+    <SidebarShortcutDemo key="preview-5" />,
+  ],
+  resizable: [
+    <ResizableVerticalDemo key="preview-1" />,
+    <ResizableNestedDemo key="preview-2" />,
+    <ResizableGripDemo key="preview-3" />,
+    <ResizableCollapsibleDemo key="preview-4" />,
+    <ResizableSavedDemo key="preview-5" />,
+    <ResizableChatDemo key="preview-6" />,
+    <ResizableContextDemo key="preview-7" />,
+  ],
+  "scroll-area": [
+    <ScrollAreaHorizontalDemo key="preview-1" />,
+    <ScrollAreaBothDemo key="preview-2" />,
+    <ScrollAreaToTopDemo key="preview-3" />,
+    <ScrollAreaContextDemo key="preview-4" />,
+  ],
   "scroll-fade": [
     <ScrollFadeHorizontalDemo key="preview-1" />,
     <ScrollFadeSizeDemo key="preview-2" />,
@@ -768,6 +929,7 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <MarqueeReverseDemo key="preview-1" />,
     <MarqueeSpeedDemo key="preview-2" />,
     <MarqueeStaticDemo key="preview-3" />,
+    <MarqueeCompositionDemo key="preview-4" />,
   ],
   "button-group": [
     <ButtonGroupOrientationsDemo key="preview-1" />,
@@ -822,14 +984,23 @@ const examplePreviews: Record<string, ReactNode[]> = {
   ],
   "data-table": [
     <DataTableColumnFiltersDemo key="preview-1" />,
-    <DataTableResizableDemo key="preview-2" />,
-    <DataTableFooterDemo key="preview-3" />,
+    <DataTableSelectionActionsDemo key="preview-2" />,
+    <DataTableResizableDemo key="preview-3" />,
+    <DataTableFooterDemo key="preview-4" />,
   ],
   "date-range-picker": [
     <DateRangePickerLimitsDemo key="preview-1" />,
     <DateRangePickerPresetsDemo key="preview-2" />,
     <DateRangePickerDisabledDemo key="preview-3" />,
     <DateRangePickerSizesDemo key="preview-4" />,
+  ],
+  "event-calendar": [
+    <EventCalendarDayDemo key="preview-1" />,
+    <EventCalendarEditDemo key="preview-2" />,
+    <EventCalendarKeyboardDemo key="preview-3" />,
+    <EventCalendarOverlapDemo key="preview-4" />,
+    <EventCalendarHoursDemo key="preview-5" />,
+    <EventCalendarCustomDemo key="preview-6" />,
   ],
   disclosure: [
     <DisclosureExpandedDemo key="preview-1" />,
@@ -867,6 +1038,16 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <InlineEditDisabledDemo key="preview-1" />,
     <InlineEditEmptyDemo key="preview-2" />,
     <InlineEditDemo key="preview-3" />,
+    <InlineEditCompositionDemo key="preview-4" />,
+  ],
+  "otp-input": [
+    <OtpInputGroupsDemo key="preview-1" />,
+    <OtpInputInvalidDemo key="preview-2" />,
+    <OtpInputAlphanumericDemo key="preview-3" />,
+    <OtpInputLengthDemo key="preview-4" />,
+    <OtpInputSizesDemo key="preview-5" />,
+    <OtpInputDisabledDemo key="preview-6" />,
+    <OtpInputContextDemo key="preview-7" />,
   ],
   "rating-input": [
     <RatingInputIconDemo key="preview-1" />,
@@ -878,6 +1059,14 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <PaginationDemo key="preview-1" />,
     <PaginationSizesDemo key="preview-2" />,
     <PaginationEllipsisDemo key="preview-3" />,
+    <PaginationContextDemo key="preview-4" />,
+  ],
+  "segmented-control": [
+    <SegmentedControlControlledDemo key="preview-1" />,
+    <SegmentedControlIconsDemo key="preview-2" />,
+    <SegmentedControlSizesDemo key="preview-3" />,
+    <SegmentedControlVerticalDemo key="preview-4" />,
+    <SegmentedControlDisabledDemo key="preview-5" />,
   ],
   "tag-group": [
     <TagGroupSelectionDemo key="preview-1" />,
@@ -888,6 +1077,11 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <PopoverPlacementDemo key="preview-1" />,
     <PopoverFormDemo key="preview-2" />,
     <PopoverPreviewDemo key="preview-3" />,
+  ],
+  tour: [
+    <TourNoSpotlightDemo key="preview-1" />,
+    <TourControlledDemo key="preview-2" />,
+    <TourFirstVisitDemo key="preview-3" />,
   ],
   "prompt-input": [
     <PromptInputKeyboardDemo key="preview-1" />,
@@ -902,11 +1096,17 @@ const examplePreviews: Record<string, ReactNode[]> = {
     <ReasoningErrorDemo key="preview-2" />,
     <ReasoningLongDemo key="preview-3" />,
   ],
+  conversation: [
+    <ConversationJumpDemo key="preview-1" />,
+    <ConversationLoadOlderDemo key="preview-2" />,
+    <ConversationEmptyDemo key="preview-3" />,
+    <ConversationPromptDemo key="preview-4" />,
+  ],
   response: [
     <ResponseActionsDemo key="preview-1" />,
     <ResponseStoppedDemo key="preview-2" />,
     <ResponseErrorDemo key="preview-3" />,
-    <ResponseSourcesDemo key="preview-4" />,
+    <ResponseReasoningDemo key="preview-4" />,
   ],
   "presence-list": [
     <PresenceListRemoveDemo key="preview-1" />,

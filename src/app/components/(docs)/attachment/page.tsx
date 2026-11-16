@@ -1,4 +1,5 @@
 import { AttachmentBasicDemo } from "@/components/docs/attachment-basic-demo";
+import { AttachmentCompactDemo } from "@/components/docs/attachment-compact-demo";
 import { AttachmentDemo } from "@/components/docs/attachment-demo";
 import { AttachmentUploadDemo } from "@/components/docs/attachment-upload-demo";
 import {
@@ -10,7 +11,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
   title: "Attachment",
-  description: `${componentPageData.attachment.description} Examples cover adding and removing files and each upload state.`,
+  description: `${componentPageData.attachment.description} Examples cover adding and removing files, each upload state, and the compact size.`,
   path: "/components/attachment",
 });
 
@@ -25,6 +26,7 @@ export default function AttachmentPage() {
       examples={withExamplePreviews(page.examples, [
         <AttachmentDemo key="example-1" />,
         <AttachmentUploadDemo key="example-2" />,
+        <AttachmentCompactDemo key="example-3" />,
       ])}
       sourcePath="src/components/ui/attachment.tsx"
     />

@@ -1,5 +1,14 @@
-import type { ComponentProps, ReactNode } from "react";
+"use client";
+
+import {
+  type ComponentProps,
+  createContext,
+  type ReactNode,
+  useContext,
+} from "react";
 import { cn } from "./utils";
+
+export const ConversationItemContext = createContext(false);
 
 export interface MessageProps extends ComponentProps<"article"> {
   sender: string;
@@ -23,14 +32,16 @@ export function Message({
   className,
   ...props
 }: MessageProps) {
+  const isConversationItem = useContext(ConversationItemContext);
   return (
     <article
       {...props}
       data-slot="message"
       data-side={side}
+      data-conversation-item={isConversationItem ? "" : undefined}
       aria-label={props["aria-label"] ?? `Message from ${sender}`}
       className={cn(
-        "flex min-w-0 items-start gap-2",
+        "group/message flex min-w-0 items-start gap-2",
         side === "outgoing" && "justify-end",
         side === "system" && "justify-center",
         className,
@@ -44,13 +55,10 @@ export function Message({
           side === "system" && "max-w-full text-center",
         )}
       >
-        {side !== "system" && (
+        {side === "incoming" && (
           <p
             data-slot="message-sender"
-            className={cn(
-              "mb-0.5 px-1 text-xs font-medium text-muted-foreground wrap-anywhere",
-              side === "outgoing" && "text-end",
-            )}
+            className="mb-0.5 px-1 text-xs font-medium text-muted-foreground wrap-anywhere"
           >
             {sender}
           </p>
@@ -62,7 +70,7 @@ export function Message({
             side === "outgoing" &&
               "rounded-se-md bg-accent text-accent-foreground",
             side === "incoming" &&
-              "rounded-ss-md border border-border bg-card text-card-foreground shadow-(--shadow-card)",
+              "rounded-ss-md border border-border bg-card text-card-foreground",
             side === "system" && "bg-muted/70 text-muted-foreground",
           )}
         >
@@ -88,7 +96,7 @@ export function Message({
             {actions && (
               <div
                 data-slot="message-actions"
-                className="-my-2.5 flex flex-wrap gap-1"
+                className="-my-2.5 flex flex-wrap gap-1 transition-opacity duration-150 ease-out-quint group-focus-within/message:opacity-100 group-hover/message:opacity-100 [@media(hover:hover)]:opacity-0"
               >
                 {actions}
               </div>

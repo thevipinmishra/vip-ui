@@ -26,9 +26,15 @@ import {
 import { Form } from "@/components/ui/form";
 import { InlineCode } from "@/components/ui/kbd-code";
 import { LayoutMorph } from "@/components/ui/layout-morph";
+import {
+  OtpInput,
+  OtpInputDescription,
+  OtpInputError,
+  OtpInputLabel,
+  OtpInputSlots,
+} from "@/components/ui/otp-input";
 import { Presence } from "@/components/ui/presence";
 import { Switch } from "@/components/ui/switch";
-import { TextField } from "@/components/ui/text-field";
 import { TextSwap } from "@/components/ui/text-swap";
 import { showToast } from "@/components/ui/toast";
 
@@ -250,20 +256,22 @@ export function TwoStepCard() {
                       />
                     </div>
                   </div>
-                  <TextField
+                  <OtpInput
                     name="code"
-                    label="6-digit code"
                     value={code}
                     onChange={(value) => {
-                      setCode(value.replace(/\D/g, "").slice(0, 6));
+                      setCode(value);
                       setCodeError("");
                     }}
-                    inputMode="numeric"
-                    autoComplete="one-time-code"
-                    placeholder="123456"
-                    description="The code changes every 30 seconds."
                     autoFocus
-                  />
+                  >
+                    <OtpInputLabel>6-digit code</OtpInputLabel>
+                    <OtpInputSlots />
+                    <OtpInputDescription>
+                      The code changes every 30 seconds.
+                    </OtpInputDescription>
+                    <OtpInputError />
+                  </OtpInput>
                 </div>
               ) : (
                 <div className="grid gap-4">

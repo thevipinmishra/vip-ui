@@ -1,0 +1,758 @@
+{
+  "reactDoctor": {
+    "version": "0.9.23",
+    "components": {
+      "button": [],
+      "button-group": [],
+      "menu": [],
+      "context-menu": [],
+      "toggle-button": [
+        {
+          "rule": "use-lazy-motion",
+          "severity": "warning",
+          "title": "Full Framer Motion import",
+          "line": 3
+        }
+      ],
+      "toggle-button-group": [
+        {
+          "rule": "only-export-components",
+          "severity": "warning",
+          "title": "Non-component export in component file",
+          "line": 14
+        }
+      ],
+      "toolbar": [],
+      "file-trigger": [],
+      "copy-button": [
+        {
+          "rule": "use-lazy-motion",
+          "severity": "warning",
+          "title": "Full Framer Motion import",
+          "line": 4
+        },
+        {
+          "rule": "no-high-complexity-react-function",
+          "severity": "warning",
+          "title": "React function has high control-flow complexity",
+          "line": 26
+        }
+      ],
+      "command-palette": [
+        {
+          "rule": "prefer-use-effect-event",
+          "severity": "warning",
+          "title": "Effect re-subscribes on a changing callback",
+          "line": 176
+        }
+      ],
+      "text-field": [],
+      "password-field": [],
+      "otp-input": [],
+      "inline-edit": [
+        {
+          "rule": "no-high-complexity-react-function",
+          "severity": "warning",
+          "title": "React function has high control-flow complexity",
+          "line": 144
+        },
+        {
+          "rule": "set-state-in-effect",
+          "severity": "warning",
+          "title": "React Compiler can't optimize this",
+          "line": 263
+        },
+        {
+          "rule": "todo",
+          "severity": "error",
+          "title": "React Compiler doesn't support this syntax",
+          "line": 289
+        }
+      ],
+      "input-group": [],
+      "text-area": [],
+      "number-field": [],
+      "search-field": [],
+      "select": [],
+      "native-select": [],
+      "combo-box": [],
+      "autocomplete": [],
+      "token-field": [
+        {
+          "rule": "only-export-components",
+          "severity": "warning",
+          "title": "Non-component export in component file",
+          "line": 31
+        }
+      ],
+      "checkbox": [],
+      "checkbox-group": [],
+      "radio-group": [],
+      "segmented-control": [],
+      "rating-input": [
+        {
+          "rule": "use-lazy-motion",
+          "severity": "warning",
+          "title": "Full Framer Motion import",
+          "line": 4
+        }
+      ],
+      "switch": [],
+      "slider": [
+        {
+          "rule": "no-array-index-as-key",
+          "severity": "warning",
+          "title": "Array index used as a key",
+          "line": 51
+        }
+      ],
+      "drop-zone": [],
+      "attachment": [
+        {
+          "rule": "use-lazy-motion",
+          "severity": "warning",
+          "title": "Full Framer Motion import",
+          "line": 13
+        },
+        {
+          "rule": "no-high-complexity-react-function",
+          "severity": "warning",
+          "title": "React function has high control-flow complexity",
+          "line": 83
+        }
+      ],
+      "form": [],
+      "fieldset": [],
+      "date-field": [],
+      "time-field": [],
+      "calendar": [],
+      "range-calendar": [
+        {
+          "rule": "use-lazy-motion",
+          "severity": "warning",
+          "title": "Full Framer Motion import",
+          "line": 3
+        }
+      ],
+      "date-picker": [],
+      "date-range-picker": [],
+      "event-calendar": [
+        {
+          "rule": "only-export-components",
+          "severity": "warning",
+          "title": "Non-component export in component file",
+          "line": 74
+        },
+        {
+          "rule": "only-export-components",
+          "severity": "warning",
+          "title": "Non-component export in component file",
+          "line": 124
+        },
+        {
+          "rule": "no-giant-component",
+          "severity": "warning",
+          "title": "Large component is hard to read and change",
+          "line": 541
+        }
+      ],
+      "color-field": [],
+      "color-swatch": [],
+      "color-swatch-picker": [],
+      "color-picker": [],
+      "color-wheel": [
+        {
+          "rule": "todo",
+          "severity": "error",
+          "title": "React Compiler doesn't support this syntax",
+          "line": 25
+        }
+      ],
+      "dialog": [],
+      "sheet": [
+        {
+          "rule": "use-lazy-motion",
+          "severity": "warning",
+          "title": "Full Framer Motion import",
+          "line": 4
+        },
+        {
+          "rule": "js-set-map-lookups",
+          "severity": "warning",
+          "title": "Array lookup inside a loop",
+          "line": 212
+        },
+        {
+          "rule": "effect-needs-cleanup",
+          "severity": "error",
+          "title": "Effect subscription or timer never cleaned up",
+          "line": 541
+        }
+      ],
+      "lightbox": [
+        {
+          "rule": "set-state-in-effect",
+          "severity": "warning",
+          "title": "React Compiler can't optimize this",
+          "line": 396
+        },
+        {
+          "rule": "no-effect-chain",
+          "severity": "warning",
+          "title": "Effects chained together",
+          "line": 418
+        },
+        {
+          "rule": "set-state-in-effect",
+          "severity": "warning",
+          "title": "React Compiler can't optimize this",
+          "line": 427
+        },
+        {
+          "rule": "no-high-complexity-react-function",
+          "severity": "warning",
+          "title": "React function has high control-flow complexity",
+          "line": 622
+        }
+      ],
+      "popover": [],
+      "tour": [
+        {
+          "rule": "no-high-complexity-react-function",
+          "severity": "warning",
+          "title": "React function has high control-flow complexity",
+          "line": 137
+        },
+        {
+          "rule": "no-giant-component",
+          "severity": "warning",
+          "title": "Large component is hard to read and change",
+          "line": 137
+        },
+        {
+          "rule": "rerender-state-only-in-handlers",
+          "severity": "warning",
+          "title": "State only used in handlers",
+          "line": 173
+        },
+        {
+          "rule": "rendering-hydration-no-flicker",
+          "severity": "warning",
+          "title": "useEffect state synchronization flashes after paint",
+          "line": 293
+        },
+        {
+          "rule": "set-state-in-effect",
+          "severity": "warning",
+          "title": "React Compiler can't optimize this",
+          "line": 294
+        },
+        {
+          "rule": "set-state-in-effect",
+          "severity": "warning",
+          "title": "React Compiler can't optimize this",
+          "line": 299
+        },
+        {
+          "rule": "no-adjust-state-on-prop-change",
+          "severity": "warning",
+          "title": "State adjusted after a prop changes",
+          "line": 372
+        },
+        {
+          "rule": "set-state-in-effect",
+          "severity": "warning",
+          "title": "React Compiler can't optimize this",
+          "line": 372
+        },
+        {
+          "rule": "prefer-use-effect-event",
+          "severity": "warning",
+          "title": "Effect re-subscribes on a changing callback",
+          "line": 409
+        },
+        {
+          "rule": "prefer-html-dialog",
+          "severity": "warning",
+          "title": "Custom modal instead of dialog",
+          "line": 438
+        }
+      ],
+      "tooltip": [],
+      "toast": [
+        {
+          "rule": "only-export-components",
+          "severity": "warning",
+          "title": "Non-component export in component file",
+          "line": 168
+        },
+        {
+          "rule": "only-export-components",
+          "severity": "warning",
+          "title": "Non-component export in component file",
+          "line": 170
+        }
+      ],
+      "link": [],
+      "tabs": [
+        {
+          "rule": "use-lazy-motion",
+          "severity": "warning",
+          "title": "Full Framer Motion import",
+          "line": 3
+        },
+        {
+          "rule": "effect-needs-cleanup",
+          "severity": "error",
+          "title": "Effect subscription or timer never cleaned up",
+          "line": 105
+        }
+      ],
+      "breadcrumbs": [],
+      "pagination": [
+        {
+          "rule": "immutability",
+          "severity": "error",
+          "title": "React Compiler can't optimize this",
+          "line": 210
+        },
+        {
+          "rule": "immutability",
+          "severity": "error",
+          "title": "React Compiler can't optimize this",
+          "line": 216
+        },
+        {
+          "rule": "only-export-components",
+          "severity": "warning",
+          "title": "Non-component export in component file",
+          "line": 315
+        },
+        {
+          "rule": "no-array-index-as-key",
+          "severity": "warning",
+          "title": "Array index used as a key",
+          "line": 322
+        }
+      ],
+      "sidebar": [
+        {
+          "rule": "no-effect-chain",
+          "severity": "warning",
+          "title": "Effects chained together",
+          "line": 145
+        },
+        {
+          "rule": "set-state-in-effect",
+          "severity": "warning",
+          "title": "React Compiler can't optimize this",
+          "line": 146
+        },
+        {
+          "rule": "no-boolean-toggle-without-functional-update",
+          "severity": "warning",
+          "title": "Boolean toggle reads a stale value",
+          "line": 180
+        }
+      ],
+      "resizable": [
+        {
+          "rule": "no-side-effect-in-state-updater-function",
+          "severity": "warning",
+          "title": "Side effect inside a state updater function",
+          "line": 254
+        },
+        {
+          "rule": "no-high-complexity-react-function",
+          "severity": "warning",
+          "title": "React function has high control-flow complexity",
+          "line": 397
+        }
+      ],
+      "list-box": [],
+      "grid-list": [],
+      "carousel": [
+        {
+          "rule": "set-state-in-effect",
+          "severity": "warning",
+          "title": "React Compiler can't optimize this",
+          "line": 151
+        },
+        {
+          "rule": "no-pass-data-to-parent",
+          "severity": "warning",
+          "title": "Data passed to parent via effect",
+          "line": 163
+        },
+        {
+          "rule": "no-pass-live-state-to-parent",
+          "severity": "warning",
+          "title": "Live state pushed to parent via effect",
+          "line": 163
+        },
+        {
+          "rule": "no-prop-callback-in-effect",
+          "severity": "warning",
+          "title": "Parent kept in sync with a callback effect",
+          "line": 163
+        },
+        {
+          "rule": "no-high-complexity-react-function",
+          "severity": "warning",
+          "title": "React function has high control-flow complexity",
+          "line": 235
+        }
+      ],
+      "tree": [
+        {
+          "rule": "use-lazy-motion",
+          "severity": "warning",
+          "title": "Full Framer Motion import",
+          "line": 10
+        },
+        {
+          "rule": "no-initialize-state",
+          "severity": "warning",
+          "title": "State initialized from a mount effect",
+          "line": 51
+        },
+        {
+          "rule": "set-state-in-effect",
+          "severity": "warning",
+          "title": "React Compiler can't optimize this",
+          "line": 51
+        }
+      ],
+      "tag-group": [
+        {
+          "rule": "use-lazy-motion",
+          "severity": "warning",
+          "title": "Full Framer Motion import",
+          "line": 4
+        },
+        {
+          "rule": "no-initialize-state",
+          "severity": "warning",
+          "title": "State initialized from a mount effect",
+          "line": 56
+        },
+        {
+          "rule": "set-state-in-effect",
+          "severity": "warning",
+          "title": "React Compiler can't optimize this",
+          "line": 56
+        }
+      ],
+      "table": [],
+      "data-table": [
+        {
+          "rule": "no-high-complexity-react-function",
+          "severity": "warning",
+          "title": "React function has high control-flow complexity",
+          "line": 103
+        },
+        {
+          "rule": "no-giant-component",
+          "severity": "warning",
+          "title": "Large component is hard to read and change",
+          "line": 103
+        },
+        {
+          "rule": "set-state-in-effect",
+          "severity": "warning",
+          "title": "React Compiler can't optimize this",
+          "line": 200
+        }
+      ],
+      "alert": [],
+      "badge": [],
+      "progress-bar": [],
+      "progress-ring": [
+        {
+          "rule": "use-lazy-motion",
+          "severity": "warning",
+          "title": "Full Framer Motion import",
+          "line": 3
+        }
+      ],
+      "meter": [],
+      "stepper": [
+        {
+          "rule": "use-lazy-motion",
+          "severity": "warning",
+          "title": "Full Framer Motion import",
+          "line": 4
+        },
+        {
+          "rule": "no-array-index-as-key",
+          "severity": "warning",
+          "title": "Array index used as a key",
+          "line": 106
+        }
+      ],
+      "spinner": [],
+      "skeleton": [],
+      "empty-state": [],
+      "card": [],
+      "spotlight-card": [],
+      "accordion": [],
+      "disclosure": [],
+      "separator": [],
+      "scroll-area": [],
+      "scroll-fade": [
+        {
+          "rule": "effect-needs-cleanup",
+          "severity": "error",
+          "title": "Effect subscription or timer never cleaned up",
+          "line": 25
+        }
+      ],
+      "progressive-blur": [],
+      "avatar": [],
+      "description-list": [],
+      "stat": [],
+      "timeline": [],
+      "kbd-code": [],
+      "code-block": [
+        {
+          "rule": "use-lazy-motion",
+          "severity": "warning",
+          "title": "Full Framer Motion import",
+          "line": 9
+        },
+        {
+          "rule": "no-high-complexity-react-function",
+          "severity": "warning",
+          "title": "React function has high control-flow complexity",
+          "line": 280
+        }
+      ],
+      "conversation": [
+        {
+          "rule": "no-adjust-state-on-prop-change",
+          "severity": "warning",
+          "title": "State adjusted after a prop changes",
+          "line": 88
+        },
+        {
+          "rule": "prefer-use-effect-event",
+          "severity": "warning",
+          "title": "Effect re-subscribes on a changing callback",
+          "line": 199
+        }
+      ],
+      "message": [
+        {
+          "rule": "only-export-components",
+          "severity": "warning",
+          "title": "Non-component export in component file",
+          "line": 11
+        },
+        {
+          "rule": "no-high-complexity-react-function",
+          "severity": "warning",
+          "title": "React function has high control-flow complexity",
+          "line": 23
+        }
+      ],
+      "agent-steps": [
+        {
+          "rule": "no-high-complexity-react-function",
+          "severity": "warning",
+          "title": "React function has high control-flow complexity",
+          "line": 33
+        }
+      ],
+      "tool-call": [
+        {
+          "rule": "use-lazy-motion",
+          "severity": "warning",
+          "title": "Full Framer Motion import",
+          "line": 4
+        }
+      ],
+      "prompt-input": [],
+      "reasoning": [
+        {
+          "rule": "set-state-in-effect",
+          "severity": "warning",
+          "title": "React Compiler can't optimize this",
+          "line": 82
+        },
+        {
+          "rule": "no-ref-current-in-render",
+          "severity": "error",
+          "title": "Ref mutated during render",
+          "line": 209
+        },
+        {
+          "rule": "refs",
+          "severity": "error",
+          "title": "React Compiler can't optimize this",
+          "line": 209
+        }
+      ],
+      "response": [],
+      "text-swap": [
+        {
+          "rule": "use-lazy-motion",
+          "severity": "warning",
+          "title": "Full Framer Motion import",
+          "line": 3
+        },
+        {
+          "rule": "no-layout-property-animation",
+          "severity": "error",
+          "title": "Animating a layout property",
+          "line": 52
+        },
+        {
+          "rule": "no-layout-property-animation",
+          "severity": "error",
+          "title": "Animating a layout property",
+          "line": 52
+        }
+      ],
+      "text-loop": [],
+      "icon-swap": [
+        {
+          "rule": "use-lazy-motion",
+          "severity": "warning",
+          "title": "Full Framer Motion import",
+          "line": 3
+        }
+      ],
+      "animated-number": [
+        {
+          "rule": "use-lazy-motion",
+          "severity": "warning",
+          "title": "Full Framer Motion import",
+          "line": 3
+        },
+        {
+          "rule": "todo",
+          "severity": "error",
+          "title": "React Compiler doesn't support this syntax",
+          "line": 171
+        },
+        {
+          "rule": "todo",
+          "severity": "error",
+          "title": "React Compiler doesn't support this syntax",
+          "line": 178
+        },
+        {
+          "rule": "no-layout-property-animation",
+          "severity": "error",
+          "title": "Animating a layout property",
+          "line": 233
+        },
+        {
+          "rule": "no-layout-property-animation",
+          "severity": "error",
+          "title": "Animating a layout property",
+          "line": 234
+        },
+        {
+          "rule": "no-layout-property-animation",
+          "severity": "error",
+          "title": "Animating a layout property",
+          "line": 235
+        }
+      ],
+      "text-reveal": [
+        {
+          "rule": "use-lazy-motion",
+          "severity": "warning",
+          "title": "Full Framer Motion import",
+          "line": 3
+        },
+        {
+          "rule": "todo",
+          "severity": "error",
+          "title": "React Compiler doesn't support this syntax",
+          "line": 53
+        }
+      ],
+      "highlighter": [
+        {
+          "rule": "no-initialize-state",
+          "severity": "warning",
+          "title": "State initialized from a mount effect",
+          "line": 64
+        },
+        {
+          "rule": "set-state-in-effect",
+          "severity": "warning",
+          "title": "React Compiler can't optimize this",
+          "line": 64
+        }
+      ],
+      "text-scramble": [
+        {
+          "rule": "js-hoist-intl",
+          "severity": "warning",
+          "title": "Intl formatter rebuilt each call",
+          "line": 24
+        },
+        {
+          "rule": "no-derived-useState",
+          "severity": "warning",
+          "title": "Prop derived into useState",
+          "line": 55
+        }
+      ],
+      "text-shimmer": [],
+      "presence": [
+        {
+          "rule": "use-lazy-motion",
+          "severity": "warning",
+          "title": "Full Framer Motion import",
+          "line": 3
+        }
+      ],
+      "presence-list": [
+        {
+          "rule": "use-lazy-motion",
+          "severity": "warning",
+          "title": "Full Framer Motion import",
+          "line": 3
+        },
+        {
+          "rule": "no-layout-property-animation",
+          "severity": "error",
+          "title": "Animating a layout property",
+          "line": 108
+        },
+        {
+          "rule": "no-layout-property-animation",
+          "severity": "error",
+          "title": "Animating a layout property",
+          "line": 108
+        }
+      ],
+      "stagger-group": [
+        {
+          "rule": "use-lazy-motion",
+          "severity": "warning",
+          "title": "Full Framer Motion import",
+          "line": 3
+        }
+      ],
+      "layout-morph": [
+        {
+          "rule": "use-lazy-motion",
+          "severity": "warning",
+          "title": "Full Framer Motion import",
+          "line": 3
+        }
+      ],
+      "marquee": [],
+      "border-beam": []
+    }
+  },
+  "axe": {
+    "version": "4.14.0",
+    "components": {}
+  }
+}

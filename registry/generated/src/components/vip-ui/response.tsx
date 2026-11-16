@@ -1,5 +1,6 @@
 "use client";
 
+import { StopCircleIcon, WarningCircleIcon } from "@phosphor-icons/react";
 import {
   type ComponentProps,
   createContext,
@@ -144,12 +145,32 @@ export function ResponseNotice({
       {...props}
       key={status}
       data-slot="response-notice"
+      data-status={status}
       className={cn(
-        "text-xs text-muted-foreground transition-[opacity,translate] duration-200 ease-out-quint starting:opacity-0 motion-safe:starting:translate-y-0.5",
+        "flex min-w-0 items-start gap-1.5 text-xs leading-5 text-muted-foreground transition-[opacity,translate] duration-200 ease-out-quint starting:opacity-0 motion-safe:starting:translate-y-0.5",
+        status === "error" && "text-destructive",
         className,
       )}
     >
-      {children ?? (status === "stopped" ? "Stopped" : "Something went wrong.")}
+      {status === "error" ? (
+        <WarningCircleIcon
+          key="icon"
+          size={14}
+          aria-hidden="true"
+          className="mt-0.75 shrink-0"
+        />
+      ) : (
+        <StopCircleIcon
+          key="icon"
+          size={14}
+          aria-hidden="true"
+          className="mt-0.75 shrink-0"
+        />
+      )}
+      <span key="label" className="min-w-0 wrap-anywhere">
+        {children ??
+          (status === "stopped" ? "Stopped" : "Something went wrong.")}
+      </span>
     </p>
   );
 }

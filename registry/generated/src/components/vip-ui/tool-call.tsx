@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckIcon, XIcon } from "@phosphor-icons/react";
+import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { type ComponentProps, useState } from "react";
 import { composeRenderProps } from "react-aria-components";
@@ -8,6 +8,7 @@ import { duration, easeOut, springPop } from "./motion";
 import { cn } from "./utils";
 import { CollapsiblePanel } from "./collapsible-panel";
 import { Disclosure, DisclosureHeader } from "./disclosure";
+import { Spinner } from "./spinner";
 
 export type ToolCallStatus = "running" | "complete" | "error";
 
@@ -50,9 +51,9 @@ function ToolCallIcon({ status }: { status: ToolCallStatus }) {
       aria-hidden="true"
       data-slot="tool-call-icon"
       className={cn(
-        "grid size-8 shrink-0 place-items-center rounded-lg bg-accent text-primary transition-colors duration-200 ease-out-quint *:col-start-1 *:row-start-1",
-        status === "complete" && "bg-success-subtle text-success",
-        status === "error" && "bg-destructive/10 text-destructive",
+        "grid h-5 w-4 shrink-0 place-items-center text-muted-foreground *:col-start-1 *:row-start-1",
+        status === "complete" && "text-success",
+        status === "error" && "text-destructive",
       )}
     >
       <AnimatePresence initial={false}>
@@ -73,11 +74,11 @@ function ToolCallIcon({ status }: { status: ToolCallStatus }) {
           transition={reduceMotion ? { duration: 0 } : springPop}
         >
           {status === "running" ? (
-            <span className="size-2 rounded-full bg-current [animation-duration:1.1s] motion-safe:animate-pulse forced-colors:bg-[CanvasText]" />
+            <Spinner size="xs" decorative />
           ) : status === "complete" ? (
-            <CheckIcon size={16} weight="bold" />
+            <CheckCircleIcon size={16} weight="fill" />
           ) : (
-            <XIcon size={16} weight="bold" />
+            <XCircleIcon size={16} weight="fill" />
           )}
         </motion.span>
       </AnimatePresence>
@@ -105,22 +106,30 @@ export function ToolCallTrigger({
         data-slot="tool-call-trigger"
         data-status={status}
         className={cn(
-          "min-h-12 items-start rounded-xl px-3 py-2.5 hover:bg-muted/70 [&>span:first-child]:min-w-0 [&>span:first-child]:flex-1 [&>span:last-child]:mt-2",
+          "items-start rounded-xl px-3 py-3 hover:bg-muted/70 [&>span:first-child]:min-w-0 [&>span:first-child]:flex-1 [&>span:last-child]:mt-0.5",
           className,
         )}
       >
-        <span className="grid min-w-0 grid-cols-[auto_minmax(0,1fr)] gap-x-3">
+        <span className="flex min-w-0 items-start gap-2.5">
           <ToolCallIcon status={status} />
-          <span className="flex min-w-0 flex-wrap items-baseline gap-x-3 py-1.5">
+          <span className="flex min-w-0 flex-1 flex-wrap items-baseline gap-x-2">
             <span
               data-slot="tool-call-name"
-              className="min-w-0 flex-[1_1_8rem] text-start font-mono text-xs font-semibold leading-5 text-foreground wrap-anywhere"
+              className="min-w-0 text-start font-mono text-xs font-medium leading-5 text-foreground wrap-anywhere"
             >
               {name}
             </span>
+            {summary && (
+              <span
+                data-slot="tool-call-summary"
+                className="min-w-0 flex-[1_1_8rem] text-start text-xs font-normal leading-5 text-muted-foreground wrap-anywhere"
+              >
+                {summary}
+              </span>
+            )}
             <span
               data-slot="tool-call-status"
-              className="inline-grid text-xs font-normal leading-5 text-muted-foreground *:col-start-1 *:row-start-1"
+              className="ms-auto inline-grid text-xs font-normal leading-5 text-muted-foreground *:col-start-1 *:row-start-1"
             >
               <AnimatePresence initial={false}>
                 <motion.span
@@ -144,14 +153,6 @@ export function ToolCallTrigger({
               </AnimatePresence>
             </span>
           </span>
-          {summary && (
-            <span
-              data-slot="tool-call-summary"
-              className="col-start-2 -mt-1 text-start text-xs font-normal leading-5 text-muted-foreground wrap-anywhere"
-            >
-              {summary}
-            </span>
-          )}
         </span>
       </DisclosureHeader>
       <output className="sr-only" aria-live="polite" aria-atomic="true">
@@ -174,7 +175,7 @@ export function ToolCallPanel({
         cn("text-sm leading-6 text-foreground", className),
       )}
     >
-      <div className="grid min-w-0 gap-3 border-t border-border/70 px-3 pt-2.5 pb-3 wrap-anywhere">
+      <div className="grid min-w-0 gap-3 border-t border-border/70 px-3 pt-3 pb-3 wrap-anywhere">
         {children}
       </div>
     </CollapsiblePanel>
@@ -205,7 +206,7 @@ export function ToolCallCode({ className, ...props }: ComponentProps<"pre">) {
       {...props}
       data-slot="tool-call-code"
       className={cn(
-        "max-h-60 min-w-0 overflow-auto rounded-md bg-muted/60 p-3 font-mono text-xs leading-5 whitespace-pre",
+        "max-h-60 min-w-0 overflow-auto rounded-lg bg-muted/60 px-3 py-2 font-mono text-xs leading-5 whitespace-pre",
         className,
       )}
     />

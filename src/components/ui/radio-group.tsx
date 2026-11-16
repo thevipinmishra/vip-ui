@@ -207,9 +207,11 @@ export function RadioButton({
       data-slot="radio-button"
       className={composeRenderProps(className, (className) =>
         cn(
-          // The label row keeps a 44px hit area on touch screens. Descriptions
-          // stay outside it.
-          "group/radio flex min-w-0 cursor-pointer items-center gap-3 pointer-coarse:min-h-11 disabled:cursor-default read-only:cursor-default",
+          "group/radio flex min-w-0 cursor-pointer items-center gap-3 disabled:cursor-default read-only:cursor-default",
+          // Extends the hit area to 44px on touch screens without adding row
+          // height. Descriptions stay outside it.
+          variant === "default" &&
+            "relative pointer-coarse:after:absolute pointer-coarse:after:inset-x-0 pointer-coarse:after:top-1/2 pointer-coarse:after:h-[max(100%,2.75rem)] pointer-coarse:after:-translate-y-1/2",
           // Card only: the card itself is the target, so include the padding
           // and description. Keep descriptions plain text in this variant.
           variant === "card" && "items-start after:absolute after:inset-0",

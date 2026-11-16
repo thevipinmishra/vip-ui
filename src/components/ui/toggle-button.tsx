@@ -90,8 +90,8 @@ export function ToggleButton({
     variant === "segmented";
   return (
     <AriaToggleButton
-      {...props}
       data-slot="toggle-button"
+      {...props}
       data-variant={variant}
       data-size={size}
       data-icon-only={iconOnly || undefined}

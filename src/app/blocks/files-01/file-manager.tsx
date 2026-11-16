@@ -32,6 +32,7 @@ import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Breadcrumb, Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { Button } from "@/components/ui/button";
+import { CarouselSlide } from "@/components/ui/carousel";
 import {
   ContextMenu,
   ContextMenuItem,
@@ -62,6 +63,12 @@ import {
 } from "@/components/ui/empty-state";
 import { FileTrigger } from "@/components/ui/file-trigger";
 import { GridList, GridListItem } from "@/components/ui/grid-list";
+import {
+  Lightbox,
+  LightboxContent,
+  LightboxImage,
+  LightboxTrigger,
+} from "@/components/ui/lightbox";
 import {
   MenuContent,
   MenuItem,
@@ -101,6 +108,7 @@ import {
   initialFiles,
   kindFromName,
 } from "./data";
+import { FileArt } from "./file-art";
 import { FileDetailsSheet } from "./file-details-sheet";
 import { FileGlyph } from "./file-glyph";
 import { NameDialog } from "./name-dialog";
@@ -166,6 +174,7 @@ export function FileManager() {
     return Date.parse(b.modifiedAt) - Date.parse(a.modifiedAt);
   });
   const childFolders = folderChildren(tree, currentFolder);
+  const images = visibleFiles.filter((file) => file.kind === "image");
   const selectedIdSet = new Set(
     selectedKeys === "all" ? files.map((file) => file.id) : [...selectedKeys],
   );
@@ -533,625 +542,658 @@ export function FileManager() {
   const selectableFiles = visibleFiles.length > 0;
 
   return (
-    <div className="min-h-svh bg-background">
-      <header className="border-b border-border/70 bg-card">
-        <div className="mx-auto flex h-14 max-w-360 items-center gap-2.5 px-4 sm:px-6">
-          <span className="grid size-8 place-items-center rounded-lg bg-primary text-primary-foreground">
-            <GridFourIcon size={17} weight="fill" aria-hidden="true" />
-          </span>
-          <span className="text-sm font-semibold tracking-[-0.02em]">
-            Kestrel
-          </span>
-          <span aria-hidden="true" className="text-muted-foreground/60">
-            /
-          </span>
-          <span className="text-sm text-muted-foreground">Files</span>
-          <div className="ms-auto flex items-center gap-2">
-            <span className="hidden text-xs text-muted-foreground sm:block">
-              Campaign workspace
+    <Lightbox>
+      <div className="min-h-svh bg-background">
+        <header className="border-b border-border/70 bg-card">
+          <div className="mx-auto flex h-14 max-w-360 items-center gap-2.5 px-4 sm:px-6">
+            <span className="grid size-8 place-items-center rounded-lg bg-primary text-primary-foreground">
+              <GridFourIcon size={17} weight="fill" aria-hidden="true" />
             </span>
-            <Avatar name="Maya Chen" size="sm" />
-          </div>
-        </div>
-      </header>
-
-      <div className="mx-auto grid max-w-360 gap-5 px-4 py-5 sm:px-6 lg:grid-cols-[236px_minmax(0,1fr)] lg:py-7">
-        <aside className="hidden lg:block">
-          <div className="sticky top-7 grid gap-5">
-            <div>
-              <p className="mb-2 px-2 text-xs font-semibold text-muted-foreground">
-                Folders
-              </p>
-              {treeView}
-            </div>
-            <div className="rounded-xl bg-card p-3.5 ring-1 ring-border/70">
-              <ProgressBar
-                label="Storage"
-                value={68}
-                maxValue={200}
-                aria-valuetext="68 GB of 200 GB used"
-                className="**:data-[slot=progress-bar-label]:text-xs **:data-[slot=progress-bar-value]:text-[11px]"
-              />
-              <p className="mt-2 text-xs leading-5 text-muted-foreground">
-                Each file can be up to 25 MB.
-              </p>
-            </div>
-          </div>
-        </aside>
-
-        <main className="min-w-0">
-          <nav aria-label="Breadcrumbs" className="mb-4">
-            <Breadcrumbs items={path} onAction={(key) => navigate(String(key))}>
-              {(folder) => (
-                <Breadcrumb id={folder.id}>{folder.name}</Breadcrumb>
-              )}
-            </Breadcrumbs>
-          </nav>
-
-          <div className="flex flex-wrap items-end justify-between gap-3">
-            <div className="min-w-0">
-              <div className="flex flex-wrap items-center gap-2">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  iconOnly
-                  aria-label="Open folders"
-                  className="-ms-2 lg:hidden"
-                  onPress={() => setNavOpen(true)}
-                >
-                  <ListIcon size={18} aria-hidden="true" />
-                </Button>
-                <h1 className="text-2xl font-semibold tracking-[-0.04em]">
-                  {currentName}
-                </h1>
-                <Badge variant="outline">
-                  {inFolder.length} {inFolder.length === 1 ? "file" : "files"}
-                </Badge>
-              </div>
-              {inFolder.length > 0 && (
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {formatSize(totalSize)} · Updated{" "}
-                  {formatShortDate(new Date(latest).toISOString())}
-                </p>
-              )}
-            </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onPress={() => setDialog({ mode: "folder" })}
-            >
-              <FolderSimplePlusIcon size={16} aria-hidden="true" />
-              New folder
-            </Button>
-          </div>
-
-          <Toolbar
-            aria-label="File actions"
-            size="xs"
-            className="mt-4 w-full flex-wrap gap-2"
-          >
-            <ToggleButtonGroup
-              aria-label="View"
-              selectionMode="single"
-              disallowEmptySelection
-              selectedKeys={[view]}
-              onSelectionChange={(keys) => {
-                const next = [...keys][0];
-                if (next === "grid" || next === "list") setView(next);
-              }}
-            >
-              <ToggleButton
-                id="grid"
-                iconOnly
-                aria-label="Grid view"
-                variant="segmented"
-              >
-                <SquaresFourIcon size={16} aria-hidden="true" />
-              </ToggleButton>
-              <ToggleButton
-                id="list"
-                iconOnly
-                aria-label="List view"
-                variant="segmented"
-              >
-                <ListIcon size={16} aria-hidden="true" />
-              </ToggleButton>
-            </ToggleButtonGroup>
-
-            <MenuTrigger>
-              <Button variant="outline" size="xs">
-                <ArrowsDownUpIcon size={16} aria-hidden="true" />
-                {sort === "name"
-                  ? "Name"
-                  : sort === "size"
-                    ? "Size"
-                    : sort === "manual"
-                      ? "Custom order"
-                      : "Last modified"}
-                <CaretDownIcon size={12} aria-hidden="true" />
-              </Button>
-              <MenuPopover placement="bottom start">
-                <MenuContent
-                  aria-label="Sort files"
-                  selectionMode="single"
-                  selectedKeys={[sort]}
-                  onSelectionChange={(keys) => {
-                    const next = [...keys][0];
-                    if (
-                      next === "name" ||
-                      next === "modified" ||
-                      next === "size" ||
-                      next === "manual"
-                    )
-                      setSort(next);
-                  }}
-                >
-                  <MenuItem id="name">Name</MenuItem>
-                  <MenuItem id="modified">Last modified</MenuItem>
-                  <MenuItem id="size">Size</MenuItem>
-                  <MenuItem id="manual">Custom order</MenuItem>
-                </MenuContent>
-              </MenuPopover>
-            </MenuTrigger>
-
-            <Separator
-              orientation="vertical"
-              className="mx-1 hidden h-7 self-center sm:block"
-            />
-
-            <SearchField
-              aria-label="Search files"
-              placeholder="Search files"
-              size="xs"
-              value={query}
-              onChange={setQuery}
-              className="w-full sm:w-52"
-            />
-
+            <span className="text-sm font-semibold tracking-[-0.02em]">
+              Kestrel
+            </span>
+            <span aria-hidden="true" className="text-muted-foreground/60">
+              /
+            </span>
+            <span className="text-sm text-muted-foreground">Files</span>
             <div className="ms-auto flex items-center gap-2">
-              <FileTrigger
-                acceptedFileTypes={[
-                  "image/*",
-                  "application/pdf",
-                  "text/*",
-                  "application/zip",
-                ]}
-                allowsMultiple
-                onSelect={(list) => {
-                  if (list) addFiles(Array.from(list));
+              <span className="hidden text-xs text-muted-foreground sm:block">
+                Campaign workspace
+              </span>
+              <Avatar name="Maya Chen" size="sm" />
+            </div>
+          </div>
+        </header>
+
+        <div className="mx-auto grid max-w-360 gap-5 px-4 py-5 sm:px-6 lg:grid-cols-[236px_minmax(0,1fr)] lg:py-7">
+          <aside className="hidden lg:block">
+            <div className="sticky top-7 grid gap-5">
+              <div>
+                <p className="mb-2 px-2 text-xs font-semibold text-muted-foreground">
+                  Folders
+                </p>
+                {treeView}
+              </div>
+              <div className="rounded-xl bg-card p-3.5 ring-1 ring-border/70">
+                <ProgressBar
+                  label="Storage"
+                  value={68}
+                  maxValue={200}
+                  aria-valuetext="68 GB of 200 GB used"
+                  className="**:data-[slot=progress-bar-label]:text-xs **:data-[slot=progress-bar-value]:text-[11px]"
+                />
+                <p className="mt-2 text-xs leading-5 text-muted-foreground">
+                  Each file can be up to 25 MB.
+                </p>
+              </div>
+            </div>
+          </aside>
+
+          <main className="min-w-0">
+            <nav aria-label="Breadcrumbs" className="mb-4">
+              <Breadcrumbs
+                items={path}
+                onAction={(key) => navigate(String(key))}
+              >
+                {(folder) => (
+                  <Breadcrumb id={folder.id}>{folder.name}</Breadcrumb>
+                )}
+              </Breadcrumbs>
+            </nav>
+
+            <div className="flex flex-wrap items-end justify-between gap-3">
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    iconOnly
+                    aria-label="Open folders"
+                    className="-ms-2 lg:hidden"
+                    onPress={() => setNavOpen(true)}
+                  >
+                    <ListIcon size={18} aria-hidden="true" />
+                  </Button>
+                  <h1 className="text-2xl font-semibold tracking-[-0.04em]">
+                    {currentName}
+                  </h1>
+                  <Badge variant="outline">
+                    {inFolder.length} {inFolder.length === 1 ? "file" : "files"}
+                  </Badge>
+                </div>
+                {inFolder.length > 0 && (
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {formatSize(totalSize)} · Updated{" "}
+                    {formatShortDate(new Date(latest).toISOString())}
+                  </p>
+                )}
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onPress={() => setDialog({ mode: "folder" })}
+              >
+                <FolderSimplePlusIcon size={16} aria-hidden="true" />
+                New folder
+              </Button>
+            </div>
+
+            <Toolbar
+              aria-label="File actions"
+              size="xs"
+              className="mt-4 w-full flex-wrap gap-2"
+            >
+              <ToggleButtonGroup
+                aria-label="View"
+                selectionMode="single"
+                disallowEmptySelection
+                selectedKeys={[view]}
+                onSelectionChange={(keys) => {
+                  const next = [...keys][0];
+                  if (next === "grid" || next === "list") setView(next);
                 }}
               >
-                <Button size="sm">
-                  <UploadSimpleIcon size={16} aria-hidden="true" />
-                  Upload
-                </Button>
-              </FileTrigger>
-            </div>
-          </Toolbar>
+                <ToggleButton
+                  id="grid"
+                  iconOnly
+                  aria-label="Grid view"
+                  variant="segmented"
+                >
+                  <SquaresFourIcon size={16} aria-hidden="true" />
+                </ToggleButton>
+                <ToggleButton
+                  id="list"
+                  iconOnly
+                  aria-label="List view"
+                  variant="segmented"
+                >
+                  <ListIcon size={16} aria-hidden="true" />
+                </ToggleButton>
+              </ToggleButtonGroup>
 
-          {selectedFiles.length > 0 && (
-            <div className="mt-3 flex flex-wrap items-center gap-2 rounded-lg bg-accent px-3 py-2 text-sm text-accent-foreground">
-              <span className="font-medium">
-                {selectedFiles.length} selected
-              </span>
-              <Button
+              <MenuTrigger>
+                <Button variant="outline" size="xs">
+                  <ArrowsDownUpIcon size={16} aria-hidden="true" />
+                  {sort === "name"
+                    ? "Name"
+                    : sort === "size"
+                      ? "Size"
+                      : sort === "manual"
+                        ? "Custom order"
+                        : "Last modified"}
+                  <CaretDownIcon size={12} aria-hidden="true" />
+                </Button>
+                <MenuPopover placement="bottom start">
+                  <MenuContent
+                    aria-label="Sort files"
+                    selectionMode="single"
+                    selectedKeys={[sort]}
+                    onSelectionChange={(keys) => {
+                      const next = [...keys][0];
+                      if (
+                        next === "name" ||
+                        next === "modified" ||
+                        next === "size" ||
+                        next === "manual"
+                      )
+                        setSort(next);
+                    }}
+                  >
+                    <MenuItem id="name">Name</MenuItem>
+                    <MenuItem id="modified">Last modified</MenuItem>
+                    <MenuItem id="size">Size</MenuItem>
+                    <MenuItem id="manual">Custom order</MenuItem>
+                  </MenuContent>
+                </MenuPopover>
+              </MenuTrigger>
+
+              <Separator
+                orientation="vertical"
+                className="mx-1 hidden h-7 self-center sm:block"
+              />
+
+              <SearchField
+                aria-label="Search files"
+                placeholder="Search files"
                 size="xs"
-                variant="minimal"
-                onPress={() => setSelectedKeys(new Set<Key>())}
-              >
-                Clear
-              </Button>
-              <div className="ms-auto flex flex-wrap items-center gap-1">
-                {selectedFiles.length === 1 && (
+                value={query}
+                onChange={setQuery}
+                className="w-full sm:w-52"
+              />
+
+              <div className="ms-auto flex items-center gap-2">
+                <FileTrigger
+                  acceptedFileTypes={[
+                    "image/*",
+                    "application/pdf",
+                    "text/*",
+                    "application/zip",
+                  ]}
+                  allowsMultiple
+                  onSelect={(list) => {
+                    if (list) addFiles(Array.from(list));
+                  }}
+                >
+                  <Button size="sm">
+                    <UploadSimpleIcon size={16} aria-hidden="true" />
+                    Upload
+                  </Button>
+                </FileTrigger>
+              </div>
+            </Toolbar>
+
+            {selectedFiles.length > 0 && (
+              <div className="mt-3 flex flex-wrap items-center gap-2 rounded-lg bg-accent px-3 py-2 text-sm text-accent-foreground">
+                <span className="font-medium">
+                  {selectedFiles.length} selected
+                </span>
+                <Button
+                  size="xs"
+                  variant="minimal"
+                  onPress={() => setSelectedKeys(new Set<Key>())}
+                >
+                  Clear
+                </Button>
+                <div className="ms-auto flex flex-wrap items-center gap-1">
+                  {selectedFiles.length === 1 && (
+                    <Button
+                      size="xs"
+                      variant="ghost"
+                      onPress={() => setDetailsId(selectedFiles[0].id)}
+                    >
+                      <InfoIcon size={14} aria-hidden="true" />
+                      Details
+                    </Button>
+                  )}
                   <Button
                     size="xs"
                     variant="ghost"
-                    onPress={() => setDetailsId(selectedFiles[0].id)}
+                    onPress={() => download(selectedFiles)}
                   >
-                    <InfoIcon size={14} aria-hidden="true" />
-                    Details
+                    <DownloadSimpleIcon size={14} aria-hidden="true" />
+                    Download
                   </Button>
-                )}
-                <Button
-                  size="xs"
-                  variant="ghost"
-                  onPress={() => download(selectedFiles)}
+                  <Button
+                    size="xs"
+                    variant="ghost"
+                    onPress={() => {
+                      const destinations = flattenFolders(tree).filter(
+                        (folder) => folder.id !== currentFolder,
+                      );
+                      setMoveTarget(destinations[0]?.id ?? "");
+                      setMoveOpen(true);
+                    }}
+                  >
+                    <FolderSimpleIcon size={14} aria-hidden="true" />
+                    Move
+                  </Button>
+                  <Button
+                    size="xs"
+                    variant="ghost"
+                    className="text-destructive"
+                    onPress={() => remove(selectedFiles)}
+                  >
+                    <TrashIcon size={14} aria-hidden="true" />
+                    Delete
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            <div className="mt-4 grid gap-4">
+              {childFolders.length > 0 && query === "" && (
+                <section
+                  aria-labelledby="folders-in-folder"
+                  className="grid gap-2"
                 >
-                  <DownloadSimpleIcon size={14} aria-hidden="true" />
-                  Download
-                </Button>
-                <Button
-                  size="xs"
-                  variant="ghost"
-                  onPress={() => {
-                    const destinations = flattenFolders(tree).filter(
-                      (folder) => folder.id !== currentFolder,
-                    );
-                    setMoveTarget(destinations[0]?.id ?? "");
-                    setMoveOpen(true);
+                  <h2
+                    id="folders-in-folder"
+                    className="text-xs font-semibold text-muted-foreground"
+                  >
+                    Folders
+                  </h2>
+                  <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
+                    {childFolders.map((folder) => {
+                      const count = filesInFolder(files, folder.id).length;
+                      return (
+                        <button
+                          key={folder.id}
+                          type="button"
+                          onClick={() => navigate(folder.id)}
+                          className="group flex min-w-0 items-center gap-3 rounded-lg border border-border/70 bg-card px-3 py-2.5 text-left shadow-[var(--shadow-card)] outline-offset-4 outline-transparent transition-[background-color,outline-color] duration-150 ease-out-quint hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                        >
+                          <span className="grid size-9 shrink-0 place-items-center rounded-md bg-muted text-muted-foreground">
+                            <FolderSimpleIcon size={19} aria-hidden="true" />
+                          </span>
+                          <span className="min-w-0 flex-1">
+                            <span className="block truncate text-sm font-medium">
+                              {folder.name}
+                            </span>
+                            <span className="block text-xs text-muted-foreground">
+                              {count} {count === 1 ? "file" : "files"}
+                            </span>
+                          </span>
+                          <CaretRightIcon
+                            size={14}
+                            aria-hidden="true"
+                            className="shrink-0 text-muted-foreground transition-transform duration-150 group-hover:translate-x-0.5"
+                          />
+                        </button>
+                      );
+                    })}
+                  </div>
+                </section>
+              )}
+
+              {visibleFiles.length === 0 ? (
+                <EmptyState>
+                  <EmptyStateIcon>
+                    {query ? (
+                      <InfoIcon size={24} />
+                    ) : (
+                      <FolderSimpleIcon size={24} />
+                    )}
+                  </EmptyStateIcon>
+                  <EmptyStateTitle as="h2">
+                    {query
+                      ? "No files match your search"
+                      : "This folder is empty"}
+                  </EmptyStateTitle>
+                  <EmptyStateDescription>
+                    {query
+                      ? `No file in ${currentName} contains “${query}”.`
+                      : "Upload a file, or drop one below."}
+                  </EmptyStateDescription>
+                  <EmptyStateActions>
+                    {query ? (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onPress={() => setQuery("")}
+                      >
+                        Clear search
+                      </Button>
+                    ) : (
+                      <FileTrigger
+                        acceptedFileTypes={[
+                          "image/*",
+                          "application/pdf",
+                          "text/*",
+                          "application/zip",
+                        ]}
+                        allowsMultiple
+                        onSelect={(list) => {
+                          if (list) addFiles(Array.from(list));
+                        }}
+                      >
+                        <Button size="sm">
+                          <UploadSimpleIcon size={16} aria-hidden="true" />
+                          Upload files
+                        </Button>
+                      </FileTrigger>
+                    )}
+                  </EmptyStateActions>
+                </EmptyState>
+              ) : (
+                <ContextMenuTrigger>
+                  <GridList
+                    id="file-grid"
+                    key={view}
+                    aria-label={`Files in ${currentName}`}
+                    items={visibleFiles}
+                    selectionMode="multiple"
+                    selectedKeys={selectedKeys}
+                    onSelectionChange={setSelectedKeys}
+                    dragAndDropHooks={dragAndDropHooks}
+                    layout={view === "grid" ? "grid" : "stack"}
+                    className={cn(
+                      "border-0 bg-transparent p-0 shadow-none",
+                      view === "grid"
+                        ? "grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-4"
+                        : "gap-1",
+                      !selectableFiles && "hidden",
+                    )}
+                  >
+                    {(file) => (
+                      <GridListItem
+                        id={file.id}
+                        textValue={file.name}
+                        onDoubleClick={() => setDetailsId(file.id)}
+                        onContextMenu={() => {
+                          if (!selectedIdSet.has(file.id)) {
+                            setSelectedKeys(new Set<Key>([file.id]));
+                          }
+                        }}
+                        className={cn(
+                          "group relative outline-offset-0",
+                          view === "grid"
+                            ? "min-h-30 flex-col items-stretch justify-start gap-2.5 rounded-lg border border-border/60 bg-card p-3 shadow-[var(--shadow-card)] hover:bg-card data-[selected]:border-primary/40 data-[selected]:bg-accent data-[selected]:ring-1 data-[selected]:ring-primary/30"
+                            : "min-h-14 rounded-md border border-transparent px-3 hover:bg-muted data-[selected]:border-primary/20",
+                        )}
+                      >
+                        {view === "grid" ? (
+                          <>
+                            <div className="flex w-full items-start justify-between gap-2">
+                              {file.kind === "image" ? (
+                                <LightboxTrigger
+                                  index={images.findIndex(
+                                    (image) => image.id === file.id,
+                                  )}
+                                  aria-label={`Preview ${file.name}`}
+                                  className="size-11 rounded-lg bg-transparent ring-0"
+                                >
+                                  <FileArt id={file.id} />
+                                </LightboxTrigger>
+                              ) : (
+                                <FileGlyph
+                                  kind={file.kind}
+                                  className="size-11"
+                                />
+                              )}
+                              <div className="flex items-center gap-1">
+                                {!selectedIdSet.has(file.id) && (
+                                  <span className="text-[10px] font-medium uppercase tracking-[0.06em] text-muted-foreground">
+                                    {fileTypeLabel(file).split(" ")[0]}
+                                  </span>
+                                )}
+                                <DragHandle name={file.name} />
+                              </div>
+                            </div>
+                            <div className="min-w-0">
+                              <p className="truncate text-sm font-medium">
+                                {file.name}
+                              </p>
+                              <p className="mt-0.5 truncate text-xs text-muted-foreground">
+                                {formatShortDate(file.modifiedAt)} ·{" "}
+                                {file.owner}
+                              </p>
+                            </div>
+                            {selectedIdSet.has(file.id) && (
+                              <span
+                                aria-hidden="true"
+                                className="absolute end-2.5 top-2.5 grid size-5 place-items-center rounded-full bg-primary text-primary-foreground"
+                              >
+                                <CheckIcon size={12} weight="bold" />
+                              </span>
+                            )}
+                          </>
+                        ) : (
+                          <>
+                            <FileGlyph kind={file.kind} className="size-10" />
+                            <div className="min-w-0 flex-1">
+                              <p className="truncate text-sm font-medium">
+                                {file.name}
+                              </p>
+                              <p className="truncate text-xs text-muted-foreground">
+                                {fileTypeLabel(file)} · {formatSize(file.size)}
+                              </p>
+                            </div>
+                            <div className="hidden w-32 shrink-0 items-center gap-2 text-xs text-muted-foreground sm:flex">
+                              <Avatar name={file.owner} size="xs" />
+                              <span className="truncate">{file.owner}</span>
+                            </div>
+                            <span className="w-20 shrink-0 text-end text-xs text-muted-foreground">
+                              {formatShortDate(file.modifiedAt)}
+                            </span>
+                            <DragHandle name={file.name} />
+                          </>
+                        )}
+                      </GridListItem>
+                    )}
+                  </GridList>
+                  <ContextMenu aria-label="File actions" onAction={menuAction}>
+                    {selectedFiles.length === 0 ? (
+                      <ContextMenuItem id="empty" isDisabled>
+                        Select a file first
+                      </ContextMenuItem>
+                    ) : (
+                      <>
+                        <ContextMenuItem id="details">
+                          <InfoIcon size={16} aria-hidden="true" />
+                          Details
+                        </ContextMenuItem>
+                        <ContextMenuItem
+                          id="rename"
+                          isDisabled={selectedFiles.length !== 1}
+                        >
+                          <PencilSimpleIcon size={16} aria-hidden="true" />
+                          Rename
+                        </ContextMenuItem>
+                        <ContextMenuItem
+                          id="duplicate"
+                          isDisabled={selectedFiles.length !== 1}
+                        >
+                          <GridFourIcon size={16} aria-hidden="true" />
+                          Duplicate
+                        </ContextMenuItem>
+                        <ContextMenuSeparator />
+                        <ContextMenuItem id="download">
+                          <DownloadSimpleIcon size={16} aria-hidden="true" />
+                          Download
+                        </ContextMenuItem>
+                        <ContextMenuItem id="link">
+                          <LinkIcon size={16} aria-hidden="true" />
+                          Copy link
+                        </ContextMenuItem>
+                        <ContextMenuItem id="move">
+                          <FolderSimpleIcon size={16} aria-hidden="true" />
+                          Move to folder
+                        </ContextMenuItem>
+                        <ContextMenuSeparator />
+                        <ContextMenuItem id="delete" variant="destructive">
+                          <TrashIcon size={16} aria-hidden="true" />
+                          Move to trash
+                        </ContextMenuItem>
+                      </>
+                    )}
+                  </ContextMenu>
+                </ContextMenuTrigger>
+              )}
+            </div>
+
+            <div className="mt-5">
+              <DropZone
+                getDropOperation={() => "copy"}
+                onDrop={async ({ items }) => {
+                  const list = await Promise.all(
+                    items
+                      .filter(
+                        (item: DropItem): item is FileDropItem =>
+                          item.kind === "file",
+                      )
+                      .map((item) => item.getFile()),
+                  );
+                  addFiles(
+                    list,
+                    currentFolder === "all" ? "campaigns" : currentFolder,
+                  );
+                }}
+                className="min-h-25 flex-row gap-4 border-border/80 bg-card/60 px-4 py-3 text-left"
+              >
+                <DropZoneIcon className="size-10">
+                  <CloudArrowUpIcon size={20} aria-hidden="true" />
+                </DropZoneIcon>
+                <div className="min-w-0 flex-1">
+                  <DropZoneLabel>
+                    Drop files into{" "}
+                    {currentName === "All files" ? "Campaigns" : currentName}
+                  </DropZoneLabel>
+                  <DropZoneDescription>
+                    Up to 25 MB per file.
+                  </DropZoneDescription>
+                </div>
+                <DropZoneTrigger
+                  size="sm"
+                  className="shrink-0"
+                  acceptedFileTypes={[
+                    "image/*",
+                    "application/pdf",
+                    "text/*",
+                    "application/zip",
+                  ]}
+                  allowsMultiple
+                  onSelect={(list) => {
+                    if (list) addFiles(Array.from(list));
                   }}
                 >
-                  <FolderSimpleIcon size={14} aria-hidden="true" />
-                  Move
-                </Button>
-                <Button
-                  size="xs"
-                  variant="ghost"
-                  className="text-destructive"
-                  onPress={() => remove(selectedFiles)}
-                >
-                  <TrashIcon size={14} aria-hidden="true" />
-                  Delete
-                </Button>
-              </div>
+                  Browse
+                </DropZoneTrigger>
+              </DropZone>
             </div>
-          )}
-
-          <div className="mt-4 grid gap-4">
-            {childFolders.length > 0 && query === "" && (
-              <section
-                aria-labelledby="folders-in-folder"
-                className="grid gap-2"
-              >
-                <h2
-                  id="folders-in-folder"
-                  className="text-xs font-semibold text-muted-foreground"
-                >
-                  Folders
-                </h2>
-                <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
-                  {childFolders.map((folder) => {
-                    const count = filesInFolder(files, folder.id).length;
-                    return (
-                      <button
-                        key={folder.id}
-                        type="button"
-                        onClick={() => navigate(folder.id)}
-                        className="group flex min-w-0 items-center gap-3 rounded-lg border border-border/70 bg-card px-3 py-2.5 text-left shadow-[var(--shadow-card)] outline-offset-4 outline-transparent transition-[background-color,outline-color] duration-150 ease-out-quint hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-                      >
-                        <span className="grid size-9 shrink-0 place-items-center rounded-md bg-muted text-muted-foreground">
-                          <FolderSimpleIcon size={19} aria-hidden="true" />
-                        </span>
-                        <span className="min-w-0 flex-1">
-                          <span className="block truncate text-sm font-medium">
-                            {folder.name}
-                          </span>
-                          <span className="block text-xs text-muted-foreground">
-                            {count} {count === 1 ? "file" : "files"}
-                          </span>
-                        </span>
-                        <CaretRightIcon
-                          size={14}
-                          aria-hidden="true"
-                          className="shrink-0 text-muted-foreground transition-transform duration-150 group-hover:translate-x-0.5"
-                        />
-                      </button>
-                    );
-                  })}
-                </div>
-              </section>
-            )}
-
-            {visibleFiles.length === 0 ? (
-              <EmptyState>
-                <EmptyStateIcon>
-                  {query ? (
-                    <InfoIcon size={24} />
-                  ) : (
-                    <FolderSimpleIcon size={24} />
-                  )}
-                </EmptyStateIcon>
-                <EmptyStateTitle as="h2">
-                  {query
-                    ? "No files match your search"
-                    : "This folder is empty"}
-                </EmptyStateTitle>
-                <EmptyStateDescription>
-                  {query
-                    ? `No file in ${currentName} contains “${query}”.`
-                    : "Upload a file, or drop one below."}
-                </EmptyStateDescription>
-                <EmptyStateActions>
-                  {query ? (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onPress={() => setQuery("")}
-                    >
-                      Clear search
-                    </Button>
-                  ) : (
-                    <FileTrigger
-                      acceptedFileTypes={[
-                        "image/*",
-                        "application/pdf",
-                        "text/*",
-                        "application/zip",
-                      ]}
-                      allowsMultiple
-                      onSelect={(list) => {
-                        if (list) addFiles(Array.from(list));
-                      }}
-                    >
-                      <Button size="sm">
-                        <UploadSimpleIcon size={16} aria-hidden="true" />
-                        Upload files
-                      </Button>
-                    </FileTrigger>
-                  )}
-                </EmptyStateActions>
-              </EmptyState>
-            ) : (
-              <ContextMenuTrigger>
-                <GridList
-                  id="file-grid"
-                  key={view}
-                  aria-label={`Files in ${currentName}`}
-                  items={visibleFiles}
-                  selectionMode="multiple"
-                  selectedKeys={selectedKeys}
-                  onSelectionChange={setSelectedKeys}
-                  dragAndDropHooks={dragAndDropHooks}
-                  layout={view === "grid" ? "grid" : "stack"}
-                  className={cn(
-                    "border-0 bg-transparent p-0 shadow-none",
-                    view === "grid"
-                      ? "grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-4"
-                      : "gap-1",
-                    !selectableFiles && "hidden",
-                  )}
-                >
-                  {(file) => (
-                    <GridListItem
-                      id={file.id}
-                      textValue={file.name}
-                      onDoubleClick={() => setDetailsId(file.id)}
-                      onContextMenu={() => {
-                        if (!selectedIdSet.has(file.id)) {
-                          setSelectedKeys(new Set<Key>([file.id]));
-                        }
-                      }}
-                      className={cn(
-                        "group relative outline-offset-0",
-                        view === "grid"
-                          ? "min-h-30 flex-col items-stretch justify-start gap-2.5 rounded-lg border border-border/60 bg-card p-3 shadow-[var(--shadow-card)] hover:bg-card data-[selected]:border-primary/40 data-[selected]:bg-accent data-[selected]:ring-1 data-[selected]:ring-primary/30"
-                          : "min-h-14 rounded-md border border-transparent px-3 hover:bg-muted data-[selected]:border-primary/20",
-                      )}
-                    >
-                      {view === "grid" ? (
-                        <>
-                          <div className="flex w-full items-start justify-between gap-2">
-                            <FileGlyph kind={file.kind} className="size-11" />
-                            <div className="flex items-center gap-1">
-                              {!selectedIdSet.has(file.id) && (
-                                <span className="text-[10px] font-medium uppercase tracking-[0.06em] text-muted-foreground">
-                                  {fileTypeLabel(file).split(" ")[0]}
-                                </span>
-                              )}
-                              <DragHandle name={file.name} />
-                            </div>
-                          </div>
-                          <div className="min-w-0">
-                            <p className="truncate text-sm font-medium">
-                              {file.name}
-                            </p>
-                            <p className="mt-0.5 truncate text-xs text-muted-foreground">
-                              {formatShortDate(file.modifiedAt)} · {file.owner}
-                            </p>
-                          </div>
-                          {selectedIdSet.has(file.id) && (
-                            <span
-                              aria-hidden="true"
-                              className="absolute end-2.5 top-2.5 grid size-5 place-items-center rounded-full bg-primary text-primary-foreground"
-                            >
-                              <CheckIcon size={12} weight="bold" />
-                            </span>
-                          )}
-                        </>
-                      ) : (
-                        <>
-                          <FileGlyph kind={file.kind} className="size-10" />
-                          <div className="min-w-0 flex-1">
-                            <p className="truncate text-sm font-medium">
-                              {file.name}
-                            </p>
-                            <p className="truncate text-xs text-muted-foreground">
-                              {fileTypeLabel(file)} · {formatSize(file.size)}
-                            </p>
-                          </div>
-                          <div className="hidden w-32 shrink-0 items-center gap-2 text-xs text-muted-foreground sm:flex">
-                            <Avatar name={file.owner} size="xs" />
-                            <span className="truncate">{file.owner}</span>
-                          </div>
-                          <span className="w-20 shrink-0 text-end text-xs text-muted-foreground">
-                            {formatShortDate(file.modifiedAt)}
-                          </span>
-                          <DragHandle name={file.name} />
-                        </>
-                      )}
-                    </GridListItem>
-                  )}
-                </GridList>
-                <ContextMenu aria-label="File actions" onAction={menuAction}>
-                  {selectedFiles.length === 0 ? (
-                    <ContextMenuItem id="empty" isDisabled>
-                      Select a file first
-                    </ContextMenuItem>
-                  ) : (
-                    <>
-                      <ContextMenuItem id="details">
-                        <InfoIcon size={16} aria-hidden="true" />
-                        Details
-                      </ContextMenuItem>
-                      <ContextMenuItem
-                        id="rename"
-                        isDisabled={selectedFiles.length !== 1}
-                      >
-                        <PencilSimpleIcon size={16} aria-hidden="true" />
-                        Rename
-                      </ContextMenuItem>
-                      <ContextMenuItem
-                        id="duplicate"
-                        isDisabled={selectedFiles.length !== 1}
-                      >
-                        <GridFourIcon size={16} aria-hidden="true" />
-                        Duplicate
-                      </ContextMenuItem>
-                      <ContextMenuSeparator />
-                      <ContextMenuItem id="download">
-                        <DownloadSimpleIcon size={16} aria-hidden="true" />
-                        Download
-                      </ContextMenuItem>
-                      <ContextMenuItem id="link">
-                        <LinkIcon size={16} aria-hidden="true" />
-                        Copy link
-                      </ContextMenuItem>
-                      <ContextMenuItem id="move">
-                        <FolderSimpleIcon size={16} aria-hidden="true" />
-                        Move to folder
-                      </ContextMenuItem>
-                      <ContextMenuSeparator />
-                      <ContextMenuItem id="delete" variant="destructive">
-                        <TrashIcon size={16} aria-hidden="true" />
-                        Move to trash
-                      </ContextMenuItem>
-                    </>
-                  )}
-                </ContextMenu>
-              </ContextMenuTrigger>
-            )}
-          </div>
-
-          <div className="mt-5">
-            <DropZone
-              getDropOperation={() => "copy"}
-              onDrop={async ({ items }) => {
-                const list = await Promise.all(
-                  items
-                    .filter(
-                      (item: DropItem): item is FileDropItem =>
-                        item.kind === "file",
-                    )
-                    .map((item) => item.getFile()),
-                );
-                addFiles(
-                  list,
-                  currentFolder === "all" ? "campaigns" : currentFolder,
-                );
-              }}
-              className="min-h-25 flex-row gap-4 border-border/80 bg-card/60 px-4 py-3 text-left"
-            >
-              <DropZoneIcon className="size-10">
-                <CloudArrowUpIcon size={20} aria-hidden="true" />
-              </DropZoneIcon>
-              <div className="min-w-0 flex-1">
-                <DropZoneLabel>
-                  Drop files into{" "}
-                  {currentName === "All files" ? "Campaigns" : currentName}
-                </DropZoneLabel>
-                <DropZoneDescription>Up to 25 MB per file.</DropZoneDescription>
-              </div>
-              <DropZoneTrigger
-                size="sm"
-                className="shrink-0"
-                acceptedFileTypes={[
-                  "image/*",
-                  "application/pdf",
-                  "text/*",
-                  "application/zip",
-                ]}
-                allowsMultiple
-                onSelect={(list) => {
-                  if (list) addFiles(Array.from(list));
-                }}
-              >
-                Browse
-              </DropZoneTrigger>
-            </DropZone>
-          </div>
-        </main>
-      </div>
-
-      <Sheet
-        isOpen={navOpen}
-        onOpenChange={setNavOpen}
-        position="left"
-        size="sm"
-      >
-        <SheetHeader>
-          <SheetTitle level={2}>Folders</SheetTitle>
-          <SheetClose />
-        </SheetHeader>
-        <SheetBody className="pb-6">{treeView}</SheetBody>
-      </Sheet>
-
-      <FileDetailsSheet
-        file={detailsFile}
-        folderName={
-          detailsFile ? folderName(tree, detailsFile.folderId) : currentName
-        }
-        onOpenChange={(open) => {
-          if (!open) setDetailsId(null);
-        }}
-        onDownload={(file) => download([file])}
-        onRename={(file) => {
-          setDetailsId(null);
-          setDialog({ mode: "rename", file });
-        }}
-        onDelete={(file) => remove([file])}
-        onCopyLink={copyLink}
-      />
-
-      <NameDialog
-        open={dialog !== null}
-        mode={dialog?.mode ?? "folder"}
-        initialName={dialog?.mode === "rename" ? dialog.file.name : ""}
-        onOpenChange={(open) => {
-          if (!open) setDialog(null);
-        }}
-        validate={validateName}
-        onSubmit={submitName}
-      />
-
-      <DialogContent
-        size="sm"
-        overlayProps={{ isOpen: moveOpen, onOpenChange: setMoveOpen }}
-      >
-        <DialogHeader>
-          <DialogTitle level={2}>
-            Move {selectedFiles.length}{" "}
-            {selectedFiles.length === 1 ? "file" : "files"}
-          </DialogTitle>
-          <DialogDescription>
-            {selectedFiles.length === 1
-              ? "The file moves to the folder you select."
-              : "The files move to the folder you select."}
-          </DialogDescription>
-          <DialogClose />
-        </DialogHeader>
-        <div className="mt-5">
-          <Select
-            label="Destination"
-            options={flattenFolders(tree)
-              .filter((folder) => folder.id !== currentFolder)
-              .map((folder) => ({
-                id: folder.id,
-                name:
-                  folderPath(tree, folder.id)
-                    .map((node) => node.name)
-                    .join(" / ") || folder.name,
-              }))}
-            value={moveTarget}
-            onValueChange={setMoveTarget}
-          />
+          </main>
         </div>
-        <DialogFooter>
-          <DialogClose variant="outline">Cancel</DialogClose>
-          <Button onPress={moveSelection} isDisabled={!moveTarget}>
-            {selectedFiles.length === 1 ? "Move file" : "Move files"}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </div>
+
+        <Sheet
+          isOpen={navOpen}
+          onOpenChange={setNavOpen}
+          position="left"
+          size="sm"
+        >
+          <SheetHeader>
+            <SheetTitle level={2}>Folders</SheetTitle>
+            <SheetClose />
+          </SheetHeader>
+          <SheetBody className="pb-6">{treeView}</SheetBody>
+        </Sheet>
+
+        <FileDetailsSheet
+          file={detailsFile}
+          folderName={
+            detailsFile ? folderName(tree, detailsFile.folderId) : currentName
+          }
+          onOpenChange={(open) => {
+            if (!open) setDetailsId(null);
+          }}
+          onDownload={(file) => download([file])}
+          onRename={(file) => {
+            setDetailsId(null);
+            setDialog({ mode: "rename", file });
+          }}
+          onDelete={(file) => remove([file])}
+          onCopyLink={copyLink}
+        />
+
+        <NameDialog
+          open={dialog !== null}
+          mode={dialog?.mode ?? "folder"}
+          initialName={dialog?.mode === "rename" ? dialog.file.name : ""}
+          onOpenChange={(open) => {
+            if (!open) setDialog(null);
+          }}
+          validate={validateName}
+          onSubmit={submitName}
+        />
+
+        <DialogContent
+          size="sm"
+          overlayProps={{ isOpen: moveOpen, onOpenChange: setMoveOpen }}
+        >
+          <DialogHeader>
+            <DialogTitle level={2}>
+              Move {selectedFiles.length}{" "}
+              {selectedFiles.length === 1 ? "file" : "files"}
+            </DialogTitle>
+            <DialogDescription>
+              {selectedFiles.length === 1
+                ? "The file moves to the folder you select."
+                : "The files move to the folder you select."}
+            </DialogDescription>
+            <DialogClose />
+          </DialogHeader>
+          <div className="mt-5">
+            <Select
+              label="Destination"
+              options={flattenFolders(tree)
+                .filter((folder) => folder.id !== currentFolder)
+                .map((folder) => ({
+                  id: folder.id,
+                  name:
+                    folderPath(tree, folder.id)
+                      .map((node) => node.name)
+                      .join(" / ") || folder.name,
+                }))}
+              value={moveTarget}
+              onValueChange={setMoveTarget}
+            />
+          </div>
+          <DialogFooter>
+            <DialogClose variant="outline">Cancel</DialogClose>
+            <Button onPress={moveSelection} isDisabled={!moveTarget}>
+              {selectedFiles.length === 1 ? "Move file" : "Move files"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+
+        <LightboxContent aria-label="Image preview">
+          {images.map((file) => (
+            <CarouselSlide key={file.id}>
+              <LightboxImage alt={`${file.name} preview`}>
+                <FileArt id={file.id} className="max-h-full" />
+              </LightboxImage>
+            </CarouselSlide>
+          ))}
+        </LightboxContent>
+      </div>
+    </Lightbox>
   );
 }

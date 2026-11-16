@@ -1,17 +1,13 @@
 "use client";
 
 import {
-  ArrowsLeftRightIcon,
-  CalculatorIcon,
-  CheckCircleIcon,
   DownloadSimpleIcon,
   FileTextIcon,
-  ListChecksIcon,
   PlayIcon,
   StopIcon,
 } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
-import { AgentStatus } from "@/components/ui/agent-status";
+import { AgentStep, AgentSteps } from "@/components/ui/agent-steps";
 import { Alert } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -35,13 +31,6 @@ import {
 } from "@/components/ui/disclosure";
 import { InlineCode, Kbd } from "@/components/ui/kbd-code";
 import { ProgressRing } from "@/components/ui/progress-ring";
-import {
-  Timeline,
-  TimelineDescription,
-  TimelineItem,
-  TimelineTime,
-  TimelineTitle,
-} from "@/components/ui/timeline";
 import { showToast } from "@/components/ui/toast";
 import {
   ToolCall,
@@ -71,7 +60,6 @@ const steps = [
     time: "10:38:02 AM",
     dateTime: "2026-10-30T10:38:02Z",
     description: "INV-8841.pdf · 6 pages",
-    icon: FileTextIcon,
   },
   {
     id: "extracted",
@@ -79,7 +67,6 @@ const steps = [
     time: "10:38:09 AM",
     dateTime: "2026-10-30T10:38:09Z",
     description: "24 lines read at 98% confidence",
-    icon: ListChecksIcon,
   },
   {
     id: "matched",
@@ -87,7 +74,6 @@ const steps = [
     time: "10:38:16 AM",
     dateTime: "2026-10-30T10:38:16Z",
     description: "22 of 24 lines match PO-4471",
-    icon: ArrowsLeftRightIcon,
   },
   {
     id: "totals",
@@ -95,13 +81,11 @@ const steps = [
     time: "10:38:19 AM",
     dateTime: "2026-10-30T10:38:19Z",
     description: "2 lines need review",
-    icon: CalculatorIcon,
   },
   {
     id: "approval",
     title: "Approval",
     description: "Waits for your review",
-    icon: CheckCircleIcon,
   },
 ] as const;
 
@@ -224,43 +208,29 @@ export function AgentRun() {
           </Alert>
         )}
 
-        <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto]">
-          <AgentStatus
-            state={status === "working" ? "working" : "error"}
-            label={
-              status === "working" ? "Checking line totals" : "Run stopped"
-            }
-            detail={
-              status === "working"
-                ? "Step 4 of 5 · 24 line totals"
-                : "Stopped by you. Resume to continue from step 4."
-            }
-            className="items-center"
+        <Card className="flex flex-wrap items-center gap-4 px-4 py-3">
+          <ProgressRing
+            size="sm"
+            value={run.progress}
+            label="Progress"
+            valueLabel={`${run.progress}%`}
+            className="[&_[data-slot=progress-ring-label]]:sr-only"
           />
-          <Card className="flex flex-wrap items-center gap-4 px-4 py-3">
-            <ProgressRing
-              size="sm"
-              value={run.progress}
-              label="Progress"
-              valueLabel={`${run.progress}%`}
-              className="[&_[data-slot=progress-ring-label]]:sr-only"
-            />
-            <div className="grid grid-cols-2 gap-x-4 gap-y-1">
-              <div>
-                <p className="text-xs text-muted-foreground">Elapsed</p>
-                <p className="text-sm font-semibold tabular-nums">
-                  {formatElapsed(elapsed)}
-                </p>
-              </div>
-              <div>
-                <p className="text-xs text-muted-foreground">Exceptions</p>
-                <p className="text-sm font-semibold tabular-nums">
-                  {exceptions.length}
-                </p>
-              </div>
+          <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+            <div>
+              <p className="text-xs text-muted-foreground">Elapsed</p>
+              <p className="text-sm font-semibold tabular-nums">
+                {formatElapsed(elapsed)}
+              </p>
             </div>
-          </Card>
-        </div>
+            <div>
+              <p className="text-xs text-muted-foreground">Exceptions</p>
+              <p className="text-sm font-semibold tabular-nums">
+                {exceptions.length}
+              </p>
+            </div>
+          </div>
+        </Card>
 
         <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
           <div className="grid content-start gap-5">
@@ -272,45 +242,48 @@ export function AgentRun() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-3">
-                <Timeline aria-label="Run steps">
+                <AgentSteps
+                  status={status === "working" ? "running" : "stopped"}
+                  label={
+                    status === "working"
+                      ? "Checking line totals"
+                      : "Run stopped"
+                  }
+                  detail="Step 4 of 5"
+                  defaultExpanded
+                >
                   {steps.map((step, index) => {
-                    const Icon = step.icon;
                     const isCurrent = step.id === "totals";
-                    const stepStatus =
-                      index < 3
-                        ? "complete"
-                        : isCurrent
-                          ? status === "working"
-                            ? "latest"
-                            : "upcoming"
-                          : "upcoming";
                     return (
-                      <TimelineItem
+                      <AgentStep
                         key={step.id}
-                        status={stepStatus}
-                        className="pb-4"
-                        icon={<Icon weight="bold" />}
-                      >
-                        <TimelineTitle className="text-sm leading-5">
-                          {step.title}
-                        </TimelineTitle>
-                        {"time" in step && (
-                          <TimelineTime
-                            className="mt-0.5 leading-4"
-                            dateTime={step.dateTime}
-                          >
-                            {step.time}
-                          </TimelineTime>
-                        )}
-                        <TimelineDescription className="mt-0.5 text-[13px] leading-5">
-                          {isCurrent && status === "stopped"
-                            ? "Stopped before the check finished."
-                            : step.description}
-                        </TimelineDescription>
-                      </TimelineItem>
+                        title={step.title}
+                        status={
+                          index < 3
+                            ? "complete"
+                            : isCurrent
+                              ? status === "working"
+                                ? "running"
+                                : "stopped"
+                              : "pending"
+                        }
+                        description={
+                          isCurrent && status === "stopped" ? (
+                            "Stopped by you. Resume to continue from this step."
+                          ) : "time" in step ? (
+                            <>
+                              <time dateTime={step.dateTime}>{step.time}</time>
+                              {" · "}
+                              {step.description}
+                            </>
+                          ) : (
+                            step.description
+                          )
+                        }
+                      />
                     );
                   })}
-                </Timeline>
+                </AgentSteps>
               </CardContent>
             </Card>
 

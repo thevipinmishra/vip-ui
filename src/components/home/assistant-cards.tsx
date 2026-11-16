@@ -8,7 +8,7 @@ import {
 import { useInView, useReducedMotion } from "motion/react";
 import { Fragment, useEffect, useRef, useState } from "react";
 import type { DropItem, FileDropItem } from "react-aria-components";
-import { AgentStatus } from "@/components/ui/agent-status";
+import { AgentStep, AgentSteps } from "@/components/ui/agent-steps";
 import { Attachment, AttachmentList } from "@/components/ui/attachment";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -21,7 +21,6 @@ import {
 } from "@/components/ui/drop-zone";
 import { Message } from "@/components/ui/message";
 import { PromptInput } from "@/components/ui/prompt-input";
-import { SourceLink } from "@/components/ui/source-link";
 import { Spinner } from "@/components/ui/spinner";
 import { Stepper } from "@/components/ui/stepper";
 import { TextSwap } from "@/components/ui/text-swap";
@@ -110,18 +109,6 @@ export function ChatCard() {
             Use Switch for a setting that applies at once. Use Checkbox when
             people must push Save. Put related controls in a Fieldset.
           </Message>
-          <div className="grid grid-cols-2 gap-2">
-            <SourceLink
-              href="/components/switch"
-              label="Switch"
-              source="vip/ui docs"
-            />
-            <SourceLink
-              href="/components/fieldset"
-              label="Fieldset"
-              source="vip/ui docs"
-            />
-          </div>
           {turns.map((turn) => (
             <Fragment key={turn.id}>
               <Message side="outgoing" sender="You">
@@ -132,11 +119,10 @@ export function ChatCard() {
                   {turn.answer}
                 </Message>
               ) : (
-                <AgentStatus
-                  state="working"
-                  label="Reading the docs"
-                  detail="Searching the component pages"
-                />
+                <AgentSteps status="running" label="Reading the docs">
+                  <AgentStep title="Found 3 component pages" />
+                  <AgentStep status="running" title="Reading the examples" />
+                </AgentSteps>
               )}
             </Fragment>
           ))}

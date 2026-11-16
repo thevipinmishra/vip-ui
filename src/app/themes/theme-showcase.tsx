@@ -19,7 +19,7 @@ import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
 import { useId, useMemo, useRef, useState } from "react";
 import { ChartPlot } from "@/components/charts/chart-plot";
-import { AgentStatus } from "@/components/ui/agent-status";
+import { AgentStep, AgentSteps } from "@/components/ui/agent-steps";
 import { AnimatedNumber } from "@/components/ui/animated-number";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -716,17 +716,28 @@ function AssistantScene({ className }: { className?: string }) {
               {message.text}
             </Message>
           ))}
-          <AgentStatus
-            state={working ? "working" : "complete"}
+          <AgentSteps
+            status={working ? "running" : "complete"}
             label={
               working ? "Looking through your data" : "Win-back email drafted"
             }
-            detail={
-              working
-                ? "Reading revenue, invoices, and support"
-                : "Ready to review in Campaigns"
-            }
-          />
+            detail={working ? undefined : "3 steps"}
+            autoCollapse
+          >
+            <AgentStep
+              title="Read revenue and invoices"
+              description="Last 30 days"
+            />
+            <AgentStep
+              status={working ? "running" : "complete"}
+              title="Read support tickets"
+            />
+            <AgentStep
+              status={working ? "pending" : "complete"}
+              title="Draft the email"
+              description={working ? undefined : "Ready to review in Campaigns"}
+            />
+          </AgentSteps>
         </div>
       </CardContent>
       <CardFooter className="border-t border-border/70 pt-5">

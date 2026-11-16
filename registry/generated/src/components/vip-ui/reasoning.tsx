@@ -110,7 +110,9 @@ export function Reasoning({
         }}
         data-slot="reasoning"
         data-status={status}
-        className={className}
+        className={composeRenderProps(className, (className) =>
+          cn("rounded-none border-0 bg-transparent", className),
+        )}
       >
         <output className="sr-only" aria-live="polite" aria-atomic="true">
           {status === "thinking" ? "" : statusText(status, seconds)}
@@ -141,7 +143,10 @@ export function ReasoningTrigger({
     <DisclosureHeader
       {...props}
       data-slot="reasoning-trigger"
-      className={cn("text-muted-foreground", className)}
+      className={cn(
+        "-ms-2 min-h-9 w-fit justify-start gap-1.5 rounded-md px-2 py-1.5 text-muted-foreground hover:bg-transparent hover:text-foreground pointer-coarse:min-h-11 aria-expanded:rounded-md",
+        className,
+      )}
     >
       <span className="flex min-w-0 items-center gap-2">
         <span
@@ -237,9 +242,9 @@ export function ReasoningPanel({
         data-slot="reasoning-content"
         tabIndex={scrollable ? 0 : undefined}
         className={cn(
-          "px-4 pb-3 wrap-anywhere outline-none",
+          "ms-1.75 mt-1 border-s border-border ps-4 wrap-anywhere outline-none",
           scrollable &&
-            "max-h-64 overflow-y-auto overscroll-contain rounded-b-lg focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring focus-visible:-outline-offset-2",
+            "max-h-64 overflow-y-auto overscroll-contain focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring focus-visible:-outline-offset-2",
         )}
       >
         <div ref={bodyRef}>{children}</div>

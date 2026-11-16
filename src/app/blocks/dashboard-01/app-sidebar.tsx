@@ -9,9 +9,15 @@ import {
   UsersIcon,
 } from "@phosphor-icons/react";
 import { Badge } from "@/components/ui/badge";
-import { ItemHighlight } from "@/components/ui/item-highlight";
 import { ProgressBar } from "@/components/ui/progress-bar";
-import { cn } from "@/lib/utils";
+import {
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarHeader,
+  SidebarItem,
+  SidebarMenu,
+} from "@/components/ui/sidebar";
 
 const navigation = [
   { label: "Overview", href: "#", icon: HouseIcon, current: true },
@@ -22,65 +28,60 @@ const navigation = [
   { label: "Settings", href: "#", icon: GearSixIcon },
 ];
 
-export function AppSidebar({ onNavigate }: { onNavigate?: () => void }) {
+export function AppSidebar() {
   return (
-    <div className="flex min-h-full flex-col gap-6">
-      <div className="flex items-center gap-2.5 px-2">
-        <span
-          aria-hidden="true"
-          className="grid size-8 place-items-center rounded-lg bg-primary text-sm font-bold text-primary-foreground"
-        >
-          A
-        </span>
-        <div className="min-w-0">
-          <p className="truncate text-sm font-semibold">Acme Store</p>
-          <p className="truncate text-xs text-muted-foreground">Pro plan</p>
+    <>
+      <SidebarHeader>
+        <div className="flex items-center gap-2.5">
+          <span
+            aria-hidden="true"
+            className="grid size-8 shrink-0 place-items-center rounded-lg bg-primary text-sm font-bold text-primary-foreground"
+          >
+            A
+          </span>
+          <div className="min-w-0">
+            <p className="truncate text-sm font-semibold">Acme Store</p>
+            <p className="truncate text-xs text-muted-foreground">Pro plan</p>
+          </div>
         </div>
-      </div>
-      <nav aria-label="Main" className="relative isolate">
-        <ItemHighlight placement="under" items="a" />
-        <ul className="grid gap-0.5">
-          {navigation.map((item) => (
-            <li key={item.label}>
-              <a
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarMenu aria-label="Main">
+            {navigation.map((item) => (
+              <SidebarItem
+                key={item.label}
                 href={item.href}
-                onClick={onNavigate}
-                aria-current={item.current ? "page" : undefined}
-                className={cn(
-                  "flex min-h-10 items-center gap-3 rounded-md px-2.5 text-sm font-medium transition-[color,background-color] duration-150 ease-out-quint focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-transparent",
-                  item.current
-                    ? "bg-accent text-accent-foreground"
-                    : "text-muted-foreground hover:text-foreground",
-                )}
+                icon={<item.icon aria-hidden="true" />}
+                isCurrent={item.current}
+                badge={
+                  item.count ? (
+                    <Badge className="min-h-5 px-2 py-0 text-[11px] shadow-none">
+                      {item.count}
+                      <span className="sr-only"> new</span>
+                    </Badge>
+                  ) : undefined
+                }
               >
-                <item.icon
-                  size={18}
-                  weight={item.current ? "fill" : "regular"}
-                  aria-hidden="true"
-                />
-                <span className="flex-1">{item.label}</span>
-                {item.count && (
-                  <Badge className="min-h-5 px-2 py-0 text-[11px] shadow-none">
-                    {item.count}
-                    <span className="sr-only"> new</span>
-                  </Badge>
-                )}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      <div className="mt-auto rounded-lg bg-muted/60 p-3 ring-1 ring-border/70">
-        <ProgressBar
-          label="Storage"
-          value={68}
-          valueLabel="6.8 of 10 GB"
-          className="gap-1.5 **:data-[slot=progress-bar-label]:text-xs **:data-[slot=progress-bar-value]:text-xs"
-        />
-        <p className="mt-2 text-xs leading-5 text-muted-foreground">
-          Upgrade to get 100 GB.
-        </p>
-      </div>
-    </div>
+                {item.label}
+              </SidebarItem>
+            ))}
+          </SidebarMenu>
+        </SidebarGroup>
+      </SidebarContent>
+      <SidebarFooter>
+        <div className="rounded-lg bg-muted/60 p-3 ring-1 ring-border/70">
+          <ProgressBar
+            label="Storage"
+            value={68}
+            valueLabel="6.8 of 10 GB"
+            className="gap-1.5 **:data-[slot=progress-bar-label]:text-xs **:data-[slot=progress-bar-value]:text-xs"
+          />
+          <p className="mt-2 text-xs leading-5 text-muted-foreground">
+            Upgrade to get 100 GB.
+          </p>
+        </div>
+      </SidebarFooter>
+    </>
   );
 }

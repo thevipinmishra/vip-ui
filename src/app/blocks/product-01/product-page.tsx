@@ -19,6 +19,14 @@ import { Badge } from "@/components/ui/badge";
 import { Breadcrumb, Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { Button } from "@/components/ui/button";
 import {
+  Carousel,
+  CarouselSlide,
+  CarouselStatus,
+  CarouselThumbnail,
+  CarouselThumbnails,
+  CarouselViewport,
+} from "@/components/ui/carousel";
+import {
   ColorSwatchPicker,
   ColorSwatchPickerItem,
 } from "@/components/ui/color-swatch-picker";
@@ -27,6 +35,12 @@ import {
   DescriptionList,
   DescriptionTerm,
 } from "@/components/ui/description-list";
+import {
+  Lightbox,
+  LightboxContent,
+  LightboxImage,
+  LightboxTrigger,
+} from "@/components/ui/lightbox";
 import { NumberField } from "@/components/ui/number-field";
 import { RatingInput } from "@/components/ui/rating-input";
 import { Tab, TabList, TabPanel, Tabs } from "@/components/ui/tabs";
@@ -256,63 +270,105 @@ export function ProductPage() {
 
         <div className="mt-5 grid gap-8 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:gap-12">
           <div className="grid content-start gap-3">
-            <div className="relative aspect-[4/5] max-h-[520px] overflow-hidden rounded-2xl bg-muted/50 ring-1 ring-border/60">
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_0%,var(--card),transparent_70%)]"
-              />
-              <div className="relative grid h-full place-items-center px-6 py-8 sm:px-10">
-                <ProductArt
-                  hex={color.hex}
-                  colorName={color.name}
-                  view={view}
-                  className="max-h-full"
-                />
-              </div>
-              <div className="absolute left-4 top-4 flex flex-wrap gap-2">
-                {color.id === "moss" && (
-                  <Badge variant="accent">New color</Badge>
-                )}
-              </div>
-              <div className="absolute inset-x-4 bottom-4 flex items-end justify-between gap-4 text-xs">
-                <div>
-                  <p className="font-medium text-foreground">{color.name}</p>
-                  <p className="text-muted-foreground">
-                    {views.find((item) => item.id === view)?.label} view
-                  </p>
+            <Lightbox
+              index={views.findIndex((item) => item.id === view)}
+              onIndexChange={(next) => {
+                const item = views[next];
+                if (item) setView(item.id);
+              }}
+            >
+              <Carousel
+                aria-label="Product photos"
+                index={views.findIndex((item) => item.id === view)}
+                onIndexChange={(next) => {
+                  const item = views[next];
+                  if (item) setView(item.id);
+                }}
+              >
+                <div className="relative">
+                  <CarouselViewport className="rounded-2xl bg-muted/50 ring-1 ring-border/60">
+                    {views.map((item, position) => (
+                      <CarouselSlide
+                        key={item.id}
+                        className="relative aspect-[4/5] max-h-[520px]"
+                        aria-label={`${item.label} view of the field jacket`}
+                      >
+                        <div
+                          aria-hidden="true"
+                          className="absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_0%,var(--card),transparent_70%)]"
+                        />
+                        <LightboxTrigger
+                          index={position}
+                          aria-label={`Open ${item.label.toLowerCase()} view`}
+                          className="relative h-full w-full place-items-center rounded-none bg-transparent px-6 py-8 ring-0 sm:px-10"
+                        >
+                          <ProductArt
+                            hex={color.hex}
+                            colorName={color.name}
+                            view={item.id}
+                            className="max-h-full"
+                            data-lightbox-source=""
+                          />
+                        </LightboxTrigger>
+                      </CarouselSlide>
+                    ))}
+                  </CarouselViewport>
+                  <div className="pointer-events-none absolute start-4 top-4 flex flex-wrap gap-2">
+                    {color.id === "moss" && (
+                      <Badge variant="accent">New color</Badge>
+                    )}
+                  </div>
+                  <div className="pointer-events-none absolute inset-x-4 bottom-4 flex items-end justify-between gap-4 text-xs">
+                    <div>
+                      <p className="font-medium text-foreground">
+                        {color.name}
+                      </p>
+                      <p className="text-muted-foreground">
+                        {views.find((item) => item.id === view)?.label} view
+                      </p>
+                    </div>
+                    <CarouselStatus className="text-xs" />
+                  </div>
                 </div>
-                <p className="tabular-nums text-muted-foreground">
-                  {views.findIndex((item) => item.id === view) + 1} / 3
-                </p>
-              </div>
-            </div>
 
-            <div className="grid grid-cols-3 gap-2">
-              {views.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  aria-label={`Show ${item.label.toLowerCase()} of the jacket`}
-                  aria-pressed={view === item.id}
-                  onClick={() => setView(item.id)}
-                  className={cn(
-                    "group grid gap-1.5 rounded-lg bg-muted/50 p-1.5 ring-1 outline-offset-2 outline-transparent transition-[ring-color,background-color] duration-150 ease-out-quint hover:bg-muted focus-visible:outline-2 focus-visible:outline-ring",
-                    view === item.id ? "ring-2 ring-primary" : "ring-border/70",
-                  )}
-                >
-                  <span className="aspect-[5/4] overflow-hidden rounded-md bg-card/60">
-                    <ProductArt
-                      hex={color.hex}
-                      colorName={color.name}
-                      view={item.id}
-                    />
-                  </span>
-                  <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground group-aria-pressed:text-foreground">
-                    {item.label}
-                  </span>
-                </button>
-              ))}
-            </div>
+                <CarouselThumbnails>
+                  {views.map((item, position) => (
+                    <CarouselThumbnail
+                      key={item.id}
+                      index={position}
+                      aria-label={`Show ${item.label.toLowerCase()} of the jacket`}
+                    >
+                      <span className="aspect-[5/4] overflow-hidden rounded-md bg-card/60">
+                        <ProductArt
+                          hex={color.hex}
+                          colorName={color.name}
+                          view={item.id}
+                        />
+                      </span>
+                      <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground group-aria-[current=true]/thumb:text-foreground">
+                        {item.label}
+                      </span>
+                    </CarouselThumbnail>
+                  ))}
+                </CarouselThumbnails>
+              </Carousel>
+              <LightboxContent aria-label="Product photos">
+                {views.map((item) => (
+                  <CarouselSlide key={item.id}>
+                    <LightboxImage
+                      alt={`Field Jacket in ${color.name}, ${item.label.toLowerCase()} view`}
+                    >
+                      <ProductArt
+                        hex={color.hex}
+                        colorName={color.name}
+                        view={item.id}
+                        className="max-h-full"
+                      />
+                    </LightboxImage>
+                  </CarouselSlide>
+                ))}
+              </LightboxContent>
+            </Lightbox>
           </div>
 
           <div className="flex min-w-0 flex-col gap-5 lg:pt-1">

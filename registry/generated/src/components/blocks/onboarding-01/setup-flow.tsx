@@ -388,6 +388,7 @@ export function SetupFlow() {
             slug={slug}
             color={color}
             invites={invited}
+            showTour={done}
           />
         </aside>
       </main>

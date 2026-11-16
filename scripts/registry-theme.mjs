@@ -47,6 +47,15 @@ export const themeAnimations = {
       },
     },
   },
+  "otp-caret": {
+    value: "otp-caret-blink 1s steps(2, jump-none) infinite",
+    keyframes: {
+      "otp-caret-blink": {
+        from: { opacity: "1" },
+        to: { opacity: "0" },
+      },
+    },
+  },
   skeleton: {
     value: "skeleton-sweep 1.6s linear infinite",
     keyframes: {
@@ -62,15 +71,6 @@ export const themeAnimations = {
       "progress-sweep": {
         from: { transform: "translateX(-100%)" },
         to: { transform: "translateX(300%)" },
-      },
-    },
-  },
-  "agent-status": {
-    value: "agent-status-pulse 1.1s cubic-bezier(0.77, 0, 0.175, 1) infinite",
-    keyframes: {
-      "agent-status-pulse": {
-        "0%, 100%": { opacity: "0.35", transform: "translateY(0px)" },
-        "50%": { opacity: "1", transform: "translateY(-2px)" },
       },
     },
   },
@@ -118,6 +118,18 @@ export const themeAnimations = {
           transform:
             "translate(var(--sheet-stack-x, 0px), var(--sheet-stack-y, 0px)) scale(var(--sheet-stack-scale, 0.94))",
         },
+      },
+    },
+  },
+  marquee: {
+    keyframes: {
+      "marquee-scroll": {
+        from: { transform: "translateX(0)" },
+        to: { transform: "translateX(var(--marquee-translate, -100%))" },
+      },
+      "marquee-scroll-y": {
+        from: { transform: "translateY(0)" },
+        to: { transform: "translateY(var(--marquee-translate, -100%))" },
       },
     },
   },

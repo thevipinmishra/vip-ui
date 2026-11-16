@@ -1,4 +1,4 @@
-import {
+﻿import {
   ArrowSquareOutIcon,
   CheckCircleIcon,
   CopyIcon,
@@ -16,6 +16,7 @@ import type { ReactNode } from "react";
 import { buttonStyles } from "@/components/ui/button-styles";
 import { Kbd, KbdGroup } from "@/components/ui/kbd-code";
 import { cn } from "@/lib/utils";
+import { lightboxPhotos } from "./lightbox-art";
 
 const surface =
   "rounded-xl bg-popover text-popover-foreground shadow-(--shadow-float) ring-1 ring-border/70";
@@ -247,6 +248,62 @@ export function ToastPreview() {
         <XIcon size={13} className="ms-auto shrink-0 text-muted-foreground" />
       </div>
     </Screen>
+  );
+}
+
+export function LightboxPreview() {
+  return (
+    <div className="relative h-44 w-80 overflow-clip rounded-xl bg-foreground ring-1 ring-border/70 dark:bg-background">
+      <span
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url("${lightboxPhotos[0].src}")` }}
+      />
+      <span className="absolute inset-0 bg-gradient-to-b from-foreground/60 via-transparent to-foreground/30 dark:from-background/60 dark:to-background/30" />
+      <span className="absolute inset-s-4 top-3 text-[11px] tabular-nums text-background dark:text-foreground">
+        2 of 4
+      </span>
+      <span className="absolute inset-e-4 top-3 grid size-7 place-items-center rounded-md bg-background/15 text-background dark:bg-foreground/15 dark:text-foreground">
+        <XIcon size={13} />
+      </span>
+    </div>
+  );
+}
+
+export function TourPreview() {
+  return (
+    <div className="relative h-44 w-80 overflow-clip rounded-xl bg-card ring-1 ring-border/70">
+      <div className="grid gap-2 p-4">
+        <span className="h-2 w-24 rounded-full bg-muted" />
+        <span className="h-2 w-40 rounded-full bg-muted" />
+        <span className="h-2 w-28 rounded-full bg-muted" />
+        <span className="h-2 w-36 rounded-full bg-muted" />
+      </div>
+      <span className="absolute inset-0 bg-foreground/35" />
+      <span className="absolute inset-s-5 top-14 flex h-8 w-30 items-center gap-1.5 rounded-md border border-border bg-card px-2.5 shadow-(--shadow-float)">
+        <FolderPlusIcon size={13} className="text-muted-foreground" />
+        <span className="text-xs font-medium">New project</span>
+      </span>
+      <span className="absolute inset-s-5 top-14 h-8 w-30 rounded-md ring-2 ring-ring" />
+      <div
+        className={cn(surface, "absolute inset-x-5 bottom-2 grid gap-1 p-2.5")}
+      >
+        <span className="flex items-center justify-between gap-3">
+          <span className="text-xs font-semibold">Start a project</span>
+          <span className="text-[10px] tabular-nums text-muted-foreground">
+            2 of 3
+          </span>
+        </span>
+        <span className="text-[10px] leading-4 text-muted-foreground">
+          Create the project and invite the team.
+        </span>
+        <span className="flex items-center justify-end gap-2">
+          <span className="text-[10px] text-muted-foreground">Skip tour</span>
+          <span className="rounded-sm bg-primary px-2 py-0.5 text-[10px] font-medium text-primary-foreground">
+            Next
+          </span>
+        </span>
+      </div>
+    </div>
   );
 }
 

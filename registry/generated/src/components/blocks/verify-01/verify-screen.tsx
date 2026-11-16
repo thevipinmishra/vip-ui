@@ -14,6 +14,12 @@ import { Checkbox } from "../../vip-ui/checkbox";
 import { Form } from "../../vip-ui/form";
 import { LayoutMorph } from "../../vip-ui/layout-morph";
 import { Link } from "../../vip-ui/link";
+import {
+  OtpInput,
+  OtpInputError,
+  OtpInputLabel,
+  OtpInputSlots,
+} from "../../vip-ui/otp-input";
 import { Spinner } from "../../vip-ui/spinner";
 import {
   TextField,
@@ -24,7 +30,6 @@ import {
 } from "../../vip-ui/text-field";
 import { TextSwap } from "../../vip-ui/text-swap";
 import { showToast } from "../../vip-ui/toast";
-import { CodeInput } from "./code-input";
 
 type View = "code" | "recovery" | "done";
 
@@ -189,18 +194,22 @@ export function VerifyScreen() {
                   }}
                 >
                   {view === "code" ? (
-                    <CodeInput
+                    <OtpInput
                       ref={codeRef}
-                      label="6-digit code"
+                      name="code"
                       value={code}
-                      error={error}
+                      isInvalid={Boolean(error)}
                       isReadOnly={pending}
                       onChange={(value) => {
                         setCode(value);
                         setError("");
                       }}
                       onComplete={verify}
-                    />
+                    >
+                      <OtpInputLabel>6-digit code</OtpInputLabel>
+                      <OtpInputSlots />
+                      <OtpInputError>{error}</OtpInputError>
+                    </OtpInput>
                   ) : (
                     <TextField
                       ref={recoveryRef}

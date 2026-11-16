@@ -57,6 +57,7 @@ export interface AttachmentProps
     | "onAnimationIteration"
   > {
   name: string;
+  size?: "sm" | "md";
   fileSize?: number;
   previewUrl?: string;
   status?: AttachmentStatus;
@@ -81,6 +82,7 @@ function formatSize(bytes: number) {
 
 export function Attachment({
   name,
+  size = "md",
   fileSize,
   previewUrl,
   status = "ready",
@@ -106,6 +108,7 @@ export function Attachment({
               )
             ? FileCodeIcon
             : FileTextIcon;
+  const small = size === "sm";
   const percent =
     progress === undefined
       ? undefined
@@ -126,6 +129,7 @@ export function Attachment({
       {...props}
       data-slot="attachment"
       data-status={status}
+      data-size={size}
       inert={!isPresent}
       aria-hidden={!isPresent || undefined}
       layout={reduceMotion ? false : "position"}
@@ -138,7 +142,10 @@ export function Attachment({
         layout: springLayout,
       })}
       className={cn(
-        "flex min-w-0 items-center gap-3 rounded-lg border border-border bg-card p-2 text-sm shadow-[var(--shadow-card)] transition-[border-color] duration-200 ease-out-quint",
+        "flex min-w-0 items-center rounded-lg border border-border bg-card text-sm transition-[border-color] duration-200 ease-out-quint",
+        small
+          ? "w-fit max-w-[min(13rem,100%)] gap-2.5 p-1.5 pe-1"
+          : "gap-3 p-2 shadow-[var(--shadow-card)]",
         status === "error" && "border-destructive/60",
         className,
       )}
@@ -146,27 +153,36 @@ export function Attachment({
       <span
         aria-hidden="true"
         data-slot="attachment-preview"
-        className="flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-md bg-muted text-muted-foreground"
+        className={cn(
+          "flex shrink-0 items-center justify-center overflow-hidden rounded-md bg-muted text-muted-foreground",
+          small ? "size-9" : "size-11",
+        )}
       >
         {previewUrl ? (
           // biome-ignore lint/performance/noImgElement: Files can be object URLs in any React app.
           <img src={previewUrl} alt="" className="size-full object-cover" />
         ) : (
-          <FileIcon size={20} aria-hidden="true" />
+          <FileIcon size={small ? 18 : 20} aria-hidden="true" />
         )}
       </span>
       <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-3">
         <div className="min-w-[min(8rem,100%)] flex-1">
           <p
             data-slot="attachment-name"
-            className="font-medium text-foreground [overflow-wrap:anywhere]"
+            className={cn(
+              "font-medium text-foreground",
+              small ? "truncate text-xs leading-4" : "[overflow-wrap:anywhere]",
+            )}
           >
             {name}
           </p>
           <p
             data-slot="attachment-details"
             className={cn(
-              "text-xs leading-5 text-muted-foreground [overflow-wrap:anywhere]",
+              "text-muted-foreground",
+              small
+                ? "truncate text-[11px] leading-4"
+                : "text-xs leading-5 [overflow-wrap:anywhere]",
               status === "error" && "text-destructive",
             )}
           >
@@ -199,12 +215,22 @@ export function Attachment({
               aria-label={`${name} upload`}
               value={progress ?? 0}
               isIndeterminate={progress === undefined}
-              className="mt-2 gap-0 transition-opacity duration-200 ease-out-quint starting:opacity-0 *:not-data-[slot=progress-bar-track]:hidden [&_[data-slot=progress-bar-track]]:h-1.5"
+              className={cn(
+                "gap-0 transition-opacity duration-200 ease-out-quint starting:opacity-0 *:not-data-[slot=progress-bar-track]:hidden",
+                small
+                  ? "mt-1 [&_[data-slot=progress-bar-track]]:h-1"
+                  : "mt-2 [&_[data-slot=progress-bar-track]]:h-1.5",
+              )}
             />
           )}
         </div>
         {status === "error" && onRetry && (
-          <Button type="button" variant="ghost" size="sm" onPress={onRetry}>
+          <Button
+            type="button"
+            variant="ghost"
+            size={small ? "xs" : "sm"}
+            onPress={onRetry}
+          >
             Retry
           </Button>
         )}
@@ -213,7 +239,7 @@ export function Attachment({
         <Button
           type="button"
           variant="ghost"
-          size="sm"
+          size={small ? "xs" : "sm"}
           iconOnly
           aria-label={`Remove ${name}`}
           onPress={onRemove}

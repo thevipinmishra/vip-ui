@@ -8,6 +8,7 @@ import { FileTrigger } from "@/components/ui/file-trigger";
 import {
   PromptInput,
   PromptInputFooter,
+  PromptInputHeader,
   PromptInputSubmit,
   PromptInputTextArea,
 } from "@/components/ui/prompt-input";
@@ -22,6 +23,12 @@ interface Item {
 export function PromptInputAttachmentsDemo() {
   const [items, setItems] = useState<Item[]>([
     { id: "brief", name: "Q3-brief.pdf", size: 284672, status: "complete" },
+    {
+      id: "revenue",
+      name: "revenue-by-region.csv",
+      size: 41984,
+      status: "complete",
+    },
   ]);
 
   const addFiles = (files: File[]) => {
@@ -51,21 +58,24 @@ export function PromptInputAttachmentsDemo() {
       className="max-w-md"
     >
       {items.length > 0 && (
-        <AttachmentList className="px-3 pt-3">
-          {items.map((item) => (
-            <Attachment
-              key={item.id}
-              name={item.name}
-              fileSize={item.size}
-              status={item.status}
-              onRemove={() =>
-                setItems((current) =>
-                  current.filter((entry) => entry.id !== item.id),
-                )
-              }
-            />
-          ))}
-        </AttachmentList>
+        <PromptInputHeader>
+          <AttachmentList className="flex flex-wrap">
+            {items.map((item) => (
+              <Attachment
+                key={item.id}
+                size="sm"
+                name={item.name}
+                fileSize={item.size}
+                status={item.status}
+                onRemove={() =>
+                  setItems((current) =>
+                    current.filter((entry) => entry.id !== item.id),
+                  )
+                }
+              />
+            ))}
+          </AttachmentList>
+        </PromptInputHeader>
       )}
       <PromptInputTextArea placeholder="Ask about these files" />
       <PromptInputFooter>
