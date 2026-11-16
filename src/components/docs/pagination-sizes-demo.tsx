@@ -6,6 +6,7 @@ import {
   PaginationItem,
   PaginationLink,
   PaginationList,
+  PaginationPages,
 } from "@/components/ui/pagination";
 import type { Size } from "@/components/ui/size";
 
@@ -21,28 +22,21 @@ export function PaginationSizesDemo() {
 
 function ResultsPagination({ size }: { size?: Size }) {
   return (
-    <Pagination size={size} aria-label="Results">
+    <Pagination
+      size={size}
+      aria-label="Results"
+      count={30}
+      page={2}
+      pageSize={10}
+      getPageUrl={() => "#preview"}
+    >
       <PaginationList className="flex-nowrap">
         <PaginationItem>
           <PaginationLink href="#preview" aria-label="Previous page">
             <CaretLeftIcon aria-hidden="true" />
           </PaginationLink>
         </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#preview" isCurrent aria-label="Page 1">
-            1
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#preview" aria-label="Page 2">
-            2
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#preview" aria-label="Page 3">
-            3
-          </PaginationLink>
-        </PaginationItem>
+        <PaginationPages />
         <PaginationItem>
           <PaginationLink href="#preview" aria-label="Next page">
             <CaretRightIcon aria-hidden="true" />

@@ -16,7 +16,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  CodeBlock,
+  CodeBlockActions,
+  CodeBlockBody,
+  CodeBlockHeader,
+  CodeBlockTitle,
+} from "@/components/ui/code-block";
 import { CopyButton } from "@/components/ui/copy-button";
+import { Link } from "@/components/ui/link";
 import { ListBox, ListBoxItem } from "@/components/ui/list-box";
 import {
   Response,
@@ -26,7 +34,6 @@ import {
 } from "@/components/ui/response";
 import { SearchField } from "@/components/ui/search-field";
 import { Skeleton } from "@/components/ui/skeleton";
-import { SourceLink } from "@/components/ui/source-link";
 import { TextScramble } from "@/components/ui/text-scramble";
 import {
   answerFor,
@@ -266,23 +273,18 @@ export function AiSearch() {
                         );
                       })}
                       {result.code && (
-                        <div className="min-w-0 overflow-hidden rounded-lg border border-border/70 bg-muted/60">
-                          <div className="flex items-center justify-between gap-2 border-b border-border/60 px-3 py-1.5">
-                            <span className="text-xs font-medium text-muted-foreground">
-                              Shell
-                            </span>
-                            <CopyButton
-                              value={result.code}
-                              iconOnly
-                              variant="ghost"
-                              size="xs"
-                              aria-label="Copy code"
-                            />
-                          </div>
-                          <pre className="overflow-x-auto p-3 font-mono text-xs leading-5 whitespace-pre">
-                            {result.code}
-                          </pre>
-                        </div>
+                        <CodeBlock
+                          code={result.code}
+                          language="bash"
+                          lineNumbers={false}
+                          className="rounded-lg"
+                        >
+                          <CodeBlockHeader>
+                            <CodeBlockTitle>Shell</CodeBlockTitle>
+                            <CodeBlockActions />
+                          </CodeBlockHeader>
+                          <CodeBlockBody />
+                        </CodeBlock>
                       )}
                     </ResponseContent>
                     <ResponseActions>
@@ -300,17 +302,18 @@ export function AiSearch() {
                       <p className="text-xs font-medium text-muted-foreground">
                         {result.sources.length} sources
                       </p>
-                      {result.sources.map((source, index) => (
-                        <SourceLink
-                          key={source.href}
-                          href={source.href}
-                          label={source.label}
-                          source={source.source}
-                          description={source.description}
-                          index={index + 1}
-                          className="gap-2.5 p-2.5"
-                        />
-                      ))}
+                      <ol className="grid list-decimal gap-1 ps-5 text-sm marker:text-xs marker:text-muted-foreground">
+                        {result.sources.map((source) => (
+                          <li key={source.href} className="ps-1">
+                            <Link href={source.href} className="font-normal">
+                              {source.label}
+                            </Link>
+                            <span className="ms-2 text-xs text-muted-foreground">
+                              {source.source}
+                            </span>
+                          </li>
+                        ))}
+                      </ol>
                     </ResponseFooter>
                   </Response>
                 </CardContent>

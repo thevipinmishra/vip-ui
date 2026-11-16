@@ -14,10 +14,8 @@ import {
   Response,
   ResponseActions,
   ResponseContent,
-  ResponseFooter,
   ResponseNotice,
 } from "@/components/ui/response";
-import { SourceLink } from "@/components/ui/source-link";
 
 type Phase = "stopped" | "thinking" | "streaming" | "complete" | "error";
 
@@ -25,7 +23,6 @@ interface Turn {
   prompt: string;
   thought: string;
   answer: string;
-  sources: Array<{ label: string; href: string }>;
   failAt?: number;
 }
 
@@ -43,10 +40,6 @@ const TURNS: Turn[] = [
       "After that it scrolls, so the footer and the Send button stay in view.",
       "Set minRows to start with a taller box.",
     ].join(" "),
-    sources: [
-      { label: "Prompt input", href: "/components/prompt-input" },
-      { label: "Text area", href: "/components/text-area" },
-    ],
   },
   {
     prompt: "Can people attach files?",
@@ -58,10 +51,6 @@ const TURNS: Turn[] = [
       "Yes. Set onFilesDropped to accept files dropped on the composer.",
       "Put a File trigger button in PromptInputFooter, and show each file with Attachment.",
     ].join(" "),
-    sources: [
-      { label: "Attachment", href: "/components/attachment" },
-      { label: "File trigger", href: "/components/file-trigger" },
-    ],
     failAt: 9,
   },
 ];
@@ -173,30 +162,17 @@ export function PromptInputTranscriptDemo() {
           <ResponseContent>{answer}</ResponseContent>
           <ResponseNotice />
           {phase === "complete" && (
-            <>
-              <ResponseActions>
-                <CopyButton value={current.answer} variant="ghost" size="sm" />
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  onPress={() => start(turn, prompt, true)}
-                >
-                  Regenerate
-                </Button>
-              </ResponseActions>
-              <ResponseFooter className="grid gap-2">
-                {current.sources.map((source, index) => (
-                  <SourceLink
-                    key={source.href}
-                    href={source.href}
-                    label={source.label}
-                    source="vip/ui docs"
-                    index={index + 1}
-                  />
-                ))}
-              </ResponseFooter>
-            </>
+            <ResponseActions>
+              <CopyButton value={current.answer} variant="ghost" size="sm" />
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onPress={() => start(turn, prompt, true)}
+              >
+                Regenerate
+              </Button>
+            </ResponseActions>
           )}
           {phase === "error" && (
             <ResponseActions>

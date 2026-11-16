@@ -7,16 +7,23 @@ import {
   SparkleIcon,
 } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
-import { AgentStatus } from "../../vip-ui/agent-status";
+import { AgentStep, AgentSteps } from "../../vip-ui/agent-steps";
 import { Attachment, AttachmentList } from "../../vip-ui/attachment";
 import { Badge } from "../../vip-ui/badge";
 import { Button } from "../../vip-ui/button";
+import {
+  Conversation,
+  ConversationContent,
+  useConversation,
+} from "../../vip-ui/conversation";
 import { CopyButton } from "../../vip-ui/copy-button";
 import { FileTrigger } from "../../vip-ui/file-trigger";
+import { Link } from "../../vip-ui/link";
 import { Message } from "../../vip-ui/message";
 import {
   PromptInput,
   PromptInputFooter,
+  PromptInputHeader,
   PromptInputSubmit,
   PromptInputTextArea,
 } from "../../vip-ui/prompt-input";
@@ -39,7 +46,6 @@ import {
   SelectTrigger,
 } from "../../vip-ui/select";
 import { Skeleton } from "../../vip-ui/skeleton";
-import { SourceLink } from "../../vip-ui/source-link";
 import { showToast } from "../../vip-ui/toast";
 import {
   ToolCall,
@@ -75,24 +81,44 @@ const initialFiles: FileItem[] = [
 ];
 
 export function AssistantChat() {
+  return (
+    <div className="flex h-svh min-h-136 flex-col bg-background text-foreground">
+      <header className="shrink-0 border-b border-border/70">
+        <div className="mx-auto flex w-full max-w-3xl items-center gap-3 px-4 py-3 sm:px-6">
+          <span
+            aria-hidden="true"
+            className="grid size-9 shrink-0 place-items-center rounded-xl bg-primary text-primary-foreground shadow-(--shadow-card)"
+          >
+            <SparkleIcon size={18} weight="fill" />
+          </span>
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-2">
+              <h1 className="truncate text-base font-semibold">Ask Fernway</h1>
+              <Badge variant="outline" className="min-h-5 py-0 text-[10px]">
+                Beta
+              </Badge>
+            </div>
+            <p className="truncate text-xs text-muted-foreground">
+              Answers with sources
+            </p>
+          </div>
+        </div>
+      </header>
+      <Conversation className="min-h-0 flex-1">
+        <AssistantChatSession />
+      </Conversation>
+    </div>
+  );
+}
+
+function AssistantChatSession() {
+  const { scrollToLatest } = useConversation();
   const [turns, setTurns] = useState<ChatTurn[]>([initialTurn]);
   const [draft, setDraft] = useState("");
   const [model, setModel] = useState("fast");
   const [files, setFiles] = useState<FileItem[]>(initialFiles);
-  const scrollRef = useRef<HTMLDivElement>(null);
   const timer = useRef<number | null>(null);
-  const previousTurns = useRef(
-    turns.map((turn) => `${turn.id}:${turn.status}`).join("|"),
-  );
   const modelName = modelOptions.find((option) => option.id === model)?.name;
-
-  useEffect(() => {
-    const key = turns.map((turn) => `${turn.id}:${turn.status}`).join("|");
-    if (key === previousTurns.current) return;
-    previousTurns.current = key;
-    const element = scrollRef.current;
-    element?.scrollTo({ top: element.scrollHeight, behavior: "smooth" });
-  }, [turns]);
 
   useEffect(
     () => () => {
@@ -125,6 +151,7 @@ export function AssistantChat() {
     setTurns((current) => [...current, turn]);
     setDraft("");
     setFiles([]);
+    scrollToLatest();
     finish(id);
   }
 
@@ -191,238 +218,218 @@ export function AssistantChat() {
       : [];
 
   return (
-    <div className="flex h-svh min-h-136 flex-col bg-background text-foreground">
-      <header className="shrink-0 border-b border-border/70">
-        <div className="mx-auto flex w-full max-w-3xl items-center gap-3 px-4 py-3 sm:px-6">
-          <span
-            aria-hidden="true"
-            className="grid size-9 shrink-0 place-items-center rounded-xl bg-primary text-primary-foreground shadow-(--shadow-card)"
-          >
-            <SparkleIcon size={18} weight="fill" />
-          </span>
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2">
-              <h1 className="truncate text-base font-semibold">Ask Fernway</h1>
-              <Badge variant="outline" className="min-h-5 py-0 text-[10px]">
-                Beta
-              </Badge>
-            </div>
-            <p className="truncate text-xs text-muted-foreground">
-              Answers with sources
-            </p>
-          </div>
+    <>
+      <ConversationContent className="mx-auto grid w-full max-w-3xl gap-6 px-4 pt-6 pb-10 sm:px-6">
+        <h2 className="sr-only">Conversation</h2>
+        <div className="flex items-center gap-3 text-xs text-muted-foreground">
+          <span className="h-px flex-1 bg-border/70" />
+          <span>Today, Oct 30</span>
+          <span className="h-px flex-1 bg-border/70" />
         </div>
-      </header>
 
-      <div
-        ref={scrollRef}
-        className="min-h-0 flex-1 overflow-y-auto overscroll-contain"
-      >
-        <div className="mx-auto grid w-full max-w-3xl gap-6 px-4 pt-6 pb-10 sm:px-6">
-          <h2 className="sr-only">Conversation</h2>
-          <div className="flex items-center gap-3 text-xs text-muted-foreground">
-            <span className="h-px flex-1 bg-border/70" />
-            <span>Today, Oct 30</span>
-            <span className="h-px flex-1 bg-border/70" />
-          </div>
-
-          {turns.map((turn) => (
-            <section
-              key={turn.id}
-              aria-label={`Conversation about ${turn.prompt}`}
-              className="grid gap-4"
+        {turns.map((turn) => (
+          <section
+            key={turn.id}
+            aria-label={`Conversation about ${turn.prompt}`}
+            className="grid gap-4"
+          >
+            <Message
+              sender="You"
+              side="outgoing"
+              timestamp={turn.time}
+              status={turn.status === "pending" ? "Sending" : "Sent"}
+              actions={
+                <CopyButton
+                  value={turn.prompt}
+                  variant="ghost"
+                  iconOnly
+                  size="xs"
+                  aria-label="Copy your message"
+                />
+              }
             >
-              <Message
-                sender="You"
-                side="outgoing"
-                timestamp={turn.time}
-                status={turn.status === "pending" ? "Sending" : "Sent"}
-                actions={
-                  <CopyButton
-                    value={turn.prompt}
-                    variant="ghost"
-                    iconOnly
-                    size="xs"
-                    aria-label="Copy your message"
-                  />
-                }
-              >
-                {turn.prompt}
-                {turn.attachments.length > 0 && (
-                  <span className="mt-2 flex flex-wrap gap-1.5">
-                    {turn.attachments.map((name) => (
-                      <span
-                        key={name}
-                        className="inline-flex max-w-full items-center gap-1.5 rounded-md bg-background/60 px-2 py-1 text-xs font-medium"
-                      >
-                        <PaperclipIcon size={12} aria-hidden="true" />
-                        <span className="truncate">{name}</span>
-                      </span>
-                    ))}
-                  </span>
-                )}
-              </Message>
-
-              <div className="flex items-start gap-3">
-                <span
-                  aria-hidden="true"
-                  className="grid size-8 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground shadow-(--shadow-card)"
-                >
-                  <SparkleIcon size={15} weight="fill" />
+              {turn.prompt}
+              {turn.attachments.length > 0 && (
+                <span className="mt-2 flex flex-wrap gap-1.5">
+                  {turn.attachments.map((name) => (
+                    <span
+                      key={name}
+                      className="inline-flex max-w-full items-center gap-1.5 rounded-md bg-background/60 px-2 py-1 text-xs font-medium"
+                    >
+                      <PaperclipIcon size={12} aria-hidden="true" />
+                      <span className="truncate">{name}</span>
+                    </span>
+                  ))}
                 </span>
-                <div className="grid min-w-0 flex-1 gap-3">
-                  <p className="text-xs text-muted-foreground">
-                    <span className="font-medium text-foreground">Fernway</span>
-                    {turn.status === "pending"
-                      ? " · Working"
-                      : turn.status === "stopped"
-                        ? " · Stopped"
-                        : ` · Answered in ${turn.duration}s`}
-                    {modelName ? ` · ${modelName}` : ""}
-                  </p>
+              )}
+            </Message>
 
-                  {turn.status === "pending" ? (
-                    <>
-                      <AgentStatus
-                        state="working"
-                        label="Checking product data"
-                        detail="Reading activation events from the last 7 days"
+            <div className="flex items-start gap-3">
+              <span
+                aria-hidden="true"
+                className="grid size-8 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground shadow-(--shadow-card)"
+              >
+                <SparkleIcon size={15} weight="fill" />
+              </span>
+              <div className="grid min-w-0 flex-1 gap-3">
+                <p className="text-xs text-muted-foreground">
+                  <span className="font-medium text-foreground">Fernway</span>
+                  {turn.status === "pending"
+                    ? " · Working"
+                    : turn.status === "stopped"
+                      ? " · Stopped"
+                      : ` · Answered in ${turn.duration}s`}
+                  {modelName ? ` · ${modelName}` : ""}
+                </p>
+
+                {turn.status === "pending" ? (
+                  <>
+                    <AgentSteps status="running" label="Checking product data">
+                      <AgentStep
+                        title="Read activation events"
+                        description="Last 7 days, 4 segments"
                       />
-                      <div className="grid gap-2 py-1" aria-hidden="true">
-                        <Skeleton className="h-3 w-11/12" />
-                        <Skeleton className="h-3 w-4/5" />
-                        <Skeleton className="h-3 w-2/3" />
-                      </div>
-                    </>
-                  ) : turn.status === "stopped" ? (
-                    <Response status="stopped" className="w-full">
-                      <ResponseContent>
-                        Stopped before Fernway finished the answer.
+                      <AgentStep
+                        status="running"
+                        title="Comparing with the week before"
+                      />
+                      <AgentStep status="pending" title="Write the answer" />
+                    </AgentSteps>
+                    <div className="grid gap-2 py-1" aria-hidden="true">
+                      <Skeleton className="h-3 w-11/12" />
+                      <Skeleton className="h-3 w-4/5" />
+                      <Skeleton className="h-3 w-2/3" />
+                    </div>
+                  </>
+                ) : turn.status === "stopped" ? (
+                  <Response status="stopped" className="w-full">
+                    <ResponseContent>
+                      Stopped before Fernway finished the answer.
+                    </ResponseContent>
+                    <ResponseNotice />
+                    <ResponseActions>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onPress={() => regenerate(turn.id)}
+                      >
+                        <ArrowClockwiseIcon size={16} aria-hidden="true" />
+                        Try again
+                      </Button>
+                    </ResponseActions>
+                  </Response>
+                ) : (
+                  <>
+                    <Reasoning
+                      status="complete"
+                      duration={turn.duration}
+                      className="w-full"
+                    >
+                      <ReasoningTrigger />
+                      <ReasoningPanel>{turn.reasoning}</ReasoningPanel>
+                    </Reasoning>
+
+                    <ToolCall className="w-full">
+                      <ToolCallTrigger
+                        name={turn.tool.name}
+                        status="complete"
+                        summary={turn.tool.summary}
+                      />
+                      <ToolCallPanel>
+                        <ToolCallSection label="Input">
+                          <ToolCallCode>{turn.tool.input}</ToolCallCode>
+                        </ToolCallSection>
+                        <ToolCallSection label="Output">
+                          <ToolCallCode>{turn.tool.output}</ToolCallCode>
+                        </ToolCallSection>
+                      </ToolCallPanel>
+                    </ToolCall>
+
+                    <Response status="complete" className="w-full">
+                      <ResponseContent className="grid gap-3">
+                        {turn.answer.map((block) => {
+                          const key =
+                            block.type === "paragraph"
+                              ? block.text
+                              : block.items.join("|");
+                          return block.type === "paragraph" ? (
+                            <p key={key}>{block.text}</p>
+                          ) : (
+                            <ul
+                              key={key}
+                              className="grid list-disc gap-1.5 ps-5 marker:text-muted-foreground"
+                            >
+                              {block.items.map((item) => (
+                                <li key={item}>{item}</li>
+                              ))}
+                            </ul>
+                          );
+                        })}
                       </ResponseContent>
-                      <ResponseNotice />
                       <ResponseActions>
+                        <CopyButton
+                          value={turnText(turn)}
+                          variant="ghost"
+                          size="sm"
+                        />
                         <Button
                           variant="ghost"
                           size="sm"
                           onPress={() => regenerate(turn.id)}
                         >
                           <ArrowClockwiseIcon size={16} aria-hidden="true" />
-                          Try again
+                          Regenerate
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onPress={() => void share(turn)}
+                        >
+                          <ShareNetworkIcon size={16} aria-hidden="true" />
+                          Share
                         </Button>
                       </ResponseActions>
-                    </Response>
-                  ) : (
-                    <>
-                      <Reasoning
-                        status="complete"
-                        duration={turn.duration}
-                        className="w-full"
-                      >
-                        <ReasoningTrigger />
-                        <ReasoningPanel>{turn.reasoning}</ReasoningPanel>
-                      </Reasoning>
-
-                      <ToolCall className="w-full">
-                        <ToolCallTrigger
-                          name={turn.tool.name}
-                          status="complete"
-                          summary={turn.tool.summary}
-                        />
-                        <ToolCallPanel>
-                          <ToolCallSection label="Input">
-                            <ToolCallCode>{turn.tool.input}</ToolCallCode>
-                          </ToolCallSection>
-                          <ToolCallSection label="Output">
-                            <ToolCallCode>{turn.tool.output}</ToolCallCode>
-                          </ToolCallSection>
-                        </ToolCallPanel>
-                      </ToolCall>
-
-                      <Response status="complete" className="w-full">
-                        <ResponseContent className="grid gap-3">
-                          {turn.answer.map((block) => {
-                            const key =
-                              block.type === "paragraph"
-                                ? block.text
-                                : block.items.join("|");
-                            return block.type === "paragraph" ? (
-                              <p key={key}>{block.text}</p>
-                            ) : (
-                              <ul
-                                key={key}
-                                className="grid list-disc gap-1.5 ps-5 marker:text-muted-foreground"
-                              >
-                                {block.items.map((item) => (
-                                  <li key={item}>{item}</li>
-                                ))}
-                              </ul>
-                            );
-                          })}
-                        </ResponseContent>
-                        <ResponseActions>
-                          <CopyButton
-                            value={turnText(turn)}
-                            variant="ghost"
-                            size="sm"
-                          />
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onPress={() => regenerate(turn.id)}
-                          >
-                            <ArrowClockwiseIcon size={16} aria-hidden="true" />
-                            Regenerate
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onPress={() => void share(turn)}
-                          >
-                            <ShareNetworkIcon size={16} aria-hidden="true" />
-                            Share
-                          </Button>
-                        </ResponseActions>
-                        <ResponseFooter className="grid gap-2 pt-1">
-                          <p className="text-xs font-medium text-muted-foreground">
-                            Sources
-                          </p>
-                          {turn.sources.map((source, index) => (
-                            <SourceLink
-                              key={source.href}
-                              href={source.href}
-                              label={source.label}
-                              source={source.source}
-                              description={source.description}
-                              index={index + 1}
-                              className="gap-2.5 p-2.5"
-                            />
+                      <ResponseFooter className="grid gap-2 pt-1">
+                        <p className="text-xs font-medium text-muted-foreground">
+                          Sources
+                        </p>
+                        <ol className="grid list-decimal gap-1 ps-5 text-sm marker:text-xs marker:text-muted-foreground">
+                          {turn.sources.map((source) => (
+                            <li key={source.href} className="ps-1">
+                              <Link href={source.href} className="font-normal">
+                                {source.label}
+                              </Link>
+                              <span className="ms-2 text-xs text-muted-foreground">
+                                {source.source}
+                              </span>
+                            </li>
                           ))}
-                        </ResponseFooter>
-                      </Response>
-                    </>
-                  )}
-                </div>
+                        </ol>
+                      </ResponseFooter>
+                    </Response>
+                  </>
+                )}
               </div>
-            </section>
-          ))}
-
-          {lastTurn?.status === "complete" && !pending && (
-            <div className="flex flex-wrap items-center gap-2 ps-11">
-              <span className="text-xs text-muted-foreground">Follow up</span>
-              {suggestions.map((suggestion) => (
-                <Button
-                  key={suggestion}
-                  variant="outline"
-                  size="sm"
-                  onPress={() => setDraft(suggestion)}
-                >
-                  {suggestion}
-                </Button>
-              ))}
             </div>
-          )}
-        </div>
-      </div>
+          </section>
+        ))}
+
+        {lastTurn?.status === "complete" && !pending && (
+          <div className="flex flex-wrap items-center gap-2 ps-11">
+            <span className="text-xs text-muted-foreground">Follow up</span>
+            {suggestions.map((suggestion) => (
+              <Button
+                key={suggestion}
+                variant="outline"
+                size="sm"
+                onPress={() => setDraft(suggestion)}
+              >
+                {suggestion}
+              </Button>
+            ))}
+          </div>
+        )}
+      </ConversationContent>
 
       <footer className="relative shrink-0 bg-background before:pointer-events-none before:absolute before:inset-x-0 before:bottom-full before:h-8 before:bg-gradient-to-t before:from-background before:to-transparent">
         <div className="mx-auto w-full max-w-3xl px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:px-6">
@@ -436,22 +443,24 @@ export function AssistantChat() {
             onFilesDropped={addFiles}
           >
             {files.length > 0 && (
-              <AttachmentList className="flex flex-wrap px-3 pt-3">
-                {files.map((file) => (
-                  <Attachment
-                    key={file.id}
-                    name={file.name}
-                    fileSize={file.size}
-                    status={file.status}
-                    className="w-full gap-2.5 p-1.5 pe-1 sm:w-72 [&_[data-slot=attachment-details]]:text-[11px] [&_[data-slot=attachment-name]]:truncate [&_[data-slot=attachment-name]]:text-xs [&_[data-slot=attachment-preview]]:size-9"
-                    onRemove={() =>
-                      setFiles((current) =>
-                        current.filter((item) => item.id !== file.id),
-                      )
-                    }
-                  />
-                ))}
-              </AttachmentList>
+              <PromptInputHeader>
+                <AttachmentList className="flex flex-wrap">
+                  {files.map((file) => (
+                    <Attachment
+                      key={file.id}
+                      size="sm"
+                      name={file.name}
+                      fileSize={file.size}
+                      status={file.status}
+                      onRemove={() =>
+                        setFiles((current) =>
+                          current.filter((item) => item.id !== file.id),
+                        )
+                      }
+                    />
+                  ))}
+                </AttachmentList>
+              </PromptInputHeader>
             )}
             <PromptInputTextArea placeholder="Ask about activation, revenue, or a customer" />
             <PromptInputFooter>
@@ -502,6 +511,6 @@ export function AssistantChat() {
           </p>
         </div>
       </footer>
-    </div>
+    </>
   );
 }

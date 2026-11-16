@@ -71,6 +71,11 @@
           "description": "Accepts a password, with a button to show or hide it."
         },
         {
+          "slug": "otp-input",
+          "name": "OTP input",
+          "description": "Accepts a short code with one box for each character."
+        },
+        {
           "slug": "inline-edit",
           "name": "Inline edit",
           "description": "Edits text in place and keeps the draft when the save fails."
@@ -134,6 +139,11 @@
           "slug": "radio-group",
           "name": "Radio group",
           "description": "Selects one option from a short visible list."
+        },
+        {
+          "slug": "segmented-control",
+          "name": "Segmented control",
+          "description": "Selects one option from a compact set of segments."
         },
         {
           "slug": "rating-input",
@@ -207,6 +217,11 @@
           "description": "Accepts a date range that you type or select from a calendar popover."
         },
         {
+          "slug": "event-calendar",
+          "name": "Event calendar",
+          "description": "Shows events on a day or week time grid that you move and resize."
+        },
+        {
           "slug": "color-field",
           "name": "Color field",
           "description": "Accepts a hex color, or one color channel as a number."
@@ -248,9 +263,19 @@
           "description": "Shows a swipeable panel that slides in from the edge of the screen."
         },
         {
+          "slug": "lightbox",
+          "name": "Lightbox",
+          "description": "Shows images full screen, one at a time, from a thumbnail."
+        },
+        {
           "slug": "popover",
           "name": "Popover",
           "description": "Shows content in a panel anchored to its trigger."
+        },
+        {
+          "slug": "tour",
+          "name": "Tour",
+          "description": "Shows a short guide that points at parts of the page, one step at a time."
         },
         {
           "slug": "tooltip",
@@ -291,6 +316,22 @@
       ]
     },
     {
+      "title": "App shell",
+      "description": "The app navigation and the page frame it sits in.",
+      "items": [
+        {
+          "slug": "sidebar",
+          "name": "Sidebar",
+          "description": "Shows app navigation that collapses to an icon rail."
+        },
+        {
+          "slug": "resizable",
+          "name": "Resizable",
+          "description": "Splits an area into panels that you resize with a pointer or the keyboard."
+        }
+      ]
+    },
+    {
       "title": "Collections",
       "description": "Lists, trees, and tables of items.",
       "items": [
@@ -303,6 +344,11 @@
           "slug": "grid-list",
           "name": "Grid list",
           "description": "Shows a list of interactive rows that you can select and act on."
+        },
+        {
+          "slug": "carousel",
+          "name": "Carousel",
+          "description": "Shows a row of slides that you swipe or move with buttons."
         },
         {
           "slug": "tree",
@@ -407,6 +453,11 @@
           "description": "Shows a line between sections of content."
         },
         {
+          "slug": "scroll-area",
+          "name": "Scroll area",
+          "description": "Scrolls content in a frame with scrollbars that match the theme."
+        },
+        {
           "slug": "scroll-fade",
           "name": "Scroll fade",
           "description": "Fades the edges of a scroll area where more content continues."
@@ -440,32 +491,37 @@
           "slug": "kbd-code",
           "name": "Kbd & code",
           "description": "Shows keyboard keys and inline code in text."
+        },
+        {
+          "slug": "code-block",
+          "name": "Code block",
+          "description": "Shows a block of code with a header, copy, and line numbers."
         }
       ]
     },
     {
       "title": "AI",
-      "description": "Prompts, answers, agent steps, and sources.",
+      "description": "Conversations, prompts, answers, and agent steps.",
       "items": [
+        {
+          "slug": "conversation",
+          "name": "Conversation",
+          "description": "Shows a transcript that stays at the newest message while it streams."
+        },
         {
           "slug": "message",
           "name": "Message",
           "description": "Shows a message in a conversation."
         },
         {
-          "slug": "agent-status",
-          "name": "Agent status",
-          "description": "Shows the current step of an agent and its state."
+          "slug": "agent-steps",
+          "name": "Agent steps",
+          "description": "Shows the steps of an agent run and the status of each step."
         },
         {
           "slug": "tool-call",
           "name": "Tool call",
           "description": "Shows a tool call and its status, and expands to show the input and output."
-        },
-        {
-          "slug": "source-link",
-          "name": "Source link",
-          "description": "Links an answer to its source."
         },
         {
           "slug": "prompt-input",

@@ -207,6 +207,11 @@ const pageSources = {
         title: "Upload states",
         sourcePath: "attachment-upload-demo.tsx",
       },
+      {
+        title: "Compact",
+        description: 'Use `size="sm"` for attachments inside a prompt input.',
+        sourcePath: "attachment-compact-demo.tsx",
+      },
     ],
   },
   autocomplete: {
@@ -338,6 +343,62 @@ const pageSources = {
           "Wrap the content and footer in a `Form` so the footer button submits.",
         sourcePath: "card-demo.tsx",
         uses: ["form", "text-field"],
+      },
+    ],
+  },
+  carousel: {
+    usage: "carousel-demo.tsx",
+    examples: [
+      {
+        title: "Several slides",
+        description:
+          "Set a `basis-*` class on each slide to show more than one.",
+        sourcePath: "carousel-several-demo.tsx",
+      },
+      {
+        title: "Thumbnails",
+        sourcePath: "carousel-thumbnails-demo.tsx",
+      },
+      {
+        title: "Autoplay",
+        description:
+          'Pass the Embla `Autoplay` plugin in `plugins`, add a pause button, and set `aria-live="off"` on the viewport.',
+        sourcePath: "carousel-autoplay-demo.tsx",
+        uses: ["button"],
+      },
+      {
+        title: "Different widths",
+        sourcePath: "carousel-widths-demo.tsx",
+        uses: ["badge"],
+      },
+      {
+        title: "Right to left",
+        sourcePath: "carousel-rtl-demo.tsx",
+      },
+      {
+        title: "Vertical",
+        description:
+          'Set `axis` to `"y"` in `opts` and give the viewport a height.',
+        sourcePath: "carousel-vertical-demo.tsx",
+      },
+    ],
+  },
+  lightbox: {
+    usage: "lightbox-demo.tsx",
+    examples: [
+      {
+        title: "Captions",
+        sourcePath: "lightbox-captions-demo.tsx",
+      },
+      {
+        title: "Controlled index",
+        description:
+          "Bind `index` to keep a page gallery and the lightbox in step.",
+        sourcePath: "lightbox-controlled-demo.tsx",
+      },
+      {
+        title: "Single image",
+        sourcePath: "lightbox-single-demo.tsx",
       },
     ],
   },
@@ -536,6 +597,63 @@ const pageSources = {
       },
     ],
   },
+  conversation: {
+    usage: "conversation-demo.tsx",
+    examples: [
+      {
+        title: "Jump to latest",
+        description: "Scroll up while the answer streams to show the button.",
+        sourcePath: "conversation-jump-demo.tsx",
+        uses: ["message", "response"],
+      },
+      {
+        title: "Load older messages",
+        sourcePath: "conversation-load-older-demo.tsx",
+        uses: ["message", "response"],
+      },
+      {
+        title: "Empty",
+        sourcePath: "conversation-empty-demo.tsx",
+        uses: ["empty-state", "prompt-input", "message", "response"],
+      },
+      {
+        title: "With prompt input",
+        description: "Call `scrollToLatest` when the user sends a message.",
+        sourcePath: "conversation-prompt-demo.tsx",
+        uses: ["message", "response", "prompt-input"],
+      },
+    ],
+  },
+  "code-block": {
+    usage: "code-block-demo.tsx",
+    examples: [
+      {
+        title: "Highlighted lines",
+        sourcePath: "code-block-highlight-demo.tsx",
+      },
+      {
+        title: "Collapsed",
+        description: "Set `maxLines` to collapse long code.",
+        sourcePath: "code-block-collapsed-demo.tsx",
+      },
+      {
+        title: "Wrap",
+        sourcePath: "code-block-wrap-demo.tsx",
+      },
+      {
+        title: "Syntax colors",
+        description:
+          "Pass the output of your highlighter as the children of `CodeBlockBody`.",
+        sourcePath: "code-block-syntax-demo.tsx",
+      },
+      {
+        title: "Streaming",
+        description: "Set `isStreaming` while the code arrives.",
+        sourcePath: "code-block-streaming-demo.tsx",
+        uses: ["response", "button"],
+      },
+    ],
+  },
   "copy-button": {
     usage: "copy-button-demo.tsx",
     examples: [
@@ -628,6 +746,40 @@ const pageSources = {
       },
     ],
   },
+  "event-calendar": {
+    usage: "event-calendar-demo.tsx",
+    examples: [
+      {
+        title: "Day view",
+        sourcePath: "event-calendar-day-demo.tsx",
+      },
+      {
+        title: "Move and resize",
+        description: "Update `events` in `onEventChange`.",
+        sourcePath: "event-calendar-edit-demo.tsx",
+      },
+      {
+        title: "Keyboard",
+        description: "Press Alt with the arrow keys to move the focused event.",
+        sourcePath: "event-calendar-keyboard-demo.tsx",
+        uses: ["kbd-code"],
+      },
+      {
+        title: "Overlapping events",
+        sourcePath: "event-calendar-overlap-demo.tsx",
+      },
+      {
+        title: "Working hours",
+        description: "Set `dayStart` and `dayEnd` to show part of the day.",
+        sourcePath: "event-calendar-hours-demo.tsx",
+      },
+      {
+        title: "Custom event",
+        sourcePath: "event-calendar-custom-demo.tsx",
+        uses: ["avatar"],
+      },
+    ],
+  },
   "description-list": {
     usage: "description-list-demo.tsx",
     examples: [
@@ -689,6 +841,39 @@ const pageSources = {
         description: "Escape and outside clicks close the top sheet first.",
         sourcePath: "sheet-nested-demo.tsx",
         uses: ["text-field"],
+      },
+    ],
+  },
+  sidebar: {
+    usage: "sidebar-demo.tsx",
+    examples: [
+      {
+        title: "Collapsed rail",
+        description: "Set `defaultOpen` to `false` to start as a rail.",
+        sourcePath: "sidebar-rail-demo.tsx",
+      },
+      {
+        title: "Sections and badges",
+        sourcePath: "sidebar-sections-demo.tsx",
+        uses: ["badge"],
+      },
+      {
+        title: "Mobile sheet",
+        description:
+          "Below 48rem of container width, the sidebar opens in a sheet.",
+        sourcePath: "sidebar-mobile-demo.tsx",
+      },
+      {
+        title: "Footer card",
+        sourcePath: "sidebar-footer-demo.tsx",
+        uses: ["button", "progress-bar"],
+      },
+      {
+        title: "Keyboard shortcut",
+        description:
+          "Mod+B toggles the sidebar. Set `shortcut` to `false` to turn it off.",
+        sourcePath: "sidebar-shortcut-demo.tsx",
+        uses: ["kbd-code"],
       },
     ],
   },
@@ -879,13 +1064,26 @@ const pageSources = {
       },
     ],
   },
-  "agent-status": {
-    usage: "agent-status-demo.tsx",
+  "agent-steps": {
+    usage: "agent-steps-demo.tsx",
     examples: [
       {
-        title: "States",
-        description: "Screen readers announce each change.",
-        sourcePath: "agent-status-states-demo.tsx",
+        title: "Auto collapse",
+        description:
+          "Use `autoCollapse` to close the steps when the run ends and open them when a new run starts.",
+        sourcePath: "agent-steps-auto-collapse-demo.tsx",
+        uses: ["button"],
+      },
+      {
+        title: "Step content",
+        description:
+          "Children of `AgentStep` show below its title, for example sources or a `ToolCall`.",
+        sourcePath: "agent-steps-content-demo.tsx",
+        uses: ["badge", "tool-call"],
+      },
+      {
+        title: "Stopped and failed",
+        sourcePath: "agent-steps-states-demo.tsx",
       },
     ],
   },
@@ -894,7 +1092,8 @@ const pageSources = {
     examples: [
       {
         title: "Sides",
-        description: "A system message shows no sender or avatar.",
+        description:
+          "Only an incoming message shows the sender. Actions show on hover or focus.",
         sourcePath: "message-demo.tsx",
       },
     ],
@@ -987,8 +1186,14 @@ const pageSources = {
       {
         title: "Skipped pages",
         description:
-          'Use `PaginationEllipsis` for skipped pages; screen readers hear "More pages".',
+          'Set `count` and `pageSize`; `PaginationPages` adds the pages and the ellipses. Screen readers hear "More pages".',
         sourcePath: "pagination-ellipsis-demo.tsx",
+      },
+      {
+        title: "First and last pages",
+        description:
+          "Add `PaginationFirstTrigger` and `PaginationLastTrigger` to move to the ends.",
+        sourcePath: "pagination-context-demo.tsx",
       },
     ],
   },
@@ -1009,6 +1214,12 @@ const pageSources = {
           "Return a promise from onSave to show progress. Throw to keep the editor open with the message.",
         sourcePath: "inline-edit-demo.tsx",
       },
+      {
+        title: "Composition",
+        description:
+          "Compose the parts to place the controls. `InlineEditContext` reads the machine state.",
+        sourcePath: "inline-edit-composition-demo.tsx",
+      },
     ],
   },
   "password-field": {
@@ -1023,6 +1234,46 @@ const pageSources = {
         description: 'Set autoComplete="new-password" and minLength.',
         sourcePath: "password-field-demo.tsx",
         uses: ["form"],
+      },
+    ],
+  },
+  "otp-input": {
+    usage: "otp-input-demo.tsx",
+    examples: [
+      {
+        title: "Groups",
+        description:
+          "Use `OtpInputGroup` and `OtpInputSeparator` to split the code.",
+        sourcePath: "otp-input-groups-demo.tsx",
+      },
+      {
+        title: "Invalid",
+        sourcePath: "otp-input-invalid-demo.tsx",
+        uses: ["button"],
+      },
+      {
+        title: "Letters and numbers",
+        description: 'Set `pattern` to `"alphanumeric"` for recovery codes.',
+        sourcePath: "otp-input-alphanumeric-demo.tsx",
+      },
+      {
+        title: "Length",
+        sourcePath: "otp-input-length-demo.tsx",
+      },
+      {
+        title: "Sizes",
+        sourcePath: "otp-input-sizes-demo.tsx",
+      },
+      {
+        title: "Disabled",
+        sourcePath: "otp-input-disabled-demo.tsx",
+      },
+      {
+        title: "Clear button",
+        description:
+          "`OtpInputContext` gives the machine to custom UI, such as a clear button.",
+        sourcePath: "otp-input-context-demo.tsx",
+        uses: ["button"],
       },
     ],
   },
@@ -1139,13 +1390,7 @@ const pageSources = {
         title: "Full transcript",
         description: "The second prompt fails once to show the error state.",
         sourcePath: "prompt-input-transcript-demo.tsx",
-        uses: [
-          "message",
-          "reasoning",
-          "response",
-          "copy-button",
-          "source-link",
-        ],
+        uses: ["message", "reasoning", "response", "copy-button"],
       },
     ],
   },
@@ -1203,6 +1448,35 @@ const pageSources = {
       },
     ],
   },
+  "segmented-control": {
+    usage: "segmented-control-demo.tsx",
+    examples: [
+      {
+        title: "Controlled",
+        sourcePath: "segmented-control-controlled-demo.tsx",
+      },
+      {
+        title: "Icons",
+        description:
+          "Mark the icon `aria-hidden` so the label stays the accessible name.",
+        sourcePath: "segmented-control-icons-demo.tsx",
+      },
+      {
+        title: "Sizes",
+        description:
+          "`xs` and `sm` expand the hit area to 44px on touch screens.",
+        sourcePath: "segmented-control-sizes-demo.tsx",
+      },
+      {
+        title: "Vertical",
+        sourcePath: "segmented-control-vertical-demo.tsx",
+      },
+      {
+        title: "Disabled",
+        sourcePath: "segmented-control-disabled-demo.tsx",
+      },
+    ],
+  },
   "range-calendar": {
     usage: "range-calendar-demo.tsx",
     examples: [
@@ -1244,6 +1518,46 @@ const pageSources = {
       },
     ],
   },
+  resizable: {
+    usage: "resizable-demo.tsx",
+    examples: [
+      {
+        title: "Vertical",
+        sourcePath: "resizable-vertical-demo.tsx",
+      },
+      {
+        title: "Nested",
+        sourcePath: "resizable-nested-demo.tsx",
+      },
+      {
+        title: "Grip and limits",
+        description: "Set `minSize` and `maxSize` on a panel to limit it.",
+        sourcePath: "resizable-grip-demo.tsx",
+      },
+      {
+        title: "Collapsible",
+        description: "Press Enter on the handle to collapse the panel.",
+        sourcePath: "resizable-collapsible-demo.tsx",
+      },
+      {
+        title: "Saved layout",
+        description:
+          "Save the layout in `onLayoutEnd` and pass it back as `defaultLayout`.",
+        sourcePath: "resizable-saved-demo.tsx",
+      },
+      {
+        title: "Chat with a preview",
+        sourcePath: "resizable-chat-demo.tsx",
+        uses: ["prompt-input", "code-block"],
+      },
+      {
+        title: "Live sizes",
+        description: "`ResizableContext` gives the splitter api to custom UI.",
+        sourcePath: "resizable-context-demo.tsx",
+        uses: ["button"],
+      },
+    ],
+  },
   response: {
     usage: "response-demo.tsx",
     examples: [
@@ -1263,9 +1577,9 @@ const pageSources = {
         sourcePath: "response-error-demo.tsx",
       },
       {
-        title: "With reasoning and sources",
-        sourcePath: "response-sources-demo.tsx",
-        uses: ["reasoning", "source-link"],
+        title: "With reasoning",
+        sourcePath: "response-reasoning-demo.tsx",
+        uses: ["reasoning"],
       },
     ],
   },
@@ -1450,6 +1764,12 @@ const pageSources = {
           "Add `filter` to a column to show a filter control. The column also needs `sortValue`.",
         sourcePath: "data-table-column-filters-demo.tsx",
         uses: ["badge"],
+      },
+      {
+        title: "Selection actions",
+        description: "Return the bulk actions from `renderSelectionActions`.",
+        sourcePath: "data-table-selection-actions-demo.tsx",
+        uses: ["toolbar", "dialog"],
       },
       {
         title: "Resizable columns and row actions",
@@ -1694,16 +2014,6 @@ const pageSources = {
       },
     ],
   },
-  "source-link": {
-    usage: "source-link-demo.tsx",
-    examples: [
-      {
-        title: "Source list",
-        description: "Set `index` to the citation number in the answer.",
-        sourcePath: "source-link-list-demo.tsx",
-      },
-    ],
-  },
   "stagger-group": {
     usage: "stagger-group-basic-demo.tsx",
     examples: [
@@ -1758,6 +2068,12 @@ const pageSources = {
           "Use `speed={0}` for a short set that should wrap instead of loop.",
         sourcePath: "marquee-static-demo.tsx",
       },
+      {
+        title: "Composition",
+        description:
+          "Compose the parts to add edge fades and your own pause button.",
+        sourcePath: "marquee-composition-demo.tsx",
+      },
     ],
   },
   "icon-swap": {
@@ -1789,6 +2105,37 @@ const pageSources = {
         description:
           "Set the text color for the base and `--text-shimmer-highlight` for the highlight.",
         sourcePath: "text-shimmer-color-demo.tsx",
+      },
+    ],
+  },
+  "scroll-area": {
+    usage: "scroll-area-demo.tsx",
+    examples: [
+      {
+        title: "Horizontal",
+        description:
+          'Set `orientation` to `"horizontal"` to scroll one row sideways.',
+        sourcePath: "scroll-area-horizontal-demo.tsx",
+      },
+      {
+        title: "Both axes",
+        description:
+          'Set `orientation` to `"both"` to show a scrollbar for each axis.',
+        sourcePath: "scroll-area-both-demo.tsx",
+      },
+      {
+        title: "Scroll from a control",
+        description:
+          "Call `useScrollArea` in a child to read the position and scroll.",
+        sourcePath: "scroll-area-to-top-demo.tsx",
+        uses: ["button"],
+      },
+      {
+        title: "Composition",
+        description:
+          "Compose the parts to place your own controls. `ScrollAreaContext` reads the progress.",
+        sourcePath: "scroll-area-context-demo.tsx",
+        uses: ["button"],
       },
     ],
   },
@@ -2021,6 +2368,29 @@ const pageSources = {
       },
     ],
   },
+  tour: {
+    usage: "tour-demo.tsx",
+    examples: [
+      {
+        title: "Without spotlight",
+        description: "Set `spotlight` to `false` to keep the page usable.",
+        sourcePath: "tour-no-spotlight-demo.tsx",
+        uses: ["button", "checkbox"],
+      },
+      {
+        title: "Controlled step",
+        sourcePath: "tour-controlled-demo.tsx",
+        uses: ["button", "stepper"],
+      },
+      {
+        title: "Start on first visit",
+        description:
+          "Start the tour in an effect and save completion in `onComplete`.",
+        sourcePath: "tour-first-visit-demo.tsx",
+        uses: ["button"],
+      },
+    ],
+  },
   tree: {
     usage: "tree-basic-demo.tsx",
     examples: [
@@ -2104,6 +2474,53 @@ const pageSources = {
 } as const satisfies Record<string, ComponentPageSource>;
 
 const usageSources = {
+  "event-calendar": {
+    code: `import { CalendarDate, CalendarDateTime, toZoned } from "@internationalized/date";
+import { EventCalendar } from "@/components/vip-ui/event-calendar";
+
+const events = [
+  {
+    id: "design-review",
+    title: "Design review",
+    start: toZoned(new CalendarDateTime(2026, 11, 24, 10), "Europe/London"),
+    end: toZoned(new CalendarDateTime(2026, 11, 24, 11), "Europe/London"),
+    color: "chart-2",
+  },
+];
+
+export function TeamWeek() {
+  return (
+    <EventCalendar
+      aria-label="Team week"
+      events={events}
+      defaultDate={new CalendarDate(2026, 11, 24)}
+      timeZone="Europe/London"
+    />
+  );
+}`,
+    filename: "team-week.tsx",
+  },
+  "agent-steps": {
+    code: `import { AgentStep, AgentSteps } from "@/components/vip-ui/agent-steps";
+
+export function ResearchRun() {
+  return (
+    <AgentSteps
+      status="running"
+      label="Checking the documentation"
+      detail="Step 2 of 3"
+    >
+      <AgentStep
+        title="Searched the component pages"
+        description="Found 3 matches"
+      />
+      <AgentStep status="running" title="Reading the disclosure guide" />
+      <AgentStep status="pending" title="Write the answer" />
+    </AgentSteps>
+  );
+}`,
+    filename: "research-run.tsx",
+  },
   alert: {
     code: `import { Alert } from "@/components/vip-ui/alert";
 
@@ -2350,6 +2767,35 @@ export function UploadButton() {
 }`,
     filename: "upload-button.tsx",
   },
+  "code-block": {
+    code: `import {
+  CodeBlock,
+  CodeBlockActions,
+  CodeBlockBody,
+  CodeBlockHeader,
+  CodeBlockTitle,
+} from "@/components/vip-ui/code-block";
+
+const code = \`import { Button } from "@/components/vip-ui/button";
+
+export function SaveButton() {
+  const save = () => saveChanges();
+  return <Button onPress={save}>Save changes</Button>;
+}\`;
+
+export function Snippet() {
+  return (
+    <CodeBlock code={code} language="tsx">
+      <CodeBlockHeader>
+        <CodeBlockTitle>button.tsx</CodeBlockTitle>
+        <CodeBlockActions />
+      </CodeBlockHeader>
+      <CodeBlockBody />
+    </CodeBlock>
+  );
+}`,
+    filename: "snippet.tsx",
+  },
   "copy-button": {
     code: `import { CopyButton } from "@/components/vip-ui/copy-button";
 
@@ -2385,6 +2831,27 @@ export function CommandMenu() {
 }`,
     filename: "command-menu.tsx",
   },
+  "otp-input": {
+    code: `import {
+  OtpInput,
+  OtpInputDescription,
+  OtpInputLabel,
+  OtpInputSlots,
+} from "@/components/vip-ui/otp-input";
+
+export function VerificationCode() {
+  return (
+    <OtpInput>
+      <OtpInputLabel>Verification code</OtpInputLabel>
+      <OtpInputSlots />
+      <OtpInputDescription>
+        Enter the code we sent to your phone.
+      </OtpInputDescription>
+    </OtpInput>
+  );
+}`,
+    filename: "verification-code.tsx",
+  },
   card: {
     code: `import {
   Card,
@@ -2404,6 +2871,71 @@ export function ProjectCard() {
   );
 }`,
     filename: "project-card.tsx",
+  },
+  carousel: {
+    code: `import {
+  Carousel,
+  CarouselIndicators,
+  CarouselNext,
+  CarouselPrevious,
+  CarouselSlide,
+  CarouselViewport,
+} from "@/components/vip-ui/carousel";
+
+const products = ["Field jacket", "Canvas tote", "Camp mug"];
+
+export function FeaturedProducts() {
+  return (
+    <Carousel aria-label="Featured products">
+      <CarouselViewport>
+        {products.map((product) => (
+          <CarouselSlide key={product}>{product}</CarouselSlide>
+        ))}
+      </CarouselViewport>
+      <div className="flex items-center justify-between gap-3">
+        <CarouselPrevious />
+        <CarouselIndicators />
+        <CarouselNext />
+      </div>
+    </Carousel>
+  );
+}`,
+    filename: "featured-products.tsx",
+    note: "`opts` and `plugins` go straight to Embla. `useCarousel()` returns the Embla `api` and the selected index, so a plugin can drive its own controls.",
+  },
+  lightbox: {
+    code: `import { CarouselSlide } from "@/components/vip-ui/carousel";
+import {
+  Lightbox,
+  LightboxContent,
+  LightboxImage,
+  LightboxTrigger,
+} from "@/components/vip-ui/lightbox";
+
+const photos = [
+  { src: "/photos/ridge.jpg", alt: "A dark ridge at sunrise." },
+  { src: "/photos/tide.jpg", alt: "Tide pools between rocks." },
+];
+
+export function TripPhotos() {
+  return (
+    <Lightbox>
+      {photos.map((photo, index) => (
+        <LightboxTrigger key={photo.src} index={index} aria-label={\`Open photo \${index + 1}\`}>
+          <img src={photo.src} alt="" className="size-full object-cover" />
+        </LightboxTrigger>
+      ))}
+      <LightboxContent>
+        {photos.map((photo) => (
+          <CarouselSlide key={photo.src}>
+            <LightboxImage src={photo.src} alt={photo.alt} />
+          </CarouselSlide>
+        ))}
+      </LightboxContent>
+    </Lightbox>
+  );
+}`,
+    filename: "trip-photos.tsx",
   },
   accordion: {
     code: `import {
@@ -2582,30 +3114,46 @@ export function ProjectBreadcrumbs() {
   pagination: {
     code: `import {
   Pagination,
-  PaginationItem,
-  PaginationLink,
   PaginationList,
+  PaginationPages,
 } from "@/components/vip-ui/pagination";
 
 export function ResultsPagination() {
   return (
-    <Pagination>
+    <Pagination
+      count={90}
+      defaultPage={2}
+      pageSize={10}
+      getPageUrl={(details) => \`?page=\${details.page}\`}
+      aria-label="Results"
+    >
       <PaginationList>
-        <PaginationItem>
-          <PaginationLink href="?page=1" isCurrent aria-label="Page 1">
-            1
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="?page=2" aria-label="Page 2">
-            2
-          </PaginationLink>
-        </PaginationItem>
+        <PaginationPages />
       </PaginationList>
     </Pagination>
   );
 }`,
     filename: "results-pagination.tsx",
+  },
+  "segmented-control": {
+    code: `import {
+  SegmentedControl,
+  SegmentedControlItem,
+} from "@/components/vip-ui/segmented-control";
+
+export function ProjectView() {
+  return (
+    <SegmentedControl aria-label="Project view" defaultValue="board">
+      <SegmentedControlItem value="board">Board</SegmentedControlItem>
+      <SegmentedControlItem value="list">List</SegmentedControlItem>
+      <SegmentedControlItem value="timeline">
+        Timeline
+      </SegmentedControlItem>
+    </SegmentedControl>
+  );
+}`,
+    filename: "project-view.tsx",
+    note: "Set `name` on the control to submit the value with a form. Each segment renders a hidden radio input.",
   },
   tabs: {
     code: `import {
@@ -2649,6 +3197,22 @@ export function SearchStatus() {
   return <TextShimmer>Searching 24 sources</TextShimmer>;
 }`,
     filename: "search-status.tsx",
+  },
+  "scroll-area": {
+    code: `import { ScrollArea } from "@/components/vip-ui/scroll-area";
+
+export function Activity({ items }: { items: string[] }) {
+  return (
+    <ScrollArea className="h-64" aria-label="Activity">
+      <ul>
+        {items.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    </ScrollArea>
+  );
+}`,
+    filename: "activity.tsx",
   },
   "scroll-fade": {
     code: `import { ScrollFade } from "@/components/vip-ui/scroll-fade";
@@ -2848,6 +3412,36 @@ export function FileList() {
 }`,
     filename: "file-list.tsx",
   },
+  tour: {
+    code: `import { Button } from "@/components/vip-ui/button";
+import { SearchField } from "@/components/vip-ui/search-field";
+import { Tour, TourTarget, useTour } from "@/components/vip-ui/tour";
+
+const steps = [
+  { id: "search", title: "Find any project", description: "Search by name or client." },
+  { id: "new", title: "Start a project", description: "Create it and invite the team." },
+];
+
+export function Workspace() {
+  return (
+    <Tour steps={steps}>
+      <TourTarget id="search">
+        <SearchField aria-label="Search projects" />
+      </TourTarget>
+      <TourTarget id="new">
+        <Button>New project</Button>
+      </TourTarget>
+      <StartTour />
+    </Tour>
+  );
+}
+
+function StartTour() {
+  const tour = useTour();
+  return <Button onPress={() => tour.start()}>Start tour</Button>;
+}`,
+    filename: "workspace.tsx",
+  },
   tree: {
     code: `import { Tree, TreeItem } from "@/components/vip-ui/tree";
 
@@ -2924,6 +3518,79 @@ export function ProjectTable() {
   );
 }`,
     filename: "project-table.tsx",
+  },
+  sidebar: {
+    code: `import { HouseIcon, ReceiptIcon } from "@phosphor-icons/react";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarInset,
+  SidebarItem,
+  SidebarMenu,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/vip-ui/sidebar";
+
+export function AppShell() {
+  return (
+    <SidebarProvider>
+      <Sidebar>
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarMenu aria-label="Main">
+              <SidebarItem
+                href="/"
+                icon={<HouseIcon aria-hidden="true" />}
+                isCurrent
+              >
+                Overview
+              </SidebarItem>
+              <SidebarItem
+                href="/orders"
+                icon={<ReceiptIcon aria-hidden="true" />}
+              >
+                Orders
+              </SidebarItem>
+            </SidebarMenu>
+          </SidebarGroup>
+        </SidebarContent>
+      </Sidebar>
+      <SidebarInset>
+        <SidebarTrigger />
+      </SidebarInset>
+    </SidebarProvider>
+  );
+}`,
+    filename: "app-shell.tsx",
+  },
+  conversation: {
+    code: `import {
+  Conversation,
+  ConversationContent,
+  ConversationJump,
+} from "@/components/vip-ui/conversation";
+import { Message } from "@/components/vip-ui/message";
+import { Response, ResponseContent } from "@/components/vip-ui/response";
+
+export function Transcript() {
+  return (
+    <Conversation className="h-96">
+      <ConversationContent className="grid gap-4 p-4">
+        <Message sender="You" side="outgoing">
+          Why did activation drop last week?
+        </Message>
+        <Response status="complete">
+          <ResponseContent>
+            Activation fell after v2.14 added the role picker.
+          </ResponseContent>
+        </Response>
+      </ConversationContent>
+      <ConversationJump />
+    </Conversation>
+  );
+}`,
+    filename: "transcript.tsx",
   },
   "data-table": {
     code: `import {
@@ -3012,6 +3679,28 @@ export function Feed({ children }: { children: ReactNode }) {
   );
 }`,
     filename: "feed.tsx",
+  },
+  resizable: {
+    code: `import {
+  ResizableGroup,
+  ResizableHandle,
+  ResizablePanel,
+} from "@/components/vip-ui/resizable";
+
+export function Workspace() {
+  return (
+    <ResizableGroup className="h-80">
+      <ResizablePanel id="brief">
+        <div className="p-4">Design brief</div>
+      </ResizablePanel>
+      <ResizableHandle />
+      <ResizablePanel id="preview">
+        <div className="p-4">Preview</div>
+      </ResizablePanel>
+    </ResizableGroup>
+  );
+}`,
+    filename: "workspace.tsx",
   },
 } as const satisfies Record<string, ComponentUsage>;
 

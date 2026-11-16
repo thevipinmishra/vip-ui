@@ -182,6 +182,15 @@
       opacity: 0.25;
     }
   }
+  --animate-otp-caret: otp-caret-blink 1s steps(2, jump-none) infinite;
+  @keyframes otp-caret-blink {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
   --animate-skeleton: skeleton-sweep 1.6s linear infinite;
   @keyframes skeleton-sweep {
     from {
@@ -198,19 +207,6 @@
     }
     to {
       transform: translateX(300%);
-    }
-  }
-  --animate-agent-status: agent-status-pulse 1.1s
-    cubic-bezier(0.77, 0, 0.175, 1) infinite;
-  @keyframes agent-status-pulse {
-    0%,
-    100% {
-      opacity: 0.35;
-      transform: translateY(0px);
-    }
-    50% {
-      opacity: 1;
-      transform: translateY(-2px);
     }
   }
   --animate-border-beam: border-beam-spin 6s linear infinite;
@@ -298,6 +294,25 @@
   to {
     transform: translate(var(--sheet-stack-x, 0px), var(--sheet-stack-y, 0px))
       scale(var(--sheet-stack-scale, 0.94));
+  }
+}
+
+/* Marquee owns these keyframes so the Zag machine can drive both axes. */
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(var(--marquee-translate, -100%));
+  }
+}
+
+@keyframes marquee-scroll-y {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(var(--marquee-translate, -100%));
   }
 }
 
@@ -516,19 +531,19 @@
   }
 }
 
-.code-block {
+.docs-code-block {
   --th-attr: #0550ae;
-  --th-command: #8250df;
+  --th-command: #7c45d6;
   --th-comment: #6e7781;
   --th-deleted: #cf222e;
-  --th-function: #8250df;
+  --th-function: #7c45d6;
   --th-heading: #0550ae;
   --th-inserted: #1a7f37;
   --th-keyword: #cf222e;
   --th-literal: #0550ae;
   --th-meta: #57606a;
   --th-number: #0550ae;
-  --th-operator: #8250df;
+  --th-operator: #7c45d6;
   --th-property: #0550ae;
   --th-selector: #116329;
   --th-string: #0a3069;
@@ -536,7 +551,7 @@
   --th-type: #953800;
   --th-variable: #953800;
 }
-.dark .code-block {
+.dark .docs-code-block {
   --th-attr: #79c0ff;
   --th-command: #d2a8ff;
   --th-comment: #8b949e;
@@ -556,7 +571,7 @@
   --th-type: #ffa657;
   --th-variable: #ffa657;
 }
-.code-block .th-code {
+.docs-code-block .th-code {
   margin: 0;
   min-width: max-content;
   padding: 1.25rem 1.5rem 1.75rem 1rem;
@@ -566,7 +581,7 @@
   line-height: 1.75;
   tab-size: 2;
 }
-.code-block .th-line::before {
+.docs-code-block .th-line::before {
   display: inline-block;
   width: calc(var(--code-line-digits, 2) * 1ch);
   margin-inline-end: 1.25rem;
@@ -575,64 +590,64 @@
   text-align: end;
   user-select: none;
 }
-.code-block[data-language="bash"] .th-code {
+.docs-code-block[data-language="bash"] .th-code {
   padding-inline: 1.25rem;
 }
-.code-block ::selection {
+.docs-code-block ::selection {
   background: var(--accent);
   color: var(--accent-foreground);
 }
-.code-block .th-attr {
+.docs-code-block .th-attr {
   color: var(--th-attr);
 }
-.code-block .th-command {
+.docs-code-block .th-command {
   color: var(--th-command);
 }
-.code-block .th-comment {
+.docs-code-block .th-comment {
   color: var(--th-comment);
 }
-.code-block .th-deleted {
+.docs-code-block .th-deleted {
   color: var(--th-deleted);
 }
-.code-block .th-function {
+.docs-code-block .th-function {
   color: var(--th-function);
 }
-.code-block .th-heading {
+.docs-code-block .th-heading {
   color: var(--th-heading);
 }
-.code-block .th-inserted {
+.docs-code-block .th-inserted {
   color: var(--th-inserted);
 }
-.code-block .th-keyword {
+.docs-code-block .th-keyword {
   color: var(--th-keyword);
 }
-.code-block .th-literal {
+.docs-code-block .th-literal {
   color: var(--th-literal);
 }
-.code-block .th-meta {
+.docs-code-block .th-meta {
   color: var(--th-meta);
 }
-.code-block .th-number {
+.docs-code-block .th-number {
   color: var(--th-number);
 }
-.code-block .th-operator {
+.docs-code-block .th-operator {
   color: var(--th-operator);
 }
-.code-block .th-property {
+.docs-code-block .th-property {
   color: var(--th-property);
 }
-.code-block .th-selector {
+.docs-code-block .th-selector {
   color: var(--th-selector);
 }
-.code-block .th-string {
+.docs-code-block .th-string {
   color: var(--th-string);
 }
-.code-block .th-tag {
+.docs-code-block .th-tag {
   color: var(--th-tag);
 }
-.code-block .th-type {
+.docs-code-block .th-type {
   color: var(--th-type);
 }
-.code-block .th-variable {
+.docs-code-block .th-variable {
   color: var(--th-variable);
 }

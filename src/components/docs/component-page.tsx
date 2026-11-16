@@ -3,17 +3,20 @@ import path from "node:path";
 import { Fragment, type ReactNode } from "react";
 import { componentName, getComponent, getNeighbors } from "@/lib/catalog";
 import { componentApi } from "@/lib/component-api";
+import { componentChecks } from "@/lib/component-checks";
 import {
   type ComponentExampleMetadata,
   exampleAnchor,
 } from "@/lib/component-examples";
 import { allComponents } from "@/lib/navigation";
 import { registryUrl } from "@/lib/registry-docs";
+import { siteUrl } from "@/lib/site-url";
 import { ApiReference } from "./api-reference";
 import { CodeBlock } from "./code-block";
 import { ComponentComposition } from "./component-composition";
 import { compositions } from "./component-compositions";
-import { Code, DocsHeader, DocsPager, ExternalLink, TextLink } from "./guide";
+import { ComponentHeader } from "./component-header";
+import { Code, DocsPager, ExternalLink, TextLink } from "./guide";
 import { InstallTabs } from "./install-tabs";
 import { ManualInstall } from "./manual-install";
 import { PackageManagerCommand } from "./package-manager-command";
@@ -95,13 +98,20 @@ export async function ComponentPage({
   );
   const cliUrl = registryUrl(componentSlug);
   const apiParts = componentApi[componentSlug] ?? [];
-  const reactAria = getComponent(componentSlug)?.reactAria;
+  const component = getComponent(componentSlug);
+  const reactAria = component?.reactAria;
+  const checks = componentChecks(componentSlug);
   return (
     <article>
-      <DocsHeader
-        title={name}
+      <ComponentHeader
+        slug={componentSlug}
+        name={name}
         description={description}
         parent={{ href: "/components", label: "Components" }}
+        primitives={component?.primitives ?? []}
+        markdownUrl={`${siteUrl()}/components/${componentSlug}.md`}
+        axe={checks.axe}
+        doctor={checks.doctor}
       />
       <section
         id="preview"

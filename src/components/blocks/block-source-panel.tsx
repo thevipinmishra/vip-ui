@@ -217,7 +217,7 @@ export function BlockSourcePanel({ block }: { block: Block }) {
               className="min-h-0 flex-1 overflow-auto overscroll-contain outline-none focus-visible:shadow-[inset_3px_0_0_var(--ring)]"
             >
               <div
-                className="code-block min-w-0 text-code-foreground"
+                className="docs-code-block min-w-0 text-code-foreground"
                 data-language={file.path.endsWith(".ts") ? "ts" : "tsx"}
                 style={
                   { "--code-line-digits": file.lineDigits } as CSSProperties

@@ -20,6 +20,7 @@ export interface CopyButtonProps
   extends Omit<ButtonProps, "children" | "onPress" | "type" | "value"> {
   value: string;
   children?: ReactNode | ((status: CopyButtonStatus) => ReactNode);
+  "data-slot"?: string;
 }
 
 export function CopyButton({
@@ -28,6 +29,7 @@ export function CopyButton({
   variant = "outline",
   iconOnly = false,
   "aria-label": ariaLabel,
+  "data-slot": dataSlot = "copy-button",
   className,
   ...props
 }: CopyButtonProps) {
@@ -108,7 +110,7 @@ export function CopyButton({
       <Button
         {...props}
         type="button"
-        data-slot="copy-button"
+        data-slot={dataSlot}
         data-status={status}
         variant={variant}
         iconOnly={iconOnly}

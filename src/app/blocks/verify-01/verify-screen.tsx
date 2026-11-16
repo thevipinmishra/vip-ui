@@ -14,6 +14,12 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Form } from "@/components/ui/form";
 import { LayoutMorph } from "@/components/ui/layout-morph";
 import { Link } from "@/components/ui/link";
+import {
+  OtpInput,
+  OtpInputError,
+  OtpInputLabel,
+  OtpInputSlots,
+} from "@/components/ui/otp-input";
 import { Spinner } from "@/components/ui/spinner";
 import {
   TextField,
@@ -24,7 +30,6 @@ import {
 } from "@/components/ui/text-field";
 import { TextSwap } from "@/components/ui/text-swap";
 import { showToast } from "@/components/ui/toast";
-import { CodeInput } from "./code-input";
 
 type View = "code" | "recovery" | "done";
 
@@ -189,18 +194,22 @@ export function VerifyScreen() {
                   }}
                 >
                   {view === "code" ? (
-                    <CodeInput
+                    <OtpInput
                       ref={codeRef}
-                      label="6-digit code"
+                      name="code"
                       value={code}
-                      error={error}
+                      isInvalid={Boolean(error)}
                       isReadOnly={pending}
                       onChange={(value) => {
                         setCode(value);
                         setError("");
                       }}
                       onComplete={verify}
-                    />
+                    >
+                      <OtpInputLabel>6-digit code</OtpInputLabel>
+                      <OtpInputSlots />
+                      <OtpInputError>{error}</OtpInputError>
+                    </OtpInput>
                   ) : (
                     <TextField
                       ref={recoveryRef}

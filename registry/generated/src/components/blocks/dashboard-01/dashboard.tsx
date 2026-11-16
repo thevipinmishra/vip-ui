@@ -6,14 +6,12 @@ import {
   CreditCardIcon,
   DownloadSimpleIcon,
   GearSixIcon,
-  ListIcon,
   ShoppingCartIcon,
   SignOutIcon,
   TrendDownIcon,
   TrendUpIcon,
   UserIcon,
 } from "@phosphor-icons/react";
-import { useState } from "react";
 import { Avatar } from "../../vip-ui/avatar";
 import { Badge } from "../../vip-ui/badge";
 import { Button } from "../../vip-ui/button";
@@ -26,13 +24,11 @@ import {
   MenuTrigger,
 } from "../../vip-ui/menu";
 import {
-  Sheet,
-  SheetBody,
-  SheetClose,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "../../vip-ui/sheet";
+  Sidebar,
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "../../vip-ui/sidebar";
 import { Stat, StatDetail, StatLabel, StatValue } from "../../vip-ui/stat";
 import {
   Timeline,
@@ -64,31 +60,14 @@ function exportOrders() {
 }
 
 export function Dashboard() {
-  const [navOpen, setNavOpen] = useState(false);
-
   return (
-    <div className="min-h-svh bg-background lg:grid lg:grid-cols-[248px_minmax(0,1fr)]">
-      <aside className="hidden border-e border-border/70 bg-card px-3 pt-3.5 pb-5 lg:sticky lg:top-0 lg:block lg:h-svh lg:overflow-y-auto">
+    <SidebarProvider className="min-h-svh">
+      <Sidebar>
         <AppSidebar />
-      </aside>
-      <div className="min-w-0">
+      </Sidebar>
+      <SidebarInset>
         <header className="sticky top-0 z-20 flex h-16 items-center gap-3 border-b border-border/70 bg-card/90 px-4 backdrop-blur sm:px-6">
-          <div className="lg:hidden">
-            <SheetTrigger isOpen={navOpen} onOpenChange={setNavOpen}>
-              <Button variant="ghost" iconOnly aria-label="Open navigation">
-                <ListIcon size={20} aria-hidden="true" />
-              </Button>
-              <Sheet position="left" className="w-72">
-                <SheetHeader className="flex justify-end">
-                  <SheetTitle className="sr-only">Navigation</SheetTitle>
-                  <SheetClose />
-                </SheetHeader>
-                <SheetBody className="pb-6">
-                  <AppSidebar onNavigate={() => setNavOpen(false)} />
-                </SheetBody>
-              </Sheet>
-            </SheetTrigger>
-          </div>
+          <SidebarTrigger />
           <SearchCommand onExport={exportOrders} />
           <div className="ms-auto flex items-center gap-1">
             <Notifications />
@@ -189,7 +168,7 @@ export function Dashboard() {
           </div>
           <RecentOrders />
         </main>
-      </div>
-    </div>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }

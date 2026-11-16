@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 
 export interface ScrollFadeProps extends ComponentProps<"div"> {
   orientation?: "vertical" | "horizontal";
+  "data-slot"?: string;
 }
 
 const edgeMask =
@@ -85,7 +86,7 @@ export function ScrollFade({
         if (typeof ref === "function") return ref(node);
         if (ref) ref.current = node;
       }}
-      data-slot="scroll-fade"
+      data-slot={props["data-slot"] ?? "scroll-fade"}
       data-orientation={orientation}
       className={cn(
         "min-h-0 min-w-0 [--scroll-fade-size:1.5rem]",

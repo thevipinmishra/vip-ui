@@ -122,11 +122,12 @@ const trees = new Map(
 const motionAllowlist = new Set([
   "animated-number",
   "attachment",
+  "code-block",
+  "conversation",
   "copy-button",
   "highlighter",
   "icon-swap",
   "layout-morph",
-  "marquee",
   "presence",
   "presence-list",
   "progress-ring",
@@ -144,11 +145,11 @@ const motionAllowlist = new Set([
   "toggle-button",
   "toggle-button-group",
   "tool-call",
+  "tour",
   "tree",
 ]);
 
 const convertingOffMotion = new Set([
-  "agent-status",
   "border-beam",
   "color-thumb",
   "meter",

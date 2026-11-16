@@ -25,12 +25,13 @@ export function ProductArt({
   colorName,
   view,
   className,
+  ...props
 }: {
   hex: string;
   colorName: string;
   view: ArtView;
   className?: string;
-}) {
+} & React.SVGProps<SVGSVGElement>) {
   const dark = mix(hex, "#000000", 0.2);
   const darker = mix(hex, "#000000", 0.32);
   const light = mix(hex, "#ffffff", 0.14);
@@ -45,6 +46,7 @@ export function ProductArt({
 
   return (
     <svg
+      {...props}
       viewBox={view === "detail" ? "0 0 400 480" : "30 55 340 355"}
       role="img"
       aria-label={`Field Jacket in ${colorName}, ${label}`}

@@ -7,12 +7,18 @@ import {
   PaginationItem,
   PaginationLink,
   PaginationList,
+  PaginationPages,
 } from "@/components/ui/pagination";
 
 export function PaginationBasicDemo() {
   const [page, setPage] = useState(1);
   return (
-    <Pagination>
+    <Pagination
+      count={30}
+      page={page}
+      pageSize={10}
+      onPageChange={(details) => setPage(details.page)}
+    >
       <PaginationList className="flex-nowrap gap-1 sm:gap-2">
         <PaginationItem>
           <PaginationLink
@@ -26,19 +32,7 @@ export function PaginationBasicDemo() {
             <span className="hidden sm:inline">Previous</span>
           </PaginationLink>
         </PaginationItem>
-        {[1, 2, 3].map((number) => (
-          <PaginationItem key={number}>
-            <PaginationLink
-              isCurrent={page === number}
-              onPress={() => {
-                setPage(number);
-              }}
-              aria-label={`Page ${number}`}
-            >
-              {number}
-            </PaginationLink>
-          </PaginationItem>
-        ))}
+        <PaginationPages />
         <PaginationItem>
           <PaginationLink
             isDisabled={page === 3}

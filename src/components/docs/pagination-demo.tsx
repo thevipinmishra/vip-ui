@@ -8,6 +8,7 @@ import {
   PaginationItem,
   PaginationLink,
   PaginationList,
+  PaginationPages,
 } from "@/components/ui/pagination";
 
 const projects = [
@@ -55,7 +56,12 @@ export function PaginationDemo() {
             </li>
           ))}
         </ul>
-        <Pagination>
+        <Pagination
+          count={projects.length}
+          page={page}
+          pageSize={3}
+          getPageUrl={(details) => `?page=${details.page}#preview`}
+        >
           <PaginationList className="w-full flex-nowrap gap-1 sm:gap-2">
             <PaginationItem className="flex-1 justify-end">
               <PaginationLink
@@ -67,17 +73,7 @@ export function PaginationDemo() {
                 <span className="hidden sm:inline">Previous</span>
               </PaginationLink>
             </PaginationItem>
-            {[1, 2, 3].map((number) => (
-              <PaginationItem key={number}>
-                <PaginationLink
-                  href={`?page=${number}#preview`}
-                  isCurrent={number === page}
-                  aria-label={`Page ${number}`}
-                >
-                  {number}
-                </PaginationLink>
-              </PaginationItem>
-            ))}
+            <PaginationPages />
             <PaginationItem className="flex-1 justify-start">
               <PaginationLink
                 href={`?page=${page + 1}#preview`}

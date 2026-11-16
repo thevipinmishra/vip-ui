@@ -17,10 +17,12 @@ import {
   tableFeatures,
   useTable,
 } from "@tanstack/react-table";
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { type ColumnProps, type Key, useLocale } from "react-aria-components";
 import { cn } from "./utils";
+import { AnimatedNumber } from "./animated-number";
 import { Button } from "./button";
+import { Presence } from "./presence";
 import { SearchField } from "./search-field";
 import { Select, type SelectOption } from "./select";
 import {
@@ -32,6 +34,7 @@ import {
   TableContainer,
   TableHeader,
 } from "./table";
+import { Toolbar } from "./toolbar";
 
 const collator = new Intl.Collator(undefined, {
   numeric: true,
@@ -71,6 +74,12 @@ export interface DataTableFooterState {
   setPageIndex: (index: number) => void;
 }
 
+export interface DataTableSelectionState {
+  selectedKeys: Set<Key>;
+  selectedCount: number;
+  clearSelection: () => void;
+}
+
 export interface DataTableProps<T> {
   label: string;
   rows: readonly T[];
@@ -86,6 +95,7 @@ export interface DataTableProps<T> {
   onRowAction?: (key: Key) => void;
   resizable?: boolean;
   showClearSelection?: boolean;
+  renderSelectionActions?: (state: DataTableSelectionState) => ReactNode;
   renderFooter?: (state: DataTableFooterState) => ReactNode;
   className?: string;
 }
@@ -105,11 +115,13 @@ export function DataTable<T extends RowData>({
   onRowAction,
   resizable = false,
   showClearSelection = true,
+  renderSelectionActions,
   renderFooter,
   className,
 }: DataTableProps<T>) {
   const { locale } = useLocale();
   const numberFormat = useMemo(() => new Intl.NumberFormat(locale), [locale]);
+  const rootRef = useRef<HTMLDivElement>(null);
   const [query, setQuery] = useState("");
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -218,8 +230,20 @@ export function DataTable<T extends RowData>({
     onSelectionChange?.(next);
   }
 
+  function clearSelection() {
+    const next = new Set<Key>();
+    if (selectedKeys === undefined) setInternalSelection(next);
+    onSelectionChange?.(next);
+  }
+
+  function clearSelectionFromActions() {
+    rootRef.current?.querySelector<HTMLElement>('[data-slot="table"]')?.focus();
+    clearSelection();
+  }
+
   return (
     <div
+      ref={rootRef}
       data-slot="data-table"
       className={cn(
         "w-full min-w-0 overflow-hidden rounded-xl border border-border bg-card text-card-foreground shadow-(--shadow-card)",
@@ -230,19 +254,14 @@ export function DataTable<T extends RowData>({
         <p className="min-w-0 text-base font-semibold tracking-tight text-foreground wrap-anywhere">
           {label}
         </p>
-        {selectable && showClearSelection && selectedCount > 0 && (
-          <Button
-            variant="minimal"
-            size="sm"
-            onPress={() => {
-              const next = new Set<Key>();
-              if (selectedKeys === undefined) setInternalSelection(next);
-              onSelectionChange?.(next);
-            }}
-          >
-            Clear selection
-          </Button>
-        )}
+        {selectable &&
+          showClearSelection &&
+          !renderSelectionActions &&
+          selectedCount > 0 && (
+            <Button variant="minimal" size="sm" onPress={clearSelection}>
+              Clear selection
+            </Button>
+          )}
       </div>
       {(getSearchText ||
         columns.some((column) => column.filter && column.sortValue)) && (
@@ -372,6 +391,38 @@ export function DataTable<T extends RowData>({
           </TableBody>
         </Table>
       </TableContainer>
+      {renderSelectionActions && (
+        <Presence show={selectedCount > 0} collapse>
+          <div
+            data-slot="data-table-selection-actions"
+            className="flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-border bg-muted/40 px-4 py-2.5 sm:px-5"
+          >
+            <p
+              aria-hidden="true"
+              dir="auto"
+              className="min-w-0 text-sm font-medium text-foreground"
+            >
+              <AnimatedNumber value={selectedCount} locale={locale} /> selected
+            </p>
+            <div className="flex w-full min-w-0 flex-wrap items-center justify-between gap-2 sm:ms-auto sm:w-auto sm:justify-start">
+              <Toolbar aria-label="Selection actions" size="sm">
+                {renderSelectionActions({
+                  selectedKeys: selection,
+                  selectedCount,
+                  clearSelection,
+                })}
+              </Toolbar>
+              <Button
+                variant="minimal"
+                size="sm"
+                onPress={clearSelectionFromActions}
+              >
+                Clear
+              </Button>
+            </div>
+          </div>
+        </Presence>
+      )}
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border bg-muted/20 px-4 py-3 text-sm text-muted-foreground sm:px-5">
         {renderFooter ? (
           renderFooter({
@@ -408,7 +459,7 @@ export function DataTable<T extends RowData>({
                   Page {numberFormat.format(Math.min(pageIndex + 1, pageCount))}{" "}
                   of {numberFormat.format(pageCount)}
                 </span>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   <Button
                     variant="outline"
                     size="sm"

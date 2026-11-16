@@ -13,7 +13,7 @@ export function CodeSnippet({
   const { html, lineDigits } = highlightCode(code, language);
   return (
     <div
-      className="code-block min-w-0 text-code-foreground"
+      className="docs-code-block min-w-0 text-code-foreground"
       data-language={language}
       style={{ "--code-line-digits": lineDigits } as CSSProperties}
       // biome-ignore lint/security/noDangerouslySetInnerHtml: highlighter output escapes the source text

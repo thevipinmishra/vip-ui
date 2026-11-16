@@ -26,9 +26,15 @@ import {
 import { Form } from "../../vip-ui/form";
 import { InlineCode } from "../../vip-ui/kbd-code";
 import { LayoutMorph } from "../../vip-ui/layout-morph";
+import {
+  OtpInput,
+  OtpInputDescription,
+  OtpInputError,
+  OtpInputLabel,
+  OtpInputSlots,
+} from "../../vip-ui/otp-input";
 import { Presence } from "../../vip-ui/presence";
 import { Switch } from "../../vip-ui/switch";
-import { TextField } from "../../vip-ui/text-field";
 import { TextSwap } from "../../vip-ui/text-swap";
 import { showToast } from "../../vip-ui/toast";
 
@@ -250,20 +256,22 @@ export function TwoStepCard() {
                       />
                     </div>
                   </div>
-                  <TextField
+                  <OtpInput
                     name="code"
-                    label="6-digit code"
                     value={code}
                     onChange={(value) => {
-                      setCode(value.replace(/\D/g, "").slice(0, 6));
+                      setCode(value);
                       setCodeError("");
                     }}
-                    inputMode="numeric"
-                    autoComplete="one-time-code"
-                    placeholder="123456"
-                    description="The code changes every 30 seconds."
                     autoFocus
-                  />
+                  >
+                    <OtpInputLabel>6-digit code</OtpInputLabel>
+                    <OtpInputSlots />
+                    <OtpInputDescription>
+                      The code changes every 30 seconds.
+                    </OtpInputDescription>
+                    <OtpInputError />
+                  </OtpInput>
                 </div>
               ) : (
                 <div className="grid gap-4">
