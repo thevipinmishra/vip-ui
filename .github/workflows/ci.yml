@@ -46,24 +46,10 @@ jobs:
           git diff --exit-code -- public/r registry.json registry/generated
           test -z "$(git status --porcelain -- public/r registry.json registry/generated)"
 
+      - name: Check React Doctor status is in sync
+        run: |
+          pnpm test:doctor
+          git diff --exit-code -- src/lib/component-checks.json
+          test -z "$(git status --porcelain -- src/lib/component-checks.json)"
+
       - run: pnpm exec next build
-
-  react-doctor:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    permissions:
-      contents: read
-      pull-requests: write
-      issues: write
-      statuses: write
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-
-      - uses: pnpm/action-setup@v6.1.0
-
-      - uses: millionco/react-doctor@v2
-        with:
-          scope: changed
-          blocking: none

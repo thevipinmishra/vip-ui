@@ -60,7 +60,7 @@ export function DateField<T extends DateValue>({
             className={cn(
               segmentedFieldStyles,
               fieldText,
-              "block content-center px-[calc(var(--field-px,0.875rem)-0.25rem)] py-[clamp(0px,calc((var(--field-h,3rem)-2rem)/2),0.5rem)] data-focus-visible:outline-none",
+              "block content-center px-[calc(var(--field-px,0.75rem)-0.25rem)] py-[clamp(0px,calc((var(--field-h,2.5rem)-2rem)/2),0.5rem)] data-focus-visible:outline-none",
             )}
           >
             {(segment) => <DateSegment segment={segment} />}

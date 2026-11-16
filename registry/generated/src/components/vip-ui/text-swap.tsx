@@ -49,6 +49,9 @@ export function TextSwap({ value, className, ...props }: TextSwapProps) {
     if (reduceMotion || !from || Math.abs(from - to) < 0.5) return;
     node.style.setProperty("--text-swap-width", `${Math.ceil(to)}px`);
     const animation = node.animate(
+      // The container morphs between the old and new label widths; the width
+      // itself is the effect, so there is no transform equivalent.
+      // react-doctor-disable-next-line react-doctor/no-layout-property-animation
       [{ width: `${from}px` }, { width: `${to}px` }],
       {
         duration: duration.base * 1000,

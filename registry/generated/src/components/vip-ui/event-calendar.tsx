@@ -16,6 +16,7 @@ import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import {
   createContext,
   type ReactNode,
+  type RefObject,
   useContext,
   useEffect,
   useLayoutEffect,
@@ -538,6 +539,243 @@ export interface EventCalendarGridProps {
   className?: string;
 }
 
+function EventCalendarDaysHeader({
+  calendar,
+  days,
+  todayValue,
+}: {
+  calendar: ReturnType<typeof useEventCalendarContext>;
+  days: CalendarDate[];
+  todayValue: CalendarDate | null;
+}) {
+  return (
+    <div
+      data-slot="event-calendar-days"
+      className="sticky top-0 z-30 flex border-b border-border/70 bg-card"
+    >
+      <div
+        aria-hidden="true"
+        className="sticky start-0 z-10 w-(--event-calendar-gutter) shrink-0 bg-card"
+      />
+      <div
+        className="grid flex-1"
+        style={{
+          gridTemplateColumns: `repeat(${days.length}, minmax(0, 1fr))`,
+        }}
+      >
+        {days.map((day) => {
+          const isToday = todayValue ? isSameDay(day, todayValue) : false;
+          return (
+            <div
+              key={day.toString()}
+              data-slot="event-calendar-day-label"
+              data-today={isToday || undefined}
+              className="flex min-w-0 flex-col items-center gap-0.5 py-1.5"
+            >
+              <span className="truncate text-xs text-muted-foreground">
+                {calendar.weekdayShort(day)}
+              </span>
+              <span
+                className={cn(
+                  "grid size-6 place-items-center rounded-full text-sm font-medium tabular-nums",
+                  isToday && "bg-primary text-primary-foreground",
+                )}
+              >
+                {day.day}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function EventCalendarGutter({
+  calendar,
+  days,
+  dayStart,
+  hours,
+}: {
+  calendar: ReturnType<typeof useEventCalendarContext>;
+  days: CalendarDate[];
+  dayStart: number;
+  hours: number[];
+}) {
+  return (
+    <div
+      data-slot="event-calendar-gutter"
+      aria-hidden="true"
+      className="sticky start-0 z-20 w-(--event-calendar-gutter) shrink-0 bg-card text-xs tabular-nums text-muted-foreground"
+    >
+      {hours.map((hourOfDay) => (
+        <span
+          key={hourOfDay}
+          className="absolute end-2 -translate-y-1/2"
+          style={{
+            top: `${(hourOfDay - dayStart) * eventCalendarHourHeight}px`,
+          }}
+        >
+          {calendar.hourLabel(days[0], hourOfDay)}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function EventCalendarHourLines({
+  dayStart,
+  halfHours,
+  hours,
+}: {
+  dayStart: number;
+  halfHours: number[];
+  hours: number[];
+}) {
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 -z-10"
+    >
+      {hours.map((hour) => (
+        <div
+          key={hour}
+          data-slot="event-calendar-hour-line"
+          className="absolute inset-x-0 border-t border-border/70"
+          style={{
+            top: `${(hour - dayStart) * eventCalendarHourHeight}px`,
+          }}
+        />
+      ))}
+      {halfHours.map((hour) => (
+        <div
+          key={hour}
+          data-slot="event-calendar-half-hour-line"
+          className="absolute inset-x-0 border-t border-dashed border-border/40"
+          style={{
+            top: `${(hour - dayStart) * eventCalendarHourHeight + eventCalendarHourHeight / 2}px`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function slotActionRange(
+  clientY: number,
+  rectTop: number,
+  day: CalendarDate,
+  dayStart: number,
+  dayEnd: number,
+  timeZone: string,
+  step: number,
+) {
+  const minutes = clamp(
+    snap((clientY - rectTop) / minuteHeight, step),
+    0,
+    (dayEnd - dayStart) * 60 - step,
+  );
+  const start = toZoned(
+    new CalendarDateTime(
+      day.year,
+      day.month,
+      day.day,
+      dayStart + Math.floor(minutes / 60),
+      minutes % 60,
+    ),
+    timeZone,
+  );
+  return { start, end: start.add({ minutes: step }) };
+}
+
+function paintGhost({
+  node,
+  session,
+  ghostRef,
+  columnRectsRef,
+}: {
+  node: HTMLDivElement | null;
+  session: DragSession | null;
+  ghostRef: RefObject<HTMLDivElement | null>;
+  columnRectsRef: RefObject<{ left: number; width: number }[]>;
+}) {
+  ghostRef.current = node;
+  if (!node || !session) return;
+  if (session.kind === "resize") {
+    node.style.height = `${Math.max(
+      minimumEventHeight,
+      (session.endMinute - session.part.startMinute) * minuteHeight,
+    )}px`;
+    return;
+  }
+  const from = columnRectsRef.current[session.originDay];
+  const to = columnRectsRef.current[session.dayIndex];
+  const dx = from && to ? to.left - from.left : 0;
+  const dy = (session.startMinute - session.part.startMinute) * minuteHeight;
+  node.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+}
+
+function updateDragSession({
+  session,
+  columns,
+  columnRects,
+  days,
+  dayStart,
+  dayEnd,
+  step,
+  ghost,
+}: {
+  session: DragSession;
+  columns: HTMLDivElement;
+  columnRects: { left: number; width: number }[];
+  days: CalendarDate[];
+  dayStart: number;
+  dayEnd: number;
+  step: number;
+  ghost: HTMLDivElement | null;
+}) {
+  const rect = columns.getBoundingClientRect();
+  const startBound = dayStart * 60;
+  const endBound = dayEnd * 60;
+  if (session.kind === "move") {
+    let start =
+      (session.pointerY - rect.top - session.grabOffsetY) / minuteHeight +
+      startBound;
+    start = snap(start, step);
+    start = clamp(start, startBound, endBound - session.partDuration);
+    session.startMinute = start - startBound;
+    let day = columnRects.findIndex(
+      (column) =>
+        session.pointerX >= column.left &&
+        session.pointerX < column.left + column.width,
+    );
+    if (day < 0) {
+      day =
+        session.pointerX < (columnRects[0]?.left ?? 0) ? 0 : days.length - 1;
+    }
+    session.dayIndex = day;
+    const from = columnRects[session.originDay];
+    const to = columnRects[day];
+    if (ghost && from && to) {
+      const dx = to.left - from.left;
+      const dy =
+        (session.startMinute - session.part.startMinute) * minuteHeight;
+      ghost.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+    }
+    return;
+  }
+  let end = (session.pointerY - rect.top) / minuteHeight + startBound;
+  end = snap(end, step);
+  end = clamp(end, session.part.startMinute + startBound + step, endBound);
+  session.endMinute = end - startBound;
+  if (ghost) {
+    ghost.style.height = `${Math.max(
+      minimumEventHeight,
+      (session.endMinute - session.part.startMinute) * minuteHeight,
+    )}px`;
+  }
+}
+
 export function EventCalendarGrid({
   children,
   className,
@@ -601,51 +839,16 @@ export function EventCalendarGrid({
     const session = sessionRef.current;
     const columns = columnsRef.current;
     if (!session || !columns) return;
-    const rect = columns.getBoundingClientRect();
-    const step = calendar.step;
-    const startBound = dayStart * 60;
-    const endBound = dayEnd * 60;
-    if (session.kind === "move") {
-      let start =
-        (session.pointerY - rect.top - session.grabOffsetY) / minuteHeight +
-        startBound;
-      start = snap(start, step);
-      start = clamp(start, startBound, endBound - session.partDuration);
-      session.startMinute = start - startBound;
-      let day = columnRectsRef.current.findIndex(
-        (column) =>
-          session.pointerX >= column.left &&
-          session.pointerX < column.left + column.width,
-      );
-      if (day < 0) {
-        day =
-          session.pointerX < (columnRectsRef.current[0]?.left ?? 0)
-            ? 0
-            : days.length - 1;
-      }
-      session.dayIndex = day;
-      const ghost = ghostRef.current;
-      const from = columnRectsRef.current[session.originDay];
-      const to = columnRectsRef.current[day];
-      if (ghost && from && to) {
-        const dx = to.left - from.left;
-        const dy =
-          (session.startMinute - session.part.startMinute) * minuteHeight;
-        ghost.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
-      }
-    } else {
-      let end = (session.pointerY - rect.top) / minuteHeight + startBound;
-      end = snap(end, step);
-      end = clamp(end, session.part.startMinute + startBound + step, endBound);
-      session.endMinute = end - startBound;
-      const ghost = ghostRef.current;
-      if (ghost) {
-        ghost.style.height = `${Math.max(
-          minimumEventHeight,
-          (session.endMinute - session.part.startMinute) * minuteHeight,
-        )}px`;
-      }
-    }
+    updateDragSession({
+      session,
+      columns,
+      columnRects: columnRectsRef.current,
+      days,
+      dayStart,
+      dayEnd,
+      step: calendar.step,
+      ghost: ghostRef.current,
+    });
   };
 
   const stopAutoScroll = () => {
@@ -791,22 +994,12 @@ export function EventCalendarGrid({
   useEffect(() => () => stopAutoScrollRef.current(), []);
 
   const applyGhost = (node: HTMLDivElement | null) => {
-    ghostRef.current = node;
-    if (!node) return;
-    const session = sessionRef.current;
-    if (!session) return;
-    if (session.kind === "resize") {
-      node.style.height = `${Math.max(
-        minimumEventHeight,
-        (session.endMinute - session.part.startMinute) * minuteHeight,
-      )}px`;
-      return;
-    }
-    const from = columnRectsRef.current[session.originDay];
-    const to = columnRectsRef.current[session.dayIndex];
-    const dx = from && to ? to.left - from.left : 0;
-    const dy = (session.startMinute - session.part.startMinute) * minuteHeight;
-    node.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+    paintGhost({
+      node,
+      session: sessionRef.current,
+      ghostRef,
+      columnRectsRef,
+    });
   };
 
   return (
@@ -823,67 +1016,22 @@ export function EventCalendarGrid({
         <div
           className={cn(calendar.view === "week" ? "min-w-[34rem]" : "min-w-0")}
         >
-          <div
-            data-slot="event-calendar-days"
-            className="sticky top-0 z-30 flex border-b border-border/70 bg-card"
-          >
-            <div
-              aria-hidden="true"
-              className="sticky start-0 z-10 w-(--event-calendar-gutter) shrink-0 bg-card"
-            />
-            <div
-              className="grid flex-1"
-              style={{
-                gridTemplateColumns: `repeat(${days.length}, minmax(0, 1fr))`,
-              }}
-            >
-              {days.map((day) => {
-                const isToday = todayValue ? isSameDay(day, todayValue) : false;
-                return (
-                  <div
-                    key={day.toString()}
-                    data-slot="event-calendar-day-label"
-                    data-today={isToday || undefined}
-                    className="flex min-w-0 flex-col items-center gap-0.5 py-1.5"
-                  >
-                    <span className="truncate text-xs text-muted-foreground">
-                      {calendar.weekdayShort(day)}
-                    </span>
-                    <span
-                      className={cn(
-                        "grid size-6 place-items-center rounded-full text-sm font-medium tabular-nums",
-                        isToday && "bg-primary text-primary-foreground",
-                      )}
-                    >
-                      {day.day}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          <EventCalendarDaysHeader
+            calendar={calendar}
+            days={days}
+            todayValue={todayValue}
+          />
           <div
             data-slot="event-calendar-body"
             className="relative flex"
             style={{ height: `${totalHeight}px` }}
           >
-            <div
-              data-slot="event-calendar-gutter"
-              aria-hidden="true"
-              className="sticky start-0 z-20 w-(--event-calendar-gutter) shrink-0 bg-card text-xs tabular-nums text-muted-foreground"
-            >
-              {hours.map((hourOfDay) => (
-                <span
-                  key={hourOfDay}
-                  className="absolute end-2 -translate-y-1/2"
-                  style={{
-                    top: `${(hourOfDay - dayStart) * eventCalendarHourHeight}px`,
-                  }}
-                >
-                  {calendar.hourLabel(days[0], hourOfDay)}
-                </span>
-              ))}
-            </div>
+            <EventCalendarGutter
+              calendar={calendar}
+              days={days}
+              dayStart={dayStart}
+              hours={hours}
+            />
             <div
               data-slot="event-calendar-columns"
               ref={columnsRef}
@@ -892,140 +1040,151 @@ export function EventCalendarGrid({
                 gridTemplateColumns: `repeat(${days.length}, minmax(0, 1fr))`,
               }}
             >
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 -z-10"
-              >
-                {hours.map((hour) => (
-                  <div
-                    key={hour}
-                    data-slot="event-calendar-hour-line"
-                    className="absolute inset-x-0 border-t border-border/70"
-                    style={{
-                      top: `${(hour - dayStart) * eventCalendarHourHeight}px`,
-                    }}
-                  />
-                ))}
-                {halfHours.map((hour) => (
-                  <div
-                    key={hour}
-                    data-slot="event-calendar-half-hour-line"
-                    className="absolute inset-x-0 border-t border-dashed border-border/40"
-                    style={{
-                      top: `${(hour - dayStart) * eventCalendarHourHeight + eventCalendarHourHeight / 2}px`,
-                    }}
-                  />
-                ))}
-              </div>
-              {dayEvents.map(({ day, layout }, dayIndex) => {
-                const isToday = todayValue ? isSameDay(day, todayValue) : false;
-                const nowMinute = currentTime
-                  ? currentTime.hour * 60 + currentTime.minute - dayStart * 60
-                  : -1;
-                return (
-                  <section
-                    key={day.toString()}
-                    data-slot="event-calendar-day"
-                    aria-label={calendar.dayLabel(day)}
-                    ref={(node) => {
-                      sectionsRef.current[dayIndex] = node;
-                    }}
-                    className="relative min-w-0 border-s border-border/70 first:border-s-0"
-                  >
-                    {calendar.onSlotAction && (
-                      <div
-                        data-slot="event-calendar-slots"
-                        aria-hidden="true"
-                        className="absolute inset-0 cursor-pointer"
-                        onClick={(pointer) => {
-                          const rect =
-                            pointer.currentTarget.getBoundingClientRect();
-                          const minutes = clamp(
-                            snap(
-                              (pointer.clientY - rect.top) / minuteHeight,
-                              calendar.step,
-                            ),
-                            0,
-                            (dayEnd - dayStart) * 60 - calendar.step,
-                          );
-                          const start = toZoned(
-                            new CalendarDateTime(
-                              day.year,
-                              day.month,
-                              day.day,
-                              dayStart + Math.floor(minutes / 60),
-                              minutes % 60,
-                            ),
-                            timeZone,
-                          );
-                          calendar.onSlotAction?.({
-                            start,
-                            end: start.add({ minutes: calendar.step }),
-                          });
-                        }}
-                      />
-                    )}
-                    {isToday &&
-                      nowMinute >= 0 &&
-                      nowMinute <= (dayEnd - dayStart) * 60 && (
-                        <div
-                          data-slot="event-calendar-now"
-                          aria-hidden="true"
-                          className="pointer-events-none absolute inset-x-0 z-20 h-0.5 bg-foreground transition-[top] duration-500 ease-out-quint motion-reduce:transition-none"
-                          style={{ top: `${nowMinute * minuteHeight}px` }}
-                        >
-                          <span className="absolute -start-1 top-1/2 size-2 -translate-y-1/2 rounded-full bg-foreground" />
-                        </div>
-                      )}
-                    {layout.map((part) => (
-                      <CalendarEventPill
-                        key={part.event.id}
-                        event={part.event}
-                        part={part}
-                        day={day}
-                        dayIndex={dayIndex}
-                        controller={controller}
-                        isDragging={drag?.id === part.event.id}
-                      />
-                    ))}
-                    {layout
-                      .filter((part) => drag?.id === part.event.id)
-                      .map((part) => (
-                        <div
-                          key={`${part.event.id}-ghost`}
-                          ref={applyGhost}
-                          data-slot="event-calendar-ghost"
-                          aria-hidden="true"
-                          className={cn(
-                            "absolute z-30",
-                            eventSurfaceClass,
-                            eventCalendarColorStyles[
-                              part.event.color ?? "default"
-                            ],
-                            "pointer-events-none opacity-80 shadow-(--shadow-float)",
-                          )}
-                          style={{
-                            top: `${part.top}px`,
-                            height: `${part.height}px`,
-                            insetInlineStart: `${(part.column / part.columns) * 100}%`,
-                            width: `calc(${100 / part.columns}% - 2px)`,
-                          }}
-                        >
-                          <EventCalendarEventBody
-                            event={part.event}
-                            time={calendar.eventTime(part.event)}
-                            showTime={part.height >= 36}
-                            renderEvent={calendar.renderEvent}
-                          />
-                        </div>
-                      ))}
-                  </section>
-                );
-              })}
+              <EventCalendarHourLines
+                dayStart={dayStart}
+                halfHours={halfHours}
+                hours={hours}
+              />
+              {dayEvents.map(({ day, layout }, dayIndex) => (
+                <EventCalendarDayColumn
+                  key={day.toString()}
+                  calendar={calendar}
+                  controller={controller}
+                  currentTime={currentTime}
+                  day={day}
+                  dayEnd={dayEnd}
+                  dayIndex={dayIndex}
+                  dayStart={dayStart}
+                  drag={drag}
+                  layout={layout}
+                  onGhost={applyGhost}
+                  sectionsRef={sectionsRef}
+                  timeZone={timeZone}
+                  todayValue={todayValue}
+                />
+              ))}
             </div>
           </div>
         </div>
       )}
+    </section>
+  );
+}
+
+function EventCalendarDayColumn({
+  calendar,
+  controller,
+  currentTime,
+  day,
+  dayEnd,
+  dayIndex,
+  dayStart,
+  drag,
+  layout,
+  onGhost,
+  sectionsRef,
+  timeZone,
+  todayValue,
+}: {
+  calendar: ReturnType<typeof useEventCalendarContext>;
+  controller: DragController;
+  currentTime: ReturnType<typeof useCurrentTime>;
+  day: CalendarDate;
+  dayEnd: number;
+  dayIndex: number;
+  dayStart: number;
+  drag: { id: string; kind: DragKind } | null;
+  layout: CalendarEventLayout[];
+  onGhost: (node: HTMLDivElement | null) => void;
+  sectionsRef: RefObject<(HTMLElement | null)[]>;
+  timeZone: string;
+  todayValue: CalendarDate | null;
+}) {
+  const isToday = todayValue ? isSameDay(day, todayValue) : false;
+  const nowMinute = currentTime
+    ? currentTime.hour * 60 + currentTime.minute - dayStart * 60
+    : -1;
+  return (
+    <section
+      key={day.toString()}
+      data-slot="event-calendar-day"
+      aria-label={calendar.dayLabel(day)}
+      ref={(node) => {
+        sectionsRef.current[dayIndex] = node;
+      }}
+      className="relative min-w-0 border-s border-border/70 first:border-s-0"
+    >
+      {calendar.onSlotAction && (
+        <div
+          data-slot="event-calendar-slots"
+          aria-hidden="true"
+          className="absolute inset-0 cursor-pointer"
+          onClick={(pointer) => {
+            const rect = pointer.currentTarget.getBoundingClientRect();
+            calendar.onSlotAction?.(
+              slotActionRange(
+                pointer.clientY,
+                rect.top,
+                day,
+                dayStart,
+                dayEnd,
+                timeZone,
+                calendar.step,
+              ),
+            );
+          }}
+        />
+      )}
+      {isToday && nowMinute >= 0 && nowMinute <= (dayEnd - dayStart) * 60 && (
+        <div
+          data-slot="event-calendar-now"
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 z-20 h-0.5 bg-foreground transition-[top] duration-500 ease-out-quint motion-reduce:transition-none"
+          style={{ top: `${nowMinute * minuteHeight}px` }}
+        >
+          <span className="absolute -start-1 top-1/2 size-2 -translate-y-1/2 rounded-full bg-foreground" />
+        </div>
+      )}
+      {layout.map((part) => (
+        <CalendarEventPill
+          key={part.event.id}
+          event={part.event}
+          part={part}
+          day={day}
+          dayIndex={dayIndex}
+          controller={controller}
+          isDragging={drag?.id === part.event.id}
+        />
+      ))}
+      {layout
+        .filter((part) => drag?.id === part.event.id)
+        .map((part) => (
+          <div
+            key={`${part.event.id}-ghost`}
+            ref={onGhost}
+            data-slot="event-calendar-ghost"
+            aria-hidden="true"
+            className={cn(
+              "absolute z-30",
+              eventSurfaceClass,
+              eventCalendarColorStyles[part.event.color ?? "default"],
+              "pointer-events-none opacity-80 shadow-(--shadow-float)",
+            )}
+            style={{
+              top: `${part.top}px`,
+              height: `${part.height}px`,
+              insetInlineStart: `${(part.column / part.columns) * 100}%`,
+              width: `calc(${100 / part.columns}% - 2px)`,
+            }}
+          >
+            <EventCalendarEventBody
+              event={part.event}
+              time={calendar.eventTime(part.event)}
+              showTime={part.height >= 36}
+              renderEvent={calendar.renderEvent}
+            />
+          </div>
+        ))}
     </section>
   );
 }

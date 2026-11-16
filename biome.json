@@ -50,6 +50,17 @@
       "formatter": { "enabled": false }
     },
     {
+      "includes": [
+        "src/components/ui/pagination.tsx",
+        "src/components/ui/slider.tsx"
+      ],
+      "linter": {
+        "rules": {
+          "suspicious": { "noArrayIndexKey": "off" }
+        }
+      }
+    },
+    {
       "includes": ["src/components/docs/resizable-*.tsx"],
       "linter": {
         "rules": {

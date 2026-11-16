@@ -8,7 +8,7 @@ import {
 import { cn } from "./utils";
 
 export const collapsibleChevronStyles =
-  "shrink-0 text-muted-foreground transition-transform duration-250 ease-out-quint group-aria-expanded/trigger:rotate-180 motion-reduce:transition-none";
+  "shrink-0 text-muted-foreground transition-transform duration-250 ease-out-quint group-aria-expanded/trigger:rotate-180 group-aria-[expanded=false]/trigger:duration-180 motion-reduce:transition-none";
 
 export function CollapsiblePanel({
   className,
@@ -20,7 +20,7 @@ export function CollapsiblePanel({
       {...props}
       className={composeRenderProps(className, (className) =>
         cn(
-          "h-(--disclosure-panel-height) overflow-clip transition-[height,opacity] duration-250 ease-out-quint aria-hidden:opacity-0 motion-reduce:transition-none",
+          "h-(--disclosure-panel-height) overflow-clip transition-[height,opacity] duration-250 ease-out-quint aria-hidden:opacity-0 aria-hidden:duration-180 motion-reduce:transition-none",
           className,
         ),
       )}

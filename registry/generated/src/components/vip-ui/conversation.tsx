@@ -10,6 +10,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useEffectEvent,
   useLayoutEffect,
   useRef,
   useState,
@@ -85,6 +86,9 @@ export function Conversation({
   const applyPinned = useCallback((next: boolean) => {
     if (pinnedRef.current === next) return;
     pinnedRef.current = next;
+    // The initial scroll prop is applied once from the layout effect; this
+    // guard makes repeated applications a no-op.
+    // react-doctor-disable-next-line react-doctor/no-adjust-state-on-prop-change
     setIsPinned(next);
   }, []);
 
@@ -159,6 +163,8 @@ export function Conversation({
     applyPinned(true);
   }, [applyPinned, initialScroll, threshold, writeBottom, writeScroll]);
 
+  const writeBottomEvent = useEffectEvent(writeBottom);
+
   useEffect(() => {
     const element = contentRef.current;
     if (!element) return;
@@ -188,7 +194,7 @@ export function Conversation({
     const handleScrollEnd = () => {
       if (!smoothRef.current) return;
       smoothRef.current = false;
-      if (pinnedRef.current) writeBottom();
+      if (pinnedRef.current) writeBottomEvent();
     };
     element.addEventListener("scroll", handleScroll, { passive: true });
     element.addEventListener("scrollend", handleScrollEnd);
@@ -196,7 +202,7 @@ export function Conversation({
       element.removeEventListener("scroll", handleScroll);
       element.removeEventListener("scrollend", handleScrollEnd);
     };
-  }, [applyCount, applyPinned, threshold, writeBottom]);
+  }, [applyCount, applyPinned, threshold]);
 
   useEffect(() => {
     const element = contentRef.current;

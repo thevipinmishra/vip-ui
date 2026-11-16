@@ -22,17 +22,18 @@ export interface ColorWheelProps
 
 export function ColorWheel({
   outerRadius = 96,
-  innerRadius = outerRadius - 24,
+  innerRadius,
   className,
   style,
   children,
   ...props
 }: ColorWheelProps) {
+  const inner = innerRadius ?? outerRadius - 24;
   return (
     <AriaColorWheel
       {...props}
       outerRadius={outerRadius}
-      innerRadius={innerRadius}
+      innerRadius={inner}
       data-slot="color-wheel"
       className={composeRenderProps(className, (className) =>
         cn("relative size-fit shrink-0 disabled:opacity-50", className),
@@ -41,7 +42,7 @@ export function ColorWheel({
         style,
         (style) =>
           ({
-            "--color-wheel-inner-size": `${innerRadius * 2}px`,
+            "--color-wheel-inner-size": `${inner * 2}px`,
             ...style,
           }) as CSSProperties,
       )}

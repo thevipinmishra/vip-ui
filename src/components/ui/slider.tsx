@@ -47,7 +47,8 @@ export function Slider({
           </SliderRail>
           {state.values.map((_, index) => (
             <SliderHandle
-              // biome-ignore lint/suspicious/noArrayIndexKey: a handle is its index.
+              // A slider thumb is identified by its value index.
+              // react-doctor-disable-next-line react-doctor/no-array-index-as-key
               key={index}
               index={index}
               aria-label={thumbLabels?.[index]}

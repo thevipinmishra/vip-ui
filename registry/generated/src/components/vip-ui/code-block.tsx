@@ -277,6 +277,92 @@ export interface CodeBlockBodyProps
   children?: ReactNode;
 }
 
+function CodeLine({
+  line,
+  number,
+  highlighted,
+  lineNumbers,
+  wrap,
+}: {
+  line: string;
+  number: number;
+  highlighted: boolean;
+  lineNumbers: boolean;
+  wrap: boolean;
+}) {
+  return (
+    <span
+      data-line={number}
+      data-line-number={number}
+      data-highlighted={highlighted || undefined}
+      className={cn(
+        "block",
+        lineNumbers &&
+          "grid grid-cols-[var(--code-block-gutter)_1fr] gap-x-5 rtl:grid-cols-[1fr_var(--code-block-gutter)] before:col-start-1 rtl:before:col-start-2 before:select-none before:text-end before:text-muted-foreground/70 before:content-[attr(data-line-number)]",
+        wrap ? "whitespace-pre-wrap wrap-anywhere" : "whitespace-pre",
+        highlighted &&
+          "bg-[color-mix(in_oklab,var(--foreground)_6%,transparent)] shadow-[inset_2px_0_0_var(--ring)] rtl:shadow-[inset_-2px_0_0_var(--ring)] forced-colors:border-s-2 forced-colors:border-s-[Highlight]",
+      )}
+    >
+      {line || " "}
+    </span>
+  );
+}
+
+function codeLabel(title: string | undefined) {
+  if (!title || title === "Code") return "Code";
+  return `Code, ${title}`;
+}
+
+function collapsedAnimation(
+  canCollapse: boolean,
+  expanded: boolean,
+  collapsedHeight: string | undefined,
+) {
+  if (!collapsedHeight) return undefined;
+  if (!canCollapse || expanded) return { height: "auto" };
+  return { height: collapsedHeight };
+}
+
+function CodeBlockFade({ expanded }: { expanded: boolean }) {
+  return (
+    <div
+      aria-hidden="true"
+      className={cn(
+        "pointer-events-none absolute inset-x-0 bottom-0 h-16 max-h-1/2 bg-linear-to-b from-muted/0 to-muted/60 transition-opacity duration-200 ease-out-quint",
+        expanded && "opacity-0",
+      )}
+    />
+  );
+}
+
+function CodeBlockExpand({
+  bodyId,
+  expanded,
+  setExpanded,
+}: {
+  bodyId: string;
+  expanded: boolean;
+  setExpanded: (value: boolean) => void;
+}) {
+  return (
+    <div
+      data-slot="code-block-expand"
+      className="flex justify-center pt-1 pb-2"
+    >
+      <Button
+        variant="minimal"
+        size="xs"
+        aria-expanded={expanded}
+        aria-controls={bodyId}
+        onPress={() => setExpanded(!expanded)}
+      >
+        {expanded ? "Show less" : "Show more"}
+      </Button>
+    </div>
+  );
+}
+
 export function CodeBlockBody({
   className,
   children,
@@ -305,7 +391,7 @@ export function CodeBlockBody({
   const gutter = `${Math.max(isStreaming ? 3 : 2, digits)}ch`;
   const collapsedHeight =
     maxLines === undefined ? undefined : `${maxLines * codeLineRem + 1}rem`;
-  const label = title && title !== "Code" ? `Code, ${title}` : "Code";
+  const label = codeLabel(title);
   const highlighted = new Set(highlight);
 
   return (
@@ -318,11 +404,7 @@ export function CodeBlockBody({
       <motion.div
         className={cn("relative", canCollapse && "overflow-hidden")}
         initial={false}
-        animate={
-          collapsedHeight
-            ? { height: !canCollapse || expanded ? "auto" : collapsedHeight }
-            : undefined
-        }
+        animate={collapsedAnimation(canCollapse, expanded, collapsedHeight)}
         transition={transitionFor(reduceMotion, {
           duration: duration.base,
           ease: easeOut,
@@ -351,57 +433,31 @@ export function CodeBlockBody({
                 {children ??
                   lines.map((line, index) => {
                     const number = index + 1;
-                    const isHighlighted = highlighted.has(number);
                     return (
-                      <span
+                      <CodeLine
+                        // Line numbers are the identity of a code line.
+                        // react-doctor-disable-next-line react-doctor/no-array-index-as-key
                         key={number}
-                        data-line={number}
-                        data-line-number={number}
-                        data-highlighted={isHighlighted || undefined}
-                        className={cn(
-                          "block",
-                          lineNumbers &&
-                            "grid grid-cols-[var(--code-block-gutter)_1fr] gap-x-5 rtl:grid-cols-[1fr_var(--code-block-gutter)] before:col-start-1 rtl:before:col-start-2 before:select-none before:text-end before:text-muted-foreground/70 before:content-[attr(data-line-number)]",
-                          wrap
-                            ? "whitespace-pre-wrap wrap-anywhere"
-                            : "whitespace-pre",
-                          isHighlighted &&
-                            "bg-[color-mix(in_oklab,var(--foreground)_6%,transparent)] shadow-[inset_2px_0_0_var(--ring)] rtl:shadow-[inset_-2px_0_0_var(--ring)] forced-colors:border-s-2 forced-colors:border-s-[Highlight]",
-                        )}
-                      >
-                        {line || " "}
-                      </span>
+                        line={line}
+                        number={number}
+                        highlighted={highlighted.has(number)}
+                        lineNumbers={lineNumbers}
+                        wrap={wrap}
+                      />
                     );
                   })}
               </code>
             </pre>
           </section>
         </div>
-        {canCollapse && (
-          <div
-            aria-hidden="true"
-            className={cn(
-              "pointer-events-none absolute inset-x-0 bottom-0 h-16 max-h-1/2 bg-linear-to-b from-muted/0 to-muted/60 transition-opacity duration-200 ease-out-quint",
-              expanded && "opacity-0",
-            )}
-          />
-        )}
+        {canCollapse && <CodeBlockFade expanded={expanded} />}
       </motion.div>
       {canCollapse && (
-        <div
-          data-slot="code-block-expand"
-          className="flex justify-center pt-1 pb-2"
-        >
-          <Button
-            variant="minimal"
-            size="xs"
-            aria-expanded={expanded}
-            aria-controls={bodyId}
-            onPress={() => setExpanded(!expanded)}
-          >
-            {expanded ? "Show less" : "Show more"}
-          </Button>
-        </div>
+        <CodeBlockExpand
+          bodyId={bodyId}
+          expanded={expanded}
+          setExpanded={setExpanded}
+        />
       )}
     </div>
   );

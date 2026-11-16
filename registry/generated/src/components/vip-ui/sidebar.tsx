@@ -133,18 +133,17 @@ export function SidebarProvider({
   useEffect(() => {
     const node = providerRef.current;
     if (!node) return;
-    const update = () =>
-      setIsWide(node.getBoundingClientRect().width >= SIDEBAR_QUERY);
+    const update = () => {
+      const wide = node.getBoundingClientRect().width >= SIDEBAR_QUERY;
+      setIsWide(wide);
+      if (wide) setMobileOpen(false);
+    };
     update();
     setIsRtl(getComputedStyle(node).direction === "rtl");
     const observer = new ResizeObserver(update);
     observer.observe(node);
     return () => observer.disconnect();
   }, []);
-
-  useEffect(() => {
-    if (isWide) setMobileOpen(false);
-  }, [isWide]);
 
   useEffect(() => {
     if (isOpen || !restoreFocus.current) return;
@@ -177,7 +176,7 @@ export function SidebarProvider({
         collapsible === "icon"
       )
         setOpen(!isOpen);
-      else setMobileOpen(!isMobileOpen);
+      else setMobileOpen((open) => !open);
     };
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);

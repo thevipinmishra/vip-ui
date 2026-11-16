@@ -52,10 +52,17 @@ function nudge(panel: HTMLElement | null) {
   if (!panel || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const phone = !matchMedia("(min-width: 40rem)").matches;
   panel.animate(
-    phone
-      ? { translate: ["0 0", "0 -0.375rem", "0 0"] }
-      : { scale: ["1", "1.015", "1"] },
-    { duration: 320, easing: "cubic-bezier(0.23, 1, 0.32, 1)" },
+    {
+      ...(phone
+        ? { translate: ["0 0", "0 -0.375rem", "0 0"] }
+        : { scale: ["1", "1.015", "1"] }),
+      offset: [0, 0.35, 1],
+      easing: [
+        "cubic-bezier(0.23, 1, 0.32, 1)",
+        "cubic-bezier(0.37, 0, 0.63, 1)",
+      ],
+    },
+    { duration: 320 },
   );
 }
 

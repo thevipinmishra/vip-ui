@@ -250,9 +250,9 @@ export function ResizableGroup({
       const index = current.findIndex((panel) => panel.key === key);
       if (index === -1) return [...current, { key, config }];
       if (current[index].config === config) return current;
-      const next = current.slice();
-      next[index] = { key, config };
-      return next;
+      return current.map((panel, position) =>
+        position === index ? { key, config } : panel,
+      );
     });
   }, []);
   const unregisterPanel = useCallback((key: string) => {
@@ -394,6 +394,36 @@ export function ResizablePanel({
   );
 }
 
+function handleClassName(horizontal: boolean, className?: string) {
+  return cn(
+    "group/handle relative z-10 flex shrink-0 touch-none items-center justify-center bg-border outline-transparent outline-offset-4 transition-[outline-color,outline-offset] duration-150 ease-out-quint focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 forced-colors:bg-[ButtonBorder]",
+    "after:pointer-events-none after:absolute after:rounded-full after:bg-ring/60 after:opacity-0 after:transition-[opacity] after:duration-150 after:delay-0 after:ease-out-quint hover:after:opacity-100 hover:after:delay-150 focus-visible:after:opacity-100 data-[dragging]:after:opacity-100 data-[dragging]:after:delay-0 forced-colors:after:bg-[Highlight]",
+    horizontal
+      ? "w-px cursor-col-resize before:absolute before:inset-y-0 before:-inset-x-[3.5px] after:inset-y-0 after:left-1/2 after:w-0.5 after:-translate-x-1/2"
+      : "h-px cursor-row-resize before:absolute before:inset-x-0 before:-inset-y-[3.5px] after:inset-x-0 after:top-1/2 after:h-0.5 after:-translate-y-1/2",
+    className,
+  );
+}
+
+function ResizableGrip({ horizontal }: { horizontal: boolean }) {
+  return (
+    <span
+      aria-hidden="true"
+      data-slot="resizable-grip"
+      className={cn(
+        "pointer-events-none absolute top-1/2 left-1/2 z-10 grid -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-border text-muted-foreground forced-colors:bg-[ButtonFace]",
+        horizontal ? "h-6 w-3" : "h-3 w-6",
+      )}
+    >
+      {horizontal ? (
+        <DotsSixVerticalIcon size={10} aria-hidden="true" />
+      ) : (
+        <DotsSixIcon size={10} aria-hidden="true" />
+      )}
+    </span>
+  );
+}
+
 export function ResizableHandle({
   withGrip = false,
   isDisabled: disabled = false,
@@ -443,35 +473,13 @@ export function ResizableHandle({
       collapsedMin != null ? Math.round(collapsedMin) : undefined,
     style,
     onDoubleClick: handleDoubleClick,
-    className: cn(
-      "group/handle relative z-10 flex shrink-0 touch-none items-center justify-center bg-border outline-transparent outline-offset-4 transition-[outline-color,outline-offset] duration-150 ease-out-quint focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 forced-colors:bg-[ButtonBorder]",
-      "after:pointer-events-none after:absolute after:rounded-full after:bg-ring/60 after:opacity-0 after:transition-[opacity] after:duration-150 after:delay-0 after:ease-out-quint hover:after:opacity-100 hover:after:delay-150 focus-visible:after:opacity-100 data-[dragging]:after:opacity-100 data-[dragging]:after:delay-0 forced-colors:after:bg-[Highlight]",
-      horizontal
-        ? "w-px cursor-col-resize before:absolute before:inset-y-0 before:-inset-x-[3.5px] after:inset-y-0 after:left-1/2 after:w-0.5 after:-translate-x-1/2"
-        : "h-px cursor-row-resize before:absolute before:inset-x-0 before:-inset-y-[3.5px] after:inset-x-0 after:top-1/2 after:h-0.5 after:-translate-y-1/2",
-      className,
-    ),
+    className: handleClassName(horizontal, className),
   });
 
   return (
     <ResizableHandleContext value={{ id: triggerId, disabled }}>
       <div {...merged} ref={ref} data-slot="resizable-handle">
-        {withGrip && (
-          <span
-            aria-hidden="true"
-            data-slot="resizable-grip"
-            className={cn(
-              "pointer-events-none absolute top-1/2 left-1/2 z-10 grid -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-border text-muted-foreground forced-colors:bg-[ButtonFace]",
-              horizontal ? "h-6 w-3" : "h-3 w-6",
-            )}
-          >
-            {horizontal ? (
-              <DotsSixVerticalIcon size={10} aria-hidden="true" />
-            ) : (
-              <DotsSixIcon size={10} aria-hidden="true" />
-            )}
-          </span>
-        )}
+        {withGrip && <ResizableGrip horizontal={horizontal} />}
         {children}
       </div>
     </ResizableHandleContext>

@@ -215,7 +215,7 @@ export function ThemeStudio({
             code={themeCss(theme)}
             label={`Copy ${theme.name} CSS`}
             text="Copy CSS"
-            className="h-11 px-4"
+            className="h-10 px-4"
           />
         </PageActions>
       </PageHeader>

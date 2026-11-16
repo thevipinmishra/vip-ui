@@ -45,12 +45,19 @@ export function TextReveal({
   const reducedMotion = useReducedMotion();
   const visible = reducedMotion || trigger === "mount" || inView;
   const tokens = useMemo(() => tokenize(text, split), [text, split]);
+  const totals = useMemo(() => {
+    const counts: number[] = [];
+    tokens.reduce((count, token) => {
+      counts.push(count);
+      return count + token.units.length;
+    }, 0);
+    return counts;
+  }, [tokens]);
   const total = tokens.reduce((count, token) => count + token.units.length, 0);
   const step = Math.min(stagger, maxStagger / Math.max(total - 1, 1));
-  let order = 0;
 
-  function unit(value: string, key: string) {
-    const unitDelay = delay + order++ * step;
+  function unit(value: string, key: string, order: number) {
+    const unitDelay = delay + order * step;
     return (
       <span
         key={key}
@@ -81,14 +88,15 @@ export function TextReveal({
     >
       <span className="sr-only">{text}</span>
       <span aria-hidden="true">
-        {tokens.map(({ value, offset, units }) => {
+        {tokens.map(({ value, offset, units }, tokenIndex) => {
           const key = `${text}-${offset}`;
+          const order = totals[tokenIndex];
           if (!units.length) return <span key={key}>{value}</span>;
-          if (split === "words") return unit(value, key);
+          if (split === "words") return unit(value, key, order);
           return (
             <span key={key} className="inline-block">
               {units.map((character, index) =>
-                unit(character, `${key}-${index}`),
+                unit(character, `${key}-${index}`, order + index),
               )}
             </span>
           );

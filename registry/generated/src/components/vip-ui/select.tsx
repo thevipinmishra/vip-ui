@@ -35,12 +35,12 @@ import { SelectionMark } from "./list-box";
 import { Popover } from "./popover";
 import type { Size } from "./size";
 
-const selectTriggerStyles = `${fieldHeight} ${fieldRadius} ${fieldText} group/trigger relative flex w-full min-w-0 cursor-pointer items-center border border-input bg-card ps-(--field-px,0.875rem) pe-[calc(var(--field-px,0.875rem)+var(--field-icon,1rem)+0.625rem)] text-start leading-6 text-foreground shadow-(--shadow-card) outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-out-quint hover:border-primary/45 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring group-invalid:border-destructive group-invalid:hover:border-destructive group-invalid:focus-visible:border-destructive group-invalid:focus-visible:ring-destructive disabled:cursor-default disabled:bg-muted disabled:opacity-60 sm:leading-5`;
+const selectTriggerStyles = `${fieldHeight} ${fieldRadius} ${fieldText} group/trigger relative flex w-full min-w-0 cursor-pointer items-center border border-input bg-card ps-(--field-px,0.75rem) pe-[calc(var(--field-px,0.75rem)+var(--field-icon,1rem)+0.625rem)] text-start leading-6 text-foreground shadow-(--shadow-card) outline-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-out-quint hover:border-primary/45 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring group-invalid:border-destructive group-invalid:hover:border-destructive group-invalid:focus-visible:border-destructive group-invalid:focus-visible:ring-destructive disabled:cursor-default disabled:bg-muted disabled:opacity-60 sm:leading-5`;
 const selectValueStyles =
   "min-w-0 flex-1 self-center truncate text-start data-placeholder:text-muted-foreground";
-const selectItemStyles = `group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none transition-colors duration-150 ease-out-quint selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50 ${itemHighlightRing}`;
+const selectItemStyles = `group/item flex min-h-9 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none transition-colors duration-150 ease-out-quint selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50 ${itemHighlightRing}`;
 const selectPopoverStyles =
-  "w-(--trigger-width) rounded-lg border-0 p-1.5 ring-1 ring-border/70";
+  "w-(--trigger-width) rounded-lg border-0 p-1 ring-1 ring-border/70";
 
 export interface SelectOption {
   id: string;
@@ -139,7 +139,7 @@ export function Select({
               data-slot="select-list-box"
               render={withItemHighlight(undefined, { ring: true })}
               items={options ?? []}
-              className="grid gap-1 outline-none"
+              className="grid gap-0.5 outline-none"
             >
               {(option) => (
                 <ListBoxItem
@@ -210,7 +210,7 @@ function SelectChevron() {
       data-slot="select-chevron"
       className={cn(
         fieldIcon,
-        "pointer-events-none absolute inset-y-0 inset-e-(--field-px,0.875rem) grid place-items-center text-muted-foreground",
+        "pointer-events-none absolute inset-y-0 inset-e-(--field-px,0.75rem) grid place-items-center text-muted-foreground",
       )}
     >
       <span className={fieldChevronStyles}>
@@ -260,7 +260,7 @@ export function SelectContent<T extends object>({
       <ListBox
         data-slot="select-list-box"
         render={withItemHighlight(undefined, { ring: true })}
-        className="grid gap-1 outline-none"
+        className="grid gap-0.5 outline-none"
       >
         {children}
       </ListBox>
@@ -314,12 +314,12 @@ export function SelectSection<T extends object>({
     <ListBoxSection
       {...props}
       data-slot="select-section"
-      className={cn("grid gap-1", className)}
+      className={cn("grid gap-0.5", className)}
     >
       {title && (
         <Header
           data-slot="select-header"
-          className="sticky -top-1.5 z-20 -mx-1.5 bg-popover px-4 pt-2 pb-1 text-xs font-medium text-muted-foreground"
+          className="sticky -top-1 z-20 -mx-1 bg-popover px-3.5 pt-2 pb-1 text-xs font-medium text-muted-foreground"
         >
           {title}
         </Header>

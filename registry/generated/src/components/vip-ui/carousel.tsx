@@ -148,6 +148,9 @@ export function Carousel({
       update();
       onChangeEvent(api.selectedScrollSnap());
     };
+    // Embla is an external store: the first snapshot is only readable after
+    // the viewport mounts, so the effect publishes it once.
+    // react-doctor-disable-next-line react-hooks-js/set-state-in-effect
     update();
     api.on("select", select);
     api.on("reInit", update);
@@ -159,7 +162,10 @@ export function Carousel({
     };
   }, [api, update]);
 
+  // `setApi` is the documented Embla handle and only exists after the viewport
+  // mounts, so it has to be published from an effect.
   useEffect(() => {
+    // react-doctor-disable-next-line react-doctor/no-pass-data-to-parent, react-doctor/no-pass-live-state-to-parent, react-doctor/no-prop-callback-in-effect
     if (api) onApiEvent(api);
   }, [api]);
 
@@ -232,6 +238,27 @@ export interface CarouselViewportProps extends ComponentProps<"div"> {
   trackClassName?: string;
 }
 
+function viewportMask(
+  vertical: boolean,
+  rtl: boolean,
+  canScrollPrev: boolean,
+  canScrollNext: boolean,
+) {
+  if (!canScrollPrev && !canScrollNext) return undefined;
+  const from = canScrollPrev ? "transparent" : "black";
+  const to = canScrollNext ? "transparent" : "black";
+  if (vertical)
+    return `linear-gradient(to bottom, ${from}, black var(--carousel-fade), black calc(100% - var(--carousel-fade)), ${to})`;
+  return `linear-gradient(${rtl ? "to left" : "to right"}, ${from}, black ${canScrollPrev ? "var(--carousel-fade)" : "0px"}, black calc(100% - var(--carousel-fade)), ${to})`;
+}
+
+function viewportArrowKeys(vertical: boolean, rtl: boolean) {
+  if (vertical) return { next: "ArrowDown", previous: "ArrowUp" };
+  return rtl
+    ? { next: "ArrowLeft", previous: "ArrowRight" }
+    : { next: "ArrowRight", previous: "ArrowLeft" };
+}
+
 export function CarouselViewport({
   className,
   children,
@@ -258,12 +285,8 @@ export function CarouselViewport({
   }, []);
 
   const fade = canScrollPrev || canScrollNext;
-  const from = canScrollPrev ? "transparent" : "black";
-  const to = canScrollNext ? "transparent" : "black";
   const maskImage = fade
-    ? vertical
-      ? `linear-gradient(to bottom, ${from}, black var(--carousel-fade), black calc(100% - var(--carousel-fade)), ${to})`
-      : `linear-gradient(${rtl ? "to left" : "to right"}, ${from}, black ${canScrollPrev ? "var(--carousel-fade)" : "0px"}, black calc(100% - var(--carousel-fade)), ${to})`
+    ? viewportMask(vertical, rtl, canScrollPrev, canScrollNext)
     : undefined;
 
   return (
@@ -289,19 +312,10 @@ export function CarouselViewport({
         if (!carousel || event.defaultPrevented) return;
         if (event.target !== event.currentTarget) return;
         const isRtl = getComputedStyle(event.currentTarget).direction === "rtl";
-        const nextKey = vertical
-          ? "ArrowDown"
-          : isRtl
-            ? "ArrowLeft"
-            : "ArrowRight";
-        const previousKey = vertical
-          ? "ArrowUp"
-          : isRtl
-            ? "ArrowRight"
-            : "ArrowLeft";
-        if (event.key !== nextKey && event.key !== previousKey) return;
+        const { next, previous } = viewportArrowKeys(vertical, isRtl);
+        if (event.key !== next && event.key !== previous) return;
         event.preventDefault();
-        if (event.key === nextKey) carousel.scrollNext();
+        if (event.key === next) carousel.scrollNext();
         else carousel.scrollPrev();
       }}
       style={{ maskImage, ...style }}

@@ -20,6 +20,34 @@ export interface MessageProps extends ComponentProps<"article"> {
   actions?: ReactNode;
 }
 
+const sideLayout = {
+  incoming: undefined,
+  outgoing: "justify-end",
+  system: "justify-center",
+} as const;
+
+const bubbleStyles = {
+  incoming: "rounded-ss-md border border-border bg-card text-card-foreground",
+  outgoing: "rounded-se-md bg-accent text-accent-foreground",
+  system: "bg-muted/70 text-muted-foreground",
+} as const;
+
+function MessageTime({
+  timestamp,
+  dateTime,
+}: {
+  timestamp: string;
+  dateTime?: string;
+}) {
+  return dateTime ? (
+    <time dateTime={dateTime} data-slot="message-time">
+      {timestamp}
+    </time>
+  ) : (
+    <span data-slot="message-time">{timestamp}</span>
+  );
+}
+
 export function Message({
   sender,
   side = "incoming",
@@ -42,8 +70,7 @@ export function Message({
       aria-label={props["aria-label"] ?? `Message from ${sender}`}
       className={cn(
         "group/message flex min-w-0 items-start gap-2",
-        side === "outgoing" && "justify-end",
-        side === "system" && "justify-center",
+        sideLayout[side],
         className,
       )}
     >
@@ -67,11 +94,7 @@ export function Message({
           data-slot="message-content"
           className={cn(
             "min-w-0 whitespace-pre-wrap wrap-anywhere rounded-2xl px-3.5 py-2 text-sm leading-6",
-            side === "outgoing" &&
-              "rounded-se-md bg-accent text-accent-foreground",
-            side === "incoming" &&
-              "rounded-ss-md border border-border bg-card text-card-foreground",
-            side === "system" && "bg-muted/70 text-muted-foreground",
+            bubbleStyles[side],
           )}
         >
           {children}
@@ -80,18 +103,12 @@ export function Message({
           <div
             className={cn(
               "mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 px-1 text-xs text-muted-foreground",
-              side === "outgoing" && "justify-end",
-              side === "system" && "justify-center",
+              sideLayout[side],
             )}
           >
-            {timestamp &&
-              (dateTime ? (
-                <time dateTime={dateTime} data-slot="message-time">
-                  {timestamp}
-                </time>
-              ) : (
-                <span data-slot="message-time">{timestamp}</span>
-              ))}
+            {timestamp && (
+              <MessageTime timestamp={timestamp} dateTime={dateTime} />
+            )}
             {status && <span data-slot="message-status">{status}</span>}
             {actions && (
               <div

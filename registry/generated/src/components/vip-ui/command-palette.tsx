@@ -1,7 +1,13 @@
 "use client";
 
 import { MagnifyingGlassIcon } from "@phosphor-icons/react";
-import { type ReactNode, useEffect, useLayoutEffect, useRef } from "react";
+import {
+  type ReactNode,
+  useEffect,
+  useEffectEvent,
+  useLayoutEffect,
+  useRef,
+} from "react";
 import {
   Collection,
   composeRenderProps,
@@ -116,7 +122,7 @@ function CommandPaletteList({
         ref={listRef}
         aria-label={title}
         autoFocus="first"
-        className="min-h-0 max-h-[min(20rem,calc(var(--visual-viewport-height,100dvh)-7rem))] shrink-0 content-start gap-1 overflow-y-auto overscroll-contain p-2 data-empty:content-center"
+        className="min-h-0 max-h-[min(20rem,calc(var(--visual-viewport-height,100dvh)-7rem))] shrink-0 content-start gap-0.5 overflow-y-auto overscroll-contain p-2 data-empty:content-center"
         renderEmptyState={() => (
           <div className="grid content-center justify-items-center gap-2 px-3 py-8 text-center text-sm text-muted-foreground">
             <MagnifyingGlassIcon
@@ -156,24 +162,26 @@ export function CommandPalette({
   shortcut = true,
   className,
 }: CommandPaletteProps) {
+  const onShortcut = useEffectEvent((event: KeyboardEvent) => {
+    if (
+      event.key.toLowerCase() === "k" &&
+      (event.metaKey || event.ctrlKey) &&
+      !event.altKey &&
+      !event.shiftKey &&
+      !event.repeat &&
+      !event.defaultPrevented
+    ) {
+      event.preventDefault();
+      onOpenChange(!isOpen);
+    }
+  });
+
   useEffect(() => {
     if (!shortcut) return;
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (
-        event.key.toLowerCase() === "k" &&
-        (event.metaKey || event.ctrlKey) &&
-        !event.altKey &&
-        !event.shiftKey &&
-        !event.repeat &&
-        !event.defaultPrevented
-      ) {
-        event.preventDefault();
-        onOpenChange(!isOpen);
-      }
-    };
+    const onKeyDown = (event: KeyboardEvent) => onShortcut(event);
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
-  }, [isOpen, onOpenChange, shortcut]);
+  }, [shortcut]);
 
   return (
     <DialogContent
@@ -254,9 +262,9 @@ export function CommandPaletteSection<T extends object>({
     <MenuSection
       {...props}
       data-slot="command-palette-section"
-      className={cn("grid gap-1 not-first:mt-2", className)}
+      className={cn("grid gap-0.5 not-first:mt-2", className)}
     >
-      <Header className="px-3 pt-1 pb-0.5 text-xs font-medium text-muted-foreground">
+      <Header className="px-2.5 pt-1 pb-0.5 text-xs font-medium text-muted-foreground">
         {title}
       </Header>
       <Collection items={items} dependencies={dependencies}>

@@ -19,11 +19,10 @@ const DEFAULT_GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 const GLYPH_INTERVAL = 0.05;
 
+const segmenter = new Intl.Segmenter(undefined, { granularity: "grapheme" });
+
 function graphemes(text: string) {
-  return Array.from(
-    new Intl.Segmenter(undefined, { granularity: "grapheme" }).segment(text),
-    ({ segment }) => segment,
-  );
+  return Array.from(segmenter.segment(text), ({ segment }) => segment);
 }
 
 function matchCase(glyph: string, source: string | undefined) {
@@ -52,7 +51,10 @@ export function TextScramble({
   className,
   ...props
 }: TextScrambleProps) {
-  const [display, setDisplay] = useState(value);
+  const [frame, setFrame] = useState<{ value: string; text: string } | null>(
+    null,
+  );
+  const display = frame?.value === value ? frame.text : value;
   const previousValue = useRef(value);
   const source = useRef<string[]>([]);
   const progress = useMotionValue(1);
@@ -67,8 +69,9 @@ export function TextScramble({
     );
     const resolved = Math.floor(latest * characters.length);
     const tick = Math.floor((latest * duration) / GLYPH_INTERVAL);
-    setDisplay(
-      Array.from({ length }, (_, index) => {
+    setFrame({
+      value,
+      text: Array.from({ length }, (_, index) => {
         const target = characters[index];
         if (index < resolved || (target && target === from[index]))
           return target;
@@ -76,7 +79,7 @@ export function TextScramble({
         if (/^\s$/u.test(reference)) return reference;
         return matchCase(pick(alphabet, index, tick), reference);
       }).join(""),
-    );
+    });
   });
 
   useLayoutEffect(() => {

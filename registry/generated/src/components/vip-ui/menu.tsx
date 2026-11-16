@@ -73,7 +73,7 @@ export function MenuPopover({
       maxHeight={props.maxHeight ?? 300}
       className={composeRenderProps(className, (className) =>
         cn(
-          "min-w-[min(11rem,calc(100vw-2rem))] rounded-lg border-0 p-1.5 ring-1 ring-border/70",
+          "min-w-[min(11rem,calc(100vw-2rem))] rounded-lg border-0 p-1 ring-1 ring-border/70",
           className,
         ),
       )}
@@ -94,7 +94,7 @@ export function MenuContent<T extends object>({
       data-slot="menu-content"
       render={withItemHighlight(render, { ring: true })}
       className={composeRenderProps(className, (className) =>
-        cn("grid gap-1 outline-none wrap-anywhere", className),
+        cn("grid gap-0.5 outline-none wrap-anywhere", className),
       )}
     />
   );
@@ -120,7 +120,7 @@ export function MenuItem<T extends object>({
       data-variant={variant}
       className={composeRenderProps(className, (className) =>
         cn(
-          "group/item flex min-h-11 cursor-pointer items-center gap-2.5 rounded-md px-3 py-2 text-sm text-foreground outline-none transition-colors duration-150 ease-out-quint open:bg-muted selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 *:data-[slot=kbd]:ms-auto",
+          "group/item flex min-h-9 cursor-pointer items-center gap-2.5 rounded-md px-2.5 py-2 text-sm text-foreground outline-none transition-colors duration-150 ease-out-quint open:bg-muted selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 *:data-[slot=kbd]:ms-auto",
           variant === "destructive" &&
             "text-destructive [&>svg]:text-destructive",
           itemHighlightRing,
@@ -165,12 +165,12 @@ export function MenuSection<T extends object>({
     <AriaMenuSection
       {...props}
       data-slot="menu-section"
-      className={cn("grid gap-1", className)}
+      className={cn("grid gap-0.5", className)}
     >
       {title && (
         <Header
           data-slot="menu-header"
-          className="px-3 pt-1.5 pb-0.5 text-xs font-medium text-muted-foreground"
+          className="px-2.5 pt-1.5 pb-0.5 text-xs font-medium text-muted-foreground"
         >
           {title}
         </Header>

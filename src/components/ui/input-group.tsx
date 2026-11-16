@@ -35,7 +35,7 @@ export function InputGroup({ size, className, ...props }: InputGroupProps) {
         cn(
           fieldHeight,
           fieldRadius,
-          "flex w-full min-w-0 items-center gap-x-2 border border-input bg-card ps-(--field-px,0.875rem) pe-(--field-px,0.875rem) text-foreground shadow-(--shadow-card) hover:border-primary/45 data-focus-within:border-ring data-focus-within:ring-1 data-focus-within:ring-ring data-invalid:border-destructive data-invalid:hover:border-destructive data-invalid:data-focus-within:border-destructive data-invalid:data-focus-within:ring-destructive data-disabled:bg-muted data-disabled:opacity-60 data-disabled:shadow-none data-disabled:hover:border-input has-[>[data-align=block-end]]:flex-wrap has-[>[data-align=inline]:first-child_button]:ps-(--field-inset,0.25rem) has-[>[data-align=inline]:last-child_button]:pe-(--field-inset,0.25rem)",
+          "flex w-full min-w-0 items-center gap-x-2 border border-input bg-card ps-(--field-px,0.75rem) pe-(--field-px,0.75rem) text-foreground shadow-(--shadow-card) hover:border-primary/45 data-focus-within:border-ring data-focus-within:ring-1 data-focus-within:ring-ring data-invalid:border-destructive data-invalid:hover:border-destructive data-invalid:data-focus-within:border-destructive data-invalid:data-focus-within:ring-destructive data-disabled:bg-muted data-disabled:opacity-60 data-disabled:shadow-none data-disabled:hover:border-input has-[>[data-align=block-end]]:flex-wrap has-[>[data-align=inline]:first-child_button]:ps-(--field-inset,0.25rem) has-[>[data-align=inline]:last-child_button]:pe-(--field-inset,0.25rem)",
           size && fieldSizeStyles[size],
           className,
         ),

@@ -393,6 +393,9 @@ export function LightboxContent({
 
   useLayoutEffect(() => {
     if (!isOpen) return;
+    // Opening starts a fresh enter transition, so the presentation state
+    // resets in the same commit.
+    // react-doctor-disable-next-line react-hooks-js/set-state-in-effect
     setPhase("entering");
     setSwipe(0);
     setDragging(false);
@@ -415,6 +418,8 @@ export function LightboxContent({
     previousRef.current = current;
   });
 
+  // Settling the phase needs the measured layout from the open effect above.
+  // react-doctor-disable-next-line react-doctor/no-effect-chain
   useLayoutEffect(() => {
     if (!isOpen || measured === 0) return;
     carouselApiRef.current?.scrollTo(current, true);
@@ -424,6 +429,8 @@ export function LightboxContent({
       originRef.current,
       image ? layoutBox(image) : null,
     );
+    // The enter phase ends once the measured image is in place.
+    // react-doctor-disable-next-line react-hooks-js/set-state-in-effect
     setPhase("idle");
   }, [current, isOpen, measured, originRef]);
 
@@ -619,6 +626,36 @@ export interface LightboxImageProps
   children?: ReactNode;
 }
 
+function swipeStyle(swipe: number) {
+  return { translate: swipe ? `0 ${swipe}px` : undefined };
+}
+
+function imageClasses(caption: boolean, dragging: boolean, settling: boolean) {
+  return cn(
+    "min-h-0 max-w-full select-none object-contain",
+    caption ? "max-h-[calc(100%-2rem)]" : "max-h-full",
+    motionClasses,
+    dragging && "transition-none",
+    settling && "duration-350 ease-spring",
+    zoomClasses,
+  );
+}
+
+function placeholderClasses(
+  caption: boolean,
+  dragging: boolean,
+  settling: boolean,
+) {
+  return cn(
+    "grid w-full place-items-center",
+    caption ? "h-[calc(100%-2rem)]" : "h-full min-h-0",
+    motionClasses,
+    dragging && "transition-none",
+    settling && "duration-350 ease-spring",
+    zoomClasses,
+  );
+}
+
 export function LightboxImage({
   src,
   alt,
@@ -698,7 +735,7 @@ export function LightboxImage({
       onPointerCancel={endDrag}
       className={cn(
         "flex h-full min-h-0 touch-pan-x flex-col items-center justify-center",
-        caption ? "gap-3" : "",
+        caption && "gap-3",
         className,
       )}
     >
@@ -710,28 +747,14 @@ export function LightboxImage({
           width={width}
           height={height}
           draggable={false}
-          style={{ translate: swipe ? `0 ${swipe}px` : undefined }}
-          className={cn(
-            "min-h-0 max-w-full select-none object-contain",
-            caption ? "max-h-[calc(100%-2rem)]" : "max-h-full",
-            motionClasses,
-            dragging && "transition-none",
-            settling && "duration-350 ease-spring",
-            zoomClasses,
-          )}
+          style={swipeStyle(swipe)}
+          className={imageClasses(Boolean(caption), dragging, settling)}
         />
       ) : (
         <div
           data-lightbox-source=""
-          style={{ translate: swipe ? `0 ${swipe}px` : undefined }}
-          className={cn(
-            "grid w-full place-items-center",
-            caption ? "h-[calc(100%-2rem)]" : "h-full min-h-0",
-            motionClasses,
-            dragging && "transition-none",
-            settling && "duration-350 ease-spring",
-            zoomClasses,
-          )}
+          style={swipeStyle(swipe)}
+          className={placeholderClasses(Boolean(caption), dragging, settling)}
         >
           {children}
         </div>

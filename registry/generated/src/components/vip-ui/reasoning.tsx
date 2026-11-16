@@ -11,6 +11,7 @@ import {
   type ReactNode,
   useContext,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
 } from "react";
@@ -79,6 +80,8 @@ export function Reasoning({
 
   useEffect(() => {
     if (status !== "thinking" || duration !== undefined) return;
+    // Restarting the timer resets the displayed seconds for the new run.
+    // react-doctor-disable-next-line react-hooks-js/set-state-in-effect
     setElapsed(0);
     const startedAt = Date.now();
     const id = window.setInterval(() => {
@@ -206,7 +209,10 @@ export function ReasoningPanel({
   const bodyRef = useRef<HTMLDivElement | null>(null);
   const thinking = status === "thinking";
   const thinkingRef = useRef(thinking);
-  thinkingRef.current = thinking;
+
+  useLayoutEffect(() => {
+    thinkingRef.current = thinking;
+  });
 
   useEffect(() => {
     const element = contentRef.current;

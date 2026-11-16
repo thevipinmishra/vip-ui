@@ -1893,6 +1893,26 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           description: "The placeholder shown in each empty box.",
         },
         {
+          name: "isDisabled",
+          type: "boolean",
+          description: "Disables every box and the hidden input.",
+        },
+        {
+          name: "isReadOnly",
+          type: "boolean",
+          description: "Keeps the value but stops changes.",
+        },
+        {
+          name: "isRequired",
+          type: "boolean",
+          description: "Requires a value before the owning form submits.",
+        },
+        {
+          name: "isInvalid",
+          type: "boolean",
+          description: "Marks the boxes and the error message as invalid.",
+        },
+        {
           name: "children",
           type: "ReactNode",
           description:

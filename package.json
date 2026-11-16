@@ -6,7 +6,7 @@
   "scripts": {
     "predev": "pnpm registry:build",
     "dev": "next dev",
-    "prebuild": "pnpm registry:build",
+    "prebuild": "pnpm registry:build && pnpm test:doctor",
     "build": "next build",
     "palette:build": "node scripts/generate-palettes.mjs && biome format --write src/lib/palette-data.ts",
     "registry:build": "node scripts/generate-registry.mjs && biome format --write public/r registry.json",

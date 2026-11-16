@@ -226,7 +226,7 @@ export function CalendarHeader({
           <CaretLeftIcon aria-hidden="true" className="rtl:rotate-180" />
         </Button>
       ) : (
-        <span aria-hidden="true" className="size-11 shrink-0" />
+        <span aria-hidden="true" className="size-10 shrink-0" />
       )}
       {children ? (
         <div
@@ -247,7 +247,7 @@ export function CalendarHeader({
           <CaretRightIcon aria-hidden="true" className="rtl:rotate-180" />
         </Button>
       ) : (
-        <span aria-hidden="true" className="size-11 shrink-0" />
+        <span aria-hidden="true" className="size-10 shrink-0" />
       )}
     </div>
   );
