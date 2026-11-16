@@ -7,6 +7,7 @@ import {
   createContext,
   type ReactNode,
   type Ref,
+  type RefObject,
   useCallback,
   useContext,
   useEffect,
@@ -28,6 +29,7 @@ import { InputGroup, InputGroupAddon } from "./input-group";
 import { Spinner } from "./spinner";
 
 const ease = "cubic-bezier(0.23, 1, 0.32, 1)";
+const swing = "cubic-bezier(0.37, 0, 0.63, 1)";
 
 function stableId(value: string) {
   return value.replace(/[^a-zA-Z0-9_-]/g, "");
@@ -260,6 +262,8 @@ export function InlineEdit({
   const editing = api.editing;
 
   useEffect(() => {
+    // Leaving edit mode restores the committed value in the draft.
+    // react-doctor-disable-next-line react-hooks-js/set-state-in-effect
     if (!editing) setDraft(current);
   }, [editing, current]);
 
@@ -272,8 +276,11 @@ export function InlineEdit({
   useEffect(() => {
     if (!error || stillMotion()) return;
     groupRef.current?.animate(
-      { translate: ["0", "-0.25rem", "0.1875rem", "-0.125rem", "0"] },
-      { duration: 320, easing: ease },
+      {
+        translate: ["0", "-0.25rem", "0.1875rem", "-0.125rem", "0"],
+        easing: [ease, swing, swing, swing],
+      },
+      { duration: 320 },
     );
   }, [error]);
 
@@ -295,10 +302,9 @@ export function InlineEdit({
           ? reason.message
           : "Could not save. Try again.",
       );
-    } finally {
-      savingRef.current = false;
-      setIsSaving(false);
     }
+    savingRef.current = false;
+    setIsSaving(false);
   }, [api, current, draft, onSave]);
 
   const context: InlineEditContextValue = {
@@ -321,68 +327,20 @@ export function InlineEdit({
             <InlineEditLabel>{label}</InlineEditLabel>
             <InlineEditArea>
               {editing ? (
-                <InputGroup
-                  ref={groupRef}
-                  data-invalid={error ? true : undefined}
-                  className="transition-[background-color,border-color,box-shadow] duration-200 ease-out-quint starting:border-transparent starting:bg-transparent starting:shadow-none"
-                >
-                  <InlineEditInput
-                    autoComplete={autoComplete}
-                    aria-describedby={error ? errorId : undefined}
-                  />
-                  <InputGroupAddon className="gap-0">
-                    <InlineEditSubmitTrigger
-                      data-pending={isSaving || undefined}
-                      className="transition-[color,background-color,scale,opacity] starting:scale-75 starting:opacity-0"
-                    >
-                      {isSaving ? (
-                        <Spinner size="sm" decorative />
-                      ) : (
-                        <CheckIcon weight="bold" aria-hidden="true" />
-                      )}
-                    </InlineEditSubmitTrigger>
-                    <InlineEditCancelTrigger
-                      disabled={isSaving || undefined}
-                      className="transition-[color,background-color,scale,opacity] starting:scale-75 starting:opacity-0"
-                    >
-                      <XIcon weight="bold" aria-hidden="true" />
-                    </InlineEditCancelTrigger>
-                  </InputGroupAddon>
-                </InputGroup>
+                <InlineEditEditing
+                  autoComplete={autoComplete}
+                  error={error}
+                  errorId={errorId}
+                  groupRef={groupRef}
+                  isSaving={isSaving}
+                />
               ) : (
-                <InlineEditEditTrigger
-                  data-saved={saved ? true : undefined}
-                  className={cn(
-                    hasEdited &&
-                      "starting:border-input starting:bg-card starting:shadow-(--shadow-card)",
-                  )}
-                >
-                  <span
-                    className={cn(
-                      "min-w-0 flex-1 truncate",
-                      !current && "text-muted-foreground",
-                    )}
-                  >
-                    {current || placeholderText}
-                  </span>
-                  <span
-                    aria-hidden="true"
-                    className="grid size-[calc(var(--field-h,3rem)-2px-2*var(--field-inset,0.25rem))] shrink-0 place-items-center text-muted-foreground *:col-start-1 *:row-start-1"
-                  >
-                    <PencilSimpleIcon
-                      size={16}
-                      className={cn(
-                        "transition-[opacity,scale,color] duration-200 ease-out-quint group-hover/read:text-foreground group-data-saved/read:scale-50 group-data-saved/read:opacity-0",
-                        hasEdited && "starting:scale-50 starting:opacity-0",
-                      )}
-                    />
-                    <CheckIcon
-                      size={16}
-                      weight="bold"
-                      className="scale-50 text-success opacity-0 transition-[opacity,scale] duration-350 ease-spring group-data-saved/read:scale-100 group-data-saved/read:opacity-100 starting:scale-50 starting:opacity-0 forced-colors:text-[CanvasText]"
-                    />
-                  </span>
-                </InlineEditEditTrigger>
+                <InlineEditReading
+                  current={current}
+                  hasEdited={hasEdited}
+                  placeholderText={placeholderText}
+                  saved={saved}
+                />
               )}
             </InlineEditArea>
             {editing && error ? (
@@ -397,6 +355,99 @@ export function InlineEdit({
         </output>
       </InlineEditRoot>
     </InlineEditPartsContext>
+  );
+}
+
+function InlineEditEditing({
+  autoComplete,
+  error,
+  errorId,
+  groupRef,
+  isSaving,
+}: {
+  autoComplete: string | undefined;
+  error: string;
+  errorId: string;
+  groupRef: RefObject<HTMLDivElement | null>;
+  isSaving: boolean;
+}) {
+  return (
+    <InputGroup
+      ref={groupRef}
+      data-invalid={error ? true : undefined}
+      className="transition-[background-color,border-color,box-shadow] duration-200 ease-out-quint starting:border-transparent starting:bg-transparent starting:shadow-none"
+    >
+      <InlineEditInput
+        autoComplete={autoComplete}
+        aria-describedby={error ? errorId : undefined}
+      />
+      <InputGroupAddon className="gap-0">
+        <InlineEditSubmitTrigger
+          data-pending={isSaving || undefined}
+          className="transition-[color,background-color,scale,opacity] starting:opacity-0 motion-safe:starting:scale-75"
+        >
+          {isSaving ? (
+            <Spinner size="sm" decorative />
+          ) : (
+            <CheckIcon weight="bold" aria-hidden="true" />
+          )}
+        </InlineEditSubmitTrigger>
+        <InlineEditCancelTrigger
+          disabled={isSaving || undefined}
+          className="transition-[color,background-color,scale,opacity] starting:opacity-0 motion-safe:starting:scale-75"
+        >
+          <XIcon weight="bold" aria-hidden="true" />
+        </InlineEditCancelTrigger>
+      </InputGroupAddon>
+    </InputGroup>
+  );
+}
+
+function InlineEditReading({
+  current,
+  hasEdited,
+  placeholderText,
+  saved,
+}: {
+  current: string;
+  hasEdited: boolean;
+  placeholderText: string;
+  saved: number;
+}) {
+  return (
+    <InlineEditEditTrigger
+      data-saved={saved ? true : undefined}
+      className={cn(
+        hasEdited &&
+          "starting:border-input starting:bg-card starting:shadow-(--shadow-card)",
+      )}
+    >
+      <span
+        className={cn(
+          "min-w-0 flex-1 truncate",
+          !current && "text-muted-foreground",
+        )}
+      >
+        {current || placeholderText}
+      </span>
+      <span
+        aria-hidden="true"
+        className="grid size-[calc(var(--field-h,2.5rem)-2px-2*var(--field-inset,0.25rem))] shrink-0 place-items-center text-muted-foreground *:col-start-1 *:row-start-1"
+      >
+        <PencilSimpleIcon
+          size={16}
+          className={cn(
+            "transition-[opacity,scale,color] duration-200 ease-out-quint group-hover/read:text-foreground group-data-saved/read:scale-50 group-data-saved/read:opacity-0",
+            hasEdited && "starting:scale-50 starting:opacity-0",
+          )}
+        />
+        <CheckIcon
+          size={16}
+          weight="bold"
+          className="scale-50 text-success opacity-0 transition-[opacity,scale] duration-350 ease-spring group-data-saved/read:scale-100 group-data-saved/read:opacity-100 starting:scale-50 starting:opacity-0 forced-colors:text-[CanvasText]"
+        />
+      </span>
+    </InlineEditEditTrigger>
   );
 }
 
@@ -529,7 +580,7 @@ export function InlineEditEditTrigger({
         fieldHeight,
         fieldRadius,
         fieldText,
-        "group/read flex w-full min-w-0 cursor-pointer items-center gap-2 border border-transparent ps-(--field-px,0.875rem) pe-(--field-inset,0.25rem) text-start text-foreground outline-offset-4 outline-transparent transition-[background-color,border-color,box-shadow,outline-color,outline-offset] duration-200 ease-out-quint hover:bg-muted pressed:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-60 disabled:hover:bg-transparent aria-disabled:cursor-default aria-disabled:opacity-60 aria-disabled:hover:bg-transparent motion-reduce:outline-offset-2 forced-colors:border-[ButtonBorder]",
+        "group/read flex w-full min-w-0 cursor-pointer items-center gap-2 border border-transparent ps-(--field-px,0.75rem) pe-(--field-inset,0.25rem) text-start text-foreground outline-offset-4 outline-transparent transition-[background-color,border-color,box-shadow,outline-color,outline-offset] duration-200 ease-out-quint hover:bg-muted pressed:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-60 disabled:hover:bg-transparent aria-disabled:cursor-default aria-disabled:opacity-60 aria-disabled:hover:bg-transparent motion-reduce:outline-offset-2 forced-colors:border-[ButtonBorder]",
         className,
       )}
     >
@@ -560,7 +611,7 @@ export function InlineEditControl({
       className={cn(
         fieldHeight,
         fieldRadius,
-        "flex w-full min-w-0 items-center gap-x-2 border border-input bg-card ps-(--field-px,0.875rem) pe-(--field-px,0.875rem) text-foreground shadow-(--shadow-card)",
+        "flex w-full min-w-0 items-center gap-x-2 border border-input bg-card ps-(--field-px,0.75rem) pe-(--field-px,0.75rem) text-foreground shadow-(--shadow-card)",
         className,
       )}
     />

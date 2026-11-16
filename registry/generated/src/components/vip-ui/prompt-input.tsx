@@ -332,7 +332,7 @@ export function PromptInputTextArea({
       className={cn(
         fieldText,
         fieldPaddingX,
-        "min-h-[calc(var(--field-h,3rem)-0.5rem)] w-full min-w-0 cursor-text resize-none overflow-y-hidden rounded-[calc(var(--prompt-input-radius)-1px)] bg-transparent pt-3 pb-2 leading-6 text-foreground outline-none transition-[color] duration-150 placeholder:text-muted-foreground/80 disabled:cursor-not-allowed disabled:opacity-60",
+        "min-h-[calc(var(--field-h,2.5rem)-0.5rem)] w-full min-w-0 cursor-text resize-none overflow-y-hidden rounded-[calc(var(--prompt-input-radius)-1px)] bg-transparent pt-3 pb-2 leading-6 text-foreground outline-none transition-[color] duration-150 placeholder:text-muted-foreground/80 disabled:cursor-not-allowed disabled:opacity-60",
         className,
       )}
     />

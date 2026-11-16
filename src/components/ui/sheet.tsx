@@ -208,8 +208,9 @@ function getStops(scroller: HTMLElement, sheet: SheetFrameState) {
         ...(sheet.after ? [positions[0]] : []),
         ...(sheet.before ? [positions[positions.length - 1]] : []),
       ];
+  const exitSet = new Set(exits);
   const open = positions
-    .filter((position) => !exits.includes(position))
+    .filter((position) => !exitSet.has(position))
     .sort(
       (a, b) =>
         Math.min(...exits.map((exit) => Math.abs(a - exit)), Infinity) -
@@ -541,14 +542,19 @@ function SheetFrame({
   useEffect(() => {
     const content = contentRef.current;
     if (!content || preventDismissal) return;
+    let timer = 0;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
-      window.setTimeout(() => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
         if (!event.defaultPrevented) state?.close();
       });
     };
     content.addEventListener("keydown", onKeyDown, true);
-    return () => content.removeEventListener("keydown", onKeyDown, true);
+    return () => {
+      window.clearTimeout(timer);
+      content.removeEventListener("keydown", onKeyDown, true);
+    };
   }, [preventDismissal, state]);
 
   return (

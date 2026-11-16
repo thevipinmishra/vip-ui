@@ -15,7 +15,7 @@ import { buttonLabel, touchTarget } from "./button-styles";
 import { type Size, useSize } from "./size";
 
 const toggleButtonStyles = tv({
-  base: "inline-flex min-h-11 max-w-full shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md px-4 text-sm font-medium [&_svg:not([class*='size-'])]:size-4 outline-offset-4 outline-transparent transition-[color,background-color,border-color,box-shadow,scale,outline-color,outline-offset] duration-150 ease-out-quint motion-safe:pressed:scale-[0.96] disabled:cursor-default disabled:opacity-50 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  base: "inline-flex min-h-10 max-w-full shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md px-4 text-sm font-medium [&_svg:not([class*='size-'])]:size-4 outline-offset-4 outline-transparent transition-[color,background-color,border-color,box-shadow,scale,outline-color,outline-offset] duration-150 ease-out-quint motion-safe:pressed:scale-[0.96] disabled:cursor-default disabled:opacity-50 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2 [&_svg]:pointer-events-none [&_svg]:shrink-0",
   variants: {
     variant: {
       default:
@@ -27,16 +27,16 @@ const toggleButtonStyles = tv({
     },
     size: {
       xs: `min-h-7 gap-1.5 rounded-sm px-2 text-xs [&_svg:not([class*='size-'])]:size-3.5 ${touchTarget}`,
-      sm: `min-h-9 px-3 ${touchTarget}`,
-      md: "min-h-11 px-4",
-      lg: "min-h-12 px-5",
-      xl: "min-h-14 gap-2.5 rounded-lg px-6 text-base [&_svg:not([class*='size-'])]:size-5",
+      sm: `min-h-8 px-3 ${touchTarget}`,
+      md: `min-h-10 px-4 ${touchTarget}`,
+      lg: "min-h-11 px-5",
+      xl: "min-h-12 gap-2.5 rounded-lg px-6 text-base [&_svg:not([class*='size-'])]:size-5",
     },
     adaptive: {
-      true: "sm:min-h-9",
+      true: "sm:min-h-8",
     },
     iconOnly: {
-      true: "w-11 px-0 [&_svg:not([class*='size-'])]:size-4.5",
+      true: "w-10 px-0 [&_svg:not([class*='size-'])]:size-4.5",
     },
   },
   compoundVariants: [
@@ -48,22 +48,22 @@ const toggleButtonStyles = tv({
     {
       size: "sm",
       iconOnly: true,
-      class: "w-9 [&_svg:not([class*='size-'])]:size-4",
+      class: "w-8 [&_svg:not([class*='size-'])]:size-4",
     },
     {
       adaptive: true,
       iconOnly: true,
-      class: "sm:w-9 sm:[&_svg:not([class*='size-'])]:size-4",
+      class: "sm:w-8 sm:[&_svg:not([class*='size-'])]:size-4",
     },
     {
       size: "lg",
       iconOnly: true,
-      class: "w-12 [&_svg:not([class*='size-'])]:size-5",
+      class: "w-11 [&_svg:not([class*='size-'])]:size-5",
     },
     {
       size: "xl",
       iconOnly: true,
-      class: "w-14 [&_svg:not([class*='size-'])]:size-6",
+      class: "w-12 [&_svg:not([class*='size-'])]:size-6",
     },
   ],
   defaultVariants: { variant: "default" },

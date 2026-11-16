@@ -59,15 +59,15 @@ export function ScrollFade({
       if (!frame) frame = requestAnimationFrame(update);
     };
     const resize = new ResizeObserver(schedule);
-    const observe = () => {
+    resize.observe(node);
+    for (const child of node.children) resize.observe(child);
+    update();
+    const mutation = new MutationObserver(() => {
       resize.disconnect();
       resize.observe(node);
       for (const child of node.children) resize.observe(child);
       schedule();
-    };
-    const mutation = new MutationObserver(observe);
-    observe();
-    update();
+    });
     mutation.observe(node, { childList: true });
     node.addEventListener("scroll", schedule, { passive: true });
     return () => {

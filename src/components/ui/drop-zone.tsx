@@ -24,6 +24,7 @@ import { Button, type ButtonProps } from "./button";
 import { FileTrigger } from "./file-trigger";
 
 const ease = "cubic-bezier(0.23, 1, 0.32, 1)";
+const swing = "cubic-bezier(0.37, 0, 0.63, 1)";
 
 function stillMotion() {
   return matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -130,8 +131,11 @@ export function DropZoneIcon({
   useEffect(() => {
     if (!isRejected || stillMotion()) return;
     iconRef.current?.animate(
-      { translate: ["0", "-0.1875rem", "0.1875rem", "-0.125rem", "0"] },
-      { duration: 320, easing: ease, composite: "add" },
+      {
+        translate: ["0", "-0.1875rem", "0.1875rem", "-0.125rem", "0"],
+        easing: [ease, swing, swing, swing],
+      },
+      { duration: 320, composite: "add" },
     );
   }, [isRejected]);
 

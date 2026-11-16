@@ -5,15 +5,18 @@ import {
   type CSSProperties,
   createContext,
   type ReactNode,
+  type RefObject,
   type SyntheticEvent,
   useCallback,
   useContext,
   useEffect,
+  useEffectEvent,
   useId,
   useLayoutEffect,
   useMemo,
   useRef,
   useState,
+  useSyncExternalStore,
 } from "react";
 import { FocusScope } from "react-aria";
 import type { Placement } from "react-aria-components";
@@ -23,6 +26,10 @@ import { cn } from "@/lib/utils";
 import { Button } from "./button";
 import { LayoutMorph } from "./layout-morph";
 import { Popover, PopoverArrow } from "./popover";
+
+function subscribeToMount() {
+  return () => {};
+}
 
 export interface TourStep {
   id: string;
@@ -76,7 +83,6 @@ interface Blocker {
 const TourContext = createContext<TourContextValue | null>(null);
 
 const glideDuration = 350;
-const holdDuration = 180;
 
 let warned = false;
 
@@ -134,6 +140,212 @@ function blockersFor(hole: {
   ];
 }
 
+function clampStep(step: number, count: number) {
+  if (count === 0) return 0;
+  return Math.min(Math.max(step, 0), count - 1);
+}
+
+function TourSpotlight({
+  rect,
+  open,
+}: {
+  rect: SpotlightRect | null;
+  open: boolean;
+}) {
+  if (!rect) return null;
+  return (
+    <div
+      data-slot="tour-spotlight"
+      data-state={open ? "open" : "closed"}
+      aria-hidden="true"
+      className={cn(
+        "pointer-events-none fixed z-50 rounded-lg opacity-0 starting:opacity-0",
+        "transition-opacity duration-200 ease-out-quint data-[state=open]:opacity-100",
+        "motion-safe:transition-[top,left,width,height,opacity] motion-safe:duration-350 motion-safe:ease-spring",
+        "motion-reduce:transition-opacity forced-colors:outline-2 forced-colors:outline-offset-2 forced-colors:outline-[CanvasText]",
+      )}
+      style={{
+        top: rect.top,
+        left: rect.left,
+        width: rect.width,
+        height: rect.height,
+        boxShadow:
+          "0 0 0 2px var(--color-ring), 0 0 0 9999px color-mix(in oklab, var(--foreground) 35%, transparent)",
+      }}
+    />
+  );
+}
+
+function TourBlockers({
+  open,
+  spotlight,
+  blockers,
+  onHold,
+}: {
+  open: boolean;
+  spotlight: boolean;
+  blockers: { edge: string; style: CSSProperties }[];
+  onHold: (event: SyntheticEvent) => void;
+}) {
+  if (!open || !spotlight) return null;
+  return (
+    <>
+      {blockers.map((blocker) => (
+        <div
+          key={blocker.edge}
+          data-slot="tour-blocker"
+          data-edge={blocker.edge}
+          aria-hidden="true"
+          className="fixed z-50 cursor-default"
+          style={blocker.style}
+          onPointerDown={onHold}
+          onClick={onHold}
+        />
+      ))}
+    </>
+  );
+}
+
+function TourDialog({
+  activeStep,
+  canGoBack,
+  count,
+  current,
+  descriptionId,
+  finish,
+  isLast,
+  moving,
+  next,
+  nextRef,
+  open,
+  panelRef,
+  popoverRef,
+  previous,
+  target,
+  titleId,
+}: {
+  activeStep: TourStep;
+  canGoBack: boolean;
+  count: number;
+  current: number;
+  descriptionId: string;
+  finish: (reason: "complete" | "skip" | "stop") => void;
+  isLast: boolean;
+  moving: boolean;
+  next: () => void;
+  nextRef: RefObject<HTMLButtonElement | null>;
+  open: boolean;
+  panelRef: RefObject<HTMLDivElement | null>;
+  popoverRef: RefObject<HTMLElement | null>;
+  previous: () => void;
+  target: Element | null;
+  titleId: string;
+}) {
+  return (
+    <Popover
+      ref={popoverRef}
+      triggerRef={{ current: target }}
+      isOpen={open}
+      isNonModal
+      placement={activeStep.placement ?? "bottom"}
+      offset={12}
+      data-slot="tour-popover"
+      data-moving={moving || undefined}
+      className="w-80"
+    >
+      <PopoverArrow />
+      {/* react-doctor-disable-next-line react-doctor/prefer-html-dialog -- The panel is positioned by Popover; a native dialog would replace that layer. */}
+      <div
+        role="dialog"
+        tabIndex={-1}
+        aria-labelledby={titleId}
+        aria-describedby={descriptionId}
+        data-slot="tour-dialog"
+        className="outline-none"
+      >
+        <FocusScope contain restoreFocus={false}>
+          <div ref={panelRef} data-slot="tour-panel" className="grid gap-4">
+            <LayoutMorph contentKey={activeStep.id}>
+              <div data-slot="tour-body" className="grid gap-1.5">
+                <h2
+                  id={titleId}
+                  data-slot="tour-title"
+                  className="text-sm font-semibold leading-5 tracking-[-0.01em] wrap-anywhere"
+                >
+                  {activeStep.title}
+                </h2>
+                <div
+                  id={descriptionId}
+                  data-slot="tour-description"
+                  className="text-sm leading-5 text-muted-foreground wrap-anywhere"
+                >
+                  {activeStep.description}
+                </div>
+              </div>
+            </LayoutMorph>
+            <div
+              data-slot="tour-footer"
+              className="flex flex-wrap items-center justify-between gap-2"
+            >
+              <span
+                data-slot="tour-count"
+                dir="ltr"
+                className="text-xs text-muted-foreground tabular-nums"
+              >
+                {current + 1} of {count}
+              </span>
+              <div className="flex flex-wrap items-center justify-end gap-1">
+                <Button
+                  data-slot="tour-skip"
+                  variant="minimal"
+                  size="sm"
+                  onPress={() => finish("skip")}
+                >
+                  Skip tour
+                </Button>
+                <Button
+                  data-slot="tour-back"
+                  variant="ghost"
+                  size="sm"
+                  isDisabled={!canGoBack}
+                  onPress={previous}
+                >
+                  Back
+                </Button>
+                <Button
+                  ref={nextRef}
+                  data-slot="tour-next"
+                  size="sm"
+                  onPress={next}
+                >
+                  {isLast ? "Done" : "Next"}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </FocusScope>
+      </div>
+    </Popover>
+  );
+}
+
+function firstTarget(
+  from: number,
+  direction: 1 | -1,
+  steps: readonly TourStep[],
+  targets: Record<string, Element | null>,
+) {
+  for (
+    let index = from;
+    index >= 0 && index < steps.length;
+    index += direction
+  ) {
+    const id = steps[index]?.id;
+    if (id !== undefined && targets[id] != null) return index;
+  }
+  return -1;
+}
+
 export function Tour({
   steps,
   isOpen,
@@ -153,14 +365,16 @@ export function Tour({
   const [internalStep, setInternalStep] = useState(defaultStep);
   const [targets, setTargets] = useState<Record<string, Element | null>>({});
   const [rect, setRect] = useState<SpotlightRect | null>(null);
-  const [holdSpotlight, setHoldSpotlight] = useState(false);
   const [moving, setMoving] = useState(false);
-  const [portal, setPortal] = useState<HTMLElement | null>(null);
+  const portal = useSyncExternalStore(
+    subscribeToMount,
+    () => document.body,
+    () => null,
+  );
 
   const open = isOpen ?? internalOpen;
   const count = steps.length;
-  const current =
-    count === 0 ? 0 : Math.min(Math.max(step ?? internalStep, 0), count - 1);
+  const current = clampStep(step ?? internalStep, count);
   const activeStep = steps[current];
 
   const popoverRef = useRef<HTMLElement | null>(null);
@@ -170,7 +384,7 @@ export function Tour({
   const wasOpen = useRef(false);
   const focusedStep = useRef<number | null>(null);
   const glide = useRef<Animation | null>(null);
-  const [glideFrom, setGlideFrom] = useState<DOMRect | null>(null);
+  const glideFrom = useRef<DOMRect | null>(null);
 
   const register = useCallback((id: string, element: Element | null) => {
     setTargets((known) =>
@@ -194,30 +408,8 @@ export function Tour({
     [step, onStepChange],
   );
 
-  const hasTarget = useCallback(
-    (index: number) => {
-      const id = steps[index]?.id;
-      return id !== undefined && targets[id] != null;
-    },
-    [steps, targets],
-  );
-
-  const findStep = useCallback(
-    (from: number, direction: 1 | -1) => {
-      for (
-        let index = from;
-        index >= 0 && index < steps.length;
-        index += direction
-      ) {
-        if (hasTarget(index)) return index;
-      }
-      return -1;
-    },
-    [hasTarget, steps.length],
-  );
-
-  const isLast = findStep(current + 1, 1) < 0;
-  const canGoBack = findStep(current - 1, -1) >= 0;
+  const isLast = firstTarget(current + 1, 1, steps, targets) < 0;
+  const canGoBack = firstTarget(current - 1, -1, steps, targets) >= 0;
 
   const finish = useCallback(
     (reason: "complete" | "skip" | "stop") => {
@@ -232,8 +424,8 @@ export function Tour({
     (at?: number) => {
       if (count === 0) return;
       const requested = Math.min(Math.max(at ?? 0, 0), count - 1);
-      const forward = findStep(requested, 1);
-      const first = forward >= 0 ? forward : findStep(0, 1);
+      const forward = firstTarget(requested, 1, steps, targets);
+      const first = forward >= 0 ? forward : firstTarget(0, 1, steps, targets);
       if (first < 0) {
         warnNoTargets();
         return;
@@ -245,26 +437,26 @@ export function Tour({
         block: "center",
         behavior: reduceMotion ? "auto" : "smooth",
       });
-      setGlideFrom(null);
+      glideFrom.current = null;
       setStep(first);
       setOpen(true);
     },
-    [count, findStep, reduceMotion, setOpen, setStep, steps, targets],
+    [count, reduceMotion, setOpen, setStep, steps, targets],
   );
 
   const stop = useCallback(() => finish("stop"), [finish]);
 
   const advance = useCallback(
     (direction: 1 | -1) => {
-      const index = findStep(current + direction, direction);
+      const index = firstTarget(current + direction, direction, steps, targets);
       if (index < 0) {
         if (direction === 1) finish("complete");
         return;
       }
-      setGlideFrom(popoverRef.current?.getBoundingClientRect() ?? null);
+      glideFrom.current = popoverRef.current?.getBoundingClientRect() ?? null;
       setStep(index);
     },
-    [current, findStep, finish, setStep],
+    [current, finish, setStep, steps, targets],
   );
 
   const next = useCallback(() => advance(1), [advance]);
@@ -288,24 +480,7 @@ export function Tour({
   const suffix = activeStep?.id ?? "none";
   const titleId = `${baseId}-${suffix}-title`;
   const descriptionId = `${baseId}-${suffix}-description`;
-  const showSpotlight = (open || holdSpotlight) && spotlight;
-
-  useEffect(() => {
-    setPortal(document.body);
-  }, []);
-
-  useEffect(() => {
-    if (open) {
-      setHoldSpotlight(true);
-      return;
-    }
-    if (!holdSpotlight) return;
-    const timer = window.setTimeout(
-      () => setHoldSpotlight(false),
-      holdDuration,
-    );
-    return () => window.clearTimeout(timer);
-  }, [open, holdSpotlight]);
+  const showSpotlight = spotlight;
 
   useLayoutEffect(() => {
     if (!open || !target) return;
@@ -366,10 +541,11 @@ export function Tour({
   }, [open, current]);
 
   useLayoutEffect(() => {
-    if (!open || !glideFrom) return;
+    void current;
+    const from = glideFrom.current;
+    if (!open || !from) return;
     const node = popoverRef.current;
-    const from = glideFrom;
-    setGlideFrom(null);
+    glideFrom.current = null;
     if (!node) return;
     const to = node.getBoundingClientRect();
     const dx = from.left - to.left;
@@ -387,7 +563,7 @@ export function Tour({
       glide.current = null;
       setMoving(false);
     };
-  }, [glideFrom, open, reduceMotion]);
+  }, [current, open, reduceMotion]);
 
   useEffect(() => {
     return () => {
@@ -396,17 +572,19 @@ export function Tour({
     };
   }, []);
 
+  const onEscape = useEffectEvent(() => finish("skip"));
+
   useEffect(() => {
     if (!open) return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key !== "Escape" || event.defaultPrevented) return;
       event.preventDefault();
       event.stopPropagation();
-      finish("skip");
+      onEscape();
     };
     document.addEventListener("keydown", onKeyDown, true);
     return () => document.removeEventListener("keydown", onKeyDown, true);
-  }, [finish, open]);
+  }, [open]);
 
   const hole = rect ? cutout(rect) : null;
   const blockers = hole
@@ -422,128 +600,35 @@ export function Tour({
     <TourContext.Provider value={value}>
       {children}
       {activeStep && (
-        <Popover
-          ref={popoverRef}
-          triggerRef={{ current: target }}
-          isOpen={open}
-          isNonModal
-          placement={activeStep.placement ?? "bottom"}
-          offset={12}
-          data-slot="tour-popover"
-          data-moving={moving || undefined}
-          className="w-80"
-        >
-          <PopoverArrow />
-          <div
-            role="dialog"
-            tabIndex={-1}
-            aria-labelledby={titleId}
-            aria-describedby={descriptionId}
-            data-slot="tour-dialog"
-            className="outline-none"
-          >
-            <FocusScope contain restoreFocus={false}>
-              <div ref={panelRef} data-slot="tour-panel" className="grid gap-4">
-                <LayoutMorph contentKey={activeStep.id}>
-                  <div data-slot="tour-body" className="grid gap-1.5">
-                    <h2
-                      id={titleId}
-                      data-slot="tour-title"
-                      className="text-sm font-semibold leading-5 tracking-[-0.01em] wrap-anywhere"
-                    >
-                      {activeStep.title}
-                    </h2>
-                    <div
-                      id={descriptionId}
-                      data-slot="tour-description"
-                      className="text-sm leading-5 text-muted-foreground wrap-anywhere"
-                    >
-                      {activeStep.description}
-                    </div>
-                  </div>
-                </LayoutMorph>
-                <div
-                  data-slot="tour-footer"
-                  className="flex flex-wrap items-center justify-between gap-2"
-                >
-                  <span
-                    data-slot="tour-count"
-                    dir="ltr"
-                    className="text-xs text-muted-foreground tabular-nums"
-                  >
-                    {current + 1} of {count}
-                  </span>
-                  <div className="flex flex-wrap items-center justify-end gap-1">
-                    <Button
-                      data-slot="tour-skip"
-                      variant="minimal"
-                      size="sm"
-                      onPress={() => finish("skip")}
-                    >
-                      Skip tour
-                    </Button>
-                    <Button
-                      data-slot="tour-back"
-                      variant="ghost"
-                      size="sm"
-                      isDisabled={!canGoBack}
-                      onPress={previous}
-                    >
-                      Back
-                    </Button>
-                    <Button
-                      ref={nextRef}
-                      data-slot="tour-next"
-                      size="sm"
-                      onPress={next}
-                    >
-                      {isLast ? "Done" : "Next"}
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </FocusScope>
-          </div>
-        </Popover>
+        <TourDialog
+          activeStep={activeStep}
+          canGoBack={canGoBack}
+          count={count}
+          current={current}
+          descriptionId={descriptionId}
+          finish={finish}
+          isLast={isLast}
+          moving={moving}
+          next={next}
+          nextRef={nextRef}
+          open={open}
+          panelRef={panelRef}
+          popoverRef={popoverRef}
+          previous={previous}
+          target={target}
+          titleId={titleId}
+        />
       )}
       {portal &&
         createPortal(
           <>
-            {showSpotlight && rect && (
-              <div
-                data-slot="tour-spotlight"
-                data-state={open ? "open" : "closed"}
-                aria-hidden="true"
-                className={cn(
-                  "pointer-events-none fixed z-50 rounded-lg opacity-0 starting:opacity-0",
-                  "transition-opacity duration-200 ease-out-quint data-[state=open]:opacity-100",
-                  "motion-safe:transition-[top,left,width,height,opacity] motion-safe:duration-350 motion-safe:ease-spring",
-                  "motion-reduce:transition-opacity forced-colors:outline-2 forced-colors:outline-offset-2 forced-colors:outline-[CanvasText]",
-                )}
-                style={{
-                  top: rect.top,
-                  left: rect.left,
-                  width: rect.width,
-                  height: rect.height,
-                  boxShadow:
-                    "0 0 0 2px var(--color-ring), 0 0 0 9999px color-mix(in oklab, var(--foreground) 35%, transparent)",
-                }}
-              />
-            )}
-            {open &&
-              spotlight &&
-              blockers.map((blocker) => (
-                <div
-                  key={blocker.edge}
-                  data-slot="tour-blocker"
-                  data-edge={blocker.edge}
-                  aria-hidden="true"
-                  className="fixed z-50 cursor-default"
-                  style={blocker.style}
-                  onPointerDown={holdOutsideClick}
-                  onClick={holdOutsideClick}
-                />
-              ))}
+            <TourSpotlight rect={showSpotlight ? rect : null} open={open} />
+            <TourBlockers
+              open={open}
+              spotlight={showSpotlight}
+              blockers={blockers}
+              onHold={holdOutsideClick}
+            />
           </>,
           portal,
         )}

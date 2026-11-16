@@ -159,31 +159,48 @@ function SlidingNumber({
   }
 
   const parts = formatter.formatToParts(value);
-  let integerPlace = parts
-    .filter((part) => part.type === "integer")
-    .reduce((count, part) => count + Array.from(part.value).length, 0);
-  let fractionPlace = 0;
+  const integerLength = parts.reduce(
+    (count, part) =>
+      part.type === "integer" ? count + Array.from(part.value).length : count,
+    0,
+  );
   const otherCounts = new Map<string, number>();
 
-  const segments = parts.flatMap((part) => {
+  const segments = parts.flatMap((part, partIndex) => {
     if (part.type === "integer") {
-      return Array.from(part.value, (digit) => ({
-        key: `integer-${--integerPlace}`,
+      return Array.from(part.value, (digit, index) => ({
+        key: `integer-${integerLength - 1 - index}`,
         text: digit,
         isDigit: true,
       }));
     }
     if (part.type === "fraction") {
-      return Array.from(part.value, (digit) => ({
-        key: `fraction-${fractionPlace++}`,
+      const offset = parts
+        .slice(0, partIndex)
+        .reduce(
+          (count, previous) =>
+            previous.type === "fraction"
+              ? count + Array.from(previous.value).length
+              : count,
+          0,
+        );
+      return Array.from(part.value, (digit, index) => ({
+        key: `fraction-${offset + index}`,
         text: digit,
         isDigit: true,
       }));
     }
     if (part.type === "group") {
-      return [
-        { key: `group-${integerPlace}`, text: part.value, isDigit: false },
-      ];
+      const remaining = parts
+        .slice(partIndex + 1)
+        .reduce(
+          (count, next) =>
+            next.type === "integer"
+              ? count + Array.from(next.value).length
+              : count,
+          0,
+        );
+      return [{ key: `group-${remaining}`, text: part.value, isDigit: false }];
     }
     const occurrence = otherCounts.get(part.type) ?? 0;
     otherCounts.set(part.type, occurrence + 1);
@@ -230,8 +247,13 @@ function SlidingSlot({
   return (
     <motion.span
       className="inline-flex justify-end overflow-x-clip"
+      // A formatted number grows and shrinks as digits are added or removed;
+      // the slot width is the property that carries that motion.
+      // react-doctor-disable-next-line react-doctor/no-layout-property-animation
       initial={{ width: 0, opacity: 0 }}
+      // react-doctor-disable-next-line react-doctor/no-layout-property-animation
       animate={{ width: "auto", opacity: 1 }}
+      // react-doctor-disable-next-line react-doctor/no-layout-property-animation
       exit={{ width: 0, opacity: 0 }}
       transition={transitionFor(reducedMotion, springSnappy)}
     >

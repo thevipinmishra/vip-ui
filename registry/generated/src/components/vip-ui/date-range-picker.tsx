@@ -85,7 +85,7 @@ export function DateRangePicker<T extends DateValue>({
             <div
               className={cn(
                 fieldText,
-                "flex min-w-0 flex-1 flex-wrap items-center gap-x-1 px-[calc(var(--field-px,0.875rem)-0.25rem)] py-[clamp(0px,calc((var(--field-h,3rem)-2rem)/2),0.5rem)]",
+                "flex min-w-0 flex-1 flex-wrap items-center gap-x-1 px-[calc(var(--field-px,0.75rem)-0.25rem)] py-[clamp(0px,calc((var(--field-h,2.5rem)-2rem)/2),0.5rem)]",
               )}
             >
               <div className="flex min-w-0 items-end gap-x-1">

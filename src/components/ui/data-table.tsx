@@ -51,6 +51,10 @@ const features = tableFeatures({
   sortedRowModel: createSortedRowModel(),
 });
 
+export type DataTableFilter =
+  | { type: "text" }
+  | { type: "select"; options: readonly SelectOption[] };
+
 export interface DataTableColumn<T> {
   id: string;
   header: string;
@@ -59,9 +63,7 @@ export interface DataTableColumn<T> {
   align?: "start" | "end";
   width?: ColumnProps["defaultWidth"];
   minWidth?: ColumnProps["minWidth"];
-  filter?:
-    | { type: "text" }
-    | { type: "select"; options: readonly SelectOption[] };
+  filter?: DataTableFilter;
 }
 
 export interface DataTableFooterState {
@@ -100,6 +102,262 @@ export interface DataTableProps<T> {
   className?: string;
 }
 
+const numberFormats = new Map<string, Intl.NumberFormat>();
+
+function numberFormatFor(locale: string) {
+  let format = numberFormats.get(locale);
+  if (!format) {
+    format = new Intl.NumberFormat(locale);
+    numberFormats.set(locale, format);
+  }
+  return format;
+}
+
+function buildColumns<T extends RowData>(
+  columns: readonly DataTableColumn<T>[],
+  getSearchText: ((row: T) => string) | undefined,
+): ColumnDef<typeof features, T>[] {
+  return columns.map((column, index) => ({
+    id: column.id,
+    accessorFn: (row) =>
+      column.sortValue?.(row) ??
+      (index === 0 ? getSearchText?.(row) : undefined) ??
+      "",
+    enableSorting: Boolean(column.sortValue),
+    enableColumnFilter: Boolean(column.sortValue && column.filter),
+    enableGlobalFilter: index === 0 && Boolean(getSearchText),
+    filterFn:
+      column.filter?.type === "select"
+        ? filterFn_equalsString
+        : filterFn_includesString,
+    sortFn: (a, b, id) => {
+      const first = a.getValue<string | number>(id);
+      const second = b.getValue<string | number>(id);
+      return typeof first === "number" && typeof second === "number"
+        ? first - second
+        : collator.compare(String(first), String(second));
+    },
+  }));
+}
+
+function readUpdater<T>(updater: T | ((previous: T) => T), previous: T): T {
+  return typeof updater === "function"
+    ? (updater as (previous: T) => T)(previous)
+    : updater;
+}
+
+function normalizePageSize(pageSize: number) {
+  if (!Number.isFinite(pageSize)) return 5;
+  return Math.max(1, Math.floor(pageSize));
+}
+
+function toSortDescriptor(sorting: SortingState) {
+  const [first] = sorting;
+  if (!first) return undefined;
+  return {
+    column: first.id,
+    direction: first.desc ? ("descending" as const) : ("ascending" as const),
+  };
+}
+
+function nextSelection(
+  keys: "all" | Set<Key>,
+  selection: Set<Key>,
+  pageKeys: Set<Key>,
+) {
+  const next = new Set([...selection].filter((key) => !pageKeys.has(key)));
+  for (const key of keys === "all" ? pageKeys : keys) next.add(key);
+  return next;
+}
+
+interface TableFilterItem {
+  id: string;
+  header: string;
+  filter: DataTableFilter;
+  value: string;
+  onChange: (value: string) => void;
+}
+
+function DataTableFilters({
+  label,
+  query,
+  hasFilters,
+  filters,
+  onQueryChange,
+  onClear,
+}: {
+  label: string;
+  query: string;
+  hasFilters: boolean;
+  filters: TableFilterItem[];
+  onQueryChange: (value: string) => void;
+  onClear: () => void;
+}) {
+  return (
+    <div className="flex flex-wrap items-end gap-3 border-b border-border px-4 py-3 sm:px-5">
+      <SearchField
+        label={`Search ${label}`}
+        value={query}
+        onChange={onQueryChange}
+        className="min-w-0 grow basis-48 sm:max-w-xs"
+      />
+      {filters.map(({ id, header, filter, value, onChange }) =>
+        filter.type === "text" ? (
+          <SearchField
+            key={id}
+            label={header}
+            value={value}
+            onChange={onChange}
+            className="min-w-0 grow basis-44 sm:max-w-56"
+          />
+        ) : (
+          <Select
+            key={id}
+            label={header}
+            value={value}
+            onValueChange={onChange}
+            options={[{ id: "", name: "All" }, ...filter.options]}
+            className="min-w-0 grow basis-40 sm:max-w-48"
+          />
+        ),
+      )}
+      {hasFilters && (
+        <Button variant="minimal" size="sm" onPress={onClear}>
+          Clear filters
+        </Button>
+      )}
+    </div>
+  );
+}
+
+function DataTableFooter({
+  label,
+  locale,
+  firstRow,
+  lastRow,
+  filteredCount,
+  totalCount,
+  selectedCount,
+  selectable,
+  hasFilters,
+  pageIndex,
+  pageCount,
+  canNextPage,
+  onPage,
+}: {
+  label: string;
+  locale: string;
+  firstRow: number;
+  lastRow: number;
+  filteredCount: number;
+  totalCount: number;
+  selectedCount: number;
+  selectable: boolean;
+  hasFilters: boolean;
+  pageIndex: number;
+  pageCount: number;
+  canNextPage: boolean;
+  onPage: (index: number) => void;
+}) {
+  const numberFormat = numberFormatFor(locale);
+  const summary =
+    filteredCount === 0
+      ? "No rows"
+      : `Showing ${numberFormat.format(firstRow)}–${numberFormat.format(lastRow)} of ${numberFormat.format(filteredCount)} ${filteredCount === 1 ? "row" : "rows"}`;
+  return (
+    <>
+      <output aria-live="polite" aria-atomic="true" className="tabular-nums">
+        {summary}
+        {hasFilters && ` (${numberFormat.format(totalCount)} total)`}
+        {selectable &&
+          selectedCount > 0 &&
+          ` · ${numberFormat.format(selectedCount)} selected`}
+      </output>
+      {pageCount > 1 && (
+        <nav
+          aria-label={`${label} pages`}
+          className="flex flex-wrap items-center gap-x-3 gap-y-2"
+        >
+          <span className="whitespace-nowrap tabular-nums">
+            Page {numberFormat.format(Math.min(pageIndex + 1, pageCount))} of{" "}
+            {numberFormat.format(pageCount)}
+          </span>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              isDisabled={pageIndex === 0}
+              onPress={() => onPage(pageIndex - 1)}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              isDisabled={!canNextPage}
+              onPress={() => onPage(pageIndex + 1)}
+            >
+              Next
+            </Button>
+          </div>
+        </nav>
+      )}
+    </>
+  );
+}
+
+function DataTableSelectionActions({
+  locale,
+  selectedCount,
+  selection,
+  clearSelection,
+  clearSelectionFromActions,
+  renderSelectionActions,
+}: {
+  locale: string;
+  selectedCount: number;
+  selection: Set<Key>;
+  clearSelection: () => void;
+  clearSelectionFromActions: () => void;
+  renderSelectionActions:
+    | ((state: DataTableSelectionState) => ReactNode)
+    | undefined;
+}) {
+  if (!renderSelectionActions) return null;
+  return (
+    <Presence show={selectedCount > 0} collapse>
+      <div
+        data-slot="data-table-selection-actions"
+        className="flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-border bg-muted/40 px-4 py-2.5 sm:px-5"
+      >
+        <p
+          aria-hidden="true"
+          dir="auto"
+          className="min-w-0 text-sm font-medium text-foreground"
+        >
+          <AnimatedNumber value={selectedCount} locale={locale} /> selected
+        </p>
+        <div className="flex w-full min-w-0 flex-wrap items-center justify-between gap-2 sm:ms-auto sm:w-auto sm:justify-start">
+          <Toolbar aria-label="Selection actions" size="sm">
+            {renderSelectionActions({
+              selectedKeys: selection,
+              selectedCount,
+              clearSelection,
+            })}
+          </Toolbar>
+          <Button
+            variant="minimal"
+            size="sm"
+            onPress={clearSelectionFromActions}
+          >
+            Clear
+          </Button>
+        </div>
+      </div>
+    </Presence>
+  );
+}
+
 export function DataTable<T extends RowData>({
   label,
   rows,
@@ -120,7 +378,6 @@ export function DataTable<T extends RowData>({
   className,
 }: DataTableProps<T>) {
   const { locale } = useLocale();
-  const numberFormat = useMemo(() => new Intl.NumberFormat(locale), [locale]);
   const rootRef = useRef<HTMLDivElement>(null);
   const [query, setQuery] = useState("");
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -130,33 +387,10 @@ export function DataTable<T extends RowData>({
     () => new Set(defaultSelectedKeys),
   );
   const selection = new Set(selectedKeys ?? internalSelection);
-  const size = Number.isFinite(pageSize)
-    ? Math.max(1, Math.floor(pageSize))
-    : 5;
+  const size = normalizePageSize(pageSize);
 
   const tableColumns = useMemo<ColumnDef<typeof features, T>[]>(
-    () =>
-      columns.map((column, index) => ({
-        id: column.id,
-        accessorFn: (row) =>
-          column.sortValue?.(row) ??
-          (index === 0 ? getSearchText?.(row) : undefined) ??
-          "",
-        enableSorting: Boolean(column.sortValue),
-        enableColumnFilter: Boolean(column.sortValue && column.filter),
-        enableGlobalFilter: index === 0 && Boolean(getSearchText),
-        filterFn:
-          column.filter?.type === "select"
-            ? filterFn_equalsString
-            : filterFn_includesString,
-        sortFn: (a, b, id) => {
-          const first = a.getValue<string | number>(id);
-          const second = b.getValue<string | number>(id);
-          return typeof first === "number" && typeof second === "number"
-            ? first - second
-            : collator.compare(String(first), String(second));
-        },
-      })),
+    () => buildColumns(columns, getSearchText),
     [columns, getSearchText],
   );
 
@@ -174,7 +408,7 @@ export function DataTable<T extends RowData>({
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: (updater) => {
       setQuery((current) => {
-        const next = typeof updater === "function" ? updater(current) : updater;
+        const next = readUpdater(updater, current);
         return next == null ? "" : String(next);
       });
       setPageIndex(0);
@@ -182,9 +416,7 @@ export function DataTable<T extends RowData>({
     onPaginationChange: (updater) => {
       setPageIndex((current) => {
         const previous = { pageIndex: current, pageSize: size };
-        const next =
-          typeof updater === "function" ? updater(previous) : updater;
-        return next.pageIndex;
+        return readUpdater(updater, previous).pageIndex;
       });
     },
     onSortingChange: setSorting,
@@ -197,6 +429,8 @@ export function DataTable<T extends RowData>({
 
   const pageCount = Math.max(1, table.getPageCount());
   useEffect(() => {
+    // Filtering can shrink the page count below the current page.
+    // react-doctor-disable-next-line react-hooks-js/set-state-in-effect
     if (pageIndex >= pageCount) setPageIndex(pageCount - 1);
   }, [pageIndex, pageCount]);
 
@@ -214,18 +448,26 @@ export function DataTable<T extends RowData>({
     filteredCount === 0 ? 0 : Math.min(pageIndex * size + 1, filteredCount);
   const lastRow = Math.min((pageIndex + 1) * size, filteredCount);
   const hasFilters = Boolean(query.trim() || columnFilters.length);
-  const sortDescriptor = sorting[0]
-    ? {
-        column: sorting[0].id,
-        direction: sorting[0].desc
-          ? ("descending" as const)
-          : ("ascending" as const),
-      }
-    : undefined;
+  const sortDescriptor = toSortDescriptor(sorting);
+  const filterableColumns = columns.filter(
+    (column) => column.filter && column.sortValue,
+  );
+  const filters: TableFilterItem[] = filterableColumns.map((column) => ({
+    id: column.id,
+    header: column.header,
+    filter: column.filter as DataTableFilter,
+    value: String(table.getColumn(column.id)?.getFilterValue() ?? ""),
+    onChange: (value) => {
+      const next =
+        (column.filter?.type === "text" ? value.trim() : value) || undefined;
+      table.getColumn(column.id)?.setFilterValue(next);
+      setPageIndex(0);
+    },
+  }));
+  const showFilters = Boolean(getSearchText) || filters.length > 0;
 
   function changeSelection(keys: "all" | Set<Key>) {
-    const next = new Set([...selection].filter((key) => !pageKeys.has(key)));
-    for (const key of keys === "all" ? pageKeys : keys) next.add(key);
+    const next = nextSelection(keys, selection, pageKeys);
     if (selectedKeys === undefined) setInternalSelection(next);
     onSelectionChange?.(next);
   }
@@ -263,66 +505,22 @@ export function DataTable<T extends RowData>({
             </Button>
           )}
       </div>
-      {(getSearchText ||
-        columns.some((column) => column.filter && column.sortValue)) && (
-        <div className="flex flex-wrap items-end gap-3 border-b border-border px-4 py-3 sm:px-5">
-          {getSearchText && (
-            <SearchField
-              label={`Search ${label}`}
-              value={query}
-              onChange={(value) => {
-                setQuery(value);
-                setPageIndex(0);
-              }}
-              className="min-w-0 grow basis-48 sm:max-w-xs"
-            />
-          )}
-          {columns
-            .filter((column) => column.filter && column.sortValue)
-            .map((column) => {
-              const filter = column.filter;
-              const tableColumn = table.getColumn(column.id);
-              if (!filter || !tableColumn) return null;
-              const value = String(tableColumn.getFilterValue() ?? "");
-              return filter.type === "text" ? (
-                <SearchField
-                  key={column.id}
-                  label={column.header}
-                  value={value}
-                  onChange={(next) => {
-                    tableColumn.setFilterValue(next.trim() ? next : undefined);
-                    setPageIndex(0);
-                  }}
-                  className="min-w-0 grow basis-44 sm:max-w-56"
-                />
-              ) : (
-                <Select
-                  key={column.id}
-                  label={column.header}
-                  value={value}
-                  onValueChange={(next) => {
-                    tableColumn.setFilterValue(next || undefined);
-                    setPageIndex(0);
-                  }}
-                  options={[{ id: "", name: "All" }, ...filter.options]}
-                  className="min-w-0 grow basis-40 sm:max-w-48"
-                />
-              );
-            })}
-          {hasFilters && (
-            <Button
-              variant="minimal"
-              size="sm"
-              onPress={() => {
-                setQuery("");
-                setColumnFilters([]);
-                setPageIndex(0);
-              }}
-            >
-              Clear filters
-            </Button>
-          )}
-        </div>
+      {showFilters && (
+        <DataTableFilters
+          label={label}
+          query={query}
+          hasFilters={hasFilters}
+          filters={filters}
+          onQueryChange={(value) => {
+            setQuery(value);
+            setPageIndex(0);
+          }}
+          onClear={() => {
+            setQuery("");
+            setColumnFilters([]);
+            setPageIndex(0);
+          }}
+        />
       )}
       <TableContainer className="@container rounded-none border-0 bg-transparent shadow-none">
         <Table
@@ -391,38 +589,14 @@ export function DataTable<T extends RowData>({
           </TableBody>
         </Table>
       </TableContainer>
-      {renderSelectionActions && (
-        <Presence show={selectedCount > 0} collapse>
-          <div
-            data-slot="data-table-selection-actions"
-            className="flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-border bg-muted/40 px-4 py-2.5 sm:px-5"
-          >
-            <p
-              aria-hidden="true"
-              dir="auto"
-              className="min-w-0 text-sm font-medium text-foreground"
-            >
-              <AnimatedNumber value={selectedCount} locale={locale} /> selected
-            </p>
-            <div className="flex w-full min-w-0 flex-wrap items-center justify-between gap-2 sm:ms-auto sm:w-auto sm:justify-start">
-              <Toolbar aria-label="Selection actions" size="sm">
-                {renderSelectionActions({
-                  selectedKeys: selection,
-                  selectedCount,
-                  clearSelection,
-                })}
-              </Toolbar>
-              <Button
-                variant="minimal"
-                size="sm"
-                onPress={clearSelectionFromActions}
-              >
-                Clear
-              </Button>
-            </div>
-          </div>
-        </Presence>
-      )}
+      <DataTableSelectionActions
+        locale={locale}
+        selectedCount={selectedCount}
+        selection={selection}
+        clearSelection={clearSelection}
+        clearSelectionFromActions={clearSelectionFromActions}
+        renderSelectionActions={renderSelectionActions}
+      />
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border bg-muted/20 px-4 py-3 text-sm text-muted-foreground sm:px-5">
         {renderFooter ? (
           renderFooter({
@@ -436,50 +610,21 @@ export function DataTable<T extends RowData>({
               setPageIndex(Math.min(Math.max(index, 0), pageCount - 1)),
           })
         ) : (
-          <>
-            <output
-              aria-live="polite"
-              aria-atomic="true"
-              className="tabular-nums"
-            >
-              {filteredCount === 0
-                ? "No rows"
-                : `Showing ${numberFormat.format(firstRow)}–${numberFormat.format(lastRow)} of ${numberFormat.format(filteredCount)} ${filteredCount === 1 ? "row" : "rows"}`}
-              {hasFilters && ` (${numberFormat.format(rows.length)} total)`}
-              {selectable &&
-                selectedCount > 0 &&
-                ` · ${numberFormat.format(selectedCount)} selected`}
-            </output>
-            {pageCount > 1 && (
-              <nav
-                aria-label={`${label} pages`}
-                className="flex flex-wrap items-center gap-x-3 gap-y-2"
-              >
-                <span className="whitespace-nowrap tabular-nums">
-                  Page {numberFormat.format(Math.min(pageIndex + 1, pageCount))}{" "}
-                  of {numberFormat.format(pageCount)}
-                </span>
-                <div className="flex flex-wrap gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    isDisabled={pageIndex === 0}
-                    onPress={() => setPageIndex(pageIndex - 1)}
-                  >
-                    Previous
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    isDisabled={!table.getCanNextPage()}
-                    onPress={() => setPageIndex(pageIndex + 1)}
-                  >
-                    Next
-                  </Button>
-                </div>
-              </nav>
-            )}
-          </>
+          <DataTableFooter
+            label={label}
+            locale={locale}
+            firstRow={firstRow}
+            lastRow={lastRow}
+            filteredCount={filteredCount}
+            totalCount={rows.length}
+            selectedCount={selectedCount}
+            selectable={selectable}
+            hasFilters={hasFilters}
+            pageIndex={pageIndex}
+            pageCount={pageCount}
+            canNextPage={table.getCanNextPage()}
+            onPage={setPageIndex}
+          />
         )}
       </div>
     </div>

@@ -2,7 +2,7 @@
 
 import { XIcon } from "@phosphor-icons/react";
 import { type HTMLMotionProps, motion, useReducedMotion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import {
   Button as AriaButton,
   Tag as AriaTag,
@@ -33,18 +33,30 @@ const tagSizeStyles = {
     remove: "size-5 rounded-[calc(var(--radius-md)-0.25rem)] [&_svg]:size-3",
   },
   sm: {
-    tag: "min-h-9 ps-2.5",
+    tag: "min-h-8 ps-2.5",
     end: "pe-2.5",
     label: "py-1",
-    remove: "size-7 rounded-[calc(var(--radius-lg)-0.25rem)] [&_svg]:size-3.5",
+    remove: "size-6 rounded-[calc(var(--radius-lg)-0.25rem)] [&_svg]:size-3.5",
   },
   md: {
-    tag: "min-h-11 ps-3",
+    tag: "min-h-10 ps-3",
     end: "pe-3",
     label: "py-1.5",
-    remove: "size-9 rounded-[calc(var(--radius-lg)-0.25rem)] [&_svg]:size-4",
+    remove: "size-8 rounded-[calc(var(--radius-lg)-0.25rem)] [&_svg]:size-4",
   },
 } satisfies Record<TagSize, Record<"tag" | "end" | "label" | "remove", string>>;
+
+function subscribeToMount() {
+  return () => {};
+}
+
+function useMounted() {
+  return useSyncExternalStore(
+    subscribeToMount,
+    () => true,
+    () => false,
+  );
+}
 
 export function TagGroup({
   className,
@@ -52,8 +64,7 @@ export function TagGroup({
   ...props
 }: AriaTagGroupProps & { size?: TagSize }) {
   const size = useSize(sizeProp);
-  const [settled, setSettled] = useState(false);
-  useEffect(() => setSettled(true), []);
+  const settled = useMounted();
   return (
     <SizeProvider size={size}>
       <AriaTagGroup

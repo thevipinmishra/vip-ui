@@ -68,7 +68,7 @@ export default function ColorsPage() {
             code={css}
             label="Copy CSS for all scales"
             text="Copy CSS"
-            className="h-11 px-4"
+            className="h-10 px-4"
           />
         </PageActions>
       </PageHeader>

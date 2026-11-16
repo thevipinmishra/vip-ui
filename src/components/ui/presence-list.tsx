@@ -105,6 +105,9 @@ export function PresenceList<T>({
     settled.current = to;
     if (reducedMotion || !from || Math.abs(from - to) < 0.5) return;
     const animation = node.animate(
+      // The list morphs to the height of its new contents, so height is the
+      // property that has to animate.
+      // react-doctor-disable-next-line react-doctor/no-layout-property-animation
       [{ height: `${from}px` }, { height: `${to}px` }],
       {
         duration: springLayout.duration * 1000,

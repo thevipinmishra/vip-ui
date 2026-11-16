@@ -142,7 +142,7 @@ export function NumberFieldInput({ className, ...props }: InputProps) {
         cn(
           fieldInnerHeight,
           fieldText,
-          "min-w-0 flex-1 cursor-text bg-transparent px-[calc(var(--field-px,0.875rem)-var(--field-inset,0.25rem))] text-center font-medium tabular-nums outline-none placeholder:font-normal placeholder:text-muted-foreground/80 disabled:cursor-not-allowed",
+          "min-w-0 flex-1 cursor-text bg-transparent px-[calc(var(--field-px,0.75rem)-var(--field-inset,0.25rem))] text-center font-medium tabular-nums outline-none placeholder:font-normal placeholder:text-muted-foreground/80 disabled:cursor-not-allowed",
           className,
         ),
       )}
@@ -199,7 +199,7 @@ export function NumberFieldSteppers({
       {...props}
       data-slot="number-field-steppers"
       className={cn(
-        "grid h-[calc(var(--field-h,3rem)-2px-2*var(--field-inset,0.25rem))] w-[calc((var(--field-h,3rem)-2px-2*var(--field-inset,0.25rem))*0.75)] shrink-0 grid-rows-2 overflow-hidden rounded-[max(0.1875rem,calc(var(--field-radius,var(--radius-lg))-1px-var(--field-inset,0.25rem)))] bg-muted/50 inset-ring-1 inset-ring-border/60 forced-colors:border",
+        "grid h-[calc(var(--field-h,2.5rem)-2px-2*var(--field-inset,0.25rem))] w-[calc((var(--field-h,2.5rem)-2px-2*var(--field-inset,0.25rem))*0.75)] shrink-0 grid-rows-2 overflow-hidden rounded-[max(0.1875rem,calc(var(--field-radius,var(--radius-lg))-1px-var(--field-inset,0.25rem)))] bg-muted/50 inset-ring-1 inset-ring-border/60 forced-colors:border",
         className,
       )}
     >

@@ -30,6 +30,16 @@ const statusLabels: Record<AgentStepStatus, string> = {
   error: "Failed",
 };
 
+const statusIcons: Record<AgentStepStatus, ReactNode> = {
+  pending: (
+    <span className="size-2 rounded-full border-[1.5px] border-current opacity-60" />
+  ),
+  running: <Spinner size="xs" decorative />,
+  complete: <CheckIcon size={14} weight="bold" />,
+  stopped: <StopCircleIcon size={16} />,
+  error: <WarningCircleIcon size={16} weight="fill" />,
+};
+
 function StatusIcon({
   status,
   step = false,
@@ -42,18 +52,10 @@ function StatusIcon({
       key={status}
       className="grid place-items-center transition-[opacity,scale] duration-200 ease-out-quint starting:scale-75 starting:opacity-0 motion-reduce:transition-none"
     >
-      {status === "running" && step ? (
+      {step && status === "running" ? (
         <span className="size-2 rounded-full bg-current motion-safe:animate-caret forced-colors:bg-[CanvasText]" />
-      ) : status === "running" ? (
-        <Spinner size="xs" decorative />
-      ) : status === "complete" ? (
-        <CheckIcon size={14} weight="bold" />
-      ) : status === "stopped" ? (
-        <StopCircleIcon size={16} />
-      ) : status === "error" ? (
-        <WarningCircleIcon size={16} weight="fill" />
       ) : (
-        <span className="size-2 rounded-full border-[1.5px] border-current opacity-60" />
+        statusIcons[status]
       )}
     </span>
   );

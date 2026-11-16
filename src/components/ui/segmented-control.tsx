@@ -18,7 +18,7 @@ import { touchTarget } from "./button-styles";
 import { type Size, SizeProvider, useSize } from "./size";
 
 const segmentedControlStyles = tv({
-  base: "relative isolate inline-grid max-w-full auto-cols-fr grid-flow-col gap-0.5 rounded-lg border border-border bg-secondary p-1 text-foreground [--touch-target:2.75rem] [--transition-duration:150ms] data-[invalid]:border-destructive data-[orientation=vertical]:[--touch-target:100%] data-[orientation=vertical]:auto-rows-fr data-[orientation=vertical]:grid-flow-row motion-reduce:[--transition-duration:0ms] forced-colors:border-[ButtonBorder]",
+  base: "relative isolate inline-grid max-w-full auto-cols-fr grid-flow-col gap-0.5 rounded-lg border border-border bg-secondary p-1 text-foreground [--touch-target:2.75rem] [--transition-duration:300ms] data-[invalid]:border-destructive data-[orientation=vertical]:[--touch-target:100%] data-[orientation=vertical]:auto-rows-fr data-[orientation=vertical]:grid-flow-row motion-reduce:[--transition-duration:0ms] forced-colors:border-[ButtonBorder]",
   variants: {
     size: {
       xs: "gap-0.5 rounded-md p-0.5",
@@ -53,10 +53,10 @@ const segmentedControlItemStyles = tv({
   variants: {
     size: {
       xs: `h-7 gap-1.5 rounded-sm px-2 text-xs [&_svg:not([class*='size-'])]:size-3.5 ${touchTarget}`,
-      sm: `h-9 rounded-md px-3 ${touchTarget}`,
-      md: "h-11 rounded-md px-4",
-      lg: "h-12 rounded-md px-5",
-      xl: "h-14 gap-2.5 rounded-lg px-6 text-base [&_svg:not([class*='size-'])]:size-5",
+      sm: `h-8 rounded-md px-3 ${touchTarget}`,
+      md: `h-10 rounded-md px-4 ${touchTarget}`,
+      lg: "h-11 rounded-md px-5",
+      xl: "h-12 gap-2.5 rounded-lg px-6 text-base [&_svg:not([class*='size-'])]:size-5",
     },
   },
   defaultVariants: { size: "md" },

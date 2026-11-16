@@ -1,7 +1,13 @@
 "use client";
 
 import { useInView } from "motion/react";
-import { type ComponentProps, useEffect, useRef, useState } from "react";
+import {
+  type ComponentProps,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import { cn } from "./utils";
 
 export type HighlighterVariant = "highlight" | "underline" | "circle";
@@ -43,6 +49,18 @@ function circlePath({ width, height, stroke }: Box) {
   return commands.join(" ");
 }
 
+function subscribeToMount() {
+  return () => {};
+}
+
+function useMounted() {
+  return useSyncExternalStore(
+    subscribeToMount,
+    () => true,
+    () => false,
+  );
+}
+
 export function Highlighter({
   variant = "highlight",
   trigger = "in-view",
@@ -56,12 +74,10 @@ export function Highlighter({
   const root = useRef<HTMLSpanElement | null>(null);
   const canvas = useRef<SVGSVGElement>(null);
   const inView = useInView(root, { once: true, amount: "all" });
-  const [mounted, setMounted] = useState(false);
+  const mounted = useMounted();
   const [box, setBox] = useState<Box>();
   const visible = mounted && (trigger === "mount" || inView);
   const drawn = visible ? "" : undefined;
-
-  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     const node = canvas.current;

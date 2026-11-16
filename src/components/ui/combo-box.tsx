@@ -35,8 +35,8 @@ import type { Size } from "./size";
 import { Tag, TagGroup, TagListView } from "./tag-group";
 
 const comboBoxPopoverStyles =
-  "w-(--trigger-width) rounded-lg border-0 p-1.5 ring-1 ring-border/70";
-const comboBoxItemStyles = `group/item flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none transition-colors duration-150 ease-out-quint selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50 ${itemHighlightRing}`;
+  "w-(--trigger-width) rounded-lg border-0 p-1 ring-1 ring-border/70";
+const comboBoxItemStyles = `group/item flex min-h-9 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none transition-colors duration-150 ease-out-quint selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50 ${itemHighlightRing}`;
 
 export interface ComboBoxOption {
   id: string;
@@ -195,11 +195,11 @@ function ComboBoxDefaults({
           render={withItemHighlight(undefined, { ring: true })}
           items={options ?? []}
           renderEmptyState={() => (
-            <div className="px-3 py-3 text-sm text-muted-foreground">
+            <div className="px-2.5 py-3 text-sm text-muted-foreground">
               No matching options.
             </div>
           )}
-          className="grid gap-1 outline-none"
+          className="grid gap-0.5 outline-none"
         >
           {(option) => (
             <ListBoxItem
@@ -292,7 +292,7 @@ export function ComboBoxControl({
       data-slot="combo-box-control"
       className={cn(
         fieldIcon,
-        "relative flex min-w-0 items-center has-[>[data-slot=combo-box-icon]]:[&>input]:ps-[calc(var(--field-px,0.875rem)+var(--field-icon,1rem)+0.625rem)]",
+        "relative flex min-w-0 items-center has-[>[data-slot=combo-box-icon]]:[&>input]:ps-[calc(var(--field-px,0.75rem)+var(--field-icon,1rem)+0.625rem)]",
         className,
       )}
     />
@@ -309,7 +309,7 @@ export function ComboBoxIcon({
       {...props}
       data-slot="combo-box-icon"
       className={cn(
-        "pointer-events-none absolute inset-s-(--field-px,0.875rem) z-10 grid place-items-center text-muted-foreground transition-colors duration-150 ease-out-quint group-focus-within:text-foreground group-disabled:opacity-60",
+        "pointer-events-none absolute inset-s-(--field-px,0.75rem) z-10 grid place-items-center text-muted-foreground transition-colors duration-150 ease-out-quint group-focus-within:text-foreground group-disabled:opacity-60",
         className,
       )}
     />
@@ -328,7 +328,7 @@ export function ComboBoxInput({
         cn(
           fieldInputStyles,
           fieldTriggerInputPadding,
-          "ps-(--field-px,0.875rem)",
+          "ps-(--field-px,0.75rem)",
           className,
         ),
       )}
@@ -384,9 +384,9 @@ export function ComboBoxContent<T extends object>({
       <ListBox
         data-slot="combo-box-list-box"
         render={withItemHighlight(undefined, { ring: true })}
-        className="grid gap-1 outline-none"
+        className="grid gap-0.5 outline-none"
         renderEmptyState={() => (
-          <div className="px-3 py-3 text-sm text-muted-foreground">
+          <div className="px-2.5 py-3 text-sm text-muted-foreground">
             No matching options.
           </div>
         )}

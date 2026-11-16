@@ -13,7 +13,7 @@ import {
   createContext,
   type ReactNode,
   type Ref,
-  type RefObject,
+  useCallback,
   useContext,
   useId,
   useLayoutEffect,
@@ -32,10 +32,10 @@ const paginationLinkStyles = tv({
   variants: {
     size: {
       xs: `min-h-7 min-w-7 gap-1 rounded-md px-2 text-xs [&_svg:not([class*='size-'])]:size-3.5 ${touchTarget}`,
-      sm: `min-h-9 min-w-9 rounded-md px-2.5 ${touchTarget}`,
-      md: "min-h-11 min-w-11 px-3",
-      lg: "min-h-12 min-w-12 px-3.5",
-      xl: "min-h-14 min-w-14 rounded-xl px-4 text-base [&_svg:not([class*='size-'])]:size-5",
+      sm: `min-h-8 min-w-8 rounded-md px-2 ${touchTarget}`,
+      md: `min-h-10 min-w-10 px-3 ${touchTarget}`,
+      lg: "min-h-11 min-w-11 px-3.5",
+      xl: "min-h-12 min-w-12 rounded-xl px-4 text-base [&_svg:not([class*='size-'])]:size-5",
     },
     isCurrent: {
       true: "cursor-default text-primary forced-colors:border",
@@ -46,15 +46,15 @@ const paginationLinkStyles = tv({
 
 const ellipsisSizeStyles = {
   xs: "min-h-7 min-w-5 text-xs",
-  sm: "min-h-9 min-w-6",
-  md: "min-h-11 min-w-8",
-  lg: "min-h-12 min-w-8",
-  xl: "min-h-14 min-w-9 text-base",
+  sm: "min-h-8 min-w-6",
+  md: "min-h-10 min-w-8",
+  lg: "min-h-11 min-w-8",
+  xl: "min-h-12 min-w-9 text-base",
 } satisfies Record<Size, string>;
 
 interface PaginationContextValue {
   api: pagination.Api;
-  frame: RefObject<HTMLElement | null>;
+  takeFrame: (next: HTMLElement | null) => HTMLElement | null;
 }
 
 const PaginationPartsContext = createContext<PaginationContextValue | null>(
@@ -117,6 +117,11 @@ export function Pagination({
 }: PaginationProps) {
   const size = useSize(sizeProp);
   const frame = useRef<HTMLElement | null>(null);
+  const takeFrame = useCallback((next: HTMLElement | null) => {
+    const previous = frame.current;
+    frame.current = next;
+    return previous;
+  }, []);
   const id = `pagination-${stableId(useId())}`;
   const label = ariaLabel ?? translations?.rootLabel ?? "Pagination";
   const service = useMachine(pagination.machine, {
@@ -147,7 +152,7 @@ export function Pagination({
 
   return (
     <SizeProvider size={size}>
-      <PaginationPartsContext value={{ api, frame }}>
+      <PaginationPartsContext value={{ api, takeFrame }}>
         <nav
           {...mergeProps(rootProps, props)}
           ref={ref}
@@ -204,7 +209,7 @@ export interface PaginationLinkProps
 }
 
 function PaginationCurrent({ current }: { current: boolean }) {
-  const frame = useContext(PaginationPartsContext)?.frame;
+  const takeFrame = useContext(PaginationPartsContext)?.takeFrame;
   const indicatorRef = useRef<HTMLSpanElement>(null);
 
   useLayoutEffect(() => {
@@ -212,8 +217,7 @@ function PaginationCurrent({ current }: { current: boolean }) {
     const indicator = indicatorRef.current;
     const link = indicator?.parentElement;
     if (!indicator || !link) return;
-    const previous = frame?.current ?? null;
-    if (frame) frame.current = link;
+    const previous = takeFrame?.(link) ?? null;
     if (!previous || previous === link || !previous.isConnected) return;
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const box = link.getBoundingClientRect();
@@ -225,7 +229,7 @@ function PaginationCurrent({ current }: { current: boolean }) {
       { transform: [`translate(${x}px, ${y}px)`, "translate(0px, 0px)"] },
       flipTiming,
     );
-  }, [current, frame]);
+  }, [current, takeFrame]);
 
   if (!current) return null;
   return (
@@ -314,31 +318,36 @@ function PaginationPageButton({ value }: { value: number }) {
 
 export function PaginationPages() {
   const { api } = usePagination();
-  return api.pages.map((entry, index) => {
-    if (entry.type === "ellipsis")
-      return (
-        <PaginationItem
-          // biome-ignore lint/suspicious/noArrayIndexKey: An ellipsis has no page number to key by.
-          key={`ellipsis-${index}`}
-        >
-          <PaginationEllipsis index={index} />
-        </PaginationItem>
-      );
-    return (
-      <PaginationItem key={entry.value}>
-        {api.type === "link" ? (
-          <PaginationLink
-            href={api.getPageUrl(entry.value)}
-            value={entry.value}
-          >
-            {entry.value}
-          </PaginationLink>
-        ) : (
-          <PaginationPageButton value={entry.value} />
-        )}
-      </PaginationItem>
-    );
-  });
+  return (
+    <>
+      {api.pages.map((entry, index) => {
+        if (entry.type === "ellipsis")
+          return (
+            <PaginationItem
+              // An ellipsis has no page number to key by.
+              // react-doctor-disable-next-line react-doctor/no-array-index-as-key
+              key={`ellipsis-${index}`}
+            >
+              <PaginationEllipsis index={index} />
+            </PaginationItem>
+          );
+        return (
+          <PaginationItem key={entry.value}>
+            {api.type === "link" ? (
+              <PaginationLink
+                href={api.getPageUrl(entry.value)}
+                value={entry.value}
+              >
+                {entry.value}
+              </PaginationLink>
+            ) : (
+              <PaginationPageButton value={entry.value} />
+            )}
+          </PaginationItem>
+        );
+      })}
+    </>
+  );
 }
 
 export interface PaginationEllipsisProps extends ComponentProps<"span"> {

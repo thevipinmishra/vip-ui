@@ -25,10 +25,10 @@ import { type Size, SizeProvider, useSize } from "./size";
 
 const tabSizeStyles = {
   xs: "min-h-7 gap-1.5 rounded-md px-2.5 text-xs [&_svg:not([class*='size-'])]:size-3.5",
-  sm: "min-h-9 px-3",
-  md: "min-h-11 px-4",
-  lg: "min-h-12 px-5",
-  xl: "min-h-14 gap-2.5 rounded-xl px-6 text-base [&_svg:not([class*='size-'])]:size-5",
+  sm: "min-h-8 px-3",
+  md: "min-h-10 px-4",
+  lg: "min-h-11 px-5",
+  xl: "min-h-12 gap-2.5 rounded-xl px-6 text-base [&_svg:not([class*='size-'])]:size-5",
 } satisfies Record<Size, string>;
 
 export interface TabsProps extends AriaTabsProps {
@@ -94,14 +94,18 @@ function useScrollFade(forwardedRef?: Ref<HTMLDivElement>) {
         );
       };
       const resize = new ResizeObserver(update);
-      const observe = () => {
+      // React 19 runs the cleanup this ref callback returns, so observers and
+      // listeners are released when the element unmounts.
+      // react-doctor-disable-next-line react-doctor/effect-needs-cleanup
+      resize.observe(element);
+      for (const child of element.children) resize.observe(child);
+      update();
+      const mutation = new MutationObserver(() => {
         resize.disconnect();
         resize.observe(element);
         for (const child of element.children) resize.observe(child);
         update();
-      };
-      const mutation = new MutationObserver(observe);
-      observe();
+      });
       mutation.observe(element, { childList: true });
       element.addEventListener("scroll", update, { passive: true });
       return () => {
@@ -170,7 +174,7 @@ export function Tab({
       data-size={size}
       className={composeRenderProps(className, (className) =>
         cn(
-          "relative isolate inline-flex min-h-11 min-w-0 max-w-full shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 text-sm font-medium leading-5 text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-out-quint hover:text-foreground motion-safe:pressed:scale-[0.96] selected:text-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-50 group-orientation-vertical/tab-list:justify-start [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+          "relative isolate inline-flex min-h-10 min-w-0 max-w-full shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 text-sm font-medium leading-5 text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-out-quint hover:text-foreground motion-safe:pressed:scale-[0.96] selected:text-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-50 group-orientation-vertical/tab-list:justify-start [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
           size ? tabSizeStyles[size] : "sm:min-h-9",
           className,
         ),

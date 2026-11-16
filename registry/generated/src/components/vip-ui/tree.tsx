@@ -12,8 +12,7 @@ import {
   createContext,
   type ReactNode,
   useContext,
-  useEffect,
-  useState,
+  useSyncExternalStore,
 } from "react";
 import {
   Button as AriaButton,
@@ -42,13 +41,24 @@ const indent = "calc(0.25rem + (var(--tree-item-level, 1) - 1) * 1.25rem)";
 // already present on page load render without an entrance.
 const TreeSettledContext = createContext(false);
 
+function subscribeToMount() {
+  return () => {};
+}
+
+function useMounted() {
+  return useSyncExternalStore(
+    subscribeToMount,
+    () => true,
+    () => false,
+  );
+}
+
 export function Tree<T extends object>({
   className,
   render,
   ...props
 }: TreeProps<T>) {
-  const [settled, setSettled] = useState(false);
-  useEffect(() => setSettled(true), []);
+  const settled = useMounted();
 
   return (
     <TreeSettledContext.Provider value={settled}>

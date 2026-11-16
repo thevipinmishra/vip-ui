@@ -102,7 +102,7 @@ export function SearchFieldControl({
     >
       <MagnifyingGlassIcon
         aria-hidden="true"
-        className="pointer-events-none absolute inset-s-(--field-px,0.875rem) text-muted-foreground transition-colors duration-150 ease-out-quint group-focus-within:text-foreground group-disabled:opacity-60"
+        className="pointer-events-none absolute inset-s-(--field-px,0.75rem) text-muted-foreground transition-colors duration-150 ease-out-quint group-focus-within:text-foreground group-disabled:opacity-60"
       />
       {children}
     </div>
@@ -121,7 +121,7 @@ export function SearchFieldInput({
         cn(
           fieldInputStyles,
           fieldTriggerInputPadding,
-          "ps-[calc(var(--field-px,0.875rem)+var(--field-icon,1rem)+0.625rem)] [&::-webkit-search-cancel-button]:hidden",
+          "ps-[calc(var(--field-px,0.75rem)+var(--field-icon,1rem)+0.625rem)] [&::-webkit-search-cancel-button]:hidden",
           className,
         ),
       )}

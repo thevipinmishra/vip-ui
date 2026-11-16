@@ -16,6 +16,18 @@ import { buttonLabel } from "./button-styles";
 
 export type CopyButtonStatus = "idle" | "copied" | "error";
 
+const statusCopy = {
+  idle: { icon: <CopyIcon />, label: "Copy" },
+  copied: { icon: <CheckIcon />, label: "Copied" },
+  error: { icon: <WarningIcon />, label: "Retry" },
+} as const;
+
+const statusAnnouncement = {
+  idle: "",
+  copied: "Copied to clipboard",
+  error: "Copy failed. Try again.",
+} as const;
+
 export interface CopyButtonProps
   extends Omit<ButtonProps, "children" | "onPress" | "type" | "value"> {
   value: string;
@@ -85,23 +97,11 @@ export function CopyButton({
     typeof children === "function" ? children("idle") : children;
   const label =
     ariaLabel ?? (typeof idleContent === "string" ? idleContent : "Copy");
+  const current = statusCopy[status];
   const defaultContent = (
     <>
-      {status === "copied" ? (
-        <CheckIcon />
-      ) : status === "error" ? (
-        <WarningIcon />
-      ) : (
-        <CopyIcon />
-      )}
-      {!iconOnly &&
-        buttonLabel(
-          status === "copied"
-            ? "Copied"
-            : status === "error"
-              ? "Retry"
-              : "Copy",
-        )}
+      {current.icon}
+      {!iconOnly && buttonLabel(current.label)}
     </>
   );
 
@@ -144,11 +144,7 @@ export function CopyButton({
         </AnimatePresence>
       </Button>
       <output className="sr-only" aria-live="polite" aria-atomic="true">
-        {status === "copied"
-          ? "Copied to clipboard"
-          : status === "error"
-            ? "Copy failed. Try again."
-            : ""}
+        {statusAnnouncement[status]}
       </output>
     </>
   );
