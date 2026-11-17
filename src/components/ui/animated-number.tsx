@@ -159,20 +159,22 @@ function SlidingNumber({
   }
 
   const parts = formatter.formatToParts(value);
-  const integerLength = parts.reduce(
-    (count, part) =>
-      part.type === "integer" ? count + Array.from(part.value).length : count,
-    0,
-  );
   const otherCounts = new Map<string, number>();
-  let integerSeen = 0;
 
   const segments = parts.flatMap((part, partIndex) => {
     if (part.type === "integer") {
-      const start = integerSeen;
-      integerSeen += Array.from(part.value).length;
-      return Array.from(part.value, (digit, index) => ({
-        key: `integer-${integerLength - 1 - start - index}`,
+      const digits = Array.from(part.value);
+      const after = parts
+        .slice(partIndex + 1)
+        .reduce(
+          (count, next) =>
+            next.type === "integer"
+              ? count + Array.from(next.value).length
+              : count,
+          0,
+        );
+      return digits.map((digit, index) => ({
+        key: `integer-${after + digits.length - 1 - index}`,
         text: digit,
         isDigit: true,
       }));
