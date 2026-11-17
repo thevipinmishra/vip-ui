@@ -239,20 +239,6 @@ export interface CarouselViewportProps extends ComponentProps<"div"> {
   trackClassName?: string;
 }
 
-function viewportMask(
-  vertical: boolean,
-  rtl: boolean,
-  canScrollPrev: boolean,
-  canScrollNext: boolean,
-) {
-  if (!canScrollPrev && !canScrollNext) return undefined;
-  const from = canScrollPrev ? "transparent" : "black";
-  const to = canScrollNext ? "transparent" : "black";
-  if (vertical)
-    return `linear-gradient(to bottom, ${from}, black var(--carousel-fade), black calc(100% - var(--carousel-fade)), ${to})`;
-  return `linear-gradient(${rtl ? "to left" : "to right"}, ${from}, black ${canScrollPrev ? "var(--carousel-fade)" : "0px"}, black calc(100% - var(--carousel-fade)), ${to})`;
-}
-
 function viewportArrowKeys(vertical: boolean, rtl: boolean) {
   if (vertical) return { next: "ArrowDown", previous: "ArrowUp" };
   return rtl
@@ -265,7 +251,6 @@ export function CarouselViewport({
   children,
   onKeyDown,
   ref,
-  style,
   trackClassName,
   "aria-label": ariaLabel = "Slides",
   "aria-live": ariaLive = "polite",
@@ -273,22 +258,11 @@ export function CarouselViewport({
 }: CarouselViewportProps) {
   const carousel = useContext(CarouselContext);
   const ownRef = useRef<HTMLDivElement | null>(null);
-  const [rtl, setRtl] = useState(false);
   const count = Children.count(children);
   const axis = carousel?.axis ?? "x";
   const vertical = axis === "y";
   const canScrollPrev = carousel?.canScrollPrev ?? false;
   const canScrollNext = carousel?.canScrollNext ?? false;
-
-  useLayoutEffect(() => {
-    const node = ownRef.current;
-    if (node) setRtl(getComputedStyle(node).direction === "rtl");
-  }, []);
-
-  const fade = canScrollPrev || canScrollNext;
-  const maskImage = fade
-    ? viewportMask(vertical, rtl, canScrollPrev, canScrollNext)
-    : undefined;
 
   return (
     // biome-ignore lint/a11y/useSemanticElements: The slide row is a labelled region, not a form control.
@@ -319,9 +293,8 @@ export function CarouselViewport({
         if (event.key === next) carousel.scrollNext();
         else carousel.scrollPrev();
       }}
-      style={{ maskImage, ...style }}
       className={cn(
-        "overflow-hidden rounded-xl [--carousel-fade:0.75rem] outline-offset-4 outline-transparent transition-[outline-color,outline-offset] duration-150 ease-out-quint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2",
+        "overflow-hidden rounded-xl outline-offset-4 outline-transparent transition-[outline-color,outline-offset] duration-150 ease-out-quint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2",
         className,
       )}
     >
