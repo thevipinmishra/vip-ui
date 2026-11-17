@@ -3,6 +3,8 @@
 import { useState } from "react";
 import {
   Carousel,
+  CarouselNext,
+  CarouselPrevious,
   CarouselSlide,
   CarouselStatus,
   CarouselViewport,
@@ -13,7 +15,7 @@ import {
   LightboxImage,
   LightboxTrigger,
 } from "@/components/ui/lightbox";
-import { lightboxPhotos } from "./lightbox-art";
+import { photos } from "./photo-art";
 
 export function LightboxControlledDemo() {
   const [index, setIndex] = useState(0);
@@ -23,7 +25,7 @@ export function LightboxControlledDemo() {
       <Lightbox index={index} onIndexChange={setIndex}>
         <Carousel aria-label="Gallery" index={index} className="gap-2">
           <CarouselViewport style={{ overflow: "hidden" }}>
-            {lightboxPhotos.map((photo, position) => (
+            {photos.map((photo, position) => (
               <CarouselSlide key={photo.id}>
                 <LightboxTrigger
                   index={position}
@@ -34,12 +36,14 @@ export function LightboxControlledDemo() {
               </CarouselSlide>
             ))}
           </CarouselViewport>
-          <div className="flex items-center justify-end">
+          <div className="flex items-center justify-between gap-3">
+            <CarouselPrevious />
             <CarouselStatus />
+            <CarouselNext />
           </div>
         </Carousel>
         <LightboxContent>
-          {lightboxPhotos.map((photo) => (
+          {photos.map((photo) => (
             <CarouselSlide key={photo.id}>
               <LightboxImage
                 src={photo.src}

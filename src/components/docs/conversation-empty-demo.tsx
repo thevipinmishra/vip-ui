@@ -62,7 +62,7 @@ function ConversationEmptySession() {
             <Message sender="You" side="outgoing">
               {prompt}
             </Message>
-            <Response status="complete" className="ms-11">
+            <Response status="complete">
               <ResponseContent>{ANSWER}</ResponseContent>
             </Response>
           </div>

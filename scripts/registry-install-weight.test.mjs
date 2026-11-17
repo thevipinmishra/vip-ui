@@ -134,6 +134,7 @@ const motionAllowlist = new Set([
   "range-calendar",
   "rating-input",
   "sheet",
+  "sidebar",
   "stagger-group",
   "stepper",
   "tabs",

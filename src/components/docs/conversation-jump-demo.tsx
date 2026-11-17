@@ -110,10 +110,7 @@ function ConversationJumpSession() {
               <Message sender="You" side="outgoing">
                 {line.prompt}
               </Message>
-              <Response
-                status={streaming ? "streaming" : "complete"}
-                className="ms-11"
-              >
+              <Response status={streaming ? "streaming" : "complete"}>
                 <ResponseContent>
                   {words.slice(0, line.revealed).join(" ")}
                 </ResponseContent>

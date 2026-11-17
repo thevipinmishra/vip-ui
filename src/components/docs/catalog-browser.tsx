@@ -5,6 +5,7 @@ import Link from "next/link";
 import { memo, useState } from "react";
 import { type CatalogComponent, catalogGroups } from "@/lib/catalog";
 import { CatalogPreview } from "./catalog-preview";
+import { NewBadge } from "./new-badge";
 
 const CatalogCard = memo(function CatalogCard({
   component,
@@ -32,6 +33,7 @@ const CatalogCard = memo(function CatalogCard({
         <span className="min-w-0 truncate text-sm font-medium tracking-[-0.01em]">
           {component.name}
         </span>
+        <NewBadge added={component.added} />
         <span className="sr-only">. {component.description}</span>
         <ArrowRightIcon
           size={14}

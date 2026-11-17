@@ -61,49 +61,56 @@
       "title": "SaaS analytics",
       "description": "Analytics dashboard with date ranges, tabs, charts, and a target.",
       "category": "dashboard",
-      "height": 1310
+      "height": 1310,
+      "added": "2026-11-03"
     },
     {
       "name": "status-01",
       "title": "Service status",
       "description": "Public status page with uptime bars and incident updates.",
       "category": "dashboard",
-      "height": 1545
+      "height": 1545,
+      "added": "2026-11-03"
     },
     {
       "name": "orders-01",
       "title": "Store orders",
       "description": "Order list with filters, bulk actions, and details.",
       "category": "data",
-      "height": 940
+      "height": 940,
+      "added": "2026-11-03"
     },
     {
       "name": "order-01",
       "title": "Order detail",
       "description": "Order with line items, fulfillment history, and a refund.",
       "category": "data",
-      "height": 1160
+      "height": 1160,
+      "added": "2026-11-03"
     },
     {
       "name": "chat-01",
       "title": "Assistant chat",
       "description": "Assistant chat that reads metrics and cites its sources.",
       "category": "ai",
-      "height": 720
+      "height": 720,
+      "added": "2026-11-03"
     },
     {
       "name": "agent-01",
       "title": "Agent run",
       "description": "Live agent run with tool calls, progress, and a stop action.",
       "category": "ai",
-      "height": 1365
+      "height": 1365,
+      "added": "2026-11-03"
     },
     {
       "name": "ai-search-01",
       "title": "Answer search",
       "description": "Docs search that answers the question and lists sources.",
       "category": "ai",
-      "height": 1250
+      "height": 1250,
+      "added": "2026-11-03"
     },
     {
       "name": "login-01",
@@ -131,28 +138,32 @@
       "title": "Two-step code",
       "description": "Two-step code check with a resend timer and recovery code.",
       "category": "authentication",
-      "height": 720
+      "height": 720,
+      "added": "2026-11-03"
     },
     {
       "name": "reset-01",
       "title": "Reset password",
       "description": "Password reset form with a sent state and a resend option.",
       "category": "authentication",
-      "height": 663
+      "height": 663,
+      "added": "2026-11-03"
     },
     {
       "name": "onboarding-01",
       "title": "Workspace setup",
       "description": "Three-step workspace setup with a live preview.",
       "category": "onboarding",
-      "height": 870
+      "height": 870,
+      "added": "2026-11-03"
     },
     {
       "name": "checklist-01",
       "title": "Getting started",
       "description": "Six-task checklist that fills a progress ring.",
       "category": "onboarding",
-      "height": 860
+      "height": 860,
+      "added": "2026-11-03"
     },
     {
       "name": "settings-01",
@@ -180,35 +191,40 @@
       "title": "Security settings",
       "description": "Password, two-step sign-in, sessions, and account deletion.",
       "category": "settings",
-      "height": 1396
+      "height": 1396,
+      "added": "2026-11-03"
     },
     {
       "name": "appearance-01",
       "title": "Appearance settings",
       "description": "Theme, accent color, font, and motion settings.",
       "category": "settings",
-      "height": 1363
+      "height": 1363,
+      "added": "2026-11-03"
     },
     {
       "name": "api-keys-01",
       "title": "API keys",
       "description": "API key list with scopes, expiry dates, and revoke actions.",
       "category": "settings",
-      "height": 729
+      "height": 729,
+      "added": "2026-11-03"
     },
     {
       "name": "integrations-01",
       "title": "Connected apps",
       "description": "App directory with connect, sync status, and access review.",
       "category": "settings",
-      "height": 1116
+      "height": 1116,
+      "added": "2026-11-03"
     },
     {
       "name": "landing-01",
       "title": "Product landing page",
       "description": "Product landing page with features, plans, and social proof.",
       "category": "marketing",
-      "height": 3605
+      "height": 3605,
+      "added": "2026-11-03"
     },
     {
       "name": "pricing-01",
@@ -222,56 +238,64 @@
       "title": "Plan comparison",
       "description": "Plan comparison with a seat calculator and feature table.",
       "category": "marketing",
-      "height": 3295
+      "height": 3295,
+      "added": "2026-11-03"
     },
     {
       "name": "changelog-01",
       "title": "Release notes",
       "description": "Release notes with type filters, search, and a timeline.",
       "category": "marketing",
-      "height": 1575
+      "height": 1575,
+      "added": "2026-11-03"
     },
     {
       "name": "contact-01",
       "title": "Contact sales",
       "description": "Sales contact form with validation and a success state.",
       "category": "marketing",
-      "height": 1195
+      "height": 1195,
+      "added": "2026-11-03"
     },
     {
       "name": "not-found-01",
       "title": "Page not found",
       "description": "404 page with search, suggested pages, and articles.",
       "category": "marketing",
-      "height": 960
+      "height": 960,
+      "added": "2026-11-03"
     },
     {
       "name": "product-01",
       "title": "Product detail",
       "description": "Product page with variants, reviews, and a cart.",
       "category": "commerce",
-      "height": 1460
+      "height": 1460,
+      "added": "2026-11-03"
     },
     {
       "name": "checkout-01",
       "title": "Checkout",
       "description": "Checkout with delivery options, promo code, and card payment.",
       "category": "commerce",
-      "height": 860
+      "height": 860,
+      "added": "2026-11-03"
     },
     {
       "name": "booking-01",
       "title": "Book a meeting",
       "description": "Booking page with a calendar, time slots, and a time zone.",
       "category": "scheduling",
-      "height": 820
+      "height": 820,
+      "added": "2026-11-03"
     },
     {
       "name": "availability-01",
       "title": "Weekly availability",
       "description": "Weekly hours editor with time off and a booking window.",
       "category": "scheduling",
-      "height": 1400
+      "height": 1400,
+      "added": "2026-11-03"
     },
     {
       "name": "team-01",
@@ -292,21 +316,24 @@
       "title": "File manager",
       "description": "File manager with folders, uploads, and file details.",
       "category": "workspace",
-      "height": 890
+      "height": 890,
+      "added": "2026-11-03"
     },
     {
       "name": "issue-01",
       "title": "Issue detail",
       "description": "Issue with properties, comments, and keyboard shortcuts.",
       "category": "workspace",
-      "height": 1615
+      "height": 1615,
+      "added": "2026-11-03"
     },
     {
       "name": "inbox-01",
       "title": "Support inbox",
       "description": "Support inbox with queues, snooze, and replies.",
       "category": "workspace",
-      "height": 850
+      "height": 850,
+      "added": "2026-11-03"
     }
   ]
 }

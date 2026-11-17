@@ -7,13 +7,13 @@ import {
   LightboxImage,
   LightboxTrigger,
 } from "@/components/ui/lightbox";
-import { lightboxPhotos } from "./lightbox-art";
+import { photos } from "./photo-art";
 
 export function LightboxCaptionsDemo() {
   return (
     <Lightbox>
-      <div className="grid w-full max-w-md grid-cols-4 gap-2">
-        {lightboxPhotos.map((photo, index) => (
+      <div className="grid w-full max-w-md grid-cols-6 gap-2">
+        {photos.map((photo, index) => (
           <LightboxTrigger
             key={photo.id}
             index={index}
@@ -24,7 +24,7 @@ export function LightboxCaptionsDemo() {
         ))}
       </div>
       <LightboxContent>
-        {lightboxPhotos.map((photo) => (
+        {photos.map((photo) => (
           <CarouselSlide key={photo.id}>
             <LightboxImage
               src={photo.src}

@@ -161,14 +161,24 @@ function writeOrigin(
   modal.style.setProperty("--lightbox-from-scale", String(scale));
 }
 
-function imageAt(carousel: HTMLElement | null, index: number) {
+function imageBoxAt(carousel: HTMLElement | null, index: number) {
   if (!carousel) return null;
   const slide = carousel.querySelector<HTMLElement>(
     `[data-slot="carousel-slide"][data-index="${index}"]`,
   );
-  return (
-    slide?.querySelector<HTMLElement>("img, [data-lightbox-source]") ?? null
+  const viewport = carousel.querySelector('[data-slot="carousel-viewport"]');
+  const image = slide?.querySelector<HTMLElement>(
+    "img, [data-lightbox-source]",
   );
+  if (!slide || !viewport || !image) return null;
+  const box = layoutBox(image);
+  const slideBox = slide.getBoundingClientRect();
+  const viewportBox = viewport.getBoundingClientRect();
+  return {
+    ...box,
+    x: box.x - slideBox.x + viewportBox.x,
+    y: box.y - slideBox.y + viewportBox.y,
+  };
 }
 
 export interface LightboxProps {
@@ -423,11 +433,10 @@ export function LightboxContent({
   useLayoutEffect(() => {
     if (!isOpen || measured === 0) return;
     carouselApiRef.current?.scrollTo(current, true);
-    const image = imageAt(carouselRef.current, current);
     writeOrigin(
       modalRef.current,
       originRef.current,
-      image ? layoutBox(image) : null,
+      imageBoxAt(carouselRef.current, current),
     );
     // The enter phase ends once the measured image is in place.
     // react-doctor-disable-next-line react-hooks-js/set-state-in-effect
@@ -438,11 +447,10 @@ export function LightboxContent({
     const same = openedIndexRef.current === current;
     const trigger = same ? triggersRef.current.get(current) : null;
     const origin = sourceBox(trigger ?? null);
-    const image = imageAt(carouselRef.current, current);
     writeOrigin(
       modalRef.current,
       origin && onScreen(origin) ? origin : null,
-      image ? layoutBox(image) : null,
+      imageBoxAt(carouselRef.current, current),
     );
     setSettling(false);
     setPhase("exiting");

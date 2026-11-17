@@ -44,7 +44,7 @@ export function PaginationContextDemo() {
   const [page, setPage] = useState(2);
 
   return (
-    <div className="grid w-full max-w-lg gap-4">
+    <div className="w-full max-w-2xl">
       <Pagination
         aria-label="Invoices"
         count={invoices.length}
@@ -54,21 +54,15 @@ export function PaginationContextDemo() {
       >
         <PaginationContext>
           {(api) => (
-            <div className="grid gap-3">
-              <div className="flex flex-wrap items-baseline justify-between gap-2 text-sm">
-                <p
-                  aria-atomic="true"
-                  aria-live="polite"
-                  className="text-muted-foreground"
-                >
-                  Showing {api.pageRange.start + 1}–
-                  {Math.min(api.pageRange.end, api.count)} of {api.count}{" "}
-                  invoices
-                </p>
-                <p className="font-medium tabular-nums">
-                  Page {api.page} of {api.totalPages}
-                </p>
-              </div>
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 sm:justify-between">
+              <p
+                aria-atomic="true"
+                aria-live="polite"
+                className="text-sm text-muted-foreground tabular-nums"
+              >
+                Showing {api.pageRange.start + 1}–
+                {Math.min(api.pageRange.end, api.count)} of {api.count} invoices
+              </p>
               <PaginationList className="flex-nowrap gap-1">
                 <PaginationItem>
                   <PaginationFirstTrigger />

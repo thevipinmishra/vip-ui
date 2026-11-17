@@ -84,10 +84,7 @@ function ConversationPromptSession() {
               <Message sender="You" side="outgoing">
                 {turn.prompt}
               </Message>
-              <Response
-                status={pending ? "streaming" : "complete"}
-                className="ms-11"
-              >
+              <Response status={pending ? "streaming" : "complete"}>
                 <ResponseContent>
                   {words.slice(0, turn.revealed).join(" ")}
                 </ResponseContent>

@@ -6,6 +6,7 @@ import {
   CodeIcon,
 } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
+import { NewBadge } from "@/components/docs/new-badge";
 import { PreviewFrame } from "@/components/docs/preview-frame";
 import { Button } from "@/components/ui/button";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -121,14 +122,15 @@ export function BlockCard({ block }: { block: Block }) {
         </button>
       </div>
       <div className="flex min-h-12 items-center gap-2 border-t border-border/70 py-1.5 pe-2 ps-4 sm:ps-5">
-        <h4 className="min-w-0 flex-1 truncate text-[13px] font-medium">
+        <h4 className="flex min-w-0 flex-1 items-center gap-2 text-[13px] font-medium">
           <button
             type="button"
             onClick={() => preview(block)}
-            className="block w-full truncate rounded-sm text-start outline-none focus-visible:underline focus-visible:underline-offset-4"
+            className="block min-w-0 truncate rounded-sm text-start outline-none focus-visible:underline focus-visible:underline-offset-4"
           >
             {block.title}
           </button>
+          <NewBadge added={block.added} />
         </h4>
         <span className="shrink-0 font-mono text-[11px] text-muted-foreground">
           {block.name}

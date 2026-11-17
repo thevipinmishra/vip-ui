@@ -9,34 +9,47 @@ import {
   CarouselSlide,
   CarouselViewport,
 } from "@/components/ui/carousel";
+import { photos } from "./photo-art";
 
-const drops = [
+const [ridge, tide, face, dunes, forest] = photos;
+
+const guides = [
   {
-    name: "Oversized quilted vest",
+    photo: ridge,
+    name: "Ridge walks",
+    count: "12 routes",
     width: "w-56",
     badge: "New",
     variant: "accent" as const,
   },
   {
-    name: "Waxed canvas weekender",
+    photo: tide,
+    name: "Coastal weekends",
+    count: "8 routes",
     width: "w-80",
-    badge: "Best seller",
+    badge: "Popular",
     variant: "success" as const,
   },
   {
-    name: "Merino base layer",
+    photo: face,
+    name: "Winter peaks",
+    count: "5 routes",
     width: "w-64",
-    badge: "Low stock",
+    badge: "Guide needed",
     variant: "warning" as const,
   },
   {
-    name: "Insulated flask",
+    photo: dunes,
+    name: "Desert nights",
+    count: "4 routes",
     width: "w-44",
-    badge: "Restocked",
+    badge: "Updated",
     variant: "outline" as const,
   },
   {
-    name: "Foldable camp stool",
+    photo: forest,
+    name: "Forest trails",
+    count: "15 routes",
     width: "w-72",
     badge: "New",
     variant: "accent" as const,
@@ -45,22 +58,27 @@ const drops = [
 
 export function CarouselWidthsDemo() {
   return (
-    <Carousel aria-label="New arrivals" className="w-full max-w-2xl">
+    <Carousel aria-label="Trail guides" className="w-full max-w-2xl">
       <CarouselViewport>
-        {drops.map((drop) => (
+        {guides.map((guide) => (
           <CarouselSlide
-            key={drop.name}
-            className={`basis-auto pb-1 ${drop.width}`}
+            key={guide.name}
+            className={`basis-auto pb-1 ${guide.width}`}
           >
-            <div className="relative grid h-40 place-items-center rounded-xl bg-muted ring-1 ring-border/60">
-              <span className="px-4 text-center text-sm font-medium text-muted-foreground">
-                {drop.name}
-              </span>
-              <Badge variant={drop.variant} className="absolute start-4 top-4">
-                {drop.badge}
+            <div
+              className="relative h-40 rounded-xl bg-cover bg-center"
+              style={{ backgroundImage: `url("${guide.photo.src}")` }}
+            >
+              <Badge variant={guide.variant} className="absolute start-3 top-3">
+                {guide.badge}
               </Badge>
             </div>
-            <p className="mt-2.5 truncate text-sm font-medium">{drop.name}</p>
+            <div className="mt-2.5 flex items-baseline justify-between gap-3">
+              <p className="truncate text-sm font-medium">{guide.name}</p>
+              <p className="shrink-0 text-xs text-muted-foreground">
+                {guide.count}
+              </p>
+            </div>
           </CarouselSlide>
         ))}
       </CarouselViewport>

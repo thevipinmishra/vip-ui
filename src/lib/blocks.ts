@@ -6,6 +6,7 @@ export interface Block {
   description: string;
   category: string;
   height: number;
+  added?: string;
 }
 
 export interface BlockCategory {

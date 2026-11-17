@@ -7,7 +7,7 @@ export function SegmentedControlDisabledDemo() {
   return (
     <div className="grid w-full max-w-sm gap-4">
       <div className="grid gap-2">
-        <p className="text-xs text-muted-foreground">One segment disabled</p>
+        <p className="text-sm font-medium">Plan</p>
         <SegmentedControl aria-label="Plan" defaultValue="pro">
           <SegmentedControlItem value="free">Free</SegmentedControlItem>
           <SegmentedControlItem value="pro">Pro</SegmentedControlItem>
@@ -17,7 +17,7 @@ export function SegmentedControlDisabledDemo() {
         </SegmentedControl>
       </div>
       <div className="grid gap-2">
-        <p className="text-xs text-muted-foreground">Entire control disabled</p>
+        <p className="text-sm font-medium">Billing period</p>
         <SegmentedControl
           aria-label="Billing period"
           defaultValue="month"

@@ -30,15 +30,15 @@ export function SegmentedControlVerticalDemo() {
         value={alignment}
         onChange={(value) => setAlignment(value as Alignment)}
       >
-        <SegmentedControlItem value="left">
+        <SegmentedControlItem className="justify-start" value="left">
           <TextAlignLeftIcon aria-hidden="true" />
           Left
         </SegmentedControlItem>
-        <SegmentedControlItem value="center">
+        <SegmentedControlItem className="justify-start" value="center">
           <TextAlignCenterIcon aria-hidden="true" />
           Center
         </SegmentedControlItem>
-        <SegmentedControlItem value="right">
+        <SegmentedControlItem className="justify-start" value="right">
           <TextAlignRightIcon aria-hidden="true" />
           Right
         </SegmentedControlItem>

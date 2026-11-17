@@ -1,7 +1,7 @@
 import type { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
 
-const pageTitleSize =
+export const pageTitleSize =
   "text-[clamp(1.75rem,1.35rem+1.35vw,2.5rem)] leading-[1.15] tracking-[-0.035em] sm:tracking-[-0.045em]";
 
 export const pageTitleClass = `font-semibold text-balance ${pageTitleSize}`;

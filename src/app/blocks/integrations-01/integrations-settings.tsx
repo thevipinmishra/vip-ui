@@ -1,19 +1,6 @@
 "use client";
 
-import {
-  ChartLineUpIcon,
-  CheckIcon,
-  FigmaLogoIcon,
-  GithubLogoIcon,
-  GoogleLogoIcon,
-  KanbanIcon,
-  LightningIcon,
-  MegaphoneIcon,
-  NotionLogoIcon,
-  PlugsConnectedIcon,
-  PulseIcon,
-  SlackLogoIcon,
-} from "@phosphor-icons/react";
+import { CheckIcon, PlugsConnectedIcon } from "@phosphor-icons/react";
 import { useRef, useState } from "react";
 import { Alert } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
@@ -45,6 +32,18 @@ import { Spinner } from "@/components/ui/spinner";
 import { Tab, TabList, TabPanel, Tabs } from "@/components/ui/tabs";
 import { showToast } from "@/components/ui/toast";
 import { cn } from "@/lib/utils";
+import {
+  DatadogMark,
+  FigmaMark,
+  GitHubMark,
+  GoogleAnalyticsMark,
+  HubSpotMark,
+  LinearMark,
+  MixpanelMark,
+  N8nMark,
+  NotionMark,
+  SlackMark,
+} from "./brand-marks";
 import { SettingsShell } from "./settings-shell";
 
 const categories = [
@@ -71,7 +70,7 @@ interface App {
   connectedBy?: string;
   connectedOn?: string;
   lastSync?: string;
-  icon: typeof SlackLogoIcon;
+  icon: typeof SlackMark;
 }
 
 const initialApps: App[] = [
@@ -91,7 +90,7 @@ const initialApps: App[] = [
     connectedBy: "Nadia Okafor",
     connectedOn: "Sep 18, 2026",
     lastSync: "2 min ago",
-    icon: SlackLogoIcon,
+    icon: SlackMark,
   },
   {
     id: "github",
@@ -106,7 +105,7 @@ const initialApps: App[] = [
     connectedBy: "Leo Park",
     connectedOn: "Aug 4, 2026",
     lastSync: "12 min ago",
-    icon: GithubLogoIcon,
+    icon: GitHubMark,
   },
   {
     id: "figma",
@@ -121,7 +120,7 @@ const initialApps: App[] = [
     connectedBy: "Nadia Okafor",
     connectedOn: "Oct 9, 2026",
     lastSync: "Paused",
-    icon: FigmaLogoIcon,
+    icon: FigmaMark,
   },
   {
     id: "notion",
@@ -135,12 +134,12 @@ const initialApps: App[] = [
     connectedBy: "Ana Souza",
     connectedOn: "Sep 30, 2026",
     lastSync: "1 h ago",
-    icon: NotionLogoIcon,
+    icon: NotionMark,
   },
   {
-    id: "segment",
-    name: "Segment",
-    publisher: "Twilio, Inc.",
+    id: "mixpanel",
+    name: "Mixpanel",
+    publisher: "Mixpanel, Inc.",
     category: "analytics",
     tagline: "Product events",
     description: "Send product events to Kestrel and map them to metrics.",
@@ -149,7 +148,7 @@ const initialApps: App[] = [
     connectedBy: "Nadia Okafor",
     connectedOn: "Oct 2, 2026",
     lastSync: "4 min ago",
-    icon: ChartLineUpIcon,
+    icon: MixpanelMark,
   },
   {
     id: "hubspot",
@@ -160,7 +159,7 @@ const initialApps: App[] = [
     description: "Sync companies and deal stages with Kestrel accounts.",
     permissions: ["Read contacts and companies", "Read deal stages"],
     connected: false,
-    icon: MegaphoneIcon,
+    icon: HubSpotMark,
   },
   {
     id: "datadog",
@@ -174,12 +173,12 @@ const initialApps: App[] = [
     connectedBy: "Leo Park",
     connectedOn: "Sep 12, 2026",
     lastSync: "6 min ago",
-    icon: PulseIcon,
+    icon: DatadogMark,
   },
   {
-    id: "zapier",
-    name: "Zapier",
-    publisher: "Zapier, Inc.",
+    id: "n8n",
+    name: "n8n",
+    publisher: "n8n GmbH",
     category: "developer",
     tagline: "Task automation",
     description: "Start a task when a customer record changes.",
@@ -189,7 +188,7 @@ const initialApps: App[] = [
     connectedBy: "Kwame Mensah",
     connectedOn: "Oct 21, 2026",
     lastSync: "18 min ago",
-    icon: LightningIcon,
+    icon: N8nMark,
   },
   {
     id: "linear",
@@ -202,7 +201,7 @@ const initialApps: App[] = [
     permissions: ["Read teams", "Create issues"],
     connected: false,
     beta: true,
-    icon: KanbanIcon,
+    icon: LinearMark,
   },
   {
     id: "google-analytics",
@@ -213,7 +212,7 @@ const initialApps: App[] = [
     description: "Compare Kestrel use with site traffic and campaigns.",
     permissions: ["Read property reports"],
     connected: false,
-    icon: GoogleLogoIcon,
+    icon: GoogleAnalyticsMark,
   },
 ];
 

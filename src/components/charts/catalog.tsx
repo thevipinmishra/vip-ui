@@ -75,6 +75,7 @@ import { ChartZoom } from "./examples/chart-zoom";
 export interface ChartExample {
   file: string;
   name: string;
+  added?: string;
   preview: ReactNode;
 }
 
@@ -315,6 +316,7 @@ export const chartCategories: ChartCategory[] = [
       {
         file: "chart-time-bins",
         name: "Time bins",
+        added: "2026-11-10",
         preview: <ChartTimeBins />,
       },
       { file: "chart-box-plot", name: "Box plot", preview: <ChartBoxPlot /> },
@@ -391,6 +393,7 @@ export const chartCategories: ChartCategory[] = [
       {
         file: "chart-contour",
         name: "Contour",
+        added: "2026-11-10",
         preview: <ChartContour />,
       },
     ],
@@ -494,16 +497,19 @@ export const chartCategories: ChartCategory[] = [
       {
         file: "chart-scrubber",
         name: "Scrubber",
+        added: "2026-11-10",
         preview: <ChartScrubber />,
       },
       {
         file: "chart-linked",
         name: "Linked charts",
+        added: "2026-11-10",
         preview: <ChartLinked />,
       },
       {
         file: "chart-export",
         name: "Export",
+        added: "2026-11-10",
         preview: <ChartExport />,
       },
     ],

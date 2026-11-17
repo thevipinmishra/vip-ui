@@ -1,6 +1,7 @@
 "use client";
 
 import { SidebarSimpleIcon } from "@phosphor-icons/react";
+import { motion, useReducedMotion } from "motion/react";
 import {
   Children,
   type ComponentProps,
@@ -17,6 +18,7 @@ import {
 } from "react";
 import { mergeRefs } from "react-aria/mergeRefs";
 import { Link as AriaLink, composeRenderProps } from "react-aria-components";
+import { springLayout, transitionFor } from "./motion";
 import { cn } from "./utils";
 import { Button, type ButtonProps } from "./button";
 import { ItemHighlight } from "./item-highlight";
@@ -28,6 +30,9 @@ export type SidebarCollapsible = "icon" | "none";
 export type SidebarState = "expanded" | "collapsed";
 
 const SIDEBAR_QUERY = 768;
+
+const sidebarFade =
+  "transition-opacity delay-100 duration-200 ease-out-quint @3xl/sidebar-shell:in-data-[state=collapsed]:opacity-0 @3xl/sidebar-shell:in-data-[state=collapsed]:delay-0 @3xl/sidebar-shell:in-data-[state=collapsed]:duration-100";
 
 interface SidebarContextValue {
   isOpen: boolean;
@@ -212,7 +217,7 @@ export function SidebarProvider({
       >
         <div
           data-slot="sidebar-shell"
-          className="relative grid h-full min-h-0 w-full grid-cols-[var(--shell-shift)_minmax(0,1fr)] [--shell-shift:0px] @3xl/sidebar-shell:[--shell-shift:var(--sidebar-shift)] motion-safe:@3xl/sidebar-shell:transition-[grid-template-columns] motion-safe:@3xl/sidebar-shell:duration-0 motion-safe:@3xl/sidebar-shell:in-data-[state=expanded]:delay-350"
+          className="relative grid h-full min-h-0 w-full grid-cols-[var(--shell-shift)_minmax(0,1fr)] [--shell-shift:0px] @3xl/sidebar-shell:[--shell-shift:var(--sidebar-shift)] motion-safe:@3xl/sidebar-shell:transition-[grid-template-columns] motion-safe:@3xl/sidebar-shell:duration-350 motion-safe:@3xl/sidebar-shell:ease-spring"
         >
           {children}
         </div>
@@ -291,7 +296,7 @@ export function SidebarHeader({ className, ...props }: ComponentProps<"div">) {
     <div
       {...props}
       data-slot="sidebar-header"
-      className={cn("flex shrink-0 flex-col gap-2 px-3 pt-3.5", className)}
+      className={cn("flex shrink-0 flex-col gap-2 px-3 pt-3.5 pb-3", className)}
     />
   );
 }
@@ -301,10 +306,7 @@ export function SidebarContent({ className, ...props }: ComponentProps<"div">) {
     <ScrollFade
       {...props}
       data-slot="sidebar-content"
-      className={cn(
-        "min-h-0 flex-1 px-3 @3xl/sidebar-shell:in-data-[state=collapsed]:px-0",
-        className,
-      )}
+      className={cn("min-h-0 flex-1 px-2", className)}
     />
   );
 }
@@ -315,8 +317,8 @@ export function SidebarFooter({ className, ...props }: ComponentProps<"div">) {
       {...props}
       data-slot="sidebar-footer"
       className={cn(
-        "flex shrink-0 flex-col gap-2 px-3 pb-5",
-        "@3xl/sidebar-shell:in-data-[state=collapsed]:hidden @3xl/sidebar-shell:in-data-[state=collapsed]:has-[[data-rail=keep]]:flex",
+        "flex shrink-0 flex-col gap-2 px-2 pb-5 transition-[opacity,visibility] delay-100 duration-200 ease-out-quint",
+        "@3xl/sidebar-shell:in-data-[state=collapsed]:invisible @3xl/sidebar-shell:in-data-[state=collapsed]:opacity-0 @3xl/sidebar-shell:in-data-[state=collapsed]:delay-0 @3xl/sidebar-shell:in-data-[state=collapsed]:duration-100 @3xl/sidebar-shell:in-data-[state=collapsed]:has-[[data-rail=keep]]:visible @3xl/sidebar-shell:in-data-[state=collapsed]:has-[[data-rail=keep]]:opacity-100",
         className,
       )}
     />
@@ -344,7 +346,7 @@ export function SidebarGroup({
         aria-labelledby={labelledBy}
         data-slot="sidebar-group"
         className={cn(
-          "grid min-w-0 gap-1 py-1 first:pt-0 last:pb-0 @3xl/sidebar-shell:in-data-[state=collapsed]:has-[>[data-slot=sidebar-group-label]]:pt-2",
+          "grid min-w-0 gap-1 py-1 first:pt-0 last:pb-0",
           className,
         )}
       >
@@ -357,6 +359,7 @@ export function SidebarGroup({
 export function SidebarGroupLabel({
   className,
   id,
+  children,
   ...props
 }: ComponentProps<"h2">) {
   const labelId = useContext(SidebarGroupContext);
@@ -366,10 +369,12 @@ export function SidebarGroupLabel({
       id={id ?? labelId}
       data-slot="sidebar-group-label"
       className={cn(
-        "min-w-0 px-2.5 pb-1 text-xs font-semibold text-muted-foreground wrap-anywhere @3xl/sidebar-shell:in-data-[state=collapsed]:sr-only",
+        "relative min-w-0 px-2.75 pb-1 text-xs font-semibold text-muted-foreground wrap-anywhere before:pointer-events-none before:absolute before:start-3 before:top-2 before:h-px before:w-4 before:bg-border before:opacity-0 before:transition-opacity before:duration-100 before:ease-out-quint forced-colors:before:bg-[CanvasText] in-[[data-slot=sidebar-group]:first-child]:before:hidden @3xl/sidebar-shell:in-data-[state=collapsed]:before:opacity-100 @3xl/sidebar-shell:in-data-[state=collapsed]:before:delay-150 @3xl/sidebar-shell:in-data-[state=collapsed]:before:duration-200",
         className,
       )}
-    />
+    >
+      <span className={cn("block", sidebarFade)}>{children}</span>
+    </h2>
   );
 }
 
@@ -406,7 +411,10 @@ export interface SidebarItemProps {
 }
 
 const sidebarItemStyles =
-  "group/item relative flex min-h-10 w-full min-w-0 items-center gap-3 overflow-clip rounded-md px-2.5 text-sm font-medium text-muted-foreground outline-transparent transition-[color,background-color,outline-color,outline-offset] duration-150 ease-out-quint hover:text-foreground focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-transparent aria-[current=page]:bg-accent aria-[current=page]:text-accent-foreground aria-[current=page]:focus-visible:bg-primary aria-[current=page]:focus-visible:text-primary-foreground forced-colors:aria-[current=page]:outline-1 forced-colors:aria-[current=page]:-outline-offset-1 forced-colors:aria-[current=page]:outline-[Highlight] forced-colors:focus-visible:outline-2 forced-colors:focus-visible:-outline-offset-2 forced-colors:focus-visible:outline-[Highlight] [&_svg:not([class*='size-'])]:size-4.5 @3xl/sidebar-shell:in-data-[state=collapsed]:w-(--sidebar-width-rail) @3xl/sidebar-shell:in-data-[state=collapsed]:justify-center @3xl/sidebar-shell:in-data-[state=collapsed]:px-0";
+  "group/item relative isolate flex min-h-10 w-full min-w-0 items-center gap-3 overflow-clip rounded-md ps-2.75 pe-2.5 text-sm font-medium text-muted-foreground outline-transparent transition-[color,background-color,outline-color,outline-offset] duration-150 ease-out-quint hover:text-foreground focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-transparent aria-[current=page]:text-accent-foreground aria-[current=page]:focus-visible:text-primary-foreground forced-colors:aria-[current=page]:outline-1 forced-colors:aria-[current=page]:-outline-offset-1 forced-colors:aria-[current=page]:outline-[Highlight] forced-colors:focus-visible:outline-2 forced-colors:focus-visible:-outline-offset-2 forced-colors:focus-visible:outline-[Highlight] [&_svg:not([class*='size-'])]:size-4.5";
+
+const sidebarItemRowStyles =
+  "w-full min-w-0 motion-safe:@3xl/sidebar-shell:transition-[width] motion-safe:@3xl/sidebar-shell:duration-350 motion-safe:@3xl/sidebar-shell:ease-spring @3xl/sidebar-shell:in-data-[state=collapsed]:w-10";
 
 export function SidebarItem({
   href,
@@ -418,9 +426,10 @@ export function SidebarItem({
   children,
   className,
 }: SidebarItemProps) {
-  const { isRtl, setMobileOpen } = useSidebarContext();
+  const { isRtl, setMobileOpen, sidebarId } = useSidebarContext();
   const inSheet = useContext(SidebarSheetContext);
   const rail = useContext(SidebarRailContext);
+  const reduceMotion = useReducedMotion();
   const label =
     tooltip ?? (typeof children === "string" ? children : undefined);
   const glyph =
@@ -444,23 +453,37 @@ export function SidebarItem({
         cn(sidebarItemStyles, className),
       )}
     >
+      {isCurrent && (
+        <motion.span
+          layoutId={`${sidebarId}-${inSheet ? "sheet" : "panel"}-current`}
+          layoutDependency={href}
+          initial={false}
+          aria-hidden="true"
+          data-slot="sidebar-item-indicator"
+          transition={transitionFor(reduceMotion, springLayout)}
+          className="pointer-events-none absolute inset-0 -z-10 rounded-[inherit] bg-accent transition-colors duration-150 ease-out-quint group-focus-visible/item:bg-primary forced-colors:hidden"
+        />
+      )}
       <span
         aria-hidden="true"
         data-slot="sidebar-item-icon"
-        className="grid size-4.5 shrink-0 place-items-center"
+        className="relative grid size-4.5 shrink-0 place-items-center"
       >
         {glyph}
+        {badge !== undefined && (
+          <span className="absolute -end-0.5 -top-0.5 size-1.5 rounded-full bg-primary opacity-0 transition-opacity duration-100 ease-out-quint group-focus-visible/item:bg-primary-foreground forced-colors:bg-[CanvasText] @3xl/sidebar-shell:in-data-[state=collapsed]:opacity-100 @3xl/sidebar-shell:in-data-[state=collapsed]:delay-150 @3xl/sidebar-shell:in-data-[state=collapsed]:duration-200" />
+        )}
       </span>
       <span
         data-slot="sidebar-item-label"
-        className="min-w-0 flex-1 truncate transition-opacity duration-150 ease-out-quint @3xl/sidebar-shell:in-data-[state=collapsed]:sr-only @3xl/sidebar-shell:in-data-[state=collapsed]:opacity-0"
+        className={cn("min-w-0 flex-1 truncate", sidebarFade)}
       >
         {children}
       </span>
       {badge !== undefined && (
         <span
           data-slot="sidebar-item-badge"
-          className="contents [&>*]:ms-auto forced-colors:bg-[CanvasText] @3xl/sidebar-shell:group-focus-visible/item:bg-primary-foreground @3xl/sidebar-shell:in-data-[state=collapsed]:absolute @3xl/sidebar-shell:in-data-[state=collapsed]:end-4 @3xl/sidebar-shell:in-data-[state=collapsed]:top-1.5 @3xl/sidebar-shell:in-data-[state=collapsed]:block @3xl/sidebar-shell:in-data-[state=collapsed]:size-1.5 @3xl/sidebar-shell:in-data-[state=collapsed]:rounded-full @3xl/sidebar-shell:in-data-[state=collapsed]:bg-primary @3xl/sidebar-shell:in-data-[state=collapsed]:[&>*]:ms-0 @3xl/sidebar-shell:in-data-[state=collapsed]:[&>*]:sr-only"
+          className={cn("flex shrink-0", sidebarFade)}
         >
           {badge}
         </span>
@@ -468,17 +491,17 @@ export function SidebarItem({
     </AriaLink>
   );
 
-  if (!label || !rail) {
+  if (!label) {
     return (
-      <li data-slot="sidebar-item" className="min-w-0">
+      <li data-slot="sidebar-item" className={sidebarItemRowStyles}>
         {link}
       </li>
     );
   }
 
   return (
-    <li data-slot="sidebar-item" className="min-w-0">
-      <TooltipTrigger>
+    <li data-slot="sidebar-item" className={sidebarItemRowStyles}>
+      <TooltipTrigger isDisabled={!rail}>
         {link}
         <Tooltip placement={isRtl ? "left" : "right"}>{label}</Tooltip>
       </TooltipTrigger>

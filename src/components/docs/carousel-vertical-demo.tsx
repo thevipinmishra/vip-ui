@@ -8,52 +8,57 @@ import {
   CarouselSlide,
   CarouselViewport,
 } from "@/components/ui/carousel";
+import { photos } from "./photo-art";
 
-const notes = [
+const [ridge, tide, face, , , lake] = photos;
+
+const stories = [
   {
-    title: "Built for wet mornings",
-    body: "The shell sheds rain without a coating.",
-    tone: "bg-muted",
+    photo: ridge,
+    title: "Sunrise on the ridge",
+    body: "A two-hour climb for the first light of the day.",
   },
   {
-    title: "Repairs, not landfill",
-    body: "We fix zips, snaps, and seams for two years.",
-    tone: "bg-secondary",
+    photo: tide,
+    title: "Low tide at the point",
+    body: "Walk out to the pools an hour before the turn.",
   },
   {
-    title: "Made in small runs",
-    body: "Four hundred jackets, then the pattern rests.",
-    tone: "bg-accent",
+    photo: face,
+    title: "After the storm",
+    body: "Fresh snow on the north face by morning.",
   },
   {
-    title: "Ready for the trail",
-    body: "Six pockets, a storm hood, and a pack strap.",
-    tone: "bg-card",
+    photo: lake,
+    title: "Dusk on the lake",
+    body: "The water goes still for ten minutes after sunset.",
   },
 ];
 
 export function CarouselVerticalDemo() {
   return (
     <Carousel
-      aria-label="Field notes"
+      aria-label="Trip highlights"
       opts={{ axis: "y" }}
-      className="w-full max-w-sm"
+      className="w-full max-w-md grid-cols-[minmax(0,1fr)_auto] items-center"
     >
       <CarouselViewport className="h-64">
-        {notes.map((note) => (
-          <CarouselSlide key={note.title} className="h-full">
+        {stories.map((story) => (
+          <CarouselSlide key={story.title} className="h-full">
             <div
-              className={`grid h-full content-end gap-1.5 rounded-xl p-5 ring-1 ring-border/60 ${note.tone}`}
+              className="relative grid h-full content-end gap-1 overflow-hidden rounded-xl bg-cover bg-center p-5 text-white"
+              style={{ backgroundImage: `url("${story.photo.src}")` }}
             >
-              <p className="text-base font-medium">{note.title}</p>
-              <p className="max-w-[34ch] text-xs leading-5 text-muted-foreground">
-                {note.body}
+              <span className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
+              <p className="relative text-base font-medium">{story.title}</p>
+              <p className="relative max-w-[34ch] text-xs leading-5 text-white/80">
+                {story.body}
               </p>
             </div>
           </CarouselSlide>
         ))}
       </CarouselViewport>
-      <div className="flex items-center justify-between gap-3">
+      <div className="flex flex-col items-center gap-3">
         <CarouselPrevious />
         <CarouselIndicators />
         <CarouselNext />

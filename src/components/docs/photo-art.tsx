@@ -19,7 +19,15 @@ const dunes = photo(
   '<defs><linearGradient id="a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4e2bd"/><stop offset="1" stop-color="#e0b579"/></linearGradient></defs><rect width="1200" height="900" fill="url(#a)"/><path d="M0 560Q260 420 560 540T1200 500V900H0Z" fill="#d9a86c"/><path d="M0 700Q300 600 620 700T1200 660V900H0Z" fill="#b8834a"/><path d="M0 820Q300 760 620 820T1200 790V900H0Z" fill="#8a5f36"/><path d="M240 700Q300 660 360 700T480 700" fill="none" stroke="#6f4a29" stroke-width="4" opacity="0.5"/>',
 );
 
-export interface LightboxPhoto {
+const forest = photo(
+  '<defs><linearGradient id="a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e4ecd9"/><stop offset="1" stop-color="#a9c19a"/></linearGradient></defs><rect width="1200" height="900" fill="url(#a)"/><path d="M0 560Q300 470 600 540T1200 500V900H0Z" fill="#7f9d74"/><path d="M90 720 170 470 250 720Z M230 740 330 400 430 740Z M760 730 850 450 940 730Z M900 760 1010 380 1120 760Z" fill="#3f5e43"/><path d="M380 760 470 520 560 760Z M560 770 640 560 720 770Z M1060 780 1140 560 1220 780Z" fill="#2f4a35"/><path d="M0 760Q300 700 600 760T1200 750V900H0Z" fill="#26392b"/>',
+);
+
+const lake = photo(
+  '<defs><linearGradient id="a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b3f6e"/><stop offset="0.55" stop-color="#c9847a"/><stop offset="1" stop-color="#f1c59a"/></linearGradient><linearGradient id="b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d79a86"/><stop offset="1" stop-color="#3a3d63"/></linearGradient></defs><rect width="1200" height="900" fill="url(#a)"/><circle cx="600" cy="560" r="96" fill="#fbe2c4"/><path d="M0 560 180 470 330 540 470 450 600 530 760 440 930 530 1080 470 1200 520V600H0Z" fill="#2c2e4f"/><rect y="600" width="1200" height="300" fill="url(#b)"/><path d="M520 640H680M550 680H650M570 720H630" stroke="#fbe2c4" stroke-width="6" stroke-linecap="round" opacity="0.6"/>',
+);
+
+export interface Photo {
   id: string;
   name: string;
   alt: string;
@@ -29,7 +37,7 @@ export interface LightboxPhoto {
   height: number;
 }
 
-export const lightboxPhotos: LightboxPhoto[] = [
+export const photos: Photo[] = [
   {
     id: "ridge",
     name: "Ridge at first light",
@@ -63,6 +71,24 @@ export const lightboxPhotos: LightboxPhoto[] = [
     alt: "Ochre dunes with dark bands of wet sand.",
     caption: "Dunes after the rain, 17:05",
     src: dunes,
+    width: 1200,
+    height: 900,
+  },
+  {
+    id: "forest",
+    name: "Pine valley",
+    alt: "Rows of dark pines below a soft green hillside.",
+    caption: "The pine valley trail, 09:30",
+    src: forest,
+    width: 1200,
+    height: 900,
+  },
+  {
+    id: "lake",
+    name: "Lake at dusk",
+    alt: "A low sun over a still lake between dark hills.",
+    caption: "Dusk on the lake, 19:48",
+    src: lake,
     width: 1200,
     height: 900,
   },

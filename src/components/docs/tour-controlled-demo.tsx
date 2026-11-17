@@ -32,12 +32,7 @@ export function TourControlledDemo() {
   return (
     <Tour steps={steps} step={step} onStepChange={setStep}>
       <div className="grid w-full max-w-md gap-4">
-        <Stepper
-          steps={progress}
-          currentStep={step}
-          aria-label="Tour steps"
-          className="border border-border bg-card"
-        />
+        <Stepper steps={progress} currentStep={step} aria-label="Tour steps" />
         <div className="grid gap-2 rounded-xl border border-border bg-card p-3 shadow-(--shadow-card)">
           <TourTarget id="inbox">
             <div className="rounded-lg bg-muted/50 px-3 py-2 text-sm">

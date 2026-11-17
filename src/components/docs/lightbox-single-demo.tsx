@@ -7,9 +7,9 @@ import {
   LightboxImage,
   LightboxTrigger,
 } from "@/components/ui/lightbox";
-import { lightboxPhotos } from "./lightbox-art";
+import { photos } from "./photo-art";
 
-const [photo] = lightboxPhotos;
+const [photo] = photos;
 
 export function LightboxSingleDemo() {
   return (

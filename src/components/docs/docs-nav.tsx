@@ -15,6 +15,7 @@ import { catalogGroups } from "@/lib/catalog";
 import { springLayout } from "@/lib/motion";
 import { guideGroups } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
+import { NewBadge } from "./new-badge";
 
 function scrollParent(element: HTMLElement) {
   let scroller = element.parentElement;
@@ -123,7 +124,11 @@ export function DocsNav({
     if (activeRef.current) revealInScrollParent(activeRef.current);
   }, [pathname]);
 
-  const renderLink = (link: { href: string; label: string }) => {
+  const renderLink = (link: {
+    href: string;
+    label: string;
+    added?: string;
+  }) => {
     const isActive = activeHref === link.href;
     return (
       <Link
@@ -136,7 +141,7 @@ export function DocsNav({
         }}
         aria-current={pathname === link.href ? "page" : undefined}
         className={cn(
-          "group/nav-link relative isolate flex min-w-0 items-center px-3 text-[13px] font-medium whitespace-nowrap transition-[color,background-color] duration-150 ease-out-quint hover:text-foreground focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-transparent",
+          "group/nav-link relative isolate flex min-w-0 items-center gap-2 px-3 text-[13px] font-medium whitespace-nowrap transition-[color,background-color] duration-150 ease-out-quint hover:text-foreground focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-transparent",
           mobile ? "min-h-10 rounded-lg" : "min-h-8 rounded-full",
           isActive ? "text-foreground" : "text-muted-foreground",
         )}
@@ -153,7 +158,8 @@ export function DocsNav({
             transition={reduceMotion ? { duration: 0 } : springLayout}
           />
         )}
-        {link.label}
+        <span className="min-w-0 truncate">{link.label}</span>
+        <NewBadge added={link.added} />
       </Link>
     );
   };
@@ -169,6 +175,7 @@ export function DocsNav({
         links: group.components.map((component) => ({
           href: `/components/${component.slug}`,
           label: component.name,
+          added: component.added,
         })),
       })),
     ];
@@ -215,6 +222,7 @@ export function DocsNav({
             renderLink({
               href: `/components/${component.slug}`,
               label: component.name,
+              added: component.added,
             }),
           )}
         </div>

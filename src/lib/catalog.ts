@@ -110,6 +110,7 @@ export interface CatalogComponent {
   name: string;
   group: string;
   description: string;
+  added?: string;
   reactAria?: { name: string; href: string };
   primitives: Primitive[];
 }

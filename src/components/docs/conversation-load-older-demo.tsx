@@ -88,7 +88,7 @@ function ConversationLoadOlderSession() {
           <Message sender="You" side="outgoing">
             {turn.prompt}
           </Message>
-          <Response status="complete" className="ms-11">
+          <Response status="complete">
             <ResponseContent>{turn.answer}</ResponseContent>
           </Response>
         </div>

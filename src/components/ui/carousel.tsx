@@ -86,8 +86,9 @@ export function Carousel({
   const [detectedDirection, setDetectedDirection] = useState<"ltr" | "rtl">(
     "ltr",
   );
+  const [startIndex] = useState(() => indexProp ?? defaultIndex);
   const [state, setState] = useState<CarouselState>(() => ({
-    selectedIndex: opts?.startIndex ?? defaultIndex,
+    selectedIndex: opts?.startIndex ?? startIndex,
     snapCount: 0,
     slideCount: 0,
     canScrollPrev: false,
@@ -122,10 +123,10 @@ export function Carousel({
     () => ({
       align: "start",
       direction,
-      startIndex: defaultIndex,
+      startIndex,
       ...opts,
     }),
-    [direction, defaultIndex, opts],
+    [direction, startIndex, opts],
   );
 
   const [viewportRef, api] = useEmblaCarousel(options, plugins);

@@ -12,9 +12,13 @@ import {
   TerminalWindowIcon,
 } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
-import { useId, useState } from "react";
+import { useId, useState, useSyncExternalStore } from "react";
 import { RouterProvider } from "react-aria-components";
 import { Block, BlockBody, BlockFooter } from "@/components/home/block";
+import {
+  showcaseAccents,
+  useShowcaseAppearance,
+} from "@/components/home/showcase-appearance";
 import { Autocomplete } from "@/components/ui/autocomplete";
 import { Avatar, AvatarGroup } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -84,6 +88,7 @@ import { showToast } from "@/components/ui/toast";
 import { ToggleButton } from "@/components/ui/toggle-button";
 import { ToggleButtonGroup } from "@/components/ui/toggle-button-group";
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
+import { updateSiteTheme } from "@/lib/update-site-theme";
 
 const tasks = [
   { id: "copy", label: "Review the page copy" },
@@ -491,17 +496,60 @@ export function CreateProjectCard() {
   );
 }
 
-const accents = [
-  { color: "#3b4a42", label: "Sage" },
-  { color: "#0d9488", label: "Teal" },
-  { color: "#4f46e5", label: "Indigo" },
-  { color: "#e11d48", label: "Rose" },
-  { color: "#d97706", label: "Amber" },
-];
+type Theme = "light" | "dark" | "system";
+
+const themeStorageKey = "vip-ui-theme";
+
+function readTheme(): Theme {
+  try {
+    const stored = window.localStorage.getItem(themeStorageKey);
+    return stored === "light" || stored === "dark" ? stored : "system";
+  } catch {
+    return "system";
+  }
+}
+
+function subscribeTheme(onChange: () => void) {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+  window.addEventListener("storage", onChange);
+  return () => {
+    observer.disconnect();
+    window.removeEventListener("storage", onChange);
+  };
+}
+
+function applyTheme(theme: Theme) {
+  try {
+    if (theme === "system") window.localStorage.removeItem(themeStorageKey);
+    else window.localStorage.setItem(themeStorageKey, theme);
+  } catch {}
+  const dark =
+    theme === "system"
+      ? window.matchMedia("(prefers-color-scheme: dark)").matches
+      : theme === "dark";
+  updateSiteTheme((root) => root.classList.toggle("dark", dark));
+}
 
 export function AppearanceCard() {
   const themeLabel = useId();
   const accentLabel = useId();
+  const theme = useSyncExternalStore(
+    subscribeTheme,
+    readTheme,
+    () => "system" as const,
+  );
+  const {
+    accent,
+    setAccent,
+    radius,
+    setRadius,
+    reduceMotion,
+    setReduceMotion,
+  } = useShowcaseAppearance();
 
   return (
     <Block title="Appearance">
@@ -514,7 +562,12 @@ export function AppearanceCard() {
             aria-labelledby={themeLabel}
             selectionMode="single"
             disallowEmptySelection
-            defaultSelectedKeys={["light"]}
+            selectedKeys={[theme]}
+            onSelectionChange={(keys) => {
+              const [next] = keys;
+              if (next === "light" || next === "dark" || next === "system")
+                applyTheme(next);
+            }}
             className="w-full flex-nowrap"
           >
             <ToggleButton
@@ -549,27 +602,37 @@ export function AppearanceCard() {
           </p>
           <ColorSwatchPicker
             aria-labelledby={accentLabel}
-            defaultValue={accents[0].color}
+            value={accent}
+            onChange={(color) => setAccent(color.toString("hex").toLowerCase())}
             className="-mx-1.5 gap-0"
           >
-            {accents.map((accent) => (
+            {showcaseAccents.map((option) => (
               <ColorSwatchPickerItem
-                key={accent.color}
-                color={accent.color}
-                aria-label={accent.label}
+                key={option.color}
+                color={option.color}
+                aria-label={option.label}
               />
             ))}
           </ColorSwatchPicker>
         </div>
         <Slider
-          label="Text size"
-          defaultValue={1}
-          minValue={0.8}
-          maxValue={1.4}
-          step={0.05}
+          label="Radius"
+          value={radius}
+          onChange={(value) =>
+            setRadius(Array.isArray(value) ? value[0] : value)
+          }
+          minValue={0}
+          maxValue={1.6}
+          step={0.1}
           formatOptions={{ style: "percent" }}
         />
-        <Switch className="w-full">Reduce motion</Switch>
+        <Switch
+          className="w-full"
+          isSelected={reduceMotion}
+          onChange={setReduceMotion}
+        >
+          Reduce motion
+        </Switch>
       </BlockBody>
     </Block>
   );

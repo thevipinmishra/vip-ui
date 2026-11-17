@@ -77,7 +77,7 @@ function ConversationSession() {
             <Message sender="You" side="outgoing">
               {turn.prompt}
             </Message>
-            <Response status="complete" className="ms-11">
+            <Response status="complete">
               <ResponseContent>{turn.answer}</ResponseContent>
             </Response>
           </div>
@@ -87,10 +87,7 @@ function ConversationSession() {
             <Message sender="You" side="outgoing">
               {FOLLOW_UP}
             </Message>
-            <Response
-              status={streaming ? "streaming" : "complete"}
-              className="ms-11"
-            >
+            <Response status={streaming ? "streaming" : "complete"}>
               <ResponseContent>
                 {FOLLOW_UP_WORDS.slice(0, revealed).join(" ")}
               </ResponseContent>
