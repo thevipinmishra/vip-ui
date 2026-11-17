@@ -31,15 +31,15 @@ const events: CalendarEvent[] = [
   {
     id: "design-review",
     title: "Design review",
-    label: "Design review Maya Chen",
+    label: "Design review with Maya Chen",
     start: at(10),
     end: at(11),
     color: "chart-2",
   },
   {
     id: "handoff",
-    title: "Handoff with Sam",
-    label: "Handoff with Sam Ruth Okafor",
+    title: "Handoff",
+    label: "Handoff with Ruth Okafor",
     start: at(12),
     end: at(13),
     color: "chart-3",
@@ -47,7 +47,7 @@ const events: CalendarEvent[] = [
   {
     id: "critique",
     title: "Studio critique",
-    label: "Studio critique Sam Rivera",
+    label: "Studio critique with Sam Rivera",
     start: at(14),
     end: at(15, 30),
     color: "chart-4",
@@ -55,7 +55,7 @@ const events: CalendarEvent[] = [
   {
     id: "workshop",
     title: "Roadmap workshop",
-    label: "Roadmap workshop Noah Williams",
+    label: "Roadmap workshop with Noah Williams",
     start: at(16),
     end: at(17),
     color: "chart-5",
@@ -75,11 +75,7 @@ export function EventCalendarCustomDemo() {
       scrollToHour={9}
       renderEvent={(event) => (
         <span className="flex items-center gap-2">
-          <Avatar
-            name={people[event.id] ?? event.title}
-            size="xs"
-            initials=""
-          />
+          <Avatar name={people[event.id] ?? event.title} size="xs" />
           <span className="min-w-0">
             <span className="block truncate font-medium">{event.title} </span>
             <span className="block truncate text-muted-foreground">

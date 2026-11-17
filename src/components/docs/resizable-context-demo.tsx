@@ -36,9 +36,6 @@ export function ResizableContextDemo() {
               </li>
             ))}
           </ol>
-          <p className="mt-auto text-xs text-muted-foreground">
-            Drag the divider, or use the inspector controls.
-          </p>
         </div>
       </ResizablePanel>
       <ResizableHandle aria-label="Resize the draft and the layout inspector">

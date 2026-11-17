@@ -11,7 +11,6 @@ import {
   HeadsetIcon,
   PaperclipIcon,
   UserPlusIcon,
-  WhatsappLogoIcon,
 } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
 import { Avatar } from "@/components/ui/avatar";
@@ -44,6 +43,7 @@ import { ToggleButtonGroup } from "@/components/ui/toggle-button-group";
 import { Toolbar } from "@/components/ui/toolbar";
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+import { WhatsAppMark } from "./brand-marks";
 import {
   type Conversation,
   formatListTime,
@@ -58,7 +58,7 @@ type Queue = "all" | "mine" | "unassigned" | "snoozed";
 const channelIcons = {
   Email: EnvelopeSimpleIcon,
   Chat: ChatCircleIcon,
-  WhatsApp: WhatsappLogoIcon,
+  WhatsApp: WhatsAppMark,
 };
 
 const priorityVariant = {

@@ -7,40 +7,34 @@ import {
   CarouselThumbnails,
   CarouselViewport,
 } from "@/components/ui/carousel";
-
-const views = [
-  { id: "front", label: "Front" },
-  { id: "back", label: "Back" },
-  { id: "fabric", label: "Fabric" },
-  { id: "pocket", label: "Pocket" },
-];
+import { photos } from "./photo-art";
 
 export function CarouselThumbnailsDemo() {
   return (
-    <Carousel aria-label="Jacket photos" className="w-full max-w-md">
+    <Carousel aria-label="Trip photos" className="w-full max-w-md">
       <CarouselViewport>
-        {views.map((view) => (
-          <CarouselSlide key={view.id}>
-            <div className="grid aspect-[4/5] place-items-center rounded-xl bg-muted ring-1 ring-border/60">
-              <span className="text-sm font-medium text-muted-foreground">
-                {view.label} view
-              </span>
-            </div>
+        {photos.map((photo) => (
+          <CarouselSlide key={photo.id}>
+            <div
+              role="img"
+              aria-label={photo.alt}
+              className="aspect-[4/3] rounded-xl bg-cover bg-center"
+              style={{ backgroundImage: `url("${photo.src}")` }}
+            />
           </CarouselSlide>
         ))}
       </CarouselViewport>
       <CarouselThumbnails>
-        {views.map((view, position) => (
+        {photos.map((photo, position) => (
           <CarouselThumbnail
-            key={view.id}
+            key={photo.id}
             index={position}
-            aria-label={`Show ${view.label.toLowerCase()} view`}
+            aria-label={`Show ${photo.name}`}
           >
-            <span className="grid aspect-square place-items-center rounded-md bg-card/60">
-              <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-                {view.label}
-              </span>
-            </span>
+            <span
+              className="aspect-square rounded-md bg-cover bg-center"
+              style={{ backgroundImage: `url("${photo.src}")` }}
+            />
           </CarouselThumbnail>
         ))}
       </CarouselThumbnails>

@@ -107,7 +107,6 @@ export async function ComponentPage({
         slug={componentSlug}
         name={name}
         description={description}
-        parent={{ href: "/components", label: "Components" }}
         primitives={component?.primitives ?? []}
         markdownUrl={`${siteUrl()}/components/${componentSlug}.md`}
         axe={checks.axe}

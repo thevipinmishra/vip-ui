@@ -2855,6 +2855,7 @@
       "categories": ["app-shell"],
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
+        "motion@^14.12.0",
         "react-aria@^3.53.1",
         "react-aria-components@^1.22.1",
         "tailwindcss-react-aria-components@^2.2.0"
@@ -2862,6 +2863,7 @@
       "registryDependencies": [
         "https://vip-ui.dev/r/button.json",
         "https://vip-ui.dev/r/item-highlight.json",
+        "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/scroll-fade.json",
         "https://vip-ui.dev/r/sheet.json",
         "https://vip-ui.dev/r/tooltip.json",
@@ -4786,7 +4788,7 @@
           "file": "login-page.tsx"
         }
       },
-      "dependencies": ["@phosphor-icons/react@^2.1.10"],
+      "dependencies": [],
       "registryDependencies": [
         "https://vip-ui.dev/r/alert.json",
         "https://vip-ui.dev/r/avatar.json",
@@ -4804,6 +4806,11 @@
         "https://vip-ui.dev/r/text-field.json"
       ],
       "files": [
+        {
+          "path": "registry/generated/src/components/blocks/login-01/brand-marks.tsx",
+          "type": "registry:file",
+          "target": "@components/blocks/login-01/brand-marks.tsx"
+        },
         {
           "path": "registry/generated/src/components/blocks/login-01/login-form.tsx",
           "type": "registry:file",
@@ -5609,6 +5616,11 @@
       },
       "files": [
         {
+          "path": "registry/generated/src/components/blocks/integrations-01/brand-marks.tsx",
+          "type": "registry:file",
+          "target": "@components/blocks/integrations-01/brand-marks.tsx"
+        },
+        {
           "path": "registry/generated/src/components/blocks/integrations-01/integrations-settings.tsx",
           "type": "registry:file",
           "target": "@components/blocks/integrations-01/integrations-settings.tsx"
@@ -6396,6 +6408,11 @@
       },
       "files": [
         {
+          "path": "registry/generated/src/components/blocks/files-01/brand-marks.tsx",
+          "type": "registry:file",
+          "target": "@components/blocks/files-01/brand-marks.tsx"
+        },
+        {
           "path": "registry/generated/src/components/blocks/files-01/data.ts",
           "type": "registry:file",
           "target": "@components/blocks/files-01/data.ts"
@@ -6537,6 +6554,11 @@
         }
       },
       "files": [
+        {
+          "path": "registry/generated/src/components/blocks/inbox-01/brand-marks.tsx",
+          "type": "registry:file",
+          "target": "@components/blocks/inbox-01/brand-marks.tsx"
+        },
         {
           "path": "registry/generated/src/components/blocks/inbox-01/data.ts",
           "type": "registry:file",

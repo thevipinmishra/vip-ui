@@ -52,8 +52,8 @@ export function ResizableSavedDemo() {
         <div tabIndex={0} className="h-full overflow-auto p-4">
           <h3 className="text-sm font-semibold">Notes</h3>
           <p className="mt-1 text-sm text-muted-foreground">
-            Drag the divider, then reload the page. The layout stays where you
-            left it.
+            Most customers leave at the account prompt. Move it after payment
+            and compare the drop-off in the next release.
           </p>
         </div>
       </ResizablePanel>

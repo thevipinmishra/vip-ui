@@ -5,6 +5,7 @@ import { CategoryTabs } from "@/components/docs/category-tabs";
 import { CodeFrame } from "@/components/docs/code-frame";
 import { CodeSnippet } from "@/components/docs/code-snippet";
 import { CopyButton } from "@/components/docs/copy-button";
+import { NewBadge } from "@/components/docs/new-badge";
 import { PackageManagerCommand } from "@/components/docs/package-manager-command";
 import {
   PageActions,
@@ -131,8 +132,11 @@ function ChartCategoryContent({ category }: { category: ChartCategory }) {
               {example.preview}
             </div>
             <div className="flex min-h-12 items-center justify-between gap-3 border-t border-border/70 py-1.5 pe-2 ps-4 sm:ps-5">
-              <span className="truncate text-[13px] font-medium text-muted-foreground">
-                {example.name}
+              <span className="flex min-w-0 items-center gap-2">
+                <span className="truncate text-[13px] font-medium text-muted-foreground">
+                  {example.name}
+                </span>
+                <NewBadge added={example.added} />
               </span>
               <div className="flex items-center gap-0.5">
                 <ChartExampleInstall example={example} />

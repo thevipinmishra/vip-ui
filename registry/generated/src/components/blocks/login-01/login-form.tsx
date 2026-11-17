@@ -1,6 +1,5 @@
 "use client";
 
-import { GithubLogoIcon, GoogleLogoIcon } from "@phosphor-icons/react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Alert } from "../../vip-ui/alert";
 import { Avatar } from "../../vip-ui/avatar";
@@ -21,12 +20,13 @@ import { Presence } from "../../vip-ui/presence";
 import { Separator } from "../../vip-ui/separator";
 import { Spinner } from "../../vip-ui/spinner";
 import { TextField } from "../../vip-ui/text-field";
+import { GitHubMark, GoogleMark } from "./brand-marks";
 
 type Method = "github" | "google" | "email";
 
 const providers = [
-  { id: "github", name: "GitHub", icon: GithubLogoIcon },
-  { id: "google", name: "Google", icon: GoogleLogoIcon },
+  { id: "github", name: "GitHub", icon: GitHubMark },
+  { id: "google", name: "Google", icon: GoogleMark },
 ] as const;
 
 const providerAccount = "maya@northwind.com";

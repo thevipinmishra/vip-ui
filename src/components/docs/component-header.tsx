@@ -5,14 +5,10 @@ import {
   ArrowUpRightIcon,
   CheckIcon,
   CopyIcon,
-  CubeIcon,
-  GithubLogoIcon,
-  MarkdownLogoIcon,
-  OpenAiLogoIcon,
   SparkleIcon,
 } from "@phosphor-icons/react";
 import { type ReactNode, useState } from "react";
-import { Breadcrumb, Breadcrumbs } from "@/components/ui/breadcrumbs";
+import { Link as AriaLink } from "react-aria-components";
 import { Button } from "@/components/ui/button";
 import { ButtonLink } from "@/components/ui/button-link";
 import { InlineCode } from "@/components/ui/kbd-code";
@@ -32,9 +28,20 @@ import {
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 import type { Primitive } from "@/lib/catalog";
 import type { AxeFinding, DoctorFinding } from "@/lib/component-checks";
-import type { NavLink } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
-import { pageTitleClass } from "./page-header";
+import {
+  AxeMark,
+  ClaudeMark,
+  GeminiMark,
+  GrokMark,
+  MarkdownMark,
+  OpenAIMark,
+  ReactAriaMark,
+  ReactDoctorMark,
+  ZagMark,
+} from "./brand-marks";
+import { GitHubMark } from "./github-mark";
+import { pageTitleClass, pageTitleSize } from "./page-header";
 
 const repository = "https://github.com/thevipinmishra/vip-ui";
 const doctorCommand = "npx -y react-doctor@latest .";
@@ -42,18 +49,23 @@ const doctorCommand = "npx -y react-doctor@latest .";
 const assistants = [
   {
     label: "ChatGPT",
-    icon: <OpenAiLogoIcon aria-hidden="true" />,
+    icon: <OpenAIMark />,
     url: (prompt: string) => `https://chatgpt.com/?hints=search&q=${prompt}`,
   },
   {
     label: "Claude",
-    icon: <SparkleIcon aria-hidden="true" />,
+    icon: <ClaudeMark />,
     url: (prompt: string) => `https://claude.ai/new?q=${prompt}`,
   },
   {
-    label: "Perplexity",
-    icon: <SparkleIcon aria-hidden="true" />,
-    url: (prompt: string) => `https://www.perplexity.ai/search/new?q=${prompt}`,
+    label: "Gemini",
+    icon: <GeminiMark />,
+    url: (prompt: string) => `https://gemini.google.com/app?q=${prompt}`,
+  },
+  {
+    label: "Grok",
+    icon: <GrokMark />,
+    url: (prompt: string) => `https://grok.com/?q=${prompt}`,
   },
 ];
 
@@ -74,7 +86,6 @@ export interface ComponentHeaderProps {
   slug: string;
   name: string;
   description: ReactNode;
-  parent: NavLink;
   primitives: Primitive[];
   markdownUrl: string;
   axe?: AxeFinding[];
@@ -85,7 +96,6 @@ export function ComponentHeader({
   slug,
   name,
   description,
-  parent,
   primitives,
   markdownUrl,
   axe,
@@ -95,19 +105,11 @@ export function ComponentHeader({
   return (
     <header>
       <div className="flex items-start justify-between gap-x-4">
-        <nav aria-label="Breadcrumbs" className="min-w-0 py-0.5">
-          <Breadcrumbs className="flex-nowrap">
-            <Breadcrumb href={parent.href} className="shrink-0">
-              {parent.label}
-            </Breadcrumb>
-            <Breadcrumb>
-              <span className="block truncate">{name}</span>
-            </Breadcrumb>
-          </Breadcrumbs>
-        </nav>
-        <PageActions slug={slug} name={name} markdownUrl={markdownUrl} />
+        <h1 className={cn(pageTitleClass, "min-w-0")}>{name}</h1>
+        <div className={`flex h-lh shrink-0 items-center ${pageTitleSize}`}>
+          <PageActions slug={slug} name={name} markdownUrl={markdownUrl} />
+        </div>
       </div>
-      <h1 className={cn(pageTitleClass, "mt-4")}>{name}</h1>
       <p className="mt-3 max-w-2xl text-base leading-7 text-pretty text-muted-foreground">
         {description}
       </p>
@@ -115,23 +117,28 @@ export function ComponentHeader({
         <ul aria-label="Details" className="mt-5 flex flex-wrap gap-2">
           {primitives.map((primitive) => (
             <li key={primitive.href} className="flex min-w-0">
-              <a
-                href={primitive.href}
-                target="_blank"
-                rel="noreferrer"
-                className={chipClass}
-              >
-                <CubeIcon size={14} aria-hidden="true" />
-                {primitive.library}
-                <span className="truncate text-muted-foreground">
-                  {primitive.name}
-                </span>
-                <ArrowUpRightIcon
-                  size={12}
-                  aria-hidden="true"
-                  className="text-muted-foreground"
-                />
-              </a>
+              <TooltipTrigger>
+                <AriaLink
+                  href={primitive.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={chipClass}
+                >
+                  {primitive.library === "Zag.js" ? (
+                    <ZagMark size={14} />
+                  ) : (
+                    <ReactAriaMark size={14} />
+                  )}
+                  <span className="sr-only">{primitive.library} </span>
+                  <span className="truncate">{primitive.name}</span>
+                  <ArrowUpRightIcon
+                    size={12}
+                    aria-hidden="true"
+                    className="text-muted-foreground"
+                  />
+                </AriaLink>
+                <Tooltip>Built with {primitive.library}</Tooltip>
+              </TooltipTrigger>
             </li>
           ))}
           {axe && (
@@ -190,7 +197,7 @@ function PageActions({
   }
 
   return (
-    <div className="-my-1.5 flex shrink-0 items-center gap-0.5">
+    <div className="flex items-center gap-0.5">
       <MenuTrigger>
         <TooltipTrigger>
           <Button variant="minimal" size="sm" iconOnly aria-label="Ask AI">
@@ -239,13 +246,13 @@ function PageActions({
         <Tooltip>{copied ? "Copied" : "Copy page as Markdown"}</Tooltip>
       </TooltipTrigger>
       <IconLink label="View as Markdown" href={markdownPath}>
-        <MarkdownLogoIcon aria-hidden="true" />
+        <MarkdownMark />
       </IconLink>
       <IconLink
         label="View source"
         href={`${repository}/blob/main/src/components/ui/${slug}.tsx`}
       >
-        <GithubLogoIcon aria-hidden="true" />
+        <GitHubMark />
       </IconLink>
     </div>
   );
@@ -280,6 +287,7 @@ function IconLink({
 
 function CheckChip({
   label,
+  icon,
   count,
   tone,
   title,
@@ -287,6 +295,7 @@ function CheckChip({
   children,
 }: {
   label: string;
+  icon: ReactNode;
   count: number;
   tone: keyof typeof toneClass;
   title: string;
@@ -295,16 +304,18 @@ function CheckChip({
 }) {
   return (
     <PopoverTrigger>
-      <Button variant="ghost" static className={chipClass}>
-        <span
-          aria-hidden="true"
-          className={cn("size-1.5 rounded-full", toneClass[tone])}
-        />
-        {label}
-        <span className="text-muted-foreground tabular-nums">
-          {issueCount(count)}
-        </span>
-      </Button>
+      <TooltipTrigger>
+        <Button variant="ghost" static className={chipClass}>
+          {icon}
+          <span className="sr-only">{label} </span>
+          <span
+            aria-hidden="true"
+            className={cn("size-1.5 rounded-full", toneClass[tone])}
+          />
+          <span className="tabular-nums">{issueCount(count)}</span>
+        </Button>
+        <Tooltip>Checked with {label}</Tooltip>
+      </TooltipTrigger>
       <Popover placement="bottom start" className="w-88">
         <PopoverDialog>
           <PopoverTitle>{title}</PopoverTitle>
@@ -360,6 +371,7 @@ function AxeChip({ findings }: { findings: AxeFinding[] }) {
   return (
     <CheckChip
       label="Axe"
+      icon={<AxeMark size={14} />}
       count={findings.length}
       tone={findings.length ? "error" : "success"}
       title="Accessibility"
@@ -410,6 +422,7 @@ function DoctorChip({
   return (
     <CheckChip
       label="React Doctor"
+      icon={<ReactDoctorMark size={14} />}
       count={findings.length}
       tone={hasErrors ? "error" : findings.length ? "warning" : "success"}
       title="React Doctor"

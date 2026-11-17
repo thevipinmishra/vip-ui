@@ -14,8 +14,8 @@ export function ResizableGripDemo() {
         <div tabIndex={0} className="h-full overflow-auto p-4">
           <h3 className="text-sm font-semibold">Shipping policy</h3>
           <p className="mt-1 text-sm text-muted-foreground">
-            Orders leave the warehouse within one business day. The divider
-            stops at 20% and 70%.
+            Orders leave the warehouse within one business day. Express orders
+            placed before 2 PM ship the same day.
           </p>
         </div>
       </ResizablePanel>

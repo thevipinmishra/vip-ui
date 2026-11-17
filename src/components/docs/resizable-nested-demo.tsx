@@ -39,9 +39,9 @@ export function ResizableNestedDemo() {
               className="h-full overflow-auto bg-muted/30 p-3 font-mono text-xs leading-6"
             >
               <p className="text-muted-foreground">checkout.tsx</p>
-              <p>export function Checkout() {"{"}</p>
-              <p>{"  return <Steps value={step} />;"}</p>
-              <p>{"}"}</p>
+              <pre>{`export function Checkout() {
+  return <Steps value={step} />;
+}`}</pre>
             </div>
           </ResizablePanel>
           <ResizableHandle aria-label="Resize the code and the terminal" />

@@ -16,7 +16,7 @@ import type { ReactNode } from "react";
 import { buttonStyles } from "@/components/ui/button-styles";
 import { Kbd, KbdGroup } from "@/components/ui/kbd-code";
 import { cn } from "@/lib/utils";
-import { lightboxPhotos } from "./lightbox-art";
+import { photos } from "./photo-art";
 
 const surface =
   "rounded-xl bg-popover text-popover-foreground shadow-(--shadow-float) ring-1 ring-border/70";
@@ -256,7 +256,7 @@ export function LightboxPreview() {
     <div className="relative h-44 w-80 overflow-clip rounded-xl bg-foreground ring-1 ring-border/70 dark:bg-background">
       <span
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url("${lightboxPhotos[0].src}")` }}
+        style={{ backgroundImage: `url("${photos[0].src}")` }}
       />
       <span className="absolute inset-0 bg-gradient-to-b from-foreground/60 via-transparent to-foreground/30 dark:from-background/60 dark:to-background/30" />
       <span className="absolute inset-s-4 top-3 text-[11px] tabular-nums text-background dark:text-foreground">

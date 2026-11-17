@@ -40,7 +40,7 @@ const selectValueStyles =
   "min-w-0 flex-1 self-center truncate text-start data-placeholder:text-muted-foreground";
 const selectItemStyles = `group/item flex min-h-9 cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none transition-colors duration-150 ease-out-quint selected:bg-accent selected:text-accent-foreground disabled:cursor-default disabled:opacity-50 ${itemHighlightRing}`;
 const selectPopoverStyles =
-  "w-(--trigger-width) rounded-lg border-0 p-1 ring-1 ring-border/70";
+  "w-max min-w-(--trigger-width) max-w-[min(20rem,calc(100vw-2rem))] rounded-lg border-0 p-1 ring-1 ring-border/70";
 
 export interface SelectOption {
   id: string;

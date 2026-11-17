@@ -608,7 +608,7 @@ function EventCalendarGutter({
       aria-hidden="true"
       className="sticky start-0 z-20 w-(--event-calendar-gutter) shrink-0 bg-card text-xs tabular-nums text-muted-foreground"
     >
-      {hours.map((hourOfDay) => (
+      {hours.slice(1, -1).map((hourOfDay) => (
         <span
           key={hourOfDay}
           className="absolute end-2 -translate-y-1/2"

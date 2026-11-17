@@ -73,7 +73,8 @@
         {
           "slug": "otp-input",
           "name": "OTP input",
-          "description": "Accepts a short code with one box for each character."
+          "description": "Accepts a short code with one box for each character.",
+          "added": "2026-11-16"
         },
         {
           "slug": "inline-edit",
@@ -143,7 +144,8 @@
         {
           "slug": "segmented-control",
           "name": "Segmented control",
-          "description": "Selects one option from a compact set of segments."
+          "description": "Selects one option from a compact set of segments.",
+          "added": "2026-11-16"
         },
         {
           "slug": "rating-input",
@@ -219,7 +221,8 @@
         {
           "slug": "event-calendar",
           "name": "Event calendar",
-          "description": "Shows events on a day or week time grid that you move and resize."
+          "description": "Shows events on a day or week time grid that you move and resize.",
+          "added": "2026-11-16"
         },
         {
           "slug": "color-field",
@@ -244,7 +247,8 @@
         {
           "slug": "color-wheel",
           "name": "Color wheel",
-          "description": "Adjusts the hue of a color on a circular track."
+          "description": "Adjusts the hue of a color on a circular track.",
+          "added": "2026-11-10"
         }
       ]
     },
@@ -265,7 +269,8 @@
         {
           "slug": "lightbox",
           "name": "Lightbox",
-          "description": "Shows images full screen, one at a time, from a thumbnail."
+          "description": "Shows images full screen, one at a time, from a thumbnail.",
+          "added": "2026-11-16"
         },
         {
           "slug": "popover",
@@ -275,7 +280,8 @@
         {
           "slug": "tour",
           "name": "Tour",
-          "description": "Shows a short guide that points at parts of the page, one step at a time."
+          "description": "Shows a short guide that points at parts of the page, one step at a time.",
+          "added": "2026-11-16"
         },
         {
           "slug": "tooltip",
@@ -322,12 +328,14 @@
         {
           "slug": "sidebar",
           "name": "Sidebar",
-          "description": "Shows app navigation that collapses to an icon rail."
+          "description": "Shows app navigation that collapses to an icon rail.",
+          "added": "2026-11-16"
         },
         {
           "slug": "resizable",
           "name": "Resizable",
-          "description": "Splits an area into panels that you resize with a pointer or the keyboard."
+          "description": "Splits an area into panels that you resize with a pointer or the keyboard.",
+          "added": "2026-11-16"
         }
       ]
     },
@@ -348,7 +356,8 @@
         {
           "slug": "carousel",
           "name": "Carousel",
-          "description": "Shows a row of slides that you swipe or move with buttons."
+          "description": "Shows a row of slides that you swipe or move with buttons.",
+          "added": "2026-11-16"
         },
         {
           "slug": "tree",
@@ -455,7 +464,8 @@
         {
           "slug": "scroll-area",
           "name": "Scroll area",
-          "description": "Scrolls content in a frame with scrollbars that match the theme."
+          "description": "Scrolls content in a frame with scrollbars that match the theme.",
+          "added": "2026-11-16"
         },
         {
           "slug": "scroll-fade",
@@ -495,7 +505,8 @@
         {
           "slug": "code-block",
           "name": "Code block",
-          "description": "Shows a block of code with a header, copy, and line numbers."
+          "description": "Shows a block of code with a header, copy, and line numbers.",
+          "added": "2026-11-16"
         }
       ]
     },
@@ -506,7 +517,8 @@
         {
           "slug": "conversation",
           "name": "Conversation",
-          "description": "Shows a transcript that stays at the newest message while it streams."
+          "description": "Shows a transcript that stays at the newest message while it streams.",
+          "added": "2026-11-16"
         },
         {
           "slug": "message",
@@ -516,7 +528,8 @@
         {
           "slug": "agent-steps",
           "name": "Agent steps",
-          "description": "Shows the steps of an agent run and the status of each step."
+          "description": "Shows the steps of an agent run and the status of each step.",
+          "added": "2026-11-16"
         },
         {
           "slug": "tool-call",

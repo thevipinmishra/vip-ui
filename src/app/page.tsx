@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { SiteFooter } from "@/components/docs/site-footer";
+import { SiteAnnouncement } from "@/components/docs/site-announcement";
 import { SiteHeader } from "@/components/docs/site-header";
 import { HomeShowcase } from "@/components/home/home-showcase";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -21,40 +21,43 @@ export default function Home() {
       <main id="main">
         <section
           aria-labelledby="hero-title"
-          className="relative isolate pt-16 pb-10 sm:pt-24 sm:pb-14"
+          className="relative isolate pt-16 pb-12 sm:pt-24 sm:pb-16"
         >
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 -top-24 -z-10 h-64 opacity-90 sm:h-80 dark:opacity-100"
+            className="pointer-events-none absolute inset-x-0 -top-24 -z-10 h-80 opacity-90 dark:opacity-100"
             style={{
               background:
-                "radial-gradient(70% 130% at 18% 8%, color-mix(in oklab, var(--chart-2) 18%, transparent) 0%, transparent 72%), radial-gradient(58% 120% at 82% 16%, color-mix(in oklab, var(--chart-3) 8%, transparent) 0%, transparent 70%)",
+                "radial-gradient(50% 100% at 50% 0%, color-mix(in oklab, var(--chart-2) 16%, transparent) 0%, transparent 75%)",
             }}
           />
           <div className="site-container">
-            <div className="max-w-4xl">
+            <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
+              <SiteAnnouncement />
               <h1
                 id="hero-title"
-                className="text-[clamp(2.25rem,1.5rem+3vw,3.75rem)] leading-[1.08] font-semibold tracking-[-0.035em] text-balance sm:tracking-[-0.045em]"
+                className="mt-6 text-[clamp(2.25rem,1.5rem+3vw,3.75rem)] leading-[1.06] font-semibold tracking-[-0.035em] text-balance sm:tracking-[-0.045em]"
               >
-                A better foundation for beautiful interfaces.
+                A better foundation{" "}
+                <span className="text-muted-foreground">
+                  for beautiful interfaces.
+                </span>
               </h1>
-              <p className="mt-6 max-w-2xl text-base leading-7 text-pretty text-muted-foreground sm:text-lg sm:leading-8">
-                A thoughtfully engineered React component collection featuring
-                accessible interactions from React Aria, fluid animations with
-                Motion, and a flexible design system.
+              <p className="mt-5 max-w-xl text-base leading-7 text-pretty text-muted-foreground sm:text-lg sm:leading-8">
+                Accessible React components on React Aria, with fluid motion and
+                a design system you own.
               </p>
-              <div className="mt-8 flex flex-wrap items-center gap-3">
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                 <ButtonLink as={Link} href="/components/installation" size="md">
                   Get Started
                 </ButtonLink>
                 <ButtonLink
                   as={Link}
                   href="/components"
-                  variant="outline"
+                  variant="ghost"
                   size="md"
                 >
-                  View Components
+                  Browse components
                 </ButtonLink>
               </div>
             </div>
@@ -64,7 +67,7 @@ export default function Home() {
         <section
           id="components"
           aria-labelledby="components-title"
-          className="w-full px-5 pb-10 pt-2 sm:px-8 sm:pb-14 sm:pt-4"
+          className="mx-auto w-full max-w-[90rem] px-5 pb-24 sm:px-8"
         >
           <h2 id="components-title" className="sr-only">
             Component examples
@@ -72,8 +75,6 @@ export default function Home() {
           <HomeShowcase />
         </section>
       </main>
-
-      <SiteFooter />
     </div>
   );
 }

@@ -27,13 +27,11 @@ export function ResizableCollapsibleDemo() {
       </ResizablePanel>
       <ResizableHandle withGrip aria-label="Resize or collapse the outline" />
       <ResizablePanel id="resizable-canvas">
-        <div
-          tabIndex={0}
-          className="grid h-full place-content-center overflow-auto bg-muted/40 p-6 text-center"
-        >
-          <p className="text-sm font-medium">Canvas</p>
-          <p className="mt-1 max-w-56 text-xs text-muted-foreground">
-            Press Enter on the divider to collapse the outline.
+        <div tabIndex={0} className="h-full overflow-auto bg-muted/40 p-4">
+          <h3 className="text-sm font-semibold">Summary</h3>
+          <p className="mt-1 max-w-prose text-sm text-muted-foreground">
+            Northwind wants a calmer checkout: three steps, no account prompt,
+            and the delivery date before payment.
           </p>
         </div>
       </ResizablePanel>

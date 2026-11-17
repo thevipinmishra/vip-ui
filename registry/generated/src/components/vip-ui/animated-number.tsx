@@ -165,11 +165,14 @@ function SlidingNumber({
     0,
   );
   const otherCounts = new Map<string, number>();
+  let integerSeen = 0;
 
   const segments = parts.flatMap((part, partIndex) => {
     if (part.type === "integer") {
+      const start = integerSeen;
+      integerSeen += Array.from(part.value).length;
       return Array.from(part.value, (digit, index) => ({
-        key: `integer-${integerLength - 1 - index}`,
+        key: `integer-${integerLength - 1 - start - index}`,
         text: digit,
         isDigit: true,
       }));

@@ -3,6 +3,7 @@ import blocksCatalog from "./src/lib/blocks.json";
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  env: { BUILD_DATE: new Date().toISOString().slice(0, 10) },
   experimental: {
     optimizePackageImports: [
       "@phosphor-icons/react",

@@ -27,7 +27,7 @@ const events: CalendarEvent[] = [
   },
   {
     id: "lunch",
-    title: "Lunch with Maya",
+    title: "Team lunch",
     start: at(23, 12),
     end: at(23, 13),
     color: "chart-3",
@@ -63,8 +63,8 @@ const events: CalendarEvent[] = [
   {
     id: "hiring",
     title: "Hiring panel",
-    start: at(26, 10, 30),
-    end: at(26, 11, 30),
+    start: at(27, 14),
+    end: at(27, 15),
     color: "chart-4",
   },
 ];

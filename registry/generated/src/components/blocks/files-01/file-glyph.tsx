@@ -1,5 +1,4 @@
 import {
-  FigmaLogoIcon,
   FileAudioIcon,
   FileDocIcon,
   FileMdIcon,
@@ -9,19 +8,27 @@ import {
   FileVideoIcon,
   FileXlsIcon,
   FileZipIcon,
-  type Icon,
   ImageIcon,
 } from "@phosphor-icons/react";
+import type { ComponentType } from "react";
 import { cn } from "../../vip-ui/utils";
+import { FigmaMark } from "./brand-marks";
 import type { FileKind } from "./data";
 
-const glyphs: Record<FileKind, { icon: Icon; tone: string; label: string }> = {
+const glyphs: Record<
+  FileKind,
+  {
+    icon: ComponentType<{ size?: number; className?: string }>;
+    tone: string;
+    label: string;
+  }
+> = {
   image: { icon: ImageIcon, tone: "text-success", label: "Image" },
   pdf: { icon: FilePdfIcon, tone: "text-destructive", label: "PDF" },
   document: { icon: FileDocIcon, tone: "text-primary", label: "DOCX" },
   sheet: { icon: FileXlsIcon, tone: "text-success", label: "XLSX" },
   video: { icon: FileVideoIcon, tone: "text-warning-foreground", label: "MP4" },
-  design: { icon: FigmaLogoIcon, tone: "text-primary", label: "FIG" },
+  design: { icon: FigmaMark, tone: "text-primary", label: "FIG" },
   archive: { icon: FileZipIcon, tone: "text-muted-foreground", label: "ZIP" },
   audio: { icon: FileAudioIcon, tone: "text-warning-foreground", label: "MP3" },
   markdown: { icon: FileMdIcon, tone: "text-foreground", label: "MD" },

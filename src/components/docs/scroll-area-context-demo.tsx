@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import {
   ScrollAreaContent,
   ScrollAreaContext,
-  ScrollAreaCorner,
   ScrollAreaRoot,
   ScrollAreaScrollbar,
   ScrollAreaThumb,
@@ -74,7 +73,7 @@ const messages = [
 export function ScrollAreaContextDemo() {
   return (
     <div className="@container w-full max-w-md overflow-hidden rounded-xl border border-border bg-card shadow-(--shadow-card)">
-      <ScrollAreaRoot orientation="both" className="h-72">
+      <ScrollAreaRoot className="h-72">
         <div className="flex h-12 items-center justify-between gap-3 border-b border-border px-4">
           <div className="shrink-0">
             <p className="text-sm font-medium whitespace-nowrap">
@@ -130,7 +129,7 @@ export function ScrollAreaContextDemo() {
           className="h-[calc(100%-3rem)]"
         >
           <ScrollAreaContent>
-            <ul className="grid w-[34rem] divide-y divide-border/60">
+            <ul className="grid divide-y divide-border/60">
               {messages.map((message) => (
                 <li
                   key={`${message.name}-${message.time}`}
@@ -163,8 +162,6 @@ export function ScrollAreaContextDemo() {
         <ScrollAreaScrollbar orientation="vertical" style={{ top: "3rem" }}>
           <ScrollAreaThumb orientation="vertical" />
         </ScrollAreaScrollbar>
-        <ScrollAreaScrollbar orientation="horizontal" />
-        <ScrollAreaCorner />
       </ScrollAreaRoot>
     </div>
   );

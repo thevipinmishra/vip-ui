@@ -2882,14 +2882,20 @@ export function ProjectCard() {
   CarouselViewport,
 } from "@/components/vip-ui/carousel";
 
-const products = ["Field jacket", "Canvas tote", "Camp mug"];
+const photos = [
+  { src: "/photos/ridge.jpg", alt: "A dark ridge at sunrise." },
+  { src: "/photos/tide.jpg", alt: "Tide pools between rocks." },
+  { src: "/photos/dunes.jpg", alt: "Ochre dunes after rain." },
+];
 
-export function FeaturedProducts() {
+export function TripPhotos() {
   return (
-    <Carousel aria-label="Featured products">
+    <Carousel aria-label="Trip photos">
       <CarouselViewport>
-        {products.map((product) => (
-          <CarouselSlide key={product}>{product}</CarouselSlide>
+        {photos.map((photo) => (
+          <CarouselSlide key={photo.src}>
+            <img src={photo.src} alt={photo.alt} className="rounded-xl" />
+          </CarouselSlide>
         ))}
       </CarouselViewport>
       <div className="flex items-center justify-between gap-3">
@@ -2900,7 +2906,7 @@ export function FeaturedProducts() {
     </Carousel>
   );
 }`,
-    filename: "featured-products.tsx",
+    filename: "trip-photos.tsx",
     note: "`opts` and `plugins` go straight to Embla. `useCarousel()` returns the Embla `api` and the selected index, so a plugin can drive its own controls.",
   },
   lightbox: {
