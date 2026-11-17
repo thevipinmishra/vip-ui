@@ -105,7 +105,7 @@ function FirstVisit({
         <div className="flex flex-wrap gap-2">
           <TourTarget id="capture">
             <Button size="sm">
-              <NotePencilIcon aria-hidden="true" />
+              <NotePencilIcon data-icon="inline-start" aria-hidden="true" />
               New note
             </Button>
           </TourTarget>

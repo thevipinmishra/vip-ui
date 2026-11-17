@@ -638,7 +638,11 @@ export function SupportInbox() {
                                   className="h-auto justify-start px-2 py-2 text-left"
                                   onPress={() => snooze(active, option.until)}
                                 >
-                                  <ClockIcon size={16} aria-hidden="true" />
+                                  <ClockIcon
+                                    data-icon="inline-start"
+                                    size={16}
+                                    aria-hidden="true"
+                                  />
                                   <span className="grid">
                                     <span className="font-medium">
                                       {option.label}

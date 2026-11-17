@@ -52,7 +52,7 @@ export function SpinnerOverlayDemo() {
           setTimeout(() => setIsLoading(false), 1800);
         }}
       >
-        <ArrowClockwiseIcon aria-hidden="true" />
+        <ArrowClockwiseIcon data-icon="inline-start" aria-hidden="true" />
         Refresh
       </Button>
     </div>

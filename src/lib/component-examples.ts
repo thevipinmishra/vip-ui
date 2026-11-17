@@ -39,7 +39,7 @@ const pageSources = {
       {
         title: "With icon",
         description:
-          "Mark the icon `aria-hidden` so the label stays the accessible name.",
+          'Add `data-icon="inline-start"` or `data-icon="inline-end"` to the icon for correct spacing. Mark the icon `aria-hidden` so the label stays the accessible name.',
         sourcePath: "button-with-icon-demo.tsx",
       },
       {
@@ -1682,7 +1682,7 @@ const pageSources = {
       {
         title: "In a button",
         description:
-          "Set `decorative` when adjacent text names the wait. `isPending` keeps focus and ignores presses.",
+          'Set `decorative` when adjacent text names the wait, and add `data-icon="inline-start"` for correct spacing. `isPending` keeps focus and ignores presses.',
         sourcePath: "spinner-usage-demo.tsx",
         uses: ["button"],
       },
@@ -2698,7 +2698,7 @@ import { ToggleButton } from "@/components/vip-ui/toggle-button";
 export function PinButton() {
   return (
     <ToggleButton>
-      <PushPinIcon aria-hidden="true" />
+      <PushPinIcon data-icon="inline-start" aria-hidden="true" />
       Pin to favorites
     </ToggleButton>
   );

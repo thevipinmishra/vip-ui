@@ -249,7 +249,11 @@ export function ProductPage() {
               onPress={() => setCartOpen(true)}
               aria-label={`Open bag, ${count} ${count === 1 ? "item" : "items"}`}
             >
-              <ShoppingBagIcon size={18} aria-hidden="true" />
+              <ShoppingBagIcon
+                data-icon="inline-start"
+                size={18}
+                aria-hidden="true"
+              />
               <span className="hidden sm:inline">Bag</span>
               <span className="grid min-w-5 place-items-center rounded-full bg-foreground px-1.5 py-0.5 text-[11px] font-semibold tabular-nums text-background">
                 {count}

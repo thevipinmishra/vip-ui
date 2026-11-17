@@ -23,9 +23,9 @@ export function SpinnerUsageDemo() {
         }}
       >
         {isSaving ? (
-          <Spinner size="sm" decorative />
+          <Spinner data-icon="inline-start" size="sm" decorative />
         ) : (
-          <FloppyDiskIcon aria-hidden="true" />
+          <FloppyDiskIcon data-icon="inline-start" aria-hidden="true" />
         )}
         {isSaving ? "Saving" : "Save changes"}
       </Button>

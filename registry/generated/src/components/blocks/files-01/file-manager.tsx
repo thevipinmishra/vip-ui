@@ -633,7 +633,11 @@ export function FileManager() {
                 size="sm"
                 onPress={() => setDialog({ mode: "folder" })}
               >
-                <FolderSimplePlusIcon size={16} aria-hidden="true" />
+                <FolderSimplePlusIcon
+                  data-icon="inline-start"
+                  size={16}
+                  aria-hidden="true"
+                />
                 New folder
               </Button>
             </div>
@@ -673,7 +677,11 @@ export function FileManager() {
 
               <MenuTrigger>
                 <Button variant="outline" size="xs">
-                  <ArrowsDownUpIcon size={16} aria-hidden="true" />
+                  <ArrowsDownUpIcon
+                    data-icon="inline-start"
+                    size={16}
+                    aria-hidden="true"
+                  />
                   {sort === "name"
                     ? "Name"
                     : sort === "size"
@@ -681,7 +689,11 @@ export function FileManager() {
                       : sort === "manual"
                         ? "Custom order"
                         : "Last modified"}
-                  <CaretDownIcon size={12} aria-hidden="true" />
+                  <CaretDownIcon
+                    data-icon="inline-end"
+                    size={12}
+                    aria-hidden="true"
+                  />
                 </Button>
                 <MenuPopover placement="bottom start">
                   <MenuContent
@@ -735,7 +747,11 @@ export function FileManager() {
                   }}
                 >
                   <Button size="sm">
-                    <UploadSimpleIcon size={16} aria-hidden="true" />
+                    <UploadSimpleIcon
+                      data-icon="inline-start"
+                      size={16}
+                      aria-hidden="true"
+                    />
                     Upload
                   </Button>
                 </FileTrigger>
@@ -761,7 +777,11 @@ export function FileManager() {
                       variant="ghost"
                       onPress={() => setDetailsId(selectedFiles[0].id)}
                     >
-                      <InfoIcon size={14} aria-hidden="true" />
+                      <InfoIcon
+                        data-icon="inline-start"
+                        size={14}
+                        aria-hidden="true"
+                      />
                       Details
                     </Button>
                   )}
@@ -770,7 +790,11 @@ export function FileManager() {
                     variant="ghost"
                     onPress={() => download(selectedFiles)}
                   >
-                    <DownloadSimpleIcon size={14} aria-hidden="true" />
+                    <DownloadSimpleIcon
+                      data-icon="inline-start"
+                      size={14}
+                      aria-hidden="true"
+                    />
                     Download
                   </Button>
                   <Button
@@ -784,7 +808,11 @@ export function FileManager() {
                       setMoveOpen(true);
                     }}
                   >
-                    <FolderSimpleIcon size={14} aria-hidden="true" />
+                    <FolderSimpleIcon
+                      data-icon="inline-start"
+                      size={14}
+                      aria-hidden="true"
+                    />
                     Move
                   </Button>
                   <Button
@@ -793,7 +821,11 @@ export function FileManager() {
                     className="text-destructive"
                     onPress={() => remove(selectedFiles)}
                   >
-                    <TrashIcon size={14} aria-hidden="true" />
+                    <TrashIcon
+                      data-icon="inline-start"
+                      size={14}
+                      aria-hidden="true"
+                    />
                     Delete
                   </Button>
                 </div>
@@ -887,7 +919,11 @@ export function FileManager() {
                         }}
                       >
                         <Button size="sm">
-                          <UploadSimpleIcon size={16} aria-hidden="true" />
+                          <UploadSimpleIcon
+                            data-icon="inline-start"
+                            size={16}
+                            aria-hidden="true"
+                          />
                           Upload files
                         </Button>
                       </FileTrigger>

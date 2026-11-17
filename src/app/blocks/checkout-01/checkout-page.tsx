@@ -1004,12 +1004,20 @@ export function CheckoutPage() {
                       <Button type="submit" isDisabled={pending}>
                         {pending ? (
                           <>
-                            <Spinner size="sm" decorative />
+                            <Spinner
+                              data-icon="inline-start"
+                              size="sm"
+                              decorative
+                            />
                             Processing payment…
                           </>
                         ) : (
                           <>
-                            <LockIcon size={16} aria-hidden="true" />
+                            <LockIcon
+                              data-icon="inline-start"
+                              size={16}
+                              aria-hidden="true"
+                            />
                             Pay {formatMoney(totals.total)}
                           </>
                         )}

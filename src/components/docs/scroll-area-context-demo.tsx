@@ -100,7 +100,7 @@ export function ScrollAreaContextDemo() {
                     isDisabled={api.isAtTop}
                     onPress={() => api.scrollToEdge({ edge: "top" })}
                   >
-                    <ArrowUpIcon aria-hidden="true" />
+                    <ArrowUpIcon data-icon="inline-start" aria-hidden="true" />
                     <span className="sr-only @[17.5rem]:not-sr-only">Top</span>
                   </Button>
                   <Button
@@ -109,7 +109,10 @@ export function ScrollAreaContextDemo() {
                     isDisabled={api.isAtBottom}
                     onPress={() => api.scrollToEdge({ edge: "bottom" })}
                   >
-                    <ArrowDownIcon aria-hidden="true" />
+                    <ArrowDownIcon
+                      data-icon="inline-start"
+                      aria-hidden="true"
+                    />
                     <span className="sr-only @[17.5rem]:not-sr-only">
                       Bottom
                     </span>

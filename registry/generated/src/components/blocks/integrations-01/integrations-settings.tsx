@@ -492,7 +492,11 @@ export function IntegrationsSettings() {
                                 onPress={() => connect(app.id)}
                               >
                                 {connecting === app.id && (
-                                  <Spinner size="sm" decorative />
+                                  <Spinner
+                                    data-icon="inline-start"
+                                    size="sm"
+                                    decorative
+                                  />
                                 )}
                                 Connect
                               </Button>

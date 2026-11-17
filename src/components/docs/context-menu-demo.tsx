@@ -13,7 +13,8 @@ export function ContextMenuDemo() {
     <div className="grid justify-items-center gap-3">
       <ContextMenuTrigger>
         <Button variant="outline">
-          <FilePdfIcon size={18} aria-hidden="true" /> brief.pdf
+          <FilePdfIcon data-icon="inline-start" size={18} aria-hidden="true" />{" "}
+          brief.pdf
         </Button>
         <ContextMenu aria-label="File actions">
           <ContextMenuItem>Rename</ContextMenuItem>

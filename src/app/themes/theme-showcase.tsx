@@ -567,7 +567,12 @@ function TeamScene({ className }: { className?: string }) {
                   aria-label={`${member.name}'s role: ${member.role}`}
                 >
                   {member.role}
-                  <DotsThreeIcon size={14} weight="bold" aria-hidden="true" />
+                  <DotsThreeIcon
+                    data-icon="inline-end"
+                    size={14}
+                    weight="bold"
+                    aria-hidden="true"
+                  />
                 </Button>
                 <MenuPopover placement="bottom end">
                   <MenuContent
@@ -1010,7 +1015,7 @@ function ProjectScene({ className }: { className?: string }) {
             Reset
           </Button>
           <Button type="submit">
-            <PlusIcon size={16} aria-hidden="true" />
+            <PlusIcon data-icon="inline-start" size={16} aria-hidden="true" />
             Create project
           </Button>
         </CardFooter>
@@ -1106,7 +1111,7 @@ function InvoicesScene({ className }: { className?: string }) {
               })
             }
           >
-            <PlusIcon size={16} aria-hidden="true" />
+            <PlusIcon data-icon="inline-start" size={16} aria-hidden="true" />
             New invoice
           </Button>
         </div>

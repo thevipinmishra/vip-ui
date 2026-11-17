@@ -406,7 +406,11 @@ export function IssueDetail() {
                   });
                 }}
               >
-                <BellIcon size={16} aria-hidden="true" />
+                <BellIcon
+                  data-icon="inline-start"
+                  size={16}
+                  aria-hidden="true"
+                />
                 {subscribed ? "Subscribed" : "Subscribe"}
               </Button>
             </div>
@@ -738,9 +742,17 @@ export function IssueDetail() {
                 className="mt-1 w-full"
               >
                 {watching ? (
-                  <EyeSlashIcon size={16} aria-hidden="true" />
+                  <EyeSlashIcon
+                    data-icon="inline-start"
+                    size={16}
+                    aria-hidden="true"
+                  />
                 ) : (
-                  <EyeIcon size={16} aria-hidden="true" />
+                  <EyeIcon
+                    data-icon="inline-start"
+                    size={16}
+                    aria-hidden="true"
+                  />
                 )}
                 {watching ? "Stop watching" : "Watch issue"}
               </Button>

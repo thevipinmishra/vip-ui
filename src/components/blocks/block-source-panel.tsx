@@ -187,7 +187,12 @@ export function BlockSourcePanel({ block }: { block: Block }) {
                   size="sm"
                   className="min-h-9 shrink-0 justify-start gap-2 px-2 font-mono text-xs font-normal"
                 >
-                  <Icon size={15} aria-hidden="true" className="shrink-0" />
+                  <Icon
+                    data-icon="inline-start"
+                    size={15}
+                    aria-hidden="true"
+                    className="shrink-0"
+                  />
                   {item.path.slice(item.path.lastIndexOf("/") + 1)}
                 </ToggleButton>
               );

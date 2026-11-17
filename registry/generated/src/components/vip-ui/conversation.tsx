@@ -433,7 +433,7 @@ export function ConversationLoadOlder({
         isPending={isPending}
         onPress={() => void load()}
       >
-        {isPending && <Spinner size="sm" decorative />}
+        {isPending && <Spinner data-icon="inline-start" size="sm" decorative />}
         {children ??
           (isPending ? "Loading older messages" : "Load older messages")}
       </Button>
@@ -484,7 +484,7 @@ export function ConversationJump({
           scrollToLatest();
         }}
       >
-        <ArrowDownIcon aria-hidden="true" />
+        <ArrowDownIcon data-icon="inline-start" aria-hidden="true" />
         <span aria-hidden="true">{children ?? "Jump to latest"}</span>
         {newCount > 0 && (
           <span

@@ -543,7 +543,11 @@ export function OrdersPage() {
             size="sm"
             onPress={() => downloadOrders(filtered, "marlow-finch-orders.csv")}
           >
-            <DownloadSimpleIcon size={16} aria-hidden="true" />
+            <DownloadSimpleIcon
+              data-icon="inline-start"
+              size={16}
+              aria-hidden="true"
+            />
             Export
           </Button>
         </header>
@@ -632,7 +636,11 @@ export function OrdersPage() {
                 isDisabled={!selectedOrders.some(isShippable)}
                 onPress={shipSelected}
               >
-                <TruckIcon size={16} aria-hidden="true" />
+                <TruckIcon
+                  data-icon="inline-start"
+                  size={16}
+                  aria-hidden="true"
+                />
                 Mark as shipped
               </Button>
               <Button
@@ -642,11 +650,19 @@ export function OrdersPage() {
                   downloadOrders(selectedOrders, "marlow-finch-selection.csv")
                 }
               >
-                <DownloadSimpleIcon size={16} aria-hidden="true" />
+                <DownloadSimpleIcon
+                  data-icon="inline-start"
+                  size={16}
+                  aria-hidden="true"
+                />
                 Export
               </Button>
               <Button size="sm" variant="ghost" onPress={archiveSelected}>
-                <ArchiveIcon size={16} aria-hidden="true" />
+                <ArchiveIcon
+                  data-icon="inline-start"
+                  size={16}
+                  aria-hidden="true"
+                />
                 Archive
               </Button>
             </Toolbar>

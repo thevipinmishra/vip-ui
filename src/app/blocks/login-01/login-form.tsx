@@ -115,6 +115,7 @@ export function LoginForm() {
                       onPress={() => signInWith(provider.id)}
                     >
                       <IconSwap
+                        data-icon="inline-start"
                         contentKey={
                           pending === provider.id ? "pending" : "idle"
                         }
@@ -169,7 +170,9 @@ export function LoginForm() {
                   isPending={pending === "email"}
                   isDisabled={pending !== null && pending !== "email"}
                 >
-                  {pending === "email" && <Spinner size="sm" decorative />}
+                  {pending === "email" && (
+                    <Spinner data-icon="inline-start" size="sm" decorative />
+                  )}
                   Sign in
                 </Button>
               </Form>

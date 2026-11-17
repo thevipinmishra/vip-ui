@@ -142,7 +142,9 @@ export function EmailLinkForm() {
             isPending={pending === "link"}
             isDisabled={pending === "passkey"}
           >
-            {pending === "link" && <Spinner size="sm" decorative />}
+            {pending === "link" && (
+              <Spinner data-icon="inline-start" size="sm" decorative />
+            )}
             Email me a link
           </Button>
           <div className="flex items-center gap-3 text-xs text-muted-foreground">
@@ -157,7 +159,10 @@ export function EmailLinkForm() {
             isDisabled={pending === "link"}
             onPress={signInWithPasskey}
           >
-            <IconSwap contentKey={pending === "passkey" ? "pending" : "idle"}>
+            <IconSwap
+              data-icon="inline-start"
+              contentKey={pending === "passkey" ? "pending" : "idle"}
+            >
               {pending === "passkey" ? (
                 <Spinner size="sm" decorative />
               ) : (

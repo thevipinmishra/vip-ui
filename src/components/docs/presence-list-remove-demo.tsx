@@ -79,7 +79,10 @@ export function PresenceListRemoveDemo() {
             variant="secondary"
             onPress={restore}
           >
-            <ArrowCounterClockwiseIcon aria-hidden="true" />
+            <ArrowCounterClockwiseIcon
+              data-icon="inline-start"
+              aria-hidden="true"
+            />
             Restore files
           </Button>
         </div>

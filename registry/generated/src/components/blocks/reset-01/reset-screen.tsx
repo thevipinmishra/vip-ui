@@ -145,7 +145,9 @@ export function ResetScreen() {
                     isRequired
                   />
                   <Button type="submit" className="w-full" isPending={pending}>
-                    {pending && <Spinner size="sm" decorative />}
+                    {pending && (
+                      <Spinner data-icon="inline-start" size="sm" decorative />
+                    )}
                     Send reset link
                   </Button>
                 </Form>

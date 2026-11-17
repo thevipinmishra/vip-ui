@@ -27,7 +27,12 @@ export default function NotFound() {
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <ButtonLink as={Link} href="/components">
-            Browse components <ArrowRightIcon size={16} aria-hidden="true" />
+            Browse components{" "}
+            <ArrowRightIcon
+              data-icon="inline-end"
+              size={16}
+              aria-hidden="true"
+            />
           </ButtonLink>
           <ButtonLink as={Link} href="/" variant="outline">
             Back home

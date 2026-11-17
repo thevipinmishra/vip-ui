@@ -14,7 +14,8 @@ export function ContextMenuGroupedDemo() {
   return (
     <ContextMenuTrigger>
       <Button variant="outline">
-        <FileMdIcon size={18} aria-hidden="true" /> Notes.md
+        <FileMdIcon data-icon="inline-start" size={18} aria-hidden="true" />{" "}
+        Notes.md
       </Button>
       <ContextMenuPopover>
         <ContextMenuContent aria-label="Notes actions">

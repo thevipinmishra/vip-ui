@@ -240,7 +240,9 @@ export function VerifyScreen() {
                     Trust this browser for 30 days
                   </Checkbox>
                   <Button type="submit" className="w-full" isPending={pending}>
-                    {pending && <Spinner size="sm" decorative />}
+                    {pending && (
+                      <Spinner data-icon="inline-start" size="sm" decorative />
+                    )}
                     Verify
                   </Button>
                 </Form>

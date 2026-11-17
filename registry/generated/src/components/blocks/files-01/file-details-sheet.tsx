@@ -101,7 +101,11 @@ export function FileDetailsSheet({
                   onPress={() => onCopyLink(shown)}
                   aria-label={`Copy link to ${shown.name}`}
                 >
-                  <LinkIcon size={14} aria-hidden="true" />
+                  <LinkIcon
+                    data-icon="inline-start"
+                    size={14}
+                    aria-hidden="true"
+                  />
                   Copy link
                 </Button>
               </DescriptionDetail>
@@ -142,15 +146,27 @@ export function FileDetailsSheet({
               onPress={() => onDelete(shown)}
               className="text-destructive sm:me-auto"
             >
-              <TrashIcon size={16} aria-hidden="true" />
+              <TrashIcon
+                data-icon="inline-start"
+                size={16}
+                aria-hidden="true"
+              />
               Delete
             </Button>
             <Button variant="outline" size="sm" onPress={() => onRename(shown)}>
-              <PencilSimpleIcon size={16} aria-hidden="true" />
+              <PencilSimpleIcon
+                data-icon="inline-start"
+                size={16}
+                aria-hidden="true"
+              />
               Rename
             </Button>
             <Button size="sm" onPress={() => onDownload(shown)}>
-              <DownloadSimpleIcon size={16} aria-hidden="true" />
+              <DownloadSimpleIcon
+                data-icon="inline-start"
+                size={16}
+                aria-hidden="true"
+              />
               Download
             </Button>
           </SheetFooter>

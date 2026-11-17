@@ -270,7 +270,11 @@ export function AvailabilityPage() {
                 Discard
               </Button>
               <Button size="sm" onPress={save}>
-                <CheckIcon size={15} aria-hidden="true" />
+                <CheckIcon
+                  data-icon="inline-start"
+                  size={15}
+                  aria-hidden="true"
+                />
                 Save changes
               </Button>
             </div>
@@ -311,7 +315,11 @@ export function AvailabilityPage() {
                   onPress={copyMonday}
                   isDisabled={!hours.find((day) => day.id === "mon")?.enabled}
                 >
-                  <CopySimpleIcon size={16} aria-hidden="true" />
+                  <CopySimpleIcon
+                    data-icon="inline-start"
+                    size={16}
+                    aria-hidden="true"
+                  />
                   Copy Monday
                 </Button>
               </CardHeader>
@@ -438,7 +446,11 @@ export function AvailabilityPage() {
                                 onPress={() => addRange(day.id)}
                                 isDisabled={day.ranges.length >= 3}
                               >
-                                <PlusIcon size={13} aria-hidden="true" />
+                                <PlusIcon
+                                  data-icon="inline-start"
+                                  size={13}
+                                  aria-hidden="true"
+                                />
                                 Add hours
                               </Button>
                             </div>
@@ -513,7 +525,11 @@ export function AvailabilityPage() {
                       isDisabled={!draft}
                       className="w-full"
                     >
-                      <PlusIcon size={16} aria-hidden="true" />
+                      <PlusIcon
+                        data-icon="inline-start"
+                        size={16}
+                        aria-hidden="true"
+                      />
                       Add time off
                     </Button>
                     <Separator />

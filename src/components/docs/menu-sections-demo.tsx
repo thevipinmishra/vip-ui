@@ -20,7 +20,7 @@ export function MenuSectionsDemo() {
   return (
     <MenuTrigger>
       <Button variant="outline">
-        <SlidersHorizontalIcon aria-hidden="true" />
+        <SlidersHorizontalIcon data-icon="inline-start" aria-hidden="true" />
         View options
       </Button>
       <MenuPopover>

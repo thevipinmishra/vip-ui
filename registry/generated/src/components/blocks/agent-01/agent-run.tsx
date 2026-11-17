@@ -180,12 +180,22 @@ export function AgentRun() {
           </div>
           {status === "working" ? (
             <Button variant="outline" size="sm" onPress={stopRun}>
-              <StopIcon size={16} weight="fill" aria-hidden="true" />
+              <StopIcon
+                data-icon="inline-start"
+                size={16}
+                weight="fill"
+                aria-hidden="true"
+              />
               Stop run
             </Button>
           ) : (
             <Button size="sm" onPress={resumeRun}>
-              <PlayIcon size={16} weight="fill" aria-hidden="true" />
+              <PlayIcon
+                data-icon="inline-start"
+                size={16}
+                weight="fill"
+                aria-hidden="true"
+              />
               Resume run
             </Button>
           )}
@@ -198,7 +208,11 @@ export function AgentRun() {
             title={`2 lines exceed ${run.purchaseOrder} by ${formatMoney(difference)}`}
             action={
               <Button variant="ghost" size="sm" onPress={downloadExceptions}>
-                <DownloadSimpleIcon size={16} aria-hidden="true" />
+                <DownloadSimpleIcon
+                  data-icon="inline-start"
+                  size={16}
+                  aria-hidden="true"
+                />
                 Download
               </Button>
             }
@@ -460,7 +474,11 @@ export function AgentRun() {
                   className="w-full"
                   onPress={downloadExceptions}
                 >
-                  <DownloadSimpleIcon size={16} aria-hidden="true" />
+                  <DownloadSimpleIcon
+                    data-icon="inline-start"
+                    size={16}
+                    aria-hidden="true"
+                  />
                   Download exceptions
                 </Button>
               </CardContent>

@@ -26,7 +26,8 @@ export default function ComponentNotFound() {
       </EmptyStateDescription>
       <EmptyStateActions>
         <ButtonLink as={Link} href="/components" variant="outline">
-          Browse components <ArrowRightIcon size={16} aria-hidden="true" />
+          Browse components{" "}
+          <ArrowRightIcon data-icon="inline-end" size={16} aria-hidden="true" />
         </ButtonLink>
       </EmptyStateActions>
     </EmptyState>

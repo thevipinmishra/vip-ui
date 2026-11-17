@@ -575,7 +575,7 @@ export function AppearanceCard() {
               variant="segmented"
               className="min-w-0 flex-1 gap-1.5 px-2"
             >
-              <SunIcon aria-hidden="true" />
+              <SunIcon data-icon="inline-start" aria-hidden="true" />
               Light
             </ToggleButton>
             <ToggleButton
@@ -583,7 +583,7 @@ export function AppearanceCard() {
               variant="segmented"
               className="min-w-0 flex-1 gap-1.5 px-2"
             >
-              <MoonIcon aria-hidden="true" />
+              <MoonIcon data-icon="inline-start" aria-hidden="true" />
               Dark
             </ToggleButton>
             <ToggleButton
@@ -591,7 +591,7 @@ export function AppearanceCard() {
               variant="segmented"
               className="min-w-0 flex-1 gap-1.5 px-2"
             >
-              <DesktopIcon aria-hidden="true" />
+              <DesktopIcon data-icon="inline-start" aria-hidden="true" />
               Auto
             </ToggleButton>
           </ToggleButtonGroup>

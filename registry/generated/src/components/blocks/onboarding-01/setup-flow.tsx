@@ -361,7 +361,11 @@ export function SetupFlow() {
                       focusHeading();
                     }}
                   >
-                    <ArrowLeftIcon size={16} aria-hidden="true" />
+                    <ArrowLeftIcon
+                      data-icon="inline-start"
+                      size={16}
+                      aria-hidden="true"
+                    />
                     Back
                   </Button>
                   <div className="flex flex-wrap items-center justify-end gap-2">
@@ -374,7 +378,11 @@ export function SetupFlow() {
                       {step === setupSteps.length - 1
                         ? "Finish setup"
                         : "Continue"}
-                      <ArrowRightIcon size={16} aria-hidden="true" />
+                      <ArrowRightIcon
+                        data-icon="inline-end"
+                        size={16}
+                        aria-hidden="true"
+                      />
                     </Button>
                   </div>
                 </CardFooter>
@@ -652,7 +660,7 @@ function DonePanel({
       <div className="flex flex-wrap gap-2">
         <ButtonLink href="/blocks/checklist-01">
           Open the checklist
-          <ArrowRightIcon size={16} aria-hidden="true" />
+          <ArrowRightIcon data-icon="inline-end" size={16} aria-hidden="true" />
         </ButtonLink>
         <Button variant="outline" onPress={onEdit}>
           Edit setup

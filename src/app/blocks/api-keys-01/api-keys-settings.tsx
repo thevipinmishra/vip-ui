@@ -400,7 +400,7 @@ export function ApiKeysSettings() {
       description="Create keys and copy each new key when it appears."
       actions={
         <Button size="sm" onPress={openCreate}>
-          <PlusIcon size={16} aria-hidden="true" />
+          <PlusIcon data-icon="inline-start" size={16} aria-hidden="true" />
           Create key
         </Button>
       }
@@ -738,7 +738,9 @@ export function ApiKeysSettings() {
                 Cancel
               </DialogClose>
               <Button type="submit" size="sm" isDisabled={pending}>
-                {pending && <Spinner size="sm" decorative />}
+                {pending && (
+                  <Spinner data-icon="inline-start" size="sm" decorative />
+                )}
                 Create key
               </Button>
             </DialogFooter>

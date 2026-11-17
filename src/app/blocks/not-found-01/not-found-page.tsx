@@ -442,7 +442,11 @@ export function NotFoundPage() {
             </h2>
             <Button variant="minimal" size="sm" onPress={focusSearch}>
               Search all articles
-              <ArrowRightIcon size={14} aria-hidden="true" />
+              <ArrowRightIcon
+                data-icon="inline-end"
+                size={14}
+                aria-hidden="true"
+              />
             </Button>
           </div>
           <div className="mt-4 grid gap-4 sm:grid-cols-2 md:grid-cols-3">

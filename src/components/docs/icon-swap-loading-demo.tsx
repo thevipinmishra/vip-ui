@@ -26,7 +26,7 @@ export function IconSwapLoadingDemo() {
       isDisabled={status !== "idle"}
       onPress={() => setStatus("saving")}
     >
-      <IconSwap contentKey={status}>
+      <IconSwap data-icon="inline-start" contentKey={status}>
         {status === "saving" ? (
           <Spinner size="sm" decorative />
         ) : status === "saved" ? (

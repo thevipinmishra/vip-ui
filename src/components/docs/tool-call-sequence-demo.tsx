@@ -74,7 +74,10 @@ export function ToolCallSequenceDemo() {
             setRun((count) => count + 1);
           }}
         >
-          <ArrowCounterClockwiseIcon aria-hidden="true" />
+          <ArrowCounterClockwiseIcon
+            data-icon="inline-start"
+            aria-hidden="true"
+          />
           Replay
         </Button>
       </div>

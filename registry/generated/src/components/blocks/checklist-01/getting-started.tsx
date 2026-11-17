@@ -338,7 +338,11 @@ export function GettingStarted() {
           <p>{tasks[1].detail}</p>
           {workspace.invites.length === 0 ? (
             <Button variant="outline" size="sm" onPress={inviteTeam}>
-              <PaperPlaneTiltIcon size={16} aria-hidden="true" />
+              <PaperPlaneTiltIcon
+                data-icon="inline-start"
+                size={16}
+                aria-hidden="true"
+              />
               Invite three teammates
             </Button>
           ) : (
@@ -439,7 +443,11 @@ export function GettingStarted() {
             className="w-fit"
             onPress={createProject}
           >
-            <FolderPlusIcon size={16} aria-hidden="true" />
+            <FolderPlusIcon
+              data-icon="inline-start"
+              size={16}
+              aria-hidden="true"
+            />
             {projects.length === 0
               ? "Create sample project"
               : "Create another project"}
@@ -468,7 +476,11 @@ export function GettingStarted() {
             className="w-fit"
             onPress={toggleCalendar}
           >
-            <CalendarCheckIcon size={16} aria-hidden="true" />
+            <CalendarCheckIcon
+              data-icon="inline-start"
+              size={16}
+              aria-hidden="true"
+            />
             {connected ? "Disconnect calendar" : "Connect Google Calendar"}
           </Button>
         </div>
@@ -492,9 +504,13 @@ export function GettingStarted() {
           onPress={importNotes}
         >
           {importing ? (
-            <Spinner size="sm" decorative />
+            <Spinner data-icon="inline-start" size="sm" decorative />
           ) : (
-            <DownloadSimpleIcon size={16} aria-hidden="true" />
+            <DownloadSimpleIcon
+              data-icon="inline-start"
+              size={16}
+              aria-hidden="true"
+            />
           )}
           {importing
             ? "Importing…"
