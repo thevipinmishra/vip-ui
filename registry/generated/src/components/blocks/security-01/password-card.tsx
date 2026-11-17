@@ -144,7 +144,9 @@ export function PasswordCard({
             Use at least {minLength} characters.
           </p>
           <Button type="submit" size="sm" isDisabled={pending}>
-            {pending && <Spinner size="sm" decorative />}
+            {pending && (
+              <Spinner data-icon="inline-start" size="sm" decorative />
+            )}
             Update password
           </Button>
         </CardFooter>

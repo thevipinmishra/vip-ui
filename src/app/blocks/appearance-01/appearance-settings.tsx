@@ -240,7 +240,11 @@ export function AppearanceSettings() {
       description="Choose how Kestrel looks on this device."
       actions={
         <Button variant="outline" size="sm" onPress={reset}>
-          <ArrowCounterClockwiseIcon size={16} aria-hidden="true" />
+          <ArrowCounterClockwiseIcon
+            data-icon="inline-start"
+            size={16}
+            aria-hidden="true"
+          />
           Reset
         </Button>
       }

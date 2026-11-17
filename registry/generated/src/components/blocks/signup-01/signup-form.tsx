@@ -189,7 +189,9 @@ export function SignupForm() {
                   <Link href="#">privacy policy</Link>
                 </Checkbox>
                 <Button type="submit" className="w-full" isPending={pending}>
-                  {pending && <Spinner size="sm" decorative />}
+                  {pending && (
+                    <Spinner data-icon="inline-start" size="sm" decorative />
+                  )}
                   Create account
                 </Button>
               </Form>

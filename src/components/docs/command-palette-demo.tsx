@@ -26,7 +26,12 @@ export function CommandPaletteDemo({
   return (
     <div className="grid justify-items-start gap-3">
       <Button variant="outline" onPress={() => setOpen(true)}>
-        <MagnifyingGlassIcon size={16} aria-hidden="true" /> Search commands
+        <MagnifyingGlassIcon
+          data-icon="inline-start"
+          size={16}
+          aria-hidden="true"
+        />{" "}
+        Search commands
       </Button>
       <CommandPalette
         isOpen={isOpen}

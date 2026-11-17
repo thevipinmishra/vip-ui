@@ -97,7 +97,10 @@ export function ResizableContextDemo() {
                     variant="outline"
                     onPress={() => api.resetSizes()}
                   >
-                    <ArrowCounterClockwiseIcon aria-hidden="true" />
+                    <ArrowCounterClockwiseIcon
+                      data-icon="inline-start"
+                      aria-hidden="true"
+                    />
                     Reset
                   </Button>
                 </div>

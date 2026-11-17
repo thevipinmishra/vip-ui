@@ -77,6 +77,7 @@ Charts use TanStack Charts (`ChartFrame`, `Chart`), not Recharts. Copy from http
 - Render code with `CodeBlock` and pass highlighter output as the children of `CodeBlockBody`. The kit has no highlighter.
 - Wrap fields in `Form`. Validate with `isRequired`, `validate`, and `validationErrors`.
 - Use icons from `@phosphor-icons/react`.
+- In a `Button`, `ButtonLink`, or `ToggleButton` with a label, add `data-icon="inline-start"` or `data-icon="inline-end"` to the icon or `Spinner` for correct spacing. Do not add it to `iconOnly` buttons.
 - Use logical classes: `ms-1`, `pe-2`, `rounded-s-md`, `text-start`. Keep `data-slot` on every part.
 
 ## 5. Sizes and colors

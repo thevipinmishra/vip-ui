@@ -8,7 +8,7 @@ export function ToggleButtonSizesDemo() {
     <div className="flex flex-col items-start gap-3">
       <div className="flex items-center gap-2">
         <ToggleButton size="xs">
-          <PushPinIcon aria-hidden="true" />
+          <PushPinIcon data-icon="inline-start" aria-hidden="true" />
           Pin
         </ToggleButton>
         <ToggleButton size="xs" iconOnly aria-label="Pin">
@@ -17,7 +17,7 @@ export function ToggleButtonSizesDemo() {
       </div>
       <div className="flex items-center gap-2">
         <ToggleButton size="sm">
-          <PushPinIcon aria-hidden="true" />
+          <PushPinIcon data-icon="inline-start" aria-hidden="true" />
           Pin
         </ToggleButton>
         <ToggleButton size="sm" iconOnly aria-label="Pin">
@@ -26,7 +26,7 @@ export function ToggleButtonSizesDemo() {
       </div>
       <div className="flex items-center gap-2">
         <ToggleButton>
-          <PushPinIcon aria-hidden="true" />
+          <PushPinIcon data-icon="inline-start" aria-hidden="true" />
           Pin
         </ToggleButton>
         <ToggleButton iconOnly aria-label="Pin">
@@ -35,7 +35,7 @@ export function ToggleButtonSizesDemo() {
       </div>
       <div className="flex items-center gap-2">
         <ToggleButton size="lg">
-          <PushPinIcon aria-hidden="true" />
+          <PushPinIcon data-icon="inline-start" aria-hidden="true" />
           Pin
         </ToggleButton>
         <ToggleButton size="lg" iconOnly aria-label="Pin">
@@ -44,7 +44,7 @@ export function ToggleButtonSizesDemo() {
       </div>
       <div className="flex items-center gap-2">
         <ToggleButton size="xl">
-          <PushPinIcon aria-hidden="true" />
+          <PushPinIcon data-icon="inline-start" aria-hidden="true" />
           Pin
         </ToggleButton>
         <ToggleButton size="xl" iconOnly aria-label="Pin">

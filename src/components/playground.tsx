@@ -61,7 +61,11 @@ export function Playground() {
             aria-label="Show overview"
             aria-pressed={view === "overview"}
           >
-            <SquaresFourIcon size={16} aria-hidden="true" />
+            <SquaresFourIcon
+              data-icon="inline-start"
+              size={16}
+              aria-hidden="true"
+            />
             <span className="hidden sm:inline">Overview</span>
           </Button>
           <Button
@@ -72,7 +76,11 @@ export function Playground() {
             aria-label="Show tokens"
             aria-pressed={view === "tokens"}
           >
-            <PaletteIcon size={16} aria-hidden="true" />
+            <PaletteIcon
+              data-icon="inline-start"
+              size={16}
+              aria-hidden="true"
+            />
             <span className="hidden sm:inline">Tokens</span>
           </Button>
           <div className="mt-auto hidden rounded-[11px] border border-border bg-card p-2.5 sm:block">

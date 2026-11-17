@@ -596,10 +596,20 @@ export function ContactPage() {
                         isDisabled={pending}
                         className="w-full sm:w-auto"
                       >
-                        {pending && <Spinner size="sm" decorative />}
+                        {pending && (
+                          <Spinner
+                            data-icon="inline-start"
+                            size="sm"
+                            decorative
+                          />
+                        )}
                         {pending ? "Sending request" : "Send request"}
                         {!pending && (
-                          <ArrowRightIcon size={16} aria-hidden="true" />
+                          <ArrowRightIcon
+                            data-icon="inline-end"
+                            size={16}
+                            aria-hidden="true"
+                          />
                         )}
                       </Button>
                     </div>

@@ -196,7 +196,11 @@ export function DeployCard() {
           main · 8c4e21a
         </span>
         <Button size="sm" isDisabled={running} onPress={() => setStage(0)}>
-          <RocketLaunchIcon size={16} aria-hidden="true" />
+          <RocketLaunchIcon
+            data-icon="inline-start"
+            size={16}
+            aria-hidden="true"
+          />
           Deploy
         </Button>
       </BlockFooter>

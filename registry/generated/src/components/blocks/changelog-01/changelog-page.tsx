@@ -271,7 +271,11 @@ export function ChangelogPage() {
                       }
                     >
                       Show older releases
-                      <CaretDownIcon size={16} aria-hidden="true" />
+                      <CaretDownIcon
+                        data-icon="inline-end"
+                        size={16}
+                        aria-hidden="true"
+                      />
                     </Button>
                   ) : null}
                 </>
@@ -296,7 +300,11 @@ export function ChangelogPage() {
                   className="mt-4 w-full"
                 >
                   Subscribe
-                  <ArrowRightIcon size={16} aria-hidden="true" />
+                  <ArrowRightIcon
+                    data-icon="inline-end"
+                    size={16}
+                    aria-hidden="true"
+                  />
                 </ButtonLink>
               </Card>
 
@@ -313,7 +321,11 @@ export function ChangelogPage() {
                   className="mt-4 w-full"
                 >
                   Start free
-                  <ArrowRightIcon size={16} aria-hidden="true" />
+                  <ArrowRightIcon
+                    data-icon="inline-end"
+                    size={16}
+                    aria-hidden="true"
+                  />
                 </ButtonLink>
                 <ButtonLink
                   href="/blocks/landing-01#features"

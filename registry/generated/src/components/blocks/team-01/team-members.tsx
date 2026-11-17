@@ -214,7 +214,11 @@ export function TeamMembers() {
             onValueChange={setRole}
           />
           <Button onPress={invite}>
-            <PaperPlaneTiltIcon size={16} aria-hidden="true" />
+            <PaperPlaneTiltIcon
+              data-icon="inline-start"
+              size={16}
+              aria-hidden="true"
+            />
             Invite
           </Button>
         </div>

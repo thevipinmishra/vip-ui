@@ -393,7 +393,9 @@ export function ProfileForm() {
               size="sm"
               isDisabled={pending || check === "checking" || check === "taken"}
             >
-              {pending && <Spinner size="sm" decorative />}
+              {pending && (
+                <Spinner data-icon="inline-start" size="sm" decorative />
+              )}
               Save changes
             </Button>
           </div>

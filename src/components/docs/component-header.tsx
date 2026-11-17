@@ -403,7 +403,7 @@ function AxeChip({ findings }: { findings: AxeFinding[] }) {
           size="xs"
         >
           View the check
-          <ArrowSquareOutIcon aria-hidden="true" />
+          <ArrowSquareOutIcon data-icon="inline-end" aria-hidden="true" />
         </ButtonLink>
       </div>
     </CheckChip>

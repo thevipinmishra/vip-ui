@@ -297,7 +297,11 @@ export function AnalyticsDashboard() {
             Analytics
           </h1>
           <Button variant="outline" size="sm" onPress={exportData}>
-            <DownloadSimpleIcon size={16} aria-hidden="true" />
+            <DownloadSimpleIcon
+              data-icon="inline-start"
+              size={16}
+              aria-hidden="true"
+            />
             Export CSV
           </Button>
         </div>

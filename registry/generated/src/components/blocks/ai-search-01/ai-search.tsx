@@ -294,7 +294,11 @@ export function AiSearch() {
                         size="sm"
                       />
                       <Button variant="ghost" size="sm" onPress={focusSearch}>
-                        <MagnifyingGlassIcon size={16} aria-hidden="true" />
+                        <MagnifyingGlassIcon
+                          data-icon="inline-start"
+                          size={16}
+                          aria-hidden="true"
+                        />
                         New search
                       </Button>
                     </ResponseActions>

@@ -402,7 +402,11 @@ export function BookingPage() {
                       isPending={pending}
                     >
                       {!pending && (
-                        <CalendarBlankIcon size={16} aria-hidden="true" />
+                        <CalendarBlankIcon
+                          data-icon="inline-start"
+                          size={16}
+                          aria-hidden="true"
+                        />
                       )}
                       {pending ? "Booking…" : "Confirm booking"}
                     </Button>
@@ -505,7 +509,11 @@ export function BookingPage() {
 
                   <div className="flex flex-wrap gap-2">
                     <Button onPress={download}>
-                      <CalendarPlusIcon size={16} aria-hidden="true" />
+                      <CalendarPlusIcon
+                        data-icon="inline-start"
+                        size={16}
+                        aria-hidden="true"
+                      />
                       Add to calendar
                     </Button>
                     <Button
@@ -519,7 +527,11 @@ export function BookingPage() {
                         );
                       }}
                     >
-                      <ArrowCounterClockwiseIcon size={16} aria-hidden="true" />
+                      <ArrowCounterClockwiseIcon
+                        data-icon="inline-start"
+                        size={16}
+                        aria-hidden="true"
+                      />
                       Reschedule
                     </Button>
                   </div>

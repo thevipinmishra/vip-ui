@@ -41,6 +41,48 @@ const toggleButtonStyles = tv({
   },
   compoundVariants: [
     {
+      variant: ["default", "ghost"],
+      iconOnly: false,
+      class:
+        "has-[>[data-icon=inline-start]]:pl-3 has-[>[data-icon=inline-end]]:pr-3",
+    },
+    {
+      variant: "segmented",
+      iconOnly: false,
+      class:
+        "has-[>[data-icon=inline-start]]:pl-2.5 has-[>[data-icon=inline-end]]:pr-2.5",
+    },
+    {
+      size: "xs",
+      iconOnly: false,
+      class:
+        "has-[>[data-icon=inline-start]]:pl-1.5 has-[>[data-icon=inline-end]]:pr-1.5",
+    },
+    {
+      size: "sm",
+      iconOnly: false,
+      class:
+        "has-[>[data-icon=inline-start]]:pl-2.5 has-[>[data-icon=inline-end]]:pr-2.5",
+    },
+    {
+      size: "md",
+      iconOnly: false,
+      class:
+        "has-[>[data-icon=inline-start]]:pl-3 has-[>[data-icon=inline-end]]:pr-3",
+    },
+    {
+      size: "lg",
+      iconOnly: false,
+      class:
+        "has-[>[data-icon=inline-start]]:pl-4 has-[>[data-icon=inline-end]]:pr-4",
+    },
+    {
+      size: "xl",
+      iconOnly: false,
+      class:
+        "has-[>[data-icon=inline-start]]:pl-5 has-[>[data-icon=inline-end]]:pr-5",
+    },
+    {
       size: "xs",
       iconOnly: true,
       class: "w-7 [&_svg:not([class*='size-'])]:size-3.5",

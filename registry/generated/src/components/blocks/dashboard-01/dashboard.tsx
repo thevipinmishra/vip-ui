@@ -111,7 +111,11 @@ export function Dashboard() {
               </p>
             </div>
             <Button variant="outline" size="sm" onPress={exportOrders}>
-              <DownloadSimpleIcon size={16} aria-hidden="true" />
+              <DownloadSimpleIcon
+                data-icon="inline-start"
+                size={16}
+                aria-hidden="true"
+              />
               Export
             </Button>
           </div>

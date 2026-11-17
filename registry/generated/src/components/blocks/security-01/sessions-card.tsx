@@ -160,7 +160,7 @@ export function SessionsCard({
             isDisabled={others.length === 0}
             onPress={() => signOut(others)}
           >
-            <SignOutIcon aria-hidden="true" />
+            <SignOutIcon data-icon="inline-start" aria-hidden="true" />
             Sign out others
           </Button>
         </CardAction>

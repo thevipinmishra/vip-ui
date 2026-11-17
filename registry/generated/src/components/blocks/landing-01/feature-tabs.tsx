@@ -356,7 +356,11 @@ export function FeatureTabs() {
                 className="mt-6 -ms-2"
               >
                 See plans
-                <ArrowRightIcon size={16} aria-hidden="true" />
+                <ArrowRightIcon
+                  data-icon="inline-end"
+                  size={16}
+                  aria-hidden="true"
+                />
               </ButtonLink>
             </div>
           </div>

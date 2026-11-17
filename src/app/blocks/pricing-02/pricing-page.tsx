@@ -395,7 +395,11 @@ export function PricingPage() {
                   className="border-transparent"
                 >
                   Start free
-                  <ArrowRightIcon size={16} aria-hidden="true" />
+                  <ArrowRightIcon
+                    data-icon="inline-end"
+                    size={16}
+                    aria-hidden="true"
+                  />
                 </ButtonLink>
                 <ButtonLink
                   href="/blocks/landing-01"

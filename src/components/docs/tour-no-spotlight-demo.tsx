@@ -54,7 +54,7 @@ export function TourNoSpotlightDemo() {
           <Launcher />
           <Button variant="minimal" size="sm">
             Open the board
-            <ArrowUpRightIcon aria-hidden="true" />
+            <ArrowUpRightIcon data-icon="inline-end" aria-hidden="true" />
           </Button>
         </div>
       </div>

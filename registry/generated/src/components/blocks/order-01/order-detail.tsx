@@ -187,7 +187,11 @@ export function OrderDetail() {
               isDisabled={fullRefund}
               onPress={() => setRefundOpen(true)}
             >
-              <ArrowCounterClockwiseIcon size={16} aria-hidden="true" />
+              <ArrowCounterClockwiseIcon
+                data-icon="inline-start"
+                size={16}
+                aria-hidden="true"
+              />
               Refund
             </Button>
             <MenuTrigger>
@@ -403,7 +407,11 @@ export function OrderDetail() {
                   variant="outline"
                   className="w-full"
                 >
-                  <EnvelopeSimpleIcon size={16} aria-hidden="true" />
+                  <EnvelopeSimpleIcon
+                    data-icon="inline-start"
+                    size={16}
+                    aria-hidden="true"
+                  />
                   Send email
                 </ButtonLink>
               </CardContent>

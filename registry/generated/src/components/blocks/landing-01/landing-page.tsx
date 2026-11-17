@@ -109,7 +109,11 @@ function Hero() {
           <div className="mt-7 flex flex-wrap items-center gap-3">
             <ButtonLink href="/blocks/signup-01" size="lg">
               Start free
-              <ArrowRightIcon size={16} aria-hidden="true" />
+              <ArrowRightIcon
+                data-icon="inline-end"
+                size={16}
+                aria-hidden="true"
+              />
             </ButtonLink>
             <ButtonLink href="/blocks/pricing-02" size="lg" variant="outline">
               See pricing
@@ -511,13 +515,17 @@ function NewsletterForm() {
             >
               {status === "pending" ? (
                 <>
-                  <Spinner size="sm" decorative />
+                  <Spinner data-icon="inline-start" size="sm" decorative />
                   Sending
                 </>
               ) : (
                 <>
                   Subscribe
-                  <ArrowRightIcon size={16} aria-hidden="true" />
+                  <ArrowRightIcon
+                    data-icon="inline-end"
+                    size={16}
+                    aria-hidden="true"
+                  />
                 </>
               )}
             </Button>

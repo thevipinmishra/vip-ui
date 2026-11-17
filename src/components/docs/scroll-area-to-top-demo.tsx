@@ -58,7 +58,7 @@ function ScrollToTop() {
       isDisabled={isAtTop}
       onPress={() => scrollToEdge({ edge: "top" })}
     >
-      <ArrowUpIcon aria-hidden="true" />
+      <ArrowUpIcon data-icon="inline-start" aria-hidden="true" />
       Top
     </Button>
   );

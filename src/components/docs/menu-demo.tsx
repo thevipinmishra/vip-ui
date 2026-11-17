@@ -25,7 +25,7 @@ export function MenuDemo() {
   return (
     <MenuTrigger>
       <Button variant="outline">
-        <DotsThreeIcon size={16} aria-hidden="true" />
+        <DotsThreeIcon data-icon="inline-start" size={16} aria-hidden="true" />
         Project actions
       </Button>
       <MenuPopover>

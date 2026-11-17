@@ -9,6 +9,7 @@ export function ToggleButtonDemo() {
       {({ isSelected }) => (
         <>
           <PushPinIcon
+            data-icon="inline-start"
             weight={isSelected ? "fill" : "regular"}
             aria-hidden="true"
           />

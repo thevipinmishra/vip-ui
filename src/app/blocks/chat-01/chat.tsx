@@ -313,7 +313,11 @@ function AssistantChatSession() {
                         size="sm"
                         onPress={() => regenerate(turn.id)}
                       >
-                        <ArrowClockwiseIcon size={16} aria-hidden="true" />
+                        <ArrowClockwiseIcon
+                          data-icon="inline-start"
+                          size={16}
+                          aria-hidden="true"
+                        />
                         Try again
                       </Button>
                     </ResponseActions>
@@ -377,7 +381,11 @@ function AssistantChatSession() {
                           size="sm"
                           onPress={() => regenerate(turn.id)}
                         >
-                          <ArrowClockwiseIcon size={16} aria-hidden="true" />
+                          <ArrowClockwiseIcon
+                            data-icon="inline-start"
+                            size={16}
+                            aria-hidden="true"
+                          />
                           Regenerate
                         </Button>
                         <Button
@@ -385,7 +393,11 @@ function AssistantChatSession() {
                           size="sm"
                           onPress={() => void share(turn)}
                         >
-                          <ShareNetworkIcon size={16} aria-hidden="true" />
+                          <ShareNetworkIcon
+                            data-icon="inline-start"
+                            size={16}
+                            aria-hidden="true"
+                          />
                           Share
                         </Button>
                       </ResponseActions>

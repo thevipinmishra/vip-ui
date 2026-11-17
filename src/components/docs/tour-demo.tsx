@@ -40,7 +40,7 @@ export function TourDemo() {
           </TourTarget>
           <TourTarget id="new">
             <Button size="sm">
-              <PlusIcon aria-hidden="true" />
+              <PlusIcon data-icon="inline-start" aria-hidden="true" />
               New project
             </Button>
           </TourTarget>

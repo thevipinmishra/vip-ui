@@ -62,7 +62,7 @@ export function BreadcrumbsFoldersDemo() {
             size="sm"
             onPress={() => setPath((items) => [...items, folder])}
           >
-            <FolderIcon aria-hidden="true" />
+            <FolderIcon data-icon="inline-start" aria-hidden="true" />
             {folder.name}
           </Button>
         )) ?? (

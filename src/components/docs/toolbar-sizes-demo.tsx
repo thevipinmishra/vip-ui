@@ -49,7 +49,7 @@ function CommentToolbar({ size }: { size: Size }) {
       </ToggleButtonGroup>
       <Separator orientation="vertical" className="h-5 self-center" />
       <Button variant="ghost">
-        <LinkSimpleIcon aria-hidden="true" />
+        <LinkSimpleIcon data-icon="inline-start" aria-hidden="true" />
         Link
       </Button>
     </Toolbar>

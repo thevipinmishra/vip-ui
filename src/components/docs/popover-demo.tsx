@@ -20,7 +20,7 @@ export function PopoverDemo() {
   return (
     <PopoverTrigger>
       <Button variant="outline">
-        <CalendarBlankIcon aria-hidden="true" />
+        <CalendarBlankIcon data-icon="inline-start" aria-hidden="true" />
         Design review
       </Button>
       <Popover placement="bottom start" className="w-80">

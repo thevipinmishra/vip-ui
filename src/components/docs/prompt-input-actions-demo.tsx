@@ -46,7 +46,7 @@ export function PromptInputActionsDemo() {
           isSelected={webSearch}
           onChange={setWebSearch}
         >
-          <GlobeIcon aria-hidden="true" />
+          <GlobeIcon data-icon="inline-start" aria-hidden="true" />
           Search
         </ToggleButton>
         <Select

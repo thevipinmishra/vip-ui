@@ -34,7 +34,12 @@ export default function ErrorPage({
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Button onPress={() => retry()}>
-            <ArrowClockwiseIcon size={16} aria-hidden="true" /> Try again
+            <ArrowClockwiseIcon
+              data-icon="inline-start"
+              size={16}
+              aria-hidden="true"
+            />{" "}
+            Try again
           </Button>
           <ButtonLink as={Link} href="/components" variant="outline">
             Browse components

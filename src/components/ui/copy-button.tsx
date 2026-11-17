@@ -129,6 +129,9 @@ export function CopyButton({
                 : "static"
             }
             layout={reduceMotion ? false : "position"}
+            data-icon={
+              children == null && !iconOnly ? "inline-start" : undefined
+            }
             aria-hidden="true"
             initial={reduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}

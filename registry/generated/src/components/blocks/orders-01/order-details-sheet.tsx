@@ -220,7 +220,11 @@ export function OrderDetailsSheet({
               )}
               {shippable && (
                 <Button onPress={() => onShip(shown)}>
-                  <TruckIcon size={16} aria-hidden="true" />
+                  <TruckIcon
+                    data-icon="inline-start"
+                    size={16}
+                    aria-hidden="true"
+                  />
                   Mark as shipped
                 </Button>
               )}

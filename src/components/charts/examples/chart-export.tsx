@@ -136,7 +136,11 @@ export function ChartExport() {
       <ChartAction>
         <MenuTrigger>
           <Button variant="outline" size="sm">
-            <DownloadSimpleIcon size={16} aria-hidden="true" />
+            <DownloadSimpleIcon
+              data-icon="inline-start"
+              size={16}
+              aria-hidden="true"
+            />
             Export
           </Button>
           <MenuPopover placement="bottom end">

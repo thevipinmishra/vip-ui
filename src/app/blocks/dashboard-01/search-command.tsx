@@ -38,7 +38,11 @@ export function SearchCommand({ onExport }: { onExport: () => void }) {
         aria-keyshortcuts="Control+K Meta+K"
         className="hidden w-full max-w-xs justify-start gap-2 px-3 font-normal text-muted-foreground shadow-none sm:inline-flex"
       >
-        <MagnifyingGlassIcon size={16} aria-hidden="true" />
+        <MagnifyingGlassIcon
+          data-icon="inline-start"
+          size={16}
+          aria-hidden="true"
+        />
         <span className="flex-1 text-start">Search</span>
         <KbdGroup aria-hidden="true">
           <Kbd>{isMac ? "⌘" : "Ctrl"}</Kbd>
