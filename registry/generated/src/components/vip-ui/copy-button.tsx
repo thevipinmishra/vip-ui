@@ -28,6 +28,39 @@ const statusAnnouncement = {
   error: "Copy failed. Try again.",
 } as const;
 
+function resolveContent(
+  children: CopyButtonProps["children"],
+  status: CopyButtonStatus,
+  iconOnly: boolean,
+) {
+  if (children == null) {
+    const current = statusCopy[status];
+    return {
+      key: status,
+      dataIcon: iconOnly ? undefined : "inline-start",
+      node: (
+        <>
+          {current.icon}
+          {!iconOnly && buttonLabel(current.label)}
+        </>
+      ),
+    };
+  }
+  if (typeof children === "function") {
+    return {
+      key: status,
+      dataIcon: undefined,
+      node: buttonLabel(children(status)),
+    };
+  }
+  return { key: "static", dataIcon: undefined, node: buttonLabel(children) };
+}
+
+function resolveLabel(children: CopyButtonProps["children"]) {
+  const idle = typeof children === "function" ? children("idle") : children;
+  return typeof idle === "string" ? idle : "Copy";
+}
+
 export interface CopyButtonProps
   extends Omit<ButtonProps, "children" | "onPress" | "type" | "value"> {
   value: string;
@@ -92,18 +125,8 @@ export function CopyButton({
     );
   };
 
-  const content = typeof children === "function" ? children(status) : children;
-  const idleContent =
-    typeof children === "function" ? children("idle") : children;
-  const label =
-    ariaLabel ?? (typeof idleContent === "string" ? idleContent : "Copy");
-  const current = statusCopy[status];
-  const defaultContent = (
-    <>
-      {current.icon}
-      {!iconOnly && buttonLabel(current.label)}
-    </>
-  );
+  const label = ariaLabel ?? resolveLabel(children);
+  const content = resolveContent(children, status, iconOnly);
 
   return (
     <>
@@ -123,15 +146,9 @@ export function CopyButton({
       >
         <AnimatePresence initial={false} mode="popLayout">
           <motion.span
-            key={
-              typeof children === "function" || children == null
-                ? status
-                : "static"
-            }
+            key={content.key}
             layout={reduceMotion ? false : "position"}
-            data-icon={
-              children == null && !iconOnly ? "inline-start" : undefined
-            }
+            data-icon={content.dataIcon}
             aria-hidden="true"
             initial={reduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -142,7 +159,7 @@ export function CopyButton({
             }}
             className="inline-flex min-w-0 max-w-full items-center justify-center gap-[inherit] whitespace-nowrap"
           >
-            {children == null ? defaultContent : buttonLabel(content)}
+            {content.node}
           </motion.span>
         </AnimatePresence>
       </Button>
