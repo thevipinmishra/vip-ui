@@ -323,18 +323,12 @@
     },
     {
       "title": "App shell",
-      "description": "The app navigation and the page frame it sits in.",
+      "description": "The navigation chrome that frames an app.",
       "items": [
         {
           "slug": "sidebar",
           "name": "Sidebar",
           "description": "Shows app navigation that collapses to an icon rail.",
-          "added": "2026-11-16"
-        },
-        {
-          "slug": "resizable",
-          "name": "Resizable",
-          "description": "Splits an area into panels that you resize with a pointer or the keyboard.",
           "added": "2026-11-16"
         }
       ]
@@ -478,6 +472,12 @@
           "description": "Blurs content more and more toward one edge."
         },
         {
+          "slug": "resizable",
+          "name": "Resizable",
+          "description": "Splits an area into panels that you resize with a pointer or the keyboard.",
+          "added": "2026-11-16"
+        },
+        {
           "slug": "avatar",
           "name": "Avatar",
           "description": "Shows an image or initials for a person."
@@ -555,7 +555,7 @@
     },
     {
       "title": "Motion & effects",
-      "description": "Text and content transitions.",
+      "description": "Animated text, content, and surface effects.",
       "items": [
         {
           "slug": "text-swap",

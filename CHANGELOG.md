@@ -44,6 +44,7 @@ All notable changes to vip/ui are documented in this file. The format is based o
 - Nine `font-<slug>` items ship the typography fonts. On Next.js the CLI adds the font import; on other frameworks it adds a Fontsource package and the font variables.
 - The 72 chart examples are registry items. One command installs an example with the chart, the components, and the packages it uses, into `components/charts/`.
 - Items carry an author and a category. The CLI prints an install note for Chart, Toast, and Typography, and each block says which component to render and where.
+- Resizable sits in the Display & layout category with the other frame primitives. App shell holds the app navigation chrome, and Sidebar is its first item.
 - Blocks use the new components: Dashboard uses Sidebar, Chat uses Conversation and Agent steps, Agent uses Agent steps, Verify and Security use OTP input, Product and Files use Carousel and Lightbox, Onboarding uses Tour, and AI search uses Code block.
 - The registry build stops when a dependency is a bare name, when a dependency URL does not resolve to an item, or when dependencies make a cycle.
 

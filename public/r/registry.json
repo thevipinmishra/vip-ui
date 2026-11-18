@@ -2539,7 +2539,7 @@
       "title": "Resizable",
       "description": "Splits an area into panels that you resize with a pointer or the keyboard.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
-      "categories": ["app-shell"],
+      "categories": ["display-layout"],
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
         "@zag-js/react@^1.48.0",
