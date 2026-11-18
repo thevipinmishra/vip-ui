@@ -145,6 +145,14 @@ import type {
   PromptInputSubmit,
   PromptInputTextArea,
 } from "@/components/ui/prompt-input";
+import type {
+  QrCode,
+  QrCodeDownloadTrigger,
+  QrCodeFrame,
+  QrCodeOverlay,
+  QrCodePattern,
+  QrCodeRoot,
+} from "@/components/ui/qr-code";
 import type { Radio, RadioGroup } from "@/components/ui/radio-group";
 import type { RatingInput } from "@/components/ui/rating-input";
 import type { Reasoning, ReasoningPanel } from "@/components/ui/reasoning";
@@ -188,6 +196,19 @@ import type {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import type {
+  SignaturePad,
+  SignaturePadClearTrigger,
+  SignaturePadControl,
+  SignaturePadDescription,
+  SignaturePadError,
+  SignaturePadGuide,
+  SignaturePadHiddenInput,
+  SignaturePadLabel,
+  SignaturePadPath,
+  SignaturePadRoot,
+  SignaturePadSegment,
+} from "@/components/ui/signature-pad";
 import type { Slider, SliderMarks } from "@/components/ui/slider";
 import type { Spinner } from "@/components/ui/spinner";
 import type { SpotlightCard } from "@/components/ui/spotlight-card";
@@ -5477,6 +5498,386 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: "number",
           default: "12",
           description: "Blur radius in pixels at the edge.",
+        },
+      ],
+    }),
+  ],
+  "signature-pad": [
+    apiPart<typeof SignaturePad>({
+      name: "SignaturePad",
+      props: [
+        {
+          name: "label",
+          type: "string",
+          required: true,
+          description: "Visible label above the drawing area.",
+        },
+        {
+          name: "description",
+          type: "string",
+          description: "Help text below the drawing area.",
+        },
+        {
+          name: "error",
+          type: "string",
+          description:
+            "Message below the drawing area while `isInvalid` is true.",
+        },
+        {
+          name: "placeholder",
+          type: "string",
+          default: '"Sign here"',
+          description: "Text in the empty drawing area.",
+        },
+        {
+          name: "size",
+          type: '"sm" | "md" | "lg"',
+          default: '"md"',
+          description: "Height of the drawing area.",
+        },
+        {
+          name: "name",
+          type: "string",
+          description:
+            "Submits the PNG data URL in a hidden input. The value updates when a stroke ends. Validate the pad with `isInvalid`.",
+        },
+        {
+          name: "form",
+          type: "string",
+          description: "Associates the hidden input with a form by id.",
+        },
+        {
+          name: "paths",
+          type: "string[]",
+          description: "The committed strokes, controlled.",
+        },
+        {
+          name: "defaultPaths",
+          type: "string[]",
+          description: "The strokes to draw first, uncontrolled.",
+        },
+        {
+          name: "drawing",
+          type: "DrawingOptions",
+          description:
+            "The stroke options. The defaults use `currentColor` and size 3.",
+        },
+        {
+          name: "isDisabled",
+          type: "boolean",
+          description: "Disables drawing and the clear button.",
+        },
+        {
+          name: "isReadOnly",
+          type: "boolean",
+          description: "Shows the strokes but stops changes.",
+        },
+        {
+          name: "isRequired",
+          type: "boolean",
+          description:
+            "Marks the pad as required. Validate it with `isInvalid`.",
+        },
+        {
+          name: "isInvalid",
+          type: "boolean",
+          description: "Marks the pad as invalid and shows the error.",
+        },
+        {
+          name: "dataUrlType",
+          type: '"image/png" | "image/jpeg" | "image/svg+xml"',
+          default: '"image/png"',
+          description: "The image type of the captured value.",
+        },
+        {
+          name: "quality",
+          type: "number",
+          description: "The quality of a lossy capture, from 0 to 1.",
+        },
+        {
+          name: "onDraw",
+          type: "(details: { paths: string[]; currentPath: string | null }) => void",
+          description: "Called with the committed strokes while drawing.",
+        },
+        {
+          name: "onDrawEnd",
+          type: "(details: { paths: string[]; getDataUrl: Function }) => void",
+          description: "Called when a stroke ends.",
+        },
+        {
+          name: "onValueChange",
+          type: "(value: string) => void",
+          description:
+            "Called with the data URL after a stroke ends or the pad is cleared.",
+        },
+        {
+          name: "translations",
+          type: "IntlTranslations",
+          description:
+            "Overrides the accessible labels of the pad and clear button.",
+        },
+        {
+          name: "dir",
+          type: '"ltr" | "rtl"',
+          description: "Sets the writing direction of the pad.",
+        },
+        {
+          name: "ids",
+          type: "ElementIds",
+          description: "Sets the ids of the pad parts.",
+        },
+        {
+          name: "getRootNode",
+          type: "() => Node",
+          description:
+            "Resolves the document in custom environments such as iframes.",
+        },
+      ],
+    }),
+    apiPart<typeof SignaturePadRoot>({
+      name: "SignaturePadRoot",
+      description:
+        "Owns the machine and renders the root. It takes the SignaturePad props without the default field content, plus `children`.",
+      props: [
+        {
+          name: "children",
+          type: "ReactNode",
+          required: true,
+          description: "The composed parts.",
+        },
+      ],
+    }),
+    apiPart<typeof SignaturePadLabel>({
+      name: "SignaturePadLabel",
+      props: [],
+    }),
+    apiPart<typeof SignaturePadControl>({
+      name: "SignaturePadControl",
+      description:
+        "The drawing surface. It takes focus and receives pointer input.",
+      props: [],
+    }),
+    apiPart<typeof SignaturePadSegment>({
+      name: "SignaturePadSegment",
+      description:
+        "Renders the strokes. Without children, it maps the committed and current paths.",
+      props: [
+        {
+          name: "children",
+          type: "ReactNode",
+          description: "Replaces the default paths with custom SVG content.",
+        },
+      ],
+    }),
+    apiPart<typeof SignaturePadPath>({
+      name: "SignaturePadPath",
+      props: [
+        {
+          name: "path",
+          type: "string",
+          required: true,
+          description: "The SVG path data of one stroke.",
+        },
+      ],
+    }),
+    apiPart<typeof SignaturePadGuide>({
+      name: "SignaturePadGuide",
+      description: "Draws the baseline guide. It takes no pointer events.",
+      props: [],
+    }),
+    apiPart<typeof SignaturePadClearTrigger>({
+      name: "SignaturePadClearTrigger",
+      description:
+        "Clears the pad. The machine hides it while the pad is empty or a stroke is in progress.",
+      props: [
+        {
+          name: "children",
+          type: "ReactNode",
+          description: 'Replaces the default "Clear" label.',
+        },
+      ],
+    }),
+    apiPart<typeof SignaturePadHiddenInput>({
+      name: "SignaturePadHiddenInput",
+      props: [
+        {
+          name: "value",
+          type: "string",
+          description: "Overrides the captured data URL.",
+        },
+        {
+          name: "form",
+          type: "string",
+          description: "Associates the input with a form by id.",
+        },
+      ],
+    }),
+    apiPart<typeof SignaturePadDescription>({
+      name: "SignaturePadDescription",
+      props: [],
+    }),
+    apiPart<typeof SignaturePadError>({
+      name: "SignaturePadError",
+      props: [],
+    }),
+  ],
+  "qr-code": [
+    apiPart<typeof QrCode>({
+      name: "QrCode",
+      props: [
+        {
+          name: "value",
+          type: "string",
+          description: "The value to encode, controlled.",
+        },
+        {
+          name: "defaultValue",
+          type: "string",
+          description: "The value to encode at first, uncontrolled.",
+        },
+        {
+          name: "size",
+          type: '"sm" | "md" | "lg"',
+          default: '"md"',
+          description: "The size of the code in the page.",
+        },
+        {
+          name: "label",
+          type: "string",
+          default: '"QR code"',
+          description: "The accessible name of the code.",
+        },
+        {
+          name: "overlay",
+          type: "{ src: string; alt?: string }",
+          description:
+            "A logo centered over the code. Sets the error correction to H unless `encoding` overrides it.",
+        },
+        {
+          name: "download",
+          type: "boolean | { fileName?: string; mimeType?: string; quality?: number }",
+          default: "false",
+          description: "Shows a download button with PNG, JPEG, or SVG output.",
+        },
+        {
+          name: "pixelSize",
+          type: "number",
+          default: "10",
+          description: "The pixel size of one module.",
+        },
+        {
+          name: "encoding",
+          type: "QrCodeGenerateOptions",
+          description: "The encoding options, such as `ecc` and `boostEcc`.",
+        },
+        {
+          name: "onValueChange",
+          type: "(details: { value: string }) => void",
+          description: "Called when the encoded value changes.",
+        },
+        {
+          name: "children",
+          type: "ReactNode",
+          description: "Renders below the code, such as a caption.",
+        },
+        {
+          name: "dir",
+          type: '"ltr" | "rtl"',
+          description: "Sets the writing direction.",
+        },
+        {
+          name: "ids",
+          type: "ElementIds",
+          description: "Sets the ids of the qr code parts.",
+        },
+        {
+          name: "getRootNode",
+          type: "() => Node",
+          description:
+            "Resolves the document in custom environments such as iframes.",
+        },
+      ],
+    }),
+    apiPart<typeof QrCodeRoot>({
+      name: "QrCodeRoot",
+      description:
+        "Owns the encoded value and renders the root. Compose the frame, pattern, overlay, and trigger inside it.",
+      props: [
+        {
+          name: "children",
+          type: "ReactNode",
+          description: "The composed parts.",
+        },
+      ],
+    }),
+    apiPart<typeof QrCodeFrame>({
+      name: "QrCodeFrame",
+      description:
+        "Renders the code on a white surface with a quiet zone. The download keeps both.",
+      props: [
+        {
+          name: "label",
+          type: "string",
+          default: '"QR code"',
+          description: "The accessible name of the code.",
+        },
+      ],
+    }),
+    apiPart<typeof QrCodePattern>({
+      name: "QrCodePattern",
+      description: "Draws the modules with `fill-current`.",
+      props: [],
+    }),
+    apiPart<typeof QrCodeOverlay>({
+      name: "QrCodeOverlay",
+      description:
+        "Centers its children in the nearest positioned element. Wrap it with the frame in a `relative` element when the root holds other parts.",
+      props: [
+        {
+          name: "children",
+          type: "ReactNode",
+          description: "The logo image.",
+        },
+      ],
+    }),
+    apiPart<typeof QrCodeDownloadTrigger>({
+      name: "QrCodeDownloadTrigger",
+      description:
+        "Downloads the code. The file includes the overlay when it renders.",
+      props: [
+        {
+          name: "fileName",
+          type: "string",
+          default: '"qr-code.png"',
+          description: "The name of the downloaded file.",
+        },
+        {
+          name: "mimeType",
+          type: '"image/png" | "image/jpeg" | "image/svg+xml"',
+          default: '"image/png"',
+          description: "The image type of the downloaded file.",
+        },
+        {
+          name: "quality",
+          type: "number",
+          description: "The quality of a lossy download, from 0 to 1.",
+        },
+        {
+          name: "variant",
+          type: "ButtonVariant",
+          default: '"outline"',
+          description: "The visual emphasis of the trigger.",
+        },
+        {
+          name: "size",
+          type: '"xs" | "sm" | "md" | "lg" | "xl"',
+          default: '"sm"',
+          description: "The size of the trigger.",
+        },
+        {
+          name: "children",
+          type: "ReactNode",
+          description: 'Replaces the default "Download" label.',
         },
       ],
     }),

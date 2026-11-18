@@ -207,6 +207,10 @@ import { PromptInputKeyboardDemo } from "@/components/docs/prompt-input-keyboard
 import { PromptInputStopDemo } from "@/components/docs/prompt-input-stop-demo";
 import { PromptInputSuggestionsDemo } from "@/components/docs/prompt-input-suggestions-demo";
 import { PromptInputTranscriptDemo } from "@/components/docs/prompt-input-transcript-demo";
+import { QrCodeDemo } from "@/components/docs/qr-code-demo";
+import { QrCodeDownloadDemo } from "@/components/docs/qr-code-download-demo";
+import { QrCodeDynamicDemo } from "@/components/docs/qr-code-dynamic-demo";
+import { QrCodeOverlayDemo } from "@/components/docs/qr-code-overlay-demo";
 import { RangeCalendarControlledDemo } from "@/components/docs/range-calendar-controlled-demo";
 import { RangeCalendarDemo } from "@/components/docs/range-calendar-demo";
 import { RangeCalendarLimitsDemo } from "@/components/docs/range-calendar-limits-demo";
@@ -255,6 +259,11 @@ import { SidebarMobileDemo } from "@/components/docs/sidebar-mobile-demo";
 import { SidebarRailDemo } from "@/components/docs/sidebar-rail-demo";
 import { SidebarSectionsDemo } from "@/components/docs/sidebar-sections-demo";
 import { SidebarShortcutDemo } from "@/components/docs/sidebar-shortcut-demo";
+import { SignaturePadCompositionDemo } from "@/components/docs/signature-pad-composition-demo";
+import { SignaturePadDemo } from "@/components/docs/signature-pad-demo";
+import { SignaturePadImageDemo } from "@/components/docs/signature-pad-image-demo";
+import { SignaturePadInvalidDemo } from "@/components/docs/signature-pad-invalid-demo";
+import { SignaturePadReadOnlyDemo } from "@/components/docs/signature-pad-read-only-demo";
 import { SkeletonBasicDemo } from "@/components/docs/skeleton-basic-demo";
 import { SkeletonDemo } from "@/components/docs/skeleton-demo";
 import { SkeletonLoadingDemo } from "@/components/docs/skeleton-loading-demo";
@@ -579,6 +588,11 @@ const entries: {
     demo: <AvatarDemo />,
   },
   {
+    slug: "qr-code",
+    name: "QR code",
+    demo: <QrCodeDemo />,
+  },
+  {
     slug: "skeleton",
     name: "Skeleton",
     demo: <SkeletonBasicDemo />,
@@ -617,6 +631,11 @@ const entries: {
     slug: "otp-input",
     name: "OTP input",
     demo: <OtpInputDemo />,
+  },
+  {
+    slug: "signature-pad",
+    name: "Signature pad",
+    demo: <SignaturePadDemo />,
   },
   {
     slug: "timeline",
@@ -1187,6 +1206,17 @@ const examplePreviews: Record<string, ReactNode[]> = {
   highlighter: [
     <HighlighterVariantsDemo key="preview-1" />,
     <HighlighterSequenceDemo key="preview-2" />,
+  ],
+  "signature-pad": [
+    <SignaturePadImageDemo key="preview-1" />,
+    <SignaturePadReadOnlyDemo key="preview-2" />,
+    <SignaturePadInvalidDemo key="preview-3" />,
+    <SignaturePadCompositionDemo key="preview-4" />,
+  ],
+  "qr-code": [
+    <QrCodeOverlayDemo key="preview-1" />,
+    <QrCodeDownloadDemo key="preview-2" />,
+    <QrCodeDynamicDemo key="preview-3" />,
   ],
 };
 

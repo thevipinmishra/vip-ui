@@ -77,6 +77,12 @@
           "added": "2026-11-16"
         },
         {
+          "slug": "signature-pad",
+          "name": "Signature pad",
+          "description": "Draws a handwritten signature with a mouse, finger, or pen.",
+          "added": "2026-11-18"
+        },
+        {
           "slug": "inline-edit",
           "name": "Inline edit",
           "description": "Edits text in place and keeps the draft when the save fails."
@@ -323,18 +329,12 @@
     },
     {
       "title": "App shell",
-      "description": "The app navigation and the page frame it sits in.",
+      "description": "The navigation chrome that frames an app.",
       "items": [
         {
           "slug": "sidebar",
           "name": "Sidebar",
           "description": "Shows app navigation that collapses to an icon rail.",
-          "added": "2026-11-16"
-        },
-        {
-          "slug": "resizable",
-          "name": "Resizable",
-          "description": "Splits an area into panels that you resize with a pointer or the keyboard.",
           "added": "2026-11-16"
         }
       ]
@@ -478,9 +478,21 @@
           "description": "Blurs content more and more toward one edge."
         },
         {
+          "slug": "resizable",
+          "name": "Resizable",
+          "description": "Splits an area into panels that you resize with a pointer or the keyboard.",
+          "added": "2026-11-16"
+        },
+        {
           "slug": "avatar",
           "name": "Avatar",
           "description": "Shows an image or initials for a person."
+        },
+        {
+          "slug": "qr-code",
+          "name": "QR code",
+          "description": "Encodes a link or text into a code that a phone can scan.",
+          "added": "2026-11-18"
         },
         {
           "slug": "description-list",
@@ -555,7 +567,7 @@
     },
     {
       "title": "Motion & effects",
-      "description": "Text and content transitions.",
+      "description": "Animated text, content, and surface effects.",
       "items": [
         {
           "slug": "text-swap",

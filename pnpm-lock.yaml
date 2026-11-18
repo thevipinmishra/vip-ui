@@ -196,6 +196,9 @@ importers:
       '@zag-js/pin-input':
         specifier: ^1.48.0
         version: 1.48.0
+      '@zag-js/qr-code':
+        specifier: ^1.48.0
+        version: 1.48.0
       '@zag-js/radio-group':
         specifier: ^1.48.0
         version: 1.48.0
@@ -203,6 +206,9 @@ importers:
         specifier: ^1.48.0
         version: 1.48.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@zag-js/scroll-area':
+        specifier: ^1.48.0
+        version: 1.48.0
+      '@zag-js/signature-pad':
         specifier: ^1.48.0
         version: 1.48.0
       '@zag-js/splitter':
@@ -1643,6 +1649,9 @@ packages:
   '@zag-js/pin-input@1.48.0':
     resolution: {integrity: sha512-r8Y0giKTmRVP9hX6jsuSlALFoPkZxtsGNtOo/CReBzMO7c8oqRKTmNZWlztdt4HIeU3qCvL8JE2IaHlHZKQsCg==}
 
+  '@zag-js/qr-code@1.48.0':
+    resolution: {integrity: sha512-wGpC02oWSNC4JxlkIfVUS+nD6PMg19NNCeN1v81hd22/fzPrftr4z4tVqVXYERqH1tsxOoMf0bUG0o2l/M64ww==}
+
   '@zag-js/radio-group@1.48.0':
     resolution: {integrity: sha512-4pnOf0+GVJprSEVHYzd9YS2aEnSvEgWy2uxcL4iINJlzROoYi9wEatjdiLBIFA29VG9bwbDrtcCFwCU9S/1oNw==}
 
@@ -1654,6 +1663,9 @@ packages:
 
   '@zag-js/scroll-area@1.48.0':
     resolution: {integrity: sha512-tKMOUThrvbK+IjGe4Hj0yw3IB/eEbrgNyfnyp7SLIShU5rND1tjbXMDU//MMTFSD20vH84BEjKk4OaMXFlvmsw==}
+
+  '@zag-js/signature-pad@1.48.0':
+    resolution: {integrity: sha512-BhKeGy3b1usRUJBWXHE5mVHt+RVAoEqzHjC0CymaeuWH9CZ17kStNwv2OpLizo2+K7ZzCHHru3S5WUTNzGAFiA==}
 
   '@zag-js/splitter@1.48.0':
     resolution: {integrity: sha512-Kqd74TNUu7K9MmOPdLAeTzvuv0zvwJJli678Bk46BhebKL4L5v542kCiIdVRW2VELQDWxFZW/OHW80xd/72Dcg==}
@@ -2350,6 +2362,9 @@ packages:
     resolution: {integrity: sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==}
     engines: {node: '>=8'}
 
+  perfect-freehand@1.2.3:
+    resolution: {integrity: sha512-bHZSfqDHGNlPpgH2yxXgPHlQSPpEbo+qg7li0M78J9vNAi2yjwLeA4x79BEQhX44lEWpCLSFCeRZwpw0niiXPA==}
+
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
 
@@ -2381,6 +2396,9 @@ packages:
 
   proxy-compare@3.0.1:
     resolution: {integrity: sha512-V9plBAt3qjMlS1+nC8771KNf6oJ12gExvaxnNzN/9yVRLdTv/lc+oJlnSzrdYDAvBfTStPCoiaCOTmTs0adv7Q==}
+
+  proxy-memoize@3.0.1:
+    resolution: {integrity: sha512-VDdG/VYtOgdGkWJx7y0o7p+zArSf2383Isci8C+BP3YXgMYDoPd3cCBjw0JdWb6YBb9sFiOPbAADDVTPJnh+9g==}
 
   punycode@2.3.1:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
@@ -2540,6 +2558,9 @@ packages:
     hasBin: true
     peerDependencies:
       browserslist: '>= 4.21.0'
+
+  uqr@0.1.3:
+    resolution: {integrity: sha512-0rjE8iEJe4YmT9TOhwsZtqCMRLc5DXZUI2UEYUUg63ikBkqqE5EYWaI0etFe/5KUcmcYwLih2RND1kq+hrUJXA==}
 
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
@@ -3588,6 +3609,16 @@ snapshots:
       '@zag-js/types': 1.48.0
       '@zag-js/utils': 1.48.0
 
+  '@zag-js/qr-code@1.48.0':
+    dependencies:
+      '@zag-js/anatomy': 1.48.0
+      '@zag-js/core': 1.48.0
+      '@zag-js/dom-query': 1.48.0
+      '@zag-js/types': 1.48.0
+      '@zag-js/utils': 1.48.0
+      proxy-memoize: 3.0.1
+      uqr: 0.1.3
+
   '@zag-js/radio-group@1.48.0':
     dependencies:
       '@zag-js/anatomy': 1.48.0
@@ -3613,6 +3644,15 @@ snapshots:
       '@zag-js/dom-query': 1.48.0
       '@zag-js/types': 1.48.0
       '@zag-js/utils': 1.48.0
+
+  '@zag-js/signature-pad@1.48.0':
+    dependencies:
+      '@zag-js/anatomy': 1.48.0
+      '@zag-js/core': 1.48.0
+      '@zag-js/dom-query': 1.48.0
+      '@zag-js/types': 1.48.0
+      '@zag-js/utils': 1.48.0
+      perfect-freehand: 1.2.3
 
   '@zag-js/splitter@1.48.0':
     dependencies:
@@ -4338,6 +4378,8 @@ snapshots:
 
   path-key@3.1.1: {}
 
+  perfect-freehand@1.2.3: {}
+
   picocolors@1.1.1: {}
 
   playwright-core@1.65.0: {}
@@ -4366,6 +4408,10 @@ snapshots:
       sisteransi: 1.0.5
 
   proxy-compare@3.0.1: {}
+
+  proxy-memoize@3.0.1:
+    dependencies:
+      proxy-compare: 3.0.1
 
   punycode@2.3.1: {}
 
@@ -4577,6 +4623,8 @@ snapshots:
       browserslist: 4.29.5
       escalade: 3.2.0
       picocolors: 1.1.1
+
+  uqr@0.1.3: {}
 
   uri-js@4.4.1:
     dependencies:
