@@ -1437,4 +1437,65 @@ export const compositions: Record<string, Composition> = {
       },
     ],
   },
+  "signature-pad": {
+    parts: [
+      {
+        part: "SignaturePad",
+        note: "Owns the drawing and the captured data URL. Set children to replace the default field layout, or use SignaturePadRoot.",
+        children: [
+          { part: "SignaturePadLabel" },
+          {
+            part: "SignaturePadControl",
+            children: [
+              { part: "SignaturePadGuide", optional: true },
+              {
+                part: "SignaturePadSegment",
+                children: [{ part: "SignaturePadPath", repeats: true }],
+              },
+              {
+                part: "SignaturePadClearTrigger",
+                optional: true,
+                note: "The machine hides it while the pad is empty or drawing.",
+              },
+            ],
+          },
+          { part: "SignaturePadDescription", optional: true },
+          { part: "SignaturePadError", optional: true },
+          {
+            part: "SignaturePadHiddenInput",
+            optional: true,
+            note: "Render it to submit the data URL with a form.",
+          },
+        ],
+      },
+    ],
+    helper: {
+      part: "SignaturePadContext",
+      note: "Renders a function with the signature pad api. useSignaturePad also returns the data URL, invalid state, capture, and clear.",
+    },
+  },
+  "qr-code": {
+    parts: [
+      {
+        part: "QrCodeRoot",
+        note: "Owns the encoded value. QrCode adds the frame, pattern, overlay, and download button.",
+        children: [
+          {
+            part: "QrCodeFrame",
+            children: [{ part: "QrCodePattern" }],
+          },
+          {
+            part: "QrCodeOverlay",
+            optional: true,
+            note: "Wrap it with QrCodeFrame in a relative element when the root holds other parts. Set encoding ecc to H.",
+          },
+          { part: "QrCodeDownloadTrigger", optional: true },
+        ],
+      },
+    ],
+    helper: {
+      part: "QrCodeContext",
+      note: "Renders a function with the qr code api: value, setValue, and getDataUrl.",
+    },
+  },
 };

@@ -73,9 +73,11 @@ const zagMachines: Record<string, { name: string; machine: string }> = {
   "inline-edit": { name: "Editable", machine: "editable" },
   marquee: { name: "Marquee", machine: "marquee" },
   pagination: { name: "Pagination", machine: "pagination" },
+  "qr-code": { name: "QR Code", machine: "qr-code" },
   resizable: { name: "Splitter", machine: "splitter" },
   "scroll-area": { name: "Scroll Area", machine: "scroll-area" },
   "segmented-control": { name: "Radio Group", machine: "radio-group" },
+  "signature-pad": { name: "Signature Pad", machine: "signature-pad" },
 };
 
 function reactAriaLink(href: string | undefined) {

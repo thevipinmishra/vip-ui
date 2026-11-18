@@ -645,4 +645,18 @@ export const catalogPreviews: Record<string, CatalogPreviewEntry> = {
         default: m.ProgressiveBlurPreview,
       })),
   },
+  "signature-pad": {
+    width: "20rem",
+    scale: 0.8,
+    load: () =>
+      import("./signature-pad-demo").then((m) => ({
+        default: m.SignaturePadDemo,
+      })),
+  },
+  "qr-code": {
+    load: () =>
+      import("./qr-code-demo").then((m) => ({
+        default: m.QrCodeDemo,
+      })),
+  },
 };

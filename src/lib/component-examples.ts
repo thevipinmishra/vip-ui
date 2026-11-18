@@ -2471,6 +2471,54 @@ const pageSources = {
       },
     ],
   },
+  "signature-pad": {
+    usage: "signature-pad-demo.tsx",
+    examples: [
+      {
+        title: "Captured image",
+        description:
+          "`onValueChange` receives a PNG data URL after each stroke ends.",
+        sourcePath: "signature-pad-image-demo.tsx",
+      },
+      {
+        title: "Read only",
+        description:
+          "`defaultPaths` takes the paths from `onDrawEnd`. Show them in a pad of the same size.",
+        sourcePath: "signature-pad-read-only-demo.tsx",
+      },
+      {
+        title: "Invalid",
+        sourcePath: "signature-pad-invalid-demo.tsx",
+      },
+      {
+        title: "Composition",
+        sourcePath: "signature-pad-composition-demo.tsx",
+        uses: ["button-link"],
+      },
+    ],
+  },
+  "qr-code": {
+    usage: "qr-code-demo.tsx",
+    examples: [
+      {
+        title: "Logo overlay",
+        description:
+          "`overlay` sets the error correction to H, so the code still scans under the logo.",
+        sourcePath: "qr-code-overlay-demo.tsx",
+      },
+      {
+        title: "Download",
+        description:
+          "The file has a white surface and a quiet zone, so it scans on any background.",
+        sourcePath: "qr-code-download-demo.tsx",
+      },
+      {
+        title: "Dynamic value",
+        sourcePath: "qr-code-dynamic-demo.tsx",
+        uses: ["text-field"],
+      },
+    ],
+  },
 } as const satisfies Record<string, ComponentPageSource>;
 
 const usageSources = {
@@ -3707,6 +3755,30 @@ export function Workspace() {
   );
 }`,
     filename: "workspace.tsx",
+  },
+  "signature-pad": {
+    code: `import { SignaturePad } from "@/components/vip-ui/signature-pad";
+
+export function ContractSignature() {
+  return (
+    <SignaturePad
+      label="Signature"
+      description="Draw your signature above the line."
+      name="signature"
+    />
+  );
+}`,
+    filename: "contract-signature.tsx",
+  },
+  "qr-code": {
+    code: `import { QrCode } from "@/components/vip-ui/qr-code";
+
+export function InstallLink() {
+  return (
+    <QrCode value="https://vip-ui.dev" label="QR code for vip-ui.dev" />
+  );
+}`,
+    filename: "install-link.tsx",
   },
 } as const satisfies Record<string, ComponentUsage>;
 

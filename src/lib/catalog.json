@@ -77,6 +77,12 @@
           "added": "2026-11-16"
         },
         {
+          "slug": "signature-pad",
+          "name": "Signature pad",
+          "description": "Draws a handwritten signature with a mouse, finger, or pen.",
+          "added": "2026-11-18"
+        },
+        {
           "slug": "inline-edit",
           "name": "Inline edit",
           "description": "Edits text in place and keeps the draft when the save fails."
@@ -481,6 +487,12 @@
           "slug": "avatar",
           "name": "Avatar",
           "description": "Shows an image or initials for a person."
+        },
+        {
+          "slug": "qr-code",
+          "name": "QR code",
+          "description": "Encodes a link or text into a code that a phone can scan.",
+          "added": "2026-11-18"
         },
         {
           "slug": "description-list",
