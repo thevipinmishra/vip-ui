@@ -5,107 +5,45 @@ import {
   ArrowsOutSimpleIcon,
   CodeIcon,
 } from "@phosphor-icons/react";
-import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { NewBadge } from "@/components/docs/new-badge";
-import { PreviewFrame } from "@/components/docs/preview-frame";
 import { Button } from "@/components/ui/button";
 import { ButtonLink } from "@/components/ui/button-link";
-import { Spinner } from "@/components/ui/spinner";
 import type { Block } from "@/lib/blocks";
-import { cn } from "@/lib/utils";
 import { useBlockPreview } from "./block-preview";
-import {
-  releasePreview,
-  requestPreview,
-  retainPreview,
-} from "./preview-scheduler";
 
-const frameWidth = 1024;
-const frameHeight = 640;
+const sizes = "(min-width: 1280px) 32vw, (min-width: 640px) 46vw, 100vw";
 
-export function BlockCard({ block }: { block: Block }) {
+export function BlockCard({
+  block,
+  priority = false,
+}: {
+  block: Block;
+  priority?: boolean;
+}) {
   const preview = useBlockPreview();
-  const stageRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(0);
-  const [inRange, setInRange] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const [loaded, setLoaded] = useState(false);
   const src = `/blocks/${block.name}`;
-
-  useEffect(() => {
-    const stage = stageRef.current;
-    if (!stage) return;
-    const resize = new ResizeObserver(([entry]) =>
-      setScale(entry.contentRect.width / frameWidth),
-    );
-    const range = new IntersectionObserver(
-      ([entry]) => setInRange(entry.isIntersecting),
-      { rootMargin: "800px 0px" },
-    );
-    resize.observe(stage);
-    range.observe(stage);
-    return () => {
-      resize.disconnect();
-      range.disconnect();
-      releasePreview(stage);
-    };
-  }, []);
-
-  useEffect(() => {
-    const stage = stageRef.current;
-    if (!stage || !inRange || mounted) return;
-    return requestPreview(stage, () => setMounted(true));
-  }, [inRange, mounted]);
-
-  const handleLoad = () => {
-    const stage = stageRef.current;
-    if (!stage) return;
-    setLoaded(true);
-    retainPreview(stage, () => {
-      setMounted(false);
-      setLoaded(false);
-    });
-  };
+  const poster = `/blocks/posters/${block.name}`;
 
   return (
     <article className="group relative isolate flex w-full min-w-0 flex-col rounded-2xl bg-card shadow-(--shadow-card) ring-1 ring-border/70 outline-offset-2 outline-transparent transition-[box-shadow,outline-color] duration-300 ease-out-quint hover:shadow-(--shadow-float) has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-ring has-[button:focus-visible]:outline-2 has-[button:focus-visible]:outline-ring">
-      <div
-        ref={stageRef}
-        className="relative aspect-16/10 overflow-hidden rounded-t-2xl bg-muted/50"
-      >
-        <div
-          inert
-          aria-hidden="true"
-          className="absolute inset-0 [content-visibility:auto]"
-        >
-          {!loaded && mounted && (
-            <div className="absolute inset-0 grid place-items-center transition-opacity delay-500 duration-300 ease-out-quint starting:opacity-0">
-              <Spinner size="sm" decorative className="text-muted-foreground" />
-            </div>
-          )}
-          {mounted && scale > 0 && (
-            <div
-              className={cn(
-                "absolute inset-s-0 top-0 origin-top-left transition-opacity duration-500 ease-out-quint rtl:origin-top-right",
-                loaded ? "opacity-100" : "opacity-0",
-              )}
-              style={{
-                width: frameWidth,
-                height: frameHeight,
-                transform: `scale(${scale})`,
-              }}
-            >
-              <PreviewFrame
-                src={src}
-                title={`${block.title} preview`}
-                height={frameHeight}
-                scrolling="no"
-                loading="eager"
-                onLoad={handleLoad}
-              />
-            </div>
-          )}
-        </div>
+      <div className="relative aspect-16/10 overflow-hidden rounded-t-2xl bg-muted/50">
+        <Image
+          src={`${poster}-light.jpg`}
+          alt=""
+          fill
+          sizes={sizes}
+          fetchPriority={priority ? "high" : undefined}
+          className="object-cover object-top dark:hidden"
+        />
+        <Image
+          src={`${poster}-dark.jpg`}
+          alt=""
+          fill
+          sizes={sizes}
+          fetchPriority={priority ? "high" : undefined}
+          className="hidden object-cover object-top dark:block"
+        />
         <button
           type="button"
           onClick={() => preview(block)}
@@ -126,9 +64,9 @@ export function BlockCard({ block }: { block: Block }) {
           <button
             type="button"
             onClick={() => preview(block)}
-            className="block min-w-0 truncate rounded-sm text-start outline-none focus-visible:underline focus-visible:underline-offset-4"
+            className="flex min-h-6 min-w-0 items-center rounded-sm text-start outline-none focus-visible:underline focus-visible:underline-offset-4"
           >
-            {block.title}
+            <span className="truncate">{block.title}</span>
           </button>
           <NewBadge added={block.added} />
         </h4>

@@ -8,7 +8,7 @@ import {
   WarningCircleIcon,
 } from "@phosphor-icons/react";
 import { type CSSProperties, useEffect, useState } from "react";
-import { CopyButton } from "@/components/docs/copy-button";
+import { CopyCodeButton } from "@/components/docs/copy-code-button";
 import { Button } from "@/components/ui/button";
 import {
   EmptyState,
@@ -138,7 +138,7 @@ export function BlockSourcePanel({ block }: { block: Block }) {
               {source.command}
             </code>
           </div>
-          <CopyButton
+          <CopyCodeButton
             code={source.command}
             label={`Copy ${block.name} install command`}
             text="Copy command"
@@ -173,7 +173,7 @@ export function BlockSourcePanel({ block }: { block: Block }) {
               const [next] = keys;
               if (typeof next === "string") setActiveFile(next);
             }}
-            className="flex w-full flex-row flex-nowrap gap-1 overflow-x-auto rounded-none border-0 bg-transparent p-2 md:flex-col md:overflow-visible"
+            className="flex w-full flex-row flex-nowrap gap-1 overflow-x-auto rounded-none bg-transparent p-2 inset-ring-0 md:flex-col md:overflow-visible"
           >
             {source.files.map((item) => {
               const Icon = item.path.endsWith(".tsx")
@@ -208,7 +208,7 @@ export function BlockSourcePanel({ block }: { block: Block }) {
               >
                 {file.path}
               </span>
-              <CopyButton
+              <CopyCodeButton
                 code={file.code}
                 label={`Copy ${file.path}`}
                 iconOnly

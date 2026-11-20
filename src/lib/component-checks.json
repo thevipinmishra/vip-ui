@@ -15,7 +15,14 @@
       "text-field": [],
       "password-field": [],
       "otp-input": [],
-      "signature-pad": [],
+      "signature-pad": [
+        {
+          "rule": "set-state-in-effect",
+          "severity": "warning",
+          "title": "React Compiler can't optimize this",
+          "line": 171
+        }
+      ],
       "inline-edit": [],
       "input-group": [],
       "text-area": [],

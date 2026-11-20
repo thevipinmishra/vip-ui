@@ -1,4 +1,4 @@
-import { CodeBlock } from "@/components/docs/code-block";
+import { CodeSample } from "@/components/docs/code-sample";
 import {
   Code,
   ExternalLink,
@@ -49,7 +49,7 @@ export default function AiAndMcpPage() {
           args="shadcn@latest mcp init --client claude"
         />
         <p>Or add the server to your MCP config by hand:</p>
-        <CodeBlock code={mcpJson} filename=".mcp.json" language="json" />
+        <CodeSample code={mcpJson} filename=".mcp.json" language="json" />
         <p>Then ask for items by name:</p>
         <List>
           <li>Add @vip-ui/button and @vip-ui/dialog to my project.</li>

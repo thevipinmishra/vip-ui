@@ -8,12 +8,7 @@ import {
   FolderOpenIcon,
 } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
-import {
-  createContext,
-  type ReactNode,
-  useContext,
-  useSyncExternalStore,
-} from "react";
+import { createContext, type ReactNode, useContext } from "react";
 import {
   Button as AriaButton,
   DropIndicator as AriaDropIndicator,
@@ -32,6 +27,7 @@ import {
 import { duration, easeOut, springLayout, transitionFor } from "./motion";
 import { cn } from "./utils";
 import { Checkbox } from "./checkbox";
+import { useMounted } from "./hooks";
 import { itemHighlightRing, withItemHighlight } from "./item-highlight";
 import { Spinner } from "./spinner";
 
@@ -40,18 +36,6 @@ const indent = "calc(0.25rem + (var(--tree-item-level, 1) - 1) * 1.25rem)";
 // Only rows that mount after the first commit animate in. Rows that are
 // already present on page load render without an entrance.
 const TreeSettledContext = createContext(false);
-
-function subscribeToMount() {
-  return () => {};
-}
-
-function useMounted() {
-  return useSyncExternalStore(
-    subscribeToMount,
-    () => true,
-    () => false,
-  );
-}
 
 export function Tree<T extends object>({
   className,

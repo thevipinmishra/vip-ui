@@ -20,30 +20,16 @@ export interface SwitchProps extends Omit<AriaSwitchFieldProps, "children"> {
   children?: ReactNode;
   description?: ReactNode;
   errorMessage?: string | ((validation: ValidationResult) => string);
-  checked?: boolean;
-  defaultChecked?: boolean;
-  onCheckedChange?: (checked: boolean) => void;
 }
 
 export function Switch({
   children,
   description,
   errorMessage,
-  checked,
-  defaultChecked,
-  onCheckedChange,
   ...props
 }: SwitchProps) {
   return (
-    <SwitchField
-      {...props}
-      isSelected={checked ?? props.isSelected}
-      defaultSelected={defaultChecked ?? props.defaultSelected}
-      onChange={(isSelected) => {
-        props.onChange?.(isSelected);
-        onCheckedChange?.(isSelected);
-      }}
-    >
+    <SwitchField {...props}>
       <SwitchButton>
         {children != null && <SwitchLabel>{children}</SwitchLabel>}
         <SwitchControl>

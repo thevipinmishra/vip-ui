@@ -33,9 +33,9 @@ export interface SignaturePadRuntime {
   /** The height of the drawing area. */
   size: SignaturePadSize;
   /** Marks the pad as invalid. */
-  isInvalid: boolean;
+  invalid: boolean;
   /** Keeps the drawing but stops changes. */
-  isReadOnly: boolean;
+  readOnly: boolean;
   /** Captures the current signature and stores the data URL. */
   capture: (
     type?: SignaturePadDataUrlType,
@@ -84,10 +84,10 @@ interface SignaturePadMachineProps {
   paths?: string[];
   defaultPaths?: string[];
   drawing?: signaturePad.DrawingOptions;
-  isDisabled?: boolean;
-  isReadOnly?: boolean;
-  isRequired?: boolean;
-  isInvalid?: boolean;
+  disabled?: boolean;
+  readOnly?: boolean;
+  required?: boolean;
+  invalid?: boolean;
   name?: string;
   translations?: signaturePad.IntlTranslations;
   dir?: "ltr" | "rtl";
@@ -105,10 +105,10 @@ function useSignaturePadMachine({
   paths,
   defaultPaths,
   drawing,
-  isDisabled,
-  isReadOnly,
-  isRequired,
-  isInvalid = false,
+  disabled,
+  readOnly,
+  required,
+  invalid = false,
   name,
   translations,
   dir,
@@ -131,9 +131,9 @@ function useSignaturePadMachine({
     paths,
     defaultPaths,
     drawing: { fill: "currentColor", size: 3, ...drawing },
-    disabled: isDisabled,
-    readOnly: isReadOnly,
-    required: isRequired,
+    disabled,
+    readOnly,
+    required,
     name,
     translations,
     dir,
@@ -167,7 +167,10 @@ function useSignaturePadMachine({
   }, [api]);
 
   useEffect(() => {
-    if (!api.paths.length) return;
+    if (!api.paths.length) {
+      setDataUrl("");
+      return;
+    }
     let active = true;
     void liveApi.current
       ?.getDataUrl(dataUrlType, quality)
@@ -199,10 +202,10 @@ function useSignaturePadMachine({
 
   const context: SignaturePadRuntime = {
     api,
-    dataUrl: api.paths.length ? dataUrl : "",
+    dataUrl,
     size,
-    isInvalid,
-    isReadOnly: isReadOnly ?? false,
+    invalid,
+    readOnly: readOnly ?? false,
     capture,
     clear,
   };
@@ -216,7 +219,7 @@ export interface SignaturePadProps
   label: string;
   /** Help text below the pad. */
   description?: string;
-  /** Error text below the pad. It shows only while `isInvalid` is true. */
+  /** Error text below the pad. It shows only while `invalid` is true. */
   error?: string;
   /** Text shown in the empty pad. */
   placeholder?: string;
@@ -233,13 +236,13 @@ export interface SignaturePadProps
   /** The stroke options. The machine sets `fill` to `currentColor`. */
   drawing?: signaturePad.DrawingOptions;
   /** Disables the pad. */
-  isDisabled?: boolean;
+  disabled?: boolean;
   /** Keeps the drawing but stops changes. */
-  isReadOnly?: boolean;
+  readOnly?: boolean;
   /** Marks the pad as required. */
-  isRequired?: boolean;
+  required?: boolean;
   /** Marks the pad as invalid. */
-  isInvalid?: boolean;
+  invalid?: boolean;
   /** The image type of the capture. */
   dataUrlType?: SignaturePadDataUrlType;
   /** The quality of a lossy capture, from 0 to 1. */
@@ -272,10 +275,10 @@ export function SignaturePad({
   paths,
   defaultPaths,
   drawing,
-  isDisabled,
-  isReadOnly,
-  isRequired,
-  isInvalid,
+  disabled,
+  readOnly,
+  required,
+  invalid,
   dataUrlType,
   quality,
   onDraw,
@@ -293,7 +296,7 @@ export function SignaturePad({
   const generatedId = stableId(useId());
   const descriptionId = `signature-pad-description-${generatedId}`;
   const errorId = `signature-pad-error-${generatedId}`;
-  const showError = Boolean(isInvalid && error);
+  const showError = Boolean(invalid && error);
   const describedBy =
     [description ? descriptionId : null, showError ? errorId : null]
       .filter(Boolean)
@@ -302,10 +305,10 @@ export function SignaturePad({
     paths,
     defaultPaths,
     drawing,
-    isDisabled,
-    isReadOnly,
-    isRequired,
-    isInvalid,
+    disabled,
+    readOnly,
+    required,
+    invalid,
     name,
     translations: { control: label, ...translations },
     dir,
@@ -328,7 +331,7 @@ export function SignaturePad({
         ref={ref}
         data-slot="signature-pad"
         data-size={size}
-        data-invalid={isInvalid || undefined}
+        data-invalid={invalid || undefined}
         className={cn("grid min-w-0 gap-2", className)}
       >
         {children ?? (
@@ -367,13 +370,7 @@ export function SignaturePad({
 export interface SignaturePadRootProps
   extends Omit<
     SignaturePadProps,
-    | "children"
-    | "description"
-    | "error"
-    | "form"
-    | "label"
-    | "placeholder"
-    | "ref"
+    "children" | "description" | "error" | "label" | "placeholder" | "ref"
   > {
   children: ReactNode;
   ref?: Ref<HTMLDivElement>;
@@ -381,13 +378,13 @@ export interface SignaturePadRootProps
 
 export function SignaturePadRoot({
   size = "md",
-  isInvalid,
+  invalid,
   paths,
   defaultPaths,
   drawing,
-  isDisabled,
-  isReadOnly,
-  isRequired,
+  disabled,
+  readOnly,
+  required,
   name,
   dataUrlType,
   quality,
@@ -407,10 +404,10 @@ export function SignaturePadRoot({
     paths,
     defaultPaths,
     drawing,
-    isDisabled,
-    isReadOnly,
-    isRequired,
-    isInvalid,
+    disabled,
+    readOnly,
+    required,
+    invalid,
     name,
     translations,
     dir,
@@ -433,7 +430,7 @@ export function SignaturePadRoot({
         ref={ref}
         data-slot="signature-pad"
         data-size={size}
-        data-invalid={isInvalid || undefined}
+        data-invalid={invalid || undefined}
         className={cn("grid min-w-0 gap-2", className)}
       >
         {children}
@@ -467,15 +464,15 @@ export function SignaturePadControl({
   className,
   ...props
 }: SignaturePadControlProps) {
-  const { api, size, isInvalid, isReadOnly } = useSignaturePad();
+  const { api, size, invalid, readOnly } = useSignaturePad();
   return (
     <div
       {...api.getControlProps()}
       {...props}
-      aria-invalid={isInvalid || undefined}
+      aria-invalid={invalid || undefined}
       data-slot="signature-pad-control"
-      data-invalid={isInvalid || undefined}
-      data-readonly={isReadOnly || undefined}
+      data-invalid={invalid || undefined}
+      data-readonly={readOnly || undefined}
       className={cn(
         "group/pad relative w-full cursor-crosshair overflow-hidden rounded-xl border border-input bg-card text-foreground shadow-(--shadow-card) outline-transparent outline-offset-4 transition-[border-color,box-shadow,outline-color,outline-offset] duration-150 ease-out-quint hover:border-primary/45 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring data-[disabled]:cursor-not-allowed data-[disabled]:bg-muted data-[disabled]:opacity-60 data-[disabled]:hover:border-input data-[invalid]:border-destructive data-[invalid]:hover:border-destructive data-[invalid]:focus-visible:outline-destructive data-[readonly]:cursor-default data-[readonly]:hover:border-input motion-reduce:outline-offset-2 forced-colors:border",
         controlHeights[size],
@@ -567,12 +564,12 @@ export function SignaturePadClearTrigger({
   children,
   ...props
 }: SignaturePadClearTriggerProps) {
-  const { api, isReadOnly } = useSignaturePad();
+  const { api, readOnly } = useSignaturePad();
   const merged = mergeProps(api.getClearTriggerProps(), props);
   return (
     <button
       {...merged}
-      hidden={isReadOnly ? true : merged.hidden}
+      hidden={readOnly ? true : merged.hidden}
       data-slot="signature-pad-clear-trigger"
       className={cn(clearTriggerStyles, className)}
     >

@@ -89,7 +89,7 @@ export function RefundDialog({
             label="Reason"
             options={reasons}
             value={reason}
-            onValueChange={setReason}
+            onChange={(key) => setReason(String(key))}
             size="md"
           />
           <TextArea

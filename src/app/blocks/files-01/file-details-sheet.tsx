@@ -142,7 +142,6 @@ export function FileDetailsSheet({
           <SheetFooter>
             <Button
               variant="ghost"
-              size="sm"
               onPress={() => onDelete(shown)}
               className="text-destructive sm:me-auto"
             >
@@ -153,7 +152,7 @@ export function FileDetailsSheet({
               />
               Delete
             </Button>
-            <Button variant="outline" size="sm" onPress={() => onRename(shown)}>
+            <Button variant="outline" onPress={() => onRename(shown)}>
               <PencilSimpleIcon
                 data-icon="inline-start"
                 size={16}
@@ -161,7 +160,7 @@ export function FileDetailsSheet({
               />
               Rename
             </Button>
-            <Button size="sm" onPress={() => onDownload(shown)}>
+            <Button onPress={() => onDownload(shown)}>
               <DownloadSimpleIcon
                 data-icon="inline-start"
                 size={16}

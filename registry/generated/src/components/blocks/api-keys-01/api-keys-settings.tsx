@@ -421,7 +421,7 @@ export function ApiKeysSettings() {
             label="Status"
             options={statusOptions}
             value={status}
-            onValueChange={setStatus}
+            onChange={(key) => setStatus(String(key))}
             className="w-full sm:w-40"
           />
           <div className="flex items-center gap-2 sm:ms-auto sm:pb-2">
@@ -640,15 +640,10 @@ export function ApiKeysSettings() {
               </p>
             </DialogBody>
             <DialogFooter>
-              <CopyButton
-                ref={copyKeyRef}
-                value={secret}
-                variant="default"
-                size="sm"
-              >
+              <CopyButton ref={copyKeyRef} value={secret} variant="default">
                 Copy key
               </CopyButton>
-              <DialogClose variant="outline" size="sm" onPress={finishSecret}>
+              <DialogClose variant="outline" onPress={finishSecret}>
                 Done
               </DialogClose>
             </DialogFooter>
@@ -674,7 +669,6 @@ export function ApiKeysSettings() {
                 className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_13rem]"
               >
                 <TextField
-                  size="sm"
                   label="Name"
                   placeholder="Production ingest"
                   value={name}
@@ -685,7 +679,6 @@ export function ApiKeysSettings() {
                   autoFocus
                 />
                 <DatePicker
-                  size="sm"
                   label="Expiry"
                   value={expiry}
                   onChange={setExpiry}
@@ -734,10 +727,8 @@ export function ApiKeysSettings() {
               )}
             </DialogBody>
             <DialogFooter>
-              <DialogClose variant="outline" size="sm">
-                Cancel
-              </DialogClose>
-              <Button type="submit" size="sm" isDisabled={pending}>
+              <DialogClose variant="outline">Cancel</DialogClose>
+              <Button type="submit" isDisabled={pending}>
                 {pending && (
                   <Spinner data-icon="inline-start" size="sm" decorative />
                 )}
@@ -765,10 +756,8 @@ export function ApiKeysSettings() {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <DialogClose variant="outline" size="sm">
-            Cancel
-          </DialogClose>
-          <Button variant="destructive" size="sm" onPress={revoke}>
+          <DialogClose variant="outline">Cancel</DialogClose>
+          <Button variant="destructive" onPress={revoke}>
             Revoke key
           </Button>
         </DialogFooter>

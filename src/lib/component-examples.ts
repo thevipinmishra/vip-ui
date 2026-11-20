@@ -3,11 +3,13 @@ export interface ComponentExampleMetadata {
   description?: string;
   sourcePath: string;
   uses?: readonly string[];
+  previewProps?: Readonly<Record<string, unknown>>;
 }
 
 import { componentDescription } from "./catalog";
 
 export interface ComponentPageData {
+  summary?: string;
   usage: string;
   description: string;
   examples: readonly ComponentExampleMetadata[];
@@ -23,6 +25,7 @@ type ComponentPageSource = Omit<ComponentPageData, "description">;
 
 const pageSources = {
   button: {
+    summary: "Examples cover icons, loading states, and links.",
     usage: "button-basic-demo.tsx",
     examples: [
       {
@@ -33,13 +36,13 @@ const pageSources = {
       {
         title: "Sizes",
         description:
-          "Set `size` to change the height, padding, and icon size; small sizes expand the hit area on touch screens.",
+          "Set `size` to change the button size. Small sizes expand the hit area on touch screens.",
         sourcePath: "button-sizes-demo.tsx",
       },
       {
         title: "With icon",
         description:
-          'Add `data-icon="inline-start"` or `data-icon="inline-end"` to the icon for correct spacing. Mark the icon `aria-hidden` so the label stays the accessible name.',
+          'Add `data-icon="inline-start"` or `data-icon="inline-end"` to the icon for correct spacing.',
         sourcePath: "button-with-icon-demo.tsx",
       },
       {
@@ -57,7 +60,7 @@ const pageSources = {
       {
         title: "Loading",
         description:
-          "While `isPending` is true, the button stays focusable, ignores presses, and announces the pending state.",
+          "Set `isPending` to show a loading state. The button stays focusable.",
         sourcePath: "button-loading-demo.tsx",
         uses: ["spinner"],
       },
@@ -71,6 +74,8 @@ const pageSources = {
     ],
   },
   select: {
+    summary:
+      "Examples cover descriptions, sections, sizes, and invalid or disabled fields.",
     usage: "select-demo.tsx",
     examples: [
       {
@@ -101,6 +106,8 @@ const pageSources = {
     ],
   },
   dialog: {
+    summary:
+      "Examples cover sizes, alert dialogs, forms, scrolling, and controlled open state.",
     usage: "dialog-demo.tsx",
     examples: [
       {
@@ -110,7 +117,7 @@ const pageSources = {
       {
         title: "Alert dialog",
         description:
-          'Set role="alertdialog" on DialogContent. An outside click nudges the dialog and does not close it.',
+          'Set `role="alertdialog"` on `DialogContent`. An outside click does not close it.',
         sourcePath: "dialog-alert-demo.tsx",
       },
       {
@@ -134,6 +141,8 @@ const pageSources = {
     ],
   },
   accordion: {
+    summary:
+      "Examples cover divided sections, multiple open panels, and disabled items.",
     usage: "accordion-demo.tsx",
     examples: [
       {
@@ -156,6 +165,8 @@ const pageSources = {
     ],
   },
   alert: {
+    summary:
+      "Examples show every variant, an action, and dismissal that restores focus to the trigger.",
     usage: "alert-basic-demo.tsx",
     examples: [
       {
@@ -195,6 +206,8 @@ const pageSources = {
     ],
   },
   attachment: {
+    summary:
+      "Examples cover adding and removing files, each upload state, and the compact size.",
     usage: "attachment-basic-demo.tsx",
     examples: [
       {
@@ -240,6 +253,7 @@ const pageSources = {
     ],
   },
   badge: {
+    summary: "Examples show every variant and the dot indicator.",
     usage: "badge-basic-demo.tsx",
     examples: [
       {
@@ -403,6 +417,8 @@ const pageSources = {
     ],
   },
   checkbox: {
+    summary:
+      "Examples cover descriptions, required and disabled states, indeterminate state, and a card.",
     usage: "checkbox-basic-demo.tsx",
     examples: [
       {
@@ -540,6 +556,8 @@ const pageSources = {
     ],
   },
   "combo-box": {
+    summary:
+      "Examples cover async results, multiple selection, icons, sizes, and disabled fields.",
     usage: "combo-box-basic-demo.tsx",
     examples: [
       {
@@ -582,11 +600,13 @@ const pageSources = {
         description:
           "When an item has an icon, set `textValue` so search can find it.",
         sourcePath: "command-palette-demo.tsx",
+        previewProps: { shortcut: false },
         uses: ["button"],
       },
     ],
   },
   "context-menu": {
+    summary: "Examples cover grouped actions.",
     usage: "context-menu-demo.tsx",
     examples: [
       {
@@ -655,6 +675,7 @@ const pageSources = {
     ],
   },
   "copy-button": {
+    summary: "Examples cover a custom label and an icon-only button.",
     usage: "copy-button-demo.tsx",
     examples: [
       {
@@ -806,6 +827,8 @@ const pageSources = {
     ],
   },
   sheet: {
+    summary:
+      "Examples cover sizes, inset panels, snap points, edge placement, and forms.",
     usage: "sheet-basic-demo.tsx",
     examples: [
       {
@@ -953,6 +976,8 @@ const pageSources = {
     ],
   },
   "input-group": {
+    summary:
+      "Examples cover icons, buttons, notes, sizes, and disabled or invalid states.",
     usage: "input-group-basic-demo.tsx",
     examples: [
       {
@@ -1033,6 +1058,8 @@ const pageSources = {
     ],
   },
   menu: {
+    summary:
+      "Examples cover icons, selection, sections, nested menus, and placement.",
     usage: "menu-basic-demo.tsx",
     examples: [
       {
@@ -1088,6 +1115,8 @@ const pageSources = {
     ],
   },
   message: {
+    summary:
+      "Examples cover both sides of a conversation and the system message that has no sender.",
     usage: "message-basic-demo.tsx",
     examples: [
       {
@@ -1110,6 +1139,7 @@ const pageSources = {
     ],
   },
   "native-select": {
+    summary: "Examples cover groups, sizes, and disabled or invalid fields.",
     usage: "native-select-demo.tsx",
     examples: [
       {
@@ -1180,13 +1210,13 @@ const pageSources = {
       {
         title: "Sizes",
         description:
-          "`xs` and `sm` expand the hit area to 44px on touch screens.",
+          "Sizes smaller than `lg` expand the hit area to 44px on touch screens.",
         sourcePath: "pagination-sizes-demo.tsx",
       },
       {
         title: "Skipped pages",
         description:
-          'Set `count` and `pageSize`; `PaginationPages` adds the pages and the ellipses. Screen readers hear "More pages".',
+          "Set `count` and `pageSize`; `PaginationPages` adds the pages and the ellipses.",
         sourcePath: "pagination-ellipsis-demo.tsx",
       },
       {
@@ -1223,6 +1253,7 @@ const pageSources = {
     ],
   },
   "password-field": {
+    summary: "Examples cover disabled fields and a new password.",
     usage: "password-field-basic-demo.tsx",
     examples: [
       {
@@ -1418,6 +1449,8 @@ const pageSources = {
     ],
   },
   "radio-group": {
+    summary:
+      "Examples cover described options, horizontal layout, cards, and required or disabled options.",
     usage: "radio-group-demo.tsx",
     examples: [
       {
@@ -1464,7 +1497,7 @@ const pageSources = {
       {
         title: "Sizes",
         description:
-          "`xs` and `sm` expand the hit area to 44px on touch screens.",
+          "Set `size` on the control. It sets the outer height, so the control lines up with a button of the same size.",
         sourcePath: "segmented-control-sizes-demo.tsx",
       },
       {
@@ -1584,6 +1617,7 @@ const pageSources = {
     ],
   },
   "search-field": {
+    summary: "Examples cover filtered results, sizes, and disabled fields.",
     usage: "search-field-basic-demo.tsx",
     examples: [
       {
@@ -1632,6 +1666,8 @@ const pageSources = {
     ],
   },
   slider: {
+    summary:
+      "Examples cover ranges, marks, vertical layout, custom layouts, and disabled state.",
     usage: "slider-demo.tsx",
     examples: [
       {
@@ -1682,7 +1718,7 @@ const pageSources = {
       {
         title: "In a button",
         description:
-          'Set `decorative` when adjacent text names the wait, and add `data-icon="inline-start"` for correct spacing. `isPending` keeps focus and ignores presses.',
+          'Set `decorative` when adjacent text names the wait. Add `data-icon="inline-start"` for correct spacing.',
         sourcePath: "spinner-usage-demo.tsx",
         uses: ["button"],
       },
@@ -1731,6 +1767,8 @@ const pageSources = {
     ],
   },
   switch: {
+    summary:
+      "Examples cover descriptions, disabled and control-first layouts, and a custom layout.",
     usage: "switch-basic-demo.tsx",
     examples: [
       {
@@ -1774,7 +1812,7 @@ const pageSources = {
       {
         title: "Resizable columns and row actions",
         description:
-          "Set `width` and `minWidth` for the starting widths, and `resizable` for the column handles. `onRowAction` runs when a user clicks a row or presses Enter on it.",
+          "Set `width` and `minWidth` for the starting widths, and `resizable` for the column handles. Use `onRowAction` to handle a row press.",
         sourcePath: "data-table-resizable-demo.tsx",
       },
       {
@@ -1842,6 +1880,8 @@ const pageSources = {
     ],
   },
   tabs: {
+    summary:
+      "Examples cover icons, disabled tabs, vertical and overflowing lists, controlled selection, and sizes.",
     usage: "tabs-basic-demo.tsx",
     examples: [
       {
@@ -1866,13 +1906,13 @@ const pageSources = {
       {
         title: "Controlled selection",
         description:
-          "Use `value` and `onValueChange` when the selected tab lives in a parent.",
+          "Use `selectedKey` and `onSelectionChange` when the selected tab lives in a parent.",
         sourcePath: "tabs-controlled-demo.tsx",
       },
       {
         title: "Sizes",
         description:
-          "`xs` and `sm` shrink the tab below the 44px touch target.",
+          "Set `size` on the tab list. It sets the outer height, so the tab list lines up with a button of the same size.",
         sourcePath: "tabs-sizes-demo.tsx",
       },
     ],
@@ -1900,6 +1940,8 @@ const pageSources = {
     ],
   },
   "text-area": {
+    summary:
+      "Examples cover descriptions, sizes, read-only, disabled, and invalid states.",
     usage: "text-area-basic-demo.tsx",
     examples: [
       {
@@ -1927,6 +1969,8 @@ const pageSources = {
     ],
   },
   "text-field": {
+    summary:
+      "Examples cover sizes, descriptions, read-only, disabled, and invalid states.",
     usage: "text-field-basic-demo.tsx",
     examples: [
       {
@@ -2253,6 +2297,8 @@ const pageSources = {
     ],
   },
   toast: {
+    summary:
+      "Examples cover status variants, actions, stacking, timeouts, and screen reader announcements.",
     usage: "toast-demo.tsx",
     examples: [
       {
@@ -2304,7 +2350,7 @@ const pageSources = {
       {
         title: "Sizes",
         description:
-          "Set `size` on the group; a size on a toggle overrides it.",
+          "Set `size` on the group. It sets the outer height, so the group lines up with a button of the same size.",
         sourcePath: "toggle-button-group-sizes-demo.tsx",
       },
     ],
@@ -2353,6 +2399,7 @@ const pageSources = {
     ],
   },
   tooltip: {
+    summary: "Examples cover placement, arrows, and tooltips on icon buttons.",
     usage: "tooltip-demo.tsx",
     examples: [
       {
@@ -3212,20 +3259,20 @@ export function ProjectView() {
   tabs: {
     code: `import {
   Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
+  TabPanel,
+  TabList,
+  Tab,
 } from "@/components/vip-ui/tabs";
 
 export function ProjectTabs() {
   return (
     <Tabs defaultValue="details">
-      <TabsList aria-label="Project">
-        <TabsTrigger value="details">Details</TabsTrigger>
-        <TabsTrigger value="activity">Activity</TabsTrigger>
-      </TabsList>
-      <TabsContent value="details">Studio North is due October 18.</TabsContent>
-      <TabsContent value="activity">No changes yet.</TabsContent>
+      <TabList aria-label="Project">
+        <Tab id="details">Details</Tab>
+        <Tab id="activity">Activity</Tab>
+      </TabList>
+      <TabPanel id="details">Studio North is due October 18.</TabPanel>
+      <TabPanel id="activity">No changes yet.</TabPanel>
     </Tabs>
   );
 }`,

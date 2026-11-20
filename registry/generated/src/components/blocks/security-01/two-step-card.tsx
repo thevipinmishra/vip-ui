@@ -193,8 +193,8 @@ export function TwoStepCard() {
         </Presence>
         <div className="border-t border-border/70 pt-4">
           <Switch
-            checked={alerts}
-            onCheckedChange={setAlerts}
+            isSelected={alerts}
+            onChange={setAlerts}
             description="We send an email when a new device signs in."
             className="w-full"
           >

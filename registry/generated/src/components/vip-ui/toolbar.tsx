@@ -9,8 +9,15 @@ import {
 } from "react-aria-components";
 import { cn } from "./utils";
 import { withItemHighlight } from "./item-highlight";
-import { type Size, SizeProvider, useSize } from "./size";
-import { groupFrameStyles } from "./toggle-button-group";
+import { GroupFrameContext, type Size, SizeProvider, useSize } from "./size";
+
+const toolbarFrameStyles = {
+  xs: "gap-0.5 rounded-md p-0.5",
+  sm: "",
+  md: "",
+  lg: "rounded-xl",
+  xl: "rounded-2xl",
+} satisfies Record<Size, string>;
 
 export function Toolbar({
   className,
@@ -22,32 +29,34 @@ export function Toolbar({
   const size = useSize(sizeProp);
   return (
     <SizeProvider size={size}>
-      <ToggleButtonGroupContext.Provider value={{ orientation }}>
-        <SeparatorContext.Provider
-          value={{
-            orientation:
-              orientation === "horizontal" ? "vertical" : "horizontal",
-          }}
-        >
-          <AriaToolbar
-            {...props}
-            data-slot="toolbar"
-            data-size={size}
-            render={withItemHighlight(render, {
-              placement: "under",
-              items: "[data-slot=button], [data-slot=toggle-button]",
-            })}
-            className={composeRenderProps(className, (className) =>
-              cn(
-                "flex w-fit max-w-full flex-wrap items-center gap-1 rounded-lg border border-border bg-card p-1 shadow-(--shadow-card) orientation-vertical:flex-col orientation-vertical:items-stretch orientation-vertical:[--touch-target:calc(100%+0.25rem)] **:data-[slot=toggle-button-group]:border-0 **:data-[slot=toggle-button-group]:bg-transparent **:data-[slot=toggle-button-group]:p-0",
-                "[&_[data-variant=segmented][data-pressed]:not([data-selected])]:bg-muted",
-                size && groupFrameStyles[size],
-                className,
-              ),
-            )}
-          />
-        </SeparatorContext.Provider>
-      </ToggleButtonGroupContext.Provider>
+      <GroupFrameContext value={false}>
+        <ToggleButtonGroupContext.Provider value={{ orientation }}>
+          <SeparatorContext.Provider
+            value={{
+              orientation:
+                orientation === "horizontal" ? "vertical" : "horizontal",
+            }}
+          >
+            <AriaToolbar
+              {...props}
+              data-slot="toolbar"
+              data-size={size}
+              render={withItemHighlight(render, {
+                placement: "under",
+                items: "[data-slot=button], [data-slot=toggle-button]",
+              })}
+              className={composeRenderProps(className, (className) =>
+                cn(
+                  "flex w-fit max-w-full flex-wrap items-center gap-1 rounded-lg border border-border bg-card p-1 shadow-(--shadow-card) orientation-vertical:flex-col orientation-vertical:items-stretch orientation-vertical:[--touch-target:calc(100%+0.25rem)] **:data-[slot=toggle-button-group]:border-0 **:data-[slot=toggle-button-group]:bg-transparent **:data-[slot=toggle-button-group]:inset-ring-0 **:data-[slot=toggle-button-group]:p-0",
+                  "[&_[data-variant=segmented][data-pressed]:not([data-selected])]:bg-muted",
+                  size && toolbarFrameStyles[size],
+                  className,
+                ),
+              )}
+            />
+          </SeparatorContext.Provider>
+        </ToggleButtonGroupContext.Provider>
+      </GroupFrameContext>
     </SizeProvider>
   );
 }

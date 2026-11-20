@@ -21,12 +21,12 @@ export function DateRangePickerSizesDemo() {
         aria-label="Trip dates"
         defaultValue={tripDates}
       />
+      <DateRangePicker aria-label="Trip dates" defaultValue={tripDates} />
       <DateRangePicker
-        size="md"
+        size="lg"
         aria-label="Trip dates"
         defaultValue={tripDates}
       />
-      <DateRangePicker aria-label="Trip dates" defaultValue={tripDates} />
     </div>
   );
 }

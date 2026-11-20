@@ -19,7 +19,7 @@ export function InputGroupSizesDemo() {
           <InputGroupInput placeholder="maya@example.com" />
         </InputGroup>
       </TextField>
-      <TextField size="md" type="email" aria-label="Email address">
+      <TextField type="email" aria-label="Email address">
         <InputGroup>
           <InputGroupAddon>
             <EnvelopeSimpleIcon aria-hidden="true" />
@@ -27,7 +27,7 @@ export function InputGroupSizesDemo() {
           <InputGroupInput placeholder="maya@example.com" />
         </InputGroup>
       </TextField>
-      <TextField type="email" aria-label="Email address">
+      <TextField size="lg" type="email" aria-label="Email address">
         <InputGroup>
           <InputGroupAddon>
             <EnvelopeSimpleIcon aria-hidden="true" />

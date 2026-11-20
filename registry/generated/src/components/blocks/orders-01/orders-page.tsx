@@ -580,8 +580,8 @@ export function OrdersPage() {
               options={[{ id: "all", name: "All payments" }, ...paymentOptions]}
               value={payment}
               size="sm"
-              onValueChange={(value) => {
-                setPayment(value);
+              onChange={(key) => {
+                setPayment(String(key));
                 clearSelection();
               }}
             />
@@ -593,8 +593,8 @@ export function OrdersPage() {
               ]}
               value={fulfillment}
               size="sm"
-              onValueChange={(value) => {
-                setFulfillment(value);
+              onChange={(key) => {
+                setFulfillment(String(key));
                 clearSelection();
               }}
             />

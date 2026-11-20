@@ -55,3 +55,12 @@ export function transitionFor<T extends object>(
 ): T | { duration: 0 } {
   return reduceMotion ? { duration: 0 } : transition;
 }
+
+export const reducedMotionQuery = "(prefers-reduced-motion: reduce)";
+
+export function prefersReducedMotion() {
+  return (
+    typeof window !== "undefined" &&
+    window.matchMedia(reducedMotionQuery).matches
+  );
+}

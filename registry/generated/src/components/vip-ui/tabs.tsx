@@ -19,45 +19,27 @@ import {
 } from "react-aria-components";
 import { springLayout, transitionFor } from "./motion";
 import { cn } from "./utils";
-import { buttonLabel } from "./button-styles";
+import { buttonLabel, touchTarget } from "./button-styles";
 import { withItemHighlight } from "./item-highlight";
 import { type Size, SizeProvider, useSize } from "./size";
 
 const tabSizeStyles = {
-  xs: "min-h-7 gap-1.5 rounded-md px-2.5 text-xs [&_svg:not([class*='size-'])]:size-3.5",
-  sm: "min-h-8 px-3",
-  md: "min-h-10 px-4",
-  lg: "min-h-11 px-5",
-  xl: "min-h-12 gap-2.5 rounded-xl px-6 text-base [&_svg:not([class*='size-'])]:size-5",
+  xs: "min-h-6 gap-1.5 rounded-md px-2 text-xs [&_svg:not([class*='size-'])]:size-3.5",
+  sm: "min-h-7 rounded-md px-2.5",
+  md: "",
+  lg: "min-h-10 px-4 text-base [&_svg:not([class*='size-'])]:size-5",
+  xl: "min-h-12 gap-2.5 rounded-xl px-5 text-base [&_svg:not([class*='size-'])]:size-5",
 } satisfies Record<Size, string>;
 
-export interface TabsProps extends AriaTabsProps {
-  defaultValue?: string;
-  value?: string;
-  onValueChange?: (value: string) => void;
-}
+export interface TabsProps extends AriaTabsProps {}
 
-export function Tabs({
-  className,
-  defaultValue,
-  value,
-  onValueChange,
-  ...props
-}: TabsProps) {
+export function Tabs({ className, ...props }: TabsProps) {
   const groupId = useId();
 
   return (
     <LayoutGroup id={groupId}>
       <AriaTabs
         {...props}
-        {...(defaultValue !== undefined && {
-          defaultSelectedKey: defaultValue,
-        })}
-        {...(value !== undefined && { selectedKey: value })}
-        onSelectionChange={(key) => {
-          props.onSelectionChange?.(key);
-          onValueChange?.(String(key));
-        }}
         data-slot="tabs"
         className={composeRenderProps(className, (className) =>
           cn(
@@ -149,7 +131,7 @@ export function TabList({
         )}
         className={composeRenderProps(className, (className) =>
           cn(
-            "group/tab-list inline-flex min-w-0 max-w-full scroll-px-1 items-center gap-1 overflow-x-auto overflow-y-hidden rounded-xl bg-muted p-1 shadow-(--shadow-inset) inset-ring inset-ring-border/70 scrollbar-none forced-colors:border data-[fade=both]:mask-x-from-[calc(100%-1.5rem)] data-[fade=left]:mask-l-from-[calc(100%-1.5rem)] data-[fade=right]:mask-r-from-[calc(100%-1.5rem)] orientation-vertical:shrink-0 orientation-vertical:flex-col orientation-vertical:items-stretch orientation-vertical:overflow-x-hidden orientation-vertical:overflow-y-auto data-[size=xl]:rounded-2xl data-[size=xs]:gap-0.5 data-[size=xs]:rounded-lg data-[size=xs]:p-0.5 [&::-webkit-scrollbar]:hidden",
+            "group/tab-list inline-flex min-w-0 max-w-full scroll-px-1 items-center gap-1 overflow-x-auto overflow-y-hidden rounded-xl bg-muted p-1 shadow-(--shadow-inset) inset-ring inset-ring-border/70 scrollbar-none forced-colors:border data-[fade=both]:mask-x-from-[calc(100%-1.5rem)] data-[fade=left]:mask-l-from-[calc(100%-1.5rem)] data-[fade=right]:mask-r-from-[calc(100%-1.5rem)] orientation-vertical:shrink-0 orientation-vertical:flex-col orientation-vertical:items-stretch orientation-vertical:overflow-x-hidden orientation-vertical:overflow-y-auto data-[size=xl]:rounded-2xl data-[size=xs]:gap-0.5 data-[size=xs]:rounded-lg data-[size=xs]:p-0.5 data-[size=sm]:gap-0.5 data-[size=sm]:rounded-lg data-[size=sm]:p-0.5 [&::-webkit-scrollbar]:hidden",
             className,
           ),
         )}
@@ -174,8 +156,9 @@ export function Tab({
       data-size={size}
       className={composeRenderProps(className, (className) =>
         cn(
-          "relative isolate inline-flex min-h-10 min-w-0 max-w-full shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 text-sm font-medium leading-5 text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-out-quint hover:text-foreground motion-safe:pressed:scale-[0.96] selected:text-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-50 group-orientation-vertical/tab-list:justify-start [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-          size ? tabSizeStyles[size] : "sm:min-h-9",
+          "isolate inline-flex min-h-8 min-w-0 max-w-full shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-lg px-3 text-sm font-medium leading-5 text-muted-foreground outline-none transition-[color,background-color,scale] duration-150 ease-out-quint hover:text-foreground motion-safe:pressed:scale-[0.96] selected:text-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-ring disabled:cursor-default disabled:opacity-50 group-orientation-vertical/tab-list:justify-start [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+          touchTarget,
+          size && tabSizeStyles[size],
           className,
         ),
       )}
@@ -211,26 +194,4 @@ export function TabPanel({ className, ...props }: AriaTabPanelProps) {
       )}
     />
   );
-}
-
-export const TabsList = TabList;
-export function TabsTrigger({
-  value,
-  ...props
-}: Omit<AriaTabProps, "id"> & {
-  id?: AriaTabProps["id"];
-  value?: string;
-  size?: Size;
-}) {
-  return <Tab {...props} id={value ?? props.id} />;
-}
-
-export function TabsContent({
-  value,
-  ...props
-}: Omit<AriaTabPanelProps, "id"> & {
-  id?: AriaTabPanelProps["id"];
-  value?: string;
-}) {
-  return <TabPanel {...props} id={value ?? props.id} />;
 }

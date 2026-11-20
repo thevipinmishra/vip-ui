@@ -10,7 +10,7 @@ export function SignaturePadReadOnlyDemo() {
       label="Signed by Maya Chen"
       description="Signed on October 18, 2026."
       defaultPaths={signedPaths}
-      isReadOnly
+      readOnly
       className="w-full max-w-sm"
     />
   );

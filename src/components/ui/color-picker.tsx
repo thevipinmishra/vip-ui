@@ -18,7 +18,7 @@ import { InputGroup, InputGroupAddon, InputGroupInput } from "./input-group";
 import { Popover } from "./popover";
 
 const triggerStyles =
-  "[--swatch-size:1.5rem] [--swatch-inset:0.5625rem] data-[size=xs]:[--swatch-size:1rem] data-[size=xs]:[--swatch-inset:0.3125rem] data-[size=sm]:[--swatch-size:1.25rem] data-[size=sm]:[--swatch-inset:0.4375rem] data-[size=lg]:[--swatch-size:1.75rem] data-[size=xl]:[--swatch-size:2rem] data-[size=xl]:[--swatch-inset:0.6875rem] ps-(--swatch-inset)";
+  "[--swatch-size:1.5rem] [--swatch-inset:0.5625rem] data-[size=xs]:[--swatch-size:1rem] data-[size=xs]:[--swatch-inset:0.3125rem] data-[size=sm]:[--swatch-size:1.25rem] data-[size=sm]:[--swatch-inset:0.4375rem] data-[size=lg]:[--swatch-size:2rem] data-[size=lg]:[--swatch-inset:0.6875rem] data-[size=xl]:[--swatch-size:2.25rem] data-[size=xl]:[--swatch-inset:0.8125rem] ps-(--swatch-inset)";
 
 const surfaceRadius =
   "rounded-[max(var(--radius-sm),calc(var(--radius-xl)-1px-0.75rem))]";

@@ -359,8 +359,8 @@ export function AvailabilityPage() {
                       >
                         <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
                           <Switch
-                            checked={day.enabled}
-                            onCheckedChange={(checked) =>
+                            isSelected={day.enabled}
+                            onChange={(checked) =>
                               updateDay(day.id, (current) => ({
                                 ...current,
                                 enabled: checked,

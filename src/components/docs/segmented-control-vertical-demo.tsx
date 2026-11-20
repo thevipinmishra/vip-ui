@@ -28,7 +28,7 @@ export function SegmentedControlVerticalDemo() {
         aria-label="Text alignment"
         orientation="vertical"
         value={alignment}
-        onChange={(value) => setAlignment(value as Alignment)}
+        onValueChange={(details) => setAlignment(details.value as Alignment)}
       >
         <SegmentedControlItem className="justify-start" value="left">
           <TextAlignLeftIcon aria-hidden="true" />

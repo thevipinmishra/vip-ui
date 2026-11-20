@@ -298,7 +298,7 @@ function FeaturePreview({ id }: { id: string }) {
 
 export function FeatureTabs() {
   return (
-    <Tabs defaultValue="funnels" className="mt-8">
+    <Tabs defaultSelectedKey="funnels" className="mt-8">
       <div className="flex justify-center">
         <TabList aria-label="Trellis features" size="md">
           {features.map((feature) => {

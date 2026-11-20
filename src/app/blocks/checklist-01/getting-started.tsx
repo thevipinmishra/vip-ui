@@ -386,6 +386,7 @@ export function GettingStarted() {
         <div className="grid gap-3">
           <p>{tasks[2].detail}</p>
           <TextField
+            size="sm"
             value={profileDraft}
             onChange={(value) => {
               setProfileDraft(value);
@@ -613,10 +614,8 @@ export function GettingStarted() {
                   <div className="flex items-center rounded-lg outline-transparent transition-[background-color,outline-color] duration-150 ease-out-quint has-[[data-slot=disclosure-header][data-hovered]]:bg-muted has-[[data-slot=disclosure-header][aria-expanded=true]]:rounded-b-none has-[[data-slot=disclosure-header][data-focus-visible]]:outline-2 has-[[data-slot=disclosure-header][data-focus-visible]]:-outline-offset-2 has-[[data-slot=disclosure-header][data-focus-visible]]:outline-ring">
                     <div className="flex shrink-0 ps-4">
                       <Checkbox
-                        checked={done[task.id]}
-                        onCheckedChange={(checked) =>
-                          completeTask(task.id, checked)
-                        }
+                        isSelected={done[task.id]}
+                        onChange={(checked) => completeTask(task.id, checked)}
                         aria-label={`Mark ${task.title} as done`}
                       />
                     </div>

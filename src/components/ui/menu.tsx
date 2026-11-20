@@ -1,7 +1,6 @@
 "use client";
 
 import { CaretRightIcon } from "@phosphor-icons/react";
-import { useSyncExternalStore } from "react";
 import {
   Menu as AriaMenu,
   MenuItem as AriaMenuItem,
@@ -20,23 +19,12 @@ import {
   useSlottedContext,
 } from "react-aria-components";
 import { cn } from "@/lib/utils";
+import { useMediaQuery } from "./hooks";
 import { itemHighlightRing, withItemHighlight } from "./item-highlight";
 import { SelectionMark } from "./list-box";
 import { Popover } from "./popover";
 
 export { MenuTrigger, SubmenuTrigger };
-
-const narrowQuery = "(max-width: 639px)";
-
-function subscribeToNarrow(onChange: () => void) {
-  const media = window.matchMedia(narrowQuery);
-  media.addEventListener("change", onChange);
-  return () => media.removeEventListener("change", onChange);
-}
-
-function isNarrowViewport() {
-  return window.matchMedia(narrowQuery).matches;
-}
 
 export function Menu<T extends object>({ className, ...props }: MenuProps<T>) {
   return (
@@ -53,11 +41,7 @@ export function MenuPopover({
 }: React.ComponentProps<typeof Popover>) {
   const context = useSlottedContext(PopoverContext, props.slot);
   const isSubmenu = context?.trigger === "SubmenuTrigger";
-  const isNarrow = useSyncExternalStore(
-    subscribeToNarrow,
-    isNarrowViewport,
-    () => false,
-  );
+  const isNarrow = useMediaQuery("(max-width: 639px)");
   const stacked = isSubmenu && isNarrow;
   return (
     <Popover

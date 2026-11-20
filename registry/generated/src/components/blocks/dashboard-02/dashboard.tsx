@@ -322,7 +322,7 @@ export function AnalyticsDashboard() {
             size="sm"
             options={compareOptions}
             value={compare}
-            onValueChange={(value) => setCompare(value as CompareKey)}
+            onChange={(value) => setCompare(value as CompareKey)}
             className="w-full sm:w-52"
           />
           <p className="pb-2 text-xs tabular-nums text-muted-foreground">
@@ -383,8 +383,8 @@ export function AnalyticsDashboard() {
         </section>
 
         <Tabs
-          value={tab}
-          onValueChange={(key) => setTab(key as TabKey)}
+          selectedKey={tab}
+          onSelectionChange={(key) => setTab(key as TabKey)}
           className="grid gap-4"
         >
           <div className="flex flex-wrap items-end justify-between gap-3">

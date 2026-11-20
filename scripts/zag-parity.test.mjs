@@ -166,7 +166,10 @@ const contracts = {
       "edit",
       "defaultEdit",
       "onEditChange",
-      "isInvalid",
+      "invalid",
+      "disabled",
+      "readOnly",
+      "required",
       "autoResize",
       "finalFocusEl",
       "translations",
@@ -252,14 +255,13 @@ const contracts = {
     props: [
       "value",
       "defaultValue",
-      "onChange",
       "onValueChange",
       "name",
       "form",
-      "isDisabled",
-      "isInvalid",
-      "isRequired",
-      "isReadOnly",
+      "disabled",
+      "invalid",
+      "required",
+      "readOnly",
       "orientation",
       "dir",
       "ids",
@@ -376,6 +378,23 @@ for (const [file, contract] of Object.entries(contracts)) {
         text,
         new RegExp(`\\b${prop}\\b`),
         `${file} must accept and forward ${prop}`,
+      );
+    }
+  });
+
+  test(`${file} keeps the Zag prop names`, async () => {
+    if (file === "otp-input") return;
+    const text = await source(file);
+    for (const name of [
+      "isDisabled",
+      "isInvalid",
+      "isRequired",
+      "isReadOnly",
+    ]) {
+      assert.doesNotMatch(
+        text,
+        new RegExp(`\\b${name}\\?:`),
+        `${file} must use the Zag name, not ${name}`,
       );
     }
   });

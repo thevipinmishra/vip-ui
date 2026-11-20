@@ -20,6 +20,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { prefersReducedMotion } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 const chartStyle = {
@@ -182,12 +183,7 @@ function ChartShell({
 
   useEffect(() => {
     const element = ref.current;
-    if (
-      !animated ||
-      !element ||
-      matchMedia("(prefers-reduced-motion: reduce)").matches
-    )
-      return;
+    if (!animated || !element || prefersReducedMotion()) return;
     const { top, bottom } = element.getBoundingClientRect();
     if (bottom > 0 && top < innerHeight) return;
     setEntrance("waiting");

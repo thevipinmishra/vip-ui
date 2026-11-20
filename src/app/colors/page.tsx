@@ -1,9 +1,8 @@
-import { ArrowDownIcon } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { inlineCode, Step, textLink } from "@/app/themes/theme-install";
 import { CodeFrame } from "@/components/docs/code-frame";
 import { CodeSnippet } from "@/components/docs/code-snippet";
-import { CopyButton } from "@/components/docs/copy-button";
+import { CopyCodeButton } from "@/components/docs/copy-code-button";
 import {
   PageActions,
   PageHeader,
@@ -62,9 +61,8 @@ export default function ColorsPage() {
         <PageActions className="mt-2 justify-center">
           <a href="#install" className={buttonLinkStyles()}>
             Install
-            <ArrowDownIcon size={16} aria-hidden="true" />
           </a>
-          <CopyButton
+          <CopyCodeButton
             code={css}
             label="Copy CSS for all scales"
             text="Copy CSS"

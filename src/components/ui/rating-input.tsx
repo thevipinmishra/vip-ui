@@ -28,13 +28,7 @@ const ratingSizeStyles = {
 export interface RatingInputProps
   extends Omit<
     RadioGroupProps,
-    | "children"
-    | "label"
-    | "value"
-    | "defaultValue"
-    | "onChange"
-    | "onValueChange"
-    | "orientation"
+    "children" | "label" | "value" | "defaultValue" | "onChange" | "orientation"
   > {
   /** The visible label. Without it, pass aria-label. */
   label?: RadioGroupProps["label"];
@@ -44,7 +38,7 @@ export interface RatingInputProps
   size?: RatingSize;
   value?: number;
   defaultValue?: number;
-  onValueChange?: (value: number) => void;
+  onChange?: (value: number) => void;
 }
 
 export function RatingInput({
@@ -54,7 +48,7 @@ export function RatingInput({
   size: sizeProp,
   value,
   defaultValue = 0,
-  onValueChange,
+  onChange,
   ...props
 }: RatingInputProps) {
   const [localValue, setLocalValue] = useState(defaultValue);
@@ -81,7 +75,7 @@ export function RatingInput({
       orientation="horizontal"
       data-size={size}
       value={checked > 0 ? String(checked) : null}
-      onValueChange={(next) => {
+      onChange={(next) => {
         const rating = Number(next);
         setPop((current) => ({
           from: rating > selected ? Math.floor(selected) : rating - 1,
@@ -89,7 +83,7 @@ export function RatingInput({
           id: current.id + 1,
         }));
         if (value === undefined) setLocalValue(rating);
-        onValueChange?.(rating);
+        onChange?.(rating);
       }}
     >
       <div className="-ms-1 flex flex-wrap" data-slot="rating-input-options">

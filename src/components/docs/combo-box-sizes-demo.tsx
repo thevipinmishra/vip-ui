@@ -24,12 +24,12 @@ export function ComboBoxSizesDemo() {
         options={options}
       />
       <ComboBox
-        size="md"
         aria-label="Framework"
         placeholder="Search frameworks"
         options={options}
       />
       <ComboBox
+        size="lg"
         aria-label="Framework"
         placeholder="Search frameworks"
         options={options}

@@ -18,14 +18,14 @@ import { touchTarget } from "./button-styles";
 import { type Size, SizeProvider, useSize } from "./size";
 
 const segmentedControlStyles = tv({
-  base: "relative isolate inline-grid max-w-full auto-cols-fr grid-flow-col gap-0.5 rounded-lg border border-border bg-secondary p-1 text-foreground [--touch-target:2.75rem] [--transition-duration:300ms] data-[invalid]:border-destructive data-[orientation=vertical]:[--touch-target:100%] data-[orientation=vertical]:auto-rows-fr data-[orientation=vertical]:grid-flow-row motion-reduce:[--transition-duration:0ms] forced-colors:border-[ButtonBorder]",
+  base: "relative isolate inline-grid max-w-full auto-cols-fr grid-flow-col gap-0.5 rounded-lg bg-secondary p-1 text-foreground inset-ring inset-ring-border [--touch-target:2.75rem] [--transition-duration:300ms] data-[invalid]:inset-ring-destructive data-[orientation=vertical]:[--touch-target:100%] data-[orientation=vertical]:auto-rows-fr data-[orientation=vertical]:grid-flow-row motion-reduce:[--transition-duration:0ms] forced-colors:border forced-colors:border-[ButtonBorder]",
   variants: {
     size: {
-      xs: "gap-0.5 rounded-md p-0.5",
-      sm: "rounded-lg p-1",
+      xs: "rounded-md p-0.5",
+      sm: "rounded-lg p-0.5",
       md: "rounded-lg p-1",
-      lg: "rounded-lg p-1",
-      xl: "gap-1 rounded-xl p-1",
+      lg: "rounded-xl p-1",
+      xl: "gap-1 rounded-2xl p-1",
     },
     fullWidth: {
       true: "w-full",
@@ -41,8 +41,8 @@ const segmentedControlIndicatorStyles = tv({
       xs: "rounded-sm",
       sm: "rounded-md",
       md: "rounded-md",
-      lg: "rounded-md",
-      xl: "rounded-lg",
+      lg: "rounded-lg",
+      xl: "rounded-xl",
     },
   },
   defaultVariants: { size: "md" },
@@ -52,11 +52,11 @@ const segmentedControlItemStyles = tv({
   base: "relative z-10 flex min-w-0 cursor-pointer items-center justify-center gap-2 rounded-md border border-transparent px-3 text-sm font-medium whitespace-nowrap text-muted-foreground select-none transition-[color,background-color,scale] duration-150 ease-out-quint outline-transparent outline-offset-4 hover:text-foreground data-[state=checked]:text-foreground data-[focus-visible]:outline-2 data-[focus-visible]:outline-solid data-[focus-visible]:-outline-offset-2 data-[focus-visible]:outline-ring data-[disabled]:cursor-default data-[disabled]:opacity-50 data-[readonly]:cursor-default motion-safe:active:scale-[0.98] [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 forced-colors:data-[state=checked]:outline-2 forced-colors:data-[state=checked]:outline-[Highlight]",
   variants: {
     size: {
-      xs: `h-7 gap-1.5 rounded-sm px-2 text-xs [&_svg:not([class*='size-'])]:size-3.5 ${touchTarget}`,
-      sm: `h-8 rounded-md px-3 ${touchTarget}`,
-      md: `h-10 rounded-md px-4 ${touchTarget}`,
-      lg: "h-11 rounded-md px-5",
-      xl: "h-12 gap-2.5 rounded-lg px-6 text-base [&_svg:not([class*='size-'])]:size-5",
+      xs: `h-6 gap-1.5 rounded-sm px-2 text-xs [&_svg:not([class*='size-'])]:size-3.5 ${touchTarget}`,
+      sm: `h-7 rounded-md px-2.5 ${touchTarget}`,
+      md: `h-8 rounded-md px-3 ${touchTarget}`,
+      lg: `h-10 rounded-lg px-4 text-base [&_svg:not([class*='size-'])]:size-5 ${touchTarget}`,
+      xl: "h-12 gap-2.5 rounded-xl px-5 text-base [&_svg:not([class*='size-'])]:size-5",
     },
   },
   defaultVariants: { size: "md" },
@@ -123,21 +123,19 @@ export interface SegmentedControlProps
   /** The selected value at first, uncontrolled. */
   defaultValue?: string | null;
   /** Called with the new value when the selection changes. */
-  onChange?: (value: string) => void;
-  /** An alias of `onChange`. Both run when both are set. */
-  onValueChange?: (value: string) => void;
+  onValueChange?: (details: radio.ValueChangeDetails) => void;
   /** Submits the selected value with a form. */
   name?: string;
   /** Associates the hidden inputs with a form by id. */
   form?: string;
   /** Disables every segment. */
-  isDisabled?: boolean;
+  disabled?: boolean;
   /** Marks the group and its segments as invalid. */
-  isInvalid?: boolean;
+  invalid?: boolean;
   /** Requires a selection before the form submits. */
-  isRequired?: boolean;
+  required?: boolean;
   /** Keeps the value but stops changes. */
-  isReadOnly?: boolean;
+  readOnly?: boolean;
   /** Lays the segments in a row or a column. */
   orientation?: SegmentedControlOrientation;
   /** Sets the writing direction of the group. */
@@ -157,14 +155,13 @@ export function SegmentedControl({
   children,
   value,
   defaultValue,
-  onChange,
   onValueChange,
   name,
   form,
-  isDisabled,
-  isInvalid,
-  isRequired,
-  isReadOnly,
+  disabled,
+  invalid,
+  required,
+  readOnly,
   dir,
   ids,
   getRootNode,
@@ -181,17 +178,13 @@ export function SegmentedControl({
     orientation,
     value,
     defaultValue,
-    onValueChange: (details) => {
-      if (details.value == null) return;
-      onChange?.(details.value);
-      onValueChange?.(details.value);
-    },
+    onValueChange,
     name,
     form,
-    disabled: isDisabled,
-    invalid: isInvalid,
-    required: isRequired,
-    readOnly: isReadOnly,
+    disabled,
+    invalid,
+    required,
+    readOnly,
     dir,
     ids,
     getRootNode,
@@ -249,7 +242,7 @@ export interface SegmentedControlItemProps
   /** The value that this segment sets. */
   value: string;
   /** Disables this segment only. */
-  isDisabled?: boolean;
+  disabled?: boolean;
   children: ReactNode;
   ref?: Ref<HTMLLabelElement>;
 }
@@ -280,14 +273,14 @@ function segmentLabel(children: ReactNode): ReactNode {
 
 export function SegmentedControlItem({
   value,
-  isDisabled,
+  disabled,
   className,
   children,
   ref,
   ...props
 }: SegmentedControlItemProps) {
   const { api, size } = useSegmentedControl();
-  const item = { value, disabled: isDisabled };
+  const item = { value, disabled };
   const merged = mergeProps(api.getItemProps(item), props, {
     "data-slot": "segmented-control-item",
     "data-size": size,

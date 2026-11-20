@@ -5,7 +5,7 @@ import {
   Radio as AriaRadio,
   RadioGroup as AriaRadioGroup,
 } from "react-aria-components";
-import { CopyButton } from "@/components/docs/copy-button";
+import { CopyCodeButton } from "@/components/docs/copy-code-button";
 import { ModeSwitch } from "@/components/docs/mode-switch";
 import { withItemHighlight } from "@/components/ui/item-highlight";
 import { contrast, contrastGrade, toHex } from "@/lib/color";
@@ -92,7 +92,7 @@ function ContrastPairs({
               <span className="text-2xl leading-none font-semibold tracking-[-0.03em]">
                 Aa
               </span>
-              <span className="rounded-full bg-[color-mix(in_oklab,currentColor_12%,transparent)] px-2 py-0.5 font-mono text-[11px] font-medium whitespace-nowrap">
+              <span className="rounded-full px-2 py-0.5 font-mono text-[11px] font-medium whitespace-nowrap ring-1 ring-current/30">
                 {ratio.toFixed(1)} · {contrastGrade(ratio)}
               </span>
             </div>
@@ -141,7 +141,7 @@ function StepItem({
           {variable}
         </p>
       </div>
-      <CopyButton
+      <CopyCodeButton
         code={value}
         label={`Copy ${variable}`}
         iconOnly
@@ -225,7 +225,7 @@ export function ColorScales() {
               {palette.description}
             </p>
           </div>
-          <CopyButton
+          <CopyCodeButton
             code={paletteCss([palette])}
             label={`Copy ${palette.name} CSS`}
             text={`Copy ${palette.name}`}

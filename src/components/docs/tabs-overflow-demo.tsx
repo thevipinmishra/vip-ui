@@ -1,6 +1,6 @@
 "use client";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tab, TabList, TabPanel, Tabs } from "@/components/ui/tabs";
 
 const sections = [
   {
@@ -33,18 +33,18 @@ const sections = [
 
 export function TabsOverflowDemo() {
   return (
-    <Tabs defaultValue="overview" className="w-full max-w-sm">
-      <TabsList aria-label="Project">
+    <Tabs defaultSelectedKey="overview" className="w-full max-w-sm">
+      <TabList aria-label="Project">
         {sections.map((section) => (
-          <TabsTrigger key={section.value} value={section.value}>
+          <Tab key={section.value} id={section.value}>
             {section.label}
-          </TabsTrigger>
+          </Tab>
         ))}
-      </TabsList>
+      </TabList>
       {sections.map((section) => (
-        <TabsContent key={section.value} value={section.value}>
+        <TabPanel key={section.value} id={section.value}>
           {section.text}
-        </TabsContent>
+        </TabPanel>
       ))}
     </Tabs>
   );

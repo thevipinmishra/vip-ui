@@ -15,7 +15,13 @@ import {
   useRef,
   useState,
 } from "react";
-import { duration, easeOut, springLayout, transitionFor } from "@/lib/motion";
+import {
+  duration,
+  easeOut,
+  prefersReducedMotion,
+  springLayout,
+  transitionFor,
+} from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 export interface Step {
@@ -77,9 +83,7 @@ export function Stepper({
         : rect.right > end
           ? rect.right - end
           : 0;
-    const smooth =
-      hasScrolled.current &&
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const smooth = hasScrolled.current && !prefersReducedMotion();
     hasScrolled.current = true;
     if (offset)
       list.scrollBy({ left: offset, behavior: smooth ? "smooth" : "auto" });

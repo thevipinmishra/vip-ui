@@ -4,7 +4,7 @@ import Link from "next/link";
 import { CategoryTabs } from "@/components/docs/category-tabs";
 import { CodeFrame } from "@/components/docs/code-frame";
 import { CodeSnippet } from "@/components/docs/code-snippet";
-import { CopyButton } from "@/components/docs/copy-button";
+import { CopyCodeButton } from "@/components/docs/copy-code-button";
 import { NewBadge } from "@/components/docs/new-badge";
 import { PackageManagerCommand } from "@/components/docs/package-manager-command";
 import {
@@ -154,7 +154,7 @@ function ChartExampleInstall({ example }: { example: ChartExample }) {
   const cliUrl = registryUrl(example.file);
   if (!cliUrl) return null;
   return (
-    <CopyButton
+    <CopyCodeButton
       code={`pnpm dlx shadcn@latest add ${cliUrl}`}
       label={`Copy install command for ${example.name}`}
       iconOnly

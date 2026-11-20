@@ -217,12 +217,7 @@ import type { StatTrend } from "@/components/ui/stat";
 import type { Stepper } from "@/components/ui/stepper";
 import type { Switch } from "@/components/ui/switch";
 import type { Column, TableLoadMoreItem } from "@/components/ui/table";
-import type {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
+import type { Tab, TabList, TabPanel } from "@/components/ui/tabs";
 import type { TagGroup } from "@/components/ui/tag-group";
 import type { TextArea } from "@/components/ui/text-area";
 import type { TextField } from "@/components/ui/text-field";
@@ -246,7 +241,7 @@ import type {
   ToolCallTrigger,
 } from "@/components/ui/tool-call";
 import type { Toolbar } from "@/components/ui/toolbar";
-import type { TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import type { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 import type { Tour, TourTarget } from "@/components/ui/tour";
 import type { TreeItem } from "@/components/ui/tree";
 
@@ -803,25 +798,23 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: '"single" | "multiple"',
           default: '"single"',
           description:
-            'Set "multiple" to let the user select more than one option. The default layout then shows the selected options as tags. value, defaultValue, and onValueChange work only in single-selection mode. In multiple-selection mode, value and defaultValue take an array of option ids, and onChange receives the new array.',
+            'Set "multiple" to let the user select more than one option. The default layout then shows the selected options as tags. value and defaultValue then take an array of option ids, and onChange receives the new array.',
         },
         {
           name: "value",
-          type: "string",
-          description:
-            "The selected option id, controlled. Use it only in single-selection mode.",
+          type: "Key | null",
+          description: "The selected option id, controlled.",
         },
         {
           name: "defaultValue",
-          type: "string",
-          description:
-            "The option id that is selected at first, uncontrolled. Use it only in single-selection mode.",
+          type: "Key | null",
+          description: "The option id that is selected at first, uncontrolled.",
         },
         {
-          name: "onValueChange",
-          type: "(value: string) => void",
+          name: "onChange",
+          type: "(value: Key | null) => void",
           description:
-            "Receives the selected id in single-selection mode, or an empty string when the selection is cleared.",
+            "Receives the selected option id, or null when the selection is cleared.",
         },
       ],
     }),
@@ -992,21 +985,18 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         },
         {
           name: "value",
-          type: "string",
-          description:
-            "The selected option id, not its name. Sets selectedKey.",
+          type: "Key | null",
+          description: "The selected option id, not its name.",
         },
         {
           name: "defaultValue",
-          type: "string",
-          description:
-            "The option id that is selected at first, not its name. Sets defaultSelectedKey.",
+          type: "Key | null",
+          description: "The option id that is selected at first, not its name.",
         },
         {
-          name: "onValueChange",
-          type: "(value: string) => void",
-          description:
-            "Receives the selected option id, or an empty string when the selection is cleared. onSelectionChange also runs.",
+          name: "onChange",
+          type: "(value: Key | null) => void",
+          description: "Receives the selected option id.",
         },
         {
           name: "placeholder",
@@ -1629,13 +1619,13 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
             "Called when you save a changed value. While its promise is pending, the save button shows a spinner. If it throws, the editor stays open and shows the error message. When controlled, update value here.",
         },
         {
-          name: "isDisabled",
+          name: "disabled",
           type: "boolean",
           default: "false",
           description: "Prevents opening the editor.",
         },
         {
-          name: "isReadOnly",
+          name: "readOnly",
           type: "boolean",
           default: "false",
           description: "Shows the value without opening the editor.",
@@ -1677,7 +1667,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           description: "Selects the text when the input receives focus.",
         },
         {
-          name: "isInvalid",
+          name: "invalid",
           type: "boolean",
           description: "Marks the field as invalid.",
         },
@@ -1707,7 +1697,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           description: "Limits the number of characters.",
         },
         {
-          name: "isRequired",
+          name: "required",
           type: "boolean",
           default: "false",
           description: "Marks the field as required.",
@@ -1896,7 +1886,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           name: "size",
           type: '"sm" | "md" | "lg"',
           default: '"lg"',
-          description: "Sets the height of each box: 36px, 44px, or 48px.",
+          description: "Sets the height of each box: 32px, 40px, or 48px.",
         },
         {
           name: "value",
@@ -3108,7 +3098,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
             "The selected rating at first, uncontrolled. 0 means no rating.",
         },
         {
-          name: "onValueChange",
+          name: "onChange",
           type: "(value: number) => void",
           description: "Called when a step is selected.",
         },
@@ -3405,14 +3395,9 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           description: "The selected value at first, uncontrolled.",
         },
         {
-          name: "onChange",
-          type: "(value: string) => void",
-          description: "Called with the new value when the selection changes.",
-        },
-        {
           name: "onValueChange",
-          type: "(value: string) => void",
-          description: "Alias for onChange. Both run when both are set.",
+          type: "(details: { value: string | null }) => void",
+          description: "Called with the new value when the selection changes.",
         },
         {
           name: "name",
@@ -3426,25 +3411,25 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           description: "Associates the hidden inputs with a form by id.",
         },
         {
-          name: "isDisabled",
+          name: "disabled",
           type: "boolean",
           default: "false",
           description: "Disables every segment.",
         },
         {
-          name: "isInvalid",
+          name: "invalid",
           type: "boolean",
           default: "false",
           description: "Marks the group as invalid.",
         },
         {
-          name: "isRequired",
+          name: "required",
           type: "boolean",
           default: "false",
           description: "Requires a selection before the form submits.",
         },
         {
-          name: "isReadOnly",
+          name: "readOnly",
           type: "boolean",
           default: "false",
           description: "Keeps the value but stops changes.",
@@ -3484,7 +3469,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           description: "The value that this segment sets.",
         },
         {
-          name: "isDisabled",
+          name: "disabled",
           type: "boolean",
           default: "false",
           description: "Disables this segment only.",
@@ -4391,7 +4376,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           description: "Shows a grip pill in the middle of the line.",
         },
         {
-          name: "isDisabled",
+          name: "disabled",
           type: "boolean",
           default: "false",
           description: "Stops the handle from resizing.",
@@ -4479,23 +4464,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
             "Shown below the label when isRequired, validate, or isInvalid makes the checkbox invalid. Without it, the browser validation message shows.",
         },
         {
-          name: "checked",
-          type: 'boolean | "indeterminate"',
-          description:
-            'Alias for isSelected. "indeterminate" sets isIndeterminate.',
-        },
-        {
-          name: "defaultChecked",
-          type: 'boolean | "indeterminate"',
-          description:
-            'Alias for defaultSelected. "indeterminate" shows the indeterminate state until the first change.',
-        },
-        {
-          name: "onCheckedChange",
-          type: "(checked: boolean) => void",
-          description: "Alias for onChange. Both run when both are set.",
-        },
-        {
           name: "variant",
           type: '"default" | "card"',
           default: '"default"',
@@ -4570,27 +4538,12 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           description:
             "Shown below the label when isRequired, validate, or isInvalid makes the switch invalid. Without it, the browser validation message shows.",
         },
-        {
-          name: "checked",
-          type: "boolean",
-          description: "Alias for isSelected.",
-        },
-        {
-          name: "defaultChecked",
-          type: "boolean",
-          description: "Alias for defaultSelected.",
-        },
-        {
-          name: "onCheckedChange",
-          type: "(checked: boolean) => void",
-          description: "Alias for onChange. Both run when both are set.",
-        },
       ],
     }),
   ],
   tabs: [
-    apiPart<typeof TabsList>({
-      name: "TabsList",
+    apiPart<typeof TabList>({
+      name: "TabList",
       props: [
         {
           name: "size",
@@ -4600,54 +4553,29 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         },
       ],
     }),
-    apiPart<typeof Tabs>({
-      name: "Tabs",
+    apiPart<typeof Tab>({
+      name: "Tab",
       props: [
         {
-          name: "value",
-          type: "string",
-          description:
-            "The value of the selected tab, controlled. Same as selectedKey.",
-        },
-        {
-          name: "defaultValue",
-          type: "string",
-          description:
-            "The value of the tab that is selected at first, uncontrolled. Same as defaultSelectedKey.",
-        },
-        {
-          name: "onValueChange",
-          type: "(value: string) => void",
-          description:
-            "Gets the value of the selected tab as a string. onSelectionChange also works.",
-        },
-      ],
-    }),
-    apiPart<typeof TabsTrigger>({
-      name: "TabsTrigger",
-      props: [
-        {
-          name: "value",
-          type: "string",
-          description:
-            "Connects the tab to the TabsContent with the same value.",
+          name: "id",
+          type: "Key",
+          description: "Connects the tab to the TabPanel with the same id.",
         },
         {
           name: "size",
           type: '"xs" | "sm" | "md" | "lg" | "xl"',
           description:
-            "Sets the size of this tab. It overrides the size of the TabsList.",
+            "Sets the size of this tab. It overrides the size of the TabList.",
         },
       ],
     }),
-    apiPart<typeof TabsContent>({
-      name: "TabsContent",
+    apiPart<typeof TabPanel>({
+      name: "TabPanel",
       props: [
         {
-          name: "value",
-          type: "string",
-          description:
-            "Connects the panel to the TabsTrigger with the same value.",
+          name: "id",
+          type: "Key",
+          description: "Connects the panel to the Tab with the same id.",
         },
       ],
     }),
@@ -5126,11 +5054,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           description:
             "Shown below the options when the group is invalid. Without it, the browser validation message shows. With label, description, or errorMessage, the group adds RadioGroupError for you.",
         },
-        {
-          name: "onValueChange",
-          type: "(value: string) => void",
-          description: "Alias for onChange. Both run when both are set.",
-        },
       ],
     }),
     apiPart<typeof Radio>({
@@ -5226,8 +5149,8 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         },
       ],
     }),
-    apiPart<typeof TooltipContent>({
-      name: "TooltipContent",
+    apiPart<typeof Tooltip>({
+      name: "Tooltip",
       props: [
         {
           name: "offset",
@@ -5563,23 +5486,23 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
             "The stroke options. The defaults use `currentColor` and size 3.",
         },
         {
-          name: "isDisabled",
+          name: "disabled",
           type: "boolean",
           description: "Disables drawing and the clear button.",
         },
         {
-          name: "isReadOnly",
+          name: "readOnly",
           type: "boolean",
           description: "Shows the strokes but stops changes.",
         },
         {
-          name: "isRequired",
+          name: "required",
           type: "boolean",
           description:
             "Marks the pad as required. Validate it with `isInvalid`.",
         },
         {
-          name: "isInvalid",
+          name: "invalid",
           type: "boolean",
           description: "Marks the pad as invalid and shows the error.",
         },

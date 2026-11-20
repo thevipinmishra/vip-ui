@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, type ReactNode, useContext, useState } from "react";
+import { createContext, type ReactNode, useContext } from "react";
 import {
   CheckboxButton as AriaCheckboxButton,
   type CheckboxButtonProps as AriaCheckboxButtonProps,
@@ -41,45 +41,16 @@ export interface CheckboxProps extends Omit<CheckboxFieldProps, "children"> {
   children?: ReactNode;
   description?: ReactNode;
   errorMessage?: string | ((validation: ValidationResult) => string);
-  checked?: boolean | "indeterminate";
-  defaultChecked?: boolean | "indeterminate";
-  onCheckedChange?: (checked: boolean) => void;
 }
 
 export function Checkbox({
   children,
   description,
   errorMessage,
-  checked,
-  defaultChecked,
-  onCheckedChange,
   ...props
 }: CheckboxProps) {
-  // React Aria only supports a controlled indeterminate state. This keeps
-  // defaultChecked="indeterminate" until the first change.
-  const [defaultIndeterminate, setDefaultIndeterminate] = useState(
-    defaultChecked === "indeterminate",
-  );
   return (
-    <CheckboxField
-      {...props}
-      isSelected={checked === undefined ? props.isSelected : checked === true}
-      defaultSelected={
-        defaultChecked === undefined
-          ? props.defaultSelected
-          : defaultChecked === true
-      }
-      isIndeterminate={
-        checked === undefined
-          ? props.isIndeterminate || defaultIndeterminate || undefined
-          : checked === "indeterminate"
-      }
-      onChange={(isSelected) => {
-        setDefaultIndeterminate(false);
-        props.onChange?.(isSelected);
-        onCheckedChange?.(isSelected);
-      }}
-    >
+    <CheckboxField {...props}>
       <CheckboxButton>
         <CheckboxIndicator />
         {children != null && <CheckboxLabel>{children}</CheckboxLabel>}

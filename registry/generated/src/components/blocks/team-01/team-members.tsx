@@ -211,7 +211,7 @@ export function TeamMembers() {
             aria-label="Role for new members"
             options={roles.filter((item) => item.id !== "owner")}
             value={role}
-            onValueChange={setRole}
+            onChange={(key) => setRole(String(key))}
           />
           <Button onPress={invite}>
             <PaperPlaneTiltIcon
@@ -354,7 +354,7 @@ function MemberRow({
         options={roles}
         value={member.role}
         isDisabled={owner}
-        onValueChange={onRoleChange}
+        onChange={(key) => onRoleChange(String(key))}
         className="w-36 max-sm:ms-14 [&_[data-slot=select-trigger]]:min-h-10"
       />
       <MenuTrigger>

@@ -18,16 +18,16 @@ export function TextFieldSizesDemo() {
       </div>
       <div className="flex items-end gap-2">
         <TextField
-          size="md"
           type="email"
           aria-label="Email"
           placeholder="name@example.com"
           className="flex-1"
         />
-        <Button size="md">Invite</Button>
+        <Button>Invite</Button>
       </div>
       <div className="flex items-end gap-2">
         <TextField
+          size="lg"
           type="email"
           aria-label="Email"
           placeholder="name@example.com"

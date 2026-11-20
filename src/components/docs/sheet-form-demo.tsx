@@ -63,7 +63,7 @@ export function SheetFormDemo() {
               ]}
             />
             <TextField name="owner" label="Owner" defaultValue="Maya Patel" />
-            <Switch name="public" defaultChecked>
+            <Switch name="public" defaultSelected>
               Show to guests
             </Switch>
           </SheetBody>

@@ -1,11 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  TooltipArrow,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipArrow, TooltipTrigger } from "@/components/ui/tooltip";
 
 const placements = [
   { placement: "top", label: "Top", side: "above", cell: "col-start-2" },
@@ -37,10 +33,10 @@ export function TooltipPlacementDemo() {
           <Button variant="outline" className={item.cell}>
             {item.label}
           </Button>
-          <TooltipContent placement={item.placement}>
+          <Tooltip placement={item.placement}>
             <TooltipArrow />
             Opens {item.side} the trigger.
-          </TooltipContent>
+          </Tooltip>
         </TooltipTrigger>
       ))}
     </div>

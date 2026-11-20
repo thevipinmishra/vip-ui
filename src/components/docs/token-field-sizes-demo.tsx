@@ -8,8 +8,8 @@ export function TokenFieldSizesDemo() {
   return (
     <div className="grid w-full max-w-sm gap-3">
       <ProjectTags size="sm" />
-      <ProjectTags size="md" />
       <ProjectTags />
+      <ProjectTags size="lg" />
       <ProjectTags size="xl" />
     </div>
   );

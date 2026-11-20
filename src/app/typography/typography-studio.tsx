@@ -1,7 +1,13 @@
 "use client";
 
 import { CaretUpDownIcon } from "@phosphor-icons/react";
-import { type CSSProperties, type ReactNode, useEffect, useState } from "react";
+import {
+  type CSSProperties,
+  type ReactNode,
+  useEffect,
+  useId,
+  useState,
+} from "react";
 import { CodeFrame } from "@/components/docs/code-frame";
 import { CodeSnippet } from "@/components/docs/code-snippet";
 import { sectionTitleClass } from "@/components/docs/page-header";
@@ -83,22 +89,32 @@ function Picker({
   className?: string;
   children: ReactNode;
 }) {
+  const labelId = useId();
+  const valueId = useId();
   return (
     <Select
       selectedKey={selectedKey}
       onSelectionChange={(key) => key !== null && onChange(String(key))}
       className={className}
     >
-      <SelectLabel className="sr-only">{label}</SelectLabel>
-      <SelectTrigger className="min-h-14 gap-3 py-2 pe-3">
+      <SelectLabel id={labelId} className="sr-only">
+        {label}
+      </SelectLabel>
+      <SelectTrigger
+        aria-labelledby={`${labelId} ${valueId}`}
+        className="min-h-14 gap-3 py-2 pe-3"
+      >
         <span className="grid min-w-0 flex-1 text-start">
           <span
             aria-hidden="true"
             className="truncate text-xs leading-4 text-muted-foreground"
           >
             {label}
-          </span>
-          <SelectValue className="text-sm leading-5 font-medium data-[placeholder]:text-foreground">
+          </span>{" "}
+          <SelectValue
+            id={valueId}
+            className="text-sm leading-5 font-medium data-[placeholder]:text-foreground"
+          >
             {value}
           </SelectValue>
         </span>
@@ -393,8 +409,8 @@ export function TypographyStudio({
       </aside>
 
       <Tabs
-        value={sample}
-        onValueChange={(value) => setSample(value as SampleId)}
+        selectedKey={sample}
+        onSelectionChange={(value) => setSample(value as SampleId)}
         className="min-w-0 lg:col-start-2 lg:row-start-2"
       >
         <TabList aria-label="Preview content">
@@ -434,7 +450,7 @@ export function TypographyStudio({
             {install}
           </Step>
           <Step number={2} title="Load the fonts">
-            <CodeFrame code={fonts} filename="app/layout.tsx" previewCode>
+            <CodeFrame code={fonts} filename="app/layout.tsx" previewCode wrap>
               <CodeSnippet code={fonts} language="tsx" />
             </CodeFrame>
           </Step>

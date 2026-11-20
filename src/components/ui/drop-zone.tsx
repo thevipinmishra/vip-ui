@@ -19,16 +19,13 @@ import {
   Text,
   type TextProps,
 } from "react-aria-components";
+import { prefersReducedMotion } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { Button, type ButtonProps } from "./button";
 import { FileTrigger } from "./file-trigger";
 
 const ease = "cubic-bezier(0.23, 1, 0.32, 1)";
 const swing = "cubic-bezier(0.37, 0, 0.63, 1)";
-
-function stillMotion() {
-  return matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
 
 const DropZoneStateContext = createContext<{
   isDisabled: boolean;
@@ -77,7 +74,7 @@ export function DropZone({
   }, []);
 
   function receive() {
-    if (stillMotion()) return;
+    if (prefersReducedMotion()) return;
     zoneRef.current?.animate(
       {
         boxShadow: [
@@ -129,7 +126,7 @@ export function DropZoneIcon({
   const isRejected = use(DropZoneStateContext)?.isRejected ?? false;
 
   useEffect(() => {
-    if (!isRejected || stillMotion()) return;
+    if (!isRejected || prefersReducedMotion()) return;
     iconRef.current?.animate(
       {
         translate: ["0", "-0.1875rem", "0.1875rem", "-0.125rem", "0"],

@@ -585,7 +585,7 @@ export function CheckoutPage() {
 
                     <Checkbox
                       isSelected={contact.marketing}
-                      onCheckedChange={(selected) =>
+                      onChange={(selected) =>
                         setContact((current) => ({
                           ...current,
                           marketing: selected,
@@ -655,7 +655,7 @@ export function CheckoutPage() {
                           label="Country"
                           options={countries}
                           value={address.country}
-                          onValueChange={changeCountry}
+                          onChange={(key) => changeCountry(String(key ?? ""))}
                           isRequired
                           size="md"
                           className="sm:col-span-3"
@@ -665,8 +665,8 @@ export function CheckoutPage() {
                             label={regionLabel(address.country)}
                             options={regionsFor(address.country)}
                             value={address.region}
-                            onValueChange={(value) =>
-                              updateAddress({ region: value })
+                            onChange={(key) =>
+                              updateAddress({ region: String(key) })
                             }
                             isRequired
                             size="md"
@@ -676,8 +676,8 @@ export function CheckoutPage() {
                           <CheckoutField
                             label={regionLabel(address.country)}
                             value={address.region}
-                            onChange={(value) =>
-                              updateAddress({ region: value })
+                            onChange={(key) =>
+                              updateAddress({ region: String(key) })
                             }
                             isRequired
                             className="sm:col-span-3"
@@ -769,7 +769,7 @@ export function CheckoutPage() {
                         <RadioGroup
                           aria-label="Delivery method"
                           value={shippingId}
-                          onValueChange={setShippingId}
+                          onChange={setShippingId}
                           className="gap-2"
                         >
                           {options.map((item) => (
@@ -914,7 +914,7 @@ export function CheckoutPage() {
 
                     <Checkbox
                       isSelected={billingSame}
-                      onCheckedChange={(selected) => {
+                      onChange={(selected) => {
                         setBillingSame(selected);
                         setCardErrors({});
                       }}
@@ -932,12 +932,13 @@ export function CheckoutPage() {
                               isSupportedCountry(country.id),
                             )}
                             value={billing.country}
-                            onValueChange={(value) =>
+                            onChange={(key) => {
+                              const country = String(key ?? "");
                               updateBilling({
-                                country: value,
-                                region: regionsFor(value)[0]?.id ?? "",
-                              })
-                            }
+                                country,
+                                region: regionsFor(country)[0]?.id ?? "",
+                              });
+                            }}
                             isRequired
                             size="md"
                             className="sm:col-span-6"
@@ -970,8 +971,8 @@ export function CheckoutPage() {
                                 : regionsFor("US")
                             }
                             value={billing.region}
-                            onValueChange={(value) =>
-                              updateBilling({ region: value })
+                            onChange={(key) =>
+                              updateBilling({ region: String(key) })
                             }
                             isRequired
                             size="md"

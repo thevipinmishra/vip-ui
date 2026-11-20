@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hooks",
+  "type": "registry:ui",
+  "title": "Hooks",
+  "description": "Tracks a media query and the first client render.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["shared"],
+  "dependencies": [],
+  "files": [
+    {
+      "path": "src/components/ui/hooks.tsx",
+      "type": "registry:file",
+      "target": "@components/vip-ui/hooks.tsx",
+      "content": "\"use client\";\n\nimport { useCallback, useSyncExternalStore } from \"react\";\n\nexport function useMediaQuery(query: string) {\n  const subscribe = useCallback(\n    (onChange: () => void) => {\n      const media = window.matchMedia(query);\n      media.addEventListener(\"change\", onChange);\n      return () => media.removeEventListener(\"change\", onChange);\n    },\n    [query],\n  );\n  return useSyncExternalStore(\n    subscribe,\n    () => window.matchMedia(query).matches,\n    () => false,\n  );\n}\n\nfunction subscribeToMount() {\n  return () => {};\n}\n\nexport function useMounted() {\n  return useSyncExternalStore(\n    subscribeToMount,\n    () => true,\n    () => false,\n  );\n}\n"
+    }
+  ]
+}

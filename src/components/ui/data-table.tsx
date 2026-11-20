@@ -215,7 +215,7 @@ function DataTableFilters({
             key={id}
             label={header}
             value={value}
-            onValueChange={onChange}
+            onChange={(key) => onChange(key === null ? "" : String(key))}
             options={[{ id: "", name: "All" }, ...filter.options]}
             className="min-w-0 grow basis-40 sm:max-w-48"
           />

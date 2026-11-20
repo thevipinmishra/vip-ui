@@ -291,8 +291,8 @@ export function BookingPage() {
                       size="md"
                       options={timeZones}
                       value={zone}
-                      onValueChange={(value) => {
-                        if (value) setZone(value);
+                      onChange={(value) => {
+                        if (value) setZone(String(value));
                       }}
                     />
                     <div className="grid gap-2">

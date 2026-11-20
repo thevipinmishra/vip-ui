@@ -167,7 +167,7 @@
       "description": "Counts to a new number or slides the digits that change.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["motion-effects"],
-      "dependencies": ["motion@^14.12.0"],
+      "dependencies": ["motion@^14.14.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/utils.json"
@@ -187,7 +187,7 @@
       "description": "Shows the name, size, preview, and upload state of a file.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["forms"],
-      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.12.0"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.14.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/button.json",
         "https://vip-ui.dev/r/motion.json",
@@ -475,7 +475,9 @@
       "registryDependencies": [
         "https://vip-ui.dev/r/button.json",
         "https://vip-ui.dev/r/field-styles.json",
+        "https://vip-ui.dev/r/hooks.json",
         "https://vip-ui.dev/r/item-highlight.json",
+        "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/select.json",
         "https://vip-ui.dev/r/utils.json"
       ],
@@ -573,7 +575,10 @@
       "categories": ["charts"],
       "docs": "Chart puts a frame around a TanStack Charts chart. It does not use the shadcn/ui chart API. Docs: https://vip-ui.dev/charts#documentation",
       "dependencies": ["@tanstack/charts@^1.5.0"],
-      "registryDependencies": ["https://vip-ui.dev/r/utils.json"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/motion.json",
+        "https://vip-ui.dev/r/utils.json"
+      ],
       "cssVars": {
         "theme": {
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
@@ -672,7 +677,7 @@
       "description": "Shows a block of code with a header, copy, and line numbers.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["display-layout"],
-      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.12.0"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.14.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/button.json",
         "https://vip-ui.dev/r/copy-button.json",
@@ -1004,7 +1009,7 @@
       "description": "Shows a transcript that stays at the newest message while it streams.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["ai"],
-      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.12.0"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.14.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/animated-number.json",
         "https://vip-ui.dev/r/button.json",
@@ -1042,7 +1047,7 @@
       "categories": ["actions"],
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "motion@^14.12.0",
+        "motion@^14.14.0",
         "react-aria-components@^1.22.1",
         "tailwindcss-react-aria-components@^2.2.0"
       ],
@@ -1258,6 +1263,7 @@
       ],
       "registryDependencies": [
         "https://vip-ui.dev/r/button.json",
+        "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/size.json",
         "https://vip-ui.dev/r/utils.json"
       ],
@@ -1347,6 +1353,7 @@
       "registryDependencies": [
         "https://vip-ui.dev/r/button.json",
         "https://vip-ui.dev/r/file-trigger.json",
+        "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/utils.json"
       ],
       "cssVars": {
@@ -1574,8 +1581,11 @@
       "description": "Draws a highlight, underline, or circle on a phrase when it comes into view.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["motion-effects"],
-      "dependencies": ["motion@^14.12.0"],
-      "registryDependencies": ["https://vip-ui.dev/r/utils.json"],
+      "dependencies": ["motion@^14.14.0"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/hooks.json",
+        "https://vip-ui.dev/r/utils.json"
+      ],
       "cssVars": {
         "theme": {
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
@@ -1590,13 +1600,29 @@
       ]
     },
     {
+      "name": "hooks",
+      "type": "registry:ui",
+      "title": "Hooks",
+      "description": "Tracks a media query and the first client render.",
+      "author": "thevipinmishra <https://github.com/thevipinmishra>",
+      "categories": ["shared"],
+      "dependencies": [],
+      "files": [
+        {
+          "path": "registry/generated/src/components/vip-ui/hooks.tsx",
+          "type": "registry:file",
+          "target": "@components/vip-ui/hooks.tsx"
+        }
+      ]
+    },
+    {
       "name": "icon-swap",
       "type": "registry:ui",
       "title": "Icon Swap",
       "description": "Swaps one icon for another with a short scale and blur.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["motion-effects"],
-      "dependencies": ["motion@^14.12.0"],
+      "dependencies": ["motion@^14.14.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/utils.json"
@@ -1624,6 +1650,7 @@
       "registryDependencies": [
         "https://vip-ui.dev/r/field-styles.json",
         "https://vip-ui.dev/r/input-group.json",
+        "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/spinner.json",
         "https://vip-ui.dev/r/utils.json"
       ],
@@ -1694,6 +1721,7 @@
       "categories": ["shared"],
       "dependencies": [],
       "registryDependencies": [
+        "https://vip-ui.dev/r/hooks.json",
         "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/utils.json"
       ],
@@ -1737,7 +1765,7 @@
       "description": "Crossfades new content and animates the container to its new size.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["motion-effects"],
-      "dependencies": ["motion@^14.12.0"],
+      "dependencies": ["motion@^14.14.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/utils.json"
@@ -1862,6 +1890,8 @@
       "dependencies": ["@zag-js/marquee@^1.48.0", "@zag-js/react@^1.48.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/button.json",
+        "https://vip-ui.dev/r/hooks.json",
+        "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/utils.json"
       ],
       "css": {
@@ -1903,6 +1933,7 @@
         "tailwindcss-react-aria-components@^2.2.0"
       ],
       "registryDependencies": [
+        "https://vip-ui.dev/r/hooks.json",
         "https://vip-ui.dev/r/item-highlight.json",
         "https://vip-ui.dev/r/list-box.json",
         "https://vip-ui.dev/r/popover.json",
@@ -2207,7 +2238,7 @@
       "description": "Animates list items when you add, remove, or move them.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["motion-effects"],
-      "dependencies": ["motion@^14.12.0"],
+      "dependencies": ["motion@^14.14.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/utils.json"
@@ -2227,7 +2258,7 @@
       "description": "Animates content in when it appears and out before it unmounts.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["motion-effects"],
-      "dependencies": ["motion@^14.12.0"],
+      "dependencies": ["motion@^14.14.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/utils.json"
@@ -2319,7 +2350,7 @@
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["feedback"],
       "dependencies": [
-        "motion@^14.12.0",
+        "motion@^14.14.0",
         "react-aria@^3.53.1",
         "react-aria-components@^1.22.1",
         "tailwindcss-react-aria-components@^2.2.0"
@@ -2476,7 +2507,7 @@
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["date-color"],
       "dependencies": [
-        "motion@^14.12.0",
+        "motion@^14.14.0",
         "react-aria-components@^1.22.1",
         "tailwindcss-react-aria-components@^2.2.0"
       ],
@@ -2512,7 +2543,7 @@
       "description": "Sets a star rating with radio controls.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["forms"],
-      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.12.0"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.14.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/radio-group.json",
@@ -2637,7 +2668,10 @@
         "@zag-js/scroll-area@^1.48.0",
         "react-aria@^3.53.1"
       ],
-      "registryDependencies": ["https://vip-ui.dev/r/utils.json"],
+      "registryDependencies": [
+        "https://vip-ui.dev/r/motion.json",
+        "https://vip-ui.dev/r/utils.json"
+      ],
       "cssVars": {
         "theme": {
           "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
@@ -2813,7 +2847,7 @@
       "categories": ["overlays"],
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "motion@^14.12.0",
+        "motion@^14.14.0",
         "react-aria@^3.53.1",
         "react-aria-components@^1.22.1",
         "tailwind-variants@^4.0.2",
@@ -2888,7 +2922,7 @@
       "categories": ["app-shell"],
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "motion@^14.12.0",
+        "motion@^14.14.0",
         "react-aria@^3.53.1",
         "react-aria-components@^1.22.1",
         "tailwindcss-react-aria-components@^2.2.0"
@@ -3103,7 +3137,7 @@
       "description": "Reveals a group of items one after another when it enters the viewport.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["motion-effects"],
-      "dependencies": ["motion@^14.12.0"],
+      "dependencies": ["motion@^14.14.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/utils.json"
@@ -3154,7 +3188,7 @@
       "description": "Shows the current step and the steps already complete.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["feedback"],
-      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.12.0"],
+      "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.14.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/utils.json"
@@ -3263,7 +3297,7 @@
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["navigation"],
       "dependencies": [
-        "motion@^14.12.0",
+        "motion@^14.14.0",
         "react-aria-components@^1.22.1",
         "tailwindcss-react-aria-components@^2.2.0"
       ],
@@ -3309,12 +3343,13 @@
       "categories": ["collections"],
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "motion@^14.12.0",
+        "motion@^14.14.0",
         "react-aria-components@^1.22.1",
         "tailwindcss-react-aria-components@^2.2.0"
       ],
       "registryDependencies": [
         "https://vip-ui.dev/r/field-styles.json",
+        "https://vip-ui.dev/r/hooks.json",
         "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/size.json",
         "https://vip-ui.dev/r/utils.json"
@@ -3403,7 +3438,7 @@
       "description": "Cycles through a list of words on a timer.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["motion-effects"],
-      "dependencies": ["motion@^14.12.0"],
+      "dependencies": ["motion@^14.14.0"],
       "registryDependencies": ["https://vip-ui.dev/r/text-swap.json"],
       "files": [
         {
@@ -3420,7 +3455,7 @@
       "description": "Reveals text word by word or character by character.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["motion-effects"],
-      "dependencies": ["motion@^14.12.0"],
+      "dependencies": ["motion@^14.14.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/utils.json"
@@ -3440,7 +3475,7 @@
       "description": "Scrambles characters and resolves them into new text when its value changes.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["motion-effects"],
-      "dependencies": ["motion@^14.12.0"],
+      "dependencies": ["motion@^14.14.0"],
       "registryDependencies": ["https://vip-ui.dev/r/utils.json"],
       "files": [
         {
@@ -3501,7 +3536,7 @@
       "description": "Swaps text with a short fade when its value changes.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["motion-effects"],
-      "dependencies": ["motion@^14.12.0"],
+      "dependencies": ["motion@^14.14.0"],
       "registryDependencies": [
         "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/utils.json"
@@ -3612,7 +3647,7 @@
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["actions"],
       "dependencies": [
-        "motion@^14.12.0",
+        "motion@^14.14.0",
         "react-aria-components@^1.22.1",
         "tailwindcss-react-aria-components@^2.2.0"
       ],
@@ -3649,7 +3684,7 @@
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["actions"],
       "dependencies": [
-        "motion@^14.12.0",
+        "motion@^14.14.0",
         "react-aria-components@^1.22.1",
         "tailwind-variants@^4.0.2",
         "tailwindcss-react-aria-components@^2.2.0"
@@ -3731,7 +3766,7 @@
       "categories": ["ai"],
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "motion@^14.12.0",
+        "motion@^14.14.0",
         "react-aria-components@^1.22.1",
         "tailwindcss-react-aria-components@^2.2.0"
       ],
@@ -3775,7 +3810,6 @@
       "registryDependencies": [
         "https://vip-ui.dev/r/item-highlight.json",
         "https://vip-ui.dev/r/size.json",
-        "https://vip-ui.dev/r/toggle-button-group.json",
         "https://vip-ui.dev/r/utils.json"
       ],
       "cssVars": {
@@ -3841,7 +3875,7 @@
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["overlays"],
       "dependencies": [
-        "motion@^14.12.0",
+        "motion@^14.14.0",
         "react-aria@^3.53.1",
         "react-aria-components@^1.22.1",
         "react-dom@^19.3.1",
@@ -3880,12 +3914,13 @@
       "categories": ["collections"],
       "dependencies": [
         "@phosphor-icons/react@^2.1.10",
-        "motion@^14.12.0",
+        "motion@^14.14.0",
         "react-aria-components@^1.22.1",
         "tailwindcss-react-aria-components@^2.2.0"
       ],
       "registryDependencies": [
         "https://vip-ui.dev/r/checkbox.json",
+        "https://vip-ui.dev/r/hooks.json",
         "https://vip-ui.dev/r/item-highlight.json",
         "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/spinner.json",

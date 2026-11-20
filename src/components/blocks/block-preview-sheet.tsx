@@ -78,8 +78,8 @@ function PreviewContent({
 
   return (
     <Tabs
-      value={view}
-      onValueChange={(value) => {
+      selectedKey={view}
+      onSelectionChange={(value) => {
         const next = value === "code" ? "code" : "preview";
         if (next === "preview") setHasPreview(true);
         setView(next);

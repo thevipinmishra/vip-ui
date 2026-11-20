@@ -120,7 +120,7 @@ export function KeyboardLab() {
         </Control>
         <Control id="alerts">
           <Switch
-            defaultChecked
+            defaultSelected
             description="We send an email at 90% of the limit."
             className="w-full"
           >

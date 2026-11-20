@@ -11,7 +11,7 @@ export function SegmentedControlDisabledDemo() {
         <SegmentedControl aria-label="Plan" defaultValue="pro">
           <SegmentedControlItem value="free">Free</SegmentedControlItem>
           <SegmentedControlItem value="pro">Pro</SegmentedControlItem>
-          <SegmentedControlItem value="scale" isDisabled>
+          <SegmentedControlItem value="scale" disabled>
             Scale
           </SegmentedControlItem>
         </SegmentedControl>
@@ -21,7 +21,7 @@ export function SegmentedControlDisabledDemo() {
         <SegmentedControl
           aria-label="Billing period"
           defaultValue="month"
-          isDisabled
+          disabled
         >
           <SegmentedControlItem value="month">Monthly</SegmentedControlItem>
           <SegmentedControlItem value="year">Yearly</SegmentedControlItem>

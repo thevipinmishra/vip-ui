@@ -6,7 +6,7 @@
   "description": "Shows a block of code with a header, copy, and line numbers.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["display-layout"],
-  "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.12.0"],
+  "dependencies": ["@phosphor-icons/react@^2.1.10", "motion@^14.14.0"],
   "registryDependencies": [
     "https://vip-ui.dev/r/button.json",
     "https://vip-ui.dev/r/copy-button.json",

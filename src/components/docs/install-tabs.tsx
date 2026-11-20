@@ -58,8 +58,8 @@ export function InstallTabs({
 
   return (
     <Tabs
-      value={selected}
-      onValueChange={(value) => selectMethod(value as InstallMethod)}
+      selectedKey={selected}
+      onSelectionChange={(value) => selectMethod(value as InstallMethod)}
     >
       <TabList aria-label="Installation method">
         <Tab id="cli">CLI</Tab>

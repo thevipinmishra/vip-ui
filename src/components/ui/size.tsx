@@ -6,6 +6,8 @@ export type Size = "xs" | "sm" | "md" | "lg" | "xl";
 
 const SizeContext = createContext<Size | undefined>(undefined);
 
+export const GroupFrameContext = createContext(true);
+
 export function useSize(size?: Size) {
   const inherited = useContext(SizeContext);
   return size ?? inherited;

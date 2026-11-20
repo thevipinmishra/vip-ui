@@ -59,9 +59,6 @@ type ComboBoxBaseProps<M extends "single" | "multiple"> = Omit<
 
 export interface ComboBoxProps extends ComboBoxBaseProps<"single"> {
   selectionMode?: "single";
-  value?: string;
-  defaultValue?: string;
-  onValueChange?: (value: string) => void;
 }
 
 export interface MultiSelectComboBoxProps
@@ -86,9 +83,6 @@ function SingleComboBox({
   size,
   className,
   children,
-  value,
-  defaultValue,
-  onValueChange,
   ...props
 }: ComboBoxProps) {
   return (
@@ -97,12 +91,6 @@ function SingleComboBox({
       allowsEmptyCollection={props.allowsEmptyCollection ?? true}
       data-slot="combo-box"
       data-size={size}
-      selectedKey={value ?? props.selectedKey}
-      defaultSelectedKey={defaultValue ?? props.defaultSelectedKey}
-      onSelectionChange={(key) => {
-        props.onSelectionChange?.(key);
-        onValueChange?.(key === null ? "" : String(key));
-      }}
       className={composeRenderProps(className, (className) =>
         cn(
           "group flex w-full min-w-0 flex-col gap-2",

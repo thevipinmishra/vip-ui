@@ -67,7 +67,8 @@ Charts use TanStack Charts (`ChartFrame`, `Chart`), not Recharts. Copy from http
 
 ## 4. Write the code
 
-- Use `onPress`, not `onClick`. Use `isDisabled`, not `disabled`.
+- Use `onPress`, not `onClick`.
+- Props keep the names of the wrapped library, with no aliases. React Aria components use `isDisabled` and `onChange`; Zag components (`SegmentedControl`, `InlineEdit`, `SignaturePad`, `ResizableHandle`) use `disabled` and `onValueChange`. See [references/name-map.md](references/name-map.md).
 - Collection items (`Select`, `ComboBox`, `Menu`, `ListBox`, `Table`, `Tree`) take an `id`. The id is the value.
 - There is no `asChild`. The trigger part holds the trigger and the overlay, for example `MenuTrigger` holds a `Button` and a `MenuPopover`. Use the `render` prop to change the element.
 - Build fields from their parts: `TextFieldLabel`, `TextFieldInput`, `TextFieldDescription`, `TextFieldError`. Do not add a separate label component.
@@ -82,9 +83,10 @@ Charts use TanStack Charts (`ChartFrame`, `Chart`), not Recharts. Copy from http
 
 ## 5. Sizes and colors
 
-- Sizes: `xs` 28px, `sm` 36px, `md` 44px, `lg` 48px, `xl` 56px. Buttons default to `md`, fields to `lg`.
-- Set `size` once on a group (`Toolbar`, `ButtonGroup`, `TabsList`, `TagGroup`). Its items follow.
-- Do not make controls smaller to save space. Reduce the spacing.
+- Sizes: `xs` 28px, `sm` 32px, `md` 40px, `lg` 48px, `xl` 56px. Controls default to `md`. `lg` and `xl` also use 16px text.
+- On `TabList`, `SegmentedControl`, and `ToggleButtonGroup`, `size` is the outer height of the frame. A group lines up with a button of the same size.
+- Set `size` once on a group (`Toolbar`, `ButtonGroup`, `TabList`, `TagGroup`). Its items follow.
+- Use `sm` for controls in dense surfaces: toolbars, filter rows, card headers, and table rows. Keep forms, dialog footers, and page actions on `md`. Use `lg` for hero search and marketing calls to action.
 - Do not set `size` on icons inside controls.
 - Use theme tokens only, such as `bg-primary`, `text-muted-foreground`, `border-border`. No hex or arbitrary colors.
 - vip/ui adds `success`, `warning`, `highlight`, shadow, and ease tokens. The CLI writes the ones a component needs.

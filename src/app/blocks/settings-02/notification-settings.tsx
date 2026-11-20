@@ -165,8 +165,8 @@ export function NotificationSettings() {
           description="Take a break and keep your settings."
         >
           <Switch
-            checked={paused}
-            onCheckedChange={(value) => {
+            isSelected={paused}
+            onChange={(value) => {
               setPaused(value);
               save();
             }}
@@ -239,10 +239,8 @@ export function NotificationSettings() {
                             <Checkbox
                               aria-label={`${event.label} by ${channel}`}
                               isDisabled={paused}
-                              checked={matrix[event.id].includes(channel)}
-                              onCheckedChange={(on) =>
-                                toggle(event.id, channel, on)
-                              }
+                              isSelected={matrix[event.id].includes(channel)}
+                              onChange={(on) => toggle(event.id, channel, on)}
                               className="w-full items-center"
                             />
                           )}
@@ -295,9 +293,9 @@ export function NotificationSettings() {
         >
           <div className="grid p-5">
             <Switch
-              checked={quiet}
+              isSelected={quiet}
               isDisabled={paused}
-              onCheckedChange={(value) => {
+              onChange={(value) => {
                 setQuiet(value);
                 save();
               }}
