@@ -167,10 +167,7 @@ function useSignaturePadMachine({
   }, [api]);
 
   useEffect(() => {
-    if (!api.paths.length) {
-      setDataUrl("");
-      return;
-    }
+    if (!api.paths.length) return;
     let active = true;
     void liveApi.current
       ?.getDataUrl(dataUrlType, quality)
@@ -202,7 +199,7 @@ function useSignaturePadMachine({
 
   const context: SignaturePadRuntime = {
     api,
-    dataUrl,
+    dataUrl: api.paths.length ? dataUrl : "",
     size,
     invalid,
     readOnly: readOnly ?? false,
