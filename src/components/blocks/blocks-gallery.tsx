@@ -87,6 +87,18 @@ export function BlocksGallery({ category }: { category: string | null }) {
 }
 
 function AllBlocks() {
+  const groups = blockCategories.reduce<
+    { category: BlockCategory; blocks: Block[]; startIndex: number }[]
+  >((result, category) => {
+    const items = blocksIn(category.slug);
+    if (items.length === 0) return result;
+    const previous = result[result.length - 1];
+    const startIndex = previous
+      ? previous.startIndex + previous.blocks.length
+      : 0;
+    result.push({ category, blocks: items, startIndex });
+    return result;
+  }, []);
   return (
     <section
       id="gallery"
@@ -100,9 +112,7 @@ function AllBlocks() {
         All blocks
       </h2>
       <div className="mt-8 grid gap-14">
-        {blockCategories.map((category) => {
-          const blocks = blocksIn(category.slug);
-          if (blocks.length === 0) return null;
+        {groups.map(({ category, blocks, startIndex }) => {
           const headingId = `${category.slug}-title`;
           return (
             <section key={category.slug} aria-labelledby={headingId}>
@@ -112,7 +122,7 @@ function AllBlocks() {
               >
                 {category.label}
               </h3>
-              <BlockGrid blocks={blocks} />
+              <BlockGrid blocks={blocks} startIndex={startIndex} />
             </section>
           );
         })}
@@ -141,12 +151,18 @@ function CategoryBlocks({ category }: { category: BlockCategory }) {
   );
 }
 
-function BlockGrid({ blocks }: { blocks: Block[] }) {
+function BlockGrid({
+  blocks,
+  startIndex = 0,
+}: {
+  blocks: Block[];
+  startIndex?: number;
+}) {
   return (
     <ul className="grid gap-4 sm:grid-cols-2 lg:gap-5 xl:grid-cols-3">
-      {blocks.map((block) => (
+      {blocks.map((block, index) => (
         <li key={block.name} className="flex min-w-0">
-          <BlockCard block={block} />
+          <BlockCard block={block} priority={startIndex + index < 3} />
         </li>
       ))}
     </ul>

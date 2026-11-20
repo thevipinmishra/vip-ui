@@ -316,7 +316,7 @@ export function ProfileForm() {
             name="language"
             options={languages}
             value={draft.language}
-            onValueChange={update("language")}
+            onChange={(key) => update("language")(String(key))}
           />
           <ComboBox
             size="sm"
@@ -326,8 +326,8 @@ export function ProfileForm() {
             placeholder="Search for a city"
             options={timezones}
             value={draft.timezone}
-            onValueChange={(value) => {
-              if (value) update("timezone")(value);
+            onChange={(value) => {
+              if (value) update("timezone")(String(value));
             }}
           />
         </div>

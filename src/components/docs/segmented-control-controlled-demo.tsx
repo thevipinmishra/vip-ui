@@ -22,7 +22,7 @@ export function SegmentedControlControlledDemo() {
       <SegmentedControl
         aria-label="Chart range"
         value={range}
-        onChange={(value) => setRange(value as Range)}
+        onValueChange={(details) => setRange(details.value as Range)}
       >
         <SegmentedControlItem value="day">Day</SegmentedControlItem>
         <SegmentedControlItem value="week">Week</SegmentedControlItem>

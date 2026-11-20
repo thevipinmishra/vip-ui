@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { CodeBlock } from "@/components/docs/code-block";
+import { CodeSample } from "@/components/docs/code-sample";
 import {
   Code,
   ExternalLink,
@@ -93,7 +93,7 @@ export default async function InstallationPage() {
           Make sure that <Code>components.json</Code> has these values. Set{" "}
           <Code>tailwind.css</Code> to the path of your global CSS file.
         </p>
-        <CodeBlock
+        <CodeSample
           code={componentsJson}
           filename="components.json"
           language="json"
@@ -187,7 +187,7 @@ export default async function InstallationPage() {
             Add vip/ui to the <Code>registries</Code> in your{" "}
             <Code>components.json</Code>. Keep your other values.
           </p>
-          <CodeBlock
+          <CodeSample
             code={namespaceJson(namespaceUrl)}
             filename="components.json"
             language="json"
@@ -223,7 +223,7 @@ export default async function InstallationPage() {
               adds the status colors, shadows, and easing curves that components
               use. The other colors and the radius come from your theme.
             </p>
-            <CodeBlock code={setupCss} filename="index.css" language="css" />
+            <CodeSample code={setupCss} filename="index.css" language="css" />
           </InstallStep>
           <InstallStep number={3} title="Add a component">
             <p>
@@ -244,7 +244,7 @@ export default async function InstallationPage() {
         <p>
           Import the component from the <Code>vip-ui/</Code> folder.
         </p>
-        <CodeBlock code={usage} filename="example.tsx" />
+        <CodeSample code={usage} filename="example.tsx" />
         <Alert variant="neutral" title="Demo imports">
           Demo code imports from <Code>@/components/vip-ui/</Code>. If your
           alias is different, change the import paths. A demo can use other
@@ -291,7 +291,7 @@ export default async function InstallationPage() {
               {fileName(file)}
             </h3>
             <p>{description}</p>
-            <CodeBlock code={file.content} filename={displayPath(file)} />
+            <CodeSample code={file.content} filename={displayPath(file)} />
           </div>
         ))}
       </GuideSection>

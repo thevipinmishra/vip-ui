@@ -644,7 +644,7 @@ export function FileManager() {
 
             <Toolbar
               aria-label="File actions"
-              size="xs"
+              size="sm"
               className="mt-4 w-full flex-wrap gap-2"
             >
               <ToggleButtonGroup
@@ -676,7 +676,7 @@ export function FileManager() {
               </ToggleButtonGroup>
 
               <MenuTrigger>
-                <Button variant="outline" size="xs">
+                <Button variant="outline">
                   <ArrowsDownUpIcon
                     data-icon="inline-start"
                     size={16}
@@ -721,13 +721,13 @@ export function FileManager() {
 
               <Separator
                 orientation="vertical"
-                className="mx-1 hidden h-7 self-center sm:block"
+                className="mx-1 hidden h-5 self-center sm:block"
               />
 
               <SearchField
                 aria-label="Search files"
                 placeholder="Search files"
-                size="xs"
+                size="sm"
                 value={query}
                 onChange={setQuery}
                 className="w-full sm:w-52"
@@ -746,7 +746,7 @@ export function FileManager() {
                     if (list) addFiles(Array.from(list));
                   }}
                 >
-                  <Button size="sm">
+                  <Button>
                     <UploadSimpleIcon
                       data-icon="inline-start"
                       size={16}
@@ -1209,7 +1209,7 @@ export function FileManager() {
                       .join(" / ") || folder.name,
                 }))}
               value={moveTarget}
-              onValueChange={setMoveTarget}
+              onChange={(key) => setMoveTarget(String(key))}
             />
           </div>
           <DialogFooter>

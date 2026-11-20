@@ -8,7 +8,7 @@ export function SearchFieldSizesDemo() {
   return (
     <div className="grid w-full max-w-lg gap-6">
       <SearchField
-        size="xl"
+        size="lg"
         aria-label="Search the help center"
         placeholder="Search the help center"
       />

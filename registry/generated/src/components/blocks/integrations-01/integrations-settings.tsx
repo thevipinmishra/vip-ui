@@ -365,7 +365,7 @@ export function IntegrationsSettings() {
             <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <TabList aria-label="App category">
                 {categories.map((item) => (
-                  <Tab key={item.id} id={item.id} className="px-3">
+                  <Tab key={item.id} id={item.id}>
                     {item.label}
                   </Tab>
                 ))}
@@ -375,7 +375,6 @@ export function IntegrationsSettings() {
                 className="w-full md:w-44 md:shrink-0 xl:w-60"
               >
                 <SearchField
-                  size="sm"
                   label="Search"
                   placeholder="Search apps"
                   value={query}

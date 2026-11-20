@@ -262,7 +262,7 @@ export function AppearanceSettings() {
               <RadioGroup
                 aria-label="Theme"
                 value={theme}
-                onValueChange={(value) => pickTheme(value as ThemeMode)}
+                onChange={(value) => pickTheme(value as ThemeMode)}
               >
                 <RadioGroupItems className="grid grid-cols-3 gap-2 sm:gap-3">
                   {themes.map((option) => (
@@ -360,7 +360,7 @@ export function AppearanceSettings() {
                 <RadioGroup
                   aria-label="Interface font"
                   value={font}
-                  onValueChange={(value) => setFont(value as FontId)}
+                  onChange={(value) => setFont(value as FontId)}
                 >
                   <RadioGroupItems className="grid gap-2 sm:grid-cols-3">
                     {fonts.map((option) => (
@@ -434,8 +434,8 @@ export function AppearanceSettings() {
             </CardHeader>
             <CardContent>
               <Switch
-                checked={reduceMotion}
-                onCheckedChange={setReduceMotion}
+                isSelected={reduceMotion}
+                onChange={setReduceMotion}
                 description="Turn off panel, chart, and hover animations."
                 className="w-full"
               >

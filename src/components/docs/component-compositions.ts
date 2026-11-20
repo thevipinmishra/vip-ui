@@ -622,7 +622,7 @@ export const compositions: Record<string, Composition> = {
         children: [
           { part: "Button", note: "It must be focusable." },
           {
-            part: "TooltipContent",
+            part: "Tooltip",
             children: [{ part: "TooltipArrow", optional: true }],
           },
         ],
@@ -967,11 +967,11 @@ export const compositions: Record<string, Composition> = {
         note: "Owns the selected panel.",
         children: [
           {
-            part: "TabsList",
+            part: "TabList",
             note: "Scrolls when the tabs do not fit.",
-            children: [{ part: "TabsTrigger", repeats: true }],
+            children: [{ part: "Tab", repeats: true }],
           },
-          { part: "TabsContent", repeats: true },
+          { part: "TabPanel", repeats: true },
         ],
       },
     ],

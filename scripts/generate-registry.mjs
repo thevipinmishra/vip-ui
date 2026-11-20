@@ -70,6 +70,29 @@ const internalCategories = {
   chart: "charts",
   typography: "typography",
 };
+export const skillComponentsFile = "skills/vip-ui/references/components.md";
+
+export function skillComponentList() {
+  const sections = catalogGroups.map((group) =>
+    [
+      `## ${group.title}`,
+      "",
+      group.description,
+      "",
+      ...group.items.map((item) => `- \`${item.slug}\`: ${item.description}`),
+    ].join("\n"),
+  );
+  return `${[
+    "# Components",
+    "",
+    "Every vip/ui component by category. Install one with `pnpm dlx shadcn@latest add @vip-ui/<name>` and read its docs at `https://vip-ui.dev/components/<name>.md`. `pnpm registry:build` writes this file from `src/lib/catalog.json`.",
+    "",
+    ...sections.flatMap((section) => [section, ""]),
+  ]
+    .join("\n")
+    .trimEnd()}\n`;
+}
+
 export const registryAuthor =
   "thevipinmishra <https://github.com/thevipinmishra>";
 export const reservedNames = ["registry"];
@@ -1083,6 +1106,7 @@ export async function generate() {
   await writeFile(path.join(root, "registry.json"), json);
   await writeFile(path.join(outputDirectory, "registry.json"), json);
   await writeFile(path.join(outputDirectory, "setup.css"), setupCss());
+  await writeFile(path.join(root, skillComponentsFile), skillComponentList());
   console.log(
     `Generated ${libSources.size} libraries, ${sources.size} components, ${styleSources.size} stylesheets, ${themes.length} themes, ${scales.length} color scales, ${fonts.length} fonts, ${blocks.length} blocks, ${examples.length} chart examples, and 1 base in public/r`,
   );

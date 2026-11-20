@@ -9,14 +9,15 @@ import {
   createContext,
   type ReactNode,
   useContext,
-  useEffect,
   useId,
   useLayoutEffect,
   useRef,
   useState,
 } from "react";
+import { reducedMotionQuery } from "./motion";
 import { cn } from "./utils";
 import { Button, type ButtonProps } from "./button";
+import { useMediaQuery } from "./hooks";
 
 export type MarqueeSide = marquee.Side;
 export type MarqueeDirection = "ltr" | "rtl";
@@ -125,20 +126,6 @@ function stableId(value: string) {
   return value.replace(/[^a-zA-Z0-9_-]/g, "");
 }
 
-function useReducedMotionPreference() {
-  const [reduced, setReduced] = useState(false);
-
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReduced(query.matches);
-    update();
-    query.addEventListener("change", update);
-    return () => query.removeEventListener("change", update);
-  }, []);
-
-  return reduced;
-}
-
 function composedMask(animated: boolean, vertical: boolean) {
   if (!animated) return undefined;
   return vertical
@@ -186,7 +173,7 @@ export function MarqueeRoot({
   const [detectedDir, setDetectedDir] = useState<MarqueeDirection>("ltr");
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
-  const reduceMotion = useReducedMotionPreference();
+  const reduceMotion = useMediaQuery(reducedMotionQuery);
 
   useLayoutEffect(() => {
     if (dir) return;
@@ -530,7 +517,7 @@ export function Marquee({
   ...props
 }: MarqueeProps) {
   const isStatic = speed <= 0;
-  const reduceMotion = useReducedMotionPreference();
+  const reduceMotion = useMediaQuery(reducedMotionQuery);
   const vertical = side === "top" || side === "bottom";
   const gapStyle = spacing
     ? ({ "--marquee-gap": spacing } as CSSProperties)

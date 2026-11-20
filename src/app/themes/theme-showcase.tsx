@@ -933,7 +933,7 @@ function NotificationsScene({ className }: { className?: string }) {
         {settings.map((setting) => (
           <Switch
             key={setting.id}
-            defaultChecked={setting.on}
+            defaultSelected={setting.on}
             description={setting.description}
             className="-mx-2 rounded-lg px-2 py-2"
           >
@@ -1008,7 +1008,7 @@ function ProjectScene({ className }: { className?: string }) {
               maximumFractionDigits: 0,
             }}
           />
-          <Checkbox defaultChecked>Preview every pull request</Checkbox>
+          <Checkbox defaultSelected>Preview every pull request</Checkbox>
         </CardContent>
         <CardFooter className="justify-end">
           <Button variant="ghost" type="reset">

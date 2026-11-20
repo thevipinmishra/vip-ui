@@ -85,7 +85,7 @@ export interface ResizableHandleProps
   /** Render the grip icon in the center of the handle. */
   withGrip?: boolean;
   /** Stops resizing with this handle. */
-  isDisabled?: boolean;
+  disabled?: boolean;
   /** Optional content rendered inside the handle. */
   children?: ReactNode;
   "aria-label"?: string;
@@ -426,7 +426,7 @@ function ResizableGrip({ horizontal }: { horizontal: boolean }) {
 
 export function ResizableHandle({
   withGrip = false,
-  isDisabled: disabled = false,
+  disabled = false,
   className,
   style,
   onDoubleClick,

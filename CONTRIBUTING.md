@@ -79,24 +79,25 @@ Use a kebab-case slug, for example `date-field`. The registry item name is the s
 2. Add an item to the correct group in `src/lib/catalog.json`, with `slug`, `name`, and `description`. Write the description as one sentence that starts with a third-person verb, for example "Selects one option from a list in a popover." The catalog, the component page, the Markdown export, `llms.txt`, and the registry all show this text. If the component wraps a React Aria component, add its docs link to `reactAriaDocs` in `src/lib/catalog.ts`.
 3. If the file has no docs page of its own and other components import it, add its description to `src/lib/internal-descriptions.json` and its slug to `sharedFileSlugs` in `src/lib/registry-docs.ts`. Otherwise the registry build or the page build fails.
 4. Add a preview for the component index to `catalogPreviews` in `src/components/docs/catalog-preview-registry.ts`. Overlays must not open from a preview; use a drawing, as in `catalog-preview-overlays.tsx`.
-5. Add demos to `src/components/docs/`. Name the usage demo `<slug>-demo.tsx` or `<slug>-basic-demo.tsx`. Name each example `<slug>-<example>-demo.tsx`.
-6. Add the page data to `pageSources` in `src/lib/component-examples.ts`: `usage` and `examples`. Each example has a `title`, an optional `description`, and a `sourcePath`.
-7. Add the page to `src/app/components/(docs)/[slug]/page.tsx`. Add an item to `entries`. Add the usage demo to `basicPreviews` if it is not `<slug>-demo.tsx`. Add the example demos to `examplePreviews` in the same order as `examples`. To give a component its own page, add `src/app/components/(docs)/<slug>/page.tsx` instead, as `alert/page.tsx` does.
-8. Add the API table to `componentApi` in `src/lib/component-api.ts`. Use `apiPart<typeof YourComponent>()`, so TypeScript checks each prop name against the component props.
-9. If the component has more than one part, add its part tree to `src/components/docs/component-compositions.ts`.
-10. Run `pnpm registry:build` and commit the generated files.
+5. Add demos to `src/components/docs/`. Name the usage demo `<slug>-demo.tsx` or `<slug>-basic-demo.tsx`. Name each example `<slug>-<example>-demo.tsx`. Each file exports one component with the PascalCase name of the file, for example `ButtonSizesDemo` in `button-sizes-demo.tsx`.
+6. Add the page data to `pageSources` in `src/lib/component-examples.ts`: `usage` and `examples`. Each example has a `title`, an optional `description`, and a `sourcePath`. The page at `/components/<slug>` loads the demos from these file names. Add an optional `summary` sentence to make the page meta description specific.
+7. Add the API table to `componentApi` in `src/lib/component-api.ts`. Use `apiPart<typeof YourComponent>()`, so TypeScript checks each prop name against the component props. Give each prop a `name` and a `description`. Then run `pnpm api:build`, which reads the type, the required flag, and the default from the component source. Set `type` or `default` on a prop only when the generated value does not read well.
+8. If the component has more than one part, add its part tree to `src/components/docs/component-compositions.ts`.
+9. Run `pnpm registry:build` and commit the generated files.
 
-To change an existing component, edit its source file and its docs data. Then run `pnpm registry:build`.
+To change an existing component, edit its source file and its docs data. Then run `pnpm api:build` and `pnpm registry:build`.
 
 ## Code conventions
 
 - Use React Aria Components for interactive behavior: focus, keyboard, press, selection, and overlays. Do not write your own keyboard or focus logic when React Aria has it.
+- Keep the prop names of the library that a component wraps. A React Aria wrapper uses React Aria names, such as `isDisabled`, `onChange`, and `selectedKey`. A Zag wrapper uses Zag names, such as `disabled` and `onValueChange`. Do not add alias props, such as `onValueChange` on a React Aria component or `checked` on a `Switch`.
 - Pass `className` through `composeRenderProps` on React Aria components, then merge it with `cn` from `@/lib/utils`.
 - Add a `data-slot` attribute to each rendered part, for example `data-slot="switch-button"`.
 - Use Tailwind CSS v4 and Tailwind Variants. Use a `tv()` recipe when a component has a variant or size axis. Keep each variant value a complete class string. See [styling and variants](https://vip-ui.dev/components/styling).
 - Use theme colors such as `bg-primary` and `text-foreground`. Do not use fixed color values.
-- Use the shared size scale. `src/components/ui/size.tsx` has the `Size` type, `SizeProvider`, and `useSize`. The control heights are xs 28px, sm 36px, md 44px, lg 48px, and xl 56px. Groups pass their size to their items through `SizeProvider`.
-- Every animated component must respect reduced motion. Use `motion-safe:` and `motion-reduce:` classes for CSS motion. For Motion, use `useReducedMotion` with `transitionFor` from `@/lib/motion`.
+- Use the shared size scale. `src/components/ui/size.tsx` has the `Size` type, `SizeProvider`, and `useSize`. The control heights are xs 28px, sm 32px, md 40px, lg 48px, and xl 56px. Groups pass their size to their items through `SizeProvider`.
+- Every animated component must respect reduced motion. Use `motion-safe:` and `motion-reduce:` classes for CSS motion. For Motion, use `useReducedMotion` with `transitionFor` from `@/lib/motion`. For the Web Animations API or scrolling, use `prefersReducedMotion()` from `@/lib/motion`. To track a media query in render, use `useMediaQuery` from `./hooks`.
+- Import icons from `@phosphor-icons/react` in a client component. In a file without `"use client"`, import them from `@phosphor-icons/react/ssr`.
 - Use the easing, duration, and spring tokens in `src/lib/motion.ts`. Do not add new timing values in a component.
 - Do not add code comments unless the code is not clear without them. Keep `biome-ignore` comments.
 - Use LF line endings. `.gitattributes` sets this. Biome fails on CRLF.

@@ -10,6 +10,8 @@
     "build": "next build",
     "palette:build": "node scripts/generate-palettes.mjs && biome format --write src/lib/palette-data.ts",
     "registry:build": "node scripts/generate-registry.mjs && biome format --write public/r registry.json",
+    "blocks:posters": "node scripts/generate-block-posters.mjs",
+    "api:build": "node scripts/generate-component-api.mjs && biome format --write src/lib/component-api.generated.json",
     "test:registry": "node --test \"scripts/*.test.mjs\"",
     "test:registry:cli": "node scripts/test-registry-cli.mjs",
     "test:a11y": "node scripts/axe-a11y.mjs",
@@ -18,7 +20,8 @@
     "seo:audit": "node scripts/seo-audit.mjs",
     "start": "next start",
     "lint": "biome check",
-    "format": "biome format --write"
+    "format": "biome format --write",
+    "doctor": "npx react-doctor@latest"
   },
   "dependencies": {
     "@internationalized/date": "^3.12.4",
@@ -43,8 +46,8 @@
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "geist": "1.9.2",
-    "motion": "^14.12.0",
-    "next": "16.4.5",
+    "motion": "^14.14.0",
+    "next": "16.4.6",
     "react": "19.3.1",
     "react-aria": "3.53.1",
     "react-aria-components": "^1.22.1",
@@ -53,8 +56,8 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
-    "@biomejs/biome": "2.6.6",
-    "@playwright/test": "1.65.0",
+    "@biomejs/biome": "2.6.8",
+    "@playwright/test": "1.65.1",
     "@tailwindcss/postcss": "^4.3.5",
     "@types/d3-geo": "^3.1.1",
     "@types/d3-scale": "^4.0.9",
@@ -66,7 +69,8 @@
     "react-doctor": "^0.9.23",
     "tailwindcss": "^4.3.5",
     "tailwindcss-react-aria-components": "^2.2.0",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "typescript5": "npm:typescript@5.9.3"
   },
   "packageManager": "pnpm@12.14.0",
   "intent": {

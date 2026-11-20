@@ -5,7 +5,7 @@ export function TextAreaSizesDemo() {
     <div className="grid w-full max-w-md gap-3">
       <TextArea size="sm" aria-label="Comment" placeholder="Add a comment" />
       <TextArea aria-label="Comment" placeholder="Add a comment" />
-      <TextArea size="xl" aria-label="Comment" placeholder="Add a comment" />
+      <TextArea size="lg" aria-label="Comment" placeholder="Add a comment" />
     </div>
   );
 }

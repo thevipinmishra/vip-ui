@@ -7,7 +7,7 @@ export function InlineEditDisabledDemo() {
     <InlineEdit
       label="Owner"
       defaultValue="Maya Chen"
-      isDisabled
+      disabled
       className="max-w-sm"
     />
   );

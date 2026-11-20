@@ -1,8 +1,8 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { registryUrl } from "@/lib/registry-docs";
-import { CodeBlock } from "./code-block";
 import { CodeFrame } from "./code-frame";
+import { CodeSample } from "./code-sample";
 import { CodeSnippet } from "./code-snippet";
 import { InstallTabs } from "./install-tabs";
 import { PackageManagerCommand } from "./package-manager-command";
@@ -30,6 +30,7 @@ export async function TypographyInstall() {
             <PackageManagerCommand
               action="run"
               args={`shadcn@latest add ${cliUrl}`}
+              wrap
             />
           ) : (
             <p className={note}>
@@ -47,7 +48,7 @@ export async function TypographyInstall() {
           <CodeFrame code={stylesheet} filename="typography.css" previewCode>
             <CodeSnippet code={stylesheet} language="css" />
           </CodeFrame>
-          <CodeBlock code={importCss} filename="globals.css" language="css" />
+          <CodeSample code={importCss} filename="globals.css" language="css" />
         </div>
       }
     />

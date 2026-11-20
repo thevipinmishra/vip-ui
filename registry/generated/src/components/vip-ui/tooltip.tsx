@@ -73,5 +73,3 @@ export function TooltipArrow({
     </OverlayArrow>
   );
 }
-
-export const TooltipContent = Tooltip;

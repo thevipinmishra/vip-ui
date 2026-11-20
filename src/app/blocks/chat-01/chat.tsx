@@ -494,7 +494,7 @@ function AssistantChatSession() {
                 aria-label="Model"
                 size="sm"
                 value={model}
-                onValueChange={setModel}
+                onChange={(key) => setModel(String(key))}
                 className="ms-auto w-auto"
               >
                 <SelectTrigger className="border-transparent bg-transparent text-muted-foreground shadow-none hover:border-transparent hover:bg-muted hover:text-foreground" />

@@ -1,14 +1,9 @@
 "use client";
 
 import { useInView } from "motion/react";
-import {
-  type ComponentProps,
-  useEffect,
-  useRef,
-  useState,
-  useSyncExternalStore,
-} from "react";
+import { type ComponentProps, useEffect, useRef, useState } from "react";
 import { cn } from "./utils";
+import { useMounted } from "./hooks";
 
 export type HighlighterVariant = "highlight" | "underline" | "circle";
 
@@ -47,18 +42,6 @@ function circlePath({ width, height, stroke }: Box) {
     commands.push(`${index ? "L" : "M"} ${x.toFixed(2)} ${y.toFixed(2)}`);
   }
   return commands.join(" ");
-}
-
-function subscribeToMount() {
-  return () => {};
-}
-
-function useMounted() {
-  return useSyncExternalStore(
-    subscribeToMount,
-    () => true,
-    () => false,
-  );
 }
 
 export function Highlighter({

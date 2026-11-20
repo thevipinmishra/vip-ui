@@ -52,33 +52,35 @@ export function ApiReference({
               {part.description}
             </p>
           )}
-          <dl className="divide-y divide-border/70 rounded-xl border border-border/70 bg-card/50">
-            {part.props.map((prop) => (
-              <div key={prop.name} className="px-4 py-3 sm:px-5">
-                <dt className="font-mono text-[13px] leading-6 text-muted-foreground wrap-anywhere">
-                  <span className="font-medium text-foreground">
-                    {prop.name}
-                  </span>
-                  {": "}
-                  <TypeSignature type={prop.type} />
-                  {prop.default && (
-                    <>
-                      {" = "}
-                      <span className="text-foreground">{prop.default}</span>
-                    </>
-                  )}
-                  {prop.required && (
-                    <span className="ms-2 inline-block rounded-sm bg-muted px-1.5 font-sans text-[11px] font-medium leading-5 text-muted-foreground">
-                      Required
+          {part.props.length > 0 && (
+            <dl className="divide-y divide-border/70 rounded-xl border border-border/70 bg-card/50">
+              {part.props.map((prop) => (
+                <div key={prop.name} className="px-4 py-3 sm:px-5">
+                  <dt className="font-mono text-[13px] leading-6 text-muted-foreground wrap-anywhere">
+                    <span className="font-medium text-foreground">
+                      {prop.name}
                     </span>
-                  )}
-                </dt>
-                <dd className="mt-0.5 text-[13px] leading-5 text-muted-foreground">
-                  {prop.description}
-                </dd>
-              </div>
-            ))}
-          </dl>
+                    {": "}
+                    <TypeSignature type={prop.type} />
+                    {prop.default && (
+                      <>
+                        {" = "}
+                        <span className="text-foreground">{prop.default}</span>
+                      </>
+                    )}
+                    {prop.required && (
+                      <span className="ms-2 inline-block rounded-sm bg-muted px-1.5 font-sans text-[11px] font-medium leading-5 text-muted-foreground">
+                        Required
+                      </span>
+                    )}
+                  </dt>
+                  <dd className="mt-0.5 text-[13px] leading-5 text-muted-foreground">
+                    {prop.description}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          )}
         </div>
       ))}
     </div>

@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/dialog";
 import { Meter } from "@/components/ui/meter";
 import { NumberField } from "@/components/ui/number-field";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tab, TabList, TabPanel, Tabs } from "@/components/ui/tabs";
 import { showToast } from "@/components/ui/toast";
 import { Block, BlockBody, BlockFooter } from "./block";
 
@@ -42,17 +42,17 @@ export function PlanCard() {
       action={<Badge variant="accent">Pro</Badge>}
     >
       <BlockBody className="gap-0 pt-2">
-        <Tabs defaultValue="usage">
-          <TabsList aria-label="Plan details" className="w-full">
-            <TabsTrigger value="usage" className="flex-1">
+        <Tabs defaultSelectedKey="usage">
+          <TabList aria-label="Plan details" className="w-full">
+            <Tab id="usage" className="flex-1">
               Usage
-            </TabsTrigger>
-            <TabsTrigger value="billing" className="flex-1">
+            </Tab>
+            <Tab id="billing" className="flex-1">
               Billing
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent
-            value="usage"
+            </Tab>
+          </TabList>
+          <TabPanel
+            id="usage"
             className="mt-4 grid gap-4 rounded-none bg-transparent p-0 shadow-none ring-0"
           >
             <Meter
@@ -65,9 +65,9 @@ export function PlanCard() {
             <Alert variant="warning" title="82% of build minutes used">
               New builds stop at the limit.
             </Alert>
-          </TabsContent>
-          <TabsContent
-            value="billing"
+          </TabPanel>
+          <TabPanel
+            id="billing"
             className="mt-4 rounded-none bg-transparent p-0 shadow-none ring-0"
           >
             <DescriptionList className="sm:grid-cols-[minmax(0,7rem)_minmax(0,1fr)] sm:gap-y-3">
@@ -80,7 +80,7 @@ export function PlanCard() {
               <DescriptionTerm>Card</DescriptionTerm>
               <DescriptionDetail>Visa ending in 4242</DescriptionDetail>
             </DescriptionList>
-          </TabsContent>
+          </TabPanel>
         </Tabs>
       </BlockBody>
       <BlockFooter className="pt-4">

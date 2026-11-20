@@ -16,7 +16,7 @@ export function SelectInvalidDemo() {
   return (
     <Select
       value={selected}
-      onValueChange={setSelected}
+      onChange={(key) => setSelected(String(key))}
       isInvalid={!selected}
       className="w-full max-w-85"
     >

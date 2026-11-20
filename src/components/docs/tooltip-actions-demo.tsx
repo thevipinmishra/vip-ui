@@ -2,7 +2,7 @@
 
 import { CheckIcon, InfoIcon } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
-import { TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 
 export function TooltipActionsDemo() {
   return (
@@ -11,13 +11,13 @@ export function TooltipActionsDemo() {
         <Button iconOnly variant="outline" aria-label="Mark as reviewed">
           <CheckIcon aria-hidden="true" />
         </Button>
-        <TooltipContent>Mark as reviewed</TooltipContent>
+        <Tooltip>Mark as reviewed</Tooltip>
       </TooltipTrigger>
       <TooltipTrigger>
         <Button iconOnly variant="ghost" aria-label="Show details">
           <InfoIcon aria-hidden="true" />
         </Button>
-        <TooltipContent placement="bottom">Show details</TooltipContent>
+        <Tooltip placement="bottom">Show details</Tooltip>
       </TooltipTrigger>
     </div>
   );

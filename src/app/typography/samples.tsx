@@ -3,6 +3,9 @@ import { Response, ResponseContent } from "@/components/ui/response";
 
 const studio = "typography typography-studio";
 
+const sampleCode =
+  "focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring";
+
 const installCommand = `pnpm dlx shadcn@latest add @vip-ui/button
 pnpm dlx shadcn@latest add @vip-ui/dialog`;
 
@@ -28,7 +31,8 @@ export function DocsSample() {
           Import the component from <code>@/components/vip-ui</code>.
         </li>
       </ol>
-      <pre>
+      {/* biome-ignore lint/a11y/noNoninteractiveTabindex: the sample scrolls horizontally and needs a keyboard stop */}
+      <pre tabIndex={0} className={sampleCode}>
         <code>{installCommand}</code>
       </pre>
       <div className="markdown-alert markdown-alert-note">
@@ -90,7 +94,8 @@ export function ChatSample() {
               <li>Restart the export worker.</li>
               <li>Run the export again.</li>
             </ol>
-            <pre>
+            {/* biome-ignore lint/a11y/noNoninteractiveTabindex: the sample scrolls horizontally and needs a keyboard stop */}
+            <pre tabIndex={0} className={sampleCode}>
               <code>studio export --project brand-refresh</code>
             </pre>
             <p>

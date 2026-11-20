@@ -88,7 +88,7 @@ function SegmentSpecimen({ play }: { play: number }) {
       selectionMode="single"
       disallowEmptySelection
       selectedKeys={[periods[(play + 1) % periods.length]]}
-      size="xs"
+      size="sm"
     >
       {periods.map((period) => (
         <ToggleButton key={period} id={period} variant="segmented">

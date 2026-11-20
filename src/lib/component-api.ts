@@ -7,6 +7,7 @@ import type { Autocomplete } from "@/components/ui/autocomplete";
 import type { Avatar } from "@/components/ui/avatar";
 import type { Badge } from "@/components/ui/badge";
 import type { BorderBeam } from "@/components/ui/border-beam";
+import type { Breadcrumb, BreadcrumbItem } from "@/components/ui/breadcrumbs";
 import type { Button } from "@/components/ui/button";
 import type { ButtonGroup } from "@/components/ui/button-group";
 import type { ButtonLink } from "@/components/ui/button-link";
@@ -40,6 +41,8 @@ import type {
 } from "@/components/ui/code-block";
 import type { ColorField } from "@/components/ui/color-field";
 import type { ColorPicker } from "@/components/ui/color-picker";
+import type { ColorSwatch } from "@/components/ui/color-swatch";
+import type { ColorSwatchPickerItem } from "@/components/ui/color-swatch-picker";
 import type { ColorWheel } from "@/components/ui/color-wheel";
 import type { ComboBoxProps, ComboBoxTags } from "@/components/ui/combo-box";
 import type {
@@ -47,6 +50,7 @@ import type {
   CommandPaletteItem,
   CommandPaletteSection,
 } from "@/components/ui/command-palette";
+import type { ContextMenuTrigger } from "@/components/ui/context-menu";
 import type {
   Conversation,
   ConversationContent,
@@ -63,14 +67,23 @@ import type {
 import type { DateField } from "@/components/ui/date-field";
 import type { DatePicker } from "@/components/ui/date-picker";
 import type { DateRangePicker } from "@/components/ui/date-range-picker";
+import type { DescriptionList } from "@/components/ui/description-list";
 import type { DialogClose, DialogContent } from "@/components/ui/dialog";
+import type {
+  DisclosureHeader,
+  DisclosurePanel,
+} from "@/components/ui/disclosure";
+import type { DropZone, DropZoneTrigger } from "@/components/ui/drop-zone";
 import type { EmptyStateTitle } from "@/components/ui/empty-state";
 import type {
   EventCalendar,
   EventCalendarGrid,
   EventCalendarHeader,
 } from "@/components/ui/event-calendar";
+import type { Fieldset, FieldsetLegend } from "@/components/ui/fieldset";
 import type { FileTrigger } from "@/components/ui/file-trigger";
+import type { Form } from "@/components/ui/form";
+import type { GridList, GridListItem } from "@/components/ui/grid-list";
 import type { Highlighter } from "@/components/ui/highlighter";
 import type { IconSwap } from "@/components/ui/icon-swap";
 import type {
@@ -87,6 +100,7 @@ import type {
   InlineEditSubmitTrigger,
 } from "@/components/ui/inline-edit";
 import type { InputGroup, InputGroupAddon } from "@/components/ui/input-group";
+import type { InlineCode, Kbd, KbdGroup } from "@/components/ui/kbd-code";
 import type { LayoutMorph } from "@/components/ui/layout-morph";
 import type {
   Lightbox,
@@ -96,6 +110,8 @@ import type {
   LightboxImage,
   LightboxTrigger,
 } from "@/components/ui/lightbox";
+import type { Link } from "@/components/ui/link";
+import type { ListBox, ListBoxItem } from "@/components/ui/list-box";
 import type {
   Marquee,
   MarqueeContent,
@@ -154,6 +170,7 @@ import type {
   QrCodeRoot,
 } from "@/components/ui/qr-code";
 import type { Radio, RadioGroup } from "@/components/ui/radio-group";
+import type { RangeCalendar } from "@/components/ui/range-calendar";
 import type { RatingInput } from "@/components/ui/rating-input";
 import type { Reasoning, ReasoningPanel } from "@/components/ui/reasoning";
 import type {
@@ -182,6 +199,7 @@ import type {
   SegmentedControlItem,
 } from "@/components/ui/segmented-control";
 import type { Select, SelectSection } from "@/components/ui/select";
+import type { Separator } from "@/components/ui/separator";
 import type { Sheet, SheetClose } from "@/components/ui/sheet";
 import type {
   Sidebar,
@@ -209,6 +227,7 @@ import type {
   SignaturePadRoot,
   SignaturePadSegment,
 } from "@/components/ui/signature-pad";
+import type { Skeleton } from "@/components/ui/skeleton";
 import type { Slider, SliderMarks } from "@/components/ui/slider";
 import type { Spinner } from "@/components/ui/spinner";
 import type { SpotlightCard } from "@/components/ui/spotlight-card";
@@ -217,12 +236,7 @@ import type { StatTrend } from "@/components/ui/stat";
 import type { Stepper } from "@/components/ui/stepper";
 import type { Switch } from "@/components/ui/switch";
 import type { Column, TableLoadMoreItem } from "@/components/ui/table";
-import type {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
+import type { Tab, TabList, TabPanel } from "@/components/ui/tabs";
 import type { TagGroup } from "@/components/ui/tag-group";
 import type { TextArea } from "@/components/ui/text-area";
 import type { TextField } from "@/components/ui/text-field";
@@ -246,9 +260,10 @@ import type {
   ToolCallTrigger,
 } from "@/components/ui/tool-call";
 import type { Toolbar } from "@/components/ui/toolbar";
-import type { TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import type { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 import type { Tour, TourTarget } from "@/components/ui/tour";
 import type { TreeItem } from "@/components/ui/tree";
+import generatedApi from "./component-api.generated.json";
 
 interface ApiEntry {
   type: string;
@@ -257,7 +272,7 @@ interface ApiEntry {
 
 export interface ApiProp extends ApiEntry {
   name: string;
-  required?: true;
+  required?: boolean;
   default?: string;
 }
 
@@ -269,18 +284,23 @@ export interface ApiPart {
 
 type PropsOf<T> = T extends (props: infer P) => unknown ? P : T;
 type Keys<P> = Extract<keyof P, string>;
-type RequiredKeys<P> = {
-  [K in Keys<P>]-?: object extends Pick<P, K> ? never : K;
-}[Keys<P>];
+
+type GeneratedProp = Partial<Pick<ApiProp, "type" | "required" | "default">>;
+
+const generatedProps: Record<
+  string,
+  Record<string, GeneratedProp>
+> = generatedApi;
 
 type TypedProp<P> =
-  | (ApiEntry & { name: RequiredKeys<P>; required: true })
+  | {
+      name: Keys<P>;
+      type?: string;
+      default?: string;
+      description: string;
+    }
   | (ApiEntry & {
-      name:
-        | Exclude<Keys<P>, RequiredKeys<P>>
-        | `--${string}`
-        | `data-${string}`;
-      required?: never;
+      name: `--${string}` | `data-${string}`;
       default?: string;
     });
 
@@ -289,7 +309,16 @@ export function apiPart<T>(part: {
   description?: string;
   props: readonly TypedProp<PropsOf<T>>[];
 }): ApiPart {
-  return part;
+  const generated = generatedProps[part.name] ?? {};
+  return {
+    ...part,
+    props: part.props.map((prop) => {
+      const merged = { ...generated[prop.name], ...prop };
+      if (!merged.type)
+        throw new Error(`No type for ${part.name}.${prop.name}`);
+      return { ...merged, type: merged.type };
+    }),
+  };
 }
 
 export function showsPartHeadings(parts: readonly ApiPart[], slug: string) {
@@ -306,55 +335,42 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "code",
-          type: "string",
-          required: true,
           description: "The code text. The copy button writes it as given.",
         },
         {
           name: "language",
-          type: "string",
           description:
             "The language name. It shows in the default header when you do not render a title.",
         },
         {
           name: "lineNumbers",
-          type: "boolean",
-          default: "true",
           description:
             "Shows a gutter with line numbers. The numbers are not copied or selected. Ignored when you pass children.",
         },
         {
           name: "highlight",
-          type: "number[]",
           description:
             "Highlights these 1-based line numbers. Ignored when you pass children.",
         },
         {
           name: "wrap",
-          type: "boolean",
           description: "Wraps long lines, controlled.",
         },
         {
           name: "defaultWrap",
-          type: "boolean",
-          default: "false",
           description: "Wraps long lines at first, uncontrolled.",
         },
         {
           name: "onWrapChange",
-          type: "(wrap: boolean) => void",
           description: "Receives the new wrap state from the toggle.",
         },
         {
           name: "maxLines",
-          type: "number",
           description:
             "Collapses the body at this many lines and adds a Show more button.",
         },
         {
           name: "isStreaming",
-          type: "boolean",
-          default: "false",
           description:
             "Marks the frame busy and keeps the gutter wide while the code arrives.",
         },
@@ -365,7 +381,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode",
           description:
             "Highlighted output from your highlighter. Without it, the body shows the code as plain text.",
         },
@@ -378,7 +393,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode",
           description:
             "Replaces the default title and action row with custom content.",
         },
@@ -391,7 +405,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode",
           description: "The title text, usually the file name.",
         },
       ],
@@ -403,7 +416,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode",
           description: "Replaces the default wrap and copy actions.",
         },
       ],
@@ -427,36 +439,26 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "text",
-          type: "string",
-          required: true,
           description:
             "Sets the text to reveal. Screen readers read it once, as plain text.",
         },
         {
           name: "split",
-          type: '"words" | "characters"',
-          default: '"words"',
           description:
             "Reveal by word or by character. Use words for scripts that join letters, such as Arabic.",
         },
         {
           name: "trigger",
-          type: '"mount" | "in-view"',
-          default: '"in-view"',
           description:
             "Start on mount, or the first time the text comes into view.",
         },
         {
           name: "stagger",
-          type: "number",
-          default: "0.045",
           description:
             "Delay in seconds between units. Long text uses a shorter delay, so the last unit starts within 0.6 seconds of the first.",
         },
         {
           name: "delay",
-          type: "number",
-          default: "0",
           description: "Delay in seconds before the first unit starts.",
         },
       ],
@@ -468,21 +470,16 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "value",
-          type: "string",
-          required: true,
           description:
             "Sets the text to show. A change starts a scramble; the first value shows without one. Add `aria-live` to announce the final text.",
         },
         {
           name: "duration",
-          type: "number",
-          default: "0.7",
           description:
             "Sets the time in seconds to resolve the text. Set 0 to change the text without a scramble.",
         },
         {
           name: "glyphs",
-          type: "string",
           default: '"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"',
           description:
             "Sets the characters that show during the scramble. The default monospace font keeps the width the same.",
@@ -496,33 +493,27 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "show",
-          type: "boolean",
-          required: true,
           description:
             "Shows or hides the content. The content is inert during its exit. Move focus before you hide focused content.",
         },
         {
           name: "as",
-          type: '"div" | "span"',
           default: '"div"',
           description: "Outer element. A span is inline-block, so it can move.",
         },
         {
           name: "distance",
-          type: "number",
           default: "8",
           description: "Travel in pixels for the entrance and the exit.",
         },
         {
           name: "duration",
-          type: "number",
           default: "0.2",
           description:
             "Entrance time in seconds. The exit takes 70% of this time.",
         },
         {
           name: "collapse",
-          type: "boolean",
           default: "false",
           description:
             "Animates the height with the content, so the content below moves smoothly.",
@@ -536,22 +527,16 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "as",
-          type: '"div" | "ul" | "ol"',
-          default: '"div"',
           description:
             "Use ul or ol with li StaggerItem children for a semantic list.",
         },
         {
           name: "trigger",
-          type: '"mount" | "in-view"',
-          default: '"in-view"',
           description:
             "Start the sequence on mount, or the first time the group comes into view.",
         },
         {
           name: "stagger",
-          type: "number",
-          default: "0.08",
           description:
             "Delay in seconds between StaggerItem children. A long group uses a shorter delay, so the last item starts within 0.6 seconds.",
         },
@@ -562,8 +547,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "as",
-          type: '"div" | "li"',
-          default: '"div"',
           description: "Element that receives the group animation.",
         },
       ],
@@ -575,8 +558,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "contentKey",
-          type: "string | number",
-          required: true,
           description:
             "Change it with the content to crossfade the content and animate the size. The width animates only when the morph fits its content, such as with w-fit. Other size changes, such as a window resize, do not animate.",
         },
@@ -589,94 +570,76 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "speed",
-          type: "number",
-          default: "50",
           description:
             "Movement in pixels per second. Hover, focus, and the built-in button pause it. Set 0 to stop it and wrap the items. Reduced motion does the same.",
         },
         {
           name: "reverse",
-          type: "boolean",
-          default: "false",
           description:
             "Move the content toward the end edge instead of the start edge.",
         },
         {
           name: "side",
-          type: '"start" | "end" | "top" | "bottom"',
           default: '"start"',
           description:
             "Sets the side the content scrolls toward. `top` and `bottom` scroll vertically.",
         },
         {
           name: "delay",
-          type: "number",
           default: "0",
           description: "Waits this many seconds before the animation starts.",
         },
         {
           name: "loopCount",
-          type: "number",
           default: "0",
           description:
             "Sets the number of loops. `0` loops forever; a finite count fires onComplete at the end.",
         },
         {
           name: "spacing",
-          type: "string",
           default: '"1.5rem"',
           description:
             "Sets the space between items. Marquee writes it to `--marquee-gap`; composed parts use `--marquee-spacing`.",
         },
         {
           name: "pauseOnInteraction",
-          type: "boolean",
-          default: "true",
           description:
             "Pauses while the pointer is over the frame or focus is inside it.",
         },
         {
           name: "paused",
-          type: "boolean",
           description: "The pause state, controlled.",
         },
         {
           name: "defaultPaused",
-          type: "boolean",
           default: "false",
           description: "The pause state at first, uncontrolled.",
         },
         {
           name: "onPauseChange",
-          type: "(details: { paused: boolean }) => void",
           description: "Called when the pause state changes.",
         },
         {
           name: "onLoopComplete",
-          type: "() => void",
           description: "Called when one loop finishes.",
         },
         {
           name: "onComplete",
-          type: "() => void",
           description:
             "Called when a finite loopCount finishes. It does not fire for an infinite loop.",
         },
         {
           name: "translations",
-          type: "{ root?: string }",
           description:
             "Sets the accessible name of the marquee region. `aria-label` does the same.",
         },
         {
           name: "dir",
-          type: '"ltr" | "rtl"',
           description:
             "Sets the writing direction. By default, the direction comes from the page.",
         },
         {
           name: "children",
-          type: "ReactNode",
           description:
             "Items to loop. Do not put IDs in them, because the copies repeat them. The copies are inert and hidden from assistive technology. A focused item moves into view.",
         },
@@ -696,7 +659,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "footer",
-          type: "ReactNode",
           description:
             "Renders after the frame, inside the marquee context, such as a pause button.",
         },
@@ -715,8 +677,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "index",
-          type: "number",
-          required: true,
           description: "Sets the copy index. `0` is the original.",
         },
       ],
@@ -734,8 +694,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "side",
-          type: '"start" | "end" | "top" | "bottom"',
-          required: true,
           description: "Sets the edge that fades.",
         },
       ],
@@ -747,7 +705,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode",
           description: "Replaces the default label.",
         },
       ],
@@ -759,8 +716,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "(api: MarqueeApi) => ReactNode",
-          required: true,
           description: "Draws the custom content inside MarqueeRoot.",
         },
       ],
@@ -772,29 +727,24 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"lg"',
           description:
             "Sets the size of the input and of the trigger. The list keeps one row height.",
         },
         {
           name: "options",
-          type: "ComboBoxOption[]",
           description: "Options for the default list layout.",
         },
         {
           name: "label",
-          type: "string",
           description: "Label above the input in the default layout.",
         },
         {
           name: "description",
-          type: "string",
           description: "Help text below the input in the default layout.",
         },
         {
           name: "placeholder",
-          type: "string",
           default: '"Search options"',
           description: "Input placeholder in the default layout.",
         },
@@ -803,25 +753,23 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           type: '"single" | "multiple"',
           default: '"single"',
           description:
-            'Set "multiple" to let the user select more than one option. The default layout then shows the selected options as tags. value, defaultValue, and onValueChange work only in single-selection mode. In multiple-selection mode, value and defaultValue take an array of option ids, and onChange receives the new array.',
+            'Set "multiple" to let the user select more than one option. The default layout then shows the selected options as tags. value and defaultValue then take an array of option ids, and onChange receives the new array.',
         },
         {
           name: "value",
-          type: "string",
-          description:
-            "The selected option id, controlled. Use it only in single-selection mode.",
+          type: "Key | null",
+          description: "The selected option id, controlled.",
         },
         {
           name: "defaultValue",
-          type: "string",
-          description:
-            "The option id that is selected at first, uncontrolled. Use it only in single-selection mode.",
+          type: "Key | null",
+          description: "The option id that is selected at first, uncontrolled.",
         },
         {
-          name: "onValueChange",
-          type: "(value: string) => void",
+          name: "onChange",
+          type: "(value: Key | null) => void",
           description:
-            "Receives the selected id in single-selection mode, or an empty string when the selection is cleared.",
+            "Receives the selected option id, or null when the selection is cleared.",
         },
       ],
     }),
@@ -830,14 +778,10 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "label",
-          type: "string",
-          default: '"Selected options"',
           description: "Accessible name for the selected tags.",
         },
         {
           name: "emptyText",
-          type: "string",
-          default: '"No options selected."',
           description: "Text shown when no tags are selected.",
         },
       ],
@@ -849,8 +793,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode",
-          required: true,
           description: "Attachment items. Give each one a unique key.",
         },
       ],
@@ -860,54 +802,42 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "name",
-          type: "string",
-          required: true,
           description: "Filename shown in the row.",
         },
         {
           name: "size",
-          type: '"sm" | "md"',
-          default: '"md"',
           description:
             "Sets the size of the row. The small size fits a prompt input.",
         },
         {
           name: "fileSize",
-          type: "number",
           description: "File size in bytes.",
         },
         {
           name: "previewUrl",
-          type: "string",
           description:
             "Image preview URL. Without it, the row shows a file icon.",
         },
         {
           name: "status",
-          type: '"ready" | "uploading" | "complete" | "error"',
-          default: '"ready"',
           description: "Upload state. Your app sets it.",
         },
         {
           name: "progress",
-          type: "number",
           description:
             "Upload percentage from 0 to 100. The status text shows it. Without it, the progress bar is indeterminate.",
         },
         {
           name: "errorMessage",
-          type: "string",
           default: '"Could not upload"',
           description: "Message shown when status is error.",
         },
         {
           name: "onRemove",
-          type: "() => void",
           description: "Shows a remove button and handles its press.",
         },
         {
           name: "onRetry",
-          type: "() => void",
           description: "Shows a retry button when status is error.",
         },
       ],
@@ -919,44 +849,36 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "label",
-          type: "string",
-          required: true,
           description: "Visible label for the select.",
         },
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"lg"',
           description:
             "Sets the size of the select box. The HTML size attribute is not available.",
         },
         {
           name: "description",
-          type: "string",
           description:
             "Help text below the select. Linked with aria-describedby.",
         },
         {
           name: "error",
-          type: "string",
           description:
             "Validation text below the select. Linked with aria-describedby. A value also marks the select invalid.",
         },
         {
           name: "isInvalid",
-          type: "boolean",
           default: "false",
           description:
             "Marks the select invalid. A value for error does the same.",
         },
         {
           name: "placeholder",
-          type: "string",
           description: "Adds an empty option.",
         },
         {
           name: "containerClassName",
-          type: "string",
           description: "Classes for the outer field layout.",
         },
       ],
@@ -968,50 +890,41 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"lg"',
           description:
             "Sets the size of the trigger. The list keeps one row height.",
         },
         {
           name: "options",
-          type: "SelectOption[]",
           description:
             "Options for the default layout. Each option has an id, a name, and an optional description.",
         },
         {
           name: "label",
-          type: "string",
           description:
             "Label above the trigger in the default layout. When you compose the parts, add SelectLabel or pass aria-label.",
         },
         {
           name: "description",
-          type: "string",
           description: "Help text below the trigger in the default layout.",
         },
         {
           name: "value",
-          type: "string",
-          description:
-            "The selected option id, not its name. Sets selectedKey.",
+          type: "Key | null",
+          description: "The selected option id, not its name.",
         },
         {
           name: "defaultValue",
-          type: "string",
-          description:
-            "The option id that is selected at first, not its name. Sets defaultSelectedKey.",
+          type: "Key | null",
+          description: "The option id that is selected at first, not its name.",
         },
         {
-          name: "onValueChange",
-          type: "(value: string) => void",
-          description:
-            "Receives the selected option id, or an empty string when the selection is cleared. onSelectionChange also runs.",
+          name: "onChange",
+          type: "(value: Key | null) => void",
+          description: "Receives the selected option id.",
         },
         {
           name: "placeholder",
-          type: "string",
-          default: '"Select an option"',
           description: "Text in the trigger when no option is selected.",
         },
       ],
@@ -1021,7 +934,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "title",
-          type: "string",
           description:
             "The section heading. It stays at the top while the list scrolls.",
         },
@@ -1034,8 +946,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "variant",
-          type: '"default" | "destructive"',
-          default: '"default"',
           description:
             "destructive colors the text and icon for an action that deletes or removes data.",
         },
@@ -1046,7 +956,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "title",
-          type: "string",
           description: "The section heading.",
         },
       ],
@@ -1058,26 +967,19 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "status",
-          type: '"running" | "complete" | "stopped" | "error"',
-          required: true,
           description: "The status of the run.",
         },
         {
           name: "label",
-          type: "string",
-          required: true,
           description:
             "The summary of the run. Screen readers announce changes with the status.",
         },
         {
           name: "detail",
-          type: "string",
           description: "Text after the label, for example the step count.",
         },
         {
           name: "autoCollapse",
-          type: "boolean",
-          default: "false",
           description:
             "Closes the steps when the run ends and opens them when it starts again.",
         },
@@ -1088,19 +990,14 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "title",
-          type: "string",
-          required: true,
           description: "What the agent did or does in this step.",
         },
         {
           name: "status",
-          type: '"pending" | "running" | "complete" | "stopped" | "error"',
-          default: '"complete"',
           description: "The status of the step.",
         },
         {
           name: "description",
-          type: "ReactNode",
           description: "Text below the title.",
         },
       ],
@@ -1112,37 +1009,29 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "sender",
-          type: "string",
-          required: true,
           description:
             'The sender name. Shows above an incoming message. The default accessible name is "Message from {sender}".',
         },
         {
           name: "side",
-          type: '"incoming" | "outgoing" | "system"',
-          default: '"incoming"',
           description: "Sets the alignment and the style.",
         },
         {
           name: "avatar",
-          type: "ReactNode",
           description: "Shows beside an incoming message.",
         },
-        { name: "timestamp", type: "string", description: "The visible time." },
+        { name: "timestamp", description: "The visible time." },
         {
           name: "dateTime",
-          type: "string",
           description:
             "The machine-readable time. Set it to render the timestamp in a time element.",
         },
         {
           name: "status",
-          type: "string",
           description: 'The delivery status, for example "Sent".',
         },
         {
           name: "actions",
-          type: "ReactNode",
           description:
             "Buttons below the message. On devices that can hover, they show on hover or focus.",
         },
@@ -1155,20 +1044,15 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "aria-label",
-          type: "string",
           default: '"Conversation"',
           description: "Names the log region for screen readers.",
         },
         {
           name: "initialScroll",
-          type: '"bottom" | "top"',
-          default: '"bottom"',
           description: "Sets the first scroll position, with no animation.",
         },
         {
           name: "threshold",
-          type: "number",
-          default: "24",
           description:
             "Sets how close to the bottom the reader must scroll to pin the view again.",
         },
@@ -1179,7 +1063,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "className",
-          type: "string",
           description:
             "Sets the width, padding, and gap of the message list inside the scroller.",
         },
@@ -1190,7 +1073,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode",
           description:
             "The empty content, usually an EmptyState. It shows until the first message renders.",
         },
@@ -1201,21 +1083,16 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "onLoad",
-          type: "() => void | Promise<void>",
-          required: true,
           description:
             "Loads the older messages. Runs when the sentinel enters view and when the button is pressed. A pending promise shows a spinner.",
         },
         {
           name: "hasMore",
-          type: "boolean",
-          required: true,
           description:
             "Renders the sentinel. Set it to false after the last page loads.",
         },
         {
           name: "children",
-          type: "ReactNode",
           description: "Replaces the button label.",
         },
       ],
@@ -1225,7 +1102,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode",
           default: '"Jump to latest"',
           description:
             "Replaces the visible label. The new message count stays in the accessible name.",
@@ -1239,20 +1115,15 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "name",
-          type: "string",
-          required: true,
           description: "The tool name.",
         },
         {
           name: "status",
-          type: '"running" | "complete" | "error"',
-          required: true,
           description:
             "Sets the icon and the status text. A change crossfades both. Screen readers announce changes.",
         },
         {
           name: "summary",
-          type: "string",
           description: "Short text beside the name.",
         },
       ],
@@ -1262,8 +1133,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "label",
-          type: "string",
-          required: true,
           description: "Heading above the section, such as Input or Output.",
         },
       ],
@@ -1275,57 +1144,45 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "label",
-          type: "string",
           description:
             "An accessible name for the textarea. The label is visually hidden. Without it, the textarea is named Message.",
         },
         {
           name: "placeholder",
-          type: "string",
           description:
             "Placeholder text in the default textarea. Pass it to PromptInputTextArea when you compose the children.",
         },
         {
           name: "submitKey",
-          type: '"enter" | "mod+enter"',
-          default: '"enter"',
           description:
             "Controls which key sends. Enter sends with Shift+Enter for a line, or Mod+Enter sends with Enter for a line. IME composition never submits.",
         },
         {
           name: "isPending",
-          type: "boolean",
-          default: "false",
           description:
             "Changes Send to Stop when onStop is set. Without onStop, Send is disabled.",
         },
         {
           name: "onSubmit",
-          type: "(value: string) => void",
           description:
             "Called with the textarea value on send. Focus returns to the textarea. If value is not set, the textarea clears after each send.",
         },
         {
           name: "onStop",
-          type: "() => void",
           description: "Called when the user stops a pending run.",
         },
         {
           name: "onFilesDropped",
-          type: "(files: File[]) => void",
           description:
             "Called with files dropped on the frame. Without it, the frame ignores drops and no overlay shows.",
         },
         {
           name: "dropLabel",
-          type: "string",
-          default: '"Drop files to attach"',
           description:
             "Copy shown in the overlay while files are dragged over the frame.",
         },
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           description: "Sets the height, text size, and padding of the frame.",
         },
       ],
@@ -1341,14 +1198,10 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "minRows",
-          type: "number",
-          default: "1",
           description: "Rows shown at rest.",
         },
         {
           name: "maxRows",
-          type: "number",
-          default: "8",
           description: "Rows shown before the textarea starts to scroll.",
         },
       ],
@@ -1360,7 +1213,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "isDisabled",
-          type: "boolean",
           description:
             "Disables the button. Send is also disabled while the textarea is empty.",
         },
@@ -1373,109 +1225,84 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "events",
-          type: "CalendarEvent[]",
-          required: true,
           description:
             "The events to show. Each event has an id, title, start, end, and an optional color, isReadOnly flag, or label. Set label when renderEvent shows more than the title and time, so the accessible name includes that content.",
         },
         {
           name: "aria-label",
-          type: "string",
-          required: true,
           description: "Names the scrollable region that holds the days.",
         },
         {
           name: "onEventChange",
-          type: "(event: CalendarEvent, range: { start; end }) => void",
           description:
             "Receives a move or a resize on release. Update events with the new range. Without it, events cannot move.",
         },
         {
           name: "view",
-          type: '"day" | "week"',
           description:
             "Shows one day or the seven days of the week, controlled.",
         },
         {
           name: "defaultView",
-          type: '"day" | "week"',
-          default: '"week"',
           description: "The view at first, uncontrolled.",
         },
         {
           name: "onViewChange",
-          type: '(view: "day" | "week") => void',
           description: "Called when the Day or Week button changes the view.",
         },
         {
           name: "date",
-          type: "CalendarDate",
           description:
             "Sets the visible date. Set onDateChange to let the header move it.",
         },
         {
           name: "defaultDate",
-          type: "CalendarDate",
           description:
             "Sets the visible date at first. The default is today, so pass it to keep screenshots stable.",
         },
         {
           name: "onDateChange",
-          type: "(date: CalendarDate) => void",
           description: "Receives requests from Today, Previous, and Next.",
         },
         {
           name: "timeZone",
-          type: "string",
           default: "getLocalTimeZone()",
           description:
             "Places events in the grid with this time zone. Pass it in server rendering so both sides agree.",
         },
         {
           name: "step",
-          type: "number",
-          default: "15",
           description:
             "Sets the snap size in minutes for a drag, a resize, a keyboard move, and a slot press.",
         },
         {
           name: "dayStart",
-          type: "number",
-          default: "0",
           description: "Sets the first hour that the grid shows.",
         },
         {
           name: "dayEnd",
-          type: "number",
-          default: "24",
           description: "Sets the last hour that the grid shows.",
         },
         {
           name: "scrollToHour",
-          type: "number",
-          default: "8",
           description: "Scrolls the grid to this hour when it mounts.",
         },
         {
           name: "onEventAction",
-          type: "(event: CalendarEvent) => void",
           description: "Receives a press on an event. A drag does not call it.",
         },
         {
           name: "onSlotAction",
-          type: "(range: { start; end }) => void",
           description:
             "Receives a press on an empty slot with a range of one step.",
         },
         {
           name: "renderEvent",
-          type: "(event: CalendarEvent) => ReactNode",
           description:
             "Replaces the title and time inside an event. The accessible name stays the title and time.",
         },
         {
           name: "className",
-          type: "string",
           description: "Sets the width and the outer spacing.",
         },
       ],
@@ -1487,7 +1314,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode",
           description:
             "Replaces the default controls. Keep the title, the date buttons, and the view buttons reachable.",
         },
@@ -1500,7 +1326,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode",
           description: "Replaces the grid content.",
         },
       ],
@@ -1512,38 +1337,30 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "status",
-          type: '"thinking" | "complete" | "error"',
-          required: true,
           description:
             "Sets the trigger text and icon. Thinking animates unless reduced motion is on.",
         },
         {
           name: "duration",
-          type: "number",
           description:
             "Seconds of reasoning. Without it, a thinking run counts its own time and the count stops when the run ends. 60 seconds or more show as minutes and seconds.",
         },
         {
           name: "autoCollapse",
-          type: "boolean",
-          default: "false",
           description:
             "Collapses the panel when the status leaves thinking, and expands it when a new run starts. Set isExpanded to control the panel yourself.",
         },
         {
           name: "defaultExpanded",
-          type: "boolean",
           description:
             "Opens the panel at first. The default is open while status is thinking.",
         },
         {
           name: "isExpanded",
-          type: "boolean",
           description: "Controls the panel.",
         },
         {
           name: "onExpandedChange",
-          type: "(isExpanded: boolean) => void",
           description: "Receives requests to open or close the panel.",
         },
       ],
@@ -1553,15 +1370,11 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "scrollable",
-          type: "boolean",
-          default: "false",
           description:
             "Caps the body at 16rem and makes it scrollable and focusable from the keyboard.",
         },
         {
           name: "autoScroll",
-          type: "boolean",
-          default: "true",
           description:
             "Keeps the newest line in view while a scrollable panel is thinking. Scroll up to pause it, and scroll to the end to start it again.",
         },
@@ -1574,8 +1387,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "status",
-          type: '"streaming" | "complete" | "stopped" | "error"',
-          required: true,
           description:
             "Sets the streaming state on the content, and announces the end once as Response complete, Response stopped, or Response failed.",
         },
@@ -1586,8 +1397,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "caret",
-          type: "boolean",
-          default: "true",
           description:
             "Shows the caret at the end while the status is streaming.",
         },
@@ -1600,152 +1409,120 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "label",
-          type: "string",
-          required: true,
           description: "Visible label in display and edit modes.",
         },
         {
           name: "value",
-          type: "string",
           description: "The saved value, controlled.",
         },
         {
           name: "defaultValue",
-          type: "string",
-          default: '""',
           description: "The saved value at first, uncontrolled.",
         },
         {
           name: "placeholder",
-          type: "string | { edit: string; preview: string }",
-          default: '"Not set"',
           description:
             "Text shown when the value is empty. Use the object form for a different edit hint.",
         },
         {
           name: "onSave",
-          type: "(value: string) => void | Promise<void>",
           description:
             "Called when you save a changed value. While its promise is pending, the save button shows a spinner. If it throws, the editor stays open and shows the error message. When controlled, update value here.",
         },
         {
-          name: "isDisabled",
-          type: "boolean",
+          name: "disabled",
           default: "false",
           description: "Prevents opening the editor.",
         },
         {
-          name: "isReadOnly",
-          type: "boolean",
+          name: "readOnly",
           default: "false",
           description: "Shows the value without opening the editor.",
         },
         {
           name: "edit",
-          type: "boolean",
           description: "The edit mode, controlled.",
         },
         {
           name: "defaultEdit",
-          type: "boolean",
           default: "false",
           description: "Opens the editor at first, uncontrolled.",
         },
         {
           name: "onEditChange",
-          type: "(details: { edit: boolean }) => void",
           description: "Called when the edit mode changes.",
         },
         {
           name: "activationMode",
-          type: '"focus" | "dblclick" | "click" | "none"',
-          default: '"none"',
           description:
             'Sets how the preview opens the editor. "none" uses the edit trigger or api.edit. The default keeps the explicit edit button.',
         },
         {
           name: "submitMode",
-          type: '"enter" | "blur" | "both" | "none"',
-          default: '"enter"',
           description:
             "Sets which action commits the draft. The save pipeline still runs onSave first.",
         },
         {
           name: "selectOnFocus",
-          type: "boolean",
           default: "true",
           description: "Selects the text when the input receives focus.",
         },
         {
-          name: "isInvalid",
-          type: "boolean",
+          name: "invalid",
           description: "Marks the field as invalid.",
         },
         {
           name: "autoResize",
-          type: "boolean",
           description: "Grows the input with its content.",
         },
         {
           name: "translations",
-          type: "{ edit?: string; submit?: string; cancel?: string; input?: string }",
           description: "Overrides the accessible labels of the controls.",
         },
         {
           name: "name",
-          type: "string",
           description: "The form field name.",
         },
         {
           name: "form",
-          type: "string",
           description: "Associates the input with a form.",
         },
         {
           name: "maxLength",
-          type: "number",
           description: "Limits the number of characters.",
         },
         {
-          name: "isRequired",
-          type: "boolean",
+          name: "required",
           default: "false",
           description: "Marks the field as required.",
         },
         {
           name: "autoComplete",
-          type: "string",
           description: "Hints the browser with an autofill value.",
         },
         {
           name: "onValueChange",
-          type: "(details: { value: string }) => void",
           description: "Called as the draft changes.",
         },
         {
           name: "onValueCommit",
-          type: "(details: { value: string }) => void",
           description: "Called when the draft is committed.",
         },
         {
           name: "onValueRevert",
-          type: "(details: { value: string }) => void",
           description: "Called when the draft is discarded.",
         },
         {
           name: "onInteractOutside",
-          type: "(event: InteractOutsideEvent) => void",
           description:
             "Called on an outside interaction. By default it prevents one, so a click does not close the editor.",
         },
         {
           name: "dir",
-          type: '"ltr" | "rtl"',
           description: "Sets the writing direction in the machine.",
         },
         {
           name: "ids",
-          type: "ElementIds",
           description:
             "Sets the ids of the label, input, preview, and controls.",
         },
@@ -1774,7 +1551,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode",
           description: "Replaces the value text.",
         },
       ],
@@ -1792,7 +1568,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode",
           description: "Replaces the value and the pencil icon.",
         },
       ],
@@ -1809,7 +1584,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode",
           description: "Replaces the check icon.",
         },
       ],
@@ -1821,7 +1595,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode",
           description: "Replaces the close icon.",
         },
       ],
@@ -1833,8 +1606,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "(api: EditableApi) => ReactNode",
-          required: true,
           description: "Draws custom content inside InlineEdit.",
         },
       ],
@@ -1846,30 +1617,23 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "label",
-          type: "string",
-          required: true,
           description: "Visible label for the field.",
         },
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"lg"',
           description: "Sets the size of the field and of the reveal button.",
         },
         {
           name: "description",
-          type: "string",
           description: "Help text below the field.",
         },
         {
           name: "placeholder",
-          type: "string",
           description: "Input placeholder.",
         },
         {
           name: "autoComplete",
-          type: "string",
-          default: '"current-password"',
           description: "Use new-password when creating a credential.",
         },
       ],
@@ -1881,22 +1645,16 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "length",
-          type: "number",
-          default: "6",
           description: "Sets the number of characters and boxes.",
         },
         {
           name: "pattern",
-          type: '"digits" | "alphanumeric"',
-          default: '"digits"',
           description:
             "Keeps digits only, or letters and numbers. Letters are uppercased.",
         },
         {
           name: "size",
-          type: '"sm" | "md" | "lg"',
-          default: '"lg"',
-          description: "Sets the height of each box: 36px, 44px, or 48px.",
+          description: "Sets the height of each box: 32px, 40px, or 48px.",
         },
         {
           name: "value",
@@ -1910,119 +1668,95 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         },
         {
           name: "placeholder",
-          type: "string",
           description: "The placeholder shown in each empty box.",
         },
         {
           name: "isDisabled",
-          type: "boolean",
           description: "Disables every box and the hidden input.",
         },
         {
           name: "isReadOnly",
-          type: "boolean",
           description: "Keeps the value but stops changes.",
         },
         {
           name: "isRequired",
-          type: "boolean",
           description: "Requires a value before the owning form submits.",
         },
         {
           name: "isInvalid",
-          type: "boolean",
           description: "Marks the boxes and the error message as invalid.",
         },
         {
           name: "children",
-          type: "ReactNode",
           description:
             "Draws a custom label, control, description, or error. Without it, the field draws the label, one row of boxes, and the hidden input.",
         },
         {
           name: "getRootNode",
-          type: "() => ShadowRoot | Document | Node",
           description:
             "Resolves the document in custom environments such as iframes.",
         },
         {
           name: "onComplete",
-          type: "(value: string) => void",
           description:
             "Called once each time the value reaches the full length.",
         },
         {
           name: "onChange",
-          type: "(value: string) => void",
           description: "Called with the filtered value after each change.",
         },
         {
           name: "name",
-          type: "string",
           description: "Sets the form field name on the hidden input.",
         },
         {
           name: "form",
-          type: "string",
           description: "Associates the hidden input with a form.",
         },
         {
           name: "autoFocus",
-          type: "boolean",
           description: "Focuses the first box on mount.",
         },
         {
           name: "autoSubmit",
-          type: "boolean",
           description: "Submits the owning form when the code is full.",
         },
         {
           name: "blurOnComplete",
-          type: "boolean",
           description: "Blurs the boxes when the code is full.",
         },
         {
           name: "mask",
-          type: "boolean",
           description: "Masks each box like a password input.",
         },
         {
           name: "selectOnFocus",
-          type: "boolean",
-          default: "true",
           description: "Selects the value of a box when it receives focus.",
         },
         {
           name: "otp",
-          type: "boolean",
-          default: "true",
           description: 'Signals autocomplete="one-time-code" to the browser.',
         },
         {
           name: "sanitizeValue",
-          type: "(value: string) => string",
           description:
             "Strips formatting before the pattern filter runs, such as dashes from a pasted code.",
         },
         {
           name: "onValueInvalid",
-          type: "(details: { value: string; index: number }) => void",
           description: "Called when a character does not match the pattern.",
         },
         {
           name: "translations",
-          type: "{ inputLabel?: (index: number, length: number) => string }",
           description: "Localizes the accessible label of each box.",
         },
         {
           name: "dir",
-          type: '"ltr" | "rtl"',
           description:
             "Sets the writing direction. By default, it comes from the page.",
         },
         {
           name: "ids",
-          type: "ElementIds",
           description: "Sets the ids of the label, control, and boxes.",
         },
       ],
@@ -2034,7 +1768,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode",
           description:
             "Draws a custom run of boxes with `OtpInputGroup`, `OtpInputSlot`, and `OtpInputSeparator`.",
         },
@@ -2047,8 +1780,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "(api: PinInputApi) => ReactNode",
-          required: true,
           description: "Draws custom content inside OtpInput.",
         },
       ],
@@ -2060,8 +1791,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "index",
-          type: "number",
-          required: true,
           description: "Sets the character position that the input shows.",
         },
       ],
@@ -2099,38 +1828,29 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "value",
-          type: "string",
-          required: true,
           description: "The exact text written to the clipboard.",
         },
         {
           name: "children",
-          type: "ReactNode | (status: CopyButtonStatus) => ReactNode",
           description:
             'The button content. Without it, the button shows an icon and status text. Pass a function to show content for each status. CopyButtonStatus is "idle", "copied", or "error".',
         },
         {
           name: "aria-label",
-          type: "string",
           description:
             'The accessible name. Without it, the name comes from text children in the idle status. Other children give the name "Copy". It does not change after a copy. A live region announces the result.',
         },
         {
           name: "variant",
-          type: "ButtonVariant",
-          default: '"outline"',
           description: "Uses the Button variants.",
         },
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"md"',
           description: "Uses the Button sizes.",
         },
         {
           name: "iconOnly",
-          type: "boolean",
-          default: "false",
           description: "Shows only the icon.",
         },
       ],
@@ -2142,13 +1862,10 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "orientation",
-          type: '"horizontal" | "vertical"',
-          default: '"horizontal"',
           description: "Joins buttons in a row or column.",
         },
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           description:
             "Sets the size of each button in the group. A size on a button overrides it.",
         },
@@ -2161,15 +1878,11 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "contentKey",
-          type: "string | number",
-          required: true,
           description:
             "Identifies the current icon. A change animates the new icon in and the old icon out.",
         },
         {
           name: "children",
-          type: "ReactNode",
-          required: true,
           description:
             "The icon to show. It is hidden from assistive technology, so label the control that contains it.",
         },
@@ -2182,13 +1895,10 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "active",
-          type: "boolean",
-          default: "true",
           description: "Runs the highlight. Set false when the work is done.",
         },
         {
           name: "duration",
-          type: "number",
           default: "1.6",
           description:
             "Time in seconds for one pass of the highlight. A short pause follows each pass.",
@@ -2208,38 +1918,31 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "orientation",
-          type: '"vertical" | "horizontal" | "both"',
-          default: '"vertical"',
           description:
             "Sets which axes scroll. Content on the other axis is clipped.",
         },
         {
           name: "dir",
-          type: '"ltr" | "rtl"',
           description:
             "Sets the scroll direction. By default, the direction comes from the page.",
         },
         {
           name: "aria-label",
-          type: "string",
           description:
             "Names the scroll region for screen readers. Add it when there is no visible heading.",
         },
         {
           name: "tabIndex",
-          type: "number",
           description:
             "Overrides the tab stop. By default, the viewport takes focus only while content overflows.",
         },
         {
           name: "className",
-          type: "string",
           description:
             "Sets the height and the frame around the content. A fixed height makes the area scroll.",
         },
         {
           name: "ids",
-          type: "ElementIds",
           description:
             "Sets the ids of the root, viewport, content, scrollbar, and thumb.",
         },
@@ -2252,8 +1955,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "orientation",
-          type: '"vertical" | "horizontal" | "both"',
-          default: '"vertical"',
           description:
             "Sets the axes that scroll. The scrollbar parts also read it from context.",
         },
@@ -2266,7 +1967,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "aria-label",
-          type: "string",
           description: "Names the scroll region when it has no heading.",
         },
       ],
@@ -2283,8 +1983,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "orientation",
-          type: '"vertical" | "horizontal"',
-          default: '"vertical"',
           description: "Sets the axis of the scrollbar.",
         },
       ],
@@ -2296,8 +1994,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "orientation",
-          type: '"vertical" | "horizontal"',
-          default: '"vertical"',
           description: "Sets the axis of the thumb.",
         },
       ],
@@ -2315,8 +2011,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "(api: ScrollAreaApi) => ReactNode",
-          required: true,
           description: "Draws custom content inside ScrollArea.",
         },
       ],
@@ -2328,8 +2022,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "orientation",
-          type: '"vertical" | "horizontal"',
-          default: '"vertical"',
           description: "Direction in which the content scrolls.",
         },
         {
@@ -2348,8 +2040,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "value",
-          type: "string",
-          required: true,
           description:
             "Sets the text to show. A change animates; the first value shows without animation. Add `aria-live` to announce changes. A long value truncates where text cannot wrap, such as in a button.",
         },
@@ -2362,21 +2052,15 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "values",
-          type: "readonly string[]",
-          required: true,
           description:
             "Sets the words to cycle through. The first value shows when motion is reduced.",
         },
         {
           name: "interval",
-          type: "number",
-          default: "2.5",
           description: "Time in seconds that each value stays on screen.",
         },
         {
           name: "active",
-          type: "boolean",
-          default: "true",
           description:
             "Runs the loop. Set false to stop on the current value. The loop also stops when it is off screen.",
         },
@@ -2389,21 +2073,15 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "variant",
-          type: '"highlight" | "underline" | "circle"',
-          default: '"highlight"',
           description:
             "Sets the mark to draw. A highlight wraps with the text. An underline or a circle keeps the phrase together.",
         },
         {
           name: "trigger",
-          type: '"mount" | "in-view"',
-          default: '"in-view"',
           description: "Draws the mark on mount or when the phrase is in view.",
         },
         {
           name: "delay",
-          type: "number",
-          default: "0",
           description: "Time in seconds to wait before the mark draws.",
         },
         {
@@ -2422,14 +2100,12 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         {
           name: "steps",
           type: "readonly { label: string; description?: string }[]",
-          required: true,
           description:
             "Steps in display order. Keep labels short; if the list overflows, it scrolls and keeps the current step in view.",
         },
         {
           name: "currentStep",
           type: "number (zero-based)",
-          required: true,
           description:
             "Sets the current step by zero-based index. Earlier steps show as complete; set it to steps.length to complete them all.",
         },
@@ -2442,22 +2118,16 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "value",
-          type: "number",
-          required: true,
           description:
             "Sets the number to show. A change animates. Add `aria-live` to announce the formatted value; a number wider than its container wraps.",
         },
         {
           name: "variant",
-          type: '"count" | "slide"',
-          default: '"count"',
           description:
             "count counts to the new value. slide moves only the digits that change.",
         },
         {
           name: "locale",
-          type: "string",
-          default: '"en-US"',
           description: "Locale for the number format.",
         },
         {
@@ -2476,20 +2146,14 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "label",
-          type: "string",
-          required: true,
           description: "Shows a label below the ring.",
         },
         {
           name: "size",
-          type: '"sm" | "md" | "lg"',
-          default: '"md"',
           description: "Sets the diameter: 40, 64, or 96 pixels.",
         },
         {
           name: "showValue",
-          type: "boolean",
-          default: "true",
           description:
             "Shows the value in the center. Keep valueLabel short so it fits.",
         },
@@ -2502,21 +2166,15 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "items",
-          type: "readonly T[]",
-          required: true,
           description: "Items to show in the list.",
         },
         {
           name: "getKey",
-          type: "(item: T) => string | number",
-          required: true,
           description:
             "Returns a unique key for an item. Keep the key the same while the item is in the list.",
         },
         {
           name: "children",
-          type: "(item: T) => ReactNode",
-          required: true,
           description:
             "Renders the content of each list item. Move focus before you remove a focused item.",
         },
@@ -2529,7 +2187,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"lg"',
           description:
             "Sets the size of the group. Without a size, the group uses the size of its parent field.",
@@ -2541,8 +2198,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "align",
-          type: '"inline" | "block-end"',
-          default: '"inline"',
           description:
             "Place text, an icon, or a button beside the input, or in a full-width row below a textarea.",
         },
@@ -2555,39 +2210,27 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "isOpen",
-          type: "boolean",
-          required: true,
           description: "Controls the dialog's visibility.",
         },
         {
           name: "onOpenChange",
-          type: "(open: boolean) => void",
-          required: true,
           description: "Receives requests to open or close the dialog.",
         },
         {
           name: "shortcut",
-          type: "boolean",
-          default: "true",
           description:
             "Ctrl+K or Command+K opens and closes the palette. Disable it when another palette owns that shortcut.",
         },
         {
           name: "title",
-          type: "string",
-          default: '"Commands"',
           description: "Accessible dialog name.",
         },
         {
           name: "placeholder",
-          type: "string",
-          default: '"Search commands"',
           description: "Search input placeholder and label.",
         },
         {
           name: "emptyMessage",
-          type: "string",
-          default: '"No matching commands."',
           description: "Text shown when search has no results.",
         },
       ],
@@ -2597,8 +2240,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "title",
-          type: "string",
-          required: true,
           description:
             "Heading for a group of items. A section with no matching items is hidden.",
         },
@@ -2609,19 +2250,16 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "textValue",
-          type: "string",
           description:
             "Text that search matches. Without it, search uses the text children. Set it when the item has an icon or other elements.",
         },
         {
           name: "shortcut",
-          type: "string",
           description:
             "A key hint at the end of the item. Screen readers hear it as the item description. It does not add a key handler.",
         },
         {
           name: "variant",
-          type: '"default" | "destructive"',
           default: '"default"',
           description:
             "Destructive colors the item for actions you cannot undo.",
@@ -2635,29 +2273,22 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "variant",
-          type: '"default" | "secondary" | "outline" | "ghost" | "minimal" | "destructive"',
-          default: '"default"',
           description:
             "Sets the visual emphasis. Minimal is for a quiet icon action.",
         },
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"md"',
           description:
             "Sets the height from 28px (xs) to 56px (xl). A size on the button overrides the group; otherwise the group size applies.",
         },
         {
           name: "iconOnly",
-          type: "boolean",
-          default: "false",
           description:
             "Makes the button a square for one icon. Give the button an aria-label.",
         },
         {
           name: "static",
-          type: "boolean",
-          default: "false",
           description:
             "Disables press scaling while keeping the button interactive.",
         },
@@ -2670,32 +2301,22 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "href",
-          type: "string",
-          required: true,
           description: "Sets the destination.",
         },
         {
           name: "as",
-          type: "ElementType",
-          default: '"a"',
           description: "Renders a router link component, such as Next.js Link.",
         },
         {
           name: "variant",
-          type: '"default" | "secondary" | "outline" | "ghost" | "minimal" | "destructive"',
-          default: '"default"',
           description: "Uses the Button variants.",
         },
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
-          default: '"md"',
           description: "Uses the Button sizes.",
         },
         {
           name: "iconOnly",
-          type: "boolean",
-          default: "false",
           description:
             "Makes the link a square for one icon. Give the link an aria-label.",
         },
@@ -2708,8 +2329,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "as",
-          type: '"h1" | "h2" | "h3" | "h4"',
-          default: '"h3"',
           description: "Heading level for the card title.",
         },
       ],
@@ -2721,44 +2340,35 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "aria-label",
-          type: "string",
-          required: true,
           description: "Names the carousel region.",
         },
         {
           name: "index",
-          type: "number",
           description:
             "Sets the current slide. A change scrolls the viewport to that slide.",
         },
         {
           name: "defaultIndex",
-          type: "number",
-          default: "0",
           description:
             "Sets the slide that shows first. `opts.startIndex` takes precedence.",
         },
         {
           name: "onIndexChange",
-          type: "(index: number) => void",
           description:
             "Receives the slide that becomes current from a swipe, a button, a plugin, or the keyboard.",
         },
         {
           name: "opts",
-          type: "CarouselOptions",
           description:
             "Embla options, such as `align`, `axis`, `loop`, `slidesToScroll`, and `dragFree`.",
         },
         {
           name: "plugins",
-          type: "CarouselPlugin[]",
           description:
             "Embla plugins, such as Autoplay, Auto Height, or Wheel Gestures. The carousel adds no plugin of its own.",
         },
         {
           name: "setApi",
-          type: "(api: CarouselApi) => void",
           description:
             "Receives the Embla API after mount. Call any Embla method from it.",
         },
@@ -2771,7 +2381,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "trackClassName",
-          type: "string",
           description:
             "Adds classes to the inner flex track, such as a different gap or alignment.",
         },
@@ -2782,7 +2391,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "aria-label",
-          type: "string",
           description:
             "Names the slide. The default is the slide number and the total, such as 2 of 5.",
         },
@@ -2816,14 +2424,10 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "index",
-          type: "number",
-          required: true,
           description: "Sets the slide that a press shows.",
         },
         {
           name: "aria-label",
-          type: "string",
-          required: true,
           description: "Names the view that the thumbnail shows.",
         },
       ],
@@ -2842,36 +2446,28 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "isOpen",
-          type: "boolean",
           description: "Controls the open state.",
         },
         {
           name: "defaultOpen",
-          type: "boolean",
-          default: "false",
           description: "Opens the viewer at first.",
         },
         {
           name: "onOpenChange",
-          type: "(isOpen: boolean) => void",
           description: "Receives requests to open or close the viewer.",
         },
         {
           name: "index",
-          type: "number",
           description:
             "Sets the current image. A change moves the carousel to that image.",
         },
         {
           name: "defaultIndex",
-          type: "number",
-          default: "0",
           description:
             "Sets the image that opens first when no thumbnail is pressed.",
         },
         {
           name: "onIndexChange",
-          type: "(index: number) => void",
           description:
             "Receives the image that becomes current from an arrow key, a side button, or a swipe.",
         },
@@ -2884,20 +2480,15 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "index",
-          type: "number",
-          required: true,
           description: "Sets the image that a press opens.",
         },
         {
           name: "aria-label",
-          type: "string",
-          required: true,
           description:
             "Names the thumbnail. The image inside it is decorative.",
         },
         {
           name: "className",
-          type: "string",
           description: "Styles the thumbnail frame.",
         },
       ],
@@ -2909,13 +2500,11 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "aria-label",
-          type: "string",
           default: '"Image viewer"',
           description: "Names the dialog.",
         },
         {
           name: "className",
-          type: "string",
           description: "Styles the dialog surface.",
         },
       ],
@@ -2927,29 +2516,23 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "src",
-          type: "string",
           description: "The image URL.",
         },
         {
           name: "alt",
-          type: "string",
-          required: true,
           description: "Describes the image for screen readers.",
         },
         {
           name: "width",
-          type: "number",
           description:
             "The image width in pixels. The image never upscales past it.",
         },
         {
           name: "height",
-          type: "number",
           description: "The image height in pixels.",
         },
         {
           name: "caption",
-          type: "string",
           description: "Shows text under the image.",
         },
       ],
@@ -2973,14 +2556,10 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "direction",
-          type: '"up" | "down" | "neutral"',
-          required: true,
           description: "Sets the arrow.",
         },
         {
           name: "invert",
-          type: "boolean",
-          default: "false",
           description:
             "Shows a fall as good and a rise as bad. Use it for values such as churn or response time.",
         },
@@ -2993,26 +2572,20 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "name",
-          type: "string",
-          required: true,
           description: "Accessible name. Avatar takes the initials from it.",
         },
         {
           name: "src",
-          type: "string",
           description:
             "Image URL. Avatar shows initials if the image is missing or does not load.",
         },
         {
           name: "initials",
-          type: "string",
           description:
             'Replaces the initials that Avatar takes from name. Set "" to show a person icon.',
         },
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
-          default: '"md"',
           description:
             "Diameter of the avatar: 24, 32, 40, 48, or 64 pixels. The initials scale with it.",
         },
@@ -3025,8 +2598,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "as",
-          type: '"h1" | "h2" | "h3" | "h4"',
-          default: '"h3"',
           description:
             "Sets the heading level. Match the level to the page outline.",
         },
@@ -3039,26 +2610,19 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "variant",
-          type: '"ring" | "dots" | "segments"',
-          default: '"ring"',
           description: "Sets the indicator style.",
         },
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
-          default: '"md"',
           description: "Sets the size: 14, 16, 24, 40, or 56 pixels.",
         },
         {
           name: "decorative",
-          type: "boolean",
-          default: "false",
           description:
             "Hides the spinner from screen readers. Use it when nearby text names the wait.",
         },
         {
           name: "aria-label",
-          type: "string",
           default: '"Loading"',
           description: "Names the wait for screen readers.",
         },
@@ -3071,45 +2635,36 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "label",
-          type: "ReactNode",
           description:
             "The visible label of the group. Without it, pass aria-label.",
         },
         {
           name: "max",
-          type: "number",
-          default: "5",
           description: "Number of steps. Use a positive whole number.",
         },
         {
           name: "icon",
-          type: "Icon",
           default: "StarIcon",
           description:
             "A Phosphor icon for each step. Steps up to the rating use the fill weight.",
         },
         {
           name: "size",
-          type: '"sm" | "md" | "lg"',
           default: '"md"',
           description: "Sets the size of each step.",
         },
         {
           name: "value",
-          type: "number",
           description:
             "The selected rating, controlled. 0 means no rating. A decimal value, such as an average, fills part of a step.",
         },
         {
           name: "defaultValue",
-          type: "number",
-          default: "0",
           description:
             "The selected rating at first, uncontrolled. 0 means no rating.",
         },
         {
-          name: "onValueChange",
-          type: "(value: number) => void",
+          name: "onChange",
           description: "Called when a step is selected.",
         },
       ],
@@ -3121,8 +2676,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "allowsResizing",
-          type: "boolean",
-          default: "false",
           description:
             "Adds a resize handle at the end of the column. The table must be in TableContainer.",
         },
@@ -3139,7 +2692,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         },
         {
           name: "isLoading",
-          type: "boolean",
           default: "false",
           description:
             "Shows a spinner and loading text until the next page arrives.",
@@ -3153,32 +2705,26 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "title",
-          type: "string",
-          required: true,
           description:
             "The row label. Typeahead uses it unless you set textValue.",
         },
         {
           name: "content",
-          type: "ReactNode",
           description:
             "Replaces the visible label. Without it, the row shows title. Use it to add details, such as a file size.",
         },
         {
           name: "icon",
-          type: "ReactNode",
           description:
             "Replaces the default icon. A row with child items shows a folder. Other rows show a file.",
         },
         {
           name: "children",
-          type: "ReactNode",
           description:
             "Nested TreeItem elements. A row with children shows an expand button.",
         },
         {
           name: "textValue",
-          type: "string",
           description:
             "Text for typeahead when it must be different from title.",
         },
@@ -3191,100 +2737,77 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "label",
-          type: "string",
-          required: true,
           description:
             "Names the table and its search and pagination controls.",
         },
         {
           name: "rows",
-          type: "readonly T[]",
-          required: true,
           description:
             "All the rows. The table searches, filters, sorts, and pages them in the browser.",
         },
         {
           name: "columns",
           type: "readonly DataTableColumn<T>[]",
-          required: true,
           description: "Column definitions. The first column labels each row.",
         },
         {
           name: "getRowId",
-          type: "(row: T) => Key",
-          required: true,
           description: "Returns a unique, stable key for each row.",
         },
         {
           name: "getSearchText",
-          type: "(row: T) => string",
           description:
             "Shows a search field. Return all the text that search can find in a row.",
         },
         {
           name: "pageSize",
-          type: "number",
-          default: "5",
           description: "Rows on each page.",
         },
         {
           name: "selectable",
-          type: "boolean",
-          default: "true",
           description:
             "Shows a selection checkbox in each row. Select all selects only the rows on the current page.",
         },
         {
           name: "selectedKeys",
-          type: "Iterable<Key>",
           description:
             "The selected row keys, controlled. The selection stays when the page, search, or filters change.",
         },
         {
           name: "defaultSelectedKeys",
-          type: "Iterable<Key>",
           description:
             "The row keys that are selected at first, uncontrolled. Without it, no rows are selected.",
         },
         {
           name: "onSelectionChange",
-          type: "(keys: Set<Key>) => void",
           description:
             "Receives selected row keys, including keys on other pages.",
         },
         {
           name: "disabledKeys",
-          type: "Iterable<Key>",
           description: "Rows that cannot be selected or focused.",
         },
         {
           name: "onRowAction",
-          type: "(key: Key) => void",
           description:
             "Called when a user clicks a row or presses Enter on it. The checkbox still selects the row.",
         },
         {
           name: "resizable",
-          type: "boolean",
-          default: "false",
           description: "Adds a resize handle to each column header.",
         },
         {
           name: "showClearSelection",
-          type: "boolean",
-          default: "true",
           description:
             "Shows the Clear selection button in the header while rows are selected.",
         },
         {
           name: "renderSelectionActions",
-          type: "(state: DataTableSelectionState) => ReactNode",
           description:
             "Shows a bar with the selected count and your bulk actions while rows are selected. The bar replaces the header Clear selection button.",
         },
         {
           name: "renderFooter",
-          type: "(state: DataTableFooterState) => ReactNode",
           description:
             "Replaces the row count and page controls below the table. The state has the visible row range, the filtered and total counts, the page index and count, and setPageIndex.",
         },
@@ -3296,21 +2819,15 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "selectedKeys",
-          type: "Set<Key>",
-          required: true,
           description:
             "Every selected row key, including rows on other pages and filters.",
         },
         {
           name: "selectedCount",
-          type: "number",
-          required: true,
           description: "The number of selected rows.",
         },
         {
           name: "clearSelection",
-          type: "() => void",
-          required: true,
           description: "Clears the selection.",
         },
       ],
@@ -3320,32 +2837,24 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "id",
-          type: "string",
-          required: true,
           description: "A stable key for the column.",
         },
         {
           name: "header",
-          type: "string",
-          required: true,
           description:
             "The visible column header. A column filter uses it as its label.",
         },
         {
           name: "cell",
-          type: "(row: T) => ReactNode",
-          required: true,
           description: "Renders the cell for a row.",
         },
         {
           name: "sortValue",
-          type: "(row: T) => string | number",
           description:
             "Turns on sorting for the column. Return a string or a number. Column filters use this value too.",
         },
         {
           name: "align",
-          type: '"start" | "end"',
           default: '"start"',
           description: "Aligns the header and cells. Use end for numbers.",
         },
@@ -3375,100 +2884,77 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"md"',
           description:
             "Sets the height, padding, and text size of every segment.",
         },
         {
           name: "fullWidth",
-          type: "boolean",
-          default: "false",
           description:
             "Stretches the control and its segments to the width of the parent.",
         },
         {
           name: "aria-label",
-          type: "string",
           default: '"Segments"',
           description:
             "Names the radio group. Change it to match the choice, such as View or Billing period.",
         },
         {
           name: "value",
-          type: "string | null",
           description: "The selected value, controlled.",
         },
         {
           name: "defaultValue",
-          type: "string | null",
           description: "The selected value at first, uncontrolled.",
         },
         {
-          name: "onChange",
-          type: "(value: string) => void",
+          name: "onValueChange",
           description: "Called with the new value when the selection changes.",
         },
         {
-          name: "onValueChange",
-          type: "(value: string) => void",
-          description: "Alias for onChange. Both run when both are set.",
-        },
-        {
           name: "name",
-          type: "string",
           description:
             "Submits the selected value with a form. Each segment renders a hidden radio input.",
         },
         {
           name: "form",
-          type: "string",
           description: "Associates the hidden inputs with a form by id.",
         },
         {
-          name: "isDisabled",
-          type: "boolean",
+          name: "disabled",
           default: "false",
           description: "Disables every segment.",
         },
         {
-          name: "isInvalid",
-          type: "boolean",
+          name: "invalid",
           default: "false",
           description: "Marks the group as invalid.",
         },
         {
-          name: "isRequired",
-          type: "boolean",
+          name: "required",
           default: "false",
           description: "Requires a selection before the form submits.",
         },
         {
-          name: "isReadOnly",
-          type: "boolean",
+          name: "readOnly",
           default: "false",
           description: "Keeps the value but stops changes.",
         },
         {
           name: "orientation",
-          type: '"horizontal" | "vertical"',
-          default: '"horizontal"',
           description: "Lays the segments in a row or a column.",
         },
         {
           name: "dir",
-          type: '"ltr" | "rtl"',
           description:
             "Sets the writing direction. The control also inherits the direction of its parent.",
         },
         {
           name: "ids",
-          type: "ElementIds",
           description: "Sets the ids of the group, indicator, and segments.",
         },
         {
           name: "getRootNode",
-          type: "() => ShadowRoot | Document | Node",
           description:
             "Resolves the document in custom environments such as iframes.",
         },
@@ -3479,20 +2965,15 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "value",
-          type: "string",
-          required: true,
           description: "The value that this segment sets.",
         },
         {
-          name: "isDisabled",
-          type: "boolean",
+          name: "disabled",
           default: "false",
           description: "Disables this segment only.",
         },
         {
           name: "children",
-          type: "ReactNode",
-          required: true,
           description:
             "The segment content. Add an icon and a label when the label alone is not clear.",
         },
@@ -3506,7 +2987,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         {
           name: "children",
           type: "(api: SegmentedControlApi) => ReactNode",
-          required: true,
           description:
             "Draws custom content for the current api. Call it inside SegmentedControl.",
         },
@@ -3519,83 +2999,70 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"md"',
           description:
             "Uses the Button heights for each link and the ellipsis. Set it on Pagination or on one PaginationLink.",
         },
         {
           name: "aria-label",
-          type: "string",
           default: '"Pagination"',
           description:
             "Names the navigation landmark. Change it when a page has more than one pagination.",
         },
         {
           name: "count",
-          type: "number",
           default: "0",
           description:
             "The total number of items. The machine calculates the pages and ellipses from it.",
         },
         {
           name: "page",
-          type: "number",
           description: "The active page, controlled.",
         },
         {
           name: "defaultPage",
-          type: "number",
           default: "1",
           description: "The active page at first, uncontrolled.",
         },
         {
           name: "pageSize",
-          type: "number",
           default: "10",
           description: "The number of items on a page, controlled.",
         },
         {
           name: "defaultPageSize",
-          type: "number",
           default: "10",
           description: "The number of items on a page at first, uncontrolled.",
         },
         {
           name: "siblingCount",
-          type: "number",
           default: "1",
           description:
             "The number of pages shown on each side of the active page.",
         },
         {
           name: "boundaryCount",
-          type: "number",
           default: "1",
           description:
             "The number of pages shown at the start and the end of the list.",
         },
         {
           name: "getPageUrl",
-          type: "(details: { page: number; pageSize: number }) => string",
           description:
             "Builds the URL of a page. Without it, PaginationPages renders buttons that change the page in place.",
         },
         {
           name: "type",
-          type: '"button" | "link"',
           description:
             'Chooses the trigger element. It defaults to "link" when getPageUrl is set, otherwise "button".',
         },
         {
           name: "onPageChange",
-          type: "(details: { page: number; pageSize: number }) => void",
           description:
             "Called when the page changes. Update page here when it is controlled.",
         },
         {
           name: "onPageSizeChange",
-          type: "(details: { pageSize: number }) => void",
           description: "Called when setPageSize changes the page size.",
         },
         {
@@ -3606,12 +3073,10 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         },
         {
           name: "dir",
-          type: '"ltr" | "rtl"',
           description: "Sets the writing direction in the machine.",
         },
         {
           name: "ids",
-          type: "ElementIds",
           description:
             "Sets the ids of the root, items, ellipses, and triggers for composition.",
         },
@@ -3634,32 +3099,27 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         },
         {
           name: "value",
-          type: "number",
           description:
             "The page number. Inside Pagination with count, the machine sets the current page, the label, and the URL.",
         },
         {
           name: "isCurrent",
-          type: "boolean",
           default: "false",
           description:
             'Shows the link as the current page and sets aria-current="page". The current-page marker glides to the new link.',
         },
         {
           name: "isDisabled",
-          type: "boolean",
           default: "false",
           description:
             "Keeps the link visible but stops navigation. The link leaves the Tab order.",
         },
         {
           name: "onPress",
-          type: "(event: PressEvent) => void",
           description: "Called when the link is pressed.",
         },
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           description:
             "Sets the size of this link. Without it, the link uses the size of the Pagination, or md.",
         },
@@ -3672,7 +3132,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           description: "Uses the Pagination size when omitted.",
         },
       ],
@@ -3683,7 +3142,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           description: "Uses the Pagination size when omitted.",
         },
       ],
@@ -3694,7 +3152,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           description: "Uses the Pagination size when omitted.",
         },
       ],
@@ -3706,7 +3163,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           description: "Uses the Pagination size when omitted.",
         },
       ],
@@ -3718,8 +3174,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "(api: PaginationApi) => ReactNode",
-          required: true,
           description:
             "Draws the custom content for the current api. Call it inside Pagination.",
         },
@@ -3732,14 +3186,11 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "status",
-          type: '"complete" | "latest" | "upcoming"',
-          default: '"complete"',
           description:
             'Sets the marker. Screen readers announce "Latest" or "Upcoming" before the item.',
         },
         {
           name: "icon",
-          type: "ReactNode",
           description:
             "Replaces the check or dot in the marker. Use a 14 pixel icon.",
         },
@@ -3750,8 +3201,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "as",
-          type: '"h2" | "h3" | "h4"',
-          default: '"h3"',
           description: "Heading level for the event title.",
         },
       ],
@@ -3763,8 +3212,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "variant",
-          type: '"card" | "divided"',
-          default: '"card"',
           description:
             "Shows sections as separate cards, or as rows with lines.",
         },
@@ -3775,7 +3222,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "title",
-          type: "string",
           description:
             "Renders an AccordionTrigger with this text. The children go into an AccordionContent.",
         },
@@ -3788,37 +3234,29 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "title",
-          type: "string",
           description:
             "Shows the variant icon and a heading, and moves the children into the description. Without it, compose the parts yourself.",
         },
         {
           name: "variant",
-          type: '"info" | "success" | "warning" | "error" | "neutral"',
-          default: '"info"',
           description: "Sets the color and icon for the message.",
         },
         {
           name: "action",
-          type: "ReactNode",
           description:
             "Adds controls after the text, such as a button. Requires title.",
         },
         {
           name: "onDismiss",
-          type: "() => void",
           description:
             "Shows a close button and calls this function on press. Remove the alert here.",
         },
         {
           name: "dismissLabel",
-          type: "string",
-          default: '"Dismiss"',
           description: "Names the close button for screen readers.",
         },
         {
           name: "children",
-          type: "ReactNode",
           description:
             "The message. With title, it renders as the description.",
         },
@@ -3837,15 +3275,11 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          type: '"sm" | "md" | "lg" | "xl" | "full"',
-          default: '"md"',
           description:
             "The maximum width from 640px up: 24rem, 28rem, 36rem, or 48rem. full fills the screen less a 1rem gutter. On phones, every size is full width, and full also fills the height.",
         },
         {
           name: "children",
-          type: "ReactNode | ({ close }) => ReactNode",
-          required: true,
           description:
             "A function receives close, for example to close the dialog after a form submits.",
         },
@@ -3876,19 +3310,16 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         },
         {
           name: "variant",
-          type: '"default" | "secondary" | "outline" | "ghost" | "minimal" | "destructive"',
           default: '"ghost"',
           description: "The Button variant.",
         },
         {
           name: "iconOnly",
-          type: "boolean",
           description:
             "Makes the button a square for one icon. The default is true without children and false with children.",
         },
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"sm" without children, "md" with children',
           description:
             "The Button size. An icon-only close button uses sm to stay compact.",
@@ -3908,14 +3339,11 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         },
         {
           name: "maxHeight",
-          type: "number",
           description:
             "Caps the panel height. The panel always fits the viewport and scrolls when its content is taller. With PopoverArrow, the content scrolls inside the panel padding.",
         },
         {
           name: "arrowBoundaryOffset",
-          type: "number",
-          default: "16",
           description:
             "The minimum distance from the arrow to the panel edge. It keeps the arrow off the rounded corner.",
         },
@@ -3938,7 +3366,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode | ({ close }) => ReactNode",
           description:
             'Moves focus into the panel and keeps it there. Name it with PopoverTitle or aria-label. Use the function form to close after an action. A Button with slot="close" inside it closes the popover.',
         },
@@ -3951,58 +3378,45 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "position",
-          type: '"bottom" | "top" | "left" | "right" | "start" | "end" | "center"',
-          default: '"bottom"',
           description:
             "The edge the sheet comes from. start and end mirror in right-to-left locales. A top or bottom sheet fits its content up to a maximum height. Set a fixed height with className.",
         },
         {
           name: "size",
-          type: '"sm" | "md" | "lg" | "xl" | "full"',
-          default: '"md"',
           description:
             "A left or right sheet is 20rem, 26rem, 36rem, or 48rem wide, and always leaves 3.5rem of the page visible. A top or bottom sheet has a maximum width of 28rem, 42rem, 56rem, or 72rem. full fills the screen.",
         },
         {
           name: "inset",
-          type: "boolean",
-          default: "false",
           description:
             "Moves the sheet 0.5rem in from the screen edges and rounds all corners.",
         },
         {
           name: "swipeDirection",
-          type: '"bottom" | "top" | "left" | "right" | "start" | "end" | "vertical" | "horizontal"',
           description:
             "The direction of a swipe or handle drag that closes the sheet. vertical and horizontal close toward either edge. Without it, the direction is the same as position. A center sheet uses vertical.",
         },
         {
           name: "snapPoints",
-          type: "Array<number | string>",
           description:
             "The visible size at each stop. Numbers are pixels. Strings are CSS lengths, and percentages are relative to the sheet. The sheet opens at the first stop. You can always drag it to full size. Below full size, a swipe on SheetBody resizes the sheet.",
         },
         {
           name: "preventDismissal",
-          type: "boolean",
-          default: "false",
           description:
             "Stops swipes, Escape, and outside clicks from closing the sheet. Snap points still work.",
         },
         {
           name: "isOpen",
-          type: "boolean",
           description:
             "Whether the sheet is open, controlled. Without isOpen and defaultOpen, a SheetTrigger can own the state instead. Then the Button inside the SheetTrigger opens the sheet.",
         },
         {
           name: "defaultOpen",
-          type: "boolean",
           description: "Whether the sheet is open at first, uncontrolled.",
         },
         {
           name: "onOpenChange",
-          type: "(isOpen: boolean) => void",
           description:
             "Receives the new open state. When a SheetTrigger owns the state, set onOpenChange on the SheetTrigger.",
         },
@@ -4038,20 +3452,16 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         },
         {
           name: "variant",
-          type: '"default" | "secondary" | "outline" | "ghost" | "minimal" | "destructive"',
-          default: '"ghost"',
           description:
             "Choose default for a primary action, outline for a secondary action, or ghost for dismissal.",
         },
         {
           name: "iconOnly",
-          type: "boolean",
           description:
             "Makes the button a square for one icon. The default is true without children and false with children.",
         },
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"sm" without children, "md" with children',
           description:
             "The Button size. An icon-only close button uses sm to stay compact.",
@@ -4067,26 +3477,20 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "isOpen",
-          type: "boolean",
           description: "Controls the collapsed state.",
         },
         {
           name: "defaultOpen",
-          type: "boolean",
-          default: "true",
           description:
             "Opens the wide sidebar at first. Set it to false to start as a rail.",
         },
         {
           name: "onOpenChange",
-          type: "(isOpen: boolean) => void",
           description:
             "Receives the new collapsed state. Use it to save the state in a cookie or a parent.",
         },
         {
           name: "shortcut",
-          type: "boolean",
-          default: "true",
           description:
             "Toggles the sidebar with Mod+B. The shortcut does not fire in a field or while an event is already handled.",
         },
@@ -4110,14 +3514,11 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "collapsible",
-          type: '"icon" | "none"',
-          default: '"icon"',
           description:
             "Sets icon to collapse to a rail, or none to keep the sidebar at full width.",
         },
         {
           name: "aria-label",
-          type: "string",
           default: '"Sidebar"',
           description: "Names the navigation landmark.",
         },
@@ -4128,7 +3529,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "aria-label",
-          type: "string",
           description:
             "Names the nav landmark. Set it when the sidebar has more than one menu.",
         },
@@ -4157,12 +3557,10 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "aria-label",
-          type: "string",
           description: "Names the group when it has no SidebarGroupLabel.",
         },
         {
           name: "aria-labelledby",
-          type: "string",
           description:
             "Points to the label element. The group uses its SidebarGroupLabel by default.",
         },
@@ -4179,39 +3577,30 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "href",
-          type: "string",
-          required: true,
           description: "The link target.",
         },
         {
           name: "icon",
-          type: "ReactNode",
-          required: true,
           description:
             "The icon before the label. It uses an 18px size and fills when isCurrent is set.",
         },
         {
           name: "isCurrent",
-          type: "boolean",
-          default: "false",
           description:
             'Marks the current page with aria-current="page" and the accent fill.',
         },
         {
           name: "badge",
-          type: "ReactNode",
           description:
             "A badge after the label. In the rail it shrinks to a 6px dot, and the text stays in the accessible name.",
         },
         {
           name: "tooltip",
-          type: "string",
           description:
             "The rail tooltip text. Without it, a string label is the text.",
         },
         {
           name: "onPress",
-          type: "(event: PressEvent) => void",
           description:
             "Runs on press. In the mobile sheet, the sheet closes after it.",
         },
@@ -4222,7 +3611,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "render",
-          type: "(props, state) => ReactElement",
           description:
             "Renders a different element, such as main. The state argument is expanded or collapsed.",
         },
@@ -4235,7 +3623,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "aria-label",
-          type: "string",
           description:
             'Names the button. The default is "Collapse sidebar", "Expand sidebar", or "Open navigation".',
         },
@@ -4250,8 +3637,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "orientation",
-          type: '"horizontal" | "vertical"',
-          default: '"horizontal"',
           description:
             "Sets the axis. A horizontal group puts panels in a row, with vertical separators.",
         },
@@ -4269,55 +3654,45 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         },
         {
           name: "onLayoutChange",
-          type: "(layout: number[]) => void",
           description:
             "Receives every size change, including each frame of a drag.",
         },
         {
           name: "onLayoutEnd",
-          type: "(layout: number[]) => void",
           description:
             "Receives the final sizes at the end of a drag or a key press. Use it to save the layout.",
         },
         {
           name: "onResizeStart",
-          type: "() => void",
           description: "Called when a drag or a key resize starts.",
         },
         {
           name: "keyboardResizeBy",
-          type: "number | null",
           description: "Sets the pixel step for the arrow keys.",
         },
         {
           name: "nonce",
-          type: "string",
           description: "Sets the nonce for the injected cursor stylesheet.",
         },
         {
           name: "onCollapse",
-          type: "(details: { panelId: string; size: number }) => void",
           description: "Called when a panel collapses.",
         },
         {
           name: "onExpand",
-          type: "(details: { panelId: string; size: number }) => void",
           description: "Called when a panel expands.",
         },
         {
           name: "registry",
-          type: "SplitterRegistry",
           description:
             "Shares drag state between nested splitters so an intersection resizes both.",
         },
         {
           name: "dir",
-          type: '"ltr" | "rtl"',
           description: "Sets the writing direction in the machine.",
         },
         {
           name: "ids",
-          type: "ElementIds",
           description: "Sets the ids of the root, panels, and triggers.",
         },
       ],
@@ -4329,13 +3704,11 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "id",
-          type: "string",
           description:
             "Sets the panel DOM id, so a handle points at it with aria-controls. Panels without it get a generated id.",
         },
         {
           name: "order",
-          type: "number",
           description:
             "Orders the panel in the machine when panels render conditionally.",
         },
@@ -4348,33 +3721,27 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         {
           name: "minSize",
           type: "number | string",
-          default: "10",
           description:
             "Sets the smallest size a drag or a key press can give the panel.",
         },
         {
           name: "maxSize",
           type: "number | string",
-          default: "100",
           description:
             "Sets the largest size a drag or a key press can give the panel.",
         },
         {
           name: "collapsible",
-          type: "boolean",
-          default: "false",
           description:
             "Lets the panel collapse to collapsedSize when it is dragged past half of minSize, or with Enter on the handle.",
         },
         {
           name: "collapsedSize",
           type: "number | string",
-          default: "0",
           description: "Sets the size of a collapsed panel.",
         },
         {
           name: "resizeBehavior",
-          type: '"preserve-relative-size" | "preserve-pixel-size"',
           description: "Sets how the panel behaves when the group resizes.",
         },
       ],
@@ -4386,19 +3753,14 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "withGrip",
-          type: "boolean",
-          default: "false",
           description: "Shows a grip pill in the middle of the line.",
         },
         {
-          name: "isDisabled",
-          type: "boolean",
-          default: "false",
+          name: "disabled",
           description: "Stops the handle from resizing.",
         },
         {
           name: "aria-label",
-          type: "string",
           default: '"Resize panels"',
           description: "Names the separator.",
         },
@@ -4423,8 +3785,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "(api: SplitterApi) => ReactNode",
-          required: true,
           description: "Draws custom content inside ResizableGroup.",
         },
       ],
@@ -4436,20 +3796,15 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "variant",
-          type: '"neutral" | "accent" | "success" | "warning" | "error" | "outline"',
-          default: '"neutral"',
           description: "Sets the color and emphasis.",
         },
         {
           name: "dot",
-          type: "boolean",
-          default: "false",
           description:
             "Shows a dot before the label. The dot is hidden from screen readers.",
         },
         {
           name: "children",
-          type: "ReactNode",
           description:
             "The label. It stays on one line and truncates when space is short.",
         },
@@ -4462,42 +3817,21 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode",
           description:
             "The label. Without it, pass aria-label so the checkbox has a name.",
         },
         {
           name: "description",
-          type: "ReactNode",
           description:
             "Help text below the label. Linked with aria-describedby, so it is not part of the name.",
         },
         {
           name: "errorMessage",
-          type: "string | ((validation: ValidationResult) => string)",
           description:
             "Shown below the label when isRequired, validate, or isInvalid makes the checkbox invalid. Without it, the browser validation message shows.",
         },
         {
-          name: "checked",
-          type: 'boolean | "indeterminate"',
-          description:
-            'Alias for isSelected. "indeterminate" sets isIndeterminate.',
-        },
-        {
-          name: "defaultChecked",
-          type: 'boolean | "indeterminate"',
-          description:
-            'Alias for defaultSelected. "indeterminate" shows the indeterminate state until the first change.',
-        },
-        {
-          name: "onCheckedChange",
-          type: "(checked: boolean) => void",
-          description: "Alias for onChange. Both run when both are set.",
-        },
-        {
           name: "variant",
-          type: '"default" | "card"',
           default: '"default"',
           description:
             "Selects the plain or card appearance. A card toggles the checkbox from anywhere inside it, so keep its description plain text. CheckboxField takes the same prop.",
@@ -4511,25 +3845,20 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "label",
-          type: "ReactNode",
           description:
             "The label of the group. Without it, pass aria-label or compose CheckboxGroupLabel.",
         },
         {
           name: "description",
-          type: "ReactNode",
           description: "Help text for the group, below the label.",
         },
         {
           name: "errorMessage",
-          type: "string | ((validation: ValidationResult) => string)",
           description:
             "Shown below the options when the group is invalid. Without it, the browser validation message shows. With label, description, or errorMessage, the group adds CheckboxGroupError for you.",
         },
         {
           name: "orientation",
-          type: '"horizontal" | "vertical"',
-          default: '"vertical"',
           description: "Lays out the options in a column or a wrapping row.",
         },
       ],
@@ -4541,7 +3870,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "filter",
-          type: "(textValue: string, inputValue: string) => boolean",
           description:
             "Decides which items match the input. Without it, an item matches when its text contains the input. The default ignores case and accents.",
         },
@@ -4554,100 +3882,53 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode",
           description:
             "The label. Without it, pass aria-label so the switch has a name.",
         },
         {
           name: "description",
-          type: "ReactNode",
           description:
             "Help text below the label. Linked with aria-describedby, so it is not part of the name.",
         },
         {
           name: "errorMessage",
-          type: "string | ((validation: ValidationResult) => string)",
           description:
             "Shown below the label when isRequired, validate, or isInvalid makes the switch invalid. Without it, the browser validation message shows.",
-        },
-        {
-          name: "checked",
-          type: "boolean",
-          description: "Alias for isSelected.",
-        },
-        {
-          name: "defaultChecked",
-          type: "boolean",
-          description: "Alias for defaultSelected.",
-        },
-        {
-          name: "onCheckedChange",
-          type: "(checked: boolean) => void",
-          description: "Alias for onChange. Both run when both are set.",
         },
       ],
     }),
   ],
   tabs: [
-    apiPart<typeof TabsList>({
-      name: "TabsList",
+    apiPart<typeof TabList>({
+      name: "TabList",
       props: [
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           description:
             "Uses the Button heights for each tab. Without a size, tabs are 44 pixels high on small screens and 36 pixels from 640 pixels.",
         },
       ],
     }),
-    apiPart<typeof Tabs>({
-      name: "Tabs",
+    apiPart<typeof Tab>({
+      name: "Tab",
       props: [
         {
-          name: "value",
-          type: "string",
-          description:
-            "The value of the selected tab, controlled. Same as selectedKey.",
-        },
-        {
-          name: "defaultValue",
-          type: "string",
-          description:
-            "The value of the tab that is selected at first, uncontrolled. Same as defaultSelectedKey.",
-        },
-        {
-          name: "onValueChange",
-          type: "(value: string) => void",
-          description:
-            "Gets the value of the selected tab as a string. onSelectionChange also works.",
-        },
-      ],
-    }),
-    apiPart<typeof TabsTrigger>({
-      name: "TabsTrigger",
-      props: [
-        {
-          name: "value",
-          type: "string",
-          description:
-            "Connects the tab to the TabsContent with the same value.",
+          name: "id",
+          description: "Connects the tab to the TabPanel with the same id.",
         },
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           description:
-            "Sets the size of this tab. It overrides the size of the TabsList.",
+            "Sets the size of this tab. It overrides the size of the TabList.",
         },
       ],
     }),
-    apiPart<typeof TabsContent>({
-      name: "TabsContent",
+    apiPart<typeof TabPanel>({
+      name: "TabPanel",
       props: [
         {
-          name: "value",
-          type: "string",
-          description:
-            "Connects the panel to the TabsTrigger with the same value.",
+          name: "id",
+          description: "Connects the panel to the Tab with the same id.",
         },
       ],
     }),
@@ -4658,19 +3939,16 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"lg"',
           description: "Sets the size of the field.",
         },
         {
           name: "label",
-          type: "string",
           description:
             "Label above the field. Without a label, pass aria-label.",
         },
         {
           name: "description",
-          type: "string",
           description: "Help text below the field.",
         },
       ],
@@ -4682,19 +3960,16 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"lg"',
           description: "Sets the size of the field.",
         },
         {
           name: "label",
-          type: "string",
           description:
             "Label above the field. Without a label, pass aria-label.",
         },
         {
           name: "description",
-          type: "string",
           description: "Help text below the field.",
         },
       ],
@@ -4706,7 +3981,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode",
           description:
             "Replaces the month heading between the previous and next buttons.",
         },
@@ -4717,13 +3991,11 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "format",
-          type: '"numeric" | "2-digit" | "long" | "short" | "narrow"',
           default: '"short"',
           description: "Sets the format of the month names.",
         },
         {
           name: "children",
-          type: "(picker: CalendarMonthPickerAria) => ReactElement",
           description:
             "Renders a custom picker. Pass the picker props to a Select.",
         },
@@ -4734,19 +4006,16 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "visibleYears",
-          type: "number",
           default: "20",
           description:
             "Sets the number of years in the list. minValue and maxValue limit the range.",
         },
         {
           name: "format",
-          type: "CalendarYearPickerFormatOptions",
           description: "Sets the format of the years.",
         },
         {
           name: "children",
-          type: "(picker: CalendarYearPickerAria) => ReactElement",
           description:
             "Renders a custom picker. Pass the picker props to a Select.",
         },
@@ -4759,25 +4028,21 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"lg"',
           description: "Sets the size of the field and of the calendar button.",
         },
         {
           name: "presets",
-          type: "DatePickerPreset[]",
           description:
             "Shortcuts beside the calendar, such as Today. Each has a label and a value. A preset sets the value and closes the calendar.",
         },
         {
           name: "label",
-          type: "string",
           description:
             "Label above the field. Without a label, pass aria-label.",
         },
         {
           name: "description",
-          type: "string",
           description: "Help text below the field.",
         },
       ],
@@ -4789,25 +4054,21 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"lg"',
           description: "Sets the size of the field and of the calendar button.",
         },
         {
           name: "presets",
-          type: "DateRangePickerPreset[]",
           description:
             "Shortcuts beside the calendar, such as Last 7 days. Each has a label and a start and end value. A preset sets the value and closes the calendar.",
         },
         {
           name: "label",
-          type: "string",
           description:
             "Label above the field. Without a label, pass aria-label.",
         },
         {
           name: "description",
-          type: "string",
           description: "Help text below the field.",
         },
       ],
@@ -4819,19 +4080,16 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"lg"',
           description: "Sets the size of the field.",
         },
         {
           name: "label",
-          type: "string",
           description:
             "Label above the field. Without a label, pass aria-label.",
         },
         {
           name: "description",
-          type: "string",
           description: "Help text below the field.",
         },
       ],
@@ -4843,8 +4101,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "label",
-          type: "string",
-          default: '"Choose color"',
           description:
             "Text on the trigger. The popover uses it in its accessible name.",
         },
@@ -4863,19 +4119,15 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "outerRadius",
-          type: "number",
-          default: "96",
           description: "Outer radius of the track, in pixels.",
         },
         {
           name: "innerRadius",
-          type: "number",
           default: "outerRadius - 24",
           description: "Inner radius of the track, in pixels.",
         },
         {
           name: "children",
-          type: "ReactNode",
           description: "Content in the center of the wheel.",
         },
       ],
@@ -4887,8 +4139,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "label",
-          type: "string",
-          default: '"Choose files"',
           description:
             "Text for the default outline button. To use a different trigger, pass it as children.",
         },
@@ -4901,7 +4151,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "label",
-          type: "string",
           description:
             "Shows a label above the meter. Without it, pass aria-label.",
         },
@@ -4914,7 +4163,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "label",
-          type: "string",
           description:
             "Shows a label above the bar. Without it, pass aria-label.",
         },
@@ -4927,25 +4175,20 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"lg"',
           description: "Sets the size of the field and of the step buttons.",
         },
         {
           name: "steppers",
-          type: '"split" | "stacked"',
-          default: '"split"',
           description:
             "Puts the step buttons on each side of the value, or stacks them at the end.",
         },
         {
           name: "label",
-          type: "string",
           description: "Label above the field.",
         },
         {
           name: "description",
-          type: "string",
           description: "Help text below the field.",
         },
       ],
@@ -4957,24 +4200,20 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"lg"',
           description:
             "Sets the size of the field, the search icon, and the clear button. The clear button shows only when the field has a value.",
         },
         {
           name: "label",
-          type: "string",
           description: "Label above the field in the default layout.",
         },
         {
           name: "description",
-          type: "string",
           description: "Help text below the field in the default layout.",
         },
         {
           name: "placeholder",
-          type: "string",
           description: "Input placeholder in the default layout.",
         },
       ],
@@ -4986,30 +4225,25 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "label",
-          type: "string",
           description: "Label above the track, next to the value.",
         },
         {
           name: "thumbLabels",
-          type: "string[]",
           description:
             "Names each handle, in value order. Give one when defaultValue or value is an array.",
         },
         {
           name: "marks",
-          type: "number[]",
           description:
             "Values to label along the track. For custom labels, compose SliderMarks.",
         },
         {
           name: "fillOffset",
-          type: "number",
           description:
             "The value the fill starts from. Set 0 for a range that goes below zero.",
         },
         {
           name: "orientation",
-          type: '"horizontal" | "vertical"',
           default: '"horizontal"',
           description:
             "A vertical slider is 14rem tall. Set the height with className.",
@@ -5021,20 +4255,16 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "values",
-          type: "number[]",
-          required: true,
           description:
             "The values to label. Labels in the selected range use the foreground color.",
         },
         {
           name: "children",
-          type: "(value: number) => ReactNode",
           description:
             "Renders each label. Without it, the slider formatOptions format the value.",
         },
         {
           name: "offset",
-          type: "number",
           description:
             "The offset of the SliderRange fill, so labels in the filled part use the foreground color.",
         },
@@ -5047,24 +4277,20 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"lg"',
           description:
             "Sets the height, padding, radius, text, and icon size of the field. The parts inside the field use it.",
         },
         {
           name: "label",
-          type: "string",
           description: "Label above the field in the default layout.",
         },
         {
           name: "description",
-          type: "string",
           description: "Help text below the field in the default layout.",
         },
         {
           name: "placeholder",
-          type: "string",
           description: "Input placeholder in the default layout.",
         },
       ],
@@ -5076,30 +4302,24 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"lg"',
           description:
             "Sets the padding, radius, and text size. The height does not change.",
         },
         {
           name: "label",
-          type: "string",
           description: "Label above the field in the default layout.",
         },
         {
           name: "description",
-          type: "string",
           description: "Help text below the field in the default layout.",
         },
         {
           name: "placeholder",
-          type: "string",
           description: "Input placeholder in the default layout.",
         },
         {
           name: "rows",
-          type: "number",
-          default: "4",
           description: "Number of visible text lines.",
         },
       ],
@@ -5111,25 +4331,17 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "label",
-          type: "ReactNode",
           description:
             "The label of the group. Without it, pass aria-label or compose RadioGroupLabel.",
         },
         {
           name: "description",
-          type: "ReactNode",
           description: "Help text for the group, below the label.",
         },
         {
           name: "errorMessage",
-          type: "string | ((validation: ValidationResult) => string)",
           description:
             "Shown below the options when the group is invalid. Without it, the browser validation message shows. With label, description, or errorMessage, the group adds RadioGroupError for you.",
-        },
-        {
-          name: "onValueChange",
-          type: "(value: string) => void",
-          description: "Alias for onChange. Both run when both are set.",
         },
       ],
     }),
@@ -5138,19 +4350,16 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode",
           description:
             "The label. Without it, pass aria-label so the option has a name.",
         },
         {
           name: "description",
-          type: "ReactNode",
           description:
             "Help text below the label. Linked with aria-describedby, so it is not part of the name.",
         },
         {
           name: "variant",
-          type: '"default" | "card"',
           default: '"default"',
           description:
             "Selects the plain or card appearance. A card selects the option from anywhere inside it, so keep its description plain text. RadioField takes the same prop.",
@@ -5177,24 +4386,19 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "title",
-          type: "string",
-          required: true,
           description: "The main text of the toast.",
         },
         {
           name: "description",
-          type: "string",
           description: "Text below the title.",
         },
         {
           name: "variant",
-          type: '"info" | "success" | "warning" | "error"',
           default: '"info"',
           description: "Sets the icon and its colors.",
         },
         {
           name: "action",
-          type: "{ label: string; onAction: () => void }",
           description:
             "Adds a button after the text. A press calls onAction and closes the toast.",
         },
@@ -5205,7 +4409,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "timeout",
-          type: "number",
           default: "5000",
           description:
             "Milliseconds before the toast closes. Values under 5000 become 5000. Set 0 to keep the toast open until the user closes it. A toast with an action defaults to 0. Hover and focus pause the timer.",
@@ -5219,20 +4422,16 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "delay",
-          type: "number",
-          default: "400",
           description:
             "Milliseconds of hover before the tooltip opens. Keyboard focus opens it at once.",
         },
       ],
     }),
-    apiPart<typeof TooltipContent>({
-      name: "TooltipContent",
+    apiPart<typeof Tooltip>({
+      name: "Tooltip",
       props: [
         {
           name: "offset",
-          type: "number",
-          default: "8",
           description: "Distance from the trigger in pixels.",
         },
         {
@@ -5244,8 +4443,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         },
         {
           name: "arrowBoundaryOffset",
-          type: "number",
-          default: "8",
           description:
             "The minimum distance from TooltipArrow to the tooltip edge. It keeps the arrow off the rounded corner.",
         },
@@ -5260,59 +4457,45 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "steps",
-          type: "readonly TourStep[]",
-          required: true,
           description:
             "Sets the guide. Each step needs an `id` that matches a `TourTarget`, a title, and a description.",
         },
         {
           name: "isOpen",
-          type: "boolean",
           description: "Controls the tour.",
         },
         {
           name: "defaultOpen",
-          type: "boolean",
-          default: "false",
           description: "Opens the tour at first, at `defaultStep`.",
         },
         {
           name: "onOpenChange",
-          type: "(isOpen: boolean) => void",
           description: "Receives requests to open or close the tour.",
         },
         {
           name: "step",
-          type: "number",
           description: "Sets the current step, counted from zero.",
         },
         {
           name: "defaultStep",
-          type: "number",
-          default: "0",
           description: "Sets the step that opens first.",
         },
         {
           name: "onStepChange",
-          type: "(step: number) => void",
           description:
             "Receives each step change from Next, Back, or `start`. A step without a mounted target is skipped in the direction of travel.",
         },
         {
           name: "onComplete",
-          type: "() => void",
           description:
             "Runs when Done is pressed on the last reachable step. The consumer saves progress here.",
         },
         {
           name: "onSkip",
-          type: "() => void",
           description: "Runs on Skip tour and on Escape.",
         },
         {
           name: "spotlight",
-          type: "boolean",
-          default: "true",
           description:
             "Dims the page except for the target and blocks clicks outside it. Set it to `false` to keep the page usable.",
         },
@@ -5325,8 +4508,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "id",
-          type: "string",
-          required: true,
           description: "Matches the `id` of the step that points here.",
         },
       ],
@@ -5338,22 +4519,17 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "variant",
-          type: '"default" | "segmented" | "ghost"',
-          default: '"default"',
           description:
             "Sets the surface. Use segmented inside a ToggleButtonGroup. All variants show the selected state.",
         },
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"md"',
           description:
             "Uses the Button heights. Without a size, a segmented toggle is 44 pixels high on small screens and 36 pixels from 640 pixels.",
         },
         {
           name: "iconOnly",
-          type: "boolean",
-          default: "false",
           description:
             "Makes the toggle a square for one icon. Give the toggle an aria-label.",
         },
@@ -5366,7 +4542,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           description:
             "Sets the size of each toggle in the group. A size on a toggle overrides it.",
         },
@@ -5379,7 +4554,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           description:
             "Sets the size of each button, toggle, and toggle group in the toolbar. Popovers and dialogs that open from the toolbar keep the default size.",
         },
@@ -5392,24 +4566,20 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
           default: '"lg"',
           description: "Sets the size of the input box. Tokens keep one size.",
         },
         {
           name: "label",
-          type: "string",
           description:
             "Label above the field in the default layout. Without it, pass aria-label.",
         },
         {
           name: "description",
-          type: "string",
           description: "Help text below the field in the default layout.",
         },
         {
           name: "placeholder",
-          type: "string",
           description: "Input placeholder in the default layout.",
         },
       ],
@@ -5421,7 +4591,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          type: '"xs" | "sm" | "md"',
           default: '"md"',
           description:
             "Sets the size of each tag and its remove button. A size on a tag overrides it.",
@@ -5456,14 +4625,10 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "active",
-          type: "boolean",
-          default: "true",
           description: "Shows the beam. Set false to remove it.",
         },
         {
           name: "duration",
-          type: "number",
-          default: "6",
           description: "Time in seconds for one lap around the border.",
         },
         {
@@ -5488,15 +4653,11 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "side",
-          type: '"top" | "bottom" | "left" | "right"',
-          default: '"bottom"',
           description:
             "Edge with the strongest blur. The component sits on this edge of its positioned parent.",
         },
         {
           name: "blur",
-          type: "number",
-          default: "12",
           description: "Blur radius in pixels at the edge.",
         },
       ],
@@ -5508,127 +4669,101 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "label",
-          type: "string",
-          required: true,
           description: "Visible label above the drawing area.",
         },
         {
           name: "description",
-          type: "string",
           description: "Help text below the drawing area.",
         },
         {
           name: "error",
-          type: "string",
           description:
             "Message below the drawing area while `isInvalid` is true.",
         },
         {
           name: "placeholder",
-          type: "string",
-          default: '"Sign here"',
           description: "Text in the empty drawing area.",
         },
         {
           name: "size",
-          type: '"sm" | "md" | "lg"',
-          default: '"md"',
           description: "Height of the drawing area.",
         },
         {
           name: "name",
-          type: "string",
           description:
             "Submits the PNG data URL in a hidden input. The value updates when a stroke ends. Validate the pad with `isInvalid`.",
         },
         {
           name: "form",
-          type: "string",
           description: "Associates the hidden input with a form by id.",
         },
         {
           name: "paths",
-          type: "string[]",
           description: "The committed strokes, controlled.",
         },
         {
           name: "defaultPaths",
-          type: "string[]",
           description: "The strokes to draw first, uncontrolled.",
         },
         {
           name: "drawing",
-          type: "DrawingOptions",
           description:
             "The stroke options. The defaults use `currentColor` and size 3.",
         },
         {
-          name: "isDisabled",
-          type: "boolean",
+          name: "disabled",
           description: "Disables drawing and the clear button.",
         },
         {
-          name: "isReadOnly",
-          type: "boolean",
+          name: "readOnly",
           description: "Shows the strokes but stops changes.",
         },
         {
-          name: "isRequired",
-          type: "boolean",
+          name: "required",
           description:
             "Marks the pad as required. Validate it with `isInvalid`.",
         },
         {
-          name: "isInvalid",
-          type: "boolean",
+          name: "invalid",
           description: "Marks the pad as invalid and shows the error.",
         },
         {
           name: "dataUrlType",
-          type: '"image/png" | "image/jpeg" | "image/svg+xml"',
           default: '"image/png"',
           description: "The image type of the captured value.",
         },
         {
           name: "quality",
-          type: "number",
           description: "The quality of a lossy capture, from 0 to 1.",
         },
         {
           name: "onDraw",
-          type: "(details: { paths: string[]; currentPath: string | null }) => void",
           description: "Called with the committed strokes while drawing.",
         },
         {
           name: "onDrawEnd",
-          type: "(details: { paths: string[]; getDataUrl: Function }) => void",
           description: "Called when a stroke ends.",
         },
         {
           name: "onValueChange",
-          type: "(value: string) => void",
           description:
             "Called with the data URL after a stroke ends or the pad is cleared.",
         },
         {
           name: "translations",
-          type: "IntlTranslations",
           description:
             "Overrides the accessible labels of the pad and clear button.",
         },
         {
           name: "dir",
-          type: '"ltr" | "rtl"',
           description: "Sets the writing direction of the pad.",
         },
         {
           name: "ids",
-          type: "ElementIds",
           description: "Sets the ids of the pad parts.",
         },
         {
           name: "getRootNode",
-          type: "() => Node",
           description:
             "Resolves the document in custom environments such as iframes.",
         },
@@ -5641,8 +4776,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode",
-          required: true,
           description: "The composed parts.",
         },
       ],
@@ -5664,7 +4797,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode",
           description: "Replaces the default paths with custom SVG content.",
         },
       ],
@@ -5674,8 +4806,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "path",
-          type: "string",
-          required: true,
           description: "The SVG path data of one stroke.",
         },
       ],
@@ -5692,7 +4822,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode",
           description: 'Replaces the default "Clear" label.',
         },
       ],
@@ -5702,12 +4831,10 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "value",
-          type: "string",
           description: "Overrides the captured data URL.",
         },
         {
           name: "form",
-          type: "string",
           description: "Associates the input with a form by id.",
         },
       ],
@@ -5727,72 +4854,58 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "value",
-          type: "string",
           description: "The value to encode, controlled.",
         },
         {
           name: "defaultValue",
-          type: "string",
           description: "The value to encode at first, uncontrolled.",
         },
         {
           name: "size",
-          type: '"sm" | "md" | "lg"',
-          default: '"md"',
           description: "The size of the code in the page.",
         },
         {
           name: "label",
-          type: "string",
           default: '"QR code"',
           description: "The accessible name of the code.",
         },
         {
           name: "overlay",
-          type: "{ src: string; alt?: string }",
           description:
             "A logo centered over the code. Sets the error correction to H unless `encoding` overrides it.",
         },
         {
           name: "download",
           type: "boolean | { fileName?: string; mimeType?: string; quality?: number }",
-          default: "false",
           description: "Shows a download button with PNG, JPEG, or SVG output.",
         },
         {
           name: "pixelSize",
-          type: "number",
           default: "10",
           description: "The pixel size of one module.",
         },
         {
           name: "encoding",
-          type: "QrCodeGenerateOptions",
           description: "The encoding options, such as `ecc` and `boostEcc`.",
         },
         {
           name: "onValueChange",
-          type: "(details: { value: string }) => void",
           description: "Called when the encoded value changes.",
         },
         {
           name: "children",
-          type: "ReactNode",
           description: "Renders below the code, such as a caption.",
         },
         {
           name: "dir",
-          type: '"ltr" | "rtl"',
           description: "Sets the writing direction.",
         },
         {
           name: "ids",
-          type: "ElementIds",
           description: "Sets the ids of the qr code parts.",
         },
         {
           name: "getRootNode",
-          type: "() => Node",
           description:
             "Resolves the document in custom environments such as iframes.",
         },
@@ -5805,7 +4918,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode",
           description: "The composed parts.",
         },
       ],
@@ -5817,8 +4929,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "label",
-          type: "string",
-          default: '"QR code"',
           description: "The accessible name of the code.",
         },
       ],
@@ -5835,7 +4945,6 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "children",
-          type: "ReactNode",
           description: "The logo image.",
         },
       ],
@@ -5847,37 +4956,359 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "fileName",
-          type: "string",
-          default: '"qr-code.png"',
           description: "The name of the downloaded file.",
         },
         {
           name: "mimeType",
-          type: '"image/png" | "image/jpeg" | "image/svg+xml"',
-          default: '"image/png"',
           description: "The image type of the downloaded file.",
         },
         {
           name: "quality",
-          type: "number",
           description: "The quality of a lossy download, from 0 to 1.",
         },
         {
           name: "variant",
-          type: "ButtonVariant",
-          default: '"outline"',
           description: "The visual emphasis of the trigger.",
         },
         {
           name: "size",
-          type: '"xs" | "sm" | "md" | "lg" | "xl"',
-          default: '"sm"',
           description: "The size of the trigger.",
         },
         {
           name: "children",
-          type: "ReactNode",
           description: 'Replaces the default "Download" label.',
+        },
+      ],
+    }),
+  ],
+  breadcrumbs: [
+    apiPart<typeof Breadcrumb>({
+      name: "Breadcrumb",
+      description:
+        "A link to one page in the trail. The last item renders as text with aria-current set to page.",
+      props: [
+        {
+          name: "href",
+          type: "string",
+          description: "The page URL. The current page ignores it.",
+        },
+        {
+          name: "children",
+          type: "ReactNode",
+          description: "The page name.",
+        },
+      ],
+    }),
+    apiPart<typeof BreadcrumbItem>({
+      name: "BreadcrumbItem",
+      description: "Holds custom content in the trail, such as a menu.",
+      props: [
+        {
+          name: "children",
+          description:
+            "The item content. A separator follows it, except on the current page.",
+        },
+      ],
+    }),
+  ],
+  "color-swatch": [
+    apiPart<typeof ColorSwatch>({
+      name: "ColorSwatch",
+      props: [
+        {
+          name: "color",
+          description:
+            "The color to show. A transparent color shows over a checkerboard.",
+        },
+      ],
+    }),
+  ],
+  "color-swatch-picker": [
+    apiPart<typeof ColorSwatchPickerItem>({
+      name: "ColorSwatchPickerItem",
+      props: [
+        {
+          name: "color",
+          description:
+            "The color of the item. The selected item shows a ring in a darker shade of it.",
+        },
+        {
+          name: "children",
+          description: "Replaces the default ColorSwatch in the item.",
+        },
+      ],
+    }),
+  ],
+  "context-menu": [
+    apiPart<typeof ContextMenuTrigger>({
+      name: "ContextMenuTrigger",
+      description:
+        "Opens the menu on right-click, long press, or Shift+F10. ContextMenu, ContextMenuItem, ContextMenuSection, and the other parts are the Menu parts.",
+      props: [
+        {
+          name: "children",
+          description: "The target element, then the ContextMenu.",
+        },
+      ],
+    }),
+  ],
+  "description-list": [
+    apiPart<typeof DescriptionList>({
+      name: "DescriptionList",
+      description:
+        "Shows terms and details in two columns from the sm breakpoint, and stacks them below it.",
+      props: [
+        {
+          name: "children",
+          description: "Pairs of DescriptionTerm and DescriptionDetail.",
+        },
+      ],
+    }),
+  ],
+  disclosure: [
+    apiPart<typeof DisclosureHeader>({
+      name: "DisclosureHeader",
+      description:
+        "The trigger button, inside a heading. Its chevron turns when the panel opens.",
+      props: [
+        {
+          name: "children",
+          description: "The header text.",
+        },
+      ],
+    }),
+    apiPart<typeof DisclosurePanel>({
+      name: "DisclosurePanel",
+      props: [
+        {
+          name: "children",
+          description:
+            "The content that shows when the disclosure is expanded.",
+        },
+      ],
+    }),
+  ],
+  "drop-zone": [
+    apiPart<typeof DropZone>({
+      name: "DropZone",
+      props: [
+        {
+          name: "getDropOperation",
+          description:
+            'Accepts or rejects a drag by its types. Return "cancel" to reject it; the icon then shakes.',
+        },
+        {
+          name: "onDrop",
+          description:
+            "Receives the dropped items. The zone shows a ripple when the drop arrives.",
+        },
+        {
+          name: "isDisabled",
+          description: "Ignores drops and disables DropZoneTrigger.",
+        },
+      ],
+    }),
+    apiPart<typeof DropZoneTrigger>({
+      name: "DropZoneTrigger",
+      description: "Opens the file picker. Its hit area covers the whole zone.",
+      props: [
+        {
+          name: "acceptedFileTypes",
+          description: "The MIME types that the file picker shows.",
+        },
+        {
+          name: "allowsMultiple",
+          description: "Lets the user select more than one file.",
+        },
+        {
+          name: "onSelect",
+          description:
+            "Receives the selected files. The zone shows the same ripple as a drop.",
+        },
+        {
+          name: "variant",
+          description: "Sets the button style.",
+        },
+        {
+          name: "children",
+          description: "The button text.",
+        },
+      ],
+    }),
+  ],
+  fieldset: [
+    apiPart<typeof Fieldset>({
+      name: "Fieldset",
+      props: [
+        {
+          name: "disabled",
+          description: "Disables every control in the fieldset and dims it.",
+        },
+      ],
+    }),
+    apiPart<typeof FieldsetLegend>({
+      name: "FieldsetLegend",
+      props: [
+        {
+          name: "children",
+          description:
+            "The name of the group. Screen readers read it with the first control.",
+        },
+      ],
+    }),
+  ],
+  form: [
+    apiPart<typeof Form>({
+      name: "Form",
+      props: [
+        {
+          name: "validationErrors",
+          description:
+            "Server errors by field name. A field shows its error until the value changes.",
+        },
+        {
+          name: "children",
+          description: "The fields and actions. They stack with a 16px gap.",
+        },
+      ],
+    }),
+  ],
+  "grid-list": [
+    apiPart<typeof GridList>({
+      name: "GridList",
+      props: [
+        {
+          name: "selectionMode",
+          description:
+            "Lets the user select one item or many. Selected items use the accent background.",
+        },
+        {
+          name: "renderEmptyState",
+          description: "Content to show when the list has no items.",
+        },
+      ],
+    }),
+    apiPart<typeof GridListItem>({
+      name: "GridListItem",
+      props: [
+        {
+          name: "textValue",
+          description:
+            "The text for type-ahead and screen readers. Set it when the children are not plain text.",
+        },
+      ],
+    }),
+  ],
+  "kbd-code": [
+    apiPart<typeof Kbd>({
+      name: "Kbd",
+      props: [
+        {
+          name: "children",
+          description: "The key name, or a key symbol such as ⌘.",
+        },
+      ],
+    }),
+    apiPart<typeof KbdGroup>({
+      name: "KbdGroup",
+      props: [
+        {
+          name: "children",
+          description: "The Kbd keys of one shortcut, such as ⌘ and K.",
+        },
+      ],
+    }),
+    apiPart<typeof InlineCode>({
+      name: "InlineCode",
+      props: [
+        {
+          name: "children",
+          description: "The code text. It wraps across lines.",
+        },
+      ],
+    }),
+  ],
+  link: [
+    apiPart<typeof Link>({
+      name: "Link",
+      props: [
+        {
+          name: "href",
+          type: "string",
+          description:
+            "The URL. Without it, the link renders as a span with the link role; use onPress.",
+        },
+        {
+          name: "children",
+          description: "The link text.",
+        },
+      ],
+    }),
+  ],
+  "list-box": [
+    apiPart<typeof ListBox>({
+      name: "ListBox",
+      props: [
+        {
+          name: "selectionMode",
+          description:
+            "Lets the user select one item or many. Selected items show a check mark.",
+        },
+        {
+          name: "renderEmptyState",
+          description: "Content to show when the list has no items.",
+        },
+      ],
+    }),
+    apiPart<typeof ListBoxItem>({
+      name: "ListBoxItem",
+      props: [
+        {
+          name: "textValue",
+          description:
+            "The text for type-ahead. It defaults to the children when they are a string.",
+        },
+      ],
+    }),
+  ],
+  "range-calendar": [
+    apiPart<typeof RangeCalendar>({
+      name: "RangeCalendar",
+      props: [
+        {
+          name: "visibleDuration",
+          description:
+            "Shows more than one month side by side, such as { months: 2 }.",
+        },
+        {
+          name: "children",
+          description: "Replaces the default month grids.",
+        },
+      ],
+    }),
+  ],
+  separator: [
+    apiPart<typeof Separator>({
+      name: "Separator",
+      props: [
+        {
+          name: "orientation",
+          description:
+            "Sets the direction of the line. A vertical line stretches to the height of its row.",
+        },
+      ],
+    }),
+  ],
+  skeleton: [
+    apiPart<typeof Skeleton>({
+      name: "Skeleton",
+      description:
+        "A placeholder with a shimmer. Screen readers ignore it, so set aria-busy on the region that loads.",
+      props: [
+        {
+          name: "className",
+          description:
+            "Sets the size and shape, such as h-4 w-32 or size-10 rounded-full.",
         },
       ],
     }),

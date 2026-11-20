@@ -12,7 +12,6 @@ import {
   useContext,
   useLayoutEffect,
   useRef,
-  useSyncExternalStore,
 } from "react";
 import {
   Calendar as AriaCalendar,
@@ -39,9 +38,11 @@ import {
   type Key,
   RangeCalendarStateContext,
 } from "react-aria-components";
+import { prefersReducedMotion } from "./motion";
 import { cn } from "./utils";
 import { Button } from "./button";
 import { fieldChevronStyles } from "./field-styles";
+import { useMediaQuery } from "./hooks";
 import { itemHighlightRing, withItemHighlight } from "./item-highlight";
 import { SelectContent, SelectItem } from "./select";
 
@@ -182,7 +183,7 @@ function useMonthSlide(ref: RefObject<HTMLElement | null>, distance: number) {
     if (!node || !from || !month) return;
     const step = Math.sign(month.compare(from));
     if (!step) return;
-    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const still = prefersReducedMotion();
     const side = getComputedStyle(node).direction === "rtl" ? -1 : 1;
     node.animate(
       still
@@ -392,18 +393,6 @@ export function CalendarGridBody(
   return <AriaCalendarGridBody {...props} />;
 }
 
-const narrowQuery = "(max-width: 639px)";
-
-function subscribeToNarrow(onChange: () => void) {
-  const media = window.matchMedia(narrowQuery);
-  media.addEventListener("change", onChange);
-  return () => media.removeEventListener("change", onChange);
-}
-
-function isNarrowViewport() {
-  return window.matchMedia(narrowQuery).matches;
-}
-
 export interface CalendarPresetsProps {
   presets: readonly string[];
   selected: string | null;
@@ -419,11 +408,7 @@ export function CalendarPresets({
   className,
   ...props
 }: CalendarPresetsProps) {
-  const narrow = useSyncExternalStore(
-    subscribeToNarrow,
-    isNarrowViewport,
-    () => false,
-  );
+  const narrow = useMediaQuery("(max-width: 639px)");
   return (
     <AriaListBox
       aria-label={props["aria-label"] ?? "Presets"}

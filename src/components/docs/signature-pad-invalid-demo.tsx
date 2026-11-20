@@ -6,8 +6,8 @@ export function SignaturePadInvalidDemo() {
       label="Signature"
       description="Draw your signature above the line."
       error="Add your signature before you continue."
-      isRequired
-      isInvalid
+      required
+      invalid
       className="w-full max-w-md"
     />
   );

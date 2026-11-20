@@ -23,13 +23,13 @@ export function SelectSizesDemo() {
         defaultValue="newest"
         options={options}
       />
+      <Select aria-label="Sort" defaultValue="newest" options={options} />
       <Select
-        size="md"
+        size="lg"
         aria-label="Sort"
         defaultValue="newest"
         options={options}
       />
-      <Select aria-label="Sort" defaultValue="newest" options={options} />
     </div>
   );
 }

@@ -13,10 +13,10 @@ import { type Size, SizeProvider, useSize } from "./size";
 
 export const groupFrameStyles = {
   xs: "gap-0.5 rounded-md p-0.5",
-  sm: "",
+  sm: "gap-0.5 p-0.5",
   md: "",
-  lg: "",
-  xl: "rounded-xl",
+  lg: "rounded-xl",
+  xl: "rounded-2xl",
 } satisfies Record<Size, string>;
 
 export function ToggleButtonGroup({
@@ -40,7 +40,7 @@ export function ToggleButtonGroup({
           })}
           className={composeRenderProps(className, (className) =>
             cn(
-              "inline-flex w-fit max-w-full flex-wrap gap-1 rounded-lg border border-border bg-secondary p-1 orientation-vertical:flex-col orientation-vertical:[--touch-target:calc(100%+0.25rem)] has-data-[variant=segmented]:*:data-[slot=item-highlight]:bg-card/70",
+              "inline-flex w-fit max-w-full flex-wrap gap-1 rounded-lg bg-secondary p-1 inset-ring inset-ring-border forced-colors:border orientation-vertical:flex-col orientation-vertical:[--touch-target:calc(100%+0.25rem)] has-data-[variant=segmented]:*:data-[slot=item-highlight]:bg-card/70",
               size && groupFrameStyles[size],
               className,
             ),

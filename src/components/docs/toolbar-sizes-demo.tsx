@@ -19,12 +19,12 @@ export function ToolbarSizesDemo() {
     <div className="flex flex-col items-start gap-3">
       <CommentToolbar size="xs" />
       <CommentToolbar size="sm" />
-      <CommentToolbar size="md" />
+      <CommentToolbar />
     </div>
   );
 }
 
-function CommentToolbar({ size }: { size: Size }) {
+function CommentToolbar({ size }: { size?: Size }) {
   return (
     <Toolbar size={size} aria-label="Comment editor">
       <Button variant="ghost" iconOnly aria-label="Undo">

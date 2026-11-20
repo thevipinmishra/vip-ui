@@ -1,4 +1,4 @@
-import { CodeBlock } from "@/components/docs/code-block";
+import { CodeSample } from "@/components/docs/code-sample";
 import {
   Code,
   ExternalLink,
@@ -127,7 +127,7 @@ export default function StylingPage() {
           The <TextLink href="/themes">themes</TextLink> set the shadcn tokens
           to steps. To make your own theme, map the tokens to steps:
         </p>
-        <CodeBlock code={scaleTheme} filename="globals.css" />
+        <CodeSample code={scaleTheme} filename="globals.css" />
       </GuideSection>
 
       <GuideSection id="dark-mode" title="Dark mode">
@@ -158,13 +158,13 @@ export default function StylingPage() {
           such as <Code>buttonStyles</Code> in <Code>button-styles.tsx</Code>.
           To add a variant, add a key to the recipe.
         </p>
-        <CodeBlock code={recipe} filename="button-styles.tsx" />
+        <CodeSample code={recipe} filename="button-styles.tsx" />
         <p>
           To change one instance, pass <Code>className</Code>. vip/ui merges it
           after the component classes. A conflicting utility, such as{" "}
           <Code>px-6</Code>, replaces the default.
         </p>
-        <CodeBlock code={usage} filename="example.tsx" />
+        <CodeSample code={usage} filename="example.tsx" />
       </GuideSection>
 
       <GuideSection id="states" title="Style states">

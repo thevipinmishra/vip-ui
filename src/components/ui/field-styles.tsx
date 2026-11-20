@@ -4,8 +4,8 @@ export const fieldSizeStyles = {
   xs: "[--field-h:1.75rem] [--field-px:0.5rem] [--field-inset:0.125rem] [--field-radius:var(--radius-sm)] [--field-text:0.75rem] [--field-icon:0.875rem]",
   sm: "[--field-h:2rem] [--field-px:0.625rem] [--field-inset:0.1875rem] [--field-radius:var(--radius-md)] [--field-text:0.875rem] [--field-icon:1rem]",
   md: "[--field-h:2.5rem] [--field-px:0.75rem] [--field-inset:0.25rem] [--field-radius:var(--radius-lg)] [--field-text:0.875rem] [--field-icon:1rem]",
-  lg: "[--field-h:2.75rem] [--field-px:0.875rem] [--field-inset:0.25rem] [--field-radius:var(--radius-lg)] [--field-text:0.875rem] [--field-icon:1rem]",
-  xl: "[--field-h:3rem] [--field-px:1rem] [--field-inset:0.3125rem] [--field-radius:var(--radius-xl)] [--field-text:1rem] [--field-icon:1.25rem]",
+  lg: "[--field-h:3rem] [--field-px:0.875rem] [--field-inset:0.3125rem] [--field-radius:var(--radius-lg)] [--field-text:1rem] [--field-icon:1.25rem]",
+  xl: "[--field-h:3.5rem] [--field-px:1rem] [--field-inset:0.375rem] [--field-radius:var(--radius-xl)] [--field-text:1rem] [--field-icon:1.25rem]",
 } satisfies Record<Size, string>;
 
 export const fieldHeight = "min-h-(--field-h,2.5rem)";

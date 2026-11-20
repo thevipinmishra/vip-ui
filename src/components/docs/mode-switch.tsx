@@ -27,10 +27,9 @@ export function ModeSwitch({
         const [next] = keys;
         if (next === "light" || next === "dark") onChange(next);
       }}
-      size={pill ? "sm" : undefined}
       className={cn(
         pill &&
-          "gap-0.5 rounded-full border-0 bg-card/60 shadow-(--shadow-card) ring-1 ring-border/60 backdrop-blur-xl *:rounded-full",
+          "gap-0.5 rounded-full bg-card/60 inset-ring-0 shadow-(--shadow-card) ring-1 ring-border/60 backdrop-blur-xl *:rounded-full",
         className,
       )}
     >

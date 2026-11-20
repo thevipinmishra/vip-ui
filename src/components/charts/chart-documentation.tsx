@@ -1,7 +1,7 @@
 import { ArrowUpRightIcon } from "@phosphor-icons/react/ssr";
 import type { ReactNode } from "react";
 import { ApiReference } from "@/components/docs/api-reference";
-import { CodeBlock } from "@/components/docs/code-block";
+import { CodeSample } from "@/components/docs/code-sample";
 import { ComponentComposition } from "@/components/docs/component-composition";
 import type { CompositionPart } from "@/components/docs/component-compositions";
 import { Code, ExternalLink, TextLink } from "@/components/docs/guide";
@@ -224,8 +224,6 @@ const api = [
     props: [
       {
         name: "variant",
-        type: '"default" | "card" | "plain"',
-        default: '"default"',
         description:
           "The frame surface. Use card to match Card. Use plain when the chart is inside another surface.",
       },
@@ -243,7 +241,6 @@ const api = [
     props: [
       {
         name: "children",
-        type: "ReactNode",
         description: "Controls for the chart, such as a period toggle.",
       },
     ],
@@ -255,14 +252,12 @@ const api = [
     props: [
       {
         name: "renderer",
-        type: "ChartRenderer",
         default: "chartMotion",
         description:
           "Draws and animates the chart. chartMotion is a TanStack motion renderer with a spring.",
       },
       {
         name: "children",
-        type: "ReactNode",
         description: "Content on top of the plot, such as ChartCenter.",
       },
     ],
@@ -274,7 +269,6 @@ const api = [
     props: [
       {
         name: "renderTooltipBody",
-        type: "(context) => ReactNode",
         description:
           "Receives points, defaultBody, pinned, and dismiss. Keep controls visible only while pinned.",
       },
@@ -285,14 +279,10 @@ const api = [
     props: [
       {
         name: "color",
-        type: "string",
-        required: true,
         description: "The series color. Use the same value as the mark.",
       },
       {
         name: "swatch",
-        type: '"square" | "line" | "dashed"',
-        default: '"square"',
         description:
           "The swatch shape. Use line for a line series and dashed for a dashed line.",
       },
@@ -303,20 +293,14 @@ const api = [
     props: [
       {
         name: "caption",
-        type: "string",
-        required: true,
         description: "Names the table for screen readers.",
       },
       {
         name: "columns",
-        type: "string[]",
-        required: true,
         description: "Column headings. The first column labels each row.",
       },
       {
         name: "rows",
-        type: "(string | number)[][]",
-        required: true,
         description:
           "The exact values. The table is visible to screen readers only.",
       },
@@ -376,7 +360,7 @@ export async function ChartDocumentation() {
               , then render it inside a ChartFrame. The frame sets the colors
               and the tooltip styles.
             </Note>
-            <CodeBlock code={usage} filename="traffic-chart.tsx" />
+            <CodeSample code={usage} filename="traffic-chart.tsx" />
           </DocumentationSection>
 
           <DocumentationSection id="composition" title="Composition">
@@ -409,9 +393,9 @@ export async function ChartDocumentation() {
               Give one chart a renderer to change its motion. This example uses
               a softer spring.
             </Note>
-            <CodeBlock code={motionRenderer} filename="revenue-chart.tsx" />
+            <CodeSample code={motionRenderer} filename="revenue-chart.tsx" />
             <Note>Use the static SVG renderer to turn the motion off.</Note>
-            <CodeBlock code={motionOff} filename="revenue-chart.tsx" />
+            <CodeSample code={motionOff} filename="revenue-chart.tsx" />
           </DocumentationSection>
 
           <DocumentationSection id="rendering" title="Rendering">
@@ -419,17 +403,17 @@ export async function ChartDocumentation() {
               Chart uses the SVG renderer with motion by default. Use the canvas
               renderer when a chart has many marks.
             </Note>
-            <CodeBlock code={canvas} filename="large-scatterplot.tsx" />
+            <CodeSample code={canvas} filename="large-scatterplot.tsx" />
             <Note>
               Use the TanStack runtime to generate SVG without a browser. The
               result works for email, static pages, and image export.
             </Note>
-            <CodeBlock code={staticSvg} filename="static-chart.ts" />
+            <CodeSample code={staticSvg} filename="static-chart.ts" />
             <Note>
               Use the export helpers to download a mounted chart as an SVG or
               PNG file.
             </Note>
-            <CodeBlock code={exportChart} filename="export-chart.tsx" />
+            <CodeSample code={exportChart} filename="export-chart.tsx" />
           </DocumentationSection>
 
           <DocumentationSection id="interaction" title="Interaction">
@@ -438,18 +422,18 @@ export async function ChartDocumentation() {
               zoom, brush, or selection. The gallery has a live example for
               each.
             </Note>
-            <CodeBlock code={crosshair} filename="crosshair-chart.tsx" />
+            <CodeSample code={crosshair} filename="crosshair-chart.tsx" />
             <Note>
               Share one cursor between charts to link them. Each chart shows the
               same x value with its own scales.
             </Note>
-            <CodeBlock code={linkedCharts} filename="linked-charts.tsx" />
+            <CodeSample code={linkedCharts} filename="linked-charts.tsx" />
             <Note>
               Tooltips can stay inside the chart definition. Use TooltipChart
               when a pinned tooltip needs React controls, nested charts, or a
               portal.
             </Note>
-            <CodeBlock code={tooltipBody} filename="energy-tooltip.tsx" />
+            <CodeSample code={tooltipBody} filename="energy-tooltip.tsx" />
           </DocumentationSection>
 
           <DocumentationSection id="scales" title="Scales and data">
@@ -458,7 +442,7 @@ export async function ChartDocumentation() {
               time. Use a D3 scale only when the data needs local time, a
               logarithmic domain, or a sequential color ramp.
             </Note>
-            <CodeBlock code={timeScale} filename="time-series.ts" />
+            <CodeSample code={timeScale} filename="time-series.ts" />
             <Note>
               TanStack transforms prepare rows before the marks. The gallery
               uses bin, fold, group, rank, normalize, cumulative, rolling
@@ -471,9 +455,9 @@ export async function ChartDocumentation() {
               Charts read six series colors, <Code>--chart-1</Code> to{" "}
               <Code>--chart-6</Code>. Set them for light and dark mode.
             </Note>
-            <CodeBlock code={theming} filename="globals.css" language="css" />
+            <CodeSample code={theming} filename="globals.css" language="css" />
             <Note>Set a color on one frame to change a single chart.</Note>
-            <CodeBlock code={override} filename="chart.tsx" />
+            <CodeSample code={override} filename="chart.tsx" />
           </DocumentationSection>
 
           <DocumentationSection id="accessibility" title="Accessibility">

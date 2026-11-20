@@ -23,6 +23,16 @@ export function SiteFooter({ className }: { className?: string }) {
         >
           GitHub
           <span className="sr-only"> (opens in a new tab)</span>
+        </a>{" "}
+        <span aria-hidden="true">·</span>{" "}
+        <a
+          href={`${repositoryUrl}/blob/main/CHANGELOG.md`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={linkStyles}
+        >
+          Changelog
+          <span className="sr-only"> (opens in a new tab)</span>
         </a>
       </p>
     </footer>

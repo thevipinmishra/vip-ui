@@ -38,18 +38,15 @@ export default function Home() {
                 id="hero-title"
                 className="mt-6 text-[clamp(2.25rem,1.5rem+3vw,3.75rem)] leading-[1.06] font-semibold tracking-[-0.035em] text-balance sm:tracking-[-0.045em]"
               >
-                A better foundation{" "}
-                <span className="text-muted-foreground">
-                  for beautiful interfaces.
-                </span>
+                Accessible React components you own.
               </h1>
               <p className="mt-5 max-w-xl text-base leading-7 text-pretty text-muted-foreground sm:text-lg sm:leading-8">
-                Accessible React components on React Aria, with fluid motion and
-                a design system you own.
+                Built on React Aria, with fluid motion, charts, and themes. Add
+                them with the shadcn CLI and edit the source.
               </p>
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                 <ButtonLink as={Link} href="/components/installation" size="md">
-                  Get Started
+                  Get started
                 </ButtonLink>
                 <ButtonLink
                   as={Link}

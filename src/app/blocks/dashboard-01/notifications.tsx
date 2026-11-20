@@ -14,7 +14,7 @@ import {
   PopoverTitle,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 const initialNotifications = [
@@ -67,7 +67,7 @@ export function Notifications() {
             />
           )}
         </Button>
-        <TooltipContent>Notifications</TooltipContent>
+        <Tooltip>Notifications</Tooltip>
       </TooltipTrigger>
       <Popover placement="bottom end" className="w-88 p-0">
         <PopoverDialog aria-label="Notifications">

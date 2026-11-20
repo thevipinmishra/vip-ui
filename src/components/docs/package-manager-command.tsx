@@ -27,9 +27,11 @@ const runCommand: Record<PackageManager, string> = {
 export function PackageManagerCommand({
   action,
   args,
+  wrap,
 }: {
   action: "run" | "add" | "add-dev";
   args: string;
+  wrap?: boolean;
 }) {
   const commands = Object.fromEntries(
     managers.map((manager) => [
@@ -39,7 +41,7 @@ export function PackageManagerCommand({
   ) as Record<PackageManager, string>;
 
   return (
-    <PackageManagerTabs commands={commands}>
+    <PackageManagerTabs commands={commands} wrap={wrap}>
       {managers.map((manager) => (
         <CodeSnippet key={manager} code={commands[manager]} language="bash" />
       ))}

@@ -43,8 +43,8 @@ jobs:
       - name: Check registry is in sync
         run: |
           pnpm registry:build
-          git diff --exit-code -- public/r registry.json registry/generated
-          test -z "$(git status --porcelain -- public/r registry.json registry/generated)"
+          git diff --exit-code -- public/r registry.json registry/generated skills/vip-ui
+          test -z "$(git status --porcelain -- public/r registry.json registry/generated skills/vip-ui)"
 
       - name: Check React Doctor status is in sync
         run: |

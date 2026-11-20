@@ -1,13 +1,12 @@
 "use client";
 
-import { ArrowDownIcon } from "@phosphor-icons/react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import {
   Radio as AriaRadio,
   RadioGroup as AriaRadioGroup,
 } from "react-aria-components";
 import { flushSync } from "react-dom";
-import { CopyButton } from "@/components/docs/copy-button";
+import { CopyCodeButton } from "@/components/docs/copy-code-button";
 import { ModeSwitch } from "@/components/docs/mode-switch";
 import {
   PageActions,
@@ -209,11 +208,10 @@ export function ThemeStudio({
         <PageActions className="mt-2 justify-center">
           <a href="#install" className={buttonLinkStyles()}>
             Install {theme.name}
-            <ArrowDownIcon size={16} aria-hidden="true" />
           </a>
-          <CopyButton
+          <CopyCodeButton
             code={themeCss(theme)}
-            label={`Copy ${theme.name} CSS`}
+            label={`Copy CSS for ${theme.name}`}
             text="Copy CSS"
             className="h-10 px-4"
           />
@@ -251,7 +249,7 @@ export function ThemeStudio({
         </div>
       </div>
 
-      <Tabs defaultValue="preview" className="site-container min-w-0">
+      <Tabs defaultSelectedKey="preview" className="site-container min-w-0">
         <TabList aria-label="Theme view">
           <Tab id="preview">Preview</Tab>
           <Tab id="components">All components</Tab>

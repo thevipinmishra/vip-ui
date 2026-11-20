@@ -56,9 +56,6 @@ export interface SelectProps
   ref?: React.Ref<HTMLDivElement>;
   className?: AriaSelectProps<SelectOption>["className"];
   children?: AriaSelectProps<SelectOption>["children"];
-  value?: string;
-  defaultValue?: string;
-  onValueChange?: (value: string) => void;
 }
 
 export function Select({
@@ -68,9 +65,6 @@ export function Select({
   size,
   className,
   children,
-  value,
-  defaultValue,
-  onValueChange,
   placeholder = "Select an option",
   ...props
 }: SelectProps) {
@@ -79,12 +73,6 @@ export function Select({
       {...props}
       data-slot="select"
       data-size={size}
-      selectedKey={value ?? props.selectedKey}
-      defaultSelectedKey={defaultValue ?? props.defaultSelectedKey}
-      onSelectionChange={(key) => {
-        props.onSelectionChange?.(key);
-        onValueChange?.(key === null ? "" : String(key));
-      }}
       placeholder={placeholder}
       className={composeRenderProps(className, (className) =>
         cn(

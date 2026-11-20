@@ -21,7 +21,11 @@ import {
 } from "react";
 import { Link as AriaLink, type LinkProps } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { springLayout, springSnappyEasing } from "@/lib/motion";
+import {
+  prefersReducedMotion,
+  springLayout,
+  springSnappyEasing,
+} from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { buttonLabel, touchTarget } from "./button-styles";
 import { ItemHighlight } from "./item-highlight";
@@ -34,8 +38,8 @@ const paginationLinkStyles = tv({
       xs: `min-h-7 min-w-7 gap-1 rounded-md px-2 text-xs [&_svg:not([class*='size-'])]:size-3.5 ${touchTarget}`,
       sm: `min-h-8 min-w-8 rounded-md px-2 ${touchTarget}`,
       md: `min-h-10 min-w-10 px-3 ${touchTarget}`,
-      lg: "min-h-11 min-w-11 px-3.5",
-      xl: "min-h-12 min-w-12 rounded-xl px-4 text-base [&_svg:not([class*='size-'])]:size-5",
+      lg: "min-h-12 min-w-12 px-3.5 text-base [&_svg:not([class*='size-'])]:size-5",
+      xl: "min-h-14 min-w-14 rounded-xl px-4 text-base [&_svg:not([class*='size-'])]:size-5",
     },
     isCurrent: {
       true: "cursor-default text-primary forced-colors:border",
@@ -48,8 +52,8 @@ const ellipsisSizeStyles = {
   xs: "min-h-7 min-w-5 text-xs",
   sm: "min-h-8 min-w-6",
   md: "min-h-10 min-w-8",
-  lg: "min-h-11 min-w-8",
-  xl: "min-h-12 min-w-9 text-base",
+  lg: "min-h-12 min-w-9 text-base",
+  xl: "min-h-14 min-w-10 text-base",
 } satisfies Record<Size, string>;
 
 interface PaginationContextValue {
@@ -219,7 +223,7 @@ function PaginationCurrent({ current }: { current: boolean }) {
     if (!indicator || !link) return;
     const previous = takeFrame?.(link) ?? null;
     if (!previous || previous === link || !previous.isConnected) return;
-    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (prefersReducedMotion()) return;
     const box = link.getBoundingClientRect();
     const from = previous.getBoundingClientRect();
     const x = from.x - box.x;

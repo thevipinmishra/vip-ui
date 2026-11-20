@@ -50,7 +50,6 @@ export interface RadioGroupProps extends Omit<AriaRadioGroupProps, "children"> {
   description?: ReactNode;
   errorMessage?: string | ((validation: ValidationResult) => string);
   children: ReactNode;
-  onValueChange?: (value: string) => void;
 }
 
 export function RadioGroup({
@@ -59,17 +58,12 @@ export function RadioGroup({
   errorMessage,
   className,
   children,
-  onValueChange,
   ...props
 }: RadioGroupProps) {
   return (
     <AriaRadioGroup
       {...props}
       data-slot="radio-group"
-      onChange={(value) => {
-        props.onChange?.(value);
-        onValueChange?.(value);
-      }}
       className={composeRenderProps(className, (className) =>
         cn(
           "group/radio-group flex min-w-0 flex-col gap-1 orientation-horizontal:flex-row orientation-horizontal:flex-wrap orientation-horizontal:gap-x-6",
@@ -270,5 +264,3 @@ export function RadioDescription({
     />
   );
 }
-
-export const RadioGroupItem = Radio;

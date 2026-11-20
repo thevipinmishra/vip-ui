@@ -288,7 +288,7 @@ export function ShareCard() {
                   size="sm"
                   options={accessOptions}
                   value={person.access}
-                  onValueChange={(value) =>
+                  onChange={(value) =>
                     setPeople((current) =>
                       current.map((item) =>
                         item.id === person.id
@@ -312,7 +312,7 @@ export function ShareCard() {
           className="shrink-0"
           value="https://acme.app/p/website-refresh"
           size="sm"
-          aria-label="Copy the project link"
+          aria-label="Copy link to the project"
         >
           {(status) => (status === "copied" ? "Copied" : "Copy link")}
         </CopyButton>

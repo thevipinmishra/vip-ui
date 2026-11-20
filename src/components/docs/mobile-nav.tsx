@@ -28,6 +28,7 @@ import {
 import { activeSection, mainNav } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 import { DocsNav } from "./docs-nav";
+import { GitHubMark, repositoryUrl } from "./github-mark";
 import { OnUnmount, useNavigateAfterClose } from "./navigate-after-close";
 
 const icons: Record<string, Icon> = {
@@ -120,6 +121,16 @@ export function MobileNav() {
                 })}
               </ul>
             </nav>
+            <a
+              href={repositoryUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex min-h-10 min-w-0 items-center gap-2.5 px-3 text-[13px] font-medium text-muted-foreground transition-[color,background-color] duration-150 ease-out-quint hover:text-foreground focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-transparent"
+            >
+              <GitHubMark className="size-4 shrink-0" />
+              <span className="truncate">GitHub</span>
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
             <DocsNav mobile onNavigate={onNavigate} />
             <OnUnmount onUnmount={onClosed} />
           </SheetBody>

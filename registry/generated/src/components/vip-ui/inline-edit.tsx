@@ -15,6 +15,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { prefersReducedMotion } from "./motion";
 import { cn } from "./utils";
 import {
   fieldErrorStyles,
@@ -33,10 +34,6 @@ const swing = "cubic-bezier(0.37, 0, 0.63, 1)";
 
 function stableId(value: string) {
   return value.replace(/[^a-zA-Z0-9_-]/g, "");
-}
-
-function stillMotion() {
-  return matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
 export interface InlineEditContextValue {
@@ -93,9 +90,9 @@ export interface InlineEditProps {
   defaultValue?: string;
   placeholder?: string | { edit: string; preview: string };
   onSave?: (value: string) => void | Promise<void>;
-  isDisabled?: boolean;
-  isReadOnly?: boolean;
-  isRequired?: boolean;
+  disabled?: boolean;
+  readOnly?: boolean;
+  required?: boolean;
   autoComplete?: string;
   name?: string;
   form?: string;
@@ -116,7 +113,7 @@ export interface InlineEditProps {
   /** Selects the text in the input when it is focused. */
   selectOnFocus?: boolean;
   /** Marks the value as invalid. */
-  isInvalid?: boolean;
+  invalid?: boolean;
   /** Overrides the accessible labels of the controls. */
   translations?: editable.IntlTranslations;
   /** The element that receives focus when the editable closes. */
@@ -149,9 +146,9 @@ export function InlineEdit({
   defaultValue = "",
   placeholder = "Not set",
   onSave,
-  isDisabled,
-  isReadOnly,
-  isRequired,
+  disabled,
+  readOnly,
+  required,
   autoComplete,
   name,
   form,
@@ -162,7 +159,7 @@ export function InlineEdit({
   activationMode = "none",
   submitMode = "enter",
   selectOnFocus,
-  isInvalid,
+  invalid,
   translations,
   finalFocusEl,
   autoResize,
@@ -204,10 +201,10 @@ export function InlineEdit({
     activationMode,
     submitMode,
     selectOnFocus,
-    disabled: isDisabled,
-    readOnly: isReadOnly,
-    required: isRequired,
-    invalid: Boolean(error) || isInvalid,
+    disabled,
+    readOnly,
+    required,
+    invalid: Boolean(error) || invalid,
     name,
     form,
     maxLength,
@@ -274,7 +271,7 @@ export function InlineEdit({
   }, [saved]);
 
   useEffect(() => {
-    if (!error || stillMotion()) return;
+    if (!error || prefersReducedMotion()) return;
     groupRef.current?.animate(
       {
         translate: ["0", "-0.25rem", "0.1875rem", "-0.125rem", "0"],

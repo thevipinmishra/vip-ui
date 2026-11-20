@@ -16,12 +16,12 @@ export function TimeFieldSizesDemo() {
         aria-label="Meeting time"
         defaultValue={new Time(9, 30)}
       />
+      <TimeField aria-label="Meeting time" defaultValue={new Time(9, 30)} />
       <TimeField
-        size="md"
+        size="lg"
         aria-label="Meeting time"
         defaultValue={new Time(9, 30)}
       />
-      <TimeField aria-label="Meeting time" defaultValue={new Time(9, 30)} />
     </div>
   );
 }

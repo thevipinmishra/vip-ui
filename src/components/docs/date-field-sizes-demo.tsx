@@ -17,11 +17,11 @@ export function DateFieldSizesDemo() {
         defaultValue={parseDate("2026-06-15")}
       />
       <DateField
-        size="md"
         aria-label="Delivery date"
         defaultValue={parseDate("2026-06-15")}
       />
       <DateField
+        size="lg"
         aria-label="Delivery date"
         defaultValue={parseDate("2026-06-15")}
       />

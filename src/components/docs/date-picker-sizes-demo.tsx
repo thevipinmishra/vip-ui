@@ -17,11 +17,11 @@ export function DatePickerSizesDemo() {
         defaultValue={parseDate("2026-06-15")}
       />
       <DatePicker
-        size="md"
         aria-label="Appointment date"
         defaultValue={parseDate("2026-06-15")}
       />
       <DatePicker
+        size="lg"
         aria-label="Appointment date"
         defaultValue={parseDate("2026-06-15")}
       />

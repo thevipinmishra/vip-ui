@@ -668,14 +668,14 @@ export function IssueDetail() {
                 size="sm"
                 options={statusOptions}
                 value={status}
-                onValueChange={(next) => changeStatus(next as StatusId)}
+                onChange={(next) => changeStatus(next as StatusId)}
               />
               <ComboBox
                 label="Assignee"
                 size="sm"
                 options={personOptions}
                 value={assignee}
-                onValueChange={changeAssignee}
+                onChange={(key) => changeAssignee(String(key ?? ""))}
                 placeholder="Search people"
               />
               <DatePicker
@@ -808,9 +808,7 @@ export function IssueDetail() {
           </dl>
         </DialogBody>
         <DialogFooter>
-          <DialogClose variant="outline" size="sm">
-            Done
-          </DialogClose>
+          <DialogClose variant="outline">Done</DialogClose>
         </DialogFooter>
       </DialogContent>
     </div>

@@ -54,8 +54,8 @@ export const buttonStyles = tv({
       xs: `h-7 gap-1.5 rounded-sm px-2.5 text-xs [&_svg:not([class*='size-'])]:size-3.5 ${touchTarget}`,
       sm: `h-8 gap-2 px-3 text-sm [&_svg:not([class*='size-'])]:size-4 ${touchTarget}`,
       md: `h-10 gap-2 px-4 text-sm [&_svg:not([class*='size-'])]:size-4 ${touchTarget}`,
-      lg: "h-11 gap-2 px-5 text-sm [&_svg:not([class*='size-'])]:size-4",
-      xl: "h-12 gap-2.5 rounded-lg px-6 text-base [&_svg:not([class*='size-'])]:size-5",
+      lg: "h-12 gap-2 rounded-lg px-5 text-base [&_svg:not([class*='size-'])]:size-5",
+      xl: "h-14 gap-2.5 rounded-xl px-6 text-base [&_svg:not([class*='size-'])]:size-5",
     },
     iconOnly: {
       true: "cursor-pointer px-0",
@@ -102,12 +102,12 @@ export const buttonStyles = tv({
     {
       size: "lg",
       iconOnly: true,
-      class: "w-11 [&_svg:not([class*='size-'])]:size-5",
+      class: "w-12 [&_svg:not([class*='size-'])]:size-5",
     },
     {
       size: "xl",
       iconOnly: true,
-      class: "w-12 [&_svg:not([class*='size-'])]:size-6",
+      class: "w-14 [&_svg:not([class*='size-'])]:size-6",
     },
   ],
   defaultVariants: { variant: "default", size: "md" },

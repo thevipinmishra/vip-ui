@@ -18,6 +18,7 @@ import {
   type TextProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import { prefersReducedMotion } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { Button, type ButtonProps } from "./button";
 import { SizeProvider } from "./size";
@@ -49,7 +50,7 @@ const dialogModalStyles = tv({
 export type DialogSize = "sm" | "md" | "lg" | "xl" | "full";
 
 function nudge(panel: HTMLElement | null) {
-  if (!panel || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (!panel || prefersReducedMotion()) return;
   const phone = !matchMedia("(min-width: 40rem)").matches;
   panel.animate(
     {

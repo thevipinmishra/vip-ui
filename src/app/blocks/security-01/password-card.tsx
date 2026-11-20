@@ -135,7 +135,7 @@ export function PasswordCard({
             }}
             isRequired
           />
-          <Checkbox checked={signOut} onCheckedChange={setSignOut}>
+          <Checkbox isSelected={signOut} onChange={setSignOut}>
             Sign out of my other sessions
           </Checkbox>
         </CardContent>

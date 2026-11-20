@@ -8,8 +8,8 @@ import {
   readRegistryItem,
 } from "@/lib/registry-docs";
 import { cn } from "@/lib/utils";
-import { CodeBlock } from "./code-block";
-import { CopyButton } from "./copy-button";
+import { CodeSample } from "./code-sample";
+import { CopyCodeButton } from "./copy-code-button";
 import { TextLink } from "./guide";
 import { InstallStep } from "./install-step";
 import { PackageManagerCommand } from "./package-manager-command";
@@ -71,7 +71,7 @@ export async function ManualInstall({
   steps.push({
     title: `Add ${name}`,
     content: (
-      <CodeBlock
+      <CodeSample
         code={plan.component.content}
         filename={displayPath(plan.component)}
       />
@@ -129,7 +129,7 @@ function RequiredFileRow({ file }: { file: RequiredFile }) {
           </>
         )}
       </div>
-      <CopyButton
+      <CopyCodeButton
         code={file.file.content}
         iconOnly
         variant="ghost"

@@ -98,7 +98,7 @@ export function TableFilterDemo() {
         <Select
           label="Status"
           value={status}
-          onValueChange={setStatus}
+          onChange={(key) => setStatus(String(key))}
           options={[
             { id: "all", name: "All statuses" },
             { id: "Paid", name: "Paid" },

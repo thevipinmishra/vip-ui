@@ -530,7 +530,7 @@ export function ContactPage() {
                           label="What do you need first?"
                           name="topic"
                           value={values.topic}
-                          onValueChange={(value) => update("topic", value)}
+                          onChange={(value) => update("topic", value)}
                           isInvalid={Boolean(errors.topic)}
                           errorMessage={errors.topic}
                         >
@@ -576,10 +576,8 @@ export function ContactPage() {
                     <div data-field="consent" className="min-w-0">
                       <Checkbox
                         name="consent"
-                        checked={values.consent}
-                        onCheckedChange={(checked) =>
-                          update("consent", checked)
-                        }
+                        isSelected={values.consent}
+                        onChange={(checked) => update("consent", checked)}
                         isInvalid={Boolean(errors.consent)}
                         errorMessage={errors.consent}
                         description="This is required. We do not add you to a mailing list."

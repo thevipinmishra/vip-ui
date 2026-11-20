@@ -6,7 +6,7 @@ import { usePress } from "react-aria";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { CodeScrollArea } from "./code-scroll-area";
-import { CopyButton } from "./copy-button";
+import { CopyCodeButton } from "./copy-code-button";
 
 export function CodeFrame({
   code,
@@ -18,6 +18,7 @@ export function CodeFrame({
   embedded = false,
   previewCode = false,
   scrollable = false,
+  wrap = false,
 }: {
   code: string;
   filename: string;
@@ -28,6 +29,7 @@ export function CodeFrame({
   embedded?: boolean;
   previewCode?: boolean;
   scrollable?: boolean;
+  wrap?: boolean;
 }) {
   const [expanded, setExpanded] = useState(false);
   const panelId = useId();
@@ -40,6 +42,7 @@ export function CodeFrame({
   return (
     <div
       data-slot="code-frame"
+      data-code-wrap={wrap || undefined}
       className={cn(
         "code-frame min-w-0 overflow-hidden bg-code text-code-foreground",
         !embedded && "rounded-2xl shadow-(--shadow-card) ring-1 ring-border/60",
@@ -74,7 +77,7 @@ export function CodeFrame({
               <div aria-hidden="true" className="h-4 w-px bg-border" />
             </>
           )}
-          <CopyButton
+          <CopyCodeButton
             key={code}
             code={code.trim()}
             label={copyText}

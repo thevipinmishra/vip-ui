@@ -1,13 +1,14 @@
 "use client";
 
+import { type ReactElement, useLayoutEffect, useRef } from "react";
 import {
-  type ReactElement,
-  useLayoutEffect,
-  useRef,
-  useSyncExternalStore,
-} from "react";
-import { duration, easeOut, springSnappyEasing } from "@/lib/motion";
+  duration,
+  easeOut,
+  reducedMotionQuery,
+  springSnappyEasing,
+} from "@/lib/motion";
 import { cn } from "@/lib/utils";
+import { useMediaQuery } from "./hooks";
 
 const collectionItems =
   "[role=option], [role=menuitem], [role=menuitemradio], [role=menuitemcheckbox], [role=row]";
@@ -27,22 +28,6 @@ const glideTiming = {
   duration: springSnappyEasing.duration * 1000,
   easing: springSnappyEasing.easing,
 } satisfies KeyframeAnimationOptions;
-
-const reducedMotionQuery = "(prefers-reduced-motion: reduce)";
-
-function subscribeReducedMotion(onChange: () => void) {
-  const query = window.matchMedia(reducedMotionQuery);
-  query.addEventListener("change", onChange);
-  return () => query.removeEventListener("change", onChange);
-}
-
-function useReducedMotionPreference() {
-  return useSyncExternalStore(
-    subscribeReducedMotion,
-    () => window.matchMedia(reducedMotionQuery).matches,
-    () => false,
-  );
-}
 
 type Move = "glide" | "snap";
 
@@ -79,7 +64,7 @@ export function ItemHighlight({
   className,
 }: ItemHighlightProps) {
   const ref = useRef<HTMLSpanElement>(null);
-  const reduceMotion = useReducedMotionPreference();
+  const reduceMotion = useMediaQuery(reducedMotionQuery);
 
   useLayoutEffect(() => {
     const layer = ref.current;

@@ -12,7 +12,7 @@ import { allComponents } from "@/lib/navigation";
 import { registryUrl } from "@/lib/registry-docs";
 import { siteUrl } from "@/lib/site-url";
 import { ApiReference } from "./api-reference";
-import { CodeBlock } from "./code-block";
+import { CodeSample } from "./code-sample";
 import { ComponentComposition } from "./component-composition";
 import { compositions } from "./component-compositions";
 import { ComponentHeader } from "./component-header";
@@ -25,24 +25,6 @@ import { SectionHeading } from "./section-heading";
 
 export interface ComponentExample extends ComponentExampleMetadata {
   preview: ReactNode;
-}
-
-export function withExamplePreviews(
-  metadata: readonly ComponentExampleMetadata[],
-  previews: readonly ReactNode[],
-): ComponentExample[] {
-  if (metadata.length !== previews.length) {
-    throw new Error(
-      `Example metadata has ${metadata.length} entries but ${previews.length} previews were provided.`,
-    );
-  }
-  return metadata.map((example, index) => {
-    const preview = previews[index];
-    if (preview === undefined) {
-      throw new Error(`Missing preview for example "${example.title}".`);
-    }
-    return { ...example, preview };
-  });
 }
 
 interface ComponentPageProps {
@@ -170,7 +152,7 @@ export async function ComponentPage({
                 {usage.note}
               </p>
             )}
-            <CodeBlock code={usage.code} filename={usage.filename} />
+            <CodeSample code={usage.code} filename={usage.filename} />
           </div>
         </section>
       )}

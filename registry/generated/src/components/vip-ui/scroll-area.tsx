@@ -20,6 +20,7 @@ import {
   useState,
 } from "react";
 import { mergeRefs } from "react-aria/mergeRefs";
+import { prefersReducedMotion } from "./motion";
 import { cn } from "./utils";
 
 export type ScrollAreaOrientation = "vertical" | "horizontal" | "both";
@@ -37,11 +38,7 @@ export interface ScrollAreaApi extends scrollArea.Api<PropTypes> {
 
 function preferredBehavior(behavior: ScrollBehavior | undefined) {
   if (behavior) return behavior;
-  if (
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  )
-    return "auto" as const;
+  if (prefersReducedMotion()) return "auto" as const;
   return undefined;
 }
 

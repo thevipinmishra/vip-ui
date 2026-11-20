@@ -1,28 +1,28 @@
 "use client";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tab, TabList, TabPanel, Tabs } from "@/components/ui/tabs";
 
 export function TabsVerticalDemo() {
   return (
     <Tabs
-      defaultValue="profile"
+      defaultSelectedKey="profile"
       orientation="vertical"
       className="w-full max-w-lg"
     >
-      <TabsList aria-label="Settings">
-        <TabsTrigger value="profile">Profile</TabsTrigger>
-        <TabsTrigger value="notifications">Notifications</TabsTrigger>
-        <TabsTrigger value="security">Security</TabsTrigger>
-      </TabsList>
-      <TabsContent value="profile">
+      <TabList aria-label="Settings">
+        <Tab id="profile">Profile</Tab>
+        <Tab id="notifications">Notifications</Tab>
+        <Tab id="security">Security</Tab>
+      </TabList>
+      <TabPanel id="profile">
         Your name and photo appear on shared projects.
-      </TabsContent>
-      <TabsContent value="notifications">
+      </TabPanel>
+      <TabPanel id="notifications">
         Choose which updates reach your inbox.
-      </TabsContent>
-      <TabsContent value="security">
+      </TabPanel>
+      <TabPanel id="security">
         Review your password and active sessions.
-      </TabsContent>
+      </TabPanel>
     </Tabs>
   );
 }

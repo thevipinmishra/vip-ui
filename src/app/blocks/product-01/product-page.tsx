@@ -456,7 +456,6 @@ export function ProductPage() {
               </div>
               <ToggleButtonGroup
                 aria-label="Size"
-                size="sm"
                 selectionMode="single"
                 disallowEmptySelection
                 selectedKeys={new Set([size])}
@@ -550,7 +549,10 @@ export function ProductPage() {
           </h2>
 
           <div className="mt-6 grid gap-10 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] lg:gap-12">
-            <Tabs value={tab} onValueChange={setTab}>
+            <Tabs
+              selectedKey={tab}
+              onSelectionChange={(key) => setTab(String(key))}
+            >
               <TabList
                 aria-label="Product information"
                 className="w-fit max-w-full"
@@ -669,7 +671,7 @@ export function ProductPage() {
                     <RatingInput
                       label="Your rating"
                       value={rating}
-                      onValueChange={setRating}
+                      onChange={setRating}
                       className="w-fit"
                     />
                     <p className="mt-2 text-xs text-muted-foreground">

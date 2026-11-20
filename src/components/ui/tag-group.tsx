@@ -2,7 +2,6 @@
 
 import { XIcon } from "@phosphor-icons/react";
 import { type HTMLMotionProps, motion, useReducedMotion } from "motion/react";
-import { useSyncExternalStore } from "react";
 import {
   Button as AriaButton,
   Tag as AriaTag,
@@ -21,42 +20,31 @@ import {
   fieldErrorStyles,
   fieldLabelStyles,
 } from "./field-styles";
+import { useMounted } from "./hooks";
 import { type Size, SizeProvider, useSize } from "./size";
 
 type TagSize = Extract<Size, "xs" | "sm" | "md">;
 
 const tagSizeStyles = {
   xs: {
-    tag: "min-h-7 rounded-md ps-2 text-xs",
+    tag: "min-h-6 rounded-sm ps-1.5 text-xs",
+    end: "pe-1.5",
+    label: "py-0.5",
+    remove: "size-4 rounded-[calc(var(--radius-sm)-0.125rem)] [&_svg]:size-3",
+  },
+  sm: {
+    tag: "min-h-7 rounded-md ps-2",
     end: "pe-2",
     label: "py-0.5",
     remove: "size-5 rounded-[calc(var(--radius-md)-0.25rem)] [&_svg]:size-3",
   },
-  sm: {
+  md: {
     tag: "min-h-8 ps-2.5",
     end: "pe-2.5",
     label: "py-1",
     remove: "size-6 rounded-[calc(var(--radius-lg)-0.25rem)] [&_svg]:size-3.5",
   },
-  md: {
-    tag: "min-h-10 ps-3",
-    end: "pe-3",
-    label: "py-1.5",
-    remove: "size-8 rounded-[calc(var(--radius-lg)-0.25rem)] [&_svg]:size-4",
-  },
 } satisfies Record<TagSize, Record<"tag" | "end" | "label" | "remove", string>>;
-
-function subscribeToMount() {
-  return () => {};
-}
-
-function useMounted() {
-  return useSyncExternalStore(
-    subscribeToMount,
-    () => true,
-    () => false,
-  );
-}
 
 export function TagGroup({
   className,

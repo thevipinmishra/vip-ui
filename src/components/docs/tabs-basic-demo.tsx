@@ -1,18 +1,16 @@
 "use client";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tab, TabList, TabPanel, Tabs } from "@/components/ui/tabs";
 
 export function TabsBasicDemo() {
   return (
-    <Tabs defaultValue="details" className="w-full max-w-sm">
-      <TabsList aria-label="Project">
-        <TabsTrigger value="details">Details</TabsTrigger>
-        <TabsTrigger value="activity">Activity</TabsTrigger>
-      </TabsList>
-      <TabsContent value="details">Studio North is due October 18.</TabsContent>
-      <TabsContent value="activity">
-        Recent changes and updates appear here.
-      </TabsContent>
+    <Tabs defaultSelectedKey="details" className="w-full max-w-sm">
+      <TabList aria-label="Project">
+        <Tab id="details">Details</Tab>
+        <Tab id="activity">Activity</Tab>
+      </TabList>
+      <TabPanel id="details">Studio North is due October 18.</TabPanel>
+      <TabPanel id="activity">Recent changes and updates appear here.</TabPanel>
     </Tabs>
   );
 }

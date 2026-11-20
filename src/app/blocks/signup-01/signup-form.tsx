@@ -178,7 +178,7 @@ export function SignupForm() {
                   name="team"
                   options={teamSizes}
                   value={team}
-                  onValueChange={setTeam}
+                  onChange={(key) => setTeam(String(key))}
                 />
                 <Checkbox
                   name="terms"
