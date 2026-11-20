@@ -2,6 +2,15 @@ import assert from "node:assert/strict";
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
+import {
+  buildGenerated,
+  readApiParts,
+  redundantOverrides,
+} from "./generate-component-api.mjs";
+import {
+  skillComponentList,
+  skillComponentsFile,
+} from "./generate-registry.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
 const read = (file) => readFile(path.join(root, file), "utf8");
@@ -106,6 +115,63 @@ test("every catalog component has an API table", async () => {
     } else {
       assert.ok(keys.has(slug), `${slug} needs componentApi`);
     }
+  }
+});
+
+test("generated API types are current and hand overrides differ from them", async () => {
+  const parts = readApiParts();
+  const current = JSON.parse(
+    await read("src/lib/component-api.generated.json"),
+  );
+  assert.deepEqual(
+    current,
+    buildGenerated(parts),
+    "Run pnpm api:build to update src/lib/component-api.generated.json",
+  );
+  assert.deepEqual(
+    redundantOverrides(parts),
+    [],
+    "Remove hand values that match the generated ones",
+  );
+  for (const part of parts) {
+    for (const prop of part.props) {
+      assert.ok(
+        prop.generated || prop.hand.type,
+        `${part.name}.${prop.name} needs a type`,
+      );
+    }
+  }
+});
+
+test("the skill component list matches the catalog", async () => {
+  assert.equal(
+    await read(skillComponentsFile),
+    skillComponentList(),
+    `Run pnpm registry:build to update ${skillComponentsFile}`,
+  );
+});
+
+test("the skill name map names catalog components", async () => {
+  const map = await read("skills/vip-ui/references/name-map.md");
+  const section = (title) =>
+    map.slice(map.indexOf(`## ${title}`)).split(/\n## /)[0];
+  const names = [
+    ...section("Same name").split("\n")[2].split(", "),
+    ...[
+      ...section("Renamed").matchAll(
+        /^\| [a-z][a-z-]* +\| ([a-z][a-z-]*) +\|$/gm,
+      ),
+    ].map((match) => match[1]),
+    ...[...section("vip/ui only").matchAll(/^- `([a-z-]+)`:/gm)].map(
+      (match) => match[1],
+    ),
+  ];
+  const known = new Set([...slugs, "chart"]);
+  for (const name of names) {
+    assert.ok(
+      known.has(name),
+      `name-map.md names ${name}, which is not in the catalog`,
+    );
   }
 });
 

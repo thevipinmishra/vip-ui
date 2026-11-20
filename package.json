@@ -11,6 +11,7 @@
     "palette:build": "node scripts/generate-palettes.mjs && biome format --write src/lib/palette-data.ts",
     "registry:build": "node scripts/generate-registry.mjs && biome format --write public/r registry.json",
     "blocks:posters": "node scripts/generate-block-posters.mjs",
+    "api:build": "node scripts/generate-component-api.mjs && biome format --write src/lib/component-api.generated.json",
     "test:registry": "node --test \"scripts/*.test.mjs\"",
     "test:registry:cli": "node scripts/test-registry-cli.mjs",
     "test:a11y": "node scripts/axe-a11y.mjs",
@@ -68,7 +69,8 @@
     "react-doctor": "^0.9.23",
     "tailwindcss": "^4.3.5",
     "tailwindcss-react-aria-components": "^2.2.0",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "typescript5": "npm:typescript@5.9.3"
   },
   "packageManager": "pnpm@12.14.0",
   "intent": {

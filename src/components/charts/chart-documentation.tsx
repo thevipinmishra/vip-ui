@@ -224,8 +224,6 @@ const api = [
     props: [
       {
         name: "variant",
-        type: '"default" | "card" | "plain"',
-        default: '"default"',
         description:
           "The frame surface. Use card to match Card. Use plain when the chart is inside another surface.",
       },
@@ -243,7 +241,6 @@ const api = [
     props: [
       {
         name: "children",
-        type: "ReactNode",
         description: "Controls for the chart, such as a period toggle.",
       },
     ],
@@ -255,14 +252,12 @@ const api = [
     props: [
       {
         name: "renderer",
-        type: "ChartRenderer",
         default: "chartMotion",
         description:
           "Draws and animates the chart. chartMotion is a TanStack motion renderer with a spring.",
       },
       {
         name: "children",
-        type: "ReactNode",
         description: "Content on top of the plot, such as ChartCenter.",
       },
     ],
@@ -274,7 +269,6 @@ const api = [
     props: [
       {
         name: "renderTooltipBody",
-        type: "(context) => ReactNode",
         description:
           "Receives points, defaultBody, pinned, and dismiss. Keep controls visible only while pinned.",
       },
@@ -285,14 +279,10 @@ const api = [
     props: [
       {
         name: "color",
-        type: "string",
-        required: true,
         description: "The series color. Use the same value as the mark.",
       },
       {
         name: "swatch",
-        type: '"square" | "line" | "dashed"',
-        default: '"square"',
         description:
           "The swatch shape. Use line for a line series and dashed for a dashed line.",
       },
@@ -303,20 +293,14 @@ const api = [
     props: [
       {
         name: "caption",
-        type: "string",
-        required: true,
         description: "Names the table for screen readers.",
       },
       {
         name: "columns",
-        type: "string[]",
-        required: true,
         description: "Column headings. The first column labels each row.",
       },
       {
         name: "rows",
-        type: "(string | number)[][]",
-        required: true,
         description:
           "The exact values. The table is visible to screen readers only.",
       },

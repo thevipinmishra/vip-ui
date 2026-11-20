@@ -81,11 +81,11 @@ Use a kebab-case slug, for example `date-field`. The registry item name is the s
 4. Add a preview for the component index to `catalogPreviews` in `src/components/docs/catalog-preview-registry.ts`. Overlays must not open from a preview; use a drawing, as in `catalog-preview-overlays.tsx`.
 5. Add demos to `src/components/docs/`. Name the usage demo `<slug>-demo.tsx` or `<slug>-basic-demo.tsx`. Name each example `<slug>-<example>-demo.tsx`. Each file exports one component with the PascalCase name of the file, for example `ButtonSizesDemo` in `button-sizes-demo.tsx`.
 6. Add the page data to `pageSources` in `src/lib/component-examples.ts`: `usage` and `examples`. Each example has a `title`, an optional `description`, and a `sourcePath`. The page at `/components/<slug>` loads the demos from these file names. Add an optional `summary` sentence to make the page meta description specific.
-7. Add the API table to `componentApi` in `src/lib/component-api.ts`. Use `apiPart<typeof YourComponent>()`, so TypeScript checks each prop name against the component props.
+7. Add the API table to `componentApi` in `src/lib/component-api.ts`. Use `apiPart<typeof YourComponent>()`, so TypeScript checks each prop name against the component props. Give each prop a `name` and a `description`. Then run `pnpm api:build`, which reads the type, the required flag, and the default from the component source. Set `type` or `default` on a prop only when the generated value does not read well.
 8. If the component has more than one part, add its part tree to `src/components/docs/component-compositions.ts`.
 9. Run `pnpm registry:build` and commit the generated files.
 
-To change an existing component, edit its source file and its docs data. Then run `pnpm registry:build`.
+To change an existing component, edit its source file and its docs data. Then run `pnpm api:build` and `pnpm registry:build`.
 
 ## Code conventions
 

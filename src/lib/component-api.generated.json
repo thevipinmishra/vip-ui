@@ -1,0 +1,2692 @@
+{
+  "CodeBlock": {
+    "code": {
+      "type": "string",
+      "required": true
+    },
+    "language": {
+      "type": "string"
+    },
+    "lineNumbers": {
+      "type": "boolean",
+      "default": "true"
+    },
+    "highlight": {
+      "type": "readonly number[]",
+      "default": "[]"
+    },
+    "wrap": {
+      "type": "boolean"
+    },
+    "defaultWrap": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "onWrapChange": {
+      "type": "(wrap: boolean) => void"
+    },
+    "maxLines": {
+      "type": "number"
+    },
+    "isStreaming": {
+      "type": "boolean",
+      "default": "false"
+    }
+  },
+  "CodeBlockBody": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "CodeBlockHeader": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "CodeBlockTitle": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "CodeBlockActions": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "CodeBlockWrap": {},
+  "CodeBlockCopy": {},
+  "TextReveal": {
+    "text": {
+      "type": "string",
+      "required": true
+    },
+    "split": {
+      "type": "\"words\" | \"characters\"",
+      "default": "\"words\""
+    },
+    "trigger": {
+      "type": "\"mount\" | \"in-view\"",
+      "default": "\"in-view\""
+    },
+    "stagger": {
+      "type": "number",
+      "default": "0.045"
+    },
+    "delay": {
+      "type": "number",
+      "default": "0"
+    }
+  },
+  "TextScramble": {
+    "value": {
+      "type": "string",
+      "required": true
+    },
+    "duration": {
+      "type": "number",
+      "default": "0.7"
+    },
+    "glyphs": {
+      "type": "string"
+    }
+  },
+  "Presence": {
+    "show": {
+      "type": "boolean",
+      "required": true
+    },
+    "as": {
+      "type": "\"div\" | \"span\""
+    },
+    "distance": {
+      "type": "number"
+    },
+    "duration": {
+      "type": "number"
+    },
+    "collapse": {
+      "type": "boolean"
+    }
+  },
+  "StaggerGroup": {
+    "as": {
+      "type": "\"div\" | \"ul\" | \"ol\"",
+      "default": "\"div\""
+    },
+    "trigger": {
+      "type": "\"mount\" | \"in-view\"",
+      "default": "\"in-view\""
+    },
+    "stagger": {
+      "type": "number",
+      "default": "0.08"
+    }
+  },
+  "StaggerItem": {
+    "as": {
+      "type": "\"div\" | \"li\"",
+      "default": "\"div\""
+    }
+  },
+  "LayoutMorph": {
+    "contentKey": {
+      "type": "string | number",
+      "required": true
+    }
+  },
+  "Marquee": {
+    "speed": {
+      "type": "number",
+      "default": "50"
+    },
+    "reverse": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "side": {
+      "type": "\"start\" | \"end\" | \"top\" | \"bottom\""
+    },
+    "delay": {
+      "type": "number"
+    },
+    "loopCount": {
+      "type": "number"
+    },
+    "spacing": {
+      "type": "string"
+    },
+    "pauseOnInteraction": {
+      "type": "boolean",
+      "default": "true"
+    },
+    "paused": {
+      "type": "boolean"
+    },
+    "defaultPaused": {
+      "type": "boolean"
+    },
+    "onPauseChange": {
+      "type": "(details: { paused: boolean }) => void"
+    },
+    "onLoopComplete": {
+      "type": "() => void"
+    },
+    "onComplete": {
+      "type": "() => void"
+    },
+    "translations": {
+      "type": "{ root?: string }"
+    },
+    "dir": {
+      "type": "\"ltr\" | \"rtl\""
+    },
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "MarqueeRoot": {
+    "footer": {
+      "type": "ReactNode"
+    }
+  },
+  "MarqueeViewport": {},
+  "MarqueeContent": {
+    "index": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "MarqueeItem": {},
+  "MarqueeEdge": {
+    "side": {
+      "type": "\"start\" | \"end\" | \"top\" | \"bottom\"",
+      "required": true
+    }
+  },
+  "MarqueePauseTrigger": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "MarqueeContext": {
+    "children": {
+      "type": "(api: MarqueeApi) => ReactNode",
+      "required": true
+    }
+  },
+  "ComboBox": {
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    },
+    "options": {
+      "type": "ComboBoxOption[]"
+    },
+    "label": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "placeholder": {
+      "type": "string"
+    },
+    "selectionMode": {
+      "type": "\"single\""
+    },
+    "value": {
+      "type": "T"
+    },
+    "defaultValue": {
+      "type": "T"
+    },
+    "onChange": {
+      "type": "(value: C) => void"
+    }
+  },
+  "ComboBoxTags": {
+    "label": {
+      "type": "string",
+      "default": "\"Selected options\""
+    },
+    "emptyText": {
+      "type": "string",
+      "default": "\"No options selected.\""
+    }
+  },
+  "AttachmentList": {
+    "children": {
+      "type": "ReactNode",
+      "required": true
+    }
+  },
+  "Attachment": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "size": {
+      "type": "\"sm\" | \"md\"",
+      "default": "\"md\""
+    },
+    "fileSize": {
+      "type": "number"
+    },
+    "previewUrl": {
+      "type": "string"
+    },
+    "status": {
+      "type": "\"ready\" | \"uploading\" | \"complete\" | \"error\"",
+      "default": "\"ready\""
+    },
+    "progress": {
+      "type": "number"
+    },
+    "errorMessage": {
+      "type": "string"
+    },
+    "onRemove": {
+      "type": "() => void"
+    },
+    "onRetry": {
+      "type": "() => void"
+    }
+  },
+  "NativeSelect": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    },
+    "description": {
+      "type": "string"
+    },
+    "error": {
+      "type": "string"
+    },
+    "isInvalid": {
+      "type": "boolean"
+    },
+    "placeholder": {
+      "type": "string"
+    },
+    "containerClassName": {
+      "type": "string"
+    }
+  },
+  "Select": {
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    },
+    "options": {
+      "type": "SelectOption[]"
+    },
+    "label": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "value": {
+      "type": "T"
+    },
+    "defaultValue": {
+      "type": "T"
+    },
+    "onChange": {
+      "type": "(value: C) => void"
+    },
+    "placeholder": {
+      "type": "string",
+      "default": "\"Select an option\""
+    }
+  },
+  "SelectSection": {
+    "title": {
+      "type": "string"
+    }
+  },
+  "MenuItem": {
+    "variant": {
+      "type": "\"default\" | \"destructive\"",
+      "default": "\"default\""
+    }
+  },
+  "MenuSection": {
+    "title": {
+      "type": "string"
+    }
+  },
+  "AgentSteps": {
+    "status": {
+      "type": "\"running\" | \"complete\" | \"stopped\" | \"error\"",
+      "required": true
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "detail": {
+      "type": "string"
+    },
+    "autoCollapse": {
+      "type": "boolean",
+      "default": "false"
+    }
+  },
+  "AgentStep": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "status": {
+      "type": "\"pending\" | \"running\" | \"complete\" | \"stopped\" | \"error\"",
+      "default": "\"complete\""
+    },
+    "description": {
+      "type": "ReactNode"
+    }
+  },
+  "Message": {
+    "sender": {
+      "type": "string",
+      "required": true
+    },
+    "side": {
+      "type": "\"incoming\" | \"outgoing\" | \"system\"",
+      "default": "\"incoming\""
+    },
+    "avatar": {
+      "type": "ReactNode"
+    },
+    "timestamp": {
+      "type": "string"
+    },
+    "dateTime": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "actions": {
+      "type": "ReactNode"
+    }
+  },
+  "Conversation": {
+    "aria-label": {
+      "type": "string"
+    },
+    "initialScroll": {
+      "type": "\"bottom\" | \"top\"",
+      "default": "\"bottom\""
+    },
+    "threshold": {
+      "type": "number",
+      "default": "24"
+    }
+  },
+  "ConversationContent": {
+    "className": {
+      "type": "string"
+    }
+  },
+  "ConversationEmpty": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "ConversationLoadOlder": {
+    "onLoad": {
+      "type": "() => void | Promise<void>",
+      "required": true
+    },
+    "hasMore": {
+      "type": "boolean",
+      "required": true
+    },
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "ConversationJump": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "ToolCallTrigger": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "status": {
+      "type": "\"running\" | \"complete\" | \"error\"",
+      "required": true
+    },
+    "summary": {
+      "type": "string"
+    }
+  },
+  "ToolCallSection": {
+    "label": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "PromptInput": {
+    "label": {
+      "type": "string"
+    },
+    "placeholder": {
+      "type": "string"
+    },
+    "submitKey": {
+      "type": "\"enter\" | \"mod+enter\"",
+      "default": "\"enter\""
+    },
+    "isPending": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "onSubmit": {
+      "type": "(value: string) => void"
+    },
+    "onStop": {
+      "type": "() => void"
+    },
+    "onFilesDropped": {
+      "type": "(files: File[]) => void"
+    },
+    "dropLabel": {
+      "type": "string",
+      "default": "\"Drop files to attach\""
+    },
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    }
+  },
+  "PromptInputHeader": {},
+  "PromptInputTextArea": {
+    "minRows": {
+      "type": "number",
+      "default": "1"
+    },
+    "maxRows": {
+      "type": "number",
+      "default": "8"
+    }
+  },
+  "PromptInputSubmit": {
+    "isDisabled": {
+      "type": "boolean"
+    }
+  },
+  "EventCalendar": {
+    "events": {
+      "type": "CalendarEvent[]",
+      "required": true
+    },
+    "aria-label": {
+      "type": "string",
+      "required": true
+    },
+    "onEventChange": {
+      "type": "(event: CalendarEvent, range: CalendarEventRange) => void"
+    },
+    "view": {
+      "type": "\"day\" | \"week\""
+    },
+    "defaultView": {
+      "type": "\"day\" | \"week\"",
+      "default": "\"week\""
+    },
+    "onViewChange": {
+      "type": "(view: \"day\" | \"week\") => void"
+    },
+    "date": {
+      "type": "CalendarDate"
+    },
+    "defaultDate": {
+      "type": "CalendarDate"
+    },
+    "onDateChange": {
+      "type": "(date: CalendarDate) => void"
+    },
+    "timeZone": {
+      "type": "string"
+    },
+    "step": {
+      "type": "number",
+      "default": "15"
+    },
+    "dayStart": {
+      "type": "number",
+      "default": "0"
+    },
+    "dayEnd": {
+      "type": "number",
+      "default": "24"
+    },
+    "scrollToHour": {
+      "type": "number",
+      "default": "8"
+    },
+    "onEventAction": {
+      "type": "(event: CalendarEvent) => void"
+    },
+    "onSlotAction": {
+      "type": "(range: CalendarEventRange) => void"
+    },
+    "renderEvent": {
+      "type": "(event: CalendarEvent) => ReactNode"
+    },
+    "className": {
+      "type": "string"
+    }
+  },
+  "EventCalendarHeader": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "EventCalendarGrid": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "Reasoning": {
+    "status": {
+      "type": "\"thinking\" | \"complete\" | \"error\"",
+      "required": true
+    },
+    "duration": {
+      "type": "number"
+    },
+    "autoCollapse": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "defaultExpanded": {
+      "type": "boolean"
+    },
+    "isExpanded": {
+      "type": "boolean"
+    },
+    "onExpandedChange": {
+      "type": "(isExpanded: boolean) => void"
+    }
+  },
+  "ReasoningPanel": {
+    "scrollable": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "autoScroll": {
+      "type": "boolean",
+      "default": "true"
+    }
+  },
+  "Response": {
+    "status": {
+      "type": "\"streaming\" | \"complete\" | \"stopped\" | \"error\"",
+      "required": true
+    }
+  },
+  "ResponseContent": {
+    "caret": {
+      "type": "boolean",
+      "default": "true"
+    }
+  },
+  "InlineEdit": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "value": {
+      "type": "string"
+    },
+    "defaultValue": {
+      "type": "string",
+      "default": "\"\""
+    },
+    "placeholder": {
+      "type": "string | { edit: string; preview: string }",
+      "default": "\"Not set\""
+    },
+    "onSave": {
+      "type": "(value: string) => void | Promise<void>"
+    },
+    "disabled": {
+      "type": "boolean"
+    },
+    "readOnly": {
+      "type": "boolean"
+    },
+    "edit": {
+      "type": "boolean"
+    },
+    "defaultEdit": {
+      "type": "boolean"
+    },
+    "onEditChange": {
+      "type": "(details: { edit: boolean }) => void"
+    },
+    "activationMode": {
+      "type": "\"focus\" | \"dblclick\" | \"click\" | \"none\"",
+      "default": "\"none\""
+    },
+    "submitMode": {
+      "type": "\"enter\" | \"blur\" | \"both\" | \"none\"",
+      "default": "\"enter\""
+    },
+    "selectOnFocus": {
+      "type": "boolean"
+    },
+    "invalid": {
+      "type": "boolean"
+    },
+    "autoResize": {
+      "type": "boolean"
+    },
+    "translations": {
+      "type": "{ edit?: string; submit?: string; cancel?: string; input?: string }"
+    },
+    "name": {
+      "type": "string"
+    },
+    "form": {
+      "type": "string"
+    },
+    "maxLength": {
+      "type": "number"
+    },
+    "required": {
+      "type": "boolean"
+    },
+    "autoComplete": {
+      "type": "string"
+    },
+    "onValueChange": {
+      "type": "(details: { value: string }) => void"
+    },
+    "onValueCommit": {
+      "type": "(details: { value: string }) => void"
+    },
+    "onValueRevert": {
+      "type": "(details: { value: string }) => void"
+    },
+    "onInteractOutside": {
+      "type": "(event: InteractOutsideEvent) => void"
+    },
+    "dir": {
+      "type": "\"ltr\" | \"rtl\""
+    },
+    "ids": {
+      "type": "ElementIds"
+    }
+  },
+  "InlineEditRoot": {},
+  "InlineEditArea": {},
+  "InlineEditLabel": {},
+  "InlineEditPreview": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "InlineEditInput": {},
+  "InlineEditEditTrigger": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "InlineEditControl": {},
+  "InlineEditSubmitTrigger": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "InlineEditCancelTrigger": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "InlineEditContext": {
+    "children": {
+      "type": "(api: EditableApi) => ReactNode",
+      "required": true
+    }
+  },
+  "PasswordField": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    },
+    "description": {
+      "type": "string"
+    },
+    "placeholder": {
+      "type": "string"
+    },
+    "autoComplete": {
+      "type": "string",
+      "default": "\"current-password\""
+    }
+  },
+  "OtpInput": {
+    "length": {
+      "type": "number",
+      "default": "6"
+    },
+    "pattern": {
+      "type": "\"digits\" | \"alphanumeric\"",
+      "default": "\"digits\""
+    },
+    "size": {
+      "type": "\"sm\" | \"md\" | \"lg\"",
+      "default": "\"lg\""
+    },
+    "value": {
+      "type": "T"
+    },
+    "defaultValue": {
+      "type": "T"
+    },
+    "placeholder": {
+      "type": "string",
+      "default": "\"\""
+    },
+    "isDisabled": {
+      "type": "boolean"
+    },
+    "isReadOnly": {
+      "type": "boolean"
+    },
+    "isRequired": {
+      "type": "boolean"
+    },
+    "isInvalid": {
+      "type": "boolean"
+    },
+    "children": {
+      "type": "ReactNode"
+    },
+    "getRootNode": {
+      "type": "() => ShadowRoot | Document | Node"
+    },
+    "onComplete": {
+      "type": "(value: string) => void"
+    },
+    "onChange": {
+      "type": "(value: string) => void"
+    },
+    "name": {
+      "type": "string"
+    },
+    "form": {
+      "type": "string"
+    },
+    "autoFocus": {
+      "type": "boolean"
+    },
+    "autoSubmit": {
+      "type": "boolean"
+    },
+    "blurOnComplete": {
+      "type": "boolean"
+    },
+    "mask": {
+      "type": "boolean"
+    },
+    "selectOnFocus": {
+      "type": "boolean",
+      "default": "true"
+    },
+    "otp": {
+      "type": "boolean",
+      "default": "true"
+    },
+    "sanitizeValue": {
+      "type": "(value: string) => string"
+    },
+    "onValueInvalid": {
+      "type": "(details: { value: string; index: number }) => void"
+    },
+    "translations": {
+      "type": "{ inputLabel?: (index: number, length: number) => string }"
+    },
+    "dir": {
+      "type": "\"ltr\" | \"rtl\""
+    },
+    "ids": {
+      "type": "ElementIds"
+    }
+  },
+  "OtpInputSlots": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "OtpInputContext": {
+    "children": {
+      "type": "(api: PinInputApi) => ReactNode",
+      "required": true
+    }
+  },
+  "OtpInputSlot": {
+    "index": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "OtpInputGroup": {},
+  "OtpInputSeparator": {},
+  "OtpInputLabel": {},
+  "OtpInputDescription": {},
+  "OtpInputError": {},
+  "CopyButton": {
+    "value": {
+      "type": "string",
+      "required": true
+    },
+    "children": {
+      "type": "ReactNode | ((status: \"idle\" | \"copied\" | \"error\") => ReactNode)"
+    },
+    "aria-label": {
+      "type": "string"
+    },
+    "variant": {
+      "type": "\"default\" | \"secondary\" | \"outline\" | \"ghost\" | \"minimal\" | \"destructive\"",
+      "default": "\"outline\""
+    },
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    },
+    "iconOnly": {
+      "type": "boolean",
+      "default": "false"
+    }
+  },
+  "ButtonGroup": {
+    "orientation": {
+      "type": "\"horizontal\" | \"vertical\"",
+      "default": "\"horizontal\""
+    },
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    }
+  },
+  "IconSwap": {
+    "contentKey": {
+      "type": "string | number",
+      "required": true
+    },
+    "children": {
+      "type": "ReactNode",
+      "required": true
+    }
+  },
+  "TextShimmer": {
+    "active": {
+      "type": "boolean",
+      "default": "true"
+    },
+    "duration": {
+      "type": "number"
+    }
+  },
+  "ScrollArea": {
+    "orientation": {
+      "type": "\"vertical\" | \"horizontal\" | \"both\"",
+      "default": "\"vertical\""
+    },
+    "dir": {
+      "type": "\"ltr\" | \"rtl\""
+    },
+    "aria-label": {
+      "type": "string"
+    },
+    "tabIndex": {
+      "type": "number"
+    },
+    "className": {
+      "type": "string"
+    },
+    "ids": {
+      "type": "ElementIds"
+    }
+  },
+  "ScrollAreaRoot": {
+    "orientation": {
+      "type": "\"vertical\" | \"horizontal\" | \"both\"",
+      "default": "\"vertical\""
+    }
+  },
+  "ScrollAreaViewport": {
+    "aria-label": {
+      "type": "string"
+    }
+  },
+  "ScrollAreaContent": {},
+  "ScrollAreaScrollbar": {
+    "orientation": {
+      "type": "\"vertical\" | \"horizontal\"",
+      "default": "\"vertical\""
+    }
+  },
+  "ScrollAreaThumb": {
+    "orientation": {
+      "type": "\"vertical\" | \"horizontal\"",
+      "default": "\"vertical\""
+    }
+  },
+  "ScrollAreaCorner": {},
+  "ScrollAreaContext": {
+    "children": {
+      "type": "(api: ScrollAreaApi) => ReactNode",
+      "required": true
+    }
+  },
+  "ScrollFade": {
+    "orientation": {
+      "type": "\"vertical\" | \"horizontal\"",
+      "default": "\"vertical\""
+    }
+  },
+  "TextSwap": {
+    "value": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "TextLoop": {
+    "values": {
+      "type": "readonly string[]",
+      "required": true
+    },
+    "interval": {
+      "type": "number",
+      "default": "2.5"
+    },
+    "active": {
+      "type": "boolean",
+      "default": "true"
+    }
+  },
+  "Highlighter": {
+    "variant": {
+      "type": "\"highlight\" | \"underline\" | \"circle\"",
+      "default": "\"highlight\""
+    },
+    "trigger": {
+      "type": "\"mount\" | \"in-view\"",
+      "default": "\"in-view\""
+    },
+    "delay": {
+      "type": "number",
+      "default": "0"
+    }
+  },
+  "Stepper": {
+    "steps": {
+      "type": "readonly Step[]",
+      "required": true
+    },
+    "currentStep": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "AnimatedNumber": {
+    "value": {
+      "type": "number",
+      "required": true
+    },
+    "variant": {
+      "type": "\"count\" | \"slide\"",
+      "default": "\"count\""
+    },
+    "locale": {
+      "type": "string",
+      "default": "\"en-US\""
+    },
+    "formatOptions": {
+      "type": "NumberFormatOptions"
+    }
+  },
+  "ProgressRing": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "size": {
+      "type": "\"sm\" | \"md\" | \"lg\"",
+      "default": "\"md\""
+    },
+    "showValue": {
+      "type": "boolean",
+      "default": "true"
+    }
+  },
+  "PresenceList": {
+    "items": {
+      "type": "readonly T[]",
+      "required": true
+    },
+    "getKey": {
+      "type": "(item: T) => string | number",
+      "required": true
+    },
+    "children": {
+      "type": "(item: T) => ReactNode",
+      "required": true
+    }
+  },
+  "InputGroup": {
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    }
+  },
+  "InputGroupAddon": {
+    "align": {
+      "type": "\"inline\" | \"block-end\"",
+      "default": "\"inline\""
+    }
+  },
+  "CommandPalette": {
+    "isOpen": {
+      "type": "boolean",
+      "required": true
+    },
+    "onOpenChange": {
+      "type": "(open: boolean) => void",
+      "required": true
+    },
+    "shortcut": {
+      "type": "boolean",
+      "default": "true"
+    },
+    "title": {
+      "type": "string",
+      "default": "\"Commands\""
+    },
+    "placeholder": {
+      "type": "string",
+      "default": "\"Search commands\""
+    },
+    "emptyMessage": {
+      "type": "string",
+      "default": "\"No matching commands.\""
+    }
+  },
+  "CommandPaletteSection": {
+    "title": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "CommandPaletteItem": {
+    "textValue": {
+      "type": "string"
+    },
+    "shortcut": {
+      "type": "string"
+    },
+    "variant": {
+      "type": "\"default\" | \"destructive\""
+    }
+  },
+  "Button": {
+    "variant": {
+      "type": "\"default\" | \"secondary\" | \"outline\" | \"ghost\" | \"minimal\" | \"destructive\"",
+      "default": "\"default\""
+    },
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    },
+    "iconOnly": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "static": {
+      "type": "boolean",
+      "default": "false"
+    }
+  },
+  "ButtonLink": {
+    "href": {
+      "type": "string",
+      "required": true
+    },
+    "as": {
+      "type": "ElementType",
+      "default": "\"a\""
+    },
+    "variant": {
+      "type": "\"default\" | \"secondary\" | \"outline\" | \"ghost\" | \"minimal\" | \"destructive\"",
+      "default": "\"default\""
+    },
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
+      "default": "\"md\""
+    },
+    "iconOnly": {
+      "type": "boolean",
+      "default": "false"
+    }
+  },
+  "CardTitle": {
+    "as": {
+      "type": "\"h1\" | \"h2\" | \"h3\" | \"h4\"",
+      "default": "\"h3\""
+    }
+  },
+  "Carousel": {
+    "aria-label": {
+      "type": "string",
+      "required": true
+    },
+    "index": {
+      "type": "number"
+    },
+    "defaultIndex": {
+      "type": "number",
+      "default": "0"
+    },
+    "onIndexChange": {
+      "type": "(index: number) => void"
+    },
+    "opts": {
+      "type": "CarouselOptions"
+    },
+    "plugins": {
+      "type": "CarouselPlugin[]"
+    },
+    "setApi": {
+      "type": "(api: CarouselApi) => void"
+    }
+  },
+  "CarouselViewport": {
+    "trackClassName": {
+      "type": "string"
+    }
+  },
+  "CarouselSlide": {
+    "aria-label": {
+      "type": "string"
+    }
+  },
+  "CarouselPrevious": {},
+  "CarouselNext": {},
+  "CarouselIndicators": {},
+  "CarouselThumbnails": {},
+  "CarouselThumbnail": {
+    "index": {
+      "type": "number",
+      "required": true
+    },
+    "aria-label": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "CarouselStatus": {},
+  "Lightbox": {
+    "isOpen": {
+      "type": "boolean"
+    },
+    "defaultOpen": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "onOpenChange": {
+      "type": "(isOpen: boolean) => void"
+    },
+    "index": {
+      "type": "number"
+    },
+    "defaultIndex": {
+      "type": "number",
+      "default": "0"
+    },
+    "onIndexChange": {
+      "type": "(index: number) => void"
+    }
+  },
+  "LightboxTrigger": {
+    "index": {
+      "type": "number",
+      "required": true
+    },
+    "aria-label": {
+      "type": "string",
+      "required": true
+    },
+    "className": {
+      "type": "string"
+    }
+  },
+  "LightboxContent": {
+    "aria-label": {
+      "type": "string"
+    },
+    "className": {
+      "type": "string"
+    }
+  },
+  "LightboxImage": {
+    "src": {
+      "type": "string"
+    },
+    "alt": {
+      "type": "string",
+      "required": true
+    },
+    "width": {
+      "type": "number"
+    },
+    "height": {
+      "type": "number"
+    },
+    "caption": {
+      "type": "string"
+    }
+  },
+  "LightboxCount": {},
+  "LightboxClose": {},
+  "StatTrend": {
+    "direction": {
+      "type": "\"up\" | \"down\" | \"neutral\"",
+      "required": true
+    },
+    "invert": {
+      "type": "boolean",
+      "default": "false"
+    }
+  },
+  "Avatar": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "src": {
+      "type": "string"
+    },
+    "initials": {
+      "type": "string"
+    },
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
+      "default": "\"md\""
+    }
+  },
+  "EmptyStateTitle": {
+    "as": {
+      "type": "\"h1\" | \"h2\" | \"h3\" | \"h4\"",
+      "default": "\"h3\""
+    }
+  },
+  "Spinner": {
+    "variant": {
+      "type": "\"ring\" | \"dots\" | \"segments\"",
+      "default": "\"ring\""
+    },
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
+      "default": "\"md\""
+    },
+    "decorative": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "aria-label": {
+      "type": "string"
+    }
+  },
+  "RatingInput": {
+    "label": {
+      "type": "ReactNode"
+    },
+    "max": {
+      "type": "number",
+      "default": "5"
+    },
+    "icon": {
+      "type": "Icon"
+    },
+    "size": {
+      "type": "\"sm\" | \"md\" | \"lg\""
+    },
+    "value": {
+      "type": "number"
+    },
+    "defaultValue": {
+      "type": "number",
+      "default": "0"
+    },
+    "onChange": {
+      "type": "(value: number) => void"
+    }
+  },
+  "Column": {
+    "allowsResizing": {
+      "type": "boolean",
+      "default": "false"
+    }
+  },
+  "TableLoadMoreItem": {
+    "onLoadMore": {
+      "type": "() => any"
+    },
+    "isLoading": {
+      "type": "boolean"
+    }
+  },
+  "TreeItem": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "content": {
+      "type": "ReactNode"
+    },
+    "icon": {
+      "type": "ReactNode"
+    },
+    "children": {
+      "type": "ReactNode"
+    },
+    "textValue": {
+      "type": "string"
+    }
+  },
+  "DataTable": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "rows": {
+      "type": "readonly T[]",
+      "required": true
+    },
+    "columns": {
+      "type": "readonly DataTableColumn[]",
+      "required": true
+    },
+    "getRowId": {
+      "type": "(row: T) => Key",
+      "required": true
+    },
+    "getSearchText": {
+      "type": "(row: T) => string"
+    },
+    "pageSize": {
+      "type": "number",
+      "default": "5"
+    },
+    "selectable": {
+      "type": "boolean",
+      "default": "true"
+    },
+    "selectedKeys": {
+      "type": "Iterable<Key>"
+    },
+    "defaultSelectedKeys": {
+      "type": "Iterable<Key>"
+    },
+    "onSelectionChange": {
+      "type": "(keys: Set<Key>) => void"
+    },
+    "disabledKeys": {
+      "type": "Iterable<Key>"
+    },
+    "onRowAction": {
+      "type": "(key: Key) => void"
+    },
+    "resizable": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "showClearSelection": {
+      "type": "boolean",
+      "default": "true"
+    },
+    "renderSelectionActions": {
+      "type": "(state: DataTableSelectionState) => ReactNode"
+    },
+    "renderFooter": {
+      "type": "(state: DataTableFooterState) => ReactNode"
+    }
+  },
+  "DataTableSelectionState": {
+    "selectedKeys": {
+      "type": "Set<Key>",
+      "required": true
+    },
+    "selectedCount": {
+      "type": "number",
+      "required": true
+    },
+    "clearSelection": {
+      "type": "() => void",
+      "required": true
+    }
+  },
+  "DataTableColumn": {
+    "id": {
+      "type": "string",
+      "required": true
+    },
+    "header": {
+      "type": "string",
+      "required": true
+    },
+    "cell": {
+      "type": "(row: T) => ReactNode",
+      "required": true
+    },
+    "sortValue": {
+      "type": "(row: T) => string | number"
+    },
+    "align": {
+      "type": "\"start\" | \"end\""
+    },
+    "width": {
+      "type": "ColumnSize | null"
+    },
+    "minWidth": {
+      "type": "ColumnStaticSize | null"
+    },
+    "filter": {
+      "type": "DataTableFilter"
+    }
+  },
+  "SegmentedControl": {
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    },
+    "fullWidth": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "aria-label": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string | null"
+    },
+    "defaultValue": {
+      "type": "string | null"
+    },
+    "onValueChange": {
+      "type": "(details: { value: string | null }) => void"
+    },
+    "name": {
+      "type": "string"
+    },
+    "form": {
+      "type": "string"
+    },
+    "disabled": {
+      "type": "boolean"
+    },
+    "invalid": {
+      "type": "boolean"
+    },
+    "required": {
+      "type": "boolean"
+    },
+    "readOnly": {
+      "type": "boolean"
+    },
+    "orientation": {
+      "type": "\"vertical\" | \"horizontal\"",
+      "default": "\"horizontal\""
+    },
+    "dir": {
+      "type": "\"ltr\" | \"rtl\""
+    },
+    "ids": {
+      "type": "ElementIds"
+    },
+    "getRootNode": {
+      "type": "() => ShadowRoot | Document | Node"
+    }
+  },
+  "SegmentedControlItem": {
+    "value": {
+      "type": "string",
+      "required": true
+    },
+    "disabled": {
+      "type": "boolean"
+    },
+    "children": {
+      "type": "ReactNode",
+      "required": true
+    }
+  },
+  "SegmentedControlContext": {
+    "children": {
+      "type": "(api: RadioApi) => ReactNode",
+      "required": true
+    }
+  },
+  "Pagination": {
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    },
+    "aria-label": {
+      "type": "string"
+    },
+    "count": {
+      "type": "number"
+    },
+    "page": {
+      "type": "number"
+    },
+    "defaultPage": {
+      "type": "number"
+    },
+    "pageSize": {
+      "type": "number"
+    },
+    "defaultPageSize": {
+      "type": "number"
+    },
+    "siblingCount": {
+      "type": "number"
+    },
+    "boundaryCount": {
+      "type": "number"
+    },
+    "getPageUrl": {
+      "type": "(details: { page: number; pageSize: number }) => string"
+    },
+    "type": {
+      "type": "\"button\" | \"link\""
+    },
+    "onPageChange": {
+      "type": "(details: { page: number; pageSize: number }) => void"
+    },
+    "onPageSizeChange": {
+      "type": "(details: { pageSize: number }) => void"
+    },
+    "translations": {
+      "type": "IntlTranslations"
+    },
+    "dir": {
+      "type": "\"ltr\" | \"rtl\""
+    },
+    "ids": {
+      "type": "ElementIds"
+    }
+  },
+  "PaginationPages": {},
+  "PaginationLink": {
+    "href": {
+      "type": "Href"
+    },
+    "value": {
+      "type": "number"
+    },
+    "isCurrent": {
+      "type": "boolean"
+    },
+    "isDisabled": {
+      "type": "boolean"
+    },
+    "onPress": {
+      "type": "(e: PressEvent) => void"
+    },
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    }
+  },
+  "PaginationFirstTrigger": {
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    }
+  },
+  "PaginationPrevTrigger": {
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    }
+  },
+  "PaginationNextTrigger": {
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    }
+  },
+  "PaginationLastTrigger": {
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    }
+  },
+  "PaginationContext": {
+    "children": {
+      "type": "(api: PaginationApi) => ReactNode",
+      "required": true
+    }
+  },
+  "TimelineItem": {
+    "status": {
+      "type": "\"complete\" | \"latest\" | \"upcoming\"",
+      "default": "\"complete\""
+    },
+    "icon": {
+      "type": "ReactNode"
+    }
+  },
+  "TimelineTitle": {
+    "as": {
+      "type": "\"h2\" | \"h3\" | \"h4\"",
+      "default": "\"h3\""
+    }
+  },
+  "Accordion": {
+    "variant": {
+      "type": "\"card\" | \"divided\"",
+      "default": "\"card\""
+    }
+  },
+  "AccordionItem": {
+    "title": {
+      "type": "string"
+    }
+  },
+  "Alert": {
+    "title": {
+      "type": "string"
+    },
+    "variant": {
+      "type": "\"error\" | \"info\" | \"success\" | \"warning\" | \"neutral\"",
+      "default": "\"info\""
+    },
+    "action": {
+      "type": "ReactNode"
+    },
+    "onDismiss": {
+      "type": "() => void"
+    },
+    "dismissLabel": {
+      "type": "string",
+      "default": "\"Dismiss\""
+    },
+    "children": {
+      "type": "ReactNode"
+    },
+    "role": {
+      "type": "AriaRole"
+    }
+  },
+  "DialogContent": {
+    "size": {
+      "type": "\"sm\" | \"md\" | \"lg\" | \"xl\" | \"full\"",
+      "default": "\"md\""
+    },
+    "children": {
+      "type": "ReactNode | ((renderProps: { close: () => void }) => ReactNode)",
+      "required": true
+    },
+    "overlayProps": {
+      "type": "Omit<ModalOverlayProps, \"children\" | \"render\">"
+    },
+    "modalProps": {
+      "type": "Omit<ComponentProps<typeof Modal>, \"children\" | \"render\">"
+    }
+  },
+  "DialogClose": {
+    "children": {
+      "type": "ChildrenOrFunction"
+    },
+    "variant": {
+      "type": "\"default\" | \"secondary\" | \"outline\" | \"ghost\" | \"minimal\" | \"destructive\""
+    },
+    "iconOnly": {
+      "type": "boolean"
+    },
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    }
+  },
+  "Popover": {
+    "className": {
+      "type": "ClassNameOrFunction<PopoverRenderProps>"
+    },
+    "maxHeight": {
+      "type": "number"
+    },
+    "arrowBoundaryOffset": {
+      "type": "number",
+      "default": "16"
+    }
+  },
+  "PopoverDialog": {
+    "children": {
+      "type": "ReactNode | ((opts: DialogRenderProps) => ReactNode)"
+    }
+  },
+  "Sheet": {
+    "position": {
+      "type": "\"bottom\" | \"top\" | \"left\" | \"right\" | \"start\" | \"end\" | \"center\"",
+      "default": "\"bottom\""
+    },
+    "size": {
+      "type": "\"sm\" | \"md\" | \"lg\" | \"xl\" | \"full\"",
+      "default": "\"md\""
+    },
+    "inset": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "swipeDirection": {
+      "type": "\"bottom\" | \"top\" | \"vertical\" | \"left\" | \"right\" | \"start\" | \"end\" | \"horizontal\""
+    },
+    "snapPoints": {
+      "type": "Array<number | string>"
+    },
+    "preventDismissal": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "isOpen": {
+      "type": "boolean"
+    },
+    "defaultOpen": {
+      "type": "boolean"
+    },
+    "onOpenChange": {
+      "type": "(isOpen: boolean) => void"
+    }
+  },
+  "SheetClose": {
+    "children": {
+      "type": "ChildrenOrFunction"
+    },
+    "variant": {
+      "type": "\"default\" | \"secondary\" | \"outline\" | \"ghost\" | \"minimal\" | \"destructive\"",
+      "default": "\"ghost\""
+    },
+    "iconOnly": {
+      "type": "boolean"
+    },
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    }
+  },
+  "SidebarProvider": {
+    "isOpen": {
+      "type": "boolean"
+    },
+    "defaultOpen": {
+      "type": "boolean",
+      "default": "true"
+    },
+    "onOpenChange": {
+      "type": "(isOpen: boolean) => void"
+    },
+    "shortcut": {
+      "type": "boolean",
+      "default": "true"
+    }
+  },
+  "Sidebar": {
+    "collapsible": {
+      "type": "\"icon\" | \"none\"",
+      "default": "\"icon\""
+    },
+    "aria-label": {
+      "type": "string"
+    }
+  },
+  "SidebarMenu": {
+    "aria-label": {
+      "type": "string"
+    }
+  },
+  "SidebarHeader": {},
+  "SidebarContent": {},
+  "SidebarFooter": {},
+  "SidebarGroup": {
+    "aria-label": {
+      "type": "string"
+    },
+    "aria-labelledby": {
+      "type": "string"
+    }
+  },
+  "SidebarGroupLabel": {},
+  "SidebarItem": {
+    "href": {
+      "type": "string",
+      "required": true
+    },
+    "icon": {
+      "type": "ReactNode",
+      "required": true
+    },
+    "isCurrent": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "badge": {
+      "type": "ReactNode"
+    },
+    "tooltip": {
+      "type": "string"
+    },
+    "onPress": {
+      "type": "(e: PressEvent) => void"
+    }
+  },
+  "SidebarInset": {
+    "render": {
+      "type": "(props: ComponentProps<\"div\"> & { \"data-slot\": string }, renderProps: SidebarInsetRenderProps) => ReactElement"
+    }
+  },
+  "SidebarTrigger": {
+    "aria-label": {
+      "type": "string"
+    }
+  },
+  "ResizableGroup": {
+    "orientation": {
+      "type": "\"horizontal\" | \"vertical\"",
+      "default": "\"horizontal\""
+    },
+    "layout": {
+      "type": "PanelSize[]"
+    },
+    "defaultLayout": {
+      "type": "PanelSize[]"
+    },
+    "onLayoutChange": {
+      "type": "(layout: number[]) => void"
+    },
+    "onLayoutEnd": {
+      "type": "(layout: number[]) => void"
+    },
+    "onResizeStart": {
+      "type": "() => void"
+    },
+    "keyboardResizeBy": {
+      "type": "number | null"
+    },
+    "nonce": {
+      "type": "string"
+    },
+    "onCollapse": {
+      "type": "(details: { panelId: string; size: number }) => void"
+    },
+    "onExpand": {
+      "type": "(details: { panelId: string; size: number }) => void"
+    },
+    "registry": {
+      "type": "SplitterRegistry"
+    },
+    "dir": {
+      "type": "\"ltr\" | \"rtl\""
+    },
+    "ids": {
+      "type": "{ root?: string; resizeTrigger?: (id: string) => string; label?: (id: string) => string; panel?: (id: string | number) => string }"
+    }
+  },
+  "ResizablePanel": {
+    "id": {
+      "type": "string"
+    },
+    "order": {
+      "type": "number"
+    },
+    "defaultSize": {
+      "type": "PanelSize"
+    },
+    "minSize": {
+      "type": "PanelSize",
+      "default": "10"
+    },
+    "maxSize": {
+      "type": "PanelSize",
+      "default": "100"
+    },
+    "collapsible": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "collapsedSize": {
+      "type": "PanelSize",
+      "default": "0"
+    },
+    "resizeBehavior": {
+      "type": "\"preserve-relative-size\" | \"preserve-pixel-size\""
+    }
+  },
+  "ResizableHandle": {
+    "withGrip": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "aria-label": {
+      "type": "string"
+    }
+  },
+  "ResizableHandleIndicator": {
+    "triggerId": {
+      "type": "ResizeTriggerId"
+    }
+  },
+  "ResizableContext": {
+    "children": {
+      "type": "(api: SplitterApi) => ReactNode",
+      "required": true
+    }
+  },
+  "Badge": {
+    "variant": {
+      "type": "\"error\" | \"outline\" | \"success\" | \"warning\" | \"neutral\" | \"accent\"",
+      "default": "\"neutral\""
+    },
+    "dot": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "Checkbox": {
+    "children": {
+      "type": "ReactNode"
+    },
+    "description": {
+      "type": "ReactNode"
+    },
+    "errorMessage": {
+      "type": "string | ((validation: ValidationResult) => string)"
+    },
+    "variant": {
+      "type": "\"default\" | \"card\""
+    }
+  },
+  "CheckboxGroup": {
+    "label": {
+      "type": "ReactNode"
+    },
+    "description": {
+      "type": "ReactNode"
+    },
+    "errorMessage": {
+      "type": "string | ((validation: ValidationResult) => string)"
+    },
+    "orientation": {
+      "type": "\"horizontal\" | \"vertical\"",
+      "default": "\"vertical\""
+    }
+  },
+  "Autocomplete": {
+    "filter": {
+      "type": "(textValue: string, inputValue: string, node: Node) => boolean"
+    }
+  },
+  "Switch": {
+    "children": {
+      "type": "ReactNode"
+    },
+    "description": {
+      "type": "ReactNode"
+    },
+    "errorMessage": {
+      "type": "string | ((validation: ValidationResult) => string)"
+    }
+  },
+  "TabList": {
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    }
+  },
+  "Tab": {
+    "id": {
+      "type": "Key"
+    },
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    }
+  },
+  "TabPanel": {
+    "id": {
+      "type": "Key"
+    }
+  },
+  "DateField": {
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    },
+    "label": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    }
+  },
+  "TimeField": {
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    },
+    "label": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    }
+  },
+  "CalendarHeader": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "CalendarMonthPicker": {
+    "format": {
+      "type": "\"numeric\" | \"2-digit\" | \"long\" | \"short\" | \"narrow\""
+    },
+    "children": {
+      "type": "(renderProps: CalendarMonthPickerAria) => Element"
+    }
+  },
+  "CalendarYearPicker": {
+    "visibleYears": {
+      "type": "number"
+    },
+    "format": {
+      "type": "CalendarYearPickerFormatOptions"
+    },
+    "children": {
+      "type": "(renderProps: CalendarYearPickerAria) => Element"
+    }
+  },
+  "DatePicker": {
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    },
+    "presets": {
+      "type": "DatePickerPreset[]"
+    },
+    "label": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    }
+  },
+  "DateRangePicker": {
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    },
+    "presets": {
+      "type": "DateRangePickerPreset[]"
+    },
+    "label": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    }
+  },
+  "ColorField": {
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    },
+    "label": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    }
+  },
+  "ColorPicker": {
+    "label": {
+      "type": "string",
+      "default": "\"Choose color\""
+    },
+    "children": {
+      "type": "ChildrenOrFunction<ColorPickerRenderProps>"
+    }
+  },
+  "ColorWheel": {
+    "outerRadius": {
+      "type": "number",
+      "default": "96"
+    },
+    "innerRadius": {
+      "type": "number"
+    },
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "FileTrigger": {
+    "label": {
+      "type": "string",
+      "default": "\"Choose files\""
+    }
+  },
+  "Meter": {
+    "label": {
+      "type": "string"
+    }
+  },
+  "ProgressBar": {
+    "label": {
+      "type": "string"
+    }
+  },
+  "NumberField": {
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    },
+    "steppers": {
+      "type": "\"split\" | \"stacked\"",
+      "default": "\"split\""
+    },
+    "label": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    }
+  },
+  "SearchField": {
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    },
+    "label": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "placeholder": {
+      "type": "string"
+    }
+  },
+  "Slider": {
+    "label": {
+      "type": "string"
+    },
+    "thumbLabels": {
+      "type": "string[]"
+    },
+    "marks": {
+      "type": "number[]"
+    },
+    "fillOffset": {
+      "type": "number"
+    },
+    "orientation": {
+      "type": "\"horizontal\" | \"vertical\""
+    }
+  },
+  "SliderMarks": {
+    "values": {
+      "type": "number[]",
+      "required": true
+    },
+    "children": {
+      "type": "(value: number) => ReactNode"
+    },
+    "offset": {
+      "type": "number"
+    }
+  },
+  "TextField": {
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    },
+    "label": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "placeholder": {
+      "type": "string"
+    }
+  },
+  "TextArea": {
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    },
+    "label": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "placeholder": {
+      "type": "string"
+    },
+    "rows": {
+      "type": "number",
+      "default": "4"
+    }
+  },
+  "RadioGroup": {
+    "label": {
+      "type": "ReactNode"
+    },
+    "description": {
+      "type": "ReactNode"
+    },
+    "errorMessage": {
+      "type": "string | ((validation: ValidationResult) => string)"
+    }
+  },
+  "Radio": {
+    "children": {
+      "type": "ReactNode"
+    },
+    "description": {
+      "type": "ReactNode"
+    },
+    "variant": {
+      "type": "\"default\" | \"card\""
+    }
+  },
+  "ToastViewport": {
+    "children": {
+      "type": "ToastRenderer"
+    }
+  },
+  "showToast message": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string"
+    },
+    "variant": {
+      "type": "\"info\" | \"success\" | \"warning\" | \"error\""
+    },
+    "action": {
+      "type": "{ label: string; onAction: () => void }"
+    }
+  },
+  "showToast options": {
+    "timeout": {
+      "type": "number"
+    }
+  },
+  "TooltipTrigger": {
+    "delay": {
+      "type": "number",
+      "default": "400"
+    }
+  },
+  "Tooltip": {
+    "offset": {
+      "type": "number",
+      "default": "8"
+    },
+    "placement": {
+      "type": "\"bottom\" | \"bottom left\" | \"bottom right\" | \"bottom start\" | \"bottom end\" | \"top\" | \"top left\" | \"top right\" | \"top start\" | \"top end\" | \"left\" | \"left top\" | \"left bottom\" | \"start\" | \"start top\" | \"start bottom\" | \"right\" | \"right top\" | \"right bottom\" | \"end\" | \"end top\" | \"end bottom\""
+    },
+    "arrowBoundaryOffset": {
+      "type": "number",
+      "default": "8"
+    }
+  },
+  "Tour": {
+    "steps": {
+      "type": "readonly TourStep[]",
+      "required": true
+    },
+    "isOpen": {
+      "type": "boolean"
+    },
+    "defaultOpen": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "onOpenChange": {
+      "type": "(isOpen: boolean) => void"
+    },
+    "step": {
+      "type": "number"
+    },
+    "defaultStep": {
+      "type": "number",
+      "default": "0"
+    },
+    "onStepChange": {
+      "type": "(step: number) => void"
+    },
+    "onComplete": {
+      "type": "() => void"
+    },
+    "onSkip": {
+      "type": "() => void"
+    },
+    "spotlight": {
+      "type": "boolean",
+      "default": "true"
+    }
+  },
+  "TourTarget": {
+    "id": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "ToggleButton": {
+    "variant": {
+      "type": "\"default\" | \"ghost\" | \"segmented\"",
+      "default": "\"default\""
+    },
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    },
+    "iconOnly": {
+      "type": "boolean",
+      "default": "false"
+    }
+  },
+  "ToggleButtonGroup": {
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    }
+  },
+  "Toolbar": {
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    }
+  },
+  "TokenField": {
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+    },
+    "label": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "placeholder": {
+      "type": "string"
+    }
+  },
+  "TagGroup": {
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\""
+    }
+  },
+  "SpotlightCard": {},
+  "BorderBeam": {
+    "active": {
+      "type": "boolean",
+      "default": "true"
+    },
+    "duration": {
+      "type": "number",
+      "default": "6"
+    }
+  },
+  "ProgressiveBlur": {
+    "side": {
+      "type": "\"top\" | \"bottom\" | \"left\" | \"right\"",
+      "default": "\"bottom\""
+    },
+    "blur": {
+      "type": "number",
+      "default": "12"
+    }
+  },
+  "SignaturePad": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string"
+    },
+    "error": {
+      "type": "string"
+    },
+    "placeholder": {
+      "type": "string",
+      "default": "\"Sign here\""
+    },
+    "size": {
+      "type": "\"sm\" | \"md\" | \"lg\"",
+      "default": "\"md\""
+    },
+    "name": {
+      "type": "string"
+    },
+    "form": {
+      "type": "string"
+    },
+    "paths": {
+      "type": "string[]"
+    },
+    "defaultPaths": {
+      "type": "string[]"
+    },
+    "drawing": {
+      "type": "DrawingOptions"
+    },
+    "disabled": {
+      "type": "boolean"
+    },
+    "readOnly": {
+      "type": "boolean"
+    },
+    "required": {
+      "type": "boolean"
+    },
+    "invalid": {
+      "type": "boolean"
+    },
+    "dataUrlType": {
+      "type": "\"image/png\" | \"image/jpeg\" | \"image/svg+xml\""
+    },
+    "quality": {
+      "type": "number"
+    },
+    "onDraw": {
+      "type": "(details: { paths: string[]; currentPath: string | null }) => void"
+    },
+    "onDrawEnd": {
+      "type": "(details: { paths: string[]; getDataUrl: (type: \"image/png\" | \"image/jpeg\" | \"image/svg+xml\", quality?: number) => Promise<string> }) => void"
+    },
+    "onValueChange": {
+      "type": "(value: string) => void"
+    },
+    "translations": {
+      "type": "{ clearTrigger?: string; control?: string }"
+    },
+    "dir": {
+      "type": "\"ltr\" | \"rtl\""
+    },
+    "ids": {
+      "type": "{ root?: string; control?: string; hiddenInput?: string; label?: string }"
+    },
+    "getRootNode": {
+      "type": "() => ShadowRoot | Document | Node"
+    }
+  },
+  "SignaturePadRoot": {
+    "children": {
+      "type": "ReactNode",
+      "required": true
+    }
+  },
+  "SignaturePadLabel": {},
+  "SignaturePadControl": {},
+  "SignaturePadSegment": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "SignaturePadPath": {
+    "path": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "SignaturePadGuide": {},
+  "SignaturePadClearTrigger": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "SignaturePadHiddenInput": {
+    "value": {
+      "type": "string"
+    },
+    "form": {
+      "type": "string"
+    }
+  },
+  "SignaturePadDescription": {},
+  "SignaturePadError": {},
+  "QrCode": {
+    "value": {
+      "type": "string"
+    },
+    "defaultValue": {
+      "type": "string"
+    },
+    "size": {
+      "type": "\"sm\" | \"md\" | \"lg\"",
+      "default": "\"md\""
+    },
+    "label": {
+      "type": "string"
+    },
+    "overlay": {
+      "type": "{ src: string; alt?: string }"
+    },
+    "download": {
+      "type": "boolean | QrCodeDownloadOptions",
+      "default": "false"
+    },
+    "pixelSize": {
+      "type": "number"
+    },
+    "encoding": {
+      "type": "QrCodeGenerateOptions"
+    },
+    "onValueChange": {
+      "type": "(details: { value: string }) => void"
+    },
+    "children": {
+      "type": "ReactNode"
+    },
+    "dir": {
+      "type": "\"ltr\" | \"rtl\""
+    },
+    "ids": {
+      "type": "{ root?: string; frame?: string; overlay?: string }"
+    },
+    "getRootNode": {
+      "type": "() => ShadowRoot | Document | Node"
+    }
+  },
+  "QrCodeRoot": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "QrCodeFrame": {
+    "label": {
+      "type": "string",
+      "default": "\"QR code\""
+    }
+  },
+  "QrCodePattern": {},
+  "QrCodeOverlay": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "QrCodeDownloadTrigger": {
+    "fileName": {
+      "type": "string",
+      "default": "\"qr-code.png\""
+    },
+    "mimeType": {
+      "type": "\"image/png\" | \"image/jpeg\" | \"image/svg+xml\"",
+      "default": "\"image/png\""
+    },
+    "quality": {
+      "type": "number"
+    },
+    "variant": {
+      "type": "\"default\" | \"secondary\" | \"outline\" | \"ghost\" | \"minimal\" | \"destructive\"",
+      "default": "\"outline\""
+    },
+    "size": {
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
+      "default": "\"sm\""
+    },
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "ChartFrame": {
+    "variant": {
+      "type": "\"default\" | \"card\" | \"plain\"",
+      "default": "\"default\""
+    }
+  },
+  "ChartAction": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "Chart": {
+    "renderer": {
+      "type": "ChartRenderer"
+    },
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "TooltipChart": {
+    "renderTooltipBody": {
+      "type": "(context: ChartTooltipBodyRenderContext) => ReactNode"
+    }
+  },
+  "ChartLegendItem": {
+    "color": {
+      "type": "string",
+      "required": true
+    },
+    "swatch": {
+      "type": "\"line\" | \"square\" | \"dashed\"",
+      "default": "\"square\""
+    }
+  },
+  "ChartTable": {
+    "caption": {
+      "type": "string",
+      "required": true
+    },
+    "columns": {
+      "type": "readonly string[]",
+      "required": true
+    },
+    "rows": {
+      "type": "readonly (readonly (string | number)[])[]",
+      "required": true
+    }
+  }
+}

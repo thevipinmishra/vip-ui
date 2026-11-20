@@ -7,7 +7,7 @@ description: Build UI with vip/ui (vip-ui.dev), a shadcn registry of React Aria 
 
 vip/ui is a shadcn registry of React components built on React Aria Components, Tailwind CSS v4, and Motion. Items install as editable source files.
 
-- Component list: https://vip-ui.dev/llms.txt
+- Component list: [references/components.md](references/components.md), or https://vip-ui.dev/llms.txt for the latest
 - Component docs as Markdown: `https://vip-ui.dev/components/<name>.md`
 - Chart examples: https://vip-ui.dev/charts
 
