@@ -7,6 +7,7 @@ import type { Autocomplete } from "@/components/ui/autocomplete";
 import type { Avatar } from "@/components/ui/avatar";
 import type { Badge } from "@/components/ui/badge";
 import type { BorderBeam } from "@/components/ui/border-beam";
+import type { Breadcrumb, BreadcrumbItem } from "@/components/ui/breadcrumbs";
 import type { Button } from "@/components/ui/button";
 import type { ButtonGroup } from "@/components/ui/button-group";
 import type { ButtonLink } from "@/components/ui/button-link";
@@ -40,6 +41,8 @@ import type {
 } from "@/components/ui/code-block";
 import type { ColorField } from "@/components/ui/color-field";
 import type { ColorPicker } from "@/components/ui/color-picker";
+import type { ColorSwatch } from "@/components/ui/color-swatch";
+import type { ColorSwatchPickerItem } from "@/components/ui/color-swatch-picker";
 import type { ColorWheel } from "@/components/ui/color-wheel";
 import type { ComboBoxProps, ComboBoxTags } from "@/components/ui/combo-box";
 import type {
@@ -47,6 +50,7 @@ import type {
   CommandPaletteItem,
   CommandPaletteSection,
 } from "@/components/ui/command-palette";
+import type { ContextMenuTrigger } from "@/components/ui/context-menu";
 import type {
   Conversation,
   ConversationContent,
@@ -63,14 +67,23 @@ import type {
 import type { DateField } from "@/components/ui/date-field";
 import type { DatePicker } from "@/components/ui/date-picker";
 import type { DateRangePicker } from "@/components/ui/date-range-picker";
+import type { DescriptionList } from "@/components/ui/description-list";
 import type { DialogClose, DialogContent } from "@/components/ui/dialog";
+import type {
+  DisclosureHeader,
+  DisclosurePanel,
+} from "@/components/ui/disclosure";
+import type { DropZone, DropZoneTrigger } from "@/components/ui/drop-zone";
 import type { EmptyStateTitle } from "@/components/ui/empty-state";
 import type {
   EventCalendar,
   EventCalendarGrid,
   EventCalendarHeader,
 } from "@/components/ui/event-calendar";
+import type { Fieldset, FieldsetLegend } from "@/components/ui/fieldset";
 import type { FileTrigger } from "@/components/ui/file-trigger";
+import type { Form } from "@/components/ui/form";
+import type { GridList, GridListItem } from "@/components/ui/grid-list";
 import type { Highlighter } from "@/components/ui/highlighter";
 import type { IconSwap } from "@/components/ui/icon-swap";
 import type {
@@ -87,6 +100,7 @@ import type {
   InlineEditSubmitTrigger,
 } from "@/components/ui/inline-edit";
 import type { InputGroup, InputGroupAddon } from "@/components/ui/input-group";
+import type { InlineCode, Kbd, KbdGroup } from "@/components/ui/kbd-code";
 import type { LayoutMorph } from "@/components/ui/layout-morph";
 import type {
   Lightbox,
@@ -96,6 +110,8 @@ import type {
   LightboxImage,
   LightboxTrigger,
 } from "@/components/ui/lightbox";
+import type { Link } from "@/components/ui/link";
+import type { ListBox, ListBoxItem } from "@/components/ui/list-box";
 import type {
   Marquee,
   MarqueeContent,
@@ -154,6 +170,7 @@ import type {
   QrCodeRoot,
 } from "@/components/ui/qr-code";
 import type { Radio, RadioGroup } from "@/components/ui/radio-group";
+import type { RangeCalendar } from "@/components/ui/range-calendar";
 import type { RatingInput } from "@/components/ui/rating-input";
 import type { Reasoning, ReasoningPanel } from "@/components/ui/reasoning";
 import type {
@@ -182,6 +199,7 @@ import type {
   SegmentedControlItem,
 } from "@/components/ui/segmented-control";
 import type { Select, SelectSection } from "@/components/ui/select";
+import type { Separator } from "@/components/ui/separator";
 import type { Sheet, SheetClose } from "@/components/ui/sheet";
 import type {
   Sidebar,
@@ -209,6 +227,7 @@ import type {
   SignaturePadRoot,
   SignaturePadSegment,
 } from "@/components/ui/signature-pad";
+import type { Skeleton } from "@/components/ui/skeleton";
 import type { Slider, SliderMarks } from "@/components/ui/slider";
 import type { Spinner } from "@/components/ui/spinner";
 import type { SpotlightCard } from "@/components/ui/spotlight-card";
@@ -4958,6 +4977,338 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         {
           name: "children",
           description: 'Replaces the default "Download" label.',
+        },
+      ],
+    }),
+  ],
+  breadcrumbs: [
+    apiPart<typeof Breadcrumb>({
+      name: "Breadcrumb",
+      description:
+        "A link to one page in the trail. The last item renders as text with aria-current set to page.",
+      props: [
+        {
+          name: "href",
+          type: "string",
+          description: "The page URL. The current page ignores it.",
+        },
+        {
+          name: "children",
+          type: "ReactNode",
+          description: "The page name.",
+        },
+      ],
+    }),
+    apiPart<typeof BreadcrumbItem>({
+      name: "BreadcrumbItem",
+      description: "Holds custom content in the trail, such as a menu.",
+      props: [
+        {
+          name: "children",
+          description:
+            "The item content. A separator follows it, except on the current page.",
+        },
+      ],
+    }),
+  ],
+  "color-swatch": [
+    apiPart<typeof ColorSwatch>({
+      name: "ColorSwatch",
+      props: [
+        {
+          name: "color",
+          description:
+            "The color to show. A transparent color shows over a checkerboard.",
+        },
+      ],
+    }),
+  ],
+  "color-swatch-picker": [
+    apiPart<typeof ColorSwatchPickerItem>({
+      name: "ColorSwatchPickerItem",
+      props: [
+        {
+          name: "color",
+          description:
+            "The color of the item. The selected item shows a ring in a darker shade of it.",
+        },
+        {
+          name: "children",
+          description: "Replaces the default ColorSwatch in the item.",
+        },
+      ],
+    }),
+  ],
+  "context-menu": [
+    apiPart<typeof ContextMenuTrigger>({
+      name: "ContextMenuTrigger",
+      description:
+        "Opens the menu on right-click, long press, or Shift+F10. ContextMenu, ContextMenuItem, ContextMenuSection, and the other parts are the Menu parts.",
+      props: [
+        {
+          name: "children",
+          description: "The target element, then the ContextMenu.",
+        },
+      ],
+    }),
+  ],
+  "description-list": [
+    apiPart<typeof DescriptionList>({
+      name: "DescriptionList",
+      description:
+        "Shows terms and details in two columns from the sm breakpoint, and stacks them below it.",
+      props: [
+        {
+          name: "children",
+          description: "Pairs of DescriptionTerm and DescriptionDetail.",
+        },
+      ],
+    }),
+  ],
+  disclosure: [
+    apiPart<typeof DisclosureHeader>({
+      name: "DisclosureHeader",
+      description:
+        "The trigger button, inside a heading. Its chevron turns when the panel opens.",
+      props: [
+        {
+          name: "children",
+          description: "The header text.",
+        },
+      ],
+    }),
+    apiPart<typeof DisclosurePanel>({
+      name: "DisclosurePanel",
+      props: [
+        {
+          name: "children",
+          description:
+            "The content that shows when the disclosure is expanded.",
+        },
+      ],
+    }),
+  ],
+  "drop-zone": [
+    apiPart<typeof DropZone>({
+      name: "DropZone",
+      props: [
+        {
+          name: "getDropOperation",
+          description:
+            'Accepts or rejects a drag by its types. Return "cancel" to reject it; the icon then shakes.',
+        },
+        {
+          name: "onDrop",
+          description:
+            "Receives the dropped items. The zone shows a ripple when the drop arrives.",
+        },
+        {
+          name: "isDisabled",
+          description: "Ignores drops and disables DropZoneTrigger.",
+        },
+      ],
+    }),
+    apiPart<typeof DropZoneTrigger>({
+      name: "DropZoneTrigger",
+      description: "Opens the file picker. Its hit area covers the whole zone.",
+      props: [
+        {
+          name: "acceptedFileTypes",
+          description: "The MIME types that the file picker shows.",
+        },
+        {
+          name: "allowsMultiple",
+          description: "Lets the user select more than one file.",
+        },
+        {
+          name: "onSelect",
+          description:
+            "Receives the selected files. The zone shows the same ripple as a drop.",
+        },
+        {
+          name: "variant",
+          description: "Sets the button style.",
+        },
+        {
+          name: "children",
+          description: "The button text.",
+        },
+      ],
+    }),
+  ],
+  fieldset: [
+    apiPart<typeof Fieldset>({
+      name: "Fieldset",
+      props: [
+        {
+          name: "disabled",
+          description: "Disables every control in the fieldset and dims it.",
+        },
+      ],
+    }),
+    apiPart<typeof FieldsetLegend>({
+      name: "FieldsetLegend",
+      props: [
+        {
+          name: "children",
+          description:
+            "The name of the group. Screen readers read it with the first control.",
+        },
+      ],
+    }),
+  ],
+  form: [
+    apiPart<typeof Form>({
+      name: "Form",
+      props: [
+        {
+          name: "validationErrors",
+          description:
+            "Server errors by field name. A field shows its error until the value changes.",
+        },
+        {
+          name: "children",
+          description: "The fields and actions. They stack with a 16px gap.",
+        },
+      ],
+    }),
+  ],
+  "grid-list": [
+    apiPart<typeof GridList>({
+      name: "GridList",
+      props: [
+        {
+          name: "selectionMode",
+          description:
+            "Lets the user select one item or many. Selected items use the accent background.",
+        },
+        {
+          name: "renderEmptyState",
+          description: "Content to show when the list has no items.",
+        },
+      ],
+    }),
+    apiPart<typeof GridListItem>({
+      name: "GridListItem",
+      props: [
+        {
+          name: "textValue",
+          description:
+            "The text for type-ahead and screen readers. Set it when the children are not plain text.",
+        },
+      ],
+    }),
+  ],
+  "kbd-code": [
+    apiPart<typeof Kbd>({
+      name: "Kbd",
+      props: [
+        {
+          name: "children",
+          description: "The key name, or a key symbol such as ⌘.",
+        },
+      ],
+    }),
+    apiPart<typeof KbdGroup>({
+      name: "KbdGroup",
+      props: [
+        {
+          name: "children",
+          description: "The Kbd keys of one shortcut, such as ⌘ and K.",
+        },
+      ],
+    }),
+    apiPart<typeof InlineCode>({
+      name: "InlineCode",
+      props: [
+        {
+          name: "children",
+          description: "The code text. It wraps across lines.",
+        },
+      ],
+    }),
+  ],
+  link: [
+    apiPart<typeof Link>({
+      name: "Link",
+      props: [
+        {
+          name: "href",
+          type: "string",
+          description:
+            "The URL. Without it, the link renders as a span with the link role; use onPress.",
+        },
+        {
+          name: "children",
+          description: "The link text.",
+        },
+      ],
+    }),
+  ],
+  "list-box": [
+    apiPart<typeof ListBox>({
+      name: "ListBox",
+      props: [
+        {
+          name: "selectionMode",
+          description:
+            "Lets the user select one item or many. Selected items show a check mark.",
+        },
+        {
+          name: "renderEmptyState",
+          description: "Content to show when the list has no items.",
+        },
+      ],
+    }),
+    apiPart<typeof ListBoxItem>({
+      name: "ListBoxItem",
+      props: [
+        {
+          name: "textValue",
+          description:
+            "The text for type-ahead. It defaults to the children when they are a string.",
+        },
+      ],
+    }),
+  ],
+  "range-calendar": [
+    apiPart<typeof RangeCalendar>({
+      name: "RangeCalendar",
+      props: [
+        {
+          name: "visibleDuration",
+          description:
+            "Shows more than one month side by side, such as { months: 2 }.",
+        },
+        {
+          name: "children",
+          description: "Replaces the default month grids.",
+        },
+      ],
+    }),
+  ],
+  separator: [
+    apiPart<typeof Separator>({
+      name: "Separator",
+      props: [
+        {
+          name: "orientation",
+          description:
+            "Sets the direction of the line. A vertical line stretches to the height of its row.",
+        },
+      ],
+    }),
+  ],
+  skeleton: [
+    apiPart<typeof Skeleton>({
+      name: "Skeleton",
+      description:
+        "A placeholder with a shimmer. Screen readers ignore it, so set aria-busy on the region that loads.",
+      props: [
+        {
+          name: "className",
+          description:
+            "Sets the size and shape, such as h-4 w-32 or size-10 rounded-full.",
         },
       ],
     }),

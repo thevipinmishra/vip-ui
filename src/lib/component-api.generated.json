@@ -2641,6 +2641,175 @@
       "type": "ReactNode"
     }
   },
+  "Breadcrumb": {
+    "href": {
+      "type": "Href"
+    },
+    "children": {
+      "type": "ChildrenOrFunction",
+      "required": true
+    }
+  },
+  "BreadcrumbItem": {
+    "children": {
+      "type": "ReactNode",
+      "required": true
+    }
+  },
+  "ColorSwatch": {
+    "color": {
+      "type": "string | Color"
+    }
+  },
+  "ColorSwatchPickerItem": {
+    "color": {
+      "type": "string | Color",
+      "required": true
+    },
+    "children": {
+      "type": "ChildrenOrFunction"
+    }
+  },
+  "ContextMenuTrigger": {
+    "children": {
+      "type": "ReactNode",
+      "required": true
+    }
+  },
+  "DescriptionList": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "DisclosureHeader": {
+    "children": {
+      "type": "ReactNode",
+      "required": true
+    }
+  },
+  "DisclosurePanel": {
+    "children": {
+      "type": "ReactNode",
+      "required": true
+    }
+  },
+  "DropZone": {
+    "getDropOperation": {
+      "type": "(types: IDragTypes, allowedOperations: (\"copy\" | \"link\" | \"move\" | \"cancel\")[]) => \"copy\" | \"link\" | \"move\" | \"cancel\""
+    },
+    "onDrop": {
+      "type": "(e: DropEvent) => void"
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "default": "false"
+    }
+  },
+  "DropZoneTrigger": {
+    "acceptedFileTypes": {
+      "type": "ReadonlyArray<string>"
+    },
+    "allowsMultiple": {
+      "type": "boolean"
+    },
+    "onSelect": {
+      "type": "(files: FileList | null) => void"
+    },
+    "variant": {
+      "type": "\"default\" | \"secondary\" | \"outline\" | \"ghost\" | \"minimal\" | \"destructive\"",
+      "default": "\"outline\""
+    },
+    "children": {
+      "type": "ChildrenOrFunction",
+      "default": "\"Browse files\""
+    }
+  },
+  "Fieldset": {
+    "disabled": {
+      "type": "boolean"
+    }
+  },
+  "FieldsetLegend": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "Form": {
+    "validationErrors": {
+      "type": "ValidationErrors"
+    },
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "GridList": {
+    "selectionMode": {
+      "type": "\"none\" | \"single\" | \"multiple\""
+    },
+    "renderEmptyState": {
+      "type": "(props: GridListRenderProps) => ReactNode"
+    }
+  },
+  "GridListItem": {
+    "textValue": {
+      "type": "string"
+    }
+  },
+  "Kbd": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "KbdGroup": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "InlineCode": {
+    "children": {
+      "type": "ReactNode"
+    }
+  },
+  "Link": {
+    "href": {
+      "type": "Href"
+    },
+    "children": {
+      "type": "ChildrenOrFunction"
+    }
+  },
+  "ListBox": {
+    "selectionMode": {
+      "type": "\"none\" | \"single\" | \"multiple\""
+    },
+    "renderEmptyState": {
+      "type": "(props: ListBoxRenderProps) => ReactNode"
+    }
+  },
+  "ListBoxItem": {
+    "textValue": {
+      "type": "string"
+    }
+  },
+  "RangeCalendar": {
+    "visibleDuration": {
+      "type": "DateDuration"
+    },
+    "children": {
+      "type": "ChildrenOrFunction"
+    }
+  },
+  "Separator": {
+    "orientation": {
+      "type": "\"horizontal\" | \"vertical\"",
+      "default": "\"horizontal\""
+    }
+  },
+  "Skeleton": {
+    "className": {
+      "type": "string"
+    }
+  },
   "ChartFrame": {
     "variant": {
       "type": "\"default\" | \"card\" | \"plain\"",

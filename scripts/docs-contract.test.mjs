@@ -59,25 +59,6 @@ const demoFiles = new Set(
   ),
 );
 
-const apiPending = new Set([
-  "breadcrumbs",
-  "color-swatch",
-  "color-swatch-picker",
-  "context-menu",
-  "description-list",
-  "disclosure",
-  "drop-zone",
-  "fieldset",
-  "form",
-  "grid-list",
-  "kbd-code",
-  "link",
-  "list-box",
-  "range-calendar",
-  "separator",
-  "skeleton",
-]);
-
 function demoExportName(file) {
   return file
     .replace(/\.tsx$/, "")
@@ -110,11 +91,7 @@ test("every catalog component has an API table", async () => {
   const api = await read("src/lib/component-api.ts");
   const keys = objectKeys(api, "export const componentApi", "\n};", arrayEntry);
   for (const slug of slugs) {
-    if (apiPending.has(slug)) {
-      assert.ok(!keys.has(slug), `remove ${slug} from apiPending`);
-    } else {
-      assert.ok(keys.has(slug), `${slug} needs componentApi`);
-    }
+    assert.ok(keys.has(slug), `${slug} needs componentApi`);
   }
 });
 
