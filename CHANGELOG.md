@@ -121,9 +121,11 @@ All notable changes to vip/ui are documented in this file. The format is based o
 - **Breaking:** Source link. Put sources in `ResponseFooter`.
 - **Breaking:** `size="icon"`. Set `iconOnly` for a square icon button at any size.
 - The six earlier themes: Atelier, Signal, Canopy, Vesper, Marigold, and Graphite.
+- **Breaking:** The internal `press-button` registry item. No component used it. Use `Button`.
 
 ### Fixed
 
+- Tree rows no longer cause a hydration mismatch, and rows that expand into view animate in again.
 - After the handle, arrow keys, or a drag move a sheet, wheel and trackpad scrolling snap to a stop again.
 - End moves a sheet with `preventDismissal` to its smallest snap point.
 - A sheet that ends flush with the viewport edge when closed now unmounts, so the page does not stay scroll-locked.

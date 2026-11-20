@@ -80,21 +80,21 @@ export function TreeItem({
   const reducedMotion = useReducedMotion();
   const settled = useContext(TreeSettledContext);
   // Motion and React share handler names. Drag and drop needs React's handlers,
-  // so use a plain row while React Aria supplies them.
-  const motionRow: TreeItemProps["render"] = (rowProps) => {
+  // so draggable rows render a plain element.
+  const motionRow: TreeItemProps["render"] = (rowProps, { allowsDragging }) => {
+    if (allowsDragging) {
+      return <div {...(rowProps as React.HTMLAttributes<HTMLDivElement>)} />;
+    }
+
     const {
       onAnimationStart: _onAnimationStart,
       onAnimationEnd: _onAnimationEnd,
       onAnimationIteration: _onAnimationIteration,
-      onDrag,
-      onDragStart,
-      onDragEnd,
+      onDrag: _onDrag,
+      onDragStart: _onDragStart,
+      onDragEnd: _onDragEnd,
       ...rest
     } = rowProps;
-
-    if (onDrag || onDragStart || onDragEnd) {
-      return <div {...(rowProps as React.HTMLAttributes<HTMLDivElement>)} />;
-    }
 
     return (
       <motion.div
