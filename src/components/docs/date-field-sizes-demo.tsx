@@ -25,6 +25,11 @@ export function DateFieldSizesDemo() {
         aria-label="Delivery date"
         defaultValue={parseDate("2026-06-15")}
       />
+      <DateField
+        size="xl"
+        aria-label="Delivery date"
+        defaultValue={parseDate("2026-06-15")}
+      />
     </div>
   );
 }

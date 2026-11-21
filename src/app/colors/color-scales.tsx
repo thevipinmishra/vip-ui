@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import {
   Radio as AriaRadio,
   RadioGroup as AriaRadioGroup,
@@ -205,8 +205,16 @@ export function ColorScales() {
             })}
             className="grid gap-0.5"
           >
-            {palettes.map((option) => (
-              <ScaleOption key={option.slug} palette={option} mode={mode} />
+            {palettes.map((option, index) => (
+              <Fragment key={option.slug}>
+                {index > 0 && option.kind !== palettes[index - 1].kind && (
+                  <span
+                    aria-hidden="true"
+                    className="mx-2 my-1 h-px bg-border/70"
+                  />
+                )}
+                <ScaleOption palette={option} mode={mode} />
+              </Fragment>
             ))}
           </AriaRadioGroup>
         </div>
@@ -223,6 +231,8 @@ export function ColorScales() {
             </h2>
             <p className="text-sm leading-6 text-muted-foreground">
               {palette.description}
+              {palette.kind === "accent" &&
+                ` Pair it with ${findPalette(palette.neutral).name}.`}
             </p>
           </div>
           <CopyCodeButton

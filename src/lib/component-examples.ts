@@ -11,6 +11,8 @@ import { componentDescription } from "./catalog";
 export interface ComponentPageData {
   summary?: string;
   usage: string;
+  previewUses?: readonly string[];
+  exampleFile?: string;
   description: string;
   examples: readonly ComponentExampleMetadata[];
 }
@@ -19,6 +21,7 @@ export interface ComponentUsage {
   code: string;
   filename?: string;
   note?: string;
+  uses?: readonly string[];
 }
 
 type ComponentPageSource = Omit<ComponentPageData, "description">;
@@ -36,7 +39,7 @@ const pageSources = {
       {
         title: "Sizes",
         description:
-          "Set `size` to change the button size. Small sizes expand the hit area on touch screens.",
+          'Use `size` to change the button size. The default is `"md"`.',
         sourcePath: "button-sizes-demo.tsx",
       },
       {
@@ -48,7 +51,7 @@ const pageSources = {
       {
         title: "Icon buttons",
         description:
-          "Set `iconOnly` for one icon; give the button an `aria-label` and mark the icon `aria-hidden`.",
+          "Set `iconOnly` for a square button. Give the button an `aria-label` and mark the icon `aria-hidden`.",
         sourcePath: "button-icon-demo.tsx",
       },
       {
@@ -60,16 +63,14 @@ const pageSources = {
       {
         title: "Loading",
         description:
-          "Set `isPending` to show a loading state. The button stays focusable.",
+          "Set `isPending` to block presses while keeping the button focusable. While saving, the example swaps the leading icon for a [Spinner](/components/spinner).",
         sourcePath: "button-loading-demo.tsx",
-        uses: ["spinner"],
       },
       {
         title: "Link",
         description:
-          "Use `ButtonLink` for navigation; it renders an anchor, and `as` accepts your router link.",
+          "With the `@vip-ui` registry configured, install `ButtonLink` with `npx shadcn@latest add @vip-ui/button-link`. Pass `as={Link}` to use Next.js routing.",
         sourcePath: "button-link-demo.tsx",
-        uses: ["button-link"],
       },
     ],
   },
@@ -229,6 +230,7 @@ const pageSources = {
   },
   autocomplete: {
     usage: "autocomplete-demo.tsx",
+    previewUses: ["search-field", "list-box"],
     examples: [],
   },
   avatar: {
@@ -292,18 +294,20 @@ const pageSources = {
     examples: [
       {
         title: "Orientations",
+        description:
+          'Buttons sit in a row by default. Set `orientation="vertical"` to stack them.',
         sourcePath: "button-group-orientations-demo.tsx",
       },
       {
         title: "Split button",
-        description: "Give the icon button an `aria-label`.",
+        description:
+          "Wrap the second button and its menu in `MenuTrigger`. Give the icon button an `aria-label`.",
         sourcePath: "button-group-demo.tsx",
         uses: ["menu"],
       },
       {
         title: "Sizes",
-        description:
-          "Set `size` on the group; a size on a button overrides it.",
+        description: "Set `size` on the group to size its buttons together.",
         sourcePath: "button-group-sizes-demo.tsx",
       },
     ],
@@ -314,7 +318,7 @@ const pageSources = {
       {
         title: "Unavailable dates",
         description:
-          "Set isDateUnavailable, minValue, and maxValue to limit the choices.",
+          "Use `isDateUnavailable` to block weekends. Set `minValue` and `maxValue` to limit selection to June.",
         sourcePath: "calendar-unavailable-demo.tsx",
       },
       {
@@ -362,6 +366,7 @@ const pageSources = {
   },
   carousel: {
     usage: "carousel-demo.tsx",
+    exampleFile: "photo-art.tsx",
     examples: [
       {
         title: "Several slides",
@@ -376,9 +381,8 @@ const pageSources = {
       {
         title: "Autoplay",
         description:
-          'Pass the Embla `Autoplay` plugin in `plugins`, add a pause button, and set `aria-live="off"` on the viewport.',
+          'Run `pnpm add embla-carousel-autoplay@^8.6.0` to install the plugin. Pass `Autoplay` in `plugins`, add a pause button, and set `aria-live="off"` on the viewport.',
         sourcePath: "carousel-autoplay-demo.tsx",
-        uses: ["button"],
       },
       {
         title: "Different widths",
@@ -435,6 +439,7 @@ const pageSources = {
         title: "Indeterminate",
         description: "Point aria-controls at the child options.",
         sourcePath: "checkbox-demo.tsx",
+        uses: ["checkbox-group"],
       },
       {
         title: "Card",
@@ -449,27 +454,31 @@ const pageSources = {
   },
   "checkbox-group": {
     usage: "checkbox-group-demo.tsx",
+    previewUses: ["checkbox"],
     examples: [
       {
         title: "Horizontal",
         sourcePath: "checkbox-group-horizontal-demo.tsx",
+        uses: ["checkbox"],
       },
       {
         title: "Card grid",
         description:
           "Put CheckboxGroupItems between the label and the error to lay out the options.",
         sourcePath: "checkbox-group-layout-demo.tsx",
+        uses: ["checkbox"],
       },
       {
         title: "Disabled",
         sourcePath: "checkbox-group-disabled-demo.tsx",
+        uses: ["checkbox"],
       },
       {
         title: "Required",
         description:
           "Asks for at least one option. The error shows after the first submit.",
         sourcePath: "checkbox-group-required-demo.tsx",
-        uses: ["form", "button"],
+        uses: ["checkbox", "form", "button"],
       },
     ],
   },
@@ -479,7 +488,7 @@ const pageSources = {
       {
         title: "Single channel",
         description:
-          "Set colorSpace and channel to edit one channel as a number.",
+          "Set `colorSpace` and `channel` to edit one channel as a number.",
         sourcePath: "color-field-channel-demo.tsx",
       },
       {
@@ -511,13 +520,14 @@ const pageSources = {
     examples: [
       {
         title: "Controlled value",
-        description: "Children render in the center of the wheel.",
+        description:
+          "Render a swatch inside the wheel to show the current color.",
         sourcePath: "color-wheel-controlled-demo.tsx",
         uses: ["color-swatch"],
       },
       {
         title: "Size",
-        description: "innerRadius defaults to 24 pixels less than outerRadius.",
+        description: "Set `outerRadius` to change the size of the wheel.",
         sourcePath: "color-wheel-size-demo.tsx",
       },
       {
@@ -532,7 +542,7 @@ const pageSources = {
       {
         title: "Named palette",
         description:
-          'Set colorName for the accessible name. Without it, the name is generated, such as "vibrant red".',
+          "Set `colorName` to name each swatch for assistive technology.",
         sourcePath: "color-swatch-demo.tsx",
       },
       {
@@ -546,11 +556,13 @@ const pageSources = {
     examples: [
       {
         title: "Disabled",
+        description: "Set `isDisabled` on the items that users cannot select.",
         sourcePath: "color-swatch-picker-disabled-demo.tsx",
       },
       {
         title: "Controlled value",
-        description: "Give each item an aria-label.",
+        description:
+          "Use `value` and `onChange` to show the selected color name.",
         sourcePath: "color-swatch-picker-controlled-demo.tsx",
       },
     ],
@@ -619,10 +631,12 @@ const pageSources = {
   },
   conversation: {
     usage: "conversation-demo.tsx",
+    previewUses: ["response"],
     examples: [
       {
         title: "Jump to latest",
-        description: "Scroll up while the answer streams to show the button.",
+        description:
+          "Scroll up in the transcript, then select Stream replies. Select Jump to latest to return to the newest message.",
         sourcePath: "conversation-jump-demo.tsx",
         uses: ["message", "response"],
       },
@@ -692,13 +706,13 @@ const pageSources = {
       {
         title: "Minimum and maximum",
         description:
-          "A date outside the limits shows an error when the field loses focus.",
+          "Change the month to May, then leave the field to see the error.",
         sourcePath: "date-field-limits-demo.tsx",
       },
       {
         title: "Date and time",
         description:
-          "Pass a CalendarDateTime to add time segments. Set granularity to change the smallest one.",
+          "Pass a `CalendarDateTime` to add time segments. Set `granularity` to choose the smallest unit.",
         sourcePath: "date-field-time-demo.tsx",
       },
       {
@@ -717,7 +731,7 @@ const pageSources = {
       {
         title: "Unavailable dates",
         description:
-          "Set isDateUnavailable, minValue, and maxValue to limit the choices.",
+          "Use `isDateUnavailable` to block dates within the window set by `minValue` and `maxValue`.",
         sourcePath: "date-picker-unavailable-demo.tsx",
       },
       {
@@ -750,7 +764,7 @@ const pageSources = {
       {
         title: "Unavailable dates",
         description:
-          "A range cannot include an unavailable date unless you set allowsNonContiguousRanges.",
+          "Start a range on June 17 to see how unavailable dates limit the selection. Set `allowsNonContiguousRanges` to let a range span unavailable dates.",
         sourcePath: "date-range-picker-limits-demo.tsx",
       },
       {
@@ -781,7 +795,8 @@ const pageSources = {
       },
       {
         title: "Keyboard",
-        description: "Press Alt with the arrow keys to move the focused event.",
+        description:
+          "Press Alt and an arrow key to move the focused event. Press Alt, Shift, and Up or Down to resize it.",
         sourcePath: "event-calendar-keyboard-demo.tsx",
         uses: ["kbd-code"],
       },
@@ -905,7 +920,8 @@ const pageSources = {
     examples: [
       {
         title: "Accepted file types",
-        description: "Use getDropOperation to accept or cancel a drop.",
+        description:
+          "Use `getDropOperation` to cancel unsupported drops. Check each file type before adding files from either input.",
         sourcePath: "drop-zone-demo.tsx",
       },
     ],
@@ -928,6 +944,7 @@ const pageSources = {
   },
   fieldset: {
     usage: "fieldset-demo.tsx",
+    previewUses: ["checkbox"],
     examples: [],
   },
   "file-trigger": {
@@ -943,18 +960,21 @@ const pageSources = {
   },
   form: {
     usage: "form-demo.tsx",
+    previewUses: ["text-field", "button"],
     examples: [
       {
         title: "Custom validation",
         description:
-          "Return an error message from validate, or null when the value is valid.",
+          "Return an error message from `validate`, or return `null` for a valid value.",
         sourcePath: "form-validation-demo.tsx",
+        uses: ["text-field", "button"],
       },
       {
         title: "Server errors",
         description:
-          'Pass server errors to validationErrors, keyed by field name. Push Save with "maya" to see one.',
+          "Pass server errors to `validationErrors` with each field name as a key. Select Save to see a simulated error for `maya`.",
         sourcePath: "form-server-errors-demo.tsx",
+        uses: ["text-field", "button"],
       },
     ],
   },
@@ -979,38 +999,47 @@ const pageSources = {
     summary:
       "Examples cover icons, buttons, notes, sizes, and disabled or invalid states.",
     usage: "input-group-basic-demo.tsx",
+    previewUses: ["text-field"],
     examples: [
       {
         title: "Icon",
+        description: "Install `@phosphor-icons/react` for the search icon.",
         sourcePath: "input-group-icon-demo.tsx",
+        uses: ["text-field"],
       },
       {
         title: "Button",
+        description: "Install `@phosphor-icons/react` for the search icon.",
         sourcePath: "input-group-demo.tsx",
+        uses: ["form", "text-field"],
       },
       {
         title: "Text area",
         description:
           'Set align="block-end" on InputGroupAddon to add a row below the text.',
         sourcePath: "input-group-notes-demo.tsx",
+        uses: ["text-area"],
       },
       {
         title: "Disabled",
         description:
           "Set isDisabled on the TextField. InputGroup inherits the state.",
         sourcePath: "input-group-disabled-demo.tsx",
+        uses: ["text-field"],
       },
       {
         title: "Invalid",
         description:
           "Set isInvalid on the TextField. InputGroup inherits the state.",
         sourcePath: "input-group-invalid-demo.tsx",
+        uses: ["text-field"],
       },
       {
         title: "Sizes",
         description:
-          "Set size on the TextField. The group and its icon use it.",
+          "Set `size` on the TextField. Install `@phosphor-icons/react` for the search icon.",
         sourcePath: "input-group-sizes-demo.tsx",
+        uses: ["text-field"],
       },
     ],
   },
@@ -1059,34 +1088,37 @@ const pageSources = {
   },
   menu: {
     summary:
-      "Examples cover icons, selection, sections, nested menus, and placement.",
+      "Build menus with actions, links, selection, submenus, and items from data.",
     usage: "menu-basic-demo.tsx",
     examples: [
       {
-        title: "Icons and shortcuts",
+        title: "Submenus",
         description:
-          "`Kbd` shows the shortcut only. Add the key handler yourself.",
-        sourcePath: "menu-demo.tsx",
-        uses: ["button", "kbd-code"],
-      },
-      {
-        title: "Selection",
-        sourcePath: "menu-selection-demo.tsx",
-      },
-      {
-        title: "Sections",
-        description: "Each `MenuSection` can have its own `selectionMode`.",
-        sourcePath: "menu-sections-demo.tsx",
-      },
-      {
-        title: "Nested menu",
-        description: "On small screens, the submenu opens below the item.",
+          "Place a `MenuItem` and a nested `Menu` inside `SubmenuTrigger`.",
         sourcePath: "menu-nested-demo.tsx",
       },
       {
-        title: "Placement and arrow",
+        title: "Actions, links, and disabled items",
         description:
-          "Use `MenuPopover` and `MenuContent` instead of `Menu` to set placement.",
+          "Use `onAction` for commands and `href` for links. Set `isDisabled` to make an item unavailable.",
+        sourcePath: "menu-demo.tsx",
+      },
+      {
+        title: "Single and multiple selection",
+        description:
+          'Set `selectionMode` to `"single"` or `"multiple"`. Use `defaultSelectedKeys` to set the initial selection.',
+        sourcePath: "menu-selection-demo.tsx",
+      },
+      {
+        title: "Selection by section",
+        description:
+          "Set `selectionMode` on each `MenuSection` to give each group its own selection.",
+        sourcePath: "menu-sections-demo.tsx",
+      },
+      {
+        title: "Items from data and popover placement",
+        description:
+          "Pass `items` to `MenuContent` and render a `MenuItem` for each entry. Set `placement` on `MenuPopover` and add a `PopoverArrow`.",
         sourcePath: "menu-placement-demo.tsx",
       },
     ],
@@ -1118,12 +1150,14 @@ const pageSources = {
     summary:
       "Examples cover both sides of a conversation and the system message that has no sender.",
     usage: "message-basic-demo.tsx",
+    previewUses: ["avatar"],
     examples: [
       {
         title: "Sides",
         description:
           "Only an incoming message shows the sender. Actions show on hover or focus.",
         sourcePath: "message-demo.tsx",
+        uses: ["avatar", "copy-button"],
       },
     ],
   },
@@ -1154,7 +1188,7 @@ const pageSources = {
         title: "Invalid selection",
         description: "Set error to show a message below the field.",
         sourcePath: "native-select-invalid-demo.tsx",
-        uses: ["form"],
+        uses: ["form", "button"],
       },
       {
         title: "Sizes",
@@ -1491,7 +1525,7 @@ const pageSources = {
       {
         title: "Icons",
         description:
-          "Mark the icon `aria-hidden` so the label stays the accessible name.",
+          "Install `@phosphor-icons/react` for the icons. Set `aria-hidden` on each icon so the segment label stays the accessible name.",
         sourcePath: "segmented-control-icons-demo.tsx",
       },
       {
@@ -1502,6 +1536,7 @@ const pageSources = {
       },
       {
         title: "Vertical",
+        description: "Install `@phosphor-icons/react` for the icons.",
         sourcePath: "segmented-control-vertical-demo.tsx",
       },
       {
@@ -1516,7 +1551,7 @@ const pageSources = {
       {
         title: "Unavailable dates",
         description:
-          "A range cannot include an unavailable date unless you set allowsNonContiguousRanges.",
+          "June 18 and 19 are unavailable. Set `allowsNonContiguousRanges` to let a range span those dates.",
         sourcePath: "range-calendar-limits-demo.tsx",
       },
       {
@@ -1526,19 +1561,21 @@ const pageSources = {
       {
         title: "Two months",
         description:
-          "Set visibleDuration. The months wrap to one column in a narrow space.",
+          "Set `visibleDuration` to `{ months: 2 }`. The months stack when space is limited.",
         sourcePath: "range-calendar-months-demo.tsx",
       },
     ],
   },
   reasoning: {
     usage: "reasoning-demo.tsx",
+    previewUses: ["button"],
     examples: [
       {
         title: "Auto collapse",
         description:
           "The panel collapses when the run ends and expands for a new run.",
         sourcePath: "reasoning-auto-collapse-demo.tsx",
+        uses: ["button"],
       },
       {
         title: "Error",
@@ -1593,6 +1630,7 @@ const pageSources = {
   },
   response: {
     usage: "response-demo.tsx",
+    previewUses: ["copy-button"],
     examples: [
       {
         title: "Actions",
@@ -1601,13 +1639,16 @@ const pageSources = {
       },
       {
         title: "Stopped",
-        description:
-          "Screen readers hear Response stopped once. Continue resumes the run.",
+        description: "Select Continue to resume the response.",
         sourcePath: "response-stopped-demo.tsx",
+        uses: ["copy-button"],
       },
       {
         title: "Error",
+        description:
+          "Select Retry to finish the response after a simulated connection error.",
         sourcePath: "response-error-demo.tsx",
+        uses: ["button"],
       },
       {
         title: "With reasoning",
@@ -1633,6 +1674,7 @@ const pageSources = {
         title: "Sizes",
         description: "Give each control in a filter bar the same size.",
         sourcePath: "search-field-sizes-demo.tsx",
+        uses: ["select", "button"],
       },
     ],
   },
@@ -1687,7 +1729,8 @@ const pageSources = {
       },
       {
         title: "Custom layout",
-        description: "Without a visible label, pass aria-label to Slider.",
+        description:
+          "Without a visible label, pass `aria-label` to Slider. Install `@phosphor-icons/react` for the icons.",
         sourcePath: "slider-custom-demo.tsx",
       },
       {
@@ -1795,6 +1838,7 @@ const pageSources = {
   },
   "data-table": {
     usage: "data-table-demo.tsx",
+    previewUses: ["badge"],
     examples: [
       {
         title: "Column filters",
@@ -1993,6 +2037,7 @@ const pageSources = {
         title: "Sizes",
         description: "Give a button next to the field the same size.",
         sourcePath: "text-field-sizes-demo.tsx",
+        uses: ["button"],
       },
     ],
   },
@@ -2251,10 +2296,12 @@ const pageSources = {
         title: "States",
         description: "Screen readers announce each change.",
         sourcePath: "tool-call-states-demo.tsx",
+        uses: ["toggle-button-group"],
       },
       {
         title: "Sequence",
         sourcePath: "tool-call-sequence-demo.tsx",
+        uses: ["button"],
       },
     ],
   },
@@ -2267,8 +2314,7 @@ const pageSources = {
       },
       {
         title: "Minimum and maximum",
-        description:
-          "A time outside the limits shows an error when the field loses focus.",
+        description: "Enter 8:00 AM, then leave the field to see the error.",
         sourcePath: "time-field-limits-demo.tsx",
       },
       {
@@ -2344,7 +2390,9 @@ const pageSources = {
     usage: "toggle-button-group-demo.tsx",
     examples: [
       {
-        title: "Multiple text styles",
+        title: "Multiple selection",
+        description:
+          'Set `selectionMode="multiple"` to let users select more than one toggle.',
         sourcePath: "toggle-button-group-editor-demo.tsx",
       },
       {
@@ -2378,21 +2426,22 @@ const pageSources = {
     usage: "toolbar-basic-demo.tsx",
     examples: [
       {
-        title: "Formatting toolbar",
+        title: "Horizontal keyboard navigation",
         description:
-          "The toolbar is one tab stop; the arrow keys move focus between controls.",
+          "Press Tab to enter the toolbar. Use Left Arrow and Right Arrow to move between controls.",
         sourcePath: "toolbar-demo.tsx",
         uses: ["button", "separator"],
       },
       {
-        title: "Vertical toolbar",
-        description: "The up and down arrow keys move focus.",
+        title: "Vertical orientation",
+        description:
+          'Set `orientation="vertical"` to stack the controls. Use Up Arrow and Down Arrow to move between them.',
         sourcePath: "toolbar-vertical-demo.tsx",
       },
       {
-        title: "Sizes",
+        title: "Shared control size",
         description:
-          "Popovers that open from the toolbar keep the default size.",
+          "Set `size` on the toolbar. Its buttons and toggle groups inherit that size.",
         sourcePath: "toolbar-sizes-demo.tsx",
         uses: ["button", "separator"],
       },
@@ -2530,7 +2579,7 @@ const pageSources = {
       {
         title: "Read only",
         description:
-          "`defaultPaths` takes the paths from `onDrawEnd`. Show them in a pad of the same size.",
+          "Pass the paths from `onDrawEnd` to `defaultPaths`. Keep the drawing area's width and height when you display the saved paths.",
         sourcePath: "signature-pad-read-only-demo.tsx",
       },
       {
@@ -2752,18 +2801,19 @@ export function MessageActions() {
     code: `import { Button } from "@/components/vip-ui/button";
 import { Menu, MenuItem, MenuTrigger } from "@/components/vip-ui/menu";
 
-export function ProjectMenu() {
+export function DocumentationMenu() {
   return (
     <MenuTrigger>
-      <Button variant="outline">Project actions</Button>
-      <Menu aria-label="Project actions">
-        <MenuItem>Rename</MenuItem>
-        <MenuItem>Duplicate</MenuItem>
+      <Button variant="outline">Open menu</Button>
+      <Menu aria-label="Documentation">
+        <MenuItem href="/components/button">Button</MenuItem>
+        <MenuItem href="/components/popover">Popover</MenuItem>
       </Menu>
     </MenuTrigger>
   );
 }`,
-    filename: "project-menu.tsx",
+    filename: "documentation-menu.tsx",
+    note: "Place a trigger button and a `Menu` inside `MenuTrigger`. Give each command or link its own `MenuItem`.",
   },
   "context-menu": {
     code: `import { Button } from "@/components/vip-ui/button";
@@ -3002,7 +3052,7 @@ export function TripPhotos() {
   );
 }`,
     filename: "trip-photos.tsx",
-    note: "`opts` and `plugins` go straight to Embla. `useCarousel()` returns the Embla `api` and the selected index, so a plugin can drive its own controls.",
+    note: "Replace the example paths with your own image files. `opts` and `plugins` go straight to Embla. `useCarousel()` returns the Embla `api` and the selected index.",
   },
   lightbox: {
     code: `import { CarouselSlide } from "@/components/vip-ui/carousel";
@@ -3467,7 +3517,9 @@ export function ClientStrip() {
     filename: "client-strip.tsx",
   },
   "list-box": {
-    code: `import { ListBox, ListBoxItem } from "@/components/vip-ui/list-box";
+    code: `"use client";
+
+import { ListBox, ListBoxItem } from "@/components/vip-ui/list-box";
 
 const teams = [
   { id: "design", name: "Design" },
@@ -3477,7 +3529,7 @@ const teams = [
 
 export function TeamPicker() {
   return (
-    <ListBox aria-label="Team" items={teams}>
+    <ListBox aria-label="Team" items={teams} selectionMode="single">
       {(team) => <ListBoxItem id={team.id}>{team.name}</ListBoxItem>}
     </ListBox>
   );
@@ -3485,7 +3537,9 @@ export function TeamPicker() {
     filename: "team-picker.tsx",
   },
   "grid-list": {
-    code: `import { GridList, GridListItem } from "@/components/vip-ui/grid-list";
+    code: `"use client";
+
+import { GridList, GridListItem } from "@/components/vip-ui/grid-list";
 
 const files = [
   { id: "brief", name: "Project brief", type: "PDF" },
@@ -3560,7 +3614,9 @@ export function FileTree() {
     filename: "file-tree.tsx",
   },
   "tag-group": {
-    code: `import {
+    code: `"use client";
+
+import {
   Tag,
   TagGroup,
   TagGroupLabel,
@@ -3586,7 +3642,9 @@ export function TopicTags() {
     filename: "topic-tags.tsx",
   },
   table: {
-    code: `import {
+    code: `"use client";
+
+import {
   Cell,
   Column,
   Row,
@@ -3692,9 +3750,12 @@ export function Transcript() {
   );
 }`,
     filename: "transcript.tsx",
+    uses: ["response"],
   },
   "data-table": {
-    code: `import {
+    code: `"use client";
+
+import {
   DataTable,
   type DataTableColumn,
 } from "@/components/vip-ui/data-table";
@@ -3736,6 +3797,7 @@ export function ProjectTable() {
   );
 }`,
     filename: "project-table.tsx",
+    note: "On narrow layouts, the table scrolls horizontally.",
   },
   "spotlight-card": {
     code: `import { CardHeader, CardTitle } from "@/components/vip-ui/card";

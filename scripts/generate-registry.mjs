@@ -121,6 +121,14 @@ const groupItems = {
   "button-group": ["button"],
   "toggle-button-group": ["toggle-button"],
 };
+const dateValueComponents = new Set([
+  "calendar",
+  "date-field",
+  "date-picker",
+  "date-range-picker",
+  "range-calendar",
+  "time-field",
+]);
 export function portableSource(source) {
   return source
     .replace(/\r\n/g, "\n")
@@ -386,6 +394,8 @@ export function createItem(name, sources) {
   );
   for (const item of groupItems[name] ?? []) registryDependencies.add(item);
   if (name === "chart") dependencies.add("@tanstack/charts");
+  if (dateValueComponents.has(name))
+    dependencies.add("@internationalized/date");
   const content = portableSource(source);
   const files = [
     {
@@ -481,6 +491,12 @@ function blockFilesItem(name, sources, blockFiles) {
       content,
     });
   }
+  if (
+    files.some((file) =>
+      /className="(?:[^"]*\s)?typography(?:\s[^"]*)?"/.test(file.content),
+    )
+  )
+    registryDependencies.add("typography");
   const { dependencies: packages, ...setup } = styleSetup(
     files.map((file) => file.content),
     dependencies,
@@ -533,6 +549,7 @@ export async function readBlockFiles(directory, prefix = "") {
 const siteModuleImports = {
   "src/lib/palettes.ts": { '"./palette-data"': "src/lib/palette-data.ts" },
   "src/app/themes/themes.ts": {
+    '"@/lib/color"': "src/lib/color.ts",
     '"@/lib/palettes"': "src/lib/palettes.ts",
   },
 };

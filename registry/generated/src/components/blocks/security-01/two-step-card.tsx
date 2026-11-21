@@ -34,11 +34,13 @@ import {
   OtpInputSlots,
 } from "../../vip-ui/otp-input";
 import { Presence } from "../../vip-ui/presence";
+import { QrCode } from "../../vip-ui/qr-code";
 import { Switch } from "../../vip-ui/switch";
 import { TextSwap } from "../../vip-ui/text-swap";
 import { showToast } from "../../vip-ui/toast";
 
 const authenticatorKey = "JBSW Y3DP EHPK 3PXP";
+const authenticatorUri = `otpauth://totp/Kestrel:nadia%40kestrel.app?secret=${authenticatorKey.replaceAll(" ", "")}&issuer=Kestrel`;
 
 const initialRecoveryCodes = [
   "7Q4M-2K9P",
@@ -204,7 +206,7 @@ export function TwoStepCard() {
       </CardContent>
 
       <DialogContent
-        size="md"
+        size="lg"
         overlayProps={{
           isOpen: setupOpen,
           onOpenChange: (open) => {
@@ -232,7 +234,7 @@ export function TwoStepCard() {
             </DialogTitle>
             <DialogDescription>
               {step === 1
-                ? "Step 1 of 2. Add this key to your authenticator app."
+                ? "Step 1 of 2. Connect your authenticator app."
                 : "Step 2 of 2. Use a code if you lose your phone."}
             </DialogDescription>
             <DialogClose />
@@ -241,19 +243,31 @@ export function TwoStepCard() {
             <LayoutMorph contentKey={step}>
               {step === 1 ? (
                 <div className="grid gap-4">
-                  <div className="rounded-lg bg-muted/60 p-4 ring-1 ring-border/70">
-                    <p className="text-sm font-medium">Setup key</p>
-                    <div className="mt-2 flex min-w-0 items-center gap-2">
-                      <InlineCode className="min-w-0 flex-1 px-2.5 py-1.5 text-sm tracking-[0.14em]">
-                        {authenticatorKey}
-                      </InlineCode>
-                      <CopyButton
-                        value={authenticatorKey}
-                        iconOnly
-                        size="sm"
-                        variant="ghost"
-                        aria-label="Copy setup key"
-                      />
+                  <div className="grid items-center gap-4 rounded-lg bg-muted/60 p-4 ring-1 ring-border/70 sm:grid-cols-[auto_minmax(0,1fr)]">
+                    <QrCode
+                      value={authenticatorUri}
+                      size="sm"
+                      label="QR code for your authenticator app"
+                      className="justify-self-center"
+                    />
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium">Scan the code</p>
+                      <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                        Open your authenticator app and scan this code. If you
+                        cannot scan it, enter the setup key.
+                      </p>
+                      <div className="mt-3 flex min-w-0 items-center gap-2">
+                        <InlineCode className="min-w-0 flex-1 px-2.5 py-1.5 text-sm tracking-[0.14em]">
+                          {authenticatorKey}
+                        </InlineCode>
+                        <CopyButton
+                          value={authenticatorKey}
+                          iconOnly
+                          size="sm"
+                          variant="ghost"
+                          aria-label="Copy setup key"
+                        />
+                      </div>
                     </div>
                   </div>
                   <OtpInput

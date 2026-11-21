@@ -696,17 +696,25 @@ export const compositions: Record<string, Composition> = {
           { part: "Button" },
           {
             part: "MenuPopover",
+            note: "Use Menu to combine MenuPopover and MenuContent.",
             children: [
               { part: "PopoverArrow", optional: true },
               {
                 part: "MenuContent",
-                note: "Owns focus and selection.",
                 children: [
+                  { part: "MenuItem", repeats: true },
                   {
                     part: "MenuSection",
                     optional: true,
                     repeats: true,
                     children: [{ part: "MenuItem", repeats: true }],
+                  },
+                  { part: "MenuSeparator", optional: true, repeats: true },
+                  {
+                    part: "SubmenuTrigger",
+                    optional: true,
+                    repeats: true,
+                    children: [{ part: "MenuItem" }, { part: "Menu" }],
                   },
                 ],
               },

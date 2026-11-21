@@ -29,6 +29,10 @@
       "label": "Marketing"
     },
     {
+      "slug": "content",
+      "label": "Content"
+    },
+    {
       "slug": "commerce",
       "label": "Commerce"
     },
@@ -87,6 +91,14 @@
       "category": "data",
       "height": 1160,
       "added": "2026-11-03"
+    },
+    {
+      "name": "logs-01",
+      "title": "Request logs",
+      "description": "Request log explorer with a live tail, status filters, and resizable details.",
+      "category": "data",
+      "height": 965,
+      "added": "2026-11-21"
     },
     {
       "name": "chat-01",
@@ -191,7 +203,7 @@
       "title": "Security settings",
       "description": "Password, two-step sign-in, sessions, and account deletion.",
       "category": "settings",
-      "height": 1396,
+      "height": 1380,
       "added": "2026-11-03"
     },
     {
@@ -199,7 +211,7 @@
       "title": "Appearance settings",
       "description": "Theme, accent color, font, and motion settings.",
       "category": "settings",
-      "height": 1363,
+      "height": 1358,
       "added": "2026-11-03"
     },
     {
@@ -266,6 +278,22 @@
       "added": "2026-11-03"
     },
     {
+      "name": "help-01",
+      "title": "Help center",
+      "description": "Help center with search, topics, articles, and a contact form.",
+      "category": "content",
+      "height": 1459,
+      "added": "2026-11-21"
+    },
+    {
+      "name": "article-01",
+      "title": "Blog article",
+      "description": "Long-form article with a table of contents, code, and a chart.",
+      "category": "content",
+      "height": 2922,
+      "added": "2026-11-21"
+    },
+    {
       "name": "product-01",
       "title": "Product detail",
       "description": "Product page with variants, reviews, and a cart.",
@@ -282,6 +310,22 @@
       "added": "2026-11-03"
     },
     {
+      "name": "invoice-01",
+      "title": "Invoice editor",
+      "description": "Invoice editor with line items, taxes, a live preview, and a send dialog.",
+      "category": "commerce",
+      "height": 814,
+      "added": "2026-11-21"
+    },
+    {
+      "name": "customers-01",
+      "title": "Customer profile",
+      "description": "Customer profile with orders, subscription, notes, and tags.",
+      "category": "commerce",
+      "height": 1429,
+      "added": "2026-11-21"
+    },
+    {
       "name": "booking-01",
       "title": "Book a meeting",
       "description": "Booking page with a calendar, time slots, and a time zone.",
@@ -296,6 +340,14 @@
       "category": "scheduling",
       "height": 1400,
       "added": "2026-11-03"
+    },
+    {
+      "name": "calendar-01",
+      "title": "Team calendar",
+      "description": "Week and day calendar with event details, editing, and calendar filters.",
+      "category": "scheduling",
+      "height": 804,
+      "added": "2026-11-21"
     },
     {
       "name": "team-01",
@@ -318,6 +370,38 @@
       "category": "workspace",
       "height": 890,
       "added": "2026-11-03"
+    },
+    {
+      "name": "projects-01",
+      "title": "Projects",
+      "description": "Project list with grid and list views, stars, filters, and a create dialog.",
+      "category": "workspace",
+      "height": 716,
+      "added": "2026-11-21"
+    },
+    {
+      "name": "kanban-01",
+      "title": "Project board",
+      "description": "Task board with drag and drop, work limits, and task details.",
+      "category": "workspace",
+      "height": 765,
+      "added": "2026-11-21"
+    },
+    {
+      "name": "share-01",
+      "title": "Share dialog",
+      "description": "Share dialog with invites, access levels, a copy link, and a QR code.",
+      "category": "workspace",
+      "height": 800,
+      "added": "2026-11-21"
+    },
+    {
+      "name": "sign-01",
+      "title": "Sign document",
+      "description": "Agreement with initials, a drawn or typed signature, and a finish step.",
+      "category": "workspace",
+      "height": 1313,
+      "added": "2026-11-21"
     },
     {
       "name": "issue-01",

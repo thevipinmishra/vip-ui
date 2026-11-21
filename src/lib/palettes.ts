@@ -18,10 +18,14 @@ export type PaletteRamp = readonly [
   string,
 ];
 
+export type PaletteKind = "neutral" | "accent";
+
 export interface Palette {
   slug: string;
   name: string;
   description: string;
+  kind: PaletteKind;
+  neutral: string;
   solidText: Record<PaletteMode, PaletteStep>;
   light: PaletteRamp;
   dark: PaletteRamp;

@@ -8,7 +8,13 @@ export interface ComponentMarkdownInput {
   site: string;
   manual: ManualInstallPlan;
   cliUrl?: string | null;
-  usage?: { code: string; filename: string };
+  usage?: {
+    code: string;
+    filename: string;
+    note?: string;
+    uses?: readonly string[];
+  };
+  exampleFile?: { filename: string; code: string };
   api?: readonly ApiPart[];
   examples?: {
     title: string;
@@ -28,6 +34,7 @@ export function buildComponentMarkdown({
   manual,
   cliUrl,
   usage,
+  exampleFile,
   api,
   examples,
   reactAria,
@@ -59,6 +66,13 @@ export function buildComponentMarkdown({
     "## Installation",
     "",
   );
+
+  if (usage?.uses?.length) {
+    lines.push(
+      `To run the opening example, also install ${usage.uses.join(", ")}.`,
+      "",
+    );
+  }
 
   if (cliUrl) {
     lines.push("```bash", `pnpm dlx shadcn@latest add ${cliUrl}`, "```", "");
@@ -97,6 +111,23 @@ export function buildComponentMarkdown({
     manual.component.content.trim(),
     "```",
   );
+
+  if (usage?.note) {
+    lines.push("", "## Usage", "", usage.note.trim());
+  }
+
+  if (exampleFile) {
+    lines.push(
+      "",
+      "## Example file",
+      "",
+      `Save \`${exampleFile.filename}\` in the same folder as the copied example files.`,
+      "",
+      "```tsx",
+      exampleFile.code.trim(),
+      "```",
+    );
+  }
 
   if (examples && examples.length > 0) {
     examples.forEach((example) => {

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slate",
+  "type": "registry:theme",
+  "title": "Slate",
+  "description": "A cool neutral. Pair it with Blue, Indigo, and Cyan.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["colors"],
+  "docs": "The scale adds --slate-1 to --slate-12 for light and dark mode. Classes such as bg-slate-3 work after the install.",
+  "dependencies": [],
+  "files": [],
+  "cssVars": {
+    "theme": {
+      "color-slate-1": "var(--slate-1)",
+      "color-slate-2": "var(--slate-2)",
+      "color-slate-3": "var(--slate-3)",
+      "color-slate-4": "var(--slate-4)",
+      "color-slate-5": "var(--slate-5)",
+      "color-slate-6": "var(--slate-6)",
+      "color-slate-7": "var(--slate-7)",
+      "color-slate-8": "var(--slate-8)",
+      "color-slate-9": "var(--slate-9)",
+      "color-slate-10": "var(--slate-10)",
+      "color-slate-11": "var(--slate-11)",
+      "color-slate-12": "var(--slate-12)"
+    },
+    "light": {
+      "slate-1": "oklch(0.987 0.003 257)",
+      "slate-2": "oklch(0.969 0.004 257)",
+      "slate-3": "oklch(0.944 0.005 257)",
+      "slate-4": "oklch(0.919 0.006 257)",
+      "slate-5": "oklch(0.894 0.008 257)",
+      "slate-6": "oklch(0.866 0.009 257)",
+      "slate-7": "oklch(0.820 0.011 257)",
+      "slate-8": "oklch(0.755 0.014 257)",
+      "slate-9": "oklch(0.420 0.020 257)",
+      "slate-10": "oklch(0.385 0.020 257)",
+      "slate-11": "oklch(0.505 0.017 257)",
+      "slate-12": "oklch(0.285 0.015 257)"
+    },
+    "dark": {
+      "slate-1": "oklch(0.185 0.006 257)",
+      "slate-2": "oklch(0.215 0.007 257)",
+      "slate-3": "oklch(0.243 0.008 257)",
+      "slate-4": "oklch(0.268 0.010 257)",
+      "slate-5": "oklch(0.293 0.011 257)",
+      "slate-6": "oklch(0.322 0.012 257)",
+      "slate-7": "oklch(0.365 0.014 257)",
+      "slate-8": "oklch(0.430 0.016 257)",
+      "slate-9": "oklch(0.700 0.020 257)",
+      "slate-10": "oklch(0.740 0.020 257)",
+      "slate-11": "oklch(0.735 0.015 257)",
+      "slate-12": "oklch(0.930 0.005 257)"
+    }
+  }
+}

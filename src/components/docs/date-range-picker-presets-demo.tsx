@@ -21,14 +21,6 @@ export function DateRangePickerPresetsDemo() {
           value: { start: now.subtract({ days: 6 }), end: now },
         },
         {
-          label: "Last 30 days",
-          value: { start: now.subtract({ days: 29 }), end: now },
-        },
-        {
-          label: "This month",
-          value: { start: startOfMonth(now), end: endOfMonth(now) },
-        },
-        {
           label: "Last month",
           value: { start: startOfMonth(lastMonth), end: endOfMonth(lastMonth) },
         },

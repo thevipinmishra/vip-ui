@@ -419,6 +419,23 @@ test("dependent components bring their files and packages", () => {
   );
 });
 
+test("date and time installs include the package used to create example values", () => {
+  for (const name of [
+    "calendar",
+    "date-field",
+    "date-picker",
+    "date-range-picker",
+    "event-calendar",
+    "range-calendar",
+    "time-field",
+  ]) {
+    assert.ok(
+      installTree(itemNamed(name)).packages.has("@internationalized/date"),
+      `${name} must install @internationalized/date`,
+    );
+  }
+});
+
 test("groups link the item they group", () => {
   assert.ok(
     createItem("button-group", sources).registryDependencies.includes(
@@ -534,7 +551,7 @@ test("blocks bring the packages their files import", async () => {
 });
 
 test("theme items carry the site themes with vars and @theme mappings", () => {
-  assert.equal(themes.length, 10);
+  assert.equal(themes.length, 13);
   for (const item of themes) {
     assert.deepEqual(
       itemNamed(item.name),
@@ -566,7 +583,7 @@ test("theme items carry the site themes with vars and @theme mappings", () => {
 });
 
 test("color scales install 12 steps for light and dark mode", () => {
-  assert.equal(scales.length, 10);
+  assert.equal(scales.length, 18);
   for (const item of scales) {
     assert.deepEqual(
       itemNamed(item.name),

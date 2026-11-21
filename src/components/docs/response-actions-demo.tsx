@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
 import {
   Response,
@@ -15,9 +14,6 @@ export function ResponseActionsDemo() {
       <ResponseContent>{TEXT}</ResponseContent>
       <ResponseActions>
         <CopyButton value={TEXT} variant="ghost" size="sm" />
-        <Button type="button" variant="ghost" size="sm">
-          Regenerate
-        </Button>
       </ResponseActions>
     </Response>
   );

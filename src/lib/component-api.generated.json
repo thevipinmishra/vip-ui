@@ -347,7 +347,86 @@
       "type": "string"
     }
   },
+  "MenuTrigger": {
+    "defaultOpen": {
+      "type": "boolean"
+    },
+    "isOpen": {
+      "type": "boolean"
+    },
+    "onOpenChange": {
+      "type": "(isOpen: boolean) => void"
+    }
+  },
+  "Menu": {},
+  "MenuPopover": {
+    "placement": {
+      "type": "\"bottom\" | \"bottom left\" | \"bottom right\" | \"bottom start\" | \"bottom end\" | \"top\" | \"top left\" | \"top right\" | \"top start\" | \"top end\" | \"left\" | \"left top\" | \"left bottom\" | \"start\" | \"start top\" | \"start bottom\" | \"right\" | \"right top\" | \"right bottom\" | \"end\" | \"end top\" | \"end bottom\""
+    },
+    "offset": {
+      "type": "number"
+    },
+    "crossOffset": {
+      "type": "number"
+    },
+    "maxHeight": {
+      "type": "number"
+    }
+  },
+  "MenuContent": {
+    "aria-label": {
+      "type": "string"
+    },
+    "items": {
+      "type": "Iterable"
+    },
+    "disabledKeys": {
+      "type": "Iterable<Key>"
+    },
+    "onAction": {
+      "type": "(key: Key, value: T) => void"
+    },
+    "selectionMode": {
+      "type": "\"none\" | \"single\" | \"multiple\""
+    },
+    "defaultSelectedKeys": {
+      "type": "\"all\" | Iterable<Key>"
+    },
+    "selectedKeys": {
+      "type": "\"all\" | Iterable<Key>"
+    },
+    "onSelectionChange": {
+      "type": "(keys: Selection) => void"
+    },
+    "disallowEmptySelection": {
+      "type": "boolean"
+    },
+    "shouldCloseOnSelect": {
+      "type": "boolean"
+    },
+    "renderEmptyState": {
+      "type": "() => ReactNode"
+    }
+  },
   "MenuItem": {
+    "id": {
+      "type": "Key"
+    },
+    "href": {
+      "type": "Href"
+    },
+    "onAction": {
+      "type": "() => void"
+    },
+    "isDisabled": {
+      "type": "boolean"
+    },
+    "textValue": {
+      "type": "string"
+    },
+    "shouldCloseOnSelect": {
+      "type": "boolean"
+    },
     "variant": {
       "type": "\"default\" | \"destructive\"",
       "default": "\"default\""
@@ -356,8 +435,23 @@
   "MenuSection": {
     "title": {
       "type": "string"
+    },
+    "items": {
+      "type": "Iterable"
+    },
+    "selectionMode": {
+      "type": "\"none\" | \"single\" | \"multiple\""
+    },
+    "shouldCloseOnSelect": {
+      "type": "boolean"
     }
   },
+  "SubmenuTrigger": {
+    "delay": {
+      "type": "number"
+    }
+  },
+  "MenuSeparator": {},
   "AgentSteps": {
     "status": {
       "type": "\"running\" | \"complete\" | \"stopped\" | \"error\"",

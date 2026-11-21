@@ -1,10 +1,9 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { CodeFrame } from "@/components/docs/code-frame";
-import { CodeSnippet } from "@/components/docs/code-snippet";
 import { PackageManagerCommand } from "@/components/docs/package-manager-command";
 import { registryUrl } from "@/lib/registry-docs";
-import { type Theme, themeCss } from "./themes";
+import { ThemeCssCode } from "./theme-css";
+import type { Theme } from "./themes";
 
 export function Step({
   number,
@@ -40,7 +39,6 @@ export const textLink =
   "font-medium text-foreground underline underline-offset-4";
 
 export function ThemeInstall({ theme }: { theme: Theme }) {
-  const css = themeCss(theme);
   const cliUrl = registryUrl(`theme-${theme.slug}`);
 
   return (
@@ -79,14 +77,7 @@ export function ThemeInstall({ theme }: { theme: Theme }) {
           <code className={inlineCode}>bg-success</code> work after the CLI
           install, or after you install one vip/ui component.
         </p>
-        <CodeFrame
-          code={css}
-          filename="globals.css"
-          copyText="Copy CSS"
-          previewCode
-        >
-          <CodeSnippet code={css} language="css" />
-        </CodeFrame>
+        <ThemeCssCode slug={theme.slug} />
       </Step>
       <Step number={3} title="Check the details">
         <ul className="grid list-disc gap-2 pl-5 marker:text-border">
@@ -98,8 +89,15 @@ export function ThemeInstall({ theme }: { theme: Theme }) {
             . The Tokens tab shows the step for each token.
           </li>
           <li>
-            The theme sets colors only. Your fonts, radius, and shadows do not
-            change.
+            The CLI installs the theme with its default settings. The CSS also
+            has your radius and focus ring changes.
+          </li>
+          <li>
+            The theme does not change your fonts. To load a font, see{" "}
+            <Link href="/typography" className={textLink}>
+              Typography
+            </Link>
+            .
           </li>
           <li>
             Dark mode uses the <code className={inlineCode}>.dark</code> class,

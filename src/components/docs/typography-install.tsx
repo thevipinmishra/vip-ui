@@ -30,7 +30,6 @@ export async function TypographyInstall() {
             <PackageManagerCommand
               action="run"
               args={`shadcn@latest add ${cliUrl}`}
-              wrap
             />
           ) : (
             <p className={note}>

@@ -439,7 +439,7 @@ function PayoutScene({ className }: { className?: string }) {
     <Card className={cn("flex min-w-0 flex-col", payoutSurface, className)}>
       <CardHeader>
         <CardTitle>Next payout</CardTitle>
-        <CardDescription className="text-(--payout-text)/75">
+        <CardDescription className="text-(--payout-text) dark:text-(--payout-text)/75">
           Thursday, Oct 15 to Chase •• 4821
         </CardDescription>
       </CardHeader>
@@ -462,7 +462,7 @@ function PayoutScene({ className }: { className?: string }) {
         </div>
       </CardContent>
       <CardFooter className="justify-between">
-        <span className="text-sm text-(--payout-text)/75">
+        <span className="text-sm text-(--payout-text) dark:text-(--payout-text)/75">
           Paid out every Thursday
         </span>
         <Button

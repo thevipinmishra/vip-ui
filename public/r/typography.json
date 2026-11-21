@@ -225,6 +225,9 @@
         "line-height": "calc(var(--typography-leading) * 0.85)",
         "color": "var(--muted-foreground)"
       },
+      ":where(.typography) :where(blockquote + figcaption):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "padding-inline-start": "calc(1em / 0.875 + 2px)"
+      },
       ":where(.typography) :where(details):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
         "border": "1px solid var(--border)",
         "border-radius": "var(--radius)",
@@ -275,12 +278,28 @@
         "list-style-type": "none"
       },
       ":where(.typography) :where(.task-list-item > input[type=\"checkbox\"]:first-child, .task-list-item > p:first-child > input[type=\"checkbox\"]:first-child):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "appearance": "none",
+        "display": "inline-grid",
+        "place-content": "center",
         "margin-block": "0",
         "margin-inline": "-1.375em 0.375em",
+        "border": "1px solid color-mix(in oklab, var(--muted-foreground) 75%, transparent)",
+        "border-radius": "calc(var(--radius) * 0.4)",
         "width": "1em",
         "height": "1em",
         "vertical-align": "-0.125em",
-        "accent-color": "var(--primary)"
+        "color": "var(--primary-foreground)"
+      },
+      ":where(.typography) :where(.task-list-item > input[type=\"checkbox\"]:first-child:checked, .task-list-item > p:first-child > input[type=\"checkbox\"]:first-child:checked):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "border-color": "var(--primary)",
+        "background-color": "var(--primary)"
+      },
+      ":where(.typography) :where(.task-list-item > input[type=\"checkbox\"]:first-child:checked, .task-list-item > p:first-child > input[type=\"checkbox\"]:first-child:checked):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))::before": {
+        "content": "\"\"",
+        "width": "0.625em",
+        "height": "0.625em",
+        "background-color": "currentColor",
+        "clip-path": "polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0, 43% 62%)"
       },
       ":where(.typography) :where(dt):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
         "font-weight": "600"
@@ -305,8 +324,10 @@
         "padding-inline-start": "1em"
       },
       ":where(.typography) :where(th):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
-        "text-align": "start",
         "font-weight": "600"
+      },
+      ":where(.typography) :where(th:not([align])):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "text-align": "start"
       },
       ":where(.typography) :where(:is(th, td):not(thead *)):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
         "vertical-align": "top"
@@ -354,6 +375,9 @@
         "color": "var(--success-foreground)",
         "box-shadow": "inset 0 0 0 1px color-mix(in oklab, var(--success) 20%, transparent), var(--shadow-card, 0 0 #0000)"
       },
+      ":where(.typography) :where(.markdown-alert-important):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+        "box-shadow": "inset 0 0 0 1px color-mix(in oklab, var(--primary) 40%, transparent), var(--shadow-card, 0 0 #0000)"
+      },
       ":where(.typography) :where(.markdown-alert-warning):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
         "background-color": "var(--warning-subtle)",
         "color": "var(--warning-foreground)",
@@ -379,6 +403,9 @@
       "@media (forced-colors: active)": {
         ":where(.typography) :where(.markdown-alert, kbd):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
           "border": "1px solid"
+        },
+        ":where(.typography) :where(.task-list-item input[type=\"checkbox\"]):not(:where(.not-typography, .not-typography *, [data-not-typography], [data-not-typography] *))": {
+          "appearance": "auto"
         }
       }
     }

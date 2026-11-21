@@ -593,11 +593,6 @@
 .docs-code-block[data-language="bash"] .th-code {
   padding-inline: 1.25rem;
 }
-[data-code-wrap] .docs-code-block .th-code {
-  min-width: 0;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-}
 .docs-code-block ::selection {
   background: var(--accent);
   color: var(--accent-foreground);

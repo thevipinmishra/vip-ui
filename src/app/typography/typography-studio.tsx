@@ -56,7 +56,7 @@ const codeSticky =
   "min-[87.5rem]:sticky min-[87.5rem]:top-[calc(var(--header-height)+1rem)] min-[87.5rem]:max-h-[calc(100dvh-var(--header-height)-2rem)] min-[87.5rem]:self-start min-[87.5rem]:overflow-y-auto min-[87.5rem]:overscroll-contain";
 const detailClass =
   "text-muted-foreground tabular-nums group-selected/item:text-accent-foreground";
-const sampleIds = ["docs", "chat", "article"] as const;
+const sampleIds = ["docs", "chat", "article", "changelog"] as const;
 const textGroups = [
   { title: "Sans serif", fonts: textFonts.filter((f) => f.kind === "sans") },
   { title: "Serif", fonts: textFonts.filter((f) => f.kind === "serif") },
@@ -417,6 +417,7 @@ export function TypographyStudio({
           <Tab id="docs">Docs</Tab>
           <Tab id="chat">Chat</Tab>
           <Tab id="article">Article</Tab>
+          <Tab id="changelog">Changelog</Tab>
         </TabList>
         {sampleIds.map((id) => (
           <TabPanel key={id} id={id} className={panelClass}>
@@ -427,7 +428,7 @@ export function TypographyStudio({
                 className={
                   id === "chat"
                     ? "mx-auto w-full max-w-2xl min-w-0"
-                    : "mx-auto w-fit max-w-full min-w-0"
+                    : "min-w-0 *:mx-auto"
                 }
               >
                 {samples[id]}
@@ -450,7 +451,7 @@ export function TypographyStudio({
             {install}
           </Step>
           <Step number={2} title="Load the fonts">
-            <CodeFrame code={fonts} filename="app/layout.tsx" previewCode wrap>
+            <CodeFrame code={fonts} filename="app/layout.tsx" previewCode>
               <CodeSnippet code={fonts} language="tsx" />
             </CodeFrame>
           </Step>

@@ -1,11 +1,18 @@
 "use client";
 
+import { CheckIcon, XIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { CopyButton } from "@/components/ui/copy-button";
 import { contrast, contrastGrade, toHex } from "@/lib/color";
 import type { PaletteMode } from "@/lib/palettes";
-import type { ColorToken, Theme } from "./themes";
+import {
+  type ColorToken,
+  checkRatio,
+  type Theme,
+  type ThemeCheck,
+  themeChecks,
+} from "./themes";
 
 const pairs: { surface: ColorToken; text: ColorToken; label: string }[] = [
   { surface: "background", text: "foreground", label: "Page" },
@@ -44,6 +51,83 @@ const charts: ColorToken[] = [
 
 const swatch =
   "shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--foreground)_8%,transparent)]";
+
+const checkGroups = Object.values(
+  Object.groupBy(themeChecks, (check) => check.label),
+) as ThemeCheck[][];
+
+function tokenList(tokens: ColorToken[]) {
+  const unique = [...new Set(tokens)];
+  return unique.length > 2 &&
+    unique.every((token) => token.startsWith("chart-"))
+    ? `${unique[0]} to ${unique[unique.length - 1]}`
+    : unique.join(", ");
+}
+
+function ContrastChecks({ theme, mode }: { theme: Theme; mode: PaletteMode }) {
+  return (
+    <div className="overflow-x-auto rounded-xl bg-card ring-1 ring-border/70">
+      <table className="w-full min-w-[34rem] text-start text-sm">
+        <thead className="text-xs text-muted-foreground">
+          <tr className="border-b border-border/70">
+            <th scope="col" className="px-4 py-2.5 text-start font-medium">
+              Check
+            </th>
+            <th scope="col" className="px-4 py-2.5 text-start font-medium">
+              Tokens
+            </th>
+            <th scope="col" className="px-4 py-2.5 text-end font-medium">
+              Minimum
+            </th>
+            <th scope="col" className="px-4 py-2.5 text-end font-medium">
+              Lowest
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {checkGroups.map((group) => {
+            const lowest = Math.min(
+              ...group.map((check) => checkRatio(theme, mode, check)),
+            );
+            const pass = lowest >= group[0].minimum;
+            return (
+              <tr
+                key={group[0].label}
+                className="border-b border-border/70 last:border-b-0"
+              >
+                <th scope="row" className="px-4 py-2.5 text-start font-medium">
+                  {group[0].label}
+                </th>
+                <td className="px-4 py-2.5 font-mono text-xs text-muted-foreground">
+                  {tokenList(group.map((check) => check.foreground))} on{" "}
+                  {tokenList(group.map((check) => check.background))}
+                </td>
+                <td className="px-4 py-2.5 text-end tabular-nums text-muted-foreground">
+                  {group[0].minimum}:1
+                </td>
+                <td className="px-4 py-2.5 text-end">
+                  <span
+                    className={`inline-flex items-center gap-1.5 font-medium tabular-nums ${pass ? "text-success-foreground" : "text-destructive"}`}
+                  >
+                    {pass ? (
+                      <CheckIcon size={14} weight="bold" aria-hidden="true" />
+                    ) : (
+                      <XIcon size={14} weight="bold" aria-hidden="true" />
+                    )}
+                    {lowest.toFixed(2)}:1
+                    <span className="sr-only">
+                      {pass ? ", pass" : ", fail"}
+                    </span>
+                  </span>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
 
 function Section({
   title,
@@ -160,6 +244,13 @@ export function ThemeTokens({
             </div>
           ))}
         </div>
+      </Section>
+
+      <Section
+        title="Contrast checks"
+        description={`The lowest ratio for each check, in ${mode} mode. Text needs 4.5:1. Rings, controls, icons, and chart series need 3:1.`}
+      >
+        <ContrastChecks theme={theme} mode={mode} />
       </Section>
 
       <Section

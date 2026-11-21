@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "indigo",
+  "type": "registry:theme",
+  "title": "Indigo",
+  "description": "A deep blue for brands and primary actions.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["colors"],
+  "docs": "The scale adds --indigo-1 to --indigo-12 for light and dark mode. Classes such as bg-indigo-3 work after the install.",
+  "dependencies": [],
+  "files": [],
+  "cssVars": {
+    "theme": {
+      "color-indigo-1": "var(--indigo-1)",
+      "color-indigo-2": "var(--indigo-2)",
+      "color-indigo-3": "var(--indigo-3)",
+      "color-indigo-4": "var(--indigo-4)",
+      "color-indigo-5": "var(--indigo-5)",
+      "color-indigo-6": "var(--indigo-6)",
+      "color-indigo-7": "var(--indigo-7)",
+      "color-indigo-8": "var(--indigo-8)",
+      "color-indigo-9": "var(--indigo-9)",
+      "color-indigo-10": "var(--indigo-10)",
+      "color-indigo-11": "var(--indigo-11)",
+      "color-indigo-12": "var(--indigo-12)"
+    },
+    "light": {
+      "indigo-1": "oklch(0.987 0.010 277)",
+      "indigo-2": "oklch(0.969 0.018 277)",
+      "indigo-3": "oklch(0.944 0.030 277)",
+      "indigo-4": "oklch(0.919 0.042 277)",
+      "indigo-5": "oklch(0.894 0.054 277)",
+      "indigo-6": "oklch(0.866 0.070 277)",
+      "indigo-7": "oklch(0.820 0.096 277)",
+      "indigo-8": "oklch(0.755 0.132 277)",
+      "indigo-9": "oklch(0.559 0.200 277)",
+      "indigo-10": "oklch(0.524 0.196 277)",
+      "indigo-11": "oklch(0.505 0.124 277)",
+      "indigo-12": "oklch(0.285 0.060 277)"
+    },
+    "dark": {
+      "indigo-1": "oklch(0.185 0.036 277)",
+      "indigo-2": "oklch(0.215 0.050 277)",
+      "indigo-3": "oklch(0.243 0.064 277)",
+      "indigo-4": "oklch(0.268 0.076 277)",
+      "indigo-5": "oklch(0.293 0.086 277)",
+      "indigo-6": "oklch(0.322 0.096 277)",
+      "indigo-7": "oklch(0.365 0.112 277)",
+      "indigo-8": "oklch(0.430 0.136 277)",
+      "indigo-9": "oklch(0.700 0.200 277)",
+      "indigo-10": "oklch(0.740 0.194 277)",
+      "indigo-11": "oklch(0.735 0.136 277)",
+      "indigo-12": "oklch(0.930 0.056 277)"
+    }
+  }
+}

@@ -25,6 +25,11 @@ export function DatePickerSizesDemo() {
         aria-label="Appointment date"
         defaultValue={parseDate("2026-06-15")}
       />
+      <DatePicker
+        size="xl"
+        aria-label="Appointment date"
+        defaultValue={parseDate("2026-06-15")}
+      />
     </div>
   );
 }

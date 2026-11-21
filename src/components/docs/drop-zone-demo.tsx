@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { DropItem, FileDropItem } from "react-aria-components";
 import {
   DropZone,
@@ -13,7 +13,15 @@ import {
 const acceptedTypes = ["image/png", "image/jpeg", "application/pdf"];
 
 export function DropZoneDemo() {
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<{ id: number; name: string }[]>([]);
+  const nextId = useRef(0);
+
+  function addFiles(added: File[]) {
+    const accepted = added
+      .filter((file) => acceptedTypes.includes(file.type))
+      .map((file) => ({ id: nextId.current++, name: file.name }));
+    if (accepted.length) setFiles((current) => [...current, ...accepted]);
+  }
 
   return (
     <div className="grid w-full max-w-md gap-3">
@@ -25,12 +33,11 @@ export function DropZoneDemo() {
           const dropped = await Promise.all(
             items
               .filter(
-                (item: DropItem): item is FileDropItem =>
-                  item.kind === "file" && acceptedTypes.includes(item.type),
+                (item: DropItem): item is FileDropItem => item.kind === "file",
               )
               .map((item) => item.getFile()),
           );
-          setFiles((current) => [...current, ...dropped]);
+          addFiles(dropped);
         }}
       >
         <DropZoneIcon />
@@ -40,8 +47,7 @@ export function DropZoneDemo() {
           acceptedFileTypes={acceptedTypes}
           allowsMultiple
           onSelect={(selected) => {
-            if (selected)
-              setFiles((current) => [...current, ...Array.from(selected)]);
+            if (selected) addFiles(Array.from(selected));
           }}
         >
           Browse files
@@ -51,9 +57,8 @@ export function DropZoneDemo() {
         aria-live="polite"
         className="grid gap-1 text-sm text-muted-foreground"
       >
-        {files.map((file, index) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: duplicate file names need the position to stay unique
-          <li key={`${file.name}-${index}`} className="truncate">
+        {files.map((file) => (
+          <li key={file.id} className="truncate">
             {file.name}
           </li>
         ))}

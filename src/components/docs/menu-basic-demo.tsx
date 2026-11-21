@@ -7,10 +7,9 @@ export function MenuBasicDemo() {
   return (
     <MenuTrigger>
       <Button variant="outline">Open menu</Button>
-      <Menu aria-label="Actions">
-        <MenuItem>Edit</MenuItem>
-        <MenuItem>Duplicate</MenuItem>
-        <MenuItem>Delete</MenuItem>
+      <Menu aria-label="Documentation">
+        <MenuItem href="/components/button">Button</MenuItem>
+        <MenuItem href="/components/popover">Popover</MenuItem>
       </Menu>
     </MenuTrigger>
   );

@@ -9,6 +9,7 @@ export function ColorFieldSizesDemo() {
       <ColorField size="sm" aria-label="Accent color" defaultValue="#4567d4" />
       <ColorField aria-label="Accent color" defaultValue="#4567d4" />
       <ColorField size="lg" aria-label="Accent color" defaultValue="#4567d4" />
+      <ColorField size="xl" aria-label="Accent color" defaultValue="#4567d4" />
     </div>
   );
 }

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sand",
+  "type": "registry:theme",
+  "title": "Sand",
+  "description": "A warm neutral. Pair it with Orange, Bronze, and Gold.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["colors"],
+  "docs": "The scale adds --sand-1 to --sand-12 for light and dark mode. Classes such as bg-sand-3 work after the install.",
+  "dependencies": [],
+  "files": [],
+  "cssVars": {
+    "theme": {
+      "color-sand-1": "var(--sand-1)",
+      "color-sand-2": "var(--sand-2)",
+      "color-sand-3": "var(--sand-3)",
+      "color-sand-4": "var(--sand-4)",
+      "color-sand-5": "var(--sand-5)",
+      "color-sand-6": "var(--sand-6)",
+      "color-sand-7": "var(--sand-7)",
+      "color-sand-8": "var(--sand-8)",
+      "color-sand-9": "var(--sand-9)",
+      "color-sand-10": "var(--sand-10)",
+      "color-sand-11": "var(--sand-11)",
+      "color-sand-12": "var(--sand-12)"
+    },
+    "light": {
+      "sand-1": "oklch(0.987 0.002 85)",
+      "sand-2": "oklch(0.969 0.003 85)",
+      "sand-3": "oklch(0.944 0.004 85)",
+      "sand-4": "oklch(0.919 0.004 85)",
+      "sand-5": "oklch(0.894 0.005 85)",
+      "sand-6": "oklch(0.866 0.006 85)",
+      "sand-7": "oklch(0.820 0.008 85)",
+      "sand-8": "oklch(0.755 0.010 85)",
+      "sand-9": "oklch(0.420 0.014 85)",
+      "sand-10": "oklch(0.385 0.014 85)",
+      "sand-11": "oklch(0.505 0.012 85)",
+      "sand-12": "oklch(0.285 0.011 85)"
+    },
+    "dark": {
+      "sand-1": "oklch(0.185 0.004 85)",
+      "sand-2": "oklch(0.215 0.005 85)",
+      "sand-3": "oklch(0.243 0.006 85)",
+      "sand-4": "oklch(0.268 0.007 85)",
+      "sand-5": "oklch(0.293 0.008 85)",
+      "sand-6": "oklch(0.322 0.008 85)",
+      "sand-7": "oklch(0.365 0.010 85)",
+      "sand-8": "oklch(0.430 0.011 85)",
+      "sand-9": "oklch(0.700 0.014 85)",
+      "sand-10": "oklch(0.740 0.014 85)",
+      "sand-11": "oklch(0.735 0.011 85)",
+      "sand-12": "oklch(0.930 0.004 85)"
+    }
+  }
+}

@@ -27,6 +27,11 @@ export function DateRangePickerSizesDemo() {
         aria-label="Trip dates"
         defaultValue={tripDates}
       />
+      <DateRangePicker
+        size="xl"
+        aria-label="Trip dates"
+        defaultValue={tripDates}
+      />
     </div>
   );
 }

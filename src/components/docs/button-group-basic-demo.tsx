@@ -7,7 +7,6 @@ export function ButtonGroupBasicDemo() {
   return (
     <ButtonGroup aria-label="Message actions">
       <Button variant="ghost">Archive</Button>
-      <Button variant="ghost">Report</Button>
       <Button variant="ghost">Snooze</Button>
     </ButtonGroup>
   );

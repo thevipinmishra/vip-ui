@@ -65,13 +65,15 @@ export async function GET(
   const usageFilename = pageData?.usage ?? (await findUsageFile(slug));
   const usage = pageUsage
     ? {
-        code: pageUsage.code,
+        ...pageUsage,
         filename: pageUsage.filename ?? `${slug}-usage.tsx`,
+        uses: pageUsage.uses?.map(componentName),
       }
     : usageFilename
       ? {
           code: await readDemoSource(usageFilename),
           filename: path.basename(usageFilename),
+          uses: pageData?.previewUses?.map(componentName),
         }
       : undefined;
 
@@ -83,6 +85,12 @@ export async function GET(
     manual: manualInstallPlan(registryItem, slug),
     cliUrl: registryUrl(slug),
     usage,
+    exampleFile: pageData?.exampleFile
+      ? {
+          filename: pageData.exampleFile,
+          code: await readDemoSource(pageData.exampleFile),
+        }
+      : undefined,
     api: componentApi[slug],
     examples: pageData ? await buildExamples(pageData) : undefined,
     reactAria: component.reactAria,

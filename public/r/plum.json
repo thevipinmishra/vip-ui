@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "plum",
+  "type": "registry:theme",
+  "title": "Plum",
+  "description": "A rich purple for brands and expressive accents.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["colors"],
+  "docs": "The scale adds --plum-1 to --plum-12 for light and dark mode. Classes such as bg-plum-3 work after the install.",
+  "dependencies": [],
+  "files": [],
+  "cssVars": {
+    "theme": {
+      "color-plum-1": "var(--plum-1)",
+      "color-plum-2": "var(--plum-2)",
+      "color-plum-3": "var(--plum-3)",
+      "color-plum-4": "var(--plum-4)",
+      "color-plum-5": "var(--plum-5)",
+      "color-plum-6": "var(--plum-6)",
+      "color-plum-7": "var(--plum-7)",
+      "color-plum-8": "var(--plum-8)",
+      "color-plum-9": "var(--plum-9)",
+      "color-plum-10": "var(--plum-10)",
+      "color-plum-11": "var(--plum-11)",
+      "color-plum-12": "var(--plum-12)"
+    },
+    "light": {
+      "plum-1": "oklch(0.987 0.009 325)",
+      "plum-2": "oklch(0.969 0.016 325)",
+      "plum-3": "oklch(0.944 0.027 325)",
+      "plum-4": "oklch(0.919 0.038 325)",
+      "plum-5": "oklch(0.894 0.049 325)",
+      "plum-6": "oklch(0.866 0.063 325)",
+      "plum-7": "oklch(0.820 0.086 325)",
+      "plum-8": "oklch(0.755 0.119 325)",
+      "plum-9": "oklch(0.566 0.180 325)",
+      "plum-10": "oklch(0.531 0.176 325)",
+      "plum-11": "oklch(0.505 0.112 325)",
+      "plum-12": "oklch(0.285 0.054 325)"
+    },
+    "dark": {
+      "plum-1": "oklch(0.185 0.032 325)",
+      "plum-2": "oklch(0.215 0.045 325)",
+      "plum-3": "oklch(0.243 0.058 325)",
+      "plum-4": "oklch(0.268 0.068 325)",
+      "plum-5": "oklch(0.293 0.077 325)",
+      "plum-6": "oklch(0.322 0.086 325)",
+      "plum-7": "oklch(0.365 0.101 325)",
+      "plum-8": "oklch(0.430 0.122 325)",
+      "plum-9": "oklch(0.700 0.180 325)",
+      "plum-10": "oklch(0.740 0.175 325)",
+      "plum-11": "oklch(0.735 0.122 325)",
+      "plum-12": "oklch(0.930 0.050 325)"
+    }
+  }
+}

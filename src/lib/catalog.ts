@@ -65,7 +65,6 @@ const reactAriaDocs: Record<string, string> = {
   tree: "https://react-aria.adobe.com/Tree",
   "drop-zone": "https://react-aria.adobe.com/DropZone",
   table: "https://react-aria.adobe.com/Table",
-  "data-table": "https://react-aria.adobe.com/Table",
 };
 
 const zagMachines: Record<string, { name: string; machine: string }> = {
@@ -92,7 +91,9 @@ export interface Primitive {
 
 function primitives(slug: string): Primitive[] {
   const zag = zagMachines[slug];
-  const reactAria = reactAriaLink(reactAriaDocs[slug]);
+  const reactAria = reactAriaLink(
+    slug === "data-table" ? reactAriaDocs.table : reactAriaDocs[slug],
+  );
   return [
     ...(zag
       ? [

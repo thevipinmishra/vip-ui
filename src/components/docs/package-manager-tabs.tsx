@@ -52,11 +52,9 @@ function selectManager(manager: PackageManager) {
 export function PackageManagerTabs({
   commands,
   children,
-  wrap,
 }: {
   commands: Record<PackageManager, string>;
   children: ReactNode[];
-  wrap?: boolean;
 }) {
   const selected = useSyncExternalStore(
     subscribe,
@@ -77,7 +75,6 @@ export function PackageManagerTabs({
           code={commands[selected]}
           filename=""
           codeLabel={`${selected} command`}
-          wrap={wrap}
           header={
             <AriaTabList
               aria-label="Package manager"

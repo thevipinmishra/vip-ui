@@ -113,20 +113,22 @@ export function ToolCallTrigger({
         <span className="flex min-w-0 items-start gap-2.5">
           <ToolCallIcon status={status} />
           <span className="flex min-w-0 flex-1 flex-wrap items-baseline gap-x-2">
-            <span
-              data-slot="tool-call-name"
-              className="min-w-0 text-start font-mono text-xs font-medium leading-5 text-foreground wrap-anywhere"
-            >
-              {name}
-            </span>
-            {summary && (
+            <span className="flex min-w-0 flex-[1_1_5rem] flex-wrap items-baseline gap-x-2">
               <span
-                data-slot="tool-call-summary"
-                className="min-w-0 flex-[1_1_8rem] text-start text-xs font-normal leading-5 text-muted-foreground wrap-anywhere"
+                data-slot="tool-call-name"
+                className="min-w-0 text-start font-mono text-xs font-medium leading-5 text-foreground wrap-anywhere"
               >
-                {summary}
+                {name}
               </span>
-            )}
+              {summary && (
+                <span
+                  data-slot="tool-call-summary"
+                  className="min-w-0 flex-[1_1_8rem] text-start text-xs font-normal leading-5 text-muted-foreground wrap-anywhere"
+                >
+                  {summary}
+                </span>
+              )}
+            </span>
             <span
               data-slot="tool-call-status"
               className="ms-auto inline-grid text-xs font-normal leading-5 text-muted-foreground *:col-start-1 *:row-start-1"

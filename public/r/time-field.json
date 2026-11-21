@@ -7,6 +7,7 @@
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["date-color"],
   "dependencies": [
+    "@internationalized/date@^3.12.4",
     "react-aria-components@^1.22.1",
     "tailwindcss-react-aria-components@^2.2.0"
   ],

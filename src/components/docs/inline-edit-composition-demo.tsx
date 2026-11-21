@@ -14,7 +14,8 @@ import {
   InlineEditSubmitTrigger,
   useInlineEdit,
 } from "@/components/ui/inline-edit";
-import { cn } from "@/lib/utils";
+
+const editHint = "Double-click the name or select Edit.";
 
 function CompositionStatus({ message }: { message: string }) {
   const { api, error, errorId } = useInlineEdit();
@@ -23,10 +24,7 @@ function CompositionStatus({ message }: { message: string }) {
     <p
       id={errorId}
       role={showsError ? "alert" : undefined}
-      className={cn(
-        "text-xs leading-5",
-        showsError ? "text-destructive" : "text-muted-foreground",
-      )}
+      className={`text-xs leading-5 ${showsError ? "text-destructive" : "text-muted-foreground"}`}
     >
       {showsError ? error : message}
     </p>
@@ -35,7 +33,7 @@ function CompositionStatus({ message }: { message: string }) {
 
 export function InlineEditCompositionDemo() {
   const [name, setName] = useState("Atlas");
-  const [status, setStatus] = useState("Double-click the name to edit it.");
+  const [status, setStatus] = useState(editHint);
 
   return (
     <div className="w-full max-w-sm rounded-xl border border-border bg-card p-4 shadow-(--shadow-card)">
@@ -43,13 +41,14 @@ export function InlineEditCompositionDemo() {
         label="Project name"
         value={name}
         activationMode="dblclick"
-        onSave={async (next) => {
+        onSave={(next) => {
           if (!next.trim()) throw new Error("Add a project name.");
           setName(next.trim());
         }}
-        onEditChange={({ edit }) =>
-          setStatus(edit ? "Editing the project name." : "Name saved.")
-        }
+        onEditChange={({ edit }) => {
+          if (edit) setStatus(editHint);
+        }}
+        onValueCommit={() => setStatus("Name saved.")}
       >
         <InlineEditLabel>Project name</InlineEditLabel>
         <InlineEditArea className="flex min-w-0 items-center gap-2">
@@ -59,7 +58,9 @@ export function InlineEditCompositionDemo() {
         <InlineEditContext>
           {(api) => (
             <div className="flex min-h-9 items-center justify-between gap-3">
-              <CompositionStatus message={status} />
+              <CompositionStatus
+                message={api.editing ? "Editing the project name." : status}
+              />
               {api.editing ? (
                 <InlineEditControl className="min-h-0 w-auto gap-1 border-0 bg-transparent p-0 shadow-none">
                   <InlineEditCancelTrigger />
