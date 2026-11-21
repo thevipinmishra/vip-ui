@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sage",
+  "type": "registry:theme",
+  "title": "Sage",
+  "description": "A green neutral. Pair it with Green and Teal.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["colors"],
+  "docs": "The scale adds --sage-1 to --sage-12 for light and dark mode. Classes such as bg-sage-3 work after the install.",
+  "dependencies": [],
+  "files": [],
+  "cssVars": {
+    "theme": {
+      "color-sage-1": "var(--sage-1)",
+      "color-sage-2": "var(--sage-2)",
+      "color-sage-3": "var(--sage-3)",
+      "color-sage-4": "var(--sage-4)",
+      "color-sage-5": "var(--sage-5)",
+      "color-sage-6": "var(--sage-6)",
+      "color-sage-7": "var(--sage-7)",
+      "color-sage-8": "var(--sage-8)",
+      "color-sage-9": "var(--sage-9)",
+      "color-sage-10": "var(--sage-10)",
+      "color-sage-11": "var(--sage-11)",
+      "color-sage-12": "var(--sage-12)"
+    },
+    "light": {
+      "sage-1": "oklch(0.987 0.002 165)",
+      "sage-2": "oklch(0.969 0.003 165)",
+      "sage-3": "oklch(0.944 0.004 165)",
+      "sage-4": "oklch(0.919 0.005 165)",
+      "sage-5": "oklch(0.894 0.006 165)",
+      "sage-6": "oklch(0.866 0.007 165)",
+      "sage-7": "oklch(0.820 0.009 165)",
+      "sage-8": "oklch(0.755 0.011 165)",
+      "sage-9": "oklch(0.420 0.016 165)",
+      "sage-10": "oklch(0.385 0.016 165)",
+      "sage-11": "oklch(0.505 0.014 165)",
+      "sage-12": "oklch(0.285 0.012 165)"
+    },
+    "dark": {
+      "sage-1": "oklch(0.185 0.005 165)",
+      "sage-2": "oklch(0.215 0.006 165)",
+      "sage-3": "oklch(0.243 0.007 165)",
+      "sage-4": "oklch(0.268 0.008 165)",
+      "sage-5": "oklch(0.293 0.009 165)",
+      "sage-6": "oklch(0.322 0.010 165)",
+      "sage-7": "oklch(0.365 0.011 165)",
+      "sage-8": "oklch(0.430 0.012 165)",
+      "sage-9": "oklch(0.700 0.016 165)",
+      "sage-10": "oklch(0.740 0.016 165)",
+      "sage-11": "oklch(0.735 0.012 165)",
+      "sage-12": "oklch(0.930 0.004 165)"
+    }
+  }
+}

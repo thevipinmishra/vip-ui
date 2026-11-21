@@ -117,14 +117,22 @@ const lightChromaCurve = [
 const darkChromaCurve = [
   0.18, 0.25, 0.32, 0.38, 0.43, 0.48, 0.56, 0.68, 1, 0.97, 0.68, 0.28,
 ];
+const neutralLightCurve = [
+  0.15, 0.2, 0.26, 0.32, 0.38, 0.45, 0.55, 0.68, 1, 1, 0.85, 0.75,
+];
+const neutralDarkCurve = [
+  0.3, 0.36, 0.42, 0.48, 0.54, 0.6, 0.68, 0.78, 1, 1, 0.75, 0.25,
+];
 
 const gamutMargin = 0.985;
 const solidDarkL = 0.7;
+const pageLight = { l: 0.969, c: 0, h: 0 };
 
 const definitions = [
   {
     slug: "gray",
     name: "Gray",
+    kind: "neutral",
     hue: 0,
     solidC: 0,
     solidLightL: 0.42,
@@ -132,8 +140,45 @@ const definitions = [
       "Surfaces, borders, and text. It has no chroma, so it does not tint other hues.",
   },
   {
+    slug: "slate",
+    name: "Slate",
+    kind: "neutral",
+    hue: 257,
+    solidC: 0.02,
+    solidLightL: 0.42,
+    description: "A cool neutral. Pair it with Blue, Indigo, and Cyan.",
+  },
+  {
+    slug: "sage",
+    name: "Sage",
+    kind: "neutral",
+    hue: 165,
+    solidC: 0.016,
+    solidLightL: 0.42,
+    description: "A green neutral. Pair it with Green and Teal.",
+  },
+  {
+    slug: "mauve",
+    name: "Mauve",
+    kind: "neutral",
+    hue: 305,
+    solidC: 0.018,
+    solidLightL: 0.42,
+    description: "A purple neutral. Pair it with Red, Violet, Plum, and Pink.",
+  },
+  {
+    slug: "sand",
+    name: "Sand",
+    kind: "neutral",
+    hue: 85,
+    solidC: 0.014,
+    solidLightL: 0.42,
+    description: "A warm neutral. Pair it with Orange, Bronze, and Gold.",
+  },
+  {
     slug: "red",
     name: "Red",
+    neutral: "mauve",
     hue: 27,
     solidC: 0.19,
     description: "Errors and destructive actions.",
@@ -141,6 +186,7 @@ const definitions = [
   {
     slug: "orange",
     name: "Orange",
+    neutral: "sand",
     hue: 58,
     solidC: 0.17,
     description: "Warnings and urgent accents that must not look like errors.",
@@ -148,6 +194,7 @@ const definitions = [
   {
     slug: "yellow",
     name: "Yellow",
+    neutral: "sand",
     hue: 92,
     solidC: 0.16,
     solidLightL: 0.8,
@@ -161,6 +208,7 @@ const definitions = [
   {
     slug: "green",
     name: "Green",
+    neutral: "sage",
     hue: 152,
     solidC: 0.16,
     description: "Success and confirmation.",
@@ -168,6 +216,7 @@ const definitions = [
   {
     slug: "teal",
     name: "Teal",
+    neutral: "sage",
     hue: 178,
     solidC: 0.14,
     description: "Calm accents and data.",
@@ -175,6 +224,7 @@ const definitions = [
   {
     slug: "cyan",
     name: "Cyan",
+    neutral: "slate",
     hue: 205,
     solidC: 0.13,
     description: "Cool accents and information.",
@@ -182,31 +232,74 @@ const definitions = [
   {
     slug: "blue",
     name: "Blue",
+    neutral: "slate",
     hue: 258,
     solidC: 0.18,
     description: "Links, focus, and primary actions.",
   },
   {
+    slug: "indigo",
+    name: "Indigo",
+    neutral: "slate",
+    hue: 277,
+    solidC: 0.2,
+    description: "A deep blue for brands and primary actions.",
+  },
+  {
     slug: "violet",
     name: "Violet",
+    neutral: "mauve",
     hue: 297,
     solidC: 0.19,
     description: "Accents and categories that must look different from blue.",
   },
   {
+    slug: "plum",
+    name: "Plum",
+    neutral: "mauve",
+    hue: 325,
+    solidC: 0.18,
+    description: "A rich purple for brands and expressive accents.",
+  },
+  {
     slug: "pink",
     name: "Pink",
+    neutral: "mauve",
     hue: 348,
     solidC: 0.2,
     description: "Tags, highlights, and expressive accents.",
+  },
+  {
+    slug: "bronze",
+    name: "Bronze",
+    neutral: "sand",
+    hue: 42,
+    solidC: 0.07,
+    description: "A muted metal for calm, refined brands.",
+  },
+  {
+    slug: "gold",
+    name: "Gold",
+    neutral: "sand",
+    hue: 82,
+    solidC: 0.085,
+    description: "A muted metal. Use it in place of Yellow for solid fills.",
   },
 ];
 
 function whiteTextSolidL(hue, solidC) {
   let l = 0.62;
   while (l > 0.4) {
-    const c = Math.min(solidC, maxChroma(l, hue) * gamutMargin);
-    if (contrast({ l: 0.987, c: 0, h: 0 }, { l, c, h: hue }) >= 4.6) break;
+    const solid = {
+      l,
+      c: Math.min(solidC, maxChroma(l, hue) * gamutMargin),
+      h: hue,
+    };
+    if (
+      contrast({ l: 0.987, c: 0, h: 0 }, solid) >= 4.6 &&
+      contrast(solid, pageLight) >= 4.55
+    )
+      break;
     l -= 0.001;
   }
   return Math.round(l * 1000) / 1000;
@@ -232,14 +325,14 @@ for (const definition of definitions) {
     (definition.lightLadder ?? lightLadder).map((l, index) =>
       l === null ? (index === 8 ? solidLightL : solidLightL - 0.035) : l,
     ),
-    lightChromaCurve,
+    definition.kind === "neutral" ? neutralLightCurve : lightChromaCurve,
   );
   const dark = buildRamp(
     definition,
     darkLadder.map((l, index) =>
       l === null ? (index === 8 ? solidDarkL : solidDarkL + 0.04) : l,
     ),
-    darkChromaCurve,
+    definition.kind === "neutral" ? neutralDarkCurve : darkChromaCurve,
   );
 
   const lightSolidText =
@@ -271,6 +364,9 @@ for (const definition of definitions) {
       darkSolidText ? contrast(dark[darkSolidText - 1], dark[8]) : 0,
       4.5,
     ],
+    ...(lightSolidText === 1
+      ? [["light solid 9 on 2", contrast(light[8], light[1]), 4.5]]
+      : []),
   ];
 
   for (const [label, ratio, floor] of checks) {
@@ -327,6 +423,8 @@ if (failures.length > 0) {
     slug: "${definition.slug}",
     name: "${definition.name}",
     description: "${definition.description}",
+    kind: "${definition.kind ?? "accent"}",
+    neutral: "${definition.neutral ?? definition.slug}",
     solidText: { light: ${lightSolidText}, dark: ${darkSolidText} },
     light: [
 ${light.map((color) => `      "${format(color)}",`).join("\n")}

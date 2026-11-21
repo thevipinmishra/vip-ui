@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bronze",
+  "type": "registry:theme",
+  "title": "Bronze",
+  "description": "A muted metal for calm, refined brands.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["colors"],
+  "docs": "The scale adds --bronze-1 to --bronze-12 for light and dark mode. Classes such as bg-bronze-3 work after the install.",
+  "dependencies": [],
+  "files": [],
+  "cssVars": {
+    "theme": {
+      "color-bronze-1": "var(--bronze-1)",
+      "color-bronze-2": "var(--bronze-2)",
+      "color-bronze-3": "var(--bronze-3)",
+      "color-bronze-4": "var(--bronze-4)",
+      "color-bronze-5": "var(--bronze-5)",
+      "color-bronze-6": "var(--bronze-6)",
+      "color-bronze-7": "var(--bronze-7)",
+      "color-bronze-8": "var(--bronze-8)",
+      "color-bronze-9": "var(--bronze-9)",
+      "color-bronze-10": "var(--bronze-10)",
+      "color-bronze-11": "var(--bronze-11)",
+      "color-bronze-12": "var(--bronze-12)"
+    },
+    "light": {
+      "bronze-1": "oklch(0.987 0.004 42)",
+      "bronze-2": "oklch(0.969 0.006 42)",
+      "bronze-3": "oklch(0.944 0.011 42)",
+      "bronze-4": "oklch(0.919 0.015 42)",
+      "bronze-5": "oklch(0.894 0.019 42)",
+      "bronze-6": "oklch(0.866 0.025 42)",
+      "bronze-7": "oklch(0.820 0.034 42)",
+      "bronze-8": "oklch(0.755 0.046 42)",
+      "bronze-9": "oklch(0.550 0.070 42)",
+      "bronze-10": "oklch(0.515 0.069 42)",
+      "bronze-11": "oklch(0.505 0.043 42)",
+      "bronze-12": "oklch(0.285 0.021 42)"
+    },
+    "dark": {
+      "bronze-1": "oklch(0.185 0.013 42)",
+      "bronze-2": "oklch(0.215 0.018 42)",
+      "bronze-3": "oklch(0.243 0.022 42)",
+      "bronze-4": "oklch(0.268 0.027 42)",
+      "bronze-5": "oklch(0.293 0.030 42)",
+      "bronze-6": "oklch(0.322 0.034 42)",
+      "bronze-7": "oklch(0.365 0.039 42)",
+      "bronze-8": "oklch(0.430 0.048 42)",
+      "bronze-9": "oklch(0.700 0.070 42)",
+      "bronze-10": "oklch(0.740 0.068 42)",
+      "bronze-11": "oklch(0.735 0.048 42)",
+      "bronze-12": "oklch(0.930 0.020 42)"
+    }
+  }
+}

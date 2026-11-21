@@ -1,6 +1,11 @@
 import { TypographyInstall } from "@/components/docs/typography-install";
 import { pageMetadata } from "@/lib/seo";
-import { ArticleSample, ChatSample, DocsSample } from "./samples";
+import {
+  ArticleSample,
+  ChangelogSample,
+  ChatSample,
+  DocsSample,
+} from "./samples";
 import { TypographyStudio } from "./typography-studio";
 
 export const metadata = pageMetadata({
@@ -18,6 +23,7 @@ export default function TypographyPage() {
         docs: <DocsSample />,
         chat: <ChatSample />,
         article: <ArticleSample />,
+        changelog: <ChangelogSample />,
       }}
       install={<TypographyInstall />}
     />

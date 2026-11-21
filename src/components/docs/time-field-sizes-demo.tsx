@@ -22,6 +22,11 @@ export function TimeFieldSizesDemo() {
         aria-label="Meeting time"
         defaultValue={new Time(9, 30)}
       />
+      <TimeField
+        size="xl"
+        aria-label="Meeting time"
+        defaultValue={new Time(9, 30)}
+      />
     </div>
   );
 }

@@ -15,9 +15,9 @@ export function CalendarControlledDemo() {
   const formatter = new Intl.DateTimeFormat(locale, { dateStyle: "full" });
 
   return (
-    <div className="grid justify-items-center gap-4">
+    <div className="flex w-full max-w-77 flex-col items-center gap-4">
       <Calendar aria-label="Delivery date" value={date} onChange={setDate} />
-      <output className="text-sm text-muted-foreground">
+      <output className="text-center text-sm text-muted-foreground">
         Selected: {formatter.format(date.toDate(getLocalTimeZone()))}
       </output>
     </div>

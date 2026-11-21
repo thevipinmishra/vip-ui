@@ -1,11 +1,13 @@
 "use client";
 
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { SlidersHorizontalIcon } from "@phosphor-icons/react";
+import { type ReactNode, useEffect, useId, useRef, useState } from "react";
 import {
   Radio as AriaRadio,
   RadioGroup as AriaRadioGroup,
 } from "react-aria-components";
 import { flushSync } from "react-dom";
+import type { FontKind } from "@/app/typography/fonts";
 import { CopyCodeButton } from "@/components/docs/copy-code-button";
 import { ModeSwitch } from "@/components/docs/mode-switch";
 import {
@@ -14,9 +16,26 @@ import {
   PageHeaderDescription,
   PageHeaderHeading,
 } from "@/components/docs/page-header";
+import { Button } from "@/components/ui/button";
 import { buttonLinkStyles } from "@/components/ui/button-styles";
 import { withItemHighlight } from "@/components/ui/item-highlight";
+import {
+  Popover,
+  PopoverDialog,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { ScrollFade } from "@/components/ui/scroll-fade";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectLabel,
+  SelectSection,
+  SelectTrigger,
+} from "@/components/ui/select";
 import { Tab, TabList, TabPanel, Tabs } from "@/components/ui/tabs";
+import { ToggleButton } from "@/components/ui/toggle-button";
+import { ToggleButtonGroup } from "@/components/ui/toggle-button-group";
 import { easeInOut } from "@/lib/motion";
 import {
   applySiteMode,
@@ -25,8 +44,27 @@ import {
   useSiteMode,
 } from "@/lib/site-mode";
 import { updateSiteTheme } from "@/lib/update-site-theme";
+import { cn } from "@/lib/utils";
+import { TweaksContext } from "./theme-css";
 import { ThemeTokens } from "./theme-tokens";
-import { findTheme, type Theme, themeCss, themes } from "./themes";
+import {
+  defaultRadius,
+  findTheme,
+  type RingStyle,
+  radiusOptions,
+  ringStyles,
+  type Theme,
+  themeCss,
+  themes,
+  withRing,
+} from "./themes";
+
+export interface FontChoice {
+  id: string;
+  name: string;
+  kind: FontKind;
+  family: string;
+}
 
 const swatches = [
   "var(--primary)",
@@ -40,6 +78,19 @@ type Point = { x: number; y: number };
 
 const panelClass =
   "docs-tab-panel mt-8 min-w-0 rounded-none bg-transparent p-0 shadow-none ring-0";
+
+const pillClass =
+  "rounded-full bg-card/60 shadow-(--shadow-card) ring-1 ring-border/60 backdrop-blur-xl";
+
+const ringNames: Record<RingStyle, string> = {
+  accent: "Accent",
+  neutral: "Neutral",
+};
+
+const fontGroups: { title: string; kind: FontKind }[] = [
+  { title: "Sans serif", kind: "sans" },
+  { title: "Serif", kind: "serif" },
+];
 
 function reveal(origin: Point | null, update: () => void) {
   const root = document.documentElement;
@@ -107,21 +158,173 @@ function ThemeOption({ theme }: { theme: Theme }) {
   return (
     <AriaRadio
       value={theme.slug}
-      className="relative inline-flex min-h-9 shrink-0 cursor-pointer items-center rounded-full ps-2 pe-3 text-[13px] font-medium whitespace-nowrap text-muted-foreground transition-[color,background-color,box-shadow] duration-200 ease-out-quint outline-transparent hover:text-foreground selected:bg-background selected:text-foreground selected:shadow-[0_1px_2px_oklch(0_0_0/0.06)] selected:ring-1 selected:ring-border/60 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
+      className={({ isSelected }) =>
+        cn(
+          "relative inline-flex min-h-9 shrink-0 cursor-pointer items-center rounded-full ps-1.5 pe-2.5 text-[13px] font-medium whitespace-nowrap text-muted-foreground transition-[color,background-color,box-shadow] duration-200 ease-out-quint outline-transparent hover:text-foreground selected:bg-background selected:text-foreground selected:shadow-[0_1px_2px_oklch(0_0_0/0.06)] selected:ring-1 selected:ring-border/60 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring max-[84rem]:px-2.5",
+          isSelected && "max-[84rem]:pe-3",
+        )
+      }
     >
-      <span data-specimen={theme.slug} className="flex items-center gap-2">
-        <span
-          aria-hidden="true"
-          className="size-4 rounded-full bg-(--primary) shadow-[inset_0_0_0_1px_oklch(0_0_0/0.12),inset_0_1px_1px_oklch(1_0_0/0.25)]"
-        />
-        {theme.name}
-      </span>
+      {({ isSelected }) => (
+        <span data-specimen={theme.slug} className="flex items-center gap-2">
+          <span
+            aria-hidden="true"
+            className="size-4 rounded-full bg-(--primary) shadow-[inset_0_0_0_1px_oklch(0_0_0/0.12),inset_0_1px_1px_oklch(1_0_0/0.25)]"
+          />
+          <span className={cn(!isSelected && "max-[84rem]:sr-only")}>
+            {theme.name}
+          </span>
+        </span>
+      )}
     </AriaRadio>
+  );
+}
+
+function Customize({
+  radius,
+  ring,
+  font,
+  fonts,
+  onRadiusChange,
+  onRingChange,
+  onFontChange,
+}: {
+  radius: string;
+  ring: RingStyle;
+  font: string;
+  fonts: FontChoice[];
+  onRadiusChange: (radius: string) => void;
+  onRingChange: (ring: RingStyle) => void;
+  onFontChange: (font: string) => void;
+}) {
+  const radiusLabel = useId();
+  const ringLabel = useId();
+  const changed =
+    radius !== defaultRadius || ring !== "accent" || font !== fonts[0].id;
+
+  return (
+    <PopoverTrigger>
+      <Button
+        variant="ghost"
+        className={cn(pillClass, "max-lg:w-10 max-lg:px-0")}
+      >
+        <SlidersHorizontalIcon size={16} aria-hidden="true" />
+        <span className="max-lg:sr-only">Customize</span>
+      </Button>
+      <Popover placement="bottom end" className="w-76">
+        <PopoverDialog aria-label="Customize" className="grid gap-5">
+          <div className="grid gap-2">
+            <span id={radiusLabel} className="text-sm font-medium">
+              Radius
+            </span>
+            <ToggleButtonGroup
+              aria-labelledby={radiusLabel}
+              selectionMode="single"
+              disallowEmptySelection
+              selectedKeys={[radius]}
+              onSelectionChange={(keys) => {
+                const [next] = keys;
+                if (typeof next === "string") onRadiusChange(next);
+              }}
+              size="sm"
+              className="w-full flex-nowrap"
+            >
+              {radiusOptions.map((option) => (
+                <ToggleButton
+                  key={option}
+                  id={option}
+                  variant="segmented"
+                  aria-label={option}
+                  className="min-w-0 flex-1 px-0 tabular-nums"
+                >
+                  {option.replace("rem", "")}
+                </ToggleButton>
+              ))}
+            </ToggleButtonGroup>
+          </div>
+          <div className="grid gap-2">
+            <span id={ringLabel} className="text-sm font-medium">
+              Focus ring
+            </span>
+            <ToggleButtonGroup
+              aria-labelledby={ringLabel}
+              selectionMode="single"
+              disallowEmptySelection
+              selectedKeys={[ring]}
+              onSelectionChange={(keys) => {
+                const next = ringStyles.find((style) => keys.has(style));
+                if (next) onRingChange(next);
+              }}
+              size="sm"
+              className="w-full flex-nowrap"
+            >
+              {ringStyles.map((style) => (
+                <ToggleButton
+                  key={style}
+                  id={style}
+                  variant="segmented"
+                  className="min-w-0 flex-1"
+                >
+                  {ringNames[style]}
+                </ToggleButton>
+              ))}
+            </ToggleButtonGroup>
+          </div>
+          <Select
+            selectedKey={font}
+            onSelectionChange={(key) => {
+              if (key !== null) onFontChange(String(key));
+            }}
+          >
+            <SelectLabel>Font</SelectLabel>
+            <SelectTrigger />
+            <SelectContent>
+              {fontGroups.map((group) => (
+                <SelectSection key={group.kind} title={group.title}>
+                  {fonts
+                    .filter((option) => option.kind === group.kind)
+                    .map((option) => (
+                      <SelectItem
+                        key={option.id}
+                        id={option.id}
+                        textValue={option.name}
+                      >
+                        <span
+                          className="min-w-0 truncate"
+                          style={{ fontFamily: option.family }}
+                        >
+                          {option.name}
+                        </span>
+                      </SelectItem>
+                    ))}
+                </SelectSection>
+              ))}
+            </SelectContent>
+          </Select>
+          <Button
+            variant="outline"
+            size="sm"
+            isDisabled={!changed}
+            onPress={() => {
+              onRadiusChange(defaultRadius);
+              onRingChange("accent");
+              onFontChange(fonts[0].id);
+            }}
+          >
+            Reset
+          </Button>
+        </PopoverDialog>
+      </Popover>
+    </PopoverTrigger>
   );
 }
 
 export function ThemeStudio({
   initialSlug,
+  initialRadius,
+  initialRing,
+  initialFont,
+  fonts,
   pageCss,
   specimenCss,
   showcase,
@@ -129,6 +332,10 @@ export function ThemeStudio({
   install,
 }: {
   initialSlug: string;
+  initialRadius: string;
+  initialRing: RingStyle;
+  initialFont: string;
+  fonts: FontChoice[];
   pageCss: Record<string, string>;
   specimenCss: string;
   showcase: ReactNode;
@@ -136,10 +343,24 @@ export function ThemeStudio({
   install: Record<string, ReactNode>;
 }) {
   const [slug, setSlug] = useState(initialSlug);
+  const [radius, setRadius] = useState(initialRadius);
+  const [ring, setRing] = useState(initialRing);
+  const [font, setFont] = useState(initialFont);
   const mode = useSiteMode();
   const pickerRef = useRef<HTMLDivElement>(null);
   const origin = useOrigin();
-  const theme = findTheme(slug) ?? themes[0];
+  const theme = withRing(findTheme(slug) ?? themes[0], ring);
+  const fontFamily = fonts.find((option) => option.id === font)?.family;
+  const tweaks = [
+    radius !== defaultRadius && `--radius:${radius};`,
+    font !== fonts[0].id && fontFamily && `--font-geist-sans:${fontFamily};`,
+  ]
+    .filter(Boolean)
+    .join("");
+  const ringCss =
+    ring === "accent"
+      ? ""
+      : `:root{--ring:${theme.light.ring};--sidebar-ring:${theme.light.ring};}.dark{--ring:${theme.dark.ring};--sidebar-ring:${theme.dark.ring};}`;
 
   function selectTheme(next: string) {
     if (next === slug || !findTheme(next)) return;
@@ -159,9 +380,15 @@ export function ThemeStudio({
   useEffect(() => {
     const url = new URL(window.location.href);
     url.searchParams.set("theme", slug);
+    if (radius === defaultRadius) url.searchParams.delete("radius");
+    else url.searchParams.set("radius", radius.replace("rem", ""));
+    if (ring === "accent") url.searchParams.delete("ring");
+    else url.searchParams.set("ring", ring);
+    if (font === fonts[0].id) url.searchParams.delete("font");
+    else url.searchParams.set("font", font);
     if (findTheme(url.hash.slice(1))) url.hash = "";
     window.history.replaceState(null, "", url);
-  }, [slug]);
+  }, [slug, radius, ring, font, fonts]);
 
   useEffect(() => {
     pickerRef.current
@@ -177,6 +404,12 @@ export function ThemeStudio({
       <style
         // biome-ignore lint/security/noDangerouslySetInnerHtml: Generated from the static theme tokens.
         dangerouslySetInnerHTML={{ __html: specimenCss + revealCss }}
+      />
+      <style
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: Built from the fixed radius and font options.
+        dangerouslySetInnerHTML={{
+          __html: (tweaks ? `:root{${tweaks}}` : "") + ringCss,
+        }}
       />
 
       <PageHeader className="site-container relative isolate items-center pb-2 pt-12 text-center sm:pb-6 sm:pt-20">
@@ -210,7 +443,7 @@ export function ThemeStudio({
             Install {theme.name}
           </a>
           <CopyCodeButton
-            code={themeCss(theme)}
+            code={themeCss(theme, radius)}
             label={`Copy CSS for ${theme.name}`}
             text="Copy CSS"
             className="h-10 px-4"
@@ -223,28 +456,44 @@ export function ThemeStudio({
         onPointerDownCapture={origin.onPointerDown}
       >
         <div className="site-container flex items-center justify-center gap-2">
-          <AriaRadioGroup
-            ref={pickerRef}
-            aria-label="Theme"
-            orientation="horizontal"
-            value={slug}
-            onChange={selectTheme}
-            render={withItemHighlight(undefined, {
-              placement: "under",
-              items: "label",
-              className: "rounded-full bg-muted/70",
-            })}
-            className="flex w-fit max-w-full min-w-0 items-center gap-0.5 overflow-x-auto rounded-full bg-card/60 p-1 shadow-(--shadow-card) ring-1 ring-border/60 backdrop-blur-xl max-[880px]:px-3 scrollbar-none [&::-webkit-scrollbar]:hidden max-[880px]:mask-[linear-gradient(to_right,transparent,black_12px,black_calc(100%-12px),transparent)]"
-          >
-            {themes.map((option) => (
-              <ThemeOption key={option.slug} theme={option} />
-            ))}
-          </AriaRadioGroup>
+          <div className={cn(pillClass, "flex min-w-0")}>
+            <ScrollFade
+              orientation="horizontal"
+              className="scroll-px-6 rounded-full p-1 scrollbar-none [&::-webkit-scrollbar]:hidden"
+            >
+              <AriaRadioGroup
+                ref={pickerRef}
+                aria-label="Theme"
+                orientation="horizontal"
+                value={slug}
+                onChange={selectTheme}
+                render={withItemHighlight(undefined, {
+                  placement: "under",
+                  items: "label",
+                  className: "rounded-full bg-muted/70",
+                })}
+                className="flex w-max items-center gap-0.5 max-[84rem]:gap-0"
+              >
+                {themes.map((option) => (
+                  <ThemeOption key={option.slug} theme={option} />
+                ))}
+              </AriaRadioGroup>
+            </ScrollFade>
+          </div>
           <ModeSwitch
             mode={mode}
             onChange={selectMode}
             pill
             className="shrink-0"
+          />
+          <Customize
+            radius={radius}
+            font={font}
+            fonts={fonts}
+            ring={ring}
+            onRadiusChange={setRadius}
+            onRingChange={setRing}
+            onFontChange={setFont}
           />
         </div>
       </div>
@@ -283,7 +532,9 @@ export function ThemeStudio({
               Works with vip/ui and any shadcn/ui project on Tailwind CSS v4.
             </p>
           </div>
-          {install[theme.slug]}
+          <TweaksContext value={{ radius, ring }}>
+            {install[theme.slug]}
+          </TweaksContext>
         </div>
       </section>
     </div>

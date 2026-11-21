@@ -6,6 +6,7 @@ import { componentApi } from "@/lib/component-api";
 import { componentChecks } from "@/lib/component-checks";
 import {
   type ComponentExampleMetadata,
+  type ComponentUsage,
   exampleAnchor,
 } from "@/lib/component-examples";
 import { allComponents } from "@/lib/navigation";
@@ -32,13 +33,11 @@ interface ComponentPageProps {
   description: string;
   preview: ReactNode;
   previewSourcePath: string;
+  previewUses?: readonly string[];
+  exampleFile?: string;
   examples?: ComponentExample[];
   sourcePath: string;
-  usage?: {
-    code: string;
-    filename?: string;
-    note?: ReactNode;
-  };
+  usage?: ComponentUsage;
   accessibility?: ReactNode;
 }
 
@@ -47,6 +46,8 @@ export async function ComponentPage({
   description,
   preview,
   previewSourcePath,
+  previewUses,
+  exampleFile,
   examples = [],
   sourcePath,
   usage,
@@ -112,6 +113,7 @@ export async function ComponentPage({
         <SectionHeading section="installation" className="mb-5">
           Installation
         </SectionHeading>
+        <PreviewDependencies slugs={previewUses} />
         <InstallTabs
           cliAvailable={Boolean(cliUrl)}
           cli={
@@ -141,21 +143,7 @@ export async function ComponentPage({
         />
       </section>
 
-      {usage && (
-        <section id="usage" className="mt-14 scroll-mt-8">
-          <SectionHeading section="usage" className="mb-5">
-            Usage
-          </SectionHeading>
-          <div className="grid max-w-167.5 gap-5">
-            {usage.note && (
-              <p className="text-sm leading-6 text-muted-foreground">
-                {usage.note}
-              </p>
-            )}
-            <CodeSample code={usage.code} filename={usage.filename} />
-          </div>
-        </section>
-      )}
+      <UsageSection usage={usage} />
 
       {compositions[componentSlug] && (
         <section id="composition" className="mt-14 scroll-mt-8">
@@ -165,6 +153,8 @@ export async function ComponentPage({
           <ComponentComposition {...compositions[componentSlug]} />
         </section>
       )}
+
+      <ExampleFileSection filename={exampleFile} />
 
       {examples.map((example, index) => (
         <section
@@ -184,7 +174,11 @@ export async function ComponentPage({
                 <ExampleDescription>{example.description}</ExampleDescription>
               )}
               {example.description && example.uses && " "}
-              {example.uses && <ExampleUses slugs={example.uses} />}
+              {example.uses && (
+                <>
+                  Also install <ComponentLinks slugs={example.uses} />.
+                </>
+              )}
             </p>
           )}
           <PreviewPanel
@@ -245,16 +239,79 @@ export async function ComponentPage({
   );
 }
 
+function UsageSection({ usage }: { usage?: ComponentUsage }) {
+  if (!usage) return null;
+  return (
+    <section id="usage" className="mt-14 scroll-mt-8">
+      <SectionHeading section="usage" className="mb-5">
+        Usage
+      </SectionHeading>
+      <div className="grid max-w-167.5 gap-5">
+        {usage.note && (
+          <p className="text-sm leading-6 text-muted-foreground">
+            <ExampleDescription>{usage.note}</ExampleDescription>
+          </p>
+        )}
+        {usage.uses?.length ? (
+          <p className="text-sm leading-6 text-muted-foreground">
+            Also install <ComponentLinks slugs={usage.uses} />.
+          </p>
+        ) : null}
+        <CodeSample code={usage.code} filename={usage.filename} />
+      </div>
+    </section>
+  );
+}
+
+async function ExampleFileSection({ filename }: { filename?: string }) {
+  if (!filename) return null;
+  const code = await readFile(
+    path.join(process.cwd(), "src/components/docs", filename),
+    "utf8",
+  );
+  return (
+    <section id="example-file" className="mt-14 scroll-mt-8">
+      <SectionHeading section="example-file" className="mb-5">
+        Example file
+      </SectionHeading>
+      <p className="-mt-2 mb-5 max-w-167.5 text-sm leading-6 text-muted-foreground">
+        Save <Code>{filename}</Code> in the same folder as the copied preview
+        and example files.
+      </p>
+      <CodeSample code={code} filename={filename} />
+    </section>
+  );
+}
+
+function PreviewDependencies({ slugs }: { slugs?: readonly string[] }) {
+  if (!slugs?.length) return null;
+
+  return (
+    <p className="mb-4 text-sm leading-6 text-muted-foreground">
+      To run the preview, install <ComponentLinks slugs={slugs} />.
+    </p>
+  );
+}
+
 function ExampleDescription({ children }: { children: string }) {
   const parts: ReactNode[] = [];
-  const regex = /`([^`]+)`/g;
+  const regex = /`([^`]+)`|\[([^\]]+)\]\(([^)\s]+)\)/g;
   let lastIndex = 0;
   let match = regex.exec(children);
   while (match) {
     if (match.index > lastIndex) {
       parts.push(children.slice(lastIndex, match.index));
     }
-    parts.push(<Code key={match.index}>{match[1]}</Code>);
+    const [, code, label, href] = match;
+    parts.push(
+      href ? (
+        <TextLink key={match.index} href={href}>
+          {label}
+        </TextLink>
+      ) : (
+        <Code key={match.index}>{code}</Code>
+      ),
+    );
     lastIndex = regex.lastIndex;
     match = regex.exec(children);
   }
@@ -264,24 +321,18 @@ function ExampleDescription({ children }: { children: string }) {
   return parts;
 }
 
-function ExampleUses({ slugs }: { slugs: readonly string[] }) {
-  return (
-    <>
-      Also install{" "}
-      {slugs.map((slug, index) => {
-        const component = getComponent(slug);
-        return (
-          <Fragment key={slug}>
-            {index > 0 && (index === slugs.length - 1 ? " and " : ", ")}
-            {component ? (
-              <TextLink href={`/components/${slug}`}>{component.name}</TextLink>
-            ) : (
-              componentName(slug)
-            )}
-          </Fragment>
-        );
-      })}
-      {"."}
-    </>
-  );
+function ComponentLinks({ slugs }: { slugs: readonly string[] }) {
+  return slugs.map((slug, index) => {
+    const component = getComponent(slug);
+    return (
+      <Fragment key={slug}>
+        {index > 0 && (index === slugs.length - 1 ? " and " : ", ")}
+        {component ? (
+          <TextLink href={`/components/${slug}`}>{component.name}</TextLink>
+        ) : (
+          componentName(slug)
+        )}
+      </Fragment>
+    );
+  });
 }

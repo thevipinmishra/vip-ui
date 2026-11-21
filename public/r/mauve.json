@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "mauve",
+  "type": "registry:theme",
+  "title": "Mauve",
+  "description": "A purple neutral. Pair it with Red, Violet, Plum, and Pink.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["colors"],
+  "docs": "The scale adds --mauve-1 to --mauve-12 for light and dark mode. Classes such as bg-mauve-3 work after the install.",
+  "dependencies": [],
+  "files": [],
+  "cssVars": {
+    "theme": {
+      "color-mauve-1": "var(--mauve-1)",
+      "color-mauve-2": "var(--mauve-2)",
+      "color-mauve-3": "var(--mauve-3)",
+      "color-mauve-4": "var(--mauve-4)",
+      "color-mauve-5": "var(--mauve-5)",
+      "color-mauve-6": "var(--mauve-6)",
+      "color-mauve-7": "var(--mauve-7)",
+      "color-mauve-8": "var(--mauve-8)",
+      "color-mauve-9": "var(--mauve-9)",
+      "color-mauve-10": "var(--mauve-10)",
+      "color-mauve-11": "var(--mauve-11)",
+      "color-mauve-12": "var(--mauve-12)"
+    },
+    "light": {
+      "mauve-1": "oklch(0.987 0.003 305)",
+      "mauve-2": "oklch(0.969 0.004 305)",
+      "mauve-3": "oklch(0.944 0.005 305)",
+      "mauve-4": "oklch(0.919 0.006 305)",
+      "mauve-5": "oklch(0.894 0.007 305)",
+      "mauve-6": "oklch(0.866 0.008 305)",
+      "mauve-7": "oklch(0.820 0.010 305)",
+      "mauve-8": "oklch(0.755 0.012 305)",
+      "mauve-9": "oklch(0.420 0.018 305)",
+      "mauve-10": "oklch(0.385 0.018 305)",
+      "mauve-11": "oklch(0.505 0.015 305)",
+      "mauve-12": "oklch(0.285 0.013 305)"
+    },
+    "dark": {
+      "mauve-1": "oklch(0.185 0.005 305)",
+      "mauve-2": "oklch(0.215 0.006 305)",
+      "mauve-3": "oklch(0.243 0.008 305)",
+      "mauve-4": "oklch(0.268 0.009 305)",
+      "mauve-5": "oklch(0.293 0.010 305)",
+      "mauve-6": "oklch(0.322 0.011 305)",
+      "mauve-7": "oklch(0.365 0.012 305)",
+      "mauve-8": "oklch(0.430 0.014 305)",
+      "mauve-9": "oklch(0.700 0.018 305)",
+      "mauve-10": "oklch(0.740 0.018 305)",
+      "mauve-11": "oklch(0.735 0.013 305)",
+      "mauve-12": "oklch(0.930 0.004 305)"
+    }
+  }
+}

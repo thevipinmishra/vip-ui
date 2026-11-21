@@ -17,13 +17,13 @@ export function RangeCalendarControlledDemo() {
   const nights = range.end.compare(range.start);
 
   return (
-    <div className="grid justify-items-center gap-4">
+    <div className="flex w-full max-w-77 flex-col items-center gap-4">
       <RangeCalendar
         aria-label="Trip dates"
         value={range}
         onChange={setRange}
       />
-      <output className="text-sm text-muted-foreground">
+      <output className="text-center text-sm text-muted-foreground">
         {format(range.start)} – {format(range.end)} · {nights}{" "}
         {nights === 1 ? "night" : "nights"}
       </output>

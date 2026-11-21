@@ -1,6 +1,6 @@
 import { findFont, fontOptions } from "./fonts";
 
-export type SampleId = "docs" | "chat" | "article";
+export type SampleId = "docs" | "chat" | "article" | "changelog";
 
 export interface TypographySettings {
   name: string;
@@ -61,7 +61,7 @@ export const presets = [
   },
   {
     id: "compact",
-    sample: "docs",
+    sample: "changelog",
     name: "Compact",
     settings: {
       name: "compact",

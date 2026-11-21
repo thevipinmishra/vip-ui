@@ -3,7 +3,7 @@ import { ButtonLink } from "@/components/ui/button-link";
 
 export function ButtonLinkDemo() {
   return (
-    <ButtonLink as={Link} href="/components/installation" variant="outline">
+    <ButtonLink as={Link} href="/components/installation">
       Read the setup guide
     </ButtonLink>
   );

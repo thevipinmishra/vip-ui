@@ -20,10 +20,12 @@ import {
 } from "@/components/ui/card";
 import { ColorField } from "@/components/ui/color-field";
 import { ColorPicker } from "@/components/ui/color-picker";
+import { ColorSwatch } from "@/components/ui/color-swatch";
 import {
   ColorSwatchPicker,
   ColorSwatchPickerItem,
 } from "@/components/ui/color-swatch-picker";
+import { ColorWheel } from "@/components/ui/color-wheel";
 import {
   RadioButton,
   RadioField,
@@ -300,50 +302,66 @@ export function AppearanceSettings() {
                 The accent marks buttons, links, and selections.
               </CardDescription>
             </CardHeader>
-            <CardContent className="grid gap-4">
-              <ColorSwatchPicker
-                aria-label="Accent color"
-                value={accent}
+            <CardContent className="grid items-center gap-5 sm:grid-cols-[auto_minmax(0,1fr)] sm:gap-6">
+              <ColorWheel
+                aria-label="Accent hue"
+                outerRadius={68}
+                innerRadius={50}
+                value={color.toFormat("hsl")}
                 onChange={pickColor}
-                className="grid grid-cols-4 justify-items-center gap-2 sm:grid-cols-8"
+                className="justify-self-center"
               >
-                {accents.map((option) => (
-                  <ColorSwatchPickerItem
-                    key={option.color}
-                    color={option.color}
-                    aria-label={option.label}
-                  />
-                ))}
-              </ColorSwatchPicker>
-              <SizeProvider size="sm">
-                <div className="flex flex-wrap items-end gap-3 border-t border-border/70 pt-4">
-                  <ColorField
-                    size="sm"
-                    label="Hex"
-                    value={color}
-                    onChange={pickColor}
-                    className="w-32"
-                  />
-                  <ColorPicker
-                    label="Pick color"
-                    value={color}
-                    onChange={pickColor}
-                  />
-                  <div className="flex items-center gap-2 pb-1.5">
-                    <p className="text-xs text-muted-foreground">
-                      Contrast{" "}
-                      <span className="font-mono tabular-nums text-foreground">
-                        {contrast.ratio.toFixed(1)}:1
-                      </span>
-                    </p>
-                    <Badge
-                      variant={contrast.ratio >= 4.5 ? "success" : "warning"}
-                    >
-                      {contrast.ratio >= 4.5 ? "AA" : "Large text"}
-                    </Badge>
+                <ColorSwatch
+                  color={color}
+                  aria-hidden="true"
+                  className="size-14 rounded-full"
+                />
+              </ColorWheel>
+              <div className="grid min-w-0 gap-4">
+                <ColorSwatchPicker
+                  aria-label="Accent color"
+                  value={accent}
+                  onChange={pickColor}
+                  className="grid grid-cols-4 justify-items-center gap-2 min-[26rem]:grid-cols-8 sm:flex sm:flex-wrap"
+                >
+                  {accents.map((option) => (
+                    <ColorSwatchPickerItem
+                      key={option.color}
+                      color={option.color}
+                      aria-label={option.label}
+                    />
+                  ))}
+                </ColorSwatchPicker>
+                <SizeProvider size="sm">
+                  <div className="flex flex-wrap items-end gap-3">
+                    <ColorField
+                      size="sm"
+                      label="Hex"
+                      value={color}
+                      onChange={pickColor}
+                      className="w-32"
+                    />
+                    <ColorPicker
+                      label="Pick color"
+                      value={color}
+                      onChange={pickColor}
+                    />
+                    <div className="flex items-center gap-2 pb-1.5">
+                      <p className="text-xs text-muted-foreground">
+                        Contrast{" "}
+                        <span className="font-mono tabular-nums text-foreground">
+                          {contrast.ratio.toFixed(1)}:1
+                        </span>
+                      </p>
+                      <Badge
+                        variant={contrast.ratio >= 4.5 ? "success" : "warning"}
+                      >
+                        {contrast.ratio >= 4.5 ? "AA" : "Large text"}
+                      </Badge>
+                    </div>
                   </div>
-                </div>
-              </SizeProvider>
+                </SizeProvider>
+              </div>
             </CardContent>
           </Card>
 

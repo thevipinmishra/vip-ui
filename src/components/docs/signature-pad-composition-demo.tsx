@@ -14,7 +14,6 @@ import {
   SignaturePadRoot,
   SignaturePadSegment,
 } from "@/components/ui/signature-pad";
-import { cn } from "@/lib/utils";
 
 export function SignaturePadCompositionDemo() {
   const [dataUrl, setDataUrl] = useState("");
@@ -68,7 +67,7 @@ export function SignaturePadCompositionDemo() {
           onClick={(event) => {
             if (!dataUrl) event.preventDefault();
           }}
-          className={cn(!dataUrl && "pointer-events-none opacity-50")}
+          className={dataUrl ? undefined : "pointer-events-none opacity-50"}
         >
           <DownloadSimpleIcon data-icon="inline-start" aria-hidden="true" />
           Download PNG

@@ -103,7 +103,8 @@ export default function StylingPage() {
 
       <GuideSection id="color-scales" title="Color scales">
         <p>
-          vip/ui has ten color scales with 12 steps each. Add a scale with the{" "}
+          vip/ui has five neutral scales and 13 accent scales, with 12 steps
+          each. Add a scale with the{" "}
           <TextLink href="/components/installation#theme">CLI</TextLink>, or
           copy its CSS from <TextLink href="/colors">Colors</TextLink>. A scale
           sets variables such as <Code>--blue-1</Code> to <Code>--blue-12</Code>{" "}
@@ -120,8 +121,15 @@ export default function StylingPage() {
         <p>
           A step has the same lightness in every scale, so all scales pass the
           same checks. Step 11 on step 1 or 2 is at least 4.5:1. Step 12 on step
-          1 or 2 is at least 7:1. Step 1 on step 9 is at least 4.5:1. On Yellow
-          in light mode, use step 12 on step 9.
+          1 or 2 is at least 7:1. Step 1 on step 9 is at least 4.5:1. Step 9 on
+          step 1 or 2 is at least 4.5:1, so you can use step 9 for text. On
+          Yellow in light mode, use step 12 on step 9, and do not use step 9 for
+          text.
+        </p>
+        <p>
+          Each accent scale has a neutral scale with a similar hue. For example,
+          Blue pairs with Slate. Use the pair for a tinted look, or use Gray
+          with any accent.
         </p>
         <p>
           The <TextLink href="/themes">themes</TextLink> set the shadcn tokens

@@ -122,7 +122,16 @@ import type {
   MarqueeRoot,
   MarqueeViewport,
 } from "@/components/ui/marquee";
-import type { MenuItem, MenuSection } from "@/components/ui/menu";
+import type {
+  Menu,
+  MenuContent,
+  MenuItem,
+  MenuPopover,
+  MenuSection,
+  MenuSeparator,
+  MenuTrigger,
+  SubmenuTrigger,
+} from "@/components/ui/menu";
 import type { Message } from "@/components/ui/message";
 import type { Meter } from "@/components/ui/meter";
 import type { NativeSelect } from "@/components/ui/native-select";
@@ -941,24 +950,167 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
     }),
   ],
   menu: [
+    apiPart<typeof MenuTrigger>({
+      name: "MenuTrigger",
+      description: "Connects the trigger button to its menu.",
+      props: [
+        { name: "defaultOpen", description: "Sets the initial open state." },
+        { name: "isOpen", description: "Controls whether the menu is open." },
+        {
+          name: "onOpenChange",
+          description: "Runs when the open state changes.",
+        },
+      ],
+    }),
+    apiPart<typeof Menu>({
+      name: "Menu",
+      description:
+        "Combines MenuPopover and MenuContent. Accepts MenuContent props.",
+      props: [],
+    }),
+    apiPart<typeof MenuPopover>({
+      name: "MenuPopover",
+      description:
+        "Positions the menu and contains MenuContent and an optional PopoverArrow.",
+      props: [
+        {
+          name: "placement",
+          description: "Sets the preferred position relative to the trigger.",
+        },
+        {
+          name: "offset",
+          description: "Sets the gap between the menu and the trigger.",
+        },
+        {
+          name: "crossOffset",
+          description: "Shifts the menu along the edge of the trigger.",
+        },
+        {
+          name: "maxHeight",
+          default: "300",
+          description: "Limits the height of the popover in pixels.",
+        },
+      ],
+    }),
+    apiPart<typeof MenuContent>({
+      name: "MenuContent",
+      description: "Renders the menu inside MenuPopover.",
+      props: [
+        {
+          name: "aria-label",
+          description: "Names the menu for assistive technology.",
+        },
+        {
+          name: "items",
+          type: "Iterable<T>",
+          description: "Provides the data for a rendered collection.",
+        },
+        {
+          name: "disabledKeys",
+          description: "Identifies items that users cannot activate.",
+        },
+        {
+          name: "onAction",
+          description:
+            "Receives the key and collection value of the item the user activates.",
+        },
+        {
+          name: "selectionMode",
+          description: "Controls how many items users can select.",
+        },
+        {
+          name: "defaultSelectedKeys",
+          description: "Sets the initial selection.",
+        },
+        {
+          name: "selectedKeys",
+          description: "Controls the current selection.",
+        },
+        {
+          name: "onSelectionChange",
+          description: "Receives the updated selection.",
+        },
+        {
+          name: "disallowEmptySelection",
+          description: "Prevents users from clearing the selection.",
+        },
+        {
+          name: "shouldCloseOnSelect",
+          description: "Controls whether activating an item closes the menu.",
+        },
+        {
+          name: "renderEmptyState",
+          description: "Renders content when the menu has no items.",
+        },
+      ],
+    }),
     apiPart<typeof MenuItem>({
       name: "MenuItem",
       props: [
         {
+          name: "id",
+          description: "Identifies the item in the menu collection.",
+        },
+        { name: "href", description: "Renders the item as a link." },
+        {
+          name: "onAction",
+          description: "Runs when the user activates the item.",
+        },
+        {
+          name: "isDisabled",
+          description: "Prevents the user from activating the item.",
+        },
+        {
+          name: "textValue",
+          description: "Provides a plain-text value for keyboard typeahead.",
+        },
+        {
+          name: "shouldCloseOnSelect",
+          description: "Controls whether activating this item closes the menu.",
+        },
+        {
           name: "variant",
           description:
-            "destructive colors the text and icon for an action that deletes or removes data.",
+            "Sets the visual style for a standard or destructive action.",
         },
       ],
     }),
     apiPart<typeof MenuSection>({
       name: "MenuSection",
       props: [
+        { name: "title", description: "Sets the section heading." },
         {
-          name: "title",
-          description: "The section heading.",
+          name: "items",
+          type: "Iterable<T>",
+          description: "Provides the data for the section's items.",
+        },
+        {
+          name: "selectionMode",
+          description: "Gives the section its own selection mode and state.",
+        },
+        {
+          name: "shouldCloseOnSelect",
+          description:
+            "Controls whether activating items in this section closes the menu.",
         },
       ],
+    }),
+    apiPart<typeof SubmenuTrigger>({
+      name: "SubmenuTrigger",
+      description: "Connects a MenuItem to a nested Menu or MenuPopover.",
+      props: [
+        {
+          name: "delay",
+          default: "200",
+          description:
+            "Sets how long to wait before opening the submenu on hover, in milliseconds.",
+        },
+      ],
+    }),
+    apiPart<typeof MenuSeparator>({
+      name: "MenuSeparator",
+      description: "Adds a divider between items or sections.",
+      props: [],
     }),
   ],
   "agent-steps": [
@@ -1235,7 +1387,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         {
           name: "onEventChange",
           description:
-            "Receives a move or a resize on release. Update events with the new range. Without it, events cannot move.",
+            "Receives the new range after a drag, resize, or keyboard shortcut. Set this callback and update events to enable editing.",
         },
         {
           name: "view",
@@ -1299,7 +1451,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         {
           name: "renderEvent",
           description:
-            "Replaces the title and time inside an event. The accessible name stays the title and time.",
+            "Replaces the visible event content. Set the event's label to give it a custom accessible name.",
         },
         {
           name: "className",
@@ -1867,7 +2019,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         {
           name: "size",
           description:
-            "Sets the size of each button in the group. A size on a button overrides it.",
+            "Sets the default size for Button children. Each button can specify its own size.",
         },
       ],
     }),
@@ -2273,14 +2425,13 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "variant",
-          description:
-            "Sets the visual emphasis. Minimal is for a quiet icon action.",
+          description: "Sets the visual emphasis.",
         },
         {
           name: "size",
           default: '"md"',
           description:
-            "Sets the height from 28px (xs) to 56px (xl). A size on the button overrides the group; otherwise the group size applies.",
+            "Sets the button size. When omitted, the button uses the group size if one is set.",
         },
         {
           name: "iconOnly",
@@ -2297,7 +2448,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
     apiPart<typeof ButtonLink>({
       name: "ButtonLink",
       description:
-        "Renders an anchor with the button styles. It accepts anchor attributes instead of React Aria Button props.",
+        "Renders an anchor with button styles and accepts anchor attributes.",
       props: [
         {
           name: "href",
@@ -3939,7 +4090,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          default: '"lg"',
+          default: '"md"',
           description: "Sets the size of the field.",
         },
         {
@@ -3960,7 +4111,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          default: '"lg"',
+          default: '"md"',
           description: "Sets the size of the field.",
         },
         {
@@ -4028,13 +4179,13 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          default: '"lg"',
+          default: '"md"',
           description: "Sets the size of the field and of the calendar button.",
         },
         {
           name: "presets",
           description:
-            "Shortcuts beside the calendar, such as Today. Each has a label and a value. A preset sets the value and closes the calendar.",
+            "Shortcuts in the calendar popover. Each has a label and a date value. Selecting a preset sets the date and closes the popover.",
         },
         {
           name: "label",
@@ -4054,13 +4205,13 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          default: '"lg"',
+          default: '"md"',
           description: "Sets the size of the field and of the calendar button.",
         },
         {
           name: "presets",
           description:
-            "Shortcuts beside the calendar, such as Last 7 days. Each has a label and a start and end value. A preset sets the value and closes the calendar.",
+            "Shortcuts in the calendar popover. Each has a label and a value with start and end dates. Selecting a preset sets the range and closes the popover.",
         },
         {
           name: "label",
@@ -4080,7 +4231,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
       props: [
         {
           name: "size",
-          default: '"lg"',
+          default: '"md"',
           description: "Sets the size of the field.",
         },
         {
@@ -4106,9 +4257,8 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         },
         {
           name: "children",
-          type: "ReactNode",
           description:
-            "Replaces the default trigger and popover. Without it, ColorPicker shows its built-in layout.",
+            "Replaces the default trigger and popover. A render function receives the current color.",
         },
       ],
     }),
@@ -4677,8 +4827,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         },
         {
           name: "error",
-          description:
-            "Message below the drawing area while `isInvalid` is true.",
+          description: "Message below the drawing area when `invalid` is true.",
         },
         {
           name: "placeholder",
@@ -4691,7 +4840,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         {
           name: "name",
           description:
-            "Submits the PNG data URL in a hidden input. The value updates when a stroke ends. Validate the pad with `isInvalid`.",
+            "Submits the captured data URL in a hidden input. The value updates when a stroke ends.",
         },
         {
           name: "form",
@@ -4721,7 +4870,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         {
           name: "required",
           description:
-            "Marks the pad as required. Validate it with `isInvalid`.",
+            "Marks the pad as required. Check the submitted value and set `invalid` when the signature is missing.",
         },
         {
           name: "invalid",
@@ -4747,7 +4896,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         {
           name: "onValueChange",
           description:
-            "Called with the data URL after a stroke ends or the pad is cleared.",
+            "Receives the data URL after a stroke ends and an empty string when the pad clears.",
         },
         {
           name: "translations",
@@ -5030,7 +5179,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         {
           name: "color",
           description:
-            "The color of the item. The selected item shows a ring in a darker shade of it.",
+            "The color of the item. The selection ring blends the color with the theme's foreground color.",
         },
         {
           name: "children",

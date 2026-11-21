@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 import {
   Conversation,
   ConversationContent,
@@ -49,77 +50,68 @@ interface Line {
 }
 
 const wordCount = (text: string) => text.split(" ").length;
+const initialLines: Line[] = SCRIPT.slice(0, 4).map((turn) => ({
+  ...turn,
+  revealed: wordCount(turn.answer),
+}));
 
 export function ConversationJumpDemo() {
-  return (
-    <Conversation className="h-96 w-full max-w-xl overflow-hidden rounded-xl border border-border bg-card shadow-(--shadow-card)">
-      <ConversationJumpSession />
-    </Conversation>
-  );
-}
-
-function ConversationJumpSession() {
-  const [lines, setLines] = useState<Line[]>(() =>
-    SCRIPT.slice(0, 4).map((turn) => ({
-      ...turn,
-      revealed: wordCount(turn.answer),
-    })),
-  );
-
-  useEffect(() => {
-    let id = 0;
-    const schedule = () => {
-      id = window.setTimeout(() => {
-        setLines((current) =>
-          current.length < SCRIPT.length
-            ? [...current, { ...SCRIPT[current.length], revealed: 0 }]
-            : current,
-        );
-        schedule();
-      }, 1800);
-    };
-    schedule();
-    return () => window.clearTimeout(id);
-  }, []);
-
+  const [started, setStarted] = useState(false);
+  const [lines, setLines] = useState(initialLines);
   const last = lines[lines.length - 1];
-  const lastWords = last ? wordCount(last.answer) : 0;
+  const revealing = last.revealed < wordCount(last.answer);
+  const running = started && (revealing || lines.length < SCRIPT.length);
 
   useEffect(() => {
-    if (!last || last.revealed >= lastWords) return;
-    const id = window.setTimeout(() => {
-      setLines((current) =>
-        current.map((line, index) =>
-          index === current.length - 1
-            ? { ...line, revealed: line.revealed + 1 }
-            : line,
-        ),
-      );
-    }, 50);
+    if (!running) return;
+    const id = window.setTimeout(
+      () => {
+        setLines(
+          revealing
+            ? [...lines.slice(0, -1), { ...last, revealed: last.revealed + 1 }]
+            : [...lines, { ...SCRIPT[lines.length], revealed: 0 }],
+        );
+      },
+      revealing ? 50 : 1800,
+    );
     return () => window.clearTimeout(id);
-  }, [last, lastWords]);
+  }, [last, lines, revealing, running]);
 
   return (
-    <>
-      <ConversationContent className="mx-auto grid w-full max-w-3xl gap-6 px-4 py-6">
-        {lines.map((line) => {
-          const words = line.answer.split(" ");
-          const streaming = line.revealed < words.length;
-          return (
-            <div key={line.prompt} className="grid gap-2">
-              <Message sender="You" side="outgoing">
-                {line.prompt}
-              </Message>
-              <Response status={streaming ? "streaming" : "complete"}>
-                <ResponseContent>
-                  {words.slice(0, line.revealed).join(" ")}
-                </ResponseContent>
-              </Response>
-            </div>
-          );
-        })}
-      </ConversationContent>
-      <ConversationJump />
-    </>
+    <div className="grid w-full max-w-xl justify-items-start gap-2">
+      <Conversation className="h-96 w-full overflow-hidden rounded-xl border border-border bg-card shadow-(--shadow-card)">
+        <ConversationContent className="mx-auto grid w-full max-w-3xl gap-6 px-4 py-6">
+          {lines.map((line) => {
+            const words = line.answer.split(" ");
+            const streaming = line.revealed < words.length;
+            return (
+              <div key={line.prompt} className="grid gap-2">
+                <Message sender="You" side="outgoing">
+                  {line.prompt}
+                </Message>
+                <Response status={streaming ? "streaming" : "complete"}>
+                  <ResponseContent>
+                    {words.slice(0, line.revealed).join(" ")}
+                  </ResponseContent>
+                </Response>
+              </div>
+            );
+          })}
+        </ConversationContent>
+        <ConversationJump />
+      </Conversation>
+      <Button
+        type="button"
+        variant="ghost"
+        size="sm"
+        isPending={running}
+        onPress={() => {
+          setLines(initialLines);
+          setStarted(true);
+        }}
+      >
+        Stream replies
+      </Button>
+    </div>
   );
 }

@@ -1,53 +1,38 @@
 "use client";
 
-import { SlidersHorizontalIcon } from "@phosphor-icons/react";
-import { useState } from "react";
-import type { Selection } from "react-aria-components";
 import { Button } from "@/components/ui/button";
 import {
-  MenuContent,
+  Menu,
   MenuItem,
-  MenuPopover,
   MenuSection,
   MenuSeparator,
   MenuTrigger,
 } from "@/components/ui/menu";
 
 export function MenuSectionsDemo() {
-  const [sort, setSort] = useState<Selection>(new Set(["modified"]));
-  const [shown, setShown] = useState<Selection>(new Set(["extensions"]));
-
   return (
     <MenuTrigger>
-      <Button variant="outline">
-        <SlidersHorizontalIcon data-icon="inline-start" aria-hidden="true" />
-        View options
-      </Button>
-      <MenuPopover>
-        <MenuContent aria-label="View options">
-          <MenuSection
-            title="Sort by"
-            selectionMode="single"
-            disallowEmptySelection
-            selectedKeys={sort}
-            onSelectionChange={setSort}
-          >
-            <MenuItem id="name">Name</MenuItem>
-            <MenuItem id="modified">Last modified</MenuItem>
-            <MenuItem id="size">Size</MenuItem>
-          </MenuSection>
-          <MenuSeparator />
-          <MenuSection
-            title="Show"
-            selectionMode="multiple"
-            selectedKeys={shown}
-            onSelectionChange={setShown}
-          >
-            <MenuItem id="extensions">File extensions</MenuItem>
-            <MenuItem id="hidden">Hidden files</MenuItem>
-          </MenuSection>
-        </MenuContent>
-      </MenuPopover>
+      <Button variant="outline">Notifications</Button>
+      <Menu aria-label="Notifications" shouldCloseOnSelect={false}>
+        <MenuSection
+          title="Delivery"
+          selectionMode="single"
+          defaultSelectedKeys={["daily"]}
+          disallowEmptySelection
+        >
+          <MenuItem id="instant">Immediately</MenuItem>
+          <MenuItem id="daily">Daily digest</MenuItem>
+        </MenuSection>
+        <MenuSeparator />
+        <MenuSection
+          title="Topics"
+          selectionMode="multiple"
+          defaultSelectedKeys={["mentions"]}
+        >
+          <MenuItem id="mentions">Mentions</MenuItem>
+          <MenuItem id="reviews">Review requests</MenuItem>
+        </MenuSection>
+      </Menu>
     </MenuTrigger>
   );
 }

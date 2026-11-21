@@ -1,29 +1,22 @@
 "use client";
 
-import { CaretDownIcon } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 
 export function ButtonGroupSizesDemo() {
   return (
-    <div className="flex flex-col items-start gap-3">
-      <ButtonGroup size="xs" aria-label="Publish">
-        <Button variant="ghost">Publish</Button>
-        <Button variant="ghost" iconOnly aria-label="More publish options">
-          <CaretDownIcon aria-hidden="true" />
-        </Button>
+    <div className="flex flex-wrap items-center justify-center gap-4">
+      <ButtonGroup size="xs" aria-label="File actions">
+        <Button variant="ghost">Copy</Button>
+        <Button variant="ghost">Move</Button>
       </ButtonGroup>
-      <ButtonGroup size="sm" aria-label="Publish">
-        <Button variant="ghost">Publish</Button>
-        <Button variant="ghost" iconOnly aria-label="More publish options">
-          <CaretDownIcon aria-hidden="true" />
-        </Button>
+      <ButtonGroup aria-label="File actions">
+        <Button variant="ghost">Copy</Button>
+        <Button variant="ghost">Move</Button>
       </ButtonGroup>
-      <ButtonGroup aria-label="Publish">
-        <Button variant="ghost">Publish</Button>
-        <Button variant="ghost" iconOnly aria-label="More publish options">
-          <CaretDownIcon aria-hidden="true" />
-        </Button>
+      <ButtonGroup size="xl" aria-label="File actions">
+        <Button variant="ghost">Copy</Button>
+        <Button variant="ghost">Move</Button>
       </ButtonGroup>
     </div>
   );

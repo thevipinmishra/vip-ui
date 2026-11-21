@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gold",
+  "type": "registry:theme",
+  "title": "Gold",
+  "description": "A muted metal. Use it in place of Yellow for solid fills.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["colors"],
+  "docs": "The scale adds --gold-1 to --gold-12 for light and dark mode. Classes such as bg-gold-3 work after the install.",
+  "dependencies": [],
+  "files": [],
+  "cssVars": {
+    "theme": {
+      "color-gold-1": "var(--gold-1)",
+      "color-gold-2": "var(--gold-2)",
+      "color-gold-3": "var(--gold-3)",
+      "color-gold-4": "var(--gold-4)",
+      "color-gold-5": "var(--gold-5)",
+      "color-gold-6": "var(--gold-6)",
+      "color-gold-7": "var(--gold-7)",
+      "color-gold-8": "var(--gold-8)",
+      "color-gold-9": "var(--gold-9)",
+      "color-gold-10": "var(--gold-10)",
+      "color-gold-11": "var(--gold-11)",
+      "color-gold-12": "var(--gold-12)"
+    },
+    "light": {
+      "gold-1": "oklch(0.987 0.004 82)",
+      "gold-2": "oklch(0.969 0.008 82)",
+      "gold-3": "oklch(0.944 0.013 82)",
+      "gold-4": "oklch(0.919 0.018 82)",
+      "gold-5": "oklch(0.894 0.023 82)",
+      "gold-6": "oklch(0.866 0.030 82)",
+      "gold-7": "oklch(0.820 0.041 82)",
+      "gold-8": "oklch(0.755 0.056 82)",
+      "gold-9": "oklch(0.545 0.085 82)",
+      "gold-10": "oklch(0.510 0.083 82)",
+      "gold-11": "oklch(0.505 0.053 82)",
+      "gold-12": "oklch(0.285 0.026 82)"
+    },
+    "dark": {
+      "gold-1": "oklch(0.185 0.015 82)",
+      "gold-2": "oklch(0.215 0.021 82)",
+      "gold-3": "oklch(0.243 0.027 82)",
+      "gold-4": "oklch(0.268 0.032 82)",
+      "gold-5": "oklch(0.293 0.037 82)",
+      "gold-6": "oklch(0.322 0.041 82)",
+      "gold-7": "oklch(0.365 0.048 82)",
+      "gold-8": "oklch(0.430 0.058 82)",
+      "gold-9": "oklch(0.700 0.085 82)",
+      "gold-10": "oklch(0.740 0.082 82)",
+      "gold-11": "oklch(0.735 0.058 82)",
+      "gold-12": "oklch(0.930 0.024 82)"
+    }
+  }
+}
