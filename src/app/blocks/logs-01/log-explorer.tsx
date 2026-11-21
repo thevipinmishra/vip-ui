@@ -1,7 +1,7 @@
 "use client";
 
 import { MagnifyingGlassIcon, PulseIcon } from "@phosphor-icons/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -139,64 +139,11 @@ function LogDetails({ entry }: { entry: LogEntry }) {
   );
 }
 
-export function LogExplorer() {
-  const [logs, setLogs] = useState(initialLogs);
-  const [query, setQuery] = useState("");
-  const [filter, setFilter] = useState<Filter>("all");
-  const [live, setLive] = useState(false);
-  const [selectedId, setSelectedId] = useState(
-    () =>
-      initialLogs.find((entry) => entry.status >= 500)?.id ?? initialLogs[0].id,
-  );
-  const [sheetOpen, setSheetOpen] = useState(false);
-  const isWide = useMediaQuery("(min-width: 1024px)");
-  const random = useRef(seededRandom(77));
-
-  useEffect(() => {
-    if (!live) return;
-    const timer = window.setInterval(() => {
-      setLogs((current) => {
-        const next = random.current;
-        const time = current[0].time + Math.round(800 + next() * 2_400);
-        const cutoff = time - windowMinutes * 60_000;
-        return [
-          createEntry(next, time, current.length),
-          ...current.filter((entry) => entry.time > cutoff),
-        ];
-      });
-    }, 1_600);
-    return () => window.clearInterval(timer);
-  }, [live]);
-
-  const terms = query.trim().toLowerCase();
-  const matching = logs.filter((entry) =>
-    terms
-      ? `${entry.id} ${entry.method} ${entry.path} ${entry.status} ${entry.region}`
-          .toLowerCase()
-          .includes(terms)
-      : true,
-  );
-  const visible = matching.filter(
-    (entry) => filter === "all" || statusClass(entry.status) === filter,
-  );
-  const counts = {
-    all: matching.length,
-    success: matching.filter((entry) => statusClass(entry.status) === "success")
-      .length,
-    client: matching.filter((entry) => statusClass(entry.status) === "client")
-      .length,
-    server: matching.filter((entry) => statusClass(entry.status) === "server")
-      .length,
-  };
-  const selected = logs.find((entry) => entry.id === selectedId) ?? null;
-  const errorRate =
-    logs.length === 0
-      ? 0
-      : (logs.filter((entry) => entry.status >= 500).length / logs.length) *
-        100;
+function RequestStats({ logs }: { logs: LogEntry[] }) {
+  const serverErrors = logs.filter((entry) => entry.status >= 500).length;
+  const errorRate = logs.length === 0 ? 0 : (serverErrors / logs.length) * 100;
 
   const durations = logs.map((entry) => entry.duration);
-  const serverErrors = logs.filter((entry) => entry.status >= 500).length;
   const routeTimes = new Map<string, number[]>();
   for (const entry of logs) {
     const route = `${entry.method} ${entry.path.replace(/\/[a-z]+_[a-z0-9]+$/, "/{id}")}`;
@@ -228,6 +175,74 @@ export function LogExplorer() {
     },
   ];
 
+  return (
+    <StatGroup
+      aria-label="Request metrics"
+      role="group"
+      className="grid-cols-2 lg:grid-cols-4"
+    >
+      {stats.map((stat) => (
+        <Stat key={stat.label}>
+          <StatLabel>{stat.label}</StatLabel>
+          <StatValue className="text-2xl tabular-nums">{stat.value}</StatValue>
+          <StatDetail className="min-w-0">
+            <span className="truncate">{stat.detail}</span>
+          </StatDetail>
+        </Stat>
+      ))}
+    </StatGroup>
+  );
+}
+
+export function LogExplorer() {
+  const [logs, setLogs] = useState(initialLogs);
+  const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState<Filter>("all");
+  const [live, setLive] = useState(false);
+  const [selectedId, setSelectedId] = useState(
+    () =>
+      initialLogs.find((entry) => entry.status >= 500)?.id ?? initialLogs[0].id,
+  );
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const isWide = useMediaQuery("(min-width: 1024px)");
+  const [random] = useState(() => seededRandom(77));
+
+  useEffect(() => {
+    if (!live) return;
+    const timer = window.setInterval(() => {
+      setLogs((current) => {
+        const time = current[0].time + Math.round(800 + random() * 2_400);
+        const cutoff = time - windowMinutes * 60_000;
+        return [
+          createEntry(random, time, current.length),
+          ...current.filter((entry) => entry.time > cutoff),
+        ];
+      });
+    }, 1_600);
+    return () => window.clearInterval(timer);
+  }, [live, random]);
+
+  const terms = query.trim().toLowerCase();
+  const matching = logs.filter((entry) =>
+    terms
+      ? `${entry.id} ${entry.method} ${entry.path} ${entry.status} ${entry.region}`
+          .toLowerCase()
+          .includes(terms)
+      : true,
+  );
+  const visible = matching.filter(
+    (entry) => filter === "all" || statusClass(entry.status) === filter,
+  );
+  const counts = {
+    all: matching.length,
+    success: matching.filter((entry) => statusClass(entry.status) === "success")
+      .length,
+    client: matching.filter((entry) => statusClass(entry.status) === "client")
+      .length,
+    server: matching.filter((entry) => statusClass(entry.status) === "server")
+      .length,
+  };
+  const selected = logs.find((entry) => entry.id === selectedId) ?? null;
   function choose(id: string) {
     setSelectedId(id);
     if (!isWide) setSheetOpen(true);
@@ -351,23 +366,7 @@ export function LogExplorer() {
           </Switch>
         </div>
 
-        <StatGroup
-          aria-label="Request metrics"
-          role="group"
-          className="grid-cols-2 lg:grid-cols-4"
-        >
-          {stats.map((stat) => (
-            <Stat key={stat.label}>
-              <StatLabel>{stat.label}</StatLabel>
-              <StatValue className="text-2xl tabular-nums">
-                {stat.value}
-              </StatValue>
-              <StatDetail className="min-w-0">
-                <span className="truncate">{stat.detail}</span>
-              </StatDetail>
-            </Stat>
-          ))}
-        </StatGroup>
+        <RequestStats logs={logs} />
 
         <LogHistogram logs={matching} end={logs[0]?.time ?? 0} />
 

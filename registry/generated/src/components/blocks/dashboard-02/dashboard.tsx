@@ -34,6 +34,7 @@ import {
 import {
   bucketRows,
   compareOptions,
+  type DayRow,
   defaultRange,
   formatCompactMoney,
   formatCount,
@@ -210,6 +211,145 @@ function Detail({ label, value }: { label: string; value: string }) {
   );
 }
 
+function exportCsv(rows: DayRow[]) {
+  const header = [
+    "Date",
+    "MRR",
+    "Active workspaces",
+    "Trials",
+    "New workspaces",
+    "Churned workspaces",
+    "New MRR",
+    "Expansion MRR",
+    "Contraction MRR",
+    "Churned MRR",
+  ];
+  const lines = rows.map((row) =>
+    [
+      row.date,
+      row.mrr,
+      row.workspaces,
+      row.trials,
+      row.signups,
+      row.churned,
+      row.newMrr,
+      row.expansionMrr,
+      row.contractionMrr,
+      row.churnedMrr,
+    ].join(","),
+  );
+  const csv = [header.join(","), ...lines].join("\n");
+  const url = URL.createObjectURL(
+    new Blob([csv], { type: "text/csv;charset=utf-8" }),
+  );
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = "cobalt-analytics.csv";
+  anchor.click();
+  URL.revokeObjectURL(url);
+  showToast({
+    title: `${rows.length} days exported`,
+    description: "The CSV file is in your downloads folder.",
+    variant: "success",
+  });
+}
+
+function KpiStats({
+  kpis,
+  compareLabel,
+}: {
+  kpis: Kpi[] | null;
+  compareLabel: string;
+}) {
+  if (!kpis) {
+    return ["a", "b", "c", "d", "e", "f"].map((key) => (
+      <Stat key={key} className="grid gap-2.5">
+        <Skeleton className="h-3.5 w-24" />
+        <Skeleton className="h-7 w-28" />
+        <Skeleton className="h-4 w-20" />
+      </Stat>
+    ));
+  }
+
+  return kpis.map((kpi) => (
+    <Stat key={kpi.label}>
+      <StatLabel className="truncate">{kpi.label}</StatLabel>
+      <StatValue className="text-2xl">
+        <AnimatedNumber value={kpi.value} formatOptions={kpi.format} />
+      </StatValue>
+      <StatDetail>
+        {kpi.change === null ? (
+          <span>No comparison</span>
+        ) : (
+          <>
+            <StatTrend
+              direction={
+                kpi.change > 0 ? "up" : kpi.change < 0 ? "down" : "neutral"
+              }
+              invert={kpi.invert}
+            >
+              {formatChange(kpi, kpi.change)}
+            </StatTrend>
+            <span className="truncate">vs. {compareLabel.toLowerCase()}</span>
+          </>
+        )}
+      </StatDetail>
+    </Stat>
+  ));
+}
+
+function GoalCard({
+  current,
+  days,
+  end,
+}: {
+  current: Summary;
+  days: number;
+  end: CalendarDate;
+}) {
+  const daysLeft = Math.max(
+    0,
+    Math.round((quarterEnd - end.toDate("UTC").getTime()) / dayMs),
+  );
+  const pace = (current.netNewMrr * 30) / days;
+  const projected = current.mrr + (pace * daysLeft) / 30;
+  const gap = Math.max(0, goal - current.mrr);
+  const needed = daysLeft > 0 ? gap / (daysLeft / 30) : gap;
+  const onTrack = projected >= goal;
+
+  return (
+    <Card className="grid content-start gap-4 p-5">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h3 className="text-base font-semibold tracking-tight">Q4 goal</h3>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {formatMoney(goal)} MRR by December 31
+          </p>
+        </div>
+        <Badge variant={onTrack ? "success" : "warning"}>
+          {onTrack ? "On track" : "Behind pace"}
+        </Badge>
+      </div>
+      <div className="grid justify-items-center py-1">
+        <ProgressRing
+          label="of goal"
+          value={Math.min(current.mrr, goal)}
+          maxValue={goal}
+          size="lg"
+          aria-label={`${formatMoney(current.mrr)} of ${formatMoney(goal)}`}
+        />
+      </div>
+      <Separator />
+      <dl className="grid gap-2.5 text-sm">
+        <Detail label="Gap to goal" value={formatMoney(gap)} />
+        <Detail label="Needed per month" value={formatMoney(needed)} />
+        <Detail label="Current pace per month" value={formatMoney(pace)} />
+        <Detail label="Projected on Dec 31" value={formatMoney(projected)} />
+      </dl>
+    </Card>
+  );
+}
+
 export function AnalyticsDashboard() {
   const [range, setRange] = useState<RangeValue<CalendarDate>>({
     start: defaultRange.start,
@@ -256,60 +396,7 @@ export function AnalyticsDashboard() {
     timer.current = window.setTimeout(() => setLoading(false), 650);
   }
 
-  function exportData() {
-    const header = [
-      "Date",
-      "MRR",
-      "Active workspaces",
-      "Trials",
-      "New workspaces",
-      "Churned workspaces",
-      "New MRR",
-      "Expansion MRR",
-      "Contraction MRR",
-      "Churned MRR",
-    ];
-    const lines = rows.map((row) =>
-      [
-        row.date,
-        row.mrr,
-        row.workspaces,
-        row.trials,
-        row.signups,
-        row.churned,
-        row.newMrr,
-        row.expansionMrr,
-        row.contractionMrr,
-        row.churnedMrr,
-      ].join(","),
-    );
-    const csv = [header.join(","), ...lines].join("\n");
-    const url = URL.createObjectURL(
-      new Blob([csv], { type: "text/csv;charset=utf-8" }),
-    );
-    const anchor = document.createElement("a");
-    anchor.href = url;
-    anchor.download = "cobalt-analytics.csv";
-    anchor.click();
-    URL.revokeObjectURL(url);
-    showToast({
-      title: `${rows.length} days exported`,
-      description: "The CSV file is in your downloads folder.",
-      variant: "success",
-    });
-  }
-
-  const kpis = current ? kpisFor(current, previous) : [];
-
-  const daysLeft = Math.max(
-    0,
-    Math.round((quarterEnd - range.end.toDate("UTC").getTime()) / dayMs),
-  );
-  const pace = current ? (current.netNewMrr * 30) / rows.length : 0;
-  const projected = current ? current.mrr + (pace * daysLeft) / 30 : 0;
-  const gap = current ? Math.max(0, goal - current.mrr) : goal;
-  const needed = daysLeft > 0 ? gap / (daysLeft / 30) : gap;
-  const onTrack = projected >= goal;
+  const kpis = current ? kpisFor(current, previous) : null;
 
   return (
     <div className="min-h-svh bg-muted/30">
@@ -375,7 +462,7 @@ export function AnalyticsDashboard() {
               onChange={(value) => setCompare(value as CompareKey)}
               className="w-full sm:w-44"
             />
-            <Button variant="outline" size="sm" onPress={exportData}>
+            <Button variant="outline" size="sm" onPress={() => exportCsv(rows)}>
               <DownloadSimpleIcon
                 data-icon="inline-start"
                 size={16}
@@ -391,48 +478,7 @@ export function AnalyticsDashboard() {
           aria-label="Key metrics"
           className="grid-cols-2 md:grid-cols-3 xl:grid-cols-6"
         >
-          {loading || !current
-            ? ["a", "b", "c", "d", "e", "f"].map((key) => (
-                <Stat key={key} className="grid gap-2.5">
-                  <Skeleton className="h-3.5 w-24" />
-                  <Skeleton className="h-7 w-28" />
-                  <Skeleton className="h-4 w-20" />
-                </Stat>
-              ))
-            : kpis.map((kpi) => (
-                <Stat key={kpi.label}>
-                  <StatLabel className="truncate">{kpi.label}</StatLabel>
-                  <StatValue className="text-2xl">
-                    <AnimatedNumber
-                      value={kpi.value}
-                      formatOptions={kpi.format}
-                    />
-                  </StatValue>
-                  <StatDetail>
-                    {kpi.change === null ? (
-                      <span>No comparison</span>
-                    ) : (
-                      <>
-                        <StatTrend
-                          direction={
-                            kpi.change > 0
-                              ? "up"
-                              : kpi.change < 0
-                                ? "down"
-                                : "neutral"
-                          }
-                          invert={kpi.invert}
-                        >
-                          {formatChange(kpi, kpi.change)}
-                        </StatTrend>
-                        <span className="truncate">
-                          vs. {compareLabel.toLowerCase()}
-                        </span>
-                      </>
-                    )}
-                  </StatDetail>
-                </Stat>
-              ))}
+          <KpiStats kpis={loading ? null : kpis} compareLabel={compareLabel} />
         </StatGroup>
 
         <Tabs
@@ -472,46 +518,11 @@ export function AnalyticsDashboard() {
                     formatValue={formatMoney}
                     formatAxis={formatCompactMoney}
                   />
-                  <Card className="grid content-start gap-4 p-5">
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <h3 className="text-base font-semibold tracking-tight">
-                          Q4 goal
-                        </h3>
-                        <p className="mt-1 text-sm text-muted-foreground">
-                          {formatMoney(goal)} MRR by December 31
-                        </p>
-                      </div>
-                      <Badge variant={onTrack ? "success" : "warning"}>
-                        {onTrack ? "On track" : "Behind pace"}
-                      </Badge>
-                    </div>
-                    <div className="grid justify-items-center py-1">
-                      <ProgressRing
-                        label="of goal"
-                        value={Math.min(current.mrr, goal)}
-                        maxValue={goal}
-                        size="lg"
-                        aria-label={`${formatMoney(current.mrr)} of ${formatMoney(goal)}`}
-                      />
-                    </div>
-                    <Separator />
-                    <dl className="grid gap-2.5 text-sm">
-                      <Detail label="Gap to goal" value={formatMoney(gap)} />
-                      <Detail
-                        label="Needed per month"
-                        value={formatMoney(needed)}
-                      />
-                      <Detail
-                        label="Current pace per month"
-                        value={formatMoney(pace)}
-                      />
-                      <Detail
-                        label="Projected on Dec 31"
-                        value={formatMoney(projected)}
-                      />
-                    </dl>
-                  </Card>
+                  <GoalCard
+                    current={current}
+                    days={rows.length}
+                    end={range.end}
+                  />
                 </div>
                 <MovementChart
                   data={buckets}

@@ -363,13 +363,17 @@ const compact = new Intl.NumberFormat("en-US", {
 export const formatCount = (value: number) => count.format(value);
 export const formatCompact = (value: number) => compact.format(value);
 
-export function formatRate(value: number) {
-  const digits = value < 0.01 ? 2 : 1;
-  return new Intl.NumberFormat("en-US", {
+const percent = (digits: number) =>
+  new Intl.NumberFormat("en-US", {
     style: "percent",
     minimumFractionDigits: digits,
     maximumFractionDigits: digits,
-  }).format(value);
+  });
+const percentFine = percent(2);
+const percentCoarse = percent(1);
+
+export function formatRate(value: number) {
+  return (value < 0.01 ? percentFine : percentCoarse).format(value);
 }
 
 export function formatMs(value: number) {
