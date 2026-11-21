@@ -6,7 +6,7 @@
   "description": "Share dialog with invites, access levels, a copy link, and a QR code.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["workspace"],
-  "docs": "Render <SharePage /> from components/blocks/share-01/share-page.tsx. Preview: https://vip-ui.dev/blocks/share-01",
+  "docs": "Render <SharePage /> from components/blocks/share-01/share-page.tsx. Preview: https://vip-ui.dev/blocks/share-01. The preview uses theme-gold, font-manrope, and --radius: 1rem.",
   "meta": {
     "entry": {
       "component": "SharePage",

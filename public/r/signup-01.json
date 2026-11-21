@@ -6,7 +6,7 @@
   "description": "A sign-up form with account and team details.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["authentication"],
-  "docs": "Render <SignupPage /> from components/blocks/signup-01/signup-page.tsx. Preview: https://vip-ui.dev/blocks/signup-01",
+  "docs": "Render <SignupPage /> from components/blocks/signup-01/signup-page.tsx. Preview: https://vip-ui.dev/blocks/signup-01. The preview uses theme-teal, font-inter, and --radius: 0.75rem.",
   "meta": {
     "entry": {
       "component": "SignupPage",

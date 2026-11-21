@@ -6,7 +6,7 @@
   "description": "Release notes with type filters, search, and a timeline.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["marketing"],
-  "docs": "Render <ChangelogPage /> from components/blocks/changelog-01/changelog-page.tsx. Preview: https://vip-ui.dev/blocks/changelog-01",
+  "docs": "Render <ChangelogPage /> from components/blocks/changelog-01/changelog-page.tsx. Preview: https://vip-ui.dev/blocks/changelog-01. The preview uses theme-orange, font-manrope, and --radius: 1rem.",
   "meta": {
     "entry": {
       "component": "ChangelogPage",

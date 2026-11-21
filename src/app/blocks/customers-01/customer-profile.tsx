@@ -42,6 +42,7 @@ import {
   MenuSeparator,
   MenuTrigger,
 } from "@/components/ui/menu";
+import { Meter } from "@/components/ui/meter";
 import {
   Stat,
   StatDetail,
@@ -212,7 +213,7 @@ export function CustomerProfile() {
           <div className="flex shrink-0 items-center gap-2 text-sm font-semibold">
             <span
               aria-hidden="true"
-              className="grid size-7 place-items-center rounded-md bg-foreground text-background"
+              className="grid size-7 place-items-center rounded-md bg-primary text-primary-foreground"
             >
               <CoffeeBeanIcon size={16} weight="fill" />
             </span>
@@ -638,6 +639,30 @@ export function CustomerProfile() {
                   </Switch>
                 </div>
               </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle as="h2">Most ordered</CardTitle>
+                <CardDescription>
+                  {customer.favorites.length > 0
+                    ? `${customer.favorites.reduce((sum, item) => sum + item.bags, 0)} bags in ${customer.ordersCount} orders`
+                    : "No orders yet."}
+                </CardDescription>
+              </CardHeader>
+              {customer.favorites.length > 0 && (
+                <CardContent className="grid gap-4">
+                  {customer.favorites.map((item) => (
+                    <Meter
+                      key={item.name}
+                      label={item.name}
+                      value={item.bags}
+                      maxValue={customer.favorites[0].bags}
+                      valueLabel={`${item.bags} bags`}
+                    />
+                  ))}
+                </CardContent>
+              )}
             </Card>
           </aside>
         </div>

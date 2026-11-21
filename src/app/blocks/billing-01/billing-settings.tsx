@@ -36,6 +36,7 @@ import { showToast } from "@/components/ui/toast";
 import { ConfirmPlanDialog } from "./confirm-plan-dialog";
 import { type PaymentCard, PaymentMethodDialog } from "./payment-method-dialog";
 import { SettingsShell } from "./settings-shell";
+import { UsageChart, type UsageDay } from "./usage-chart";
 
 export const plans = [
   {
@@ -64,13 +65,47 @@ export const plans = [
 export type Plan = (typeof plans)[number];
 
 export const daysInPeriod = 30;
-export const daysLeft = 28;
+export const daysLeft = 9;
 
 const seatsUsed = 12;
 
+const eventLimit = 2_000_000;
+
+function random(seed: number) {
+  let state = seed;
+  return () => {
+    state = (state + 0x6d2b79f5) | 0;
+    let value = Math.imul(state ^ (state >>> 15), 1 | state);
+    value = (value + Math.imul(value ^ (value >>> 7), 61 | value)) ^ value;
+    return ((value ^ (value >>> 14)) >>> 0) / 4_294_967_296;
+  };
+}
+
+const usageDays: UsageDay[] = (() => {
+  const next = random(1121);
+  const elapsed = daysInPeriod - daysLeft;
+  const raw = Array.from({ length: daysInPeriod }, (_, index) => {
+    const weekday = new Date(Date.UTC(2026, 10, index + 1)).getUTCDay();
+    const weekend = weekday === 0 || weekday === 6;
+    return (weekend ? 0.56 : 1) * (1 + index * 0.006) * (0.92 + next() * 0.16);
+  });
+  const scale =
+    1_480_000 / raw.slice(0, elapsed).reduce((sum, value) => sum + value, 0);
+  return raw.map((value, index) => ({
+    day: `Nov ${index + 1}`,
+    events: Math.round((value * scale) / 100) * 100,
+    projected: index >= elapsed,
+  }));
+})();
+
+const eventsUsed = usageDays
+  .filter((item) => !item.projected)
+  .reduce((sum, item) => sum + item.events, 0);
+const eventsProjected = usageDays.reduce((sum, item) => sum + item.events, 0);
+
 const usage = [
   { label: "Seats", value: seatsUsed, max: 15 },
-  { label: "Events", value: 1_480_000, max: 2_000_000 },
+  { label: "Events", value: eventsUsed, max: eventLimit },
   { label: "API requests", value: 74_000, max: 100_000 },
 ];
 
@@ -286,6 +321,12 @@ export function BillingSettings() {
             </Card>
           </div>
         </div>
+        <UsageChart
+          days={usageDays}
+          limit={eventLimit}
+          used={eventsUsed}
+          projected={eventsProjected}
+        />
         <Card className="overflow-hidden">
           <CardHeader className="pb-4">
             <CardTitle as="h2">Invoices</CardTitle>

@@ -633,7 +633,7 @@ test("the base item is schema-valid and carries the site setup", () => {
 });
 
 test("font items carry the typography fonts for every framework", () => {
-  assert.equal(fonts.length, 9);
+  assert.equal(fonts.length, 11);
   for (const item of fonts) {
     assert.deepEqual(
       itemNamed(item.name),

@@ -1,7 +1,7 @@
 "use client";
 
 import { MagnifyingGlassIcon, PulseIcon } from "@phosphor-icons/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,6 +33,13 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import {
+  Stat,
+  StatDetail,
+  StatGroup,
+  StatLabel,
+  StatValue,
+} from "@/components/ui/stat";
 import { Switch } from "@/components/ui/switch";
 import { ToggleButton } from "@/components/ui/toggle-button";
 import { ToggleButtonGroup } from "@/components/ui/toggle-button-group";
@@ -43,6 +50,7 @@ import {
   formatFull,
   initialLogs,
   type LogEntry,
+  percentile,
   responseBody,
   type StatusClass,
   seededRandom,
@@ -131,6 +139,61 @@ function LogDetails({ entry }: { entry: LogEntry }) {
   );
 }
 
+function RequestStats({ logs }: { logs: LogEntry[] }) {
+  const serverErrors = logs.filter((entry) => entry.status >= 500).length;
+  const errorRate = logs.length === 0 ? 0 : (serverErrors / logs.length) * 100;
+
+  const durations = logs.map((entry) => entry.duration);
+  const routeTimes = new Map<string, number[]>();
+  for (const entry of logs) {
+    const route = `${entry.method} ${entry.path.replace(/\/[a-z]+_[a-z0-9]+$/, "/{id}")}`;
+    routeTimes.set(route, [...(routeTimes.get(route) ?? []), entry.duration]);
+  }
+  const slowest = [...routeTimes.entries()]
+    .map(([route, times]) => ({ route, median: percentile(times, 0.5) }))
+    .sort((a, b) => b.median - a.median)[0];
+  const stats = [
+    {
+      label: "Requests",
+      value: logs.length.toLocaleString("en-US"),
+      detail: `${Math.round(logs.length / windowMinutes)} per minute`,
+    },
+    {
+      label: "Server errors",
+      value: serverErrors.toLocaleString("en-US"),
+      detail: `${errorRate.toFixed(1)}% of requests`,
+    },
+    {
+      label: "Latency p50",
+      value: `${percentile(durations, 0.5)} ms`,
+      detail: `p99 ${percentile(durations, 0.99).toLocaleString("en-US")} ms`,
+    },
+    {
+      label: "Latency p95",
+      value: `${percentile(durations, 0.95).toLocaleString("en-US")} ms`,
+      detail: slowest ? `Slowest: ${slowest.route}` : "No requests",
+    },
+  ];
+
+  return (
+    <StatGroup
+      aria-label="Request metrics"
+      role="group"
+      className="grid-cols-2 lg:grid-cols-4"
+    >
+      {stats.map((stat) => (
+        <Stat key={stat.label}>
+          <StatLabel>{stat.label}</StatLabel>
+          <StatValue className="text-2xl tabular-nums">{stat.value}</StatValue>
+          <StatDetail className="min-w-0">
+            <span className="truncate">{stat.detail}</span>
+          </StatDetail>
+        </Stat>
+      ))}
+    </StatGroup>
+  );
+}
+
 export function LogExplorer() {
   const [logs, setLogs] = useState(initialLogs);
   const [query, setQuery] = useState("");
@@ -142,23 +205,22 @@ export function LogExplorer() {
   );
   const [sheetOpen, setSheetOpen] = useState(false);
   const isWide = useMediaQuery("(min-width: 1024px)");
-  const random = useRef(seededRandom(77));
+  const [random] = useState(() => seededRandom(77));
 
   useEffect(() => {
     if (!live) return;
     const timer = window.setInterval(() => {
       setLogs((current) => {
-        const next = random.current;
-        const time = current[0].time + Math.round(800 + next() * 2_400);
+        const time = current[0].time + Math.round(800 + random() * 2_400);
         const cutoff = time - windowMinutes * 60_000;
         return [
-          createEntry(next, time, current.length),
+          createEntry(random, time, current.length),
           ...current.filter((entry) => entry.time > cutoff),
         ];
       });
     }, 1_600);
     return () => window.clearInterval(timer);
-  }, [live]);
+  }, [live, random]);
 
   const terms = query.trim().toLowerCase();
   const matching = logs.filter((entry) =>
@@ -181,12 +243,6 @@ export function LogExplorer() {
       .length,
   };
   const selected = logs.find((entry) => entry.id === selectedId) ?? null;
-  const errorRate =
-    logs.length === 0
-      ? 0
-      : (logs.filter((entry) => entry.status >= 500).length / logs.length) *
-        100;
-
   function choose(id: string) {
     setSelectedId(id);
     if (!isWide) setSheetOpen(true);
@@ -289,9 +345,8 @@ export function LogExplorer() {
             <h1 className="text-2xl font-semibold tracking-[-0.04em]">
               Requests
             </h1>
-            <p className="text-sm text-muted-foreground tabular-nums">
-              {logs.length} in the last 30 minutes · {errorRate.toFixed(1)}%
-              server errors
+            <p className="text-sm text-muted-foreground">
+              Last {windowMinutes} minutes in all regions
             </p>
           </div>
           <Switch
@@ -310,6 +365,8 @@ export function LogExplorer() {
             </span>
           </Switch>
         </div>
+
+        <RequestStats logs={logs} />
 
         <LogHistogram logs={matching} end={logs[0]?.time ?? 0} />
 

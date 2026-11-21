@@ -5,13 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { Alert } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import {
   Disclosure,
   DisclosureHeader,
@@ -32,14 +26,8 @@ import {
   TimelineTitle,
 } from "@/components/ui/timeline";
 import { showToast } from "@/components/ui/toast";
-import { incidents, type ServiceState, services, stateLabels } from "./data";
-import { UptimeChart } from "./uptime-chart";
-
-const badgeVariants: Record<ServiceState, "success" | "warning" | "error"> = {
-  operational: "success",
-  degraded: "warning",
-  outage: "error",
-};
+import { incidents } from "./data";
+import { ServiceUptime } from "./service-uptime";
 
 function jumpTo(id: string, selector: string) {
   const node = document.getElementById(id);
@@ -60,10 +48,6 @@ export function StatusPage() {
   useEffect(() => {
     if (subscribed) anotherEmail.current?.focus();
   }, [subscribed]);
-
-  const degraded = services.filter(
-    (service) => service.state !== "operational",
-  ).length;
 
   function subscribe(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -169,51 +153,13 @@ export function StatusPage() {
           </div>
         </Card>
 
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
-          <div id="uptime" className="min-w-0 scroll-mt-24">
-            <UptimeChart />
-          </div>
+        <Alert variant="info" title="Scheduled maintenance on 4 November">
+          We upgrade the reports database from 02:00 to 02:30 UTC. Reports and
+          exports are read-only during this time.
+        </Alert>
 
-          <Card className="min-w-0">
-            <CardHeader>
-              <CardTitle as="h2">Services</CardTitle>
-              <CardDescription>
-                {services.length} components · {degraded} degraded
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="px-0 pb-0 pt-2">
-              <ul className="divide-y divide-border/70 border-t border-border/70">
-                {services.map((service) => (
-                  <li
-                    key={service.name}
-                    className="flex items-center justify-between gap-3 px-5 py-2.5"
-                  >
-                    <div className="min-w-0">
-                      <p className="text-sm font-medium">{service.name}</p>
-                      <p className="mt-0.5 text-xs tabular-nums text-muted-foreground">
-                        {service.uptime} uptime
-                      </p>
-                    </div>
-                    {service.state === "operational" ? (
-                      <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
-                        <CheckCircleIcon
-                          size={16}
-                          weight="fill"
-                          aria-hidden="true"
-                          className="text-success"
-                        />
-                        <span className="sr-only">Operational</span>
-                      </span>
-                    ) : (
-                      <Badge variant={badgeVariants[service.state]}>
-                        {stateLabels[service.state]}
-                      </Badge>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
+        <div id="uptime" className="min-w-0 scroll-mt-24">
+          <ServiceUptime />
         </div>
 
         <section

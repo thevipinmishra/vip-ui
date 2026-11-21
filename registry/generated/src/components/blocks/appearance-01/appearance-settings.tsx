@@ -43,7 +43,7 @@ import { SettingsShell } from "./settings-shell";
 import { updateSiteTheme } from "./site-theme";
 
 const accents = [
-  { color: "#4f46e5", label: "Indigo" },
+  { color: "#2563eb", label: "Blue" },
   { color: "#0d9488", label: "Teal" },
   { color: "#0284c7", label: "Sky" },
   { color: "#7c3aed", label: "Violet" },
@@ -195,7 +195,7 @@ function applyTheme(mode: ThemeMode) {
 
 export function AppearanceSettings() {
   const [theme, setTheme] = useState<ThemeMode>("system");
-  const [accent, setAccent] = useState("#4f46e5");
+  const [accent, setAccent] = useState("#2563eb");
   const [font, setFont] = useState<FontId>("sans");
   const [fontSize, setFontSize] = useState(16);
   const [radius, setRadius] = useState(10);
@@ -223,7 +223,7 @@ export function AppearanceSettings() {
   }
 
   function reset() {
-    setAccent("#4f46e5");
+    setAccent("#2563eb");
     setFont("sans");
     setFontSize(16);
     setRadius(10);

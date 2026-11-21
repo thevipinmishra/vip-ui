@@ -68,6 +68,18 @@ export const initialItems: LineItem[] = [
     quantity: 12,
     rate: 120,
   },
+  {
+    id: "l4",
+    description: "Onboarding motion specs",
+    quantity: 18,
+    rate: 135,
+  },
+  {
+    id: "l5",
+    description: "Study participant incentives",
+    quantity: 8,
+    rate: 75,
+  },
 ];
 
 export const money = new Intl.NumberFormat("en-US", {

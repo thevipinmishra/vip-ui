@@ -142,7 +142,7 @@ export function BlogArticle() {
           <div className="flex items-center gap-2 text-sm font-semibold">
             <span
               aria-hidden="true"
-              className="grid size-7 place-items-center rounded-md bg-foreground text-background"
+              className="grid size-7 place-items-center rounded-md bg-primary text-primary-foreground"
             >
               <DatabaseIcon size={16} weight="fill" />
             </span>

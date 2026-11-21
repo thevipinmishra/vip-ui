@@ -6,7 +6,7 @@
   "description": "App directory with connect, sync status, and access review.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["settings"],
-  "docs": "Render <IntegrationsSettings /> from components/blocks/integrations-01/integrations-settings.tsx. Preview: https://vip-ui.dev/blocks/integrations-01",
+  "docs": "Render <IntegrationsSettings /> from components/blocks/integrations-01/integrations-settings.tsx. Preview: https://vip-ui.dev/blocks/integrations-01. The preview uses theme-blue, font-inter, and --radius: 0.5rem.",
   "meta": {
     "entry": {
       "component": "IntegrationsSettings",

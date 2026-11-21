@@ -6,7 +6,7 @@
   "description": "Three-step workspace setup with a live preview.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["onboarding"],
-  "docs": "Render <SetupFlow /> from components/blocks/onboarding-01/setup-flow.tsx. Preview: https://vip-ui.dev/blocks/onboarding-01",
+  "docs": "Render <SetupFlow /> from components/blocks/onboarding-01/setup-flow.tsx. Preview: https://vip-ui.dev/blocks/onboarding-01. The preview uses theme-bronze, font-figtree, and --radius: 0.75rem.",
   "meta": {
     "entry": {
       "component": "SetupFlow",

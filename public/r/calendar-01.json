@@ -6,7 +6,7 @@
   "description": "Week and day calendar with event details, editing, and calendar filters.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["scheduling"],
-  "docs": "Render <TeamCalendar /> from components/blocks/calendar-01/team-calendar.tsx. Preview: https://vip-ui.dev/blocks/calendar-01",
+  "docs": "Render <TeamCalendar /> from components/blocks/calendar-01/team-calendar.tsx. Preview: https://vip-ui.dev/blocks/calendar-01. The preview uses theme-blue, font-inter, and --radius: 0.5rem.",
   "meta": {
     "entry": {
       "component": "TeamCalendar",

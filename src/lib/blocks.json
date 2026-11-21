@@ -49,39 +49,77 @@
     {
       "name": "dashboard-01",
       "title": "Store dashboard",
-      "description": "A dashboard with a sidebar, key metrics, a revenue chart, and recent orders.",
+      "description": "Store dashboard with six metrics, sales against the previous period, channels, top products, fulfillment, and orders.",
       "category": "dashboard",
-      "height": 1200
+      "height": 1840,
+      "theme": {
+        "color": "orange",
+        "font": "figtree",
+        "radius": "0.75rem"
+      }
     },
     {
       "name": "stats-01",
       "title": "Metric cards",
-      "description": "Metric cards that change with the selected period.",
+      "description": "Metric cards with daily sparklines that change with the selected period.",
       "category": "dashboard",
-      "height": 410
+      "height": 410,
+      "theme": {
+        "color": "gray",
+        "font": "ibm-plex-sans",
+        "radius": "0.25rem"
+      }
     },
     {
       "name": "dashboard-02",
       "title": "SaaS analytics",
-      "description": "Analytics dashboard with date ranges, tabs, charts, and a target.",
+      "description": "Revenue analytics with date ranges, comparisons, MRR movement, a goal, cohorts, and an accounts table.",
       "category": "dashboard",
-      "height": 1310,
+      "height": 1975,
+      "theme": {
+        "color": "indigo",
+        "font": "manrope",
+        "radius": "0.5rem"
+      },
       "added": "2026-11-03"
     },
     {
       "name": "status-01",
       "title": "Service status",
-      "description": "Public status page with uptime bars and incident updates.",
+      "description": "Public status page with daily uptime for each service, maintenance, and incident updates.",
       "category": "dashboard",
-      "height": 1545,
+      "height": 1900,
+      "theme": {
+        "color": "indigo",
+        "font": "manrope",
+        "radius": "0.5rem"
+      },
       "added": "2026-11-03"
+    },
+    {
+      "name": "dashboard-03",
+      "title": "Observability",
+      "description": "Monitoring dashboard with traffic, errors, latency percentiles, an open incident, services, alerts, and changes.",
+      "category": "dashboard",
+      "height": 2440,
+      "theme": {
+        "color": "indigo",
+        "font": "manrope",
+        "radius": "0.5rem"
+      },
+      "added": "2026-11-21"
     },
     {
       "name": "orders-01",
       "title": "Store orders",
       "description": "Order list with filters, bulk actions, and details.",
       "category": "data",
-      "height": 940,
+      "height": 1116,
+      "theme": {
+        "color": "gold",
+        "font": "figtree",
+        "radius": "0.5rem"
+      },
       "added": "2026-11-03"
     },
     {
@@ -89,7 +127,12 @@
       "title": "Order detail",
       "description": "Order with line items, fulfillment history, and a refund.",
       "category": "data",
-      "height": 1160,
+      "height": 1715,
+      "theme": {
+        "color": "gold",
+        "font": "figtree",
+        "radius": "0.5rem"
+      },
       "added": "2026-11-03"
     },
     {
@@ -97,7 +140,12 @@
       "title": "Request logs",
       "description": "Request log explorer with a live tail, status filters, and resizable details.",
       "category": "data",
-      "height": 965,
+      "height": 1095,
+      "theme": {
+        "color": "cyan",
+        "font": "ibm-plex-sans",
+        "radius": "0.25rem"
+      },
       "added": "2026-11-21"
     },
     {
@@ -106,6 +154,11 @@
       "description": "Assistant chat that reads metrics and cites its sources.",
       "category": "ai",
       "height": 720,
+      "theme": {
+        "color": "violet",
+        "font": "geist",
+        "radius": "0.75rem"
+      },
       "added": "2026-11-03"
     },
     {
@@ -114,6 +167,11 @@
       "description": "Live agent run with tool calls, progress, and a stop action.",
       "category": "ai",
       "height": 1365,
+      "theme": {
+        "color": "violet",
+        "font": "geist",
+        "radius": "0.75rem"
+      },
       "added": "2026-11-03"
     },
     {
@@ -122,6 +180,11 @@
       "description": "Docs search that answers the question and lists sources.",
       "category": "ai",
       "height": 1250,
+      "theme": {
+        "color": "violet",
+        "font": "geist",
+        "radius": "0.75rem"
+      },
       "added": "2026-11-03"
     },
     {
@@ -129,21 +192,36 @@
       "title": "Sign in",
       "description": "A sign-in form in a card.",
       "category": "authentication",
-      "height": 690
+      "height": 690,
+      "theme": {
+        "color": "teal",
+        "font": "inter",
+        "radius": "0.75rem"
+      }
     },
     {
       "name": "login-02",
       "title": "Sign in with a link",
       "description": "A two-column sign-in page with an email link and a brand panel.",
       "category": "authentication",
-      "height": 700
+      "height": 700,
+      "theme": {
+        "color": "teal",
+        "font": "inter",
+        "radius": "0.75rem"
+      }
     },
     {
       "name": "signup-01",
       "title": "Sign up",
       "description": "A sign-up form with account and team details.",
       "category": "authentication",
-      "height": 820
+      "height": 820,
+      "theme": {
+        "color": "teal",
+        "font": "inter",
+        "radius": "0.75rem"
+      }
     },
     {
       "name": "verify-01",
@@ -151,6 +229,11 @@
       "description": "Two-step code check with a resend timer and recovery code.",
       "category": "authentication",
       "height": 720,
+      "theme": {
+        "color": "violet",
+        "font": "geist",
+        "radius": "0.75rem"
+      },
       "added": "2026-11-03"
     },
     {
@@ -159,6 +242,11 @@
       "description": "Password reset form with a sent state and a resend option.",
       "category": "authentication",
       "height": 663,
+      "theme": {
+        "color": "violet",
+        "font": "geist",
+        "radius": "0.75rem"
+      },
       "added": "2026-11-03"
     },
     {
@@ -167,6 +255,11 @@
       "description": "Three-step workspace setup with a live preview.",
       "category": "onboarding",
       "height": 870,
+      "theme": {
+        "color": "bronze",
+        "font": "figtree",
+        "radius": "0.75rem"
+      },
       "added": "2026-11-03"
     },
     {
@@ -175,6 +268,11 @@
       "description": "Six-task checklist that fills a progress ring.",
       "category": "onboarding",
       "height": 860,
+      "theme": {
+        "color": "bronze",
+        "font": "figtree",
+        "radius": "0.75rem"
+      },
       "added": "2026-11-03"
     },
     {
@@ -182,21 +280,36 @@
       "title": "Profile settings",
       "description": "A profile form with a username check and a save bar.",
       "category": "settings",
-      "height": 1079
+      "height": 1079,
+      "theme": {
+        "color": "blue",
+        "font": "inter",
+        "radius": "0.5rem"
+      }
     },
     {
       "name": "settings-02",
       "title": "Notification settings",
       "description": "Notification channels for each event, with quiet hours and autosave.",
       "category": "settings",
-      "height": 1232
+      "height": 1232,
+      "theme": {
+        "color": "blue",
+        "font": "inter",
+        "radius": "0.5rem"
+      }
     },
     {
       "name": "billing-01",
       "title": "Billing",
       "description": "A plan picker with prorated cost, usage meters, and invoices.",
       "category": "settings",
-      "height": 966
+      "height": 1302,
+      "theme": {
+        "color": "blue",
+        "font": "inter",
+        "radius": "0.5rem"
+      }
     },
     {
       "name": "security-01",
@@ -204,6 +317,11 @@
       "description": "Password, two-step sign-in, sessions, and account deletion.",
       "category": "settings",
       "height": 1380,
+      "theme": {
+        "color": "blue",
+        "font": "inter",
+        "radius": "0.5rem"
+      },
       "added": "2026-11-03"
     },
     {
@@ -212,6 +330,11 @@
       "description": "Theme, accent color, font, and motion settings.",
       "category": "settings",
       "height": 1358,
+      "theme": {
+        "color": "blue",
+        "font": "inter",
+        "radius": "0.5rem"
+      },
       "added": "2026-11-03"
     },
     {
@@ -219,7 +342,12 @@
       "title": "API keys",
       "description": "API key list with scopes, expiry dates, and revoke actions.",
       "category": "settings",
-      "height": 729,
+      "height": 739,
+      "theme": {
+        "color": "blue",
+        "font": "inter",
+        "radius": "0.5rem"
+      },
       "added": "2026-11-03"
     },
     {
@@ -228,6 +356,11 @@
       "description": "App directory with connect, sync status, and access review.",
       "category": "settings",
       "height": 1116,
+      "theme": {
+        "color": "blue",
+        "font": "inter",
+        "radius": "0.5rem"
+      },
       "added": "2026-11-03"
     },
     {
@@ -236,6 +369,11 @@
       "description": "Product landing page with features, plans, and social proof.",
       "category": "marketing",
       "height": 3605,
+      "theme": {
+        "color": "orange",
+        "font": "manrope",
+        "radius": "1rem"
+      },
       "added": "2026-11-03"
     },
     {
@@ -243,7 +381,12 @@
       "title": "Pricing plans",
       "description": "Pricing plans with a monthly and yearly toggle.",
       "category": "marketing",
-      "height": 972
+      "height": 972,
+      "theme": {
+        "color": "orange",
+        "font": "manrope",
+        "radius": "1rem"
+      }
     },
     {
       "name": "pricing-02",
@@ -251,6 +394,11 @@
       "description": "Plan comparison with a seat calculator and feature table.",
       "category": "marketing",
       "height": 3295,
+      "theme": {
+        "color": "orange",
+        "font": "manrope",
+        "radius": "1rem"
+      },
       "added": "2026-11-03"
     },
     {
@@ -259,6 +407,11 @@
       "description": "Release notes with type filters, search, and a timeline.",
       "category": "marketing",
       "height": 1575,
+      "theme": {
+        "color": "orange",
+        "font": "manrope",
+        "radius": "1rem"
+      },
       "added": "2026-11-03"
     },
     {
@@ -267,6 +420,11 @@
       "description": "Sales contact form with validation and a success state.",
       "category": "marketing",
       "height": 1195,
+      "theme": {
+        "color": "plum",
+        "font": "inter",
+        "radius": "0.5rem"
+      },
       "added": "2026-11-03"
     },
     {
@@ -275,6 +433,11 @@
       "description": "404 page with search, suggested pages, and articles.",
       "category": "marketing",
       "height": 960,
+      "theme": {
+        "color": "plum",
+        "font": "inter",
+        "radius": "0.5rem"
+      },
       "added": "2026-11-03"
     },
     {
@@ -283,6 +446,11 @@
       "description": "Help center with search, topics, articles, and a contact form.",
       "category": "content",
       "height": 1459,
+      "theme": {
+        "color": "violet",
+        "font": "geist",
+        "radius": "0.75rem"
+      },
       "added": "2026-11-21"
     },
     {
@@ -290,7 +458,12 @@
       "title": "Blog article",
       "description": "Long-form article with a table of contents, code, and a chart.",
       "category": "content",
-      "height": 2922,
+      "height": 2797,
+      "theme": {
+        "color": "gray",
+        "font": "newsreader",
+        "radius": "0.5rem"
+      },
       "added": "2026-11-21"
     },
     {
@@ -299,6 +472,11 @@
       "description": "Product page with variants, reviews, and a cart.",
       "category": "commerce",
       "height": 1460,
+      "theme": {
+        "color": "green",
+        "font": "source-serif",
+        "radius": "0.5rem"
+      },
       "added": "2026-11-03"
     },
     {
@@ -307,6 +485,11 @@
       "description": "Checkout with delivery options, promo code, and card payment.",
       "category": "commerce",
       "height": 860,
+      "theme": {
+        "color": "green",
+        "font": "source-serif",
+        "radius": "0.5rem"
+      },
       "added": "2026-11-03"
     },
     {
@@ -314,7 +497,12 @@
       "title": "Invoice editor",
       "description": "Invoice editor with line items, taxes, a live preview, and a send dialog.",
       "category": "commerce",
-      "height": 814,
+      "height": 910,
+      "theme": {
+        "color": "pink",
+        "font": "geist",
+        "radius": "0.25rem"
+      },
       "added": "2026-11-21"
     },
     {
@@ -323,6 +511,11 @@
       "description": "Customer profile with orders, subscription, notes, and tags.",
       "category": "commerce",
       "height": 1429,
+      "theme": {
+        "color": "bronze",
+        "font": "manrope",
+        "radius": "0.75rem"
+      },
       "added": "2026-11-21"
     },
     {
@@ -331,6 +524,11 @@
       "description": "Booking page with a calendar, time slots, and a time zone.",
       "category": "scheduling",
       "height": 820,
+      "theme": {
+        "color": "green",
+        "font": "figtree",
+        "radius": "1rem"
+      },
       "added": "2026-11-03"
     },
     {
@@ -338,7 +536,12 @@
       "title": "Weekly availability",
       "description": "Weekly hours editor with time off and a booking window.",
       "category": "scheduling",
-      "height": 1400,
+      "height": 1256,
+      "theme": {
+        "color": "cyan",
+        "font": "inter",
+        "radius": "0.75rem"
+      },
       "added": "2026-11-03"
     },
     {
@@ -347,6 +550,11 @@
       "description": "Week and day calendar with event details, editing, and calendar filters.",
       "category": "scheduling",
       "height": 804,
+      "theme": {
+        "color": "blue",
+        "font": "inter",
+        "radius": "0.5rem"
+      },
       "added": "2026-11-21"
     },
     {
@@ -354,14 +562,24 @@
       "title": "Team members",
       "description": "A team list with invites, roles, and member actions.",
       "category": "workspace",
-      "height": 680
+      "height": 1356,
+      "theme": {
+        "color": "blue",
+        "font": "inter",
+        "radius": "0.5rem"
+      }
     },
     {
       "name": "upload-01",
       "title": "File upload",
       "description": "A file upload area with progress for each file.",
       "category": "workspace",
-      "height": 680
+      "height": 1071,
+      "theme": {
+        "color": "blue",
+        "font": "inter",
+        "radius": "0.5rem"
+      }
     },
     {
       "name": "files-01",
@@ -369,6 +587,11 @@
       "description": "File manager with folders, uploads, and file details.",
       "category": "workspace",
       "height": 890,
+      "theme": {
+        "color": "blue",
+        "font": "inter",
+        "radius": "0.5rem"
+      },
       "added": "2026-11-03"
     },
     {
@@ -377,6 +600,11 @@
       "description": "Project list with grid and list views, stars, filters, and a create dialog.",
       "category": "workspace",
       "height": 716,
+      "theme": {
+        "color": "pink",
+        "font": "geist",
+        "radius": "0.25rem"
+      },
       "added": "2026-11-21"
     },
     {
@@ -385,6 +613,11 @@
       "description": "Task board with drag and drop, work limits, and task details.",
       "category": "workspace",
       "height": 765,
+      "theme": {
+        "color": "bronze",
+        "font": "figtree",
+        "radius": "0.75rem"
+      },
       "added": "2026-11-21"
     },
     {
@@ -393,6 +626,11 @@
       "description": "Share dialog with invites, access levels, a copy link, and a QR code.",
       "category": "workspace",
       "height": 800,
+      "theme": {
+        "color": "gold",
+        "font": "manrope",
+        "radius": "1rem"
+      },
       "added": "2026-11-21"
     },
     {
@@ -401,6 +639,11 @@
       "description": "Agreement with initials, a drawn or typed signature, and a finish step.",
       "category": "workspace",
       "height": 1313,
+      "theme": {
+        "color": "indigo",
+        "font": "lora",
+        "radius": "0.25rem"
+      },
       "added": "2026-11-21"
     },
     {
@@ -409,6 +652,11 @@
       "description": "Issue with properties, comments, and keyboard shortcuts.",
       "category": "workspace",
       "height": 1615,
+      "theme": {
+        "color": "blue",
+        "font": "inter",
+        "radius": "0.5rem"
+      },
       "added": "2026-11-03"
     },
     {
@@ -416,7 +664,12 @@
       "title": "Support inbox",
       "description": "Support inbox with queues, snooze, and replies.",
       "category": "workspace",
-      "height": 850,
+      "height": 965,
+      "theme": {
+        "color": "blue",
+        "font": "inter",
+        "radius": "0.5rem"
+      },
       "added": "2026-11-03"
     }
   ]

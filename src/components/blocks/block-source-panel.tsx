@@ -8,6 +8,8 @@ import {
   WarningCircleIcon,
 } from "@phosphor-icons/react";
 import { type CSSProperties, useEffect, useState } from "react";
+import { findTheme } from "@/app/themes/themes";
+import { findFont } from "@/app/typography/fonts";
 import { CopyCodeButton } from "@/components/docs/copy-code-button";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,6 +19,7 @@ import {
   EmptyStateIcon,
   EmptyStateTitle,
 } from "@/components/ui/empty-state";
+import { Link } from "@/components/ui/link";
 import { Spinner } from "@/components/ui/spinner";
 import { ToggleButton } from "@/components/ui/toggle-button";
 import { ToggleButtonGroup } from "@/components/ui/toggle-button-group";
@@ -24,6 +27,25 @@ import type { Block } from "@/lib/blocks";
 import type { BlockSource } from "./block-source-types";
 
 const cache = new Map<string, BlockSource>();
+
+function PreviewTheme({ block }: { block: Block }) {
+  const theme = block.theme;
+  const colors = findTheme(theme?.color);
+  if (!theme || !colors) return null;
+  const params = new URLSearchParams({
+    theme: colors.slug,
+    font: theme.font,
+    radius: theme.radius.replace("rem", ""),
+  });
+
+  return (
+    <p className="text-pretty text-xs leading-5 text-muted-foreground">
+      The preview uses the{" "}
+      <Link href={`/themes?${params}`}>{colors.name} theme</Link> with{" "}
+      {findFont(theme.font).name} and a {theme.radius} radius.
+    </p>
+  );
+}
 
 function defaultFile(source: BlockSource) {
   return (
@@ -155,6 +177,7 @@ export function BlockSourcePanel({ block }: { block: Block }) {
           </code>{" "}
           on any page.
         </p>
+        <PreviewTheme block={block} />
       </div>
       <div className="code-frame flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl bg-code text-code-foreground md:grid md:grid-cols-[14rem_minmax(0,1fr)] md:grid-rows-[minmax(0,1fr)]">
         <div className="flex min-h-0 shrink-0 flex-col border-b border-border/70 md:overflow-y-auto md:border-e md:border-b-0">

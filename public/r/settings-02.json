@@ -6,7 +6,7 @@
   "description": "Notification channels for each event, with quiet hours and autosave.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["settings"],
-  "docs": "Render <NotificationsPage /> from components/blocks/settings-02/notifications-page.tsx. Preview: https://vip-ui.dev/blocks/settings-02",
+  "docs": "Render <NotificationsPage /> from components/blocks/settings-02/notifications-page.tsx. Preview: https://vip-ui.dev/blocks/settings-02. The preview uses theme-blue, font-inter, and --radius: 0.5rem.",
   "meta": {
     "entry": {
       "component": "NotificationsPage",

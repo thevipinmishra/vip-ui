@@ -19,6 +19,7 @@ import {
   useEffect,
   useRef,
   useState,
+  useSyncExternalStore,
 } from "react";
 import { prefersReducedMotion } from "./motion";
 import { cn } from "./utils";
@@ -170,6 +171,8 @@ export type TooltipChartProps<
   children?: ReactNode;
 };
 
+const subscribeToHydration = () => () => {};
+
 function ChartShell({
   animated,
   children,
@@ -180,6 +183,11 @@ function ChartShell({
   const ref = useRef<HTMLDivElement>(null);
   const framed = use(ChartFrameContext);
   const [entrance, setEntrance] = useState<ChartEntrance>("idle");
+  const hydrating = useSyncExternalStore(
+    subscribeToHydration,
+    () => false,
+    () => true,
+  );
 
   useEffect(() => {
     const element = ref.current;
@@ -211,9 +219,9 @@ function ChartShell({
     <div
       ref={ref}
       data-slot="chart-plot"
-      data-entrance={animated ? entrance : "idle"}
+      data-entrance={hydrating ? "waiting" : animated ? entrance : "idle"}
       className={cn(
-        "relative transition-opacity duration-250 ease-out-quint data-[entrance=waiting]:opacity-0 data-[entrance=waiting]:transition-none print:data-[entrance=waiting]:opacity-100",
+        "relative transition-opacity duration-250 ease-out-quint data-[entrance=waiting]:opacity-0 data-[entrance=waiting]:transition-none noscript:data-[entrance=waiting]:opacity-100 print:data-[entrance=waiting]:opacity-100",
         !framed && chartSurfaceClass,
       )}
       style={framed ? undefined : chartStyle}

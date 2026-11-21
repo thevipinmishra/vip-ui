@@ -509,6 +509,12 @@ function blockFilesItem(name, sources, blockFiles) {
   };
 }
 
+function previewTheme(block) {
+  if (!block.theme) return "";
+  const { color, font, radius } = block.theme;
+  return `. The preview uses theme-${color}, font-${font}, and --radius: ${radius}.`;
+}
+
 export function createBlockItem(block, sources, blockFiles) {
   const entry = blockEntry(block, blockFiles);
   return {
@@ -519,7 +525,7 @@ export function createBlockItem(block, sources, blockFiles) {
     description: block.description,
     author: registryAuthor,
     categories: [block.category],
-    docs: `Render <${entry.component} /> from components/blocks/${block.name}/${entry.file}. Preview: ${registryOrigin}/blocks/${block.name}`,
+    docs: `Render <${entry.component} /> from components/blocks/${block.name}/${entry.file}. Preview: ${registryOrigin}/blocks/${block.name}${previewTheme(block)}`,
     meta: { entry },
     ...blockFilesItem(block.name, sources, blockFiles),
   };
@@ -798,6 +804,8 @@ const fontFamilies = {
   "geist-mono": "Geist Mono Variable",
   inter: "Inter Variable",
   "ibm-plex-sans": "IBM Plex Sans Variable",
+  figtree: "Figtree Variable",
+  manrope: "Manrope Variable",
   "source-serif": "Source Serif 4 Variable",
   newsreader: "Newsreader Variable",
   lora: "Lora Variable",
@@ -817,6 +825,8 @@ const fontDependencies = {
   "geist-mono": "@fontsource-variable/geist-mono",
   inter: "@fontsource-variable/inter",
   "ibm-plex-sans": "@fontsource-variable/ibm-plex-sans",
+  figtree: "@fontsource-variable/figtree",
+  manrope: "@fontsource-variable/manrope",
   "source-serif": "@fontsource-variable/source-serif-4",
   newsreader: "@fontsource-variable/newsreader",
   lora: "@fontsource-variable/lora",

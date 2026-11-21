@@ -394,7 +394,7 @@ export function CheckoutPage() {
 
   return (
     <div className="flex min-h-svh flex-col bg-background">
-      <div className="bg-foreground px-4 py-2 text-center text-[11px] font-medium uppercase tracking-[0.14em] text-background">
+      <div className="bg-primary px-4 py-2 text-center text-[11px] font-medium uppercase tracking-[0.14em] text-primary-foreground">
         Fall field event · 15% off with code {promoCode}
       </div>
 

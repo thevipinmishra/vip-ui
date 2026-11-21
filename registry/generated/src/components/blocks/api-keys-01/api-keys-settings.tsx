@@ -57,6 +57,7 @@ import {
 } from "../../vip-ui/table";
 import { TextField } from "../../vip-ui/text-field";
 import { showToast } from "../../vip-ui/toast";
+import { cn } from "../../vip-ui/utils";
 import { SettingsShell } from "./settings-shell";
 
 const scopes = [
@@ -95,6 +96,8 @@ interface ApiKey {
   lastUsed: string | null;
   expires: string;
   status: KeyStatus;
+  requests: number;
+  errors: number;
 }
 
 const initialKeys: ApiKey[] = [
@@ -108,6 +111,8 @@ const initialKeys: ApiKey[] = [
     lastUsed: "2026-11-03T09:41:00Z",
     expires: "2027-11-02",
     status: "active",
+    requests: 1_842_300,
+    errors: 3869,
   },
   {
     id: "warehouse-sync",
@@ -119,6 +124,8 @@ const initialKeys: ApiKey[] = [
     lastUsed: "2026-11-03T07:20:00Z",
     expires: "2027-01-31",
     status: "active",
+    requests: 412_800,
+    errors: 165,
   },
   {
     id: "zapier-bridge",
@@ -130,6 +137,8 @@ const initialKeys: ApiKey[] = [
     lastUsed: "2026-10-29T15:05:00Z",
     expires: "2026-12-15",
     status: "active",
+    requests: 38_150,
+    errors: 713,
   },
   {
     id: "legacy-dashboard",
@@ -141,6 +150,8 @@ const initialKeys: ApiKey[] = [
     lastUsed: "2026-08-14T11:32:00Z",
     expires: "2026-09-30",
     status: "expired",
+    requests: 0,
+    errors: 0,
   },
   {
     id: "mobile-beta",
@@ -152,6 +163,8 @@ const initialKeys: ApiKey[] = [
     lastUsed: null,
     expires: "2027-04-30",
     status: "active",
+    requests: 0,
+    errors: 0,
   },
   {
     id: "old-cli-token",
@@ -163,8 +176,15 @@ const initialKeys: ApiKey[] = [
     lastUsed: "2026-09-02T10:10:00Z",
     expires: "2026-11-19",
     status: "revoked",
+    requests: 0,
+    errors: 0,
   },
 ];
+
+const compactCount = new Intl.NumberFormat("en-US", {
+  notation: "compact",
+  maximumFractionDigits: 2,
+});
 
 const dayFormat = new Intl.DateTimeFormat("en-US", {
   month: "short",
@@ -323,6 +343,8 @@ export function ApiKeysSettings() {
           lastUsed: null,
           expires: expiry.toString(),
           status: "active",
+          requests: 0,
+          errors: 0,
         },
         ...current,
       ]);
@@ -437,9 +459,13 @@ export function ApiKeysSettings() {
                 )}
               </>
             ) : (
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-muted-foreground tabular-nums">
                 {keys.length} keys ·{" "}
-                {keys.filter((key) => key.status === "active").length} active
+                {keys.filter((key) => key.status === "active").length} active ·{" "}
+                {compactCount.format(
+                  keys.reduce((sum, key) => sum + key.requests, 0),
+                )}{" "}
+                requests in 30 days
               </p>
             )}
           </div>
@@ -466,16 +492,16 @@ export function ApiKeysSettings() {
           <TableContainer>
             <Table
               aria-label="API keys"
-              className="min-w-[52rem] text-[13px] [width:100%]!"
+              className="min-w-[58rem] text-[13px] [width:100%]!"
             >
               <TableHeader>
-                <Column isRowHeader width={240}>
+                <Column isRowHeader width={250}>
                   Name
                 </Column>
-                <Column width={230}>Scopes</Column>
+                <Column width={200}>Scopes</Column>
+                <Column width={140}>Requests, 30 days</Column>
                 <Column width={145}>Last used</Column>
-                <Column width={125}>Expires</Column>
-                <Column width={105}>Status</Column>
+                <Column width={140}>Status</Column>
                 <Column width={56}>
                   <span className="sr-only">Actions</span>
                 </Column>
@@ -520,11 +546,27 @@ export function ApiKeysSettings() {
                         ))}
                       </div>
                     </Cell>
-                    <Cell className="tabular-nums text-muted-foreground">
-                      {key.lastUsed ? formatUsed(key.lastUsed) : "Never"}
+                    <Cell className="tabular-nums">
+                      {key.requests > 0 ? (
+                        <>
+                          <p>{compactCount.format(key.requests)}</p>
+                          <p
+                            className={cn(
+                              "text-xs text-muted-foreground",
+                              key.errors / key.requests > 0.01 &&
+                                "text-destructive",
+                            )}
+                          >
+                            {((key.errors / key.requests) * 100).toFixed(2)}%
+                            errors
+                          </p>
+                        </>
+                      ) : (
+                        <span className="text-muted-foreground">None</span>
+                      )}
                     </Cell>
                     <Cell className="tabular-nums text-muted-foreground">
-                      {formatDay(key.expires)}
+                      {key.lastUsed ? formatUsed(key.lastUsed) : "Never"}
                     </Cell>
                     <Cell>
                       <Badge
@@ -534,6 +576,12 @@ export function ApiKeysSettings() {
                       >
                         {key.status}
                       </Badge>
+                      {key.status !== "revoked" && (
+                        <p className="mt-1 text-xs text-muted-foreground tabular-nums">
+                          {key.status === "expired" ? "Expired" : "Expires"}{" "}
+                          {formatDay(key.expires)}
+                        </p>
+                      )}
                     </Cell>
                     <Cell className="text-end">
                       <MenuTrigger>

@@ -1,16 +1,8 @@
 export type ServiceState = "operational" | "degraded" | "outage";
-export interface UptimeDay {
-  date: string;
-  label: string;
-  fullLabel: string;
-  uptime: number;
-  state: ServiceState;
-}
-
 export interface Service {
   name: string;
   state: ServiceState;
-  uptime: string;
+  history: ServiceDay[];
 }
 
 export interface IncidentUpdate {
@@ -32,13 +24,77 @@ export interface Incident {
 const dayMs = 86_400_000;
 const end = Date.UTC(2026, 9, 31);
 
-const dips: Record<string, number> = {
-  "2026-09-12": 99.96,
-  "2026-09-29": 99.62,
-  "2026-10-03": 99.86,
-  "2026-10-14": 99.97,
-  "2026-10-21": 99.91,
-  "2026-10-31": 99.74,
+export const stateLabels: Record<ServiceState, string> = {
+  operational: "Operational",
+  degraded: "Degraded",
+  outage: "Outage",
+};
+
+export const stateColors: Record<ServiceState, string> = {
+  operational: "color-mix(in oklab, var(--success) 72%, var(--card))",
+  degraded: "var(--warning)",
+  outage: "var(--destructive)",
+};
+
+export interface Outage {
+  service: string;
+  date: string;
+  minutes: number;
+  state: Exclude<ServiceState, "operational">;
+  incident: string;
+}
+
+export interface ServiceDay {
+  date: string;
+  label: string;
+  fullLabel: string;
+  state: ServiceState;
+  uptime: number;
+  note: string;
+}
+
+export const outages: Outage[] = [
+  {
+    service: "Reports",
+    date: "2026-10-31",
+    minutes: 101,
+    state: "degraded",
+    incident: "Reports load slowly",
+  },
+  {
+    service: "Webhooks",
+    date: "2026-10-21",
+    minutes: 158,
+    state: "degraded",
+    incident: "Webhook retries delayed",
+  },
+  {
+    service: "API",
+    date: "2026-10-03",
+    minutes: 64,
+    state: "outage",
+    incident: "Elevated API error rates",
+  },
+  {
+    service: "Web app",
+    date: "2026-10-03",
+    minutes: 41,
+    state: "degraded",
+    incident: "Elevated API error rates",
+  },
+  {
+    service: "Background jobs",
+    date: "2026-09-29",
+    minutes: 93,
+    state: "degraded",
+    incident: "Background jobs delayed",
+  },
+];
+
+const weight: Record<ServiceState, number> = {
+  operational: 0,
+  degraded: 0.3,
+  outage: 1,
 };
 
 const shortDay = new Intl.DateTimeFormat("en-US", {
@@ -54,60 +110,74 @@ const longDay = new Intl.DateTimeFormat("en-US", {
   timeZone: "UTC",
 });
 
-function stateOf(uptime: number): ServiceState {
-  if (uptime >= 99.95) return "operational";
-  if (uptime >= 99.5) return "degraded";
-  return "outage";
+const days = Array.from({ length: 90 }, (_, index) => {
+  const date = new Date(end - (89 - index) * dayMs);
+  return {
+    date: date.toISOString().slice(0, 10),
+    label: shortDay.format(date),
+    fullLabel: longDay.format(date),
+  };
+});
+
+function formatMinutes(minutes: number) {
+  const hours = Math.floor(minutes / 60);
+  const rest = minutes % 60;
+  return hours ? `${hours} h ${rest} min` : `${rest} min`;
 }
 
-export const uptimeDays: UptimeDay[] = Array.from(
-  { length: 90 },
-  (_, index) => {
-    const date = new Date(end - (89 - index) * dayMs);
-    const key = date.toISOString().slice(0, 10);
-    const uptime = dips[key] ?? 100;
+function historyFor(service: string): ServiceDay[] {
+  return days.map((day) => {
+    const hits = outages.filter(
+      (outage) => outage.service === service && outage.date === day.date,
+    );
+    const lost = hits.reduce(
+      (total, hit) => total + hit.minutes * weight[hit.state],
+      0,
+    );
+    const state = hits.some((hit) => hit.state === "outage")
+      ? "outage"
+      : hits.length
+        ? "degraded"
+        : "operational";
     return {
-      date: key,
-      label: shortDay.format(date),
-      fullLabel: longDay.format(date),
-      uptime,
-      state: stateOf(uptime),
+      ...day,
+      state,
+      uptime: 100 - (lost / 1440) * 100,
+      note: hits.length
+        ? hits
+            .map(
+              (hit) =>
+                `${hit.incident}, ${formatMinutes(hit.minutes)} ${stateLabels[hit.state].toLowerCase()}`,
+            )
+            .join("; ")
+        : "No incidents",
     };
-  },
-);
+  });
+}
 
-export const services: Service[] = [
-  {
-    name: "Web app",
-    state: "operational",
-    uptime: "100%",
-  },
-  {
-    name: "API",
-    state: "operational",
-    uptime: "99.98%",
-  },
-  {
-    name: "Reports",
-    state: "degraded",
-    uptime: "99.87%",
-  },
-  {
-    name: "Webhooks",
-    state: "operational",
-    uptime: "99.99%",
-  },
-  {
-    name: "Background jobs",
-    state: "operational",
-    uptime: "99.94%",
-  },
-  {
-    name: "Email delivery",
-    state: "operational",
-    uptime: "100%",
-  },
+export function uptimeOf(history: ServiceDay[]) {
+  if (history.length === 0) return 100;
+  return history.reduce((total, day) => total + day.uptime, 0) / history.length;
+}
+
+export function formatUptime(value: number) {
+  return `${(Math.floor(value * 100) / 100).toFixed(2)}%`;
+}
+
+const names = [
+  "Web app",
+  "API",
+  "Reports",
+  "Webhooks",
+  "Background jobs",
+  "Email delivery",
 ];
+
+export const services: Service[] = names.map((name) => ({
+  name,
+  state: name === "Reports" ? "degraded" : "operational",
+  history: historyFor(name),
+}));
 
 export const incidents: Incident[] = [
   {
@@ -219,33 +289,3 @@ export const incidents: Incident[] = [
     ],
   },
 ];
-
-export const stateLabels: Record<ServiceState, string> = {
-  operational: "Operational",
-  degraded: "Degraded",
-  outage: "Outage",
-};
-
-export const stateColors: Record<ServiceState, string> = {
-  operational: "color-mix(in oklab, var(--success) 72%, var(--card))",
-  degraded: "var(--warning)",
-  outage: "var(--destructive)",
-};
-
-export function average(rows: UptimeDay[]) {
-  if (rows.length === 0) return 100;
-  return rows.reduce((sum, row) => sum + row.uptime, 0) / rows.length;
-}
-
-export function formatAverage(value: number) {
-  return `${value.toFixed(3)}%`;
-}
-
-export function formatRangeLabel(rows: UptimeDay[]) {
-  const first = rows[0];
-  const last = rows.at(-1);
-  if (!first || !last) return "";
-  return `${shortDay.format(new Date(`${first.date}T00:00:00Z`))} – ${longDay.format(
-    new Date(`${last.date}T00:00:00Z`),
-  )}`;
-}

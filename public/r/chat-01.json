@@ -6,7 +6,7 @@
   "description": "Assistant chat that reads metrics and cites its sources.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["ai"],
-  "docs": "Render <AssistantChat /> from components/blocks/chat-01/chat.tsx. Preview: https://vip-ui.dev/blocks/chat-01",
+  "docs": "Render <AssistantChat /> from components/blocks/chat-01/chat.tsx. Preview: https://vip-ui.dev/blocks/chat-01. The preview uses theme-violet, font-geist, and --radius: 0.75rem.",
   "meta": {
     "entry": {
       "component": "AssistantChat",

@@ -58,7 +58,7 @@ export function AppSidebar() {
                   item.count ? (
                     <Badge className="min-h-5 px-2 py-0 text-[11px] shadow-none">
                       {item.count}
-                      <span className="sr-only"> new</span>
+                      <span className="sr-only"> to fulfill</span>
                     </Badge>
                   ) : undefined
                 }

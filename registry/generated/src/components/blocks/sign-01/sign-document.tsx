@@ -214,7 +214,7 @@ export function SignDocument() {
         <div className="flex min-w-0 flex-1 items-center gap-2.5">
           <span
             aria-hidden="true"
-            className="grid size-7 shrink-0 place-items-center rounded-md bg-foreground text-xs font-bold text-background"
+            className="grid size-7 shrink-0 place-items-center rounded-md bg-primary text-xs font-bold text-primary-foreground"
           >
             R
           </span>

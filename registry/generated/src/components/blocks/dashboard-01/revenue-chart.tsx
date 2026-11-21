@@ -1,6 +1,6 @@
 "use client";
 
-import { areaY, defineChart, lineY } from "@tanstack/charts";
+import { areaY, defineChart, lineY, ruleX, text } from "@tanstack/charts";
 import { decorative } from "@tanstack/charts/mark/decorative";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { scalePoint } from "@tanstack/charts/scales/point";
@@ -12,80 +12,161 @@ import {
   ChartCaption,
   ChartDescription,
   ChartFrame,
+  ChartLegend,
+  ChartLegendItem,
   ChartTable,
   ChartTitle,
+  ChartValue,
 } from "../../vip-ui/chart";
+import { StatTrend } from "../../vip-ui/stat";
 import { ToggleButton } from "../../vip-ui/toggle-button";
 import { ToggleButtonGroup } from "../../vip-ui/toggle-button-group";
-import { revenue } from "./data";
+import { change, current, formatCompact, formatMoney, previous } from "./data";
 
 const periods = {
-  "7": "Last 7 days",
-  "14": "Last 14 days",
-  "30": "Last 30 days",
+  "7": "7 days",
+  "14": "14 days",
+  "30": "30 days",
 } as const;
 type Period = keyof typeof periods;
 
+const launch = { date: "2026-09-18", label: "Fall collection" };
+const colors = {
+  current: "var(--ts-chart-1)",
+  previous: "var(--muted-foreground)",
+};
+
 export function RevenueChart() {
   const [period, setPeriod] = useState<Period>("30");
-  const rows = useMemo(() => revenue.slice(-Number(period)), [period]);
-  const total = rows.reduce((sum, row) => sum + row.value, 0);
+  const rows = useMemo(() => {
+    const days = Number(period);
+    const before = previous.slice(-days);
+    return current.slice(-days).map((day, index) => ({
+      date: day.date,
+      label: day.label,
+      sales: day.sales,
+      previous: before[index].sales,
+      previousLabel: before[index].label,
+    }));
+  }, [period]);
+  const total = rows.reduce((sum, row) => sum + row.sales, 0);
+  const totalBefore = rows.reduce((sum, row) => sum + row.previous, 0);
+  const delta = change(total, totalBefore);
+  const markers = rows.filter((row) => row.date === launch.date);
+
   const definition = useMemo(() => {
-    const step = Math.ceil(rows.length / 7);
+    const step = rows.length > 14 ? 5 : rows.length > 7 ? 2 : 1;
     const ticks = rows
       .filter((_, index) => (rows.length - 1 - index) % step === 0)
-      .map((row) => row.day);
+      .map((row) => row.date);
+    const labels = new Map(rows.map((row) => [row.date, row.label]));
+    const max = Math.max(...rows.flatMap((row) => [row.sales, row.previous]));
     return defineChart({
       marks: [
         decorative(
-          areaY(rows, {
-            id: "revenue-fill",
-            x: "day",
-            y: "value",
-            fill: "var(--ts-chart-1)",
-            fillOpacity: 0.16,
+          ruleX(markers, {
+            x: "date",
+            stroke: "var(--muted-foreground)",
+            strokeDasharray: "2 3",
+            strokeOpacity: 0.7,
+          }),
+        ),
+        decorative(
+          text(markers, {
+            x: "date",
+            y: () => max * 1.12,
+            text: () => launch.label,
+            anchor: "end",
+            dx: -6,
+            fill: "var(--muted-foreground)",
+            fontSize: 11,
+            fontWeight: 500,
           }),
         ),
         lineY(rows, {
-          id: "revenue-line",
-          x: "day",
-          y: "value",
-          stroke: "var(--ts-chart-1)",
-          strokeWidth: 2.5,
+          id: "previous",
+          x: "date",
+          y: "previous",
+          stroke: colors.previous,
+          strokeWidth: 1.5,
+          strokeDasharray: "4 4",
+          strokeOpacity: 0.7,
+        }),
+        decorative(
+          areaY(rows, {
+            id: "sales-fill",
+            x: "date",
+            y: "sales",
+            fill: colors.current,
+            fillOpacity: 0.12,
+          }),
+        ),
+        lineY(rows, {
+          id: "sales",
+          x: "date",
+          y: "sales",
+          stroke: colors.current,
+          strokeWidth: 2,
         }),
       ],
       scales: {
-        x: { scale: scalePoint, axis: { ticks: { values: ticks } } },
-        y: { scale: scaleLinear().domain([0, 4.5]), grid: true },
+        x: {
+          scale: scalePoint<string>().domain(rows.map((row) => row.date)),
+          axis: {
+            ticks: {
+              values: ticks,
+              format: (key) => labels.get(String(key)) ?? String(key),
+            },
+          },
+        },
+        y: {
+          scale: scaleLinear().domain([0, max * 1.18]),
+          grid: true,
+          axis: { ticks: { count: 4, format: formatCompact } },
+        },
       },
+      focus: "group-x",
       tooltip: {
         use: tooltip,
-        content: ([point]) => ({
-          title: point.datum.day,
-          rows: [
-            {
-              label: "Revenue",
-              value: `$${(point.datum.value * 1000).toLocaleString("en-US")}`,
-              color: point.color,
-            },
-          ],
-        }),
+        content: (points) => {
+          const row = points[0].datum;
+          return {
+            title: row.label,
+            rows: [
+              {
+                label: "Net sales",
+                value: formatMoney(row.sales),
+                color: colors.current,
+              },
+              {
+                label: `Same day, ${row.previousLabel}`,
+                value: formatMoney(row.previous),
+                color: colors.previous,
+              },
+            ],
+          };
+        },
       },
     });
-  }, [rows]);
+  }, [rows, markers]);
 
   return (
     <ChartFrame variant="card">
       <ChartCaption>
-        <ChartTitle>Revenue</ChartTitle>
-        <ChartDescription>
-          ${(total * 1000).toLocaleString("en-US")} in the{" "}
-          {periods[period].toLowerCase()}
+        <ChartTitle>Net sales</ChartTitle>
+        <ChartValue>{formatMoney(total)}</ChartValue>
+        <ChartDescription className="flex flex-wrap items-center gap-2">
+          <StatTrend direction={delta >= 0 ? "up" : "down"}>
+            {delta >= 0 ? "+" : "−"}
+            {Math.abs(delta).toFixed(1)}%
+          </StatTrend>
+          vs. previous {periods[period]}
         </ChartDescription>
       </ChartCaption>
       <ChartAction>
         <ToggleButtonGroup
-          aria-label="Revenue period"
+          aria-label="Sales period"
+          size="sm"
           selectionMode="single"
           disallowEmptySelection
           selectedKeys={[period]}
@@ -94,27 +175,35 @@ export function RevenueChart() {
             if (next === "7" || next === "14" || next === "30") setPeriod(next);
           }}
         >
-          <ToggleButton id="7" variant="segmented">
-            7 days
-          </ToggleButton>
-          <ToggleButton id="14" variant="segmented">
-            14 days
-          </ToggleButton>
-          <ToggleButton id="30" variant="segmented">
-            30 days
-          </ToggleButton>
+          {(Object.keys(periods) as Period[]).map((key) => (
+            <ToggleButton key={key} id={key} variant="segmented">
+              {periods[key]}
+            </ToggleButton>
+          ))}
         </ToggleButtonGroup>
       </ChartAction>
       <Chart
         definition={definition}
-        height={240}
+        height={248}
         initialWidth={640}
-        ariaLabel={`Daily revenue for the ${periods[period].toLowerCase()}, in thousands of dollars`}
+        ariaLabel={`Daily net sales for the last ${periods[period]}, compared with the previous ${periods[period]}`}
       />
+      <ChartLegend className="justify-start">
+        <ChartLegendItem color={colors.current} swatch="line">
+          Last {periods[period]}
+        </ChartLegendItem>
+        <ChartLegendItem color={colors.previous} swatch="dashed">
+          Previous {periods[period]}
+        </ChartLegendItem>
+      </ChartLegend>
       <ChartTable
-        caption="Daily revenue, in thousands of dollars"
-        columns={["Day", "Revenue"]}
-        rows={rows.map((row) => [row.day, row.value])}
+        caption="Daily net sales, in dollars"
+        columns={["Day", "Net sales", "Previous period"]}
+        rows={rows.map((row) => [
+          row.label,
+          formatMoney(row.sales),
+          formatMoney(row.previous),
+        ])}
       />
     </ChartFrame>
   );

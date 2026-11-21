@@ -1,6 +1,14 @@
 "use client";
 
-import { areaY, barY, defineChart, group, lineY } from "@tanstack/charts";
+import {
+  barY,
+  cell,
+  defineChart,
+  lineY,
+  ruleY,
+  stack,
+  text,
+} from "@tanstack/charts";
 import { decorative } from "@tanstack/charts/mark/decorative";
 import { scaleBand } from "@tanstack/charts/scales/band";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
@@ -18,10 +26,28 @@ import {
   ChartTitle,
   ChartValue,
 } from "../../vip-ui/chart";
-import type { Bucket } from "./data";
+import {
+  type Bucket,
+  bucketRange,
+  cohorts,
+  formatCount,
+  formatPercent,
+} from "./data";
 
-interface AreaChartProps {
+const tickLabels = { fontSize: 12 };
+
+function tickValues(buckets: Bucket[]) {
+  if (buckets.length <= 7) return undefined;
+  const step = Math.ceil(buckets.length / 6);
+  return buckets
+    .filter((_, index) => (buckets.length - 1 - index) % step === 0)
+    .map((bucket) => bucket.start);
+}
+
+interface TrendChartProps {
   data: Bucket[];
+  compare: Bucket[] | null;
+  compareLabel: string;
   value: "mrr" | "workspaces";
   title: string;
   description: string;
@@ -32,8 +58,10 @@ interface AreaChartProps {
   formatAxis: (value: number) => string;
 }
 
-export function AreaChart({
+export function TrendChart({
   data,
+  compare,
+  compareLabel,
   value,
   title,
   description,
@@ -42,46 +70,42 @@ export function AreaChart({
   color,
   formatValue,
   formatAxis,
-}: AreaChartProps) {
+}: TrendChartProps) {
   const rows = useMemo(
     () =>
-      data.map((bucket) => ({
+      data.map((bucket, index) => ({
         start: bucket.start,
-        label: bucket.label,
+        range: bucketRange(bucket),
         value: bucket[value],
+        previous: compare?.[index]?.[value] ?? null,
+        previousRange: compare?.[index] ? bucketRange(compare[index]) : "",
       })),
-    [data, value],
-  );
-  const labels = useMemo(
-    () => new Map(rows.map((row) => [row.start, row.label])),
-    [rows],
-  );
-  const ticks = useMemo(
-    () =>
-      rows.length > 9
-        ? rows.filter((_, index) => index % 3 === 0).map((row) => row.start)
-        : undefined,
-    [rows],
+    [data, compare, value],
   );
   const definition = useMemo(() => {
-    const values = rows.map((row) => row.value);
+    const labels = new Map(data.map((bucket) => [bucket.start, bucket.label]));
+    const values = rows.flatMap((row) =>
+      row.previous === null ? [row.value] : [row.value, row.previous],
+    );
     const min = Math.min(...values);
     const max = Math.max(...values);
-    const pad = (max - min) * 0.2 || Math.abs(max) * 0.05 || 1;
-    const lower = Math.max(0, min - pad);
-    const upper = max + pad;
+    const pad = (max - min) * 0.15 || Math.abs(max) * 0.05 || 1;
+    const withPrevious = rows.filter((row) => row.previous !== null);
     return defineChart({
       marks: [
-        decorative(
-          areaY(rows, {
-            id: `${value}-fill`,
-            x: "start",
-            y: "value",
-            y1: lower,
-            fill: color,
-            fillOpacity: 0.14,
-          }),
-        ),
+        ...(withPrevious.length
+          ? [
+              lineY(withPrevious, {
+                id: `${value}-previous`,
+                x: "start",
+                y: "previous",
+                stroke: "var(--muted-foreground)",
+                strokeWidth: 1.5,
+                strokeDasharray: "4 4",
+                strokeOpacity: 0.7,
+              }),
+            ]
+          : []),
         lineY(rows, {
           id: `${value}-line`,
           x: "start",
@@ -92,39 +116,45 @@ export function AreaChart({
       ],
       scales: {
         x: {
-          scale: scalePoint,
+          scale: scalePoint<string>().domain(rows.map((row) => row.start)),
           axis: {
             ticks: {
-              values: ticks,
+              values: tickValues(data),
               format: (key) => labels.get(String(key)) ?? String(key),
             },
-            tickLabels: { fontSize: 13 },
+            tickLabels,
           },
         },
         y: {
-          scale: scaleLinear().domain([lower, upper]),
+          scale: scaleLinear().domain([Math.max(0, min - pad), max + pad]),
           grid: true,
-          axis: {
-            ticks: { count: 4, format: formatAxis },
-            tickLabels: { fontSize: 13 },
-          },
+          axis: { ticks: { count: 4, format: formatAxis }, tickLabels },
         },
       },
+      focus: "group-x",
       tooltip: {
         use: tooltip,
-        content: ([point]) => ({
-          title: labels.get(point.datum.start) ?? point.datum.start,
-          rows: [
-            {
-              label: title,
-              value: formatValue(point.datum.value),
-              color: point.color,
-            },
-          ],
-        }),
+        content: (points) => {
+          const row = points[0].datum;
+          return {
+            title: row.range,
+            rows: [
+              { label: title, value: formatValue(row.value), color },
+              ...(row.previous === null
+                ? []
+                : [
+                    {
+                      label: row.previousRange,
+                      value: formatValue(row.previous),
+                      color: "var(--muted-foreground)",
+                    },
+                  ]),
+            ],
+          };
+        },
       },
     });
-  }, [rows, value, color, labels, ticks, formatAxis, formatValue, title]);
+  }, [rows, data, value, color, formatAxis, formatValue, title]);
 
   return (
     <ChartFrame variant="card">
@@ -137,71 +167,113 @@ export function AreaChart({
       </ChartCaption>
       <Chart
         definition={definition}
-        height={264}
+        height={248}
         initialWidth={760}
         ariaLabel={ariaLabel}
       />
+      <ChartLegend className="justify-start text-[13px]">
+        <ChartLegendItem color={color} swatch="line">
+          Selected range
+        </ChartLegendItem>
+        {compare && (
+          <ChartLegendItem color="var(--muted-foreground)" swatch="dashed">
+            {compareLabel}
+          </ChartLegendItem>
+        )}
+      </ChartLegend>
       <ChartTable
         caption={title}
-        columns={["Date", title]}
-        rows={rows.map((row) => [row.label, formatValue(row.value)])}
+        columns={["Period", title, ...(compare ? [compareLabel] : [])]}
+        rows={rows.map((row) => [
+          row.range,
+          formatValue(row.value),
+          ...(compare
+            ? [row.previous === null ? "" : formatValue(row.previous)]
+            : []),
+        ])}
       />
     </ChartFrame>
   );
 }
 
-interface BarSeries {
-  key: "newMrr" | "expansionMrr" | "signups" | "churned";
+export interface MovementSeries {
+  key:
+    | "newMrr"
+    | "expansionMrr"
+    | "contractionMrr"
+    | "churnedMrr"
+    | "signups"
+    | "churned";
   label: string;
   color: string;
+  sign: 1 | -1;
 }
 
-interface BarChartProps {
+interface MovementChartProps {
   data: Bucket[];
-  series: BarSeries[];
+  series: MovementSeries[];
   title: string;
   description: string;
+  netLabel: string;
   ariaLabel: string;
   formatValue: (value: number) => string;
   formatAxis: (value: number) => string;
 }
 
-export function BarChart({
+export function MovementChart({
   data,
   series,
   title,
   description,
+  netLabel,
   ariaLabel,
   formatValue,
   formatAxis,
-}: BarChartProps) {
+}: MovementChartProps) {
   const rows = useMemo(
     () =>
       data.flatMap((bucket) =>
         series.map((item) => ({
           start: bucket.start,
-          label: bucket.label,
           series: item.label,
-          value: bucket[item.key],
+          value: bucket[item.key] * item.sign,
         })),
       ),
     [data, series],
   );
-  const labels = useMemo(
-    () => new Map(data.map((bucket) => [bucket.start, bucket.label])),
-    [data],
-  );
-  const ticks = useMemo(
+  const nets = useMemo(
     () =>
-      data.length > 9
-        ? data
-            .filter((_, index) => index % 3 === 0)
-            .map((bucket) => bucket.start)
-        : undefined,
-    [data],
+      data.map((bucket) => ({
+        start: bucket.start,
+        net: series.reduce(
+          (total, item) => total + bucket[item.key] * item.sign,
+          0,
+        ),
+      })),
+    [data, series],
   );
   const definition = useMemo(() => {
-    const max = Math.max(1, ...rows.map((row) => row.value));
+    const labels = new Map(data.map((bucket) => [bucket.start, bucket.label]));
+    const ranges = new Map(
+      data.map((bucket) => [bucket.start, bucketRange(bucket)]),
+    );
+    const netByStart = new Map(nets.map((row) => [row.start, row.net]));
+    const up = Math.max(
+      1,
+      ...data.map((bucket) =>
+        series
+          .filter((item) => item.sign > 0)
+          .reduce((total, item) => total + bucket[item.key], 0),
+      ),
+    );
+    const down = Math.max(
+      1,
+      ...data.map((bucket) =>
+        series
+          .filter((item) => item.sign < 0)
+          .reduce((total, item) => total + bucket[item.key], 0),
+      ),
+    );
     return defineChart({
       marks: [
         barY(rows, {
@@ -209,29 +281,40 @@ export function BarChart({
           y: "value",
           z: "series",
           color: "series",
-          layout: group({ padding: 0.12 }),
+          layout: stack({
+            offset: "diverging",
+            order: series.map((item) => item.label),
+          }),
           inset: 1,
-          radius: { end: 3 },
+          radius: 2,
+        }),
+        decorative(ruleY([0], { stroke: "var(--muted-foreground)" })),
+        lineY(nets, {
+          id: "net",
+          x: "start",
+          y: "net",
+          stroke: "var(--foreground)",
+          strokeWidth: 1.5,
         }),
       ],
       scales: {
         x: {
-          scale: () => scaleBand().padding(0.18),
+          scale: () =>
+            scaleBand<string>()
+              .domain(data.map((bucket) => bucket.start))
+              .padding(0.24),
           axis: {
             ticks: {
-              values: ticks,
+              values: tickValues(data),
               format: (key) => labels.get(String(key)) ?? String(key),
             },
-            tickLabels: { fontSize: 13 },
+            tickLabels,
           },
         },
         y: {
-          scale: scaleLinear().domain([0, max * 1.08]),
+          scale: scaleLinear().domain([-down * 1.15, up * 1.1]),
           grid: true,
-          axis: {
-            ticks: { count: 4, format: formatAxis },
-            tickLabels: { fontSize: 13 },
-          },
+          axis: { ticks: { count: 5, format: formatAxis }, tickLabels },
         },
       },
       color: {
@@ -242,18 +325,32 @@ export function BarChart({
       tooltip: {
         use: tooltip,
         sort: "color-domain",
-        content: (points, { primaryPoint }) => ({
-          title: points[0] ? labels.get(points[0].datum.start) : "",
-          rows: points.map((point) => ({
-            label: point.groupLabel,
-            value: formatValue(point.datum.value),
-            color: point.color,
-            active: point === primaryPoint,
-          })),
-        }),
+        content: (points) => {
+          const start = String(points[0]?.datum.start ?? "");
+          return {
+            title: ranges.get(start) ?? start,
+            rows: [
+              ...points.flatMap((point) =>
+                "series" in point.datum
+                  ? [
+                      {
+                        label: point.groupLabel,
+                        value: formatValue(Math.abs(point.datum.value)),
+                        color: point.color,
+                      },
+                    ]
+                  : [],
+              ),
+              {
+                label: netLabel,
+                value: formatValue(netByStart.get(start) ?? 0),
+              },
+            ],
+          };
+        },
       },
     });
-  }, [rows, series, labels, ticks, formatValue, formatAxis]);
+  }, [rows, nets, data, series, formatAxis, formatValue, netLabel]);
 
   return (
     <ChartFrame variant="card">
@@ -265,23 +362,155 @@ export function BarChart({
       </ChartCaption>
       <Chart
         definition={definition}
-        height={224}
+        height={240}
         initialWidth={900}
         ariaLabel={ariaLabel}
       />
-      <ChartLegend className="text-[13px]">
+      <ChartLegend className="justify-start text-[13px]">
         {series.map((item) => (
           <ChartLegendItem key={item.label} color={item.color}>
             {item.label}
           </ChartLegendItem>
         ))}
+        <ChartLegendItem color="var(--foreground)" swatch="line">
+          {netLabel}
+        </ChartLegendItem>
       </ChartLegend>
       <ChartTable
         caption={title}
-        columns={["Date", ...series.map((item) => item.label)]}
-        rows={data.map((bucket) => [
-          bucket.label,
+        columns={["Period", ...series.map((item) => item.label), netLabel]}
+        rows={data.map((bucket, index) => [
+          bucketRange(bucket),
           ...series.map((item) => formatValue(bucket[item.key])),
+          formatValue(nets[index].net),
+        ])}
+      />
+    </ChartFrame>
+  );
+}
+
+const steps = [
+  "Month 1",
+  "Month 2",
+  "Month 3",
+  "Month 4",
+  "Month 5",
+  "Month 6",
+];
+
+const levels = [
+  { label: "Below 78%", min: 0, mix: 18, text: "var(--foreground)" },
+  { label: "78–83%", min: 0.78, mix: 40, text: "var(--foreground)" },
+  { label: "84–89%", min: 0.84, mix: 70, text: "var(--card)" },
+  { label: "90% and above", min: 0.9, mix: 100, text: "var(--card)" },
+].map((level) => ({
+  ...level,
+  color:
+    level.mix === 100
+      ? "var(--ts-chart-1)"
+      : `color-mix(in oklab, var(--ts-chart-1) ${level.mix}%, var(--muted))`,
+}));
+
+const levelFor = (rate: number) =>
+  levels.findLast((level) => rate >= level.min) ?? levels[0];
+
+const cohortRows = cohorts.flatMap((cohort) =>
+  cohort.retained.map((rate, index) => ({
+    cohort: cohort.label,
+    step: steps[index],
+    rate,
+    workspaces: Math.round(cohort.signups * rate),
+    signups: cohort.signups,
+  })),
+);
+
+const cohortDefinition = defineChart({
+  marks: [
+    cell(cohortRows, {
+      x: "step",
+      y: "cohort",
+      color: (row) => levelFor(row.rate).label,
+      key: (row) => `${row.cohort}-${row.step}`,
+      inset: 2,
+      radius: 4,
+    }),
+    decorative(
+      text(cohortRows, {
+        x: "step",
+        y: "cohort",
+        text: (row) => formatPercent(row.rate, 0),
+        fill: (row) => levelFor(row.rate).text,
+        fontSize: 12,
+        fontWeight: 600,
+      }),
+    ),
+  ],
+  scales: {
+    x: {
+      scale: () => scaleBand<string>().domain(steps),
+      axis: { tickLabels },
+    },
+    y: {
+      scale: () => scaleBand<string>().domain(cohorts.map((row) => row.label)),
+      axis: { tickLabels },
+    },
+  },
+  color: {
+    domain: levels.map((level) => level.label),
+    range: levels.map((level) => level.color),
+  },
+  tooltip: {
+    use: tooltip,
+    content: ([point]) => ({
+      title: `${point.datum.cohort} cohort, ${point.datum.step.toLowerCase()}`,
+      rows: [
+        {
+          label: "Still active",
+          value: formatPercent(point.datum.rate),
+          color: point.color,
+        },
+        {
+          label: "Workspaces",
+          value: `${formatCount(point.datum.workspaces)} of ${formatCount(point.datum.signups)}`,
+        },
+      ],
+    }),
+  },
+});
+
+export function CohortChart() {
+  return (
+    <ChartFrame variant="card">
+      <ChartCaption>
+        <ChartTitle>Workspace retention</ChartTitle>
+        <ChartDescription className="text-[13px] leading-5">
+          Paid workspaces still active, by signup month
+        </ChartDescription>
+      </ChartCaption>
+      <Chart
+        definition={cohortDefinition}
+        height={248}
+        initialWidth={560}
+        ariaLabel="Workspace retention for signup cohorts from April to September 2026, in percent, for each month after signup"
+      />
+      <ChartLegend className="justify-start text-[13px]">
+        {levels.map((level) => (
+          <ChartLegendItem key={level.label} color={level.color}>
+            {level.label}
+          </ChartLegendItem>
+        ))}
+      </ChartLegend>
+      <ChartTable
+        caption="Paid workspaces still active, in percent, by signup month"
+        columns={["Signup month", "Workspaces", ...steps]}
+        rows={cohorts.map((cohort) => [
+          cohort.label,
+          formatCount(cohort.signups),
+          ...steps.map((_, index) =>
+            cohort.retained[index] === undefined
+              ? ""
+              : formatPercent(cohort.retained[index], 0),
+          ),
         ])}
       />
     </ChartFrame>

@@ -6,7 +6,7 @@
   "description": "Support inbox with queues, snooze, and replies.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["workspace"],
-  "docs": "Render <SupportInbox /> from components/blocks/inbox-01/support-inbox.tsx. Preview: https://vip-ui.dev/blocks/inbox-01",
+  "docs": "Render <SupportInbox /> from components/blocks/inbox-01/support-inbox.tsx. Preview: https://vip-ui.dev/blocks/inbox-01. The preview uses theme-blue, font-inter, and --radius: 0.5rem.",
   "meta": {
     "entry": {
       "component": "SupportInbox",
