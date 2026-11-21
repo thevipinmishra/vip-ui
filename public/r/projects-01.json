@@ -6,7 +6,7 @@
   "description": "Project list with grid and list views, stars, filters, and a create dialog.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["workspace"],
-  "docs": "Render <ProjectsPage /> from components/blocks/projects-01/projects-page.tsx. Preview: https://vip-ui.dev/blocks/projects-01",
+  "docs": "Render <ProjectsPage /> from components/blocks/projects-01/projects-page.tsx. Preview: https://vip-ui.dev/blocks/projects-01. The preview uses theme-pink, font-geist, and --radius: 0.25rem.",
   "meta": {
     "entry": {
       "component": "ProjectsPage",

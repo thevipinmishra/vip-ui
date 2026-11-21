@@ -6,7 +6,7 @@
   "description": "A two-column sign-in page with an email link and a brand panel.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["authentication"],
-  "docs": "Render <LoginPage /> from components/blocks/login-02/login-page.tsx. Preview: https://vip-ui.dev/blocks/login-02",
+  "docs": "Render <LoginPage /> from components/blocks/login-02/login-page.tsx. Preview: https://vip-ui.dev/blocks/login-02. The preview uses theme-teal, font-inter, and --radius: 0.75rem.",
   "meta": {
     "entry": {
       "component": "LoginPage",

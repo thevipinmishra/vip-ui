@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "font-manrope",
+  "type": "registry:font",
+  "title": "Manrope",
+  "description": "The Manrope font for the typography presets.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["fonts"],
+  "dependencies": [],
+  "files": [],
+  "font": {
+    "family": "'Manrope Variable', sans-serif",
+    "provider": "google",
+    "import": "Manrope",
+    "variable": "--font-manrope",
+    "subsets": ["latin"],
+    "dependency": "@fontsource-variable/manrope"
+  }
+}

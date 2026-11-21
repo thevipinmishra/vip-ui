@@ -1,11 +1,13 @@
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import {
+  Figtree,
   IBM_Plex_Mono,
   IBM_Plex_Sans,
   Inter,
   JetBrains_Mono,
   Lora,
+  Manrope,
   Newsreader,
   Source_Serif_4,
 } from "next/font/google";
@@ -19,6 +21,16 @@ const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-ibm-plex-sans",
+  preload: false,
+});
+const figtree = Figtree({
+  subsets: ["latin"],
+  variable: "--font-figtree",
+  preload: false,
+});
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-manrope",
   preload: false,
 });
 const sourceSerif = Source_Serif_4({
@@ -51,6 +63,8 @@ const ibmPlexMono = IBM_Plex_Mono({
 export const fontVariables = [
   inter,
   ibmPlexSans,
+  figtree,
+  manrope,
   sourceSerif,
   newsreader,
   lora,
@@ -64,6 +78,8 @@ export const fontFamilies: Record<string, string> = {
   geist: GeistSans.style.fontFamily,
   inter: inter.style.fontFamily,
   "ibm-plex-sans": ibmPlexSans.style.fontFamily,
+  figtree: figtree.style.fontFamily,
+  manrope: manrope.style.fontFamily,
   "source-serif": sourceSerif.style.fontFamily,
   newsreader: newsreader.style.fontFamily,
   lora: lora.style.fontFamily,

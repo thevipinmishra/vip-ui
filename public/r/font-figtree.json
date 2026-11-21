@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "font-figtree",
+  "type": "registry:font",
+  "title": "Figtree",
+  "description": "The Figtree font for the typography presets.",
+  "author": "thevipinmishra <https://github.com/thevipinmishra>",
+  "categories": ["fonts"],
+  "dependencies": [],
+  "files": [],
+  "font": {
+    "family": "'Figtree Variable', sans-serif",
+    "provider": "google",
+    "import": "Figtree",
+    "variable": "--font-figtree",
+    "subsets": ["latin"],
+    "dependency": "@fontsource-variable/figtree"
+  }
+}

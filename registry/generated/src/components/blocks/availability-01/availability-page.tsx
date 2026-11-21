@@ -238,7 +238,7 @@ export function AvailabilityPage() {
             </span>
             <div className="min-w-0">
               <p className="truncate text-sm font-semibold tracking-[-0.02em]">
-                Marlow Health
+                Orchard Health
               </p>
               <p className="truncate text-xs text-muted-foreground">
                 Booking settings

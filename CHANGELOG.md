@@ -44,11 +44,13 @@ All notable changes to vip/ui are documented in this file. The format is based o
 - You can add the `@vip-ui` namespace to `components.json` and add items by name, for example `@vip-ui/button`.
 - Ten `theme-<slug>` items and ten color-scale items install the themes and the scales with the CLI. A theme item adds the colors and the Tailwind color mappings, so classes such as `bg-success` work after one command. A scale item adds `--<slug>-1` to `--<slug>-12`, so classes such as `bg-blue-3` work after one command.
 - A `base` item sets up a new project with one command: the vip/ui theme, the shadow and easing tokens, and the React Aria Tailwind plugin.
-- Nine `font-<slug>` items ship the typography fonts. On Next.js the CLI adds the font import; on other frameworks it adds a Fontsource package and the font variables.
+- Eleven `font-<slug>` items ship the typography fonts, including Figtree and Manrope. On Next.js the CLI adds the font import; on other frameworks it adds a Fontsource package and the font variables.
 - The 72 chart examples are registry items. One command installs an example with the chart, the components, and the packages it uses, into `components/charts/`.
 - Items carry an author and a category. The CLI prints an install note for Chart, Toast, and Typography, and each block says which component to render and where.
 - Resizable sits in the Display & layout category with the other frame primitives. App shell holds the app navigation chrome, and Sidebar is its first item.
 - Blocks use the new components: Dashboard uses Sidebar, Chat uses Conversation and Agent steps, Agent uses Agent steps, Verify and Security use OTP input, Product and Files use Carousel and Lightbox, Onboarding uses Tour, and AI search uses Code block.
+- Observability block (`dashboard-03`) shows traffic, errors, latency percentiles, an open incident, services, alerts, and changes. The Store dashboard, SaaS analytics, Metric cards, and Service status blocks show more data, and the metrics, charts, and tables in each block use the same numbers.
+- Each block preview uses the theme of its company: a color theme, a font, and a radius. The block code panel links to that theme on the Themes page, and the item docs name it.
 - The registry build stops when a dependency is a bare name, when a dependency URL does not resolve to an item, or when dependencies make a cycle.
 
 #### Documentation
@@ -125,6 +127,7 @@ All notable changes to vip/ui are documented in this file. The format is based o
 
 ### Fixed
 
+- Charts are full width when the page loads. Before, a server-rendered chart was narrower than its frame until the page hydrated.
 - Tree rows no longer cause a hydration mismatch, and rows that expand into view animate in again.
 - After the handle, arrow keys, or a drag move a sheet, wheel and trackpad scrolling snap to a stop again.
 - End moves a sheet with `preventDismissal` to its smallest snap point.

@@ -3,15 +3,18 @@
 import {
   ArrowCounterClockwiseIcon,
   CaretDownIcon,
+  CheckCircleIcon,
   CheckIcon,
   CopyIcon,
   CreditCardIcon,
   EnvelopeSimpleIcon,
   FilesIcon,
+  MapPinIcon,
   PackageIcon,
   PaperPlaneTiltIcon,
   PrinterIcon,
   ShoppingBagIcon,
+  TagIcon,
   TruckIcon,
 } from "@phosphor-icons/react";
 import { useState } from "react";
@@ -44,6 +47,7 @@ import {
   MenuSeparator,
   MenuTrigger,
 } from "../../vip-ui/menu";
+import { Meter } from "../../vip-ui/meter";
 import { Separator } from "../../vip-ui/separator";
 import {
   Cell,
@@ -62,12 +66,18 @@ import {
 } from "../../vip-ui/timeline";
 import { showToast } from "../../vip-ui/toast";
 import {
+  conversion,
+  customerTags,
   formatEventTime,
   formatMoney,
+  formatShortDate,
   formatStamp,
   itemCount,
   order,
+  previousOrders,
+  previousSpend,
   refundReasonLabel,
+  riskChecks,
   timeline,
   totals,
 } from "./data";
@@ -84,8 +94,11 @@ interface RefundEntry {
 const eventIcons = {
   placed: ShoppingBagIcon,
   paid: CreditCardIcon,
+  email: PaperPlaneTiltIcon,
   packed: PackageIcon,
+  label: TagIcon,
   shipped: TruckIcon,
+  transit: MapPinIcon,
   delivered: CheckIcon,
   refund: ArrowCounterClockwiseIcon,
 };
@@ -98,7 +111,7 @@ export function OrderDetail() {
   const fullRefund = remaining <= 0;
 
   const events = [
-    ...timeline.map((event) => ({ ...event, kind: event.id })),
+    ...timeline,
     ...refunds.map((refund) => ({
       id: refund.id,
       title: "Refund issued",
@@ -290,13 +303,20 @@ export function OrderDetail() {
                   <DescriptionDetail className="text-end tabular-nums">
                     {formatMoney(totals.subtotal)}
                   </DescriptionDetail>
-                  <DescriptionTerm>Discount</DescriptionTerm>
+                  <DescriptionTerm>
+                    Discount{" "}
+                    <span className="font-mono text-xs">
+                      {order.discountCode}
+                    </span>
+                  </DescriptionTerm>
                   <DescriptionDetail className="text-end tabular-nums">
                     −{formatMoney(order.discount)}
                   </DescriptionDetail>
                   <DescriptionTerm>Shipping</DescriptionTerm>
                   <DescriptionDetail className="text-end tabular-nums">
-                    {formatMoney(order.shipping)}
+                    {order.shipping === 0
+                      ? "Free"
+                      : formatMoney(order.shipping)}
                   </DescriptionDetail>
                   <DescriptionTerm>Tax</DescriptionTerm>
                   <DescriptionDetail className="text-end tabular-nums">
@@ -356,7 +376,7 @@ export function OrderDetail() {
                         <TimelineTime dateTime={event.dateTime}>
                           {formatEventTime(event.dateTime)}
                         </TimelineTime>
-                        {event.kind !== "shipped" && event.description && (
+                        {event.description && (
                           <TimelineDescription>
                             {event.description}
                           </TimelineDescription>
@@ -365,6 +385,26 @@ export function OrderDetail() {
                     );
                   })}
                 </Timeline>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle as="h2">Conversion</CardTitle>
+                <CardDescription>
+                  This is the customer’s fourth order.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <dl className="grid grid-cols-2 gap-4 text-sm sm:grid-cols-4">
+                  {conversion.map((item) => (
+                    <div key={item.term} className="grid min-w-0 gap-1">
+                      <dt className="text-xs text-muted-foreground">
+                        {item.term}
+                      </dt>
+                      <dd className="break-words">{item.detail}</dd>
+                    </div>
+                  ))}
+                </dl>
               </CardContent>
             </Card>
           </div>
@@ -392,16 +432,57 @@ export function OrderDetail() {
                 <Separator />
                 <DescriptionList className="gap-y-2">
                   <DescriptionTerm>Orders</DescriptionTerm>
-                  <DescriptionDetail>
-                    {order.previousOrders + 1}
+                  <DescriptionDetail className="tabular-nums">
+                    {previousOrders.length + 1}
                   </DescriptionDetail>
                   <DescriptionTerm>Total spent</DescriptionTerm>
                   <DescriptionDetail className="tabular-nums">
-                    {formatMoney(order.previousSpend + totals.total - refunded)}
+                    {formatMoney(previousSpend + totals.total - refunded)}
+                  </DescriptionDetail>
+                  <DescriptionTerm>Average order</DescriptionTerm>
+                  <DescriptionDetail className="tabular-nums">
+                    {formatMoney(
+                      Math.round(
+                        (previousSpend + totals.total - refunded) /
+                          (previousOrders.length + 1),
+                      ),
+                    )}
                   </DescriptionDetail>
                   <DescriptionTerm>Customer since</DescriptionTerm>
                   <DescriptionDetail>{order.customerSince}</DescriptionDetail>
                 </DescriptionList>
+                <div className="flex flex-wrap gap-1.5">
+                  {customerTags.map((tag) => (
+                    <Badge key={tag} variant="neutral">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+                <Separator />
+                <div className="grid gap-2">
+                  <p className="text-xs font-medium text-muted-foreground">
+                    Earlier orders
+                  </p>
+                  <ul className="grid gap-2 text-sm">
+                    {previousOrders.map((item) => (
+                      <li
+                        key={item.id}
+                        className="flex items-baseline justify-between gap-3"
+                      >
+                        <span className="min-w-0 truncate">
+                          <span className="font-medium">{item.id}</span>
+                          <span className="text-muted-foreground">
+                            {" "}
+                            · {formatShortDate(item.placedAt)}
+                          </span>
+                        </span>
+                        <span className="shrink-0 tabular-nums">
+                          {formatMoney(item.total)}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
                 <ButtonLink
                   href={`mailto:${order.email}`}
                   variant="outline"
@@ -486,6 +567,33 @@ export function OrderDetail() {
                     The money returns to the card in 3 to 5 business days.
                   </Alert>
                 )}
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle as="h2">Order risk</CardTitle>
+                <CardAction>
+                  <Badge variant="success" dot>
+                    Low
+                  </Badge>
+                </CardAction>
+              </CardHeader>
+              <CardContent className="grid gap-4">
+                <Meter label="Risk score" value={8} valueLabel="8 of 100" />
+                <ul className="grid gap-2 text-sm">
+                  {riskChecks.map((check) => (
+                    <li key={check.id} className="flex gap-2">
+                      <CheckCircleIcon
+                        size={16}
+                        weight="fill"
+                        className="mt-0.5 shrink-0 text-success"
+                        aria-hidden="true"
+                      />
+                      {check.label}
+                    </li>
+                  ))}
+                </ul>
               </CardContent>
             </Card>
 

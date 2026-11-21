@@ -6,7 +6,7 @@
   "description": "Six-task checklist that fills a progress ring.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["onboarding"],
-  "docs": "Render <GettingStarted /> from components/blocks/checklist-01/getting-started.tsx. Preview: https://vip-ui.dev/blocks/checklist-01",
+  "docs": "Render <GettingStarted /> from components/blocks/checklist-01/getting-started.tsx. Preview: https://vip-ui.dev/blocks/checklist-01. The preview uses theme-bronze, font-figtree, and --radius: 0.75rem.",
   "meta": {
     "entry": {
       "component": "GettingStarted",

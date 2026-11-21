@@ -35,6 +35,22 @@ export const fontOptions: FontOption[] = [
     source: "google",
   },
   {
+    id: "figtree",
+    name: "Figtree",
+    kind: "sans",
+    variable: "--font-figtree",
+    loader: "Figtree",
+    source: "google",
+  },
+  {
+    id: "manrope",
+    name: "Manrope",
+    kind: "sans",
+    variable: "--font-manrope",
+    loader: "Manrope",
+    source: "google",
+  },
+  {
     id: "source-serif",
     name: "Source Serif 4",
     kind: "serif",

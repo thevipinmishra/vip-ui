@@ -6,7 +6,7 @@
   "description": "Two-step code check with a resend timer and recovery code.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["authentication"],
-  "docs": "Render <VerifyScreen /> from components/blocks/verify-01/verify-screen.tsx. Preview: https://vip-ui.dev/blocks/verify-01",
+  "docs": "Render <VerifyScreen /> from components/blocks/verify-01/verify-screen.tsx. Preview: https://vip-ui.dev/blocks/verify-01. The preview uses theme-violet, font-geist, and --radius: 0.75rem.",
   "meta": {
     "entry": {
       "component": "VerifyScreen",

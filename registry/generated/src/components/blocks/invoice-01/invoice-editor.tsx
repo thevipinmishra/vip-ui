@@ -224,17 +224,17 @@ export function InvoiceEditor() {
             }
           }}
           fullWidth
-          className="lg:hidden"
+          className="xl:hidden"
         >
           <SegmentedControlItem value="edit">Edit</SegmentedControlItem>
           <SegmentedControlItem value="preview">Preview</SegmentedControlItem>
         </SegmentedControl>
 
-        <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,6fr)]">
+        <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,7fr)_minmax(0,6fr)]">
           <div
             className={cn(
               "grid gap-6 rounded-xl bg-card p-5 shadow-(--shadow-card) ring-1 ring-border/70 sm:p-6",
-              pane === "preview" && "max-lg:hidden",
+              pane === "preview" && "max-xl:hidden",
             )}
           >
             {showProblems && (
@@ -406,8 +406,8 @@ export function InvoiceEditor() {
 
           <div
             className={cn(
-              "lg:sticky lg:top-8",
-              pane === "edit" && "max-lg:hidden",
+              "xl:sticky xl:top-8",
+              pane === "edit" && "max-xl:hidden",
             )}
           >
             {preview}

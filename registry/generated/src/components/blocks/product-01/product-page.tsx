@@ -205,7 +205,7 @@ export function ProductPage() {
 
   return (
     <div id="top" className="min-h-svh bg-background pb-24 md:pb-0">
-      <div className="bg-foreground px-4 py-2 text-center text-[11px] font-medium uppercase tracking-[0.16em] text-background">
+      <div className="bg-primary px-4 py-2 text-center text-[11px] font-medium uppercase tracking-[0.16em] text-primary-foreground">
         Free shipping over $150 · 60-day returns
       </div>
 
@@ -255,7 +255,7 @@ export function ProductPage() {
                 aria-hidden="true"
               />
               <span className="hidden sm:inline">Bag</span>
-              <span className="grid min-w-5 place-items-center rounded-full bg-foreground px-1.5 py-0.5 text-[11px] font-semibold tabular-nums text-background">
+              <span className="grid min-w-5 place-items-center rounded-full bg-primary px-1.5 py-0.5 text-[11px] font-semibold tabular-nums text-primary-foreground">
                 {count}
               </span>
             </Button>
@@ -653,7 +653,7 @@ export function ProductPage() {
                           </span>
                           <span className="h-1.5 min-w-0 flex-1 overflow-hidden rounded-full bg-muted">
                             <span
-                              className="block h-full rounded-full bg-foreground"
+                              className="block h-full rounded-full bg-primary"
                               style={{
                                 width: `${(row.count / product.reviewCount) * 100}%`,
                               }}

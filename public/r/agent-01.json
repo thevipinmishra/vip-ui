@@ -6,7 +6,7 @@
   "description": "Live agent run with tool calls, progress, and a stop action.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["ai"],
-  "docs": "Render <AgentRun /> from components/blocks/agent-01/agent-run.tsx. Preview: https://vip-ui.dev/blocks/agent-01",
+  "docs": "Render <AgentRun /> from components/blocks/agent-01/agent-run.tsx. Preview: https://vip-ui.dev/blocks/agent-01. The preview uses theme-violet, font-geist, and --radius: 0.75rem.",
   "meta": {
     "entry": {
       "component": "AgentRun",

@@ -16,8 +16,8 @@ export interface LogEntry {
 export const statusClasses: { id: StatusClass; name: string; color: string }[] =
   [
     { id: "success", name: "2xx", color: "var(--ts-chart-1)" },
-    { id: "client", name: "4xx", color: "var(--ts-chart-3)" },
-    { id: "server", name: "5xx", color: "var(--ts-chart-5)" },
+    { id: "client", name: "4xx", color: "var(--warning)" },
+    { id: "server", name: "5xx", color: "var(--destructive)" },
   ];
 
 export function statusClass(status: number): StatusClass {
@@ -119,12 +119,18 @@ function buildLogs() {
   while (time > windowEnd - windowMinutes * 60_000) {
     entries.push(createEntry(next, time, index));
     index += 1;
-    time -= Math.round(4_000 + next() * 14_000);
+    time -= Math.round(1_200 + next() * 3_200);
   }
   return entries;
 }
 
 export const initialLogs = buildLogs();
+
+export function percentile(values: number[], share: number) {
+  if (values.length === 0) return 0;
+  const sorted = [...values].sort((a, b) => a - b);
+  return sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * share))];
+}
 
 export function seededRandom(seed: number) {
   return random(seed);

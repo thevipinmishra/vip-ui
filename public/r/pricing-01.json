@@ -6,7 +6,7 @@
   "description": "Pricing plans with a monthly and yearly toggle.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["marketing"],
-  "docs": "Render <PricingPage /> from components/blocks/pricing-01/pricing-page.tsx. Preview: https://vip-ui.dev/blocks/pricing-01",
+  "docs": "Render <PricingPage /> from components/blocks/pricing-01/pricing-page.tsx. Preview: https://vip-ui.dev/blocks/pricing-01. The preview uses theme-orange, font-manrope, and --radius: 1rem.",
   "meta": {
     "entry": {
       "component": "PricingPage",

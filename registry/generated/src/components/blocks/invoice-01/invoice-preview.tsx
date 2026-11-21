@@ -37,7 +37,7 @@ export function InvoicePreview({
         <div className="flex items-center gap-2.5">
           <span
             aria-hidden="true"
-            className="grid size-8 place-items-center rounded-lg bg-foreground text-sm font-semibold text-background"
+            className="grid size-8 place-items-center rounded-lg bg-primary text-sm font-semibold text-primary-foreground"
           >
             B
           </span>

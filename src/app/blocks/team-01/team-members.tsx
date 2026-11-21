@@ -57,9 +57,15 @@ interface Member {
   name?: string;
   email: string;
   role: string;
+  title?: string;
   invited?: boolean;
+  invitedOn?: string;
+  expires?: string;
+  twoStep?: boolean;
   lastActive?: string;
 }
+
+const seatLimit = 20;
 
 const initialMembers: Member[] = [
   {
@@ -67,6 +73,8 @@ const initialMembers: Member[] = [
     name: "Maya Chen",
     email: "maya@northwind.com",
     role: "owner",
+    title: "Head of Product",
+    twoStep: true,
     lastActive: "Active now",
   },
   {
@@ -74,23 +82,116 @@ const initialMembers: Member[] = [
     name: "Leo Park",
     email: "leo@northwind.com",
     role: "admin",
+    title: "Engineering Manager",
+    twoStep: true,
     lastActive: "Active 2 h ago",
   },
   {
     id: "3",
     name: "Ana Souza",
     email: "ana@northwind.com",
-    role: "member",
-    lastActive: "Active yesterday",
+    role: "admin",
+    title: "Operations",
+    twoStep: true,
+    lastActive: "Active 20 min ago",
   },
   {
     id: "4",
     name: "Kwame Mensah",
     email: "kwame@northwind.com",
     role: "member",
-    lastActive: "Active Oct 28",
+    title: "Staff Engineer",
+    twoStep: true,
+    lastActive: "Active now",
   },
-  { id: "5", email: "sam@contractor.dev", role: "viewer", invited: true },
+  {
+    id: "5",
+    name: "Priya Raman",
+    email: "priya@northwind.com",
+    role: "member",
+    title: "Product Designer",
+    twoStep: true,
+    lastActive: "Active 1 h ago",
+  },
+  {
+    id: "6",
+    name: "Tomás Herrera",
+    email: "tomas@northwind.com",
+    role: "member",
+    title: "Frontend Engineer",
+    twoStep: false,
+    lastActive: "Active 3 h ago",
+  },
+  {
+    id: "7",
+    name: "Hannah Weber",
+    email: "hannah@northwind.com",
+    role: "member",
+    title: "Backend Engineer",
+    twoStep: true,
+    lastActive: "Active yesterday",
+  },
+  {
+    id: "8",
+    name: "Jun Watanabe",
+    email: "jun@northwind.com",
+    role: "member",
+    title: "Data Analyst",
+    twoStep: true,
+    lastActive: "Active yesterday",
+  },
+  {
+    id: "9",
+    name: "Grace Okafor",
+    email: "grace@northwind.com",
+    role: "member",
+    title: "Support Lead",
+    twoStep: false,
+    lastActive: "Active Oct 27",
+  },
+  {
+    id: "10",
+    name: "Elif Demir",
+    email: "elif@northwind.com",
+    role: "member",
+    title: "QA Engineer",
+    twoStep: true,
+    lastActive: "Active Oct 26",
+  },
+  {
+    id: "11",
+    name: "Marco Bianchi",
+    email: "marco@agency.studio",
+    role: "viewer",
+    title: "Brand contractor",
+    twoStep: false,
+    lastActive: "Active Oct 14",
+  },
+  {
+    id: "12",
+    name: "Nadia Haddad",
+    email: "nadia@northwind.com",
+    role: "viewer",
+    title: "Finance",
+    twoStep: true,
+    lastActive: "Active Oct 9",
+  },
+  {
+    id: "13",
+    email: "sam@contractor.dev",
+    role: "viewer",
+    invited: true,
+    invitedOn: "Oct 28",
+    expires: "Nov 4",
+  },
+  {
+    id: "14",
+    email: "olu@northwind.com",
+    role: "member",
+    invited: true,
+    invitedOn: "Oct 29",
+    expires: "Nov 5",
+  },
 ];
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -105,12 +206,21 @@ export function TeamMembers() {
   const [role, setRole] = useState("member");
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
+  const [roleFilter, setRoleFilter] = useState("all");
   const [removing, setRemoving] = useState<Member | null>(null);
-  const shown = members.filter((member) =>
-    `${member.name ?? ""} ${member.email}`
-      .toLowerCase()
-      .includes(query.trim().toLowerCase()),
+  const shown = members.filter(
+    (member) =>
+      (roleFilter === "all" || member.role === roleFilter) &&
+      `${member.name ?? ""} ${member.email} ${member.title ?? ""}`
+        .toLowerCase()
+        .includes(query.trim().toLowerCase()),
   );
+  const active = members.filter((member) => !member.invited);
+  const pending = members.length - active.length;
+  const protectedCount = active.filter((member) => member.twoStep).length;
+  const admins = active.filter(
+    (member) => member.role === "owner" || member.role === "admin",
+  ).length;
 
   function invite() {
     const emails = [...new Set(emailsIn(invites))];
@@ -130,6 +240,12 @@ export function TeamMembers() {
       setError(`${existing.join(", ")} is already on the team.`);
       return;
     }
+    if (members.length + emails.length > seatLimit) {
+      setError(
+        `Your plan has ${seatLimit} seats. Remove a person or add seats first.`,
+      );
+      return;
+    }
     setMembers((current) => [
       ...current,
       ...emails.map((email) => ({
@@ -137,6 +253,8 @@ export function TeamMembers() {
         email,
         role,
         invited: true,
+        invitedOn: "Oct 30",
+        expires: "Nov 6",
       })),
     ]);
     setInvites(new TagFieldValue([]));
@@ -179,6 +297,41 @@ export function TeamMembers() {
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-6">
+        <dl className="grid grid-cols-2 gap-x-6 gap-y-4 rounded-lg bg-muted/50 p-4 ring-1 ring-border/70 ring-inset sm:grid-cols-4">
+          <div className="grid gap-2">
+            <dt className="text-xs text-muted-foreground">Seats</dt>
+            <dd className="grid gap-2">
+              <span className="text-sm font-medium tabular-nums">
+                {members.length} of {seatLimit} used
+              </span>
+              <span
+                aria-hidden="true"
+                className="h-1.5 overflow-hidden rounded-full bg-secondary"
+              >
+                <span
+                  className="block h-full rounded-full bg-primary"
+                  style={{ width: `${(members.length / seatLimit) * 100}%` }}
+                />
+              </span>
+            </dd>
+          </div>
+          <div className="grid gap-1">
+            <dt className="text-xs text-muted-foreground">Admins</dt>
+            <dd className="text-sm font-medium tabular-nums">
+              {admins} of {active.length} people
+            </dd>
+          </div>
+          <div className="grid gap-1">
+            <dt className="text-xs text-muted-foreground">Pending invites</dt>
+            <dd className="text-sm font-medium tabular-nums">{pending}</dd>
+          </div>
+          <div className="grid gap-1">
+            <dt className="text-xs text-muted-foreground">Two-step sign-in</dt>
+            <dd className="text-sm font-medium tabular-nums">
+              {protectedCount} of {active.length} people
+            </dd>
+          </div>
+        </dl>
         <div className="grid items-start gap-3 sm:grid-cols-[minmax(0,1fr)_10rem_auto]">
           <TokenField
             value={invites}
@@ -227,18 +380,27 @@ export function TeamMembers() {
             <h2 className="text-sm font-medium">
               {members.length} {members.length === 1 ? "person" : "people"}
             </h2>
-            <SearchField
-              aria-label="Search members"
-              placeholder="Search members"
-              value={query}
-              onChange={setQuery}
-              className="w-full sm:w-64"
-            />
+            <div className="flex w-full flex-wrap gap-2 sm:w-auto">
+              <Select
+                aria-label="Filter by role"
+                options={[{ id: "all", name: "All roles" }, ...roles]}
+                value={roleFilter}
+                onChange={(key) => setRoleFilter(String(key))}
+                className="w-36"
+              />
+              <SearchField
+                aria-label="Search members"
+                placeholder="Name, email, or title"
+                value={query}
+                onChange={setQuery}
+                className="min-w-0 flex-1 sm:w-64 sm:flex-none"
+              />
+            </div>
           </div>
           <div className="-mx-5 border-t border-border/70">
             {shown.length === 0 ? (
               <p className="px-5 py-8 text-center text-sm text-muted-foreground">
-                No members match “{query.trim()}”.
+                No members match these filters.
               </p>
             ) : (
               <PresenceList
@@ -342,11 +504,16 @@ function MemberRow({
               Invited
             </Badge>
           )}
+          {!member.invited && !member.twoStep && (
+            <Badge variant="outline" className="min-h-5 shrink-0 py-0">
+              No two-step
+            </Badge>
+          )}
         </p>
         <p className="truncate text-xs text-muted-foreground">
           {member.name
-            ? `${member.email} · ${member.lastActive}`
-            : "Invite sent. It expires in 7 days."}
+            ? `${member.title} · ${member.email} · ${member.lastActive}`
+            : `Invited ${member.invitedOn} · Expires ${member.expires}`}
         </p>
       </div>
       <Select

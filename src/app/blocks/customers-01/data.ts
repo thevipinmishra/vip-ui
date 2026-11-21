@@ -45,6 +45,7 @@ export interface Customer {
   smsOptIn: boolean;
   ordersCount: number;
   spent: number;
+  favorites: { name: string; bags: number }[];
   subscription?: Subscription;
   orders: CustomerOrder[];
   activity: Activity[];
@@ -76,6 +77,12 @@ export const customers: Customer[] = [
     smsOptIn: false,
     ordersCount: 23,
     spent: 128460,
+    favorites: [
+      { name: "Kitale AA", bags: 26 },
+      { name: "Huila decaf", bags: 9 },
+      { name: "Guji natural", bags: 8 },
+      { name: "House espresso", bags: 5 },
+    ],
     subscription: {
       product: "Kitale AA, whole bean",
       plan: "2 bags every 2 weeks",
@@ -163,6 +170,11 @@ export const customers: Customer[] = [
     smsOptIn: true,
     ordersCount: 61,
     spent: 1439600,
+    favorites: [
+      { name: "House espresso, 5 lb", bags: 212 },
+      { name: "Kitale AA, 5 lb", bags: 38 },
+      { name: "Huila decaf, 5 lb", bags: 22 },
+    ],
     subscription: {
       product: "House espresso, 5 lb",
       plan: "4 bags every week",
@@ -249,6 +261,7 @@ export const customers: Customer[] = [
     smsOptIn: false,
     ordersCount: 0,
     spent: 0,
+    favorites: [],
     orders: [],
     activity: [
       {

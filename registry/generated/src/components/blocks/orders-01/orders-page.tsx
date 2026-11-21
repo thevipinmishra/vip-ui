@@ -8,8 +8,6 @@ import {
 import {
   ArchiveIcon,
   ArrowCounterClockwiseIcon,
-  CaretLeftIcon,
-  CaretRightIcon,
   CopyIcon,
   DotsThreeIcon,
   DownloadSimpleIcon,
@@ -49,12 +47,22 @@ import {
 import {
   Pagination,
   PaginationItem,
-  PaginationLink,
   PaginationList,
+  PaginationNextTrigger,
+  PaginationPages,
+  PaginationPrevTrigger,
 } from "../../vip-ui/pagination";
 import { Presence } from "../../vip-ui/presence";
 import { SearchField } from "../../vip-ui/search-field";
 import { Select } from "../../vip-ui/select";
+import {
+  Stat,
+  StatDetail,
+  StatGroup,
+  StatLabel,
+  StatTrend,
+  StatValue,
+} from "../../vip-ui/stat";
 import { Tag, TagGroup, TagListView } from "../../vip-ui/tag-group";
 import { showToast } from "../../vip-ui/toast";
 import { Toolbar } from "../../vip-ui/toolbar";
@@ -136,6 +144,54 @@ function formatRange(start: CalendarDate, end: CalendarDate) {
   return `${fullDate.format(toDate(start))} – ${fullDate.format(toDate(end))}`;
 }
 
+function previousRange(range: RangeValue<CalendarDate>) {
+  const days = range.end.compare(range.start) + 1;
+  return {
+    start: range.start.subtract({ days }),
+    end: range.start.subtract({ days: 1 }),
+  };
+}
+
+function inRange(order: Order, start: string, end: string) {
+  const day = order.placedAt.slice(0, 10);
+  return day >= start && day <= end;
+}
+
+function summarize(list: Order[]) {
+  const paid = list.filter((order) => order.payment === "paid");
+  const sales = paid.reduce((sum, order) => sum + orderTotals(order).total, 0);
+  const hours = list
+    .map((order) => order.shippedAfter)
+    .filter((value): value is number => value !== undefined && value > 0)
+    .sort((a, b) => a - b);
+  return {
+    orders: list.length,
+    sales,
+    average: paid.length > 0 ? sales / paid.length : 0,
+    items: list.reduce((sum, order) => sum + itemCount(order), 0),
+    refundRate:
+      list.length > 0
+        ? (list.filter((order) => order.payment === "refunded").length /
+            list.length) *
+          100
+        : 0,
+    shipHours: hours.length > 0 ? hours[Math.floor(hours.length / 2)] : 0,
+  };
+}
+
+function change(current: number, previous: number) {
+  return previous > 0 ? ((current - previous) / previous) * 100 : 0;
+}
+
+function formatPeriod(start: CalendarDate, end: CalendarDate) {
+  const first = shortDate.format(toDate(start));
+  if (start.compare(end) === 0) return first;
+  if (start.month === end.month && start.year === end.year) {
+    return `${first}–${end.day}`;
+  }
+  return `${first} – ${shortDate.format(toDate(end))}`;
+}
+
 function isShippable(order: Order) {
   return (
     order.fulfillment === "unfulfilled" || order.fulfillment === "processing"
@@ -204,8 +260,7 @@ export function OrdersPage() {
   const dayEnd = range.end.toString();
   const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
   const filtered = rows.filter((order) => {
-    const day = order.placedAt.slice(0, 10);
-    if (day < dayStart || day > dayEnd) return false;
+    if (!inRange(order, dayStart, dayEnd)) return false;
     if (payment !== "all" && order.payment !== payment) return false;
     if (fulfillment !== "all" && order.fulfillment !== fulfillment) {
       return false;
@@ -235,13 +290,55 @@ export function OrdersPage() {
   const refundOrder = refundId
     ? (rows.find((order) => order.id === refundId) ?? null)
     : null;
-  const paidRevenue = rows
-    .filter((order) => order.payment === "paid")
-    .reduce((sum, order) => sum + orderTotals(order).total, 0);
-  const toFulfill = rows.filter(
-    (order) =>
-      order.fulfillment === "unfulfilled" || order.fulfillment === "processing",
+  const toFulfill = rows.filter(isShippable).length;
+  const awaitingPayment = rows.filter(
+    (order) => order.payment === "pending",
   ).length;
+  const previous = previousRange(range);
+  const current = summarize(
+    rows.filter((order) => inRange(order, dayStart, dayEnd)),
+  );
+  const before = summarize(
+    rows.filter((order) =>
+      inRange(order, previous.start.toString(), previous.end.toString()),
+    ),
+  );
+  const compareLabel = `vs. ${formatPeriod(previous.start, previous.end)}`;
+  const metrics = [
+    {
+      label: "Orders",
+      value: current.orders.toLocaleString("en-US"),
+      change: change(current.orders, before.orders),
+    },
+    {
+      label: "Net sales",
+      value: formatMoney(current.sales),
+      change: change(current.sales, before.sales),
+    },
+    {
+      label: "Average order",
+      value: formatMoney(current.average),
+      change: change(current.average, before.average),
+    },
+    {
+      label: "Items sold",
+      value: current.items.toLocaleString("en-US"),
+      change: change(current.items, before.items),
+    },
+    {
+      label: "Refund rate",
+      value: `${current.refundRate.toFixed(2)}%`,
+      change: current.refundRate - before.refundRate,
+      points: true,
+      invert: true,
+    },
+    {
+      label: "Median time to ship",
+      value: `${current.shipHours} h`,
+      change: change(current.shipHours, before.shipHours),
+      invert: true,
+    },
+  ];
   const rangeChanged =
     range.start.toString() !== initialRange.start.toString() ||
     range.end.toString() !== initialRange.end.toString();
@@ -443,6 +540,15 @@ export function OrdersPage() {
       sortValue: (order) => order.placedAt,
     },
     {
+      id: "channel",
+      header: "Channel",
+      minWidth: 128,
+      cell: (order) => (
+        <span className="text-muted-foreground">{order.channel}</span>
+      ),
+      sortValue: (order) => order.channel,
+    },
+    {
       id: "items",
       header: "Items",
       align: "end",
@@ -530,12 +636,20 @@ export function OrdersPage() {
       <div className="mx-auto grid w-full max-w-[1180px] gap-6">
         <header className="flex flex-wrap items-end justify-between gap-4">
           <div className="grid gap-1">
+            <p className="mb-2 flex items-center gap-2 text-sm font-medium">
+              <span
+                aria-hidden="true"
+                className="grid size-6 place-items-center rounded-md bg-primary text-[0.625rem] font-semibold text-primary-foreground"
+              >
+                M&amp;F
+              </span>
+              Marlow &amp; Finch
+            </p>
             <h1 className="text-2xl font-semibold tracking-[-0.04em]">
               Orders
             </h1>
             <p className="text-sm text-muted-foreground">
-              {rows.length} orders · {formatMoney(paidRevenue)} paid ·{" "}
-              {toFulfill} to fulfill
+              {toFulfill} to fulfill · {awaitingPayment} awaiting payment
             </p>
           </div>
           <Button
@@ -551,6 +665,40 @@ export function OrdersPage() {
             Export
           </Button>
         </header>
+
+        <StatGroup
+          aria-label="Order metrics"
+          role="group"
+          className="grid-cols-2 md:grid-cols-3 xl:grid-cols-6"
+        >
+          {metrics.map((metric) => (
+            <Stat key={metric.label}>
+              <StatLabel className="truncate">{metric.label}</StatLabel>
+              <StatValue className="text-2xl">{metric.value}</StatValue>
+              <StatDetail className="flex-wrap">
+                <StatTrend
+                  direction={
+                    Math.abs(metric.change) < 0.005
+                      ? "neutral"
+                      : metric.change > 0
+                        ? "up"
+                        : "down"
+                  }
+                  invert={metric.invert}
+                >
+                  {metric.change >= 0.005
+                    ? "+"
+                    : metric.change <= -0.005
+                      ? "−"
+                      : ""}
+                  {Math.abs(metric.change).toFixed(metric.points ? 2 : 1)}
+                  {metric.points ? " pts" : "%"}
+                </StatTrend>
+                <span className="truncate">{compareLabel}</span>
+              </StatDetail>
+            </Stat>
+          ))}
+        </StatGroup>
 
         <Card className="grid gap-3 p-4 sm:p-5">
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_18rem_10rem_11rem] lg:items-end">
@@ -712,7 +860,7 @@ export function OrdersPage() {
             selectedKeys={selected}
             onSelectionChange={setSelected}
             onRowAction={(key) => setSheetId(String(key))}
-            pageSize={8}
+            pageSize={10}
             showClearSelection={false}
             renderFooter={({
               firstRow,
@@ -732,39 +880,21 @@ export function OrdersPage() {
                   {filteredCount === 1 ? "order" : "orders"}
                 </output>
                 {pageCount > 1 && (
-                  <Pagination size="sm">
+                  <Pagination
+                    size="sm"
+                    count={filteredCount}
+                    pageSize={10}
+                    siblingCount={1}
+                    page={pageIndex + 1}
+                    onPageChange={(details) => setPageIndex(details.page - 1)}
+                  >
                     <PaginationList className="flex-nowrap gap-1">
                       <PaginationItem>
-                        <PaginationLink
-                          isDisabled={pageIndex === 0}
-                          aria-label="Previous page"
-                          onPress={() => setPageIndex(pageIndex - 1)}
-                        >
-                          <CaretLeftIcon aria-hidden="true" />
-                        </PaginationLink>
+                        <PaginationPrevTrigger />
                       </PaginationItem>
-                      {Array.from(
-                        { length: pageCount },
-                        (_, index) => index + 1,
-                      ).map((number) => (
-                        <PaginationItem key={number}>
-                          <PaginationLink
-                            isCurrent={number - 1 === pageIndex}
-                            aria-label={`Page ${number}`}
-                            onPress={() => setPageIndex(number - 1)}
-                          >
-                            {number}
-                          </PaginationLink>
-                        </PaginationItem>
-                      ))}
+                      <PaginationPages />
                       <PaginationItem>
-                        <PaginationLink
-                          isDisabled={pageIndex === pageCount - 1}
-                          aria-label="Next page"
-                          onPress={() => setPageIndex(pageIndex + 1)}
-                        >
-                          <CaretRightIcon aria-hidden="true" />
-                        </PaginationLink>
+                        <PaginationNextTrigger />
                       </PaginationItem>
                     </PaginationList>
                   </Pagination>

@@ -6,7 +6,7 @@
   "description": "File manager with folders, uploads, and file details.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["workspace"],
-  "docs": "Render <FileManager /> from components/blocks/files-01/file-manager.tsx. Preview: https://vip-ui.dev/blocks/files-01",
+  "docs": "Render <FileManager /> from components/blocks/files-01/file-manager.tsx. Preview: https://vip-ui.dev/blocks/files-01. The preview uses theme-blue, font-inter, and --radius: 0.5rem.",
   "meta": {
     "entry": {
       "component": "FileManager",

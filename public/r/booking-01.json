@@ -6,7 +6,7 @@
   "description": "Booking page with a calendar, time slots, and a time zone.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["scheduling"],
-  "docs": "Render <BookingPage /> from components/blocks/booking-01/booking-page.tsx. Preview: https://vip-ui.dev/blocks/booking-01",
+  "docs": "Render <BookingPage /> from components/blocks/booking-01/booking-page.tsx. Preview: https://vip-ui.dev/blocks/booking-01. The preview uses theme-green, font-figtree, and --radius: 1rem.",
   "meta": {
     "entry": {
       "component": "BookingPage",

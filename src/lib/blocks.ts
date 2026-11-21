@@ -1,5 +1,11 @@
 import catalog from "./blocks.json";
 
+export interface BlockTheme {
+  color: string;
+  font: string;
+  radius: string;
+}
+
 export interface Block {
   name: string;
   title: string;
@@ -7,6 +13,7 @@ export interface Block {
   category: string;
   height: number;
   added?: string;
+  theme?: BlockTheme;
 }
 
 export interface BlockCategory {
@@ -21,4 +28,8 @@ export function blocksIn(category: string | null) {
   return category
     ? blocks.filter((block) => block.category === category)
     : blocks;
+}
+
+export function findBlock(name: string | null) {
+  return blocks.find((block) => block.name === name);
 }
