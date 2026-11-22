@@ -20,7 +20,7 @@ import type {
 import { itemPrompt } from "@/lib/agent-docs";
 import { apiPart } from "@/lib/component-api";
 import { registryUrl } from "@/lib/registry-docs";
-import { siteUrl } from "@/lib/site-url";
+import { agentSiteUrl } from "@/lib/site-url";
 import { cn } from "@/lib/utils";
 import { ChartCoverage } from "./chart-coverage";
 
@@ -315,7 +315,7 @@ const listClass =
 
 export async function ChartDocumentation() {
   const cliUrl = registryUrl("chart");
-  const site = siteUrl();
+  const site = agentSiteUrl();
   const prompt = itemPrompt(site, cliUrl ?? `${site}/r/chart.json`, "Chart");
 
   return (

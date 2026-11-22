@@ -1,16 +1,17 @@
 import { setupDocUrl } from "@/lib/agent-docs";
+import { blockCategories, blocksIn } from "@/lib/blocks";
 import { catalogGroups } from "@/lib/catalog";
 import { docsGuides } from "@/lib/navigation";
-import { siteUrl } from "@/lib/site-url";
+import { agentSiteUrl } from "@/lib/site-url";
 
 export const dynamic = "force-static";
 
 export function GET() {
-  const site = siteUrl();
+  const site = agentSiteUrl();
   const lines: string[] = [
     "# vip/ui",
     "",
-    "> Copyable React components built on React Aria, Tailwind CSS v4, and Motion. Every component page is available as Markdown by appending `.md` to its URL, with installation steps, usage, examples, API, and links to the source files.",
+    "> Copyable React components built on React Aria, Tailwind CSS v4, and Motion. Every component and block page is available as Markdown by appending `.md` to its URL, with installation steps, usage, examples, API, and links to the source files.",
     "",
     "## Start here",
     "",
@@ -35,6 +36,24 @@ export function GET() {
     for (const component of group.components) {
       lines.push(
         `- [${component.name}](${site}/components/${component.slug}.md): ${component.description}`,
+      );
+    }
+    lines.push("");
+  }
+
+  lines.push(
+    "## Blocks",
+    "",
+    "Complete page sections that install as React components, grouped by category.",
+    "",
+  );
+  for (const category of blockCategories) {
+    const items = blocksIn(category.slug);
+    if (!items.length) continue;
+    lines.push(`### ${category.label}`, "");
+    for (const block of items) {
+      lines.push(
+        `- [${block.title}](${site}/blocks/${block.name}.md): ${block.description}`,
       );
     }
     lines.push("");

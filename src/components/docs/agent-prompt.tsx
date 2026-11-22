@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { CopyCodeButton } from "./copy-code-button";
 
 export function AgentPrompt({ prompt }: { prompt: string }) {
@@ -17,8 +18,29 @@ export function AgentPrompt({ prompt }: { prompt: string }) {
         />
       </div>
       <p className="p-4 font-mono text-[13px] leading-6 wrap-anywhere">
-        {prompt}
+        {prompt.split(/(https?:\/\/\S+)/).map((part, index) =>
+          index % 2 ? (
+            // biome-ignore lint/suspicious/noArrayIndexKey: each URL is identified by its position in the static prompt, so repeated URLs stay distinct.
+            <PromptUrl key={index} url={part} />
+          ) : (
+            part
+          ),
+        )}
       </p>
     </div>
+  );
+}
+
+function PromptUrl({ url }: { url: string }) {
+  return (
+    <span className="inline-block max-w-full">
+      {url.split(/(?<=\w\/)/).map((segment, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: repeated path segments, such as a/a/, are distinct by position.
+        <Fragment key={index}>
+          {segment}
+          <wbr />
+        </Fragment>
+      ))}
+    </span>
   );
 }

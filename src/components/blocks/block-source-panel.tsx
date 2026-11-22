@@ -10,6 +10,7 @@ import {
 import { type CSSProperties, useEffect, useState } from "react";
 import { findTheme } from "@/app/themes/themes";
 import { findFont } from "@/app/typography/fonts";
+import { AgentPrompt } from "@/components/docs/agent-prompt";
 import { CopyCodeButton } from "@/components/docs/copy-code-button";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,7 +24,9 @@ import { Link } from "@/components/ui/link";
 import { Spinner } from "@/components/ui/spinner";
 import { ToggleButton } from "@/components/ui/toggle-button";
 import { ToggleButtonGroup } from "@/components/ui/toggle-button-group";
+import { blockPrompt } from "@/lib/block-docs";
 import type { Block } from "@/lib/blocks";
+import { agentSiteUrl } from "@/lib/site-url";
 import type { BlockSource } from "./block-source-types";
 
 const cache = new Map<string, BlockSource>();
@@ -146,6 +149,9 @@ export function BlockSourcePanel({ block }: { block: Block }) {
         <p className="max-w-3xl text-pretty text-sm leading-6 text-muted-foreground">
           {block.description}
         </p>
+        <AgentPrompt
+          prompt={blockPrompt(agentSiteUrl(), block.name, block.title)}
+        />
         <div className="flex min-w-0 flex-col gap-1 rounded-xl bg-muted/50 p-2 ring-1 ring-border/70 sm:flex-row sm:items-center sm:gap-2 sm:py-1 sm:ps-3 sm:pe-1">
           <div className="flex min-w-0 flex-1 items-start gap-2">
             <TerminalWindowIcon

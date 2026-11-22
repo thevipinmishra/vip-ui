@@ -3,7 +3,13 @@ import blocksCatalog from "./src/lib/blocks.json";
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
-  env: { BUILD_DATE: new Date().toISOString().slice(0, 10) },
+  env: {
+    BUILD_DATE: new Date().toISOString().slice(0, 10),
+    NEXT_PUBLIC_DEPLOY_ORIGIN:
+      process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : "",
+  },
   experimental: {
     optimizePackageImports: [
       "@phosphor-icons/react",
@@ -42,6 +48,16 @@ const nextConfig: NextConfig = {
       {
         source: "/components/from-shadcn",
         destination: "/components/installation",
+        permanent: true,
+      },
+      {
+        source: "/components/ai-and-mcp",
+        destination: "/components/agents",
+        permanent: true,
+      },
+      {
+        source: "/components/ai-and-mcp/:path*",
+        destination: "/components/agents",
         permanent: true,
       },
       {
@@ -88,6 +104,10 @@ const nextConfig: NextConfig = {
         source: "/components/:slug.md",
         destination: "/components/:slug/markdown",
       },
+      {
+        source: "/blocks/:block.md",
+        destination: "/api/blocks/:block/markdown",
+      },
     ];
   },
   async headers() {
@@ -110,6 +130,14 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/components/:slug.md",
+        headers: robotsTag("noindex, nofollow"),
+      },
+      {
+        source: "/api/blocks/:name/markdown",
+        headers: robotsTag("noindex, nofollow"),
+      },
+      {
+        source: "/blocks/:block.md",
         headers: robotsTag("noindex, nofollow"),
       },
       {

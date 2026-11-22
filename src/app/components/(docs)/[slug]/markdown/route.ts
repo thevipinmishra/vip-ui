@@ -14,7 +14,7 @@ import {
   readRegistryItem,
   registryUrl,
 } from "@/lib/registry-docs";
-import { siteUrl } from "@/lib/site-url";
+import { agentSiteUrl } from "@/lib/site-url";
 
 export const dynamic = "force-static";
 
@@ -83,7 +83,7 @@ export async function GET(
     slug,
     name: component.name,
     description: component.description,
-    site: siteUrl(),
+    site: agentSiteUrl(),
     manual: manualInstallPlan(registryItem, slug),
     cliUrl: registryUrl(slug),
     usage: usage && {

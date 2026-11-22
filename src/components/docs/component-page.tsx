@@ -17,7 +17,7 @@ import {
 } from "@/lib/example-dependencies";
 import { allComponents } from "@/lib/navigation";
 import { registryNamespace, registryUrl } from "@/lib/registry-docs";
-import { siteUrl } from "@/lib/site-url";
+import { agentSiteUrl } from "@/lib/site-url";
 import { ApiReference } from "./api-reference";
 import { CodeSample } from "./code-sample";
 import { ComponentComposition } from "./component-composition";
@@ -90,7 +90,7 @@ export async function ComponentPage({
       ),
     ),
   );
-  const site = siteUrl();
+  const site = agentSiteUrl();
   const prompt = componentPrompt(site, componentSlug, name);
   const cliUrl = registryUrl(componentSlug);
   const apiParts = componentApi[componentSlug] ?? [];
@@ -369,7 +369,7 @@ function ComponentDependency({ slug }: { slug: string }) {
   ) : (
     <>
       the <Code>{`${registryNamespace}/${slug}`}</Code>{" "}
-      <TextLink href="/components/installation#namespace">
+      <TextLink href="/components/installation#install-by-name">
         registry item
       </TextLink>
     </>

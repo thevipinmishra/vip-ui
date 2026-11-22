@@ -154,8 +154,8 @@ export function DocsPager({
 const guideSeoDescriptions: Partial<Record<Guide["href"], string>> = {
   "/components/installation":
     "Add vip/ui components with the shadcn CLI, or copy the files manually, and update them later. Requires React 19, TypeScript, and Tailwind CSS v4.1 or later.",
-  "/components/ai-and-mcp":
-    "Use the shadcn MCP server, llms.txt, the Markdown pages, the CLI, and the vip/ui agent skill to build with vip/ui components through AI tools.",
+  "/components/agents":
+    "Give your agent a setup prompt, install the vip/ui skill, use the shadcn MCP server and the CLI, and read llms.txt and the Markdown pages.",
   "/components/rtl":
     "vip/ui components use logical CSS classes, so right-to-left layouts work with no transform. What the CLI rtl option changes, and the components that set left or right on purpose.",
 };

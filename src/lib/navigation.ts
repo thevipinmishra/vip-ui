@@ -11,10 +11,10 @@ export const docsGuides = [
       "Set up your project with an agent prompt, the shadcn CLI, or manual steps. Then add and update components.",
   },
   {
-    href: "/components/ai-and-mcp",
-    label: "AI and MCP",
+    href: "/components/agents",
+    label: "Agents",
     description:
-      "Use vip/ui with AI tools: the shadcn MCP server, llms.txt, Markdown pages, the CLI, and the agent skill.",
+      "Give your agent a setup prompt, install the vip/ui skill, connect the shadcn MCP server, and read llms.txt and the Markdown pages.",
   },
   {
     href: "/components/styling",

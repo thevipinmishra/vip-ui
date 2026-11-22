@@ -65,7 +65,8 @@ const pageSources = {
       },
       {
         title: "Link",
-        description: "Pass `as={Link}` to use Next.js routing.",
+        description:
+          "Install `ButtonLink` with `npx shadcn@latest add @vip-ui/button-link`. Pass `as={Link}` to use Next.js routing.",
         sourcePath: "button-link-demo.tsx",
       },
     ],
@@ -138,7 +139,7 @@ const pageSources = {
   },
   accordion: {
     summary:
-      "Examples cover divided sections, multiple open panels, and disabled items.",
+      "Examples cover divided sections, form validation, and disabled items.",
     usage: "accordion-demo.tsx",
     examples: [
       {
@@ -148,9 +149,9 @@ const pageSources = {
         sourcePath: "accordion-billing-demo.tsx",
       },
       {
-        title: "Multiple open sections",
+        title: "Form validation",
         description:
-          "Set `allowsMultipleExpanded` to keep more than one section open.",
+          "Open the section with the first invalid field through `expandedKeys`. Set `allowsMultipleExpanded` to keep the other sections open.",
         sourcePath: "accordion-multiple-demo.tsx",
       },
       {
@@ -337,7 +338,7 @@ const pageSources = {
       {
         title: "Linked card",
         description:
-          "Put `CardLink` in the title to make the whole card a link; give other buttons `relative z-10`.",
+          "Put `CardLink` in the title to make the card clickable. Give `CardAction` the `relative z-10` classes to keep the menu button above the link.",
         sourcePath: "card-link-demo.tsx",
       },
       {
@@ -784,7 +785,8 @@ const pageSources = {
     usage: "description-list-demo.tsx",
     examples: [
       {
-        title: "Rich values",
+        title: "Deployment inspector",
+        description: "The metadata stacks inside a narrow panel on any screen.",
         sourcePath: "description-list-components-demo.tsx",
       },
     ],
@@ -2466,17 +2468,19 @@ const pageSources = {
       {
         title: "Logo overlay",
         description:
-          "`overlay` sets the error correction to H, so the code still scans under the logo.",
+          "`overlay` defaults to error correction level H. Keep the logo small and check that the code scans.",
         sourcePath: "qr-code-overlay-demo.tsx",
       },
       {
         title: "Download",
         description:
-          "The file has a white surface and a quiet zone, so it scans on any background.",
+          "The file includes a white background and a four-module quiet zone.",
         sourcePath: "qr-code-download-demo.tsx",
       },
       {
         title: "Dynamic value",
+        description:
+          "Validate the checkout link before you pass it to `QrCode`.",
         sourcePath: "qr-code-dynamic-demo.tsx",
       },
     ],

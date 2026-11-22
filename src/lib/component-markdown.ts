@@ -28,7 +28,10 @@ export interface ComponentMarkdownInput {
   reactAria?: { name: string; href: string };
 }
 
-function dependencyLine(uses?: ExampleDependencies) {
+export function dependencyLine(
+  uses?: ExampleDependencies,
+  subject = "this example",
+) {
   if (!uses) return null;
   const parts = [
     { noun: "registry item", names: uses.components },
@@ -41,7 +44,7 @@ function dependencyLine(uses?: ExampleDependencies) {
       : [],
   );
   return parts.length
-    ? `To use this example, install ${parts.join(" and ")}.`
+    ? `To use ${subject}, install ${parts.join(" and ")}.`
     : null;
 }
 
@@ -111,23 +114,6 @@ export function buildComponentMarkdown({
     );
   }
 
-  if (examples && examples.length > 0) {
-    examples.forEach((example) => {
-      lines.push("", `## ${example.title}`);
-      if (example.description) {
-        lines.push("", example.description.trim());
-      }
-      const install = dependencyLine(example.uses);
-      if (install) lines.push("", install);
-      if (example.code) {
-        lines.push("", "```tsx", example.code.trim(), "```");
-        if (example.filename) {
-          lines.push("", `Source: \`${example.filename}\``);
-        }
-      }
-    });
-  }
-
   if (api?.length || reactAria) {
     lines.push("", "## API reference");
     if (reactAria) {
@@ -154,6 +140,23 @@ export function buildComponentMarkdown({
         }
       }
     }
+  }
+
+  if (examples && examples.length > 0) {
+    examples.forEach((example) => {
+      lines.push("", `## ${example.title}`);
+      if (example.description) {
+        lines.push("", example.description.trim());
+      }
+      const install = dependencyLine(example.uses);
+      if (install) lines.push("", install);
+      if (example.code) {
+        lines.push("", "```tsx", example.code.trim(), "```");
+        if (example.filename) {
+          lines.push("", `Source: \`${example.filename}\``);
+        }
+      }
+    });
   }
 
   lines.push(

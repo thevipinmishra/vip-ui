@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { getComponent } from "./catalog";
 import internalDescriptions from "./internal-descriptions.json";
+import { deployOrigin } from "./site-url";
 
 export interface RegistryFile {
   path: string;
@@ -109,6 +110,7 @@ export const registryNamespace = "@vip-ui";
 
 function registryOrigin() {
   const base =
+    deployOrigin() ||
     process.env.NEXT_PUBLIC_REGISTRY_URL ||
     (process.env.NODE_ENV === "development" ? "http://localhost:3000" : null);
   return base ? base.replace(/\/$/, "") : null;

@@ -5,7 +5,7 @@ import {
   ArrowUpRightIcon,
   CheckIcon,
   CopyIcon,
-  SparkleIcon,
+  DotsThreeIcon,
 } from "@phosphor-icons/react";
 import { type ReactNode, useState } from "react";
 import { Link as AriaLink } from "react-aria-components";
@@ -16,6 +16,7 @@ import {
   MenuContent,
   MenuItem,
   MenuPopover,
+  MenuSeparator,
   MenuTrigger,
 } from "@/components/ui/menu";
 import {
@@ -107,16 +108,16 @@ export function ComponentHeader({
   const hasChips = primitives.length > 0 || axe || doctor;
   return (
     <header>
-      <div className="flex items-start justify-between gap-x-4">
+      <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-3">
         <h1 className={cn(pageTitleClass, "min-w-0")}>{name}</h1>
-        <div className={`flex h-lh shrink-0 items-center ${pageTitleSize}`}>
-          <div className="me-2 hidden sm:flex">
-            <CopyCodeButton
-              code={prompt}
-              label="Copy prompt"
-              text="Copy prompt"
-            />
-          </div>
+        <div
+          className={`flex h-lh shrink-0 items-center gap-2 ${pageTitleSize}`}
+        >
+          <CopyCodeButton
+            code={prompt}
+            label="Copy prompt"
+            text="Copy prompt"
+          />
           <PageActions slug={slug} name={name} markdownUrl={markdownUrl} />
         </div>
       </div>
@@ -207,91 +208,84 @@ function PageActions({
   }
 
   return (
-    <div className="flex items-center gap-0.5">
-      <MenuTrigger>
-        <TooltipTrigger>
-          <Button variant="minimal" size="sm" iconOnly aria-label="Ask AI">
-            <SparkleIcon aria-hidden="true" />
-          </Button>
-          <Tooltip>Ask AI</Tooltip>
-        </TooltipTrigger>
-        <MenuPopover placement="bottom end" className="min-w-56">
-          <MenuContent aria-label="Ask AI">
-            {assistants.map((assistant) => (
-              <MenuItem
-                key={assistant.label}
-                href={assistant.url(prompt)}
-                target="_blank"
-                rel="noreferrer"
-                textValue={`Open in ${assistant.label}`}
-              >
-                <span className="text-muted-foreground [&_svg]:size-4">
-                  {assistant.icon}
-                </span>
-                Open in {assistant.label}
-                <ArrowUpRightIcon
-                  size={14}
-                  aria-hidden="true"
-                  className="ms-auto text-muted-foreground"
-                />
-              </MenuItem>
-            ))}
-          </MenuContent>
-        </MenuPopover>
-      </MenuTrigger>
+    <MenuTrigger>
       <TooltipTrigger>
-        <Button
-          variant="minimal"
-          size="sm"
-          iconOnly
-          aria-label={copied ? "Copied" : "Copy page as Markdown"}
-          onPress={copyPage}
-        >
-          {copied ? (
-            <CheckIcon aria-hidden="true" />
-          ) : (
-            <CopyIcon aria-hidden="true" />
-          )}
+        <Button variant="minimal" size="sm" iconOnly aria-label="More actions">
+          <DotsThreeIcon weight="bold" aria-hidden="true" />
         </Button>
-        <Tooltip>{copied ? "Copied" : "Copy page as Markdown"}</Tooltip>
+        <Tooltip>More actions</Tooltip>
       </TooltipTrigger>
-      <IconLink label="View as Markdown" href={markdownPath}>
-        <MarkdownMark />
-      </IconLink>
-      <IconLink
-        label="View source"
-        href={`${repository}/blob/main/src/components/ui/${slug}.tsx`}
-      >
-        <GitHubMark />
-      </IconLink>
-    </div>
-  );
-}
-
-function IconLink({
-  label,
-  href,
-  children,
-}: {
-  label: string;
-  href: string;
-  children: ReactNode;
-}) {
-  return (
-    <TooltipTrigger>
-      <ButtonLink
-        href={href}
-        target="_blank"
-        rel="noreferrer"
-        variant="minimal"
-        size="sm"
-        iconOnly
-        aria-label={label}
-      >
-        {children}
-      </ButtonLink>
-      <Tooltip>{label}</Tooltip>
-    </TooltipTrigger>
+      <MenuPopover placement="bottom end" className="min-w-56">
+        <MenuContent aria-label="More actions">
+          <MenuItem
+            shouldCloseOnSelect={false}
+            onAction={copyPage}
+            textValue="Copy page as Markdown"
+          >
+            <span className="text-muted-foreground [&_svg]:size-4">
+              {copied ? (
+                <CheckIcon aria-hidden="true" />
+              ) : (
+                <CopyIcon aria-hidden="true" />
+              )}
+            </span>
+            {copied ? "Copied" : "Copy page as Markdown"}
+          </MenuItem>
+          <MenuItem
+            href={markdownPath}
+            target="_blank"
+            rel="noreferrer"
+            textValue="View as Markdown"
+          >
+            <span className="text-muted-foreground [&_svg]:size-4">
+              <MarkdownMark />
+            </span>
+            View as Markdown
+            <ArrowUpRightIcon
+              size={14}
+              aria-hidden="true"
+              className="ms-auto text-muted-foreground"
+            />
+          </MenuItem>
+          <MenuItem
+            href={`${repository}/blob/main/src/components/ui/${slug}.tsx`}
+            target="_blank"
+            rel="noreferrer"
+            textValue="View source"
+          >
+            <span className="text-muted-foreground">
+              <GitHubMark />
+            </span>
+            View source
+            <ArrowUpRightIcon
+              size={14}
+              aria-hidden="true"
+              className="ms-auto text-muted-foreground"
+            />
+          </MenuItem>
+          <MenuSeparator />
+          {assistants.map((assistant) => (
+            <MenuItem
+              key={assistant.label}
+              href={assistant.url(prompt)}
+              target="_blank"
+              rel="noreferrer"
+              textValue={`Open in ${assistant.label}`}
+            >
+              <span className="text-muted-foreground [&_svg]:size-4">
+                {assistant.icon}
+              </span>
+              Open in {assistant.label}
+              <ArrowUpRightIcon
+                size={14}
+                aria-hidden="true"
+                className="ms-auto text-muted-foreground"
+              />
+            </MenuItem>
+          ))}
+        </MenuContent>
+      </MenuPopover>
+    </MenuTrigger>
   );
 }
 

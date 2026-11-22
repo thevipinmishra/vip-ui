@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { itemPrompt } from "@/lib/agent-docs";
 import { registryUrl } from "@/lib/registry-docs";
-import { siteUrl } from "@/lib/site-url";
+import { agentSiteUrl } from "@/lib/site-url";
 import { CodeFrame } from "./code-frame";
 import { CodeSample } from "./code-sample";
 import { CodeSnippet } from "./code-snippet";
@@ -19,7 +19,7 @@ export async function TypographyInstall() {
     await readFile(path.join(process.cwd(), "src/app/typography.css"), "utf8")
   ).replace(/\r\n/g, "\n");
   const cliUrl = registryUrl("typography");
-  const site = siteUrl();
+  const site = agentSiteUrl();
   const prompt = itemPrompt(
     site,
     cliUrl ?? `${site}/r/typography.json`,

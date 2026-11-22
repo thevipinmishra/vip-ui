@@ -20,12 +20,11 @@ import {
   fileName,
   readSharedFile,
   registryNamespace,
-  registryNamespaceUrl,
   registryUrl,
   type SharedFileSlug,
   sharedFiles,
 } from "@/lib/registry-docs";
-import { siteUrl } from "@/lib/site-url";
+import { agentSiteUrl } from "@/lib/site-url";
 
 export const metadata = guideMetadata("/components/installation");
 
@@ -33,10 +32,6 @@ const componentsJson = `{
   "tsx": true,
   "tailwind": { "css": "src/index.css", "cssVariables": true }
 }`;
-
-function namespaceJson(url: string) {
-  return JSON.stringify({ registries: { [registryNamespace]: url } }, null, 2);
-}
 
 const usage = `import { Button } from "@/components/vip-ui/button";
 
@@ -52,7 +47,6 @@ export default async function InstallationPage() {
   const buttonUrl = registryUrl("button");
   const themeUrl = registryUrl("theme-blue");
   const scaleUrl = registryUrl("blue");
-  const namespaceUrl = registryNamespaceUrl();
   const shared = await Promise.all(
     (Object.keys(sharedFiles) as SharedFileSlug[]).map(async (slug) => ({
       slug,
@@ -68,7 +62,11 @@ export default async function InstallationPage() {
           Give this prompt to your coding agent. To install without an agent,
           use the steps that follow.
         </p>
-        <AgentPrompt prompt={setupPrompt(siteUrl())} />
+        <AgentPrompt prompt={setupPrompt(agentSiteUrl())} />
+        <p>
+          For the vip/ui skill, the MCP server, and Markdown sources, see the{" "}
+          <TextLink href="/components/agents">Agents guide</TextLink>.
+        </p>
       </GuideSection>
 
       <GuideSection id="requirements" title="Requirements">
@@ -154,23 +152,33 @@ export default async function InstallationPage() {
         )}
       </GuideSection>
 
-      <GuideSection id="add-component" title="Add a component">
+      <GuideSection id="install-by-name" title="Install by name">
         <p>
-          Copy the command from a component page, such as{" "}
-          <TextLink href="/components/button#installation">Button</TextLink>.
-          Run it from your project root.
+          Add a component by name. You do not need to add vip/ui to{" "}
+          <Code>components.json</Code> first. The CLI finds it in the public
+          registry directory.
         </p>
+        <PackageManagerCommand
+          action="run"
+          args={`shadcn@latest add ${registryNamespace}/button`}
+        />
         {buttonUrl ? (
-          <PackageManagerCommand
-            action="run"
-            args={`shadcn@latest add ${buttonUrl}`}
-          />
-        ) : (
-          <p>
-            The CLI command shows when the registry has a public URL. Until
-            then, use the <TextLink href="#manual">manual steps</TextLink>.
-          </p>
-        )}
+          <>
+            <p>
+              To install from a specific registry URL, such as a local or
+              preview deploy, use the URL instead:
+            </p>
+            <PackageManagerCommand
+              action="run"
+              args={`shadcn@latest add ${buttonUrl}`}
+            />
+          </>
+        ) : null}
+        <p>
+          The first install by name writes the vip/ui registry to{" "}
+          <Code>components.json</Code>. The shadcn MCP server reads that file,
+          so it can find vip/ui after one install.
+        </p>
         <p>The CLI does these steps:</p>
         <List>
           <li>
@@ -204,25 +212,6 @@ export default async function InstallationPage() {
           file after the install.
         </Alert>
       </GuideSection>
-
-      {namespaceUrl ? (
-        <GuideSection id="namespace" title="Add the namespace">
-          <p>
-            Add vip/ui to the <Code>registries</Code> in your{" "}
-            <Code>components.json</Code>. Keep your other values.
-          </p>
-          <CodeSample
-            code={namespaceJson(namespaceUrl)}
-            filename="components.json"
-            language="json"
-          />
-          <p>Then add items by name.</p>
-          <PackageManagerCommand
-            action="run"
-            args={`shadcn@latest add ${registryNamespace}/button`}
-          />
-        </GuideSection>
-      ) : null}
 
       <GuideSection id="manual" title="Install manually">
         <p>

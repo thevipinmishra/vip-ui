@@ -54,6 +54,15 @@ const { getComponentPageData } = loadSite(
   path.join(root, "src/lib/component-examples.ts"),
 );
 const { catalogComponents } = loadSite(path.join(root, "src/lib/catalog.ts"));
+const { GET: getBlockMarkdown } = loadSite(
+  path.join(root, "src/app/api/blocks/[name]/markdown/route.ts"),
+);
+const { blocks: catalogBlocks } = loadSite(
+  path.join(root, "src/lib/blocks.json"),
+);
+const { GET: getLlmsTxt } = loadSite(
+  path.join(root, "src/app/llms.txt/route.ts"),
+);
 
 const registry = new Map();
 for (const file of await readdir(path.join(root, "public/r"))) {
@@ -87,6 +96,46 @@ function consumerPath(target) {
   return `${consumer}/${target.replace(/^@components\//, "components/")}`;
 }
 
+function importSpecifiers(source) {
+  return [...source.matchAll(/\b(?:from|import)\s+["']([^"']+)["']/g)].map(
+    (match) => match[1],
+  );
+}
+
+function blockDependencies(name, item) {
+  const components = new Set();
+  const packages = new Set();
+  const blockDirectory = `${consumer}/components/blocks/${name}/`;
+  for (const file of item.files) {
+    const target = consumerPath(file.target);
+    const fileDirectory = path.posix.dirname(target);
+    for (const specifier of importSpecifiers(file.content)) {
+      if (specifier.startsWith(".")) {
+        const resolved = path.posix.normalize(
+          path.posix.join(fileDirectory, specifier),
+        );
+        const match = resolved.match(
+          /\/components\/vip-ui\/([\w-]+?)(?:\.tsx?)?$/,
+        );
+        if (match) components.add(match[1]);
+        else if (!resolved.startsWith(blockDirectory))
+          throw new Error(`${name} has the unresolved import ${specifier}`);
+      } else if (!["react", "react-dom"].includes(packageName(specifier))) {
+        packages.add(packageName(specifier));
+      }
+    }
+    if (/className="(?:[^"]*\s)?typography(?:\s[^"]*)?"/.test(file.content))
+      components.add("typography");
+  }
+  // The registry adds the React Aria Tailwind plugin with React Aria itself.
+  if (packages.has("react-aria-components"))
+    packages.add("tailwindcss-react-aria-components");
+  return {
+    components: [...components].sort(),
+    packages: [...packages].sort(),
+  };
+}
+
 function readSections(markdown) {
   let section = { title: "", text: [], snippets: [] };
   const sections = [section];
@@ -111,7 +160,7 @@ function readSections(markdown) {
 
 function declaredDependencies(text) {
   const line = text.find((entry) =>
-    entry.startsWith("To use this example, install "),
+    /^To use this (?:example|block), install /.test(entry),
   );
   if (!line) return { items: [], packages: [] };
   const packagesStart = line.search(/the npm packages? `/);
@@ -403,6 +452,38 @@ test("the snippet check finds each class of broken code", () => {
   const problems = compile("button", "", broken).problems.join("\n");
   assert.match(problems, /Cannot find name 'process'/);
   assert.match(problems, /\[Symbol\.iterator\]/);
+
+  const dashboard = registry.get("dashboard-01");
+  assert.ok(dashboard, "dashboard-01 must be a block");
+  const brokenBlock = new Map(registry).set("dashboard-01", {
+    ...dashboard,
+    files: dashboard.files.map((file, index) =>
+      index === 0
+        ? {
+            ...file,
+            content: `${file.content}\nimport "missing-block-package";\n`,
+          }
+        : file,
+    ),
+  });
+  assert.match(
+    compile("dashboard-01", "", brokenBlock).problems.join("\n"),
+    /TS2307.*missing-block-package/,
+  );
+
+  const chart = registry.get("chart-bar-default");
+  assert.ok(chart, "chart-bar-default must be a chart example");
+  const brokenChart = new Map(registry).set("chart-bar-default", {
+    ...chart,
+    files: chart.files.map((file) => ({
+      ...file,
+      content: `${file.content}\nimport "missing-chart-package";\n`,
+    })),
+  });
+  assert.match(
+    compile("chart-bar-default", "", brokenChart).problems.join("\n"),
+    /TS2307.*missing-chart-package/,
+  );
 });
 
 test("each component Markdown snippet compiles with its declared dependencies", async () => {
@@ -422,6 +503,19 @@ test("each component Markdown snippet compiles with its declared dependencies", 
       1 + page.examples.length + (page.exampleFile ? 1 : 0),
       `${slug} must have a snippet for Usage and each example`,
     );
+    const apiAt = markdown.indexOf("## API reference");
+    const manualAt = markdown.indexOf("## Manual installation");
+    const firstExampleAt = page.examples[0]
+      ? markdown.indexOf(`## ${page.examples[0].title}`)
+      : -1;
+    assert.ok(
+      apiAt === -1 || firstExampleAt === -1 || apiAt < firstExampleAt,
+      `${slug}: API must come before the first example`,
+    );
+    assert.ok(
+      apiAt === -1 || apiAt < manualAt,
+      `${slug}: API must come before Manual installation`,
+    );
     if (markdown.includes("install the registry item"))
       assert.ok(
         markdown.includes(`${origin}/r/<slug>.json`),
@@ -438,6 +532,107 @@ test("each component Markdown snippet compiles with its declared dependencies", 
     `Compiled ${snippets} snippets from ${catalogComponents.length} components.`,
   );
   assert.equal(problems.length, 0, `\n${problems.join("\n")}`);
+});
+
+test("each block Markdown snippet compiles with its declared dependencies", async () => {
+  assert.ok(catalogBlocks.length > 0, "The catalog has no blocks");
+  const problems = [];
+  let snippets = 0;
+  let files = 0;
+  for (const block of catalogBlocks) {
+    const item = registry.get(block.name);
+    assert.ok(item, `${block.name} has no registry item`);
+    const response = await getBlockMarkdown(
+      new Request(`${origin}/blocks/${block.name}.md`),
+      { params: Promise.resolve({ name: block.name }) },
+    );
+    assert.equal(response.status, 200, block.name);
+    const markdown = await response.text();
+    const declared = declaredDependencies(markdown.split(/\r?\n/));
+    const expected = blockDependencies(block.name, item);
+    assert.deepEqual(
+      [...declared.items].sort(),
+      expected.components,
+      `${block.name} declares the wrong registry items`,
+    );
+    assert.deepEqual(
+      [...declared.packages].sort(),
+      expected.packages,
+      `${block.name} declares the wrong npm packages`,
+    );
+    const declaredRegistry = new Map(registry).set(block.name, {
+      ...item,
+      registryDependencies: declared.items.map(
+        (dependency) => `${origin}/r/${dependency}.json`,
+      ),
+      dependencies: declared.packages,
+    });
+    const result = compile(block.name, markdown, declaredRegistry);
+    assert.equal(
+      result.snippets,
+      1,
+      `${block.name} must have one Usage snippet`,
+    );
+    problems.push(...result.problems);
+    snippets += result.snippets;
+    files += item.files.length;
+  }
+  console.log(
+    `Compiled ${snippets} block snippets and ${files} block files from ${catalogBlocks.length} blocks.`,
+  );
+  assert.equal(problems.length, 0, `\n${problems.join("\n")}`);
+});
+
+test("the block check finds an undeclared snippet dependency", async () => {
+  const response = await getBlockMarkdown(
+    new Request(`${origin}/blocks/dashboard-01.md`),
+    { params: Promise.resolve({ name: "dashboard-01" }) },
+  );
+  assert.equal(response.status, 200);
+  const markdown = await response.text();
+  const declared = declaredDependencies(markdown.split(/\r?\n/));
+  const item = registry.get("dashboard-01");
+  assert.ok(item, "dashboard-01 has no registry item");
+  const declaredRegistry = new Map(registry).set("dashboard-01", {
+    ...item,
+    registryDependencies: declared.items.map(
+      (dependency) => `${origin}/r/${dependency}.json`,
+    ),
+    dependencies: declared.packages,
+  });
+  const broken = markdown.replace(
+    "```tsx",
+    '```tsx\nimport { Lightbox } from "@/components/vip-ui/lightbox";',
+  );
+  assert.match(
+    compile("dashboard-01", broken, declaredRegistry).problems.join("\n"),
+    /TS2307.*vip-ui\/lightbox/,
+  );
+});
+
+test("each chart example compiles with its declared dependencies", () => {
+  const charts = [...registry.values()].filter(
+    (item) =>
+      item.type === "registry:block" &&
+      item.files.length > 0 &&
+      item.files.every((file) => file.target.startsWith("@components/charts/")),
+  );
+  assert.ok(charts.length > 0, "The registry has no chart examples");
+  const problems = charts.flatMap(({ name }) => compile(name, "").problems);
+  console.log(`Compiled ${charts.length} chart examples.`);
+  assert.equal(problems.length, 0, `\n${problems.join("\n")}`);
+});
+
+test("llms.txt lists every block Markdown page", async () => {
+  const text = await (await getLlmsTxt()).text();
+  for (const block of catalogBlocks) {
+    assert.ok(
+      text.includes(
+        `[${block.title}](${origin}/blocks/${block.name}.md): ${block.description}`,
+      ),
+      `${block.name} is not in llms.txt`,
+    );
+  }
 });
 
 test("each other shipped component compiles without Node types", () => {
