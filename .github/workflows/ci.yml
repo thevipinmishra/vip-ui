@@ -53,3 +53,27 @@ jobs:
           test -z "$(git status --porcelain -- src/lib/component-checks.json)"
 
       - run: pnpm exec next build
+
+  agent-e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        package-manager: [npm, pnpm]
+    env:
+      NEXT_TELEMETRY_DISABLED: 1
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6.1.0
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Run the agent end-to-end flow
+        run: node scripts/agent-e2e.mjs --package-manager ${{ matrix.package-manager }}

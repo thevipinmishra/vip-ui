@@ -1,6 +1,7 @@
 import { setupDocUrl } from "@/lib/agent-docs";
 import { blockCategories, blocksIn } from "@/lib/blocks";
 import { catalogGroups } from "@/lib/catalog";
+import { guideMarkdownUrl } from "@/lib/guide-markdown";
 import { docsGuides } from "@/lib/navigation";
 import { agentSiteUrl } from "@/lib/site-url";
 
@@ -21,8 +22,11 @@ export function GET() {
     "",
     ...docsGuides.map(
       (guide) =>
-        `- [${guide.label}](${site}${guide.href}): ${guide.description}`,
+        `- [${guide.label}](${site}${guide.href}) ([Markdown](${guideMarkdownUrl(site, guide.href)})): ${guide.description}`,
     ),
+    `- [Charts Markdown](${site}/charts.md): install the chart frame, then add a chart example.`,
+    `- [Typography Markdown](${site}/typography.md): install the styles, then choose a preset and fonts.`,
+    `- [Themes Markdown](${site}/themes.md): install a theme item, or copy its CSS.`,
     `- [Components](${site}/components): the full catalog, grouped by purpose.`,
     `- [Themes](${site}/themes): color themes made from the vip/ui color scales, with a live preview, radius and font controls, and copyable CSS.`,
     `- [Colors](${site}/colors): OKLCH neutral and accent color scales with 12 steps each, for light and dark mode, with copyable CSS and Tailwind colors.`,

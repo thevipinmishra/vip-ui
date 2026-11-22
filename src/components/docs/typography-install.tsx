@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { itemPrompt } from "@/lib/agent-docs";
+import { itemDocPrompt } from "@/lib/agent-docs";
 import { registryUrl } from "@/lib/registry-docs";
 import { agentSiteUrl } from "@/lib/site-url";
 import { CodeFrame } from "./code-frame";
@@ -20,11 +20,7 @@ export async function TypographyInstall() {
   ).replace(/\r\n/g, "\n");
   const cliUrl = registryUrl("typography");
   const site = agentSiteUrl();
-  const prompt = itemPrompt(
-    site,
-    cliUrl ?? `${site}/r/typography.json`,
-    "Typography",
-  );
+  const prompt = itemDocPrompt(site, "/typography.md", "Typography");
   return (
     <InstallTabs
       prompt={prompt}

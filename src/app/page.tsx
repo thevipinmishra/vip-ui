@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { textLinkClass } from "@/components/docs/guide";
 import { SiteAnnouncement } from "@/components/docs/site-announcement";
 import { SiteHeader } from "@/components/docs/site-header";
 import { HomeShowcase } from "@/components/home/home-showcase";
@@ -57,6 +58,14 @@ export default function Home() {
                   Browse components
                 </ButtonLink>
               </div>
+              <p className="mt-4 text-sm text-muted-foreground">
+                <Link
+                  href="/components/installation#agent"
+                  className={textLinkClass}
+                >
+                  Set up with an agent
+                </Link>
+              </p>
             </div>
           </div>
         </section>

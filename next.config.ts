@@ -108,6 +108,18 @@ const nextConfig: NextConfig = {
         source: "/blocks/:block.md",
         destination: "/api/blocks/:block/markdown",
       },
+      {
+        source: "/charts.md",
+        destination: "/charts/markdown",
+      },
+      {
+        source: "/typography.md",
+        destination: "/typography/markdown",
+      },
+      {
+        source: "/themes.md",
+        destination: "/themes/markdown",
+      },
     ];
   },
   async headers() {
@@ -138,6 +150,30 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/blocks/:block.md",
+        headers: robotsTag("noindex, nofollow"),
+      },
+      {
+        source: "/charts/markdown",
+        headers: robotsTag("noindex, nofollow"),
+      },
+      {
+        source: "/charts.md",
+        headers: robotsTag("noindex, nofollow"),
+      },
+      {
+        source: "/typography/markdown",
+        headers: robotsTag("noindex, nofollow"),
+      },
+      {
+        source: "/typography.md",
+        headers: robotsTag("noindex, nofollow"),
+      },
+      {
+        source: "/themes/markdown",
+        headers: robotsTag("noindex, nofollow"),
+      },
+      {
+        source: "/themes.md",
         headers: robotsTag("noindex, nofollow"),
       },
       {

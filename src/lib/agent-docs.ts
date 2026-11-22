@@ -31,6 +31,17 @@ export function itemPrompt(site: string, itemUrl: string, name: string) {
   );
 }
 
+export function itemDocPrompt(site: string, docPath: string, name: string) {
+  return agentPrompt(
+    `Add the vip/ui ${name} to this project`,
+    `${site}${docPath}`,
+  );
+}
+
+export function themePrompt(site: string, slug: string, name: string) {
+  return `Apply the vip/ui ${name} theme to this project with @vip-ui/theme-${slug}. Follow ${site}/themes.md. Change only the theme values and keep my components and edits. Then list the changes.`;
+}
+
 export function installSteps(itemUrl: string) {
   const command = `npx shadcn@latest add ${itemUrl}`;
   const install = `node -e "process.exit(child_process.spawnSync('${command} --yes',{shell:true,input:'n '.repeat(9e6),stdio:['pipe',1,2]}).status??1)"`;

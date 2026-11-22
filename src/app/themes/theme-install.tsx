@@ -1,7 +1,10 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { AgentPrompt } from "@/components/docs/agent-prompt";
 import { PackageManagerCommand } from "@/components/docs/package-manager-command";
+import { themePrompt } from "@/lib/agent-docs";
 import { registryUrl } from "@/lib/registry-docs";
+import { agentSiteUrl } from "@/lib/site-url";
 import { ThemeCssCode } from "./theme-css";
 import type { Theme } from "./themes";
 
@@ -42,69 +45,74 @@ export function ThemeInstall({ theme }: { theme: Theme }) {
   const cliUrl = registryUrl(`theme-${theme.slug}`);
 
   return (
-    <ol className="grid gap-12">
-      <Step number={1} title="Install the theme">
-        <p>
-          The CLI adds the colors and the Tailwind color mappings to your global
-          CSS file. For a new project, start with the{" "}
-          <Link href="/components/installation" className={textLink}>
-            installation guide
-          </Link>
-          .
-        </p>
-        {cliUrl ? (
-          <PackageManagerCommand
-            action="run"
-            args={`shadcn@latest add ${cliUrl}`}
-          />
-        ) : (
-          <p className="text-[13px] leading-6 text-muted-foreground">
-            The CLI command shows when the registry has a public URL. Use the
-            paste step below.
-          </p>
-        )}
-      </Step>
-      <Step number={2} title="Or paste the CSS">
-        <p>
-          Paste the CSS after the <code className={inlineCode}>:root</code> and{" "}
-          <code className={inlineCode}>.dark</code> rules in your global CSS
-          file. It sets every shadcn/ui color, including the sidebar and chart
-          colors, and the success and warning colors that vip/ui uses.
-        </p>
-        <p>
-          The paste sets colors only. It does not add the Tailwind color
-          mappings. Classes such as{" "}
-          <code className={inlineCode}>bg-success</code> work after the CLI
-          install, or after you install one vip/ui component.
-        </p>
-        <ThemeCssCode slug={theme.slug} />
-      </Step>
-      <Step number={3} title="Check the details">
-        <ul className="grid list-disc gap-2 pl-5 marker:text-border">
-          <li>
-            Each value is a step of a{" "}
-            <Link href="/colors" className={textLink}>
-              color scale
-            </Link>
-            . The Tokens tab shows the step for each token.
-          </li>
-          <li>
-            The CLI installs the theme with its default settings. The CSS also
-            has your radius and focus ring changes.
-          </li>
-          <li>
-            The theme does not change your fonts. To load a font, see{" "}
-            <Link href="/typography" className={textLink}>
-              Typography
+    <div className="grid gap-6">
+      <AgentPrompt
+        prompt={themePrompt(agentSiteUrl(), theme.slug, theme.name)}
+      />
+      <ol className="grid gap-12">
+        <Step number={1} title="Install the theme">
+          <p>
+            The CLI adds the colors and the Tailwind color mappings to your
+            global CSS file. For a new project, start with the{" "}
+            <Link href="/components/installation" className={textLink}>
+              installation guide
             </Link>
             .
-          </li>
-          <li>
-            Dark mode uses the <code className={inlineCode}>.dark</code> class,
-            the same as shadcn/ui.
-          </li>
-        </ul>
-      </Step>
-    </ol>
+          </p>
+          {cliUrl ? (
+            <PackageManagerCommand
+              action="run"
+              args={`shadcn@latest add ${cliUrl}`}
+            />
+          ) : (
+            <p className="text-[13px] leading-6 text-muted-foreground">
+              The CLI command shows when the registry has a public URL. Use the
+              paste step below.
+            </p>
+          )}
+        </Step>
+        <Step number={2} title="Or paste the CSS">
+          <p>
+            Paste the CSS after the <code className={inlineCode}>:root</code>{" "}
+            and <code className={inlineCode}>.dark</code> rules in your global
+            CSS file. It sets every shadcn/ui color, including the sidebar and
+            chart colors, and the success and warning colors that vip/ui uses.
+          </p>
+          <p>
+            The paste sets colors only. It does not add the Tailwind color
+            mappings. Classes such as{" "}
+            <code className={inlineCode}>bg-success</code> work after the CLI
+            install, or after you install one vip/ui component.
+          </p>
+          <ThemeCssCode slug={theme.slug} />
+        </Step>
+        <Step number={3} title="Check the details">
+          <ul className="grid list-disc gap-2 pl-5 marker:text-border">
+            <li>
+              Each value is a step of a{" "}
+              <Link href="/colors" className={textLink}>
+                color scale
+              </Link>
+              . The Tokens tab shows the step for each token.
+            </li>
+            <li>
+              The CLI installs the theme with its default settings. The CSS also
+              has your radius and focus ring changes.
+            </li>
+            <li>
+              The theme does not change your fonts. To load a font, see{" "}
+              <Link href="/typography" className={textLink}>
+                Typography
+              </Link>
+              .
+            </li>
+            <li>
+              Dark mode uses the <code className={inlineCode}>.dark</code>{" "}
+              class, the same as shadcn/ui.
+            </li>
+          </ul>
+        </Step>
+      </ol>
+    </div>
   );
 }

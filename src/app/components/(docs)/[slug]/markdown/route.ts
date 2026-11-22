@@ -10,6 +10,11 @@ import {
 import { buildComponentMarkdown } from "@/lib/component-markdown";
 import { exampleDependencies } from "@/lib/example-dependencies";
 import {
+  buildGuideMarkdown,
+  guideMarkdownSlugs,
+  isGuideMarkdownSlug,
+} from "@/lib/guide-markdown";
+import {
   manualInstallPlan,
   readRegistryItem,
   registryUrl,
@@ -21,7 +26,10 @@ export const dynamic = "force-static";
 const demoDirectory = path.join(process.cwd(), "src/components/docs");
 
 export function generateStaticParams() {
-  return catalogComponents.map((component) => ({ slug: component.slug }));
+  return [
+    ...guideMarkdownSlugs.map((slug) => ({ slug })),
+    ...catalogComponents.map((component) => ({ slug: component.slug })),
+  ];
 }
 
 async function findUsageFile(slug: string): Promise<string | null> {
@@ -60,6 +68,12 @@ export async function GET(
   { params }: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await params;
+  if (isGuideMarkdownSlug(slug)) {
+    return new Response(buildGuideMarkdown(slug, agentSiteUrl()), {
+      headers: { "Content-Type": "text/markdown; charset=utf-8" },
+    });
+  }
+
   const component = getComponent(slug);
   if (!component) return new Response("Not found", { status: 404 });
 

@@ -47,6 +47,18 @@ To install from a local or preview registry, use its URL in place of the name:
 pnpm dlx shadcn@latest add http://localhost:3000/r/button.json
 ```
 
+### Use an agent
+
+Give your coding agent this prompt:
+
+> Set up vip/ui in this project. Follow https://vip-ui.dev/components/installation.md. Keep my theme and edits. Make sure that the build passes, then list the changes.
+
+Add `.md` to any guide, component, or block URL to get the copy for agents, for example <https://vip-ui.dev/components/button.md>. The [Agents guide](https://vip-ui.dev/components/agents) also has the MCP server and the vip/ui skill:
+
+```bash
+pnpm dlx skills add thevipinmishra/vip-ui --skill vip-ui
+```
+
 ### Install manually
 
 1. Open a [component page](https://vip-ui.dev/components).

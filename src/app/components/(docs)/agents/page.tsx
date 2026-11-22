@@ -136,7 +136,8 @@ export default function AgentsPage() {
           </li>
           <li>
             <Code>{`${site}/components/installation.md`}</Code> gives the setup
-            steps for agents. Other guides have no Markdown copy.
+            steps for agents. Each guide also has a Markdown copy, such as{" "}
+            <Code>{`${site}/components/styling.md`}</Code>.
           </li>
           <li>
             <Code>{`${site}/r/registry.json`}</Code> is the registry index. Each
