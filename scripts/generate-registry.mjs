@@ -258,7 +258,7 @@ function ownImports(name, source, sources) {
       registryDependencies.add(slug);
     } else if (specifier.startsWith("@/lib/") && libSources.has(lib)) {
       registryDependencies.add(lib);
-    } else if (specifier === "react") {
+    } else if (specifier === "react" || specifier === "react-dom") {
     } else if (
       !specifier.startsWith("@/") &&
       !specifier.startsWith(".") &&

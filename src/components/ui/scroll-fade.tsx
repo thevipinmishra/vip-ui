@@ -60,12 +60,12 @@ export function ScrollFade({
     };
     const resize = new ResizeObserver(schedule);
     resize.observe(node);
-    for (const child of node.children) resize.observe(child);
+    for (const child of Array.from(node.children)) resize.observe(child);
     update();
     const mutation = new MutationObserver(() => {
       resize.disconnect();
       resize.observe(node);
-      for (const child of node.children) resize.observe(child);
+      for (const child of Array.from(node.children)) resize.observe(child);
       schedule();
     });
     mutation.observe(node, { childList: true });

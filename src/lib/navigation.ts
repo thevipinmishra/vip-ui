@@ -8,7 +8,7 @@ export const docsGuides = [
     href: "/components/installation",
     label: "Installation",
     description:
-      "Set up your project. Then add components with the shadcn CLI, or copy the files, and update them later.",
+      "Set up your project with an agent prompt, the shadcn CLI, or manual steps. Then add and update components.",
   },
   {
     href: "/components/ai-and-mcp",

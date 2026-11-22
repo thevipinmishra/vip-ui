@@ -1,3 +1,4 @@
+import { setupDocUrl } from "@/lib/agent-docs";
 import { catalogGroups } from "@/lib/catalog";
 import { docsGuides } from "@/lib/navigation";
 import { siteUrl } from "@/lib/site-url";
@@ -9,7 +10,11 @@ export function GET() {
   const lines: string[] = [
     "# vip/ui",
     "",
-    "> Copyable React components built on React Aria, Tailwind CSS v4, and Motion. Every component page is available as Markdown by appending `.md` to its URL, with the same description, installation files, usage source, named examples with source, and API tables as the HTML page. Pages without named examples export the description, installation, usage, and API sections.",
+    "> Copyable React components built on React Aria, Tailwind CSS v4, and Motion. Every component page is available as Markdown by appending `.md` to its URL, with installation steps, usage, examples, API, and links to the source files.",
+    "",
+    "## Start here",
+    "",
+    `- [Agent setup](${setupDocUrl(site)}): read this before you install an item.`,
     "",
     "## Guides",
     "",

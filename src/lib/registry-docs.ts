@@ -13,6 +13,7 @@ export interface RegistryItem {
   name: string;
   title?: string;
   description?: string;
+  docs?: string;
   dependencies: string[];
   devDependencies?: string[];
   registryDependencies?: string[];
@@ -50,6 +51,7 @@ export type RequiredFile =
 
 export interface ManualInstallPlan {
   packages: string[];
+  note?: string;
   component: RegistryFile;
   requires: RequiredFile[];
 }
@@ -63,7 +65,7 @@ async function readItemFile(name: string): Promise<RegistryItem> {
   ) as RegistryItem;
 }
 
-function packageName(dependency: string) {
+export function packageName(dependency: string) {
   const at = dependency.indexOf("@", 1);
   return at === -1 ? dependency : dependency.slice(0, at);
 }
@@ -138,6 +140,12 @@ function isSharedFileSlug(slug: string): slug is SharedFileSlug {
   return Object.hasOwn(sharedFiles, slug);
 }
 
+function setupNote(docs?: string) {
+  return docs
+    ?.replace(/\s*Docs: \S+$/, "")
+    .replace(/<[^<>]+>/g, (tag) => `\`${tag}\``);
+}
+
 export function manualInstallPlan(
   item: RegistryItem,
   slug: string,
@@ -172,6 +180,7 @@ export function manualInstallPlan(
   }
   return {
     packages: item.dependencies,
+    note: setupNote(item.docs),
     component,
     requires: [...components, ...shared],
   };

@@ -40,6 +40,7 @@ import {
   ReactDoctorMark,
   ZagMark,
 } from "./brand-marks";
+import { CopyCodeButton } from "./copy-code-button";
 import { GitHubMark } from "./github-mark";
 import { pageTitleClass, pageTitleSize } from "./page-header";
 
@@ -88,6 +89,7 @@ export interface ComponentHeaderProps {
   description: ReactNode;
   primitives: Primitive[];
   markdownUrl: string;
+  prompt: string;
   axe?: AxeFinding[];
   doctor?: DoctorFinding[];
 }
@@ -98,6 +100,7 @@ export function ComponentHeader({
   description,
   primitives,
   markdownUrl,
+  prompt,
   axe,
   doctor,
 }: ComponentHeaderProps) {
@@ -107,6 +110,13 @@ export function ComponentHeader({
       <div className="flex items-start justify-between gap-x-4">
         <h1 className={cn(pageTitleClass, "min-w-0")}>{name}</h1>
         <div className={`flex h-lh shrink-0 items-center ${pageTitleSize}`}>
+          <div className="me-2 hidden sm:flex">
+            <CopyCodeButton
+              code={prompt}
+              label="Copy prompt"
+              text="Copy prompt"
+            />
+          </div>
           <PageActions slug={slug} name={name} markdownUrl={markdownUrl} />
         </div>
       </div>

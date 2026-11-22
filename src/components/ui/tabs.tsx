@@ -80,12 +80,12 @@ function useScrollFade(forwardedRef?: Ref<HTMLDivElement>) {
       // listeners are released when the element unmounts.
       // react-doctor-disable-next-line react-doctor/effect-needs-cleanup
       resize.observe(element);
-      for (const child of element.children) resize.observe(child);
+      for (const child of Array.from(element.children)) resize.observe(child);
       update();
       const mutation = new MutationObserver(() => {
         resize.disconnect();
         resize.observe(element);
-        for (const child of element.children) resize.observe(child);
+        for (const child of Array.from(element.children)) resize.observe(child);
         update();
       });
       mutation.observe(element, { childList: true });

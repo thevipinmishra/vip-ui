@@ -155,8 +155,10 @@ function measureRange(
   const prefix = `${session}|${gridKey}|`;
 
   const rows = new Map<HTMLTableRowElement, RangeCell[]>();
-  for (const cell of container.querySelectorAll<HTMLElement>(
-    "[role=gridcell] > [data-selected]",
+  for (const cell of Array.from(
+    container.querySelectorAll<HTMLElement>(
+      "[role=gridcell] > [data-selected]",
+    ),
   )) {
     if (multiMonth && cell.hasAttribute("data-outside-month")) continue;
     const row = cell.closest<HTMLTableRowElement>("tr");

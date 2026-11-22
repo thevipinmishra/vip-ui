@@ -17,8 +17,10 @@ import type {
   ChartTable,
   TooltipChart,
 } from "@/components/ui/chart";
+import { itemPrompt } from "@/lib/agent-docs";
 import { apiPart } from "@/lib/component-api";
 import { registryUrl } from "@/lib/registry-docs";
+import { siteUrl } from "@/lib/site-url";
 import { cn } from "@/lib/utils";
 import { ChartCoverage } from "./chart-coverage";
 
@@ -313,6 +315,8 @@ const listClass =
 
 export async function ChartDocumentation() {
   const cliUrl = registryUrl("chart");
+  const site = siteUrl();
+  const prompt = itemPrompt(site, cliUrl ?? `${site}/r/chart.json`, "Chart");
 
   return (
     <section
@@ -334,6 +338,7 @@ export async function ChartDocumentation() {
               first.
             </Note>
             <InstallTabs
+              prompt={prompt}
               cliAvailable={Boolean(cliUrl)}
               cli={
                 cliUrl ? (

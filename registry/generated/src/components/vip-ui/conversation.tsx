@@ -258,7 +258,7 @@ export function Conversation({
       if (!pinnedRef.current) {
         let added = 0;
         for (const record of records) {
-          for (const node of record.addedNodes) {
+          for (const node of Array.from(record.addedNodes)) {
             if (!(node instanceof Element)) continue;
             const items = node.matches("[data-conversation-item]")
               ? [node]

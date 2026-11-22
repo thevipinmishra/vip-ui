@@ -65,9 +65,13 @@ export default function AiAndMcpPage() {
             components.
           </li>
           <li>
-            Add <Code>.md</Code> to a component URL to get the page as Markdown,
-            for example <Code>{`${site}/components/button.md`}</Code>. Guides
-            have no Markdown copy.
+            Add <Code>.md</Code> to a component URL to get short installation
+            steps, examples, and the API, for example{" "}
+            <Code>{`${site}/components/button.md`}</Code>.
+          </li>
+          <li>
+            <Code>{`${site}/components/installation.md`}</Code> gives the setup
+            steps for agents. Other guides have no Markdown copy.
           </li>
           <li>
             <Code>{`${site}/r/registry.json`}</Code> is the registry index. Each

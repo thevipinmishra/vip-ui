@@ -58,7 +58,6 @@ export default async function ComponentDocsPage({
       description={componentDescription(slug)}
       preview={preview}
       previewSourcePath={`src/components/docs/${page.usage}`}
-      previewUses={page.previewUses}
       exampleFile={page.exampleFile}
       usage={getComponentUsage(slug)}
       examples={examples}

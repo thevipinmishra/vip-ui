@@ -1,5 +1,7 @@
+import { installSteps, setupDocUrl } from "./agent-docs";
 import { type ApiPart, showsPartHeadings } from "./component-api";
-import { displayPath, fileName, type ManualInstallPlan } from "./registry-docs";
+import type { ExampleDependencies } from "./example-dependencies";
+import { displayPath, fileSlug, type ManualInstallPlan } from "./registry-docs";
 
 export interface ComponentMarkdownInput {
   slug: string;
@@ -12,7 +14,7 @@ export interface ComponentMarkdownInput {
     code: string;
     filename: string;
     note?: string;
-    uses?: readonly string[];
+    uses?: ExampleDependencies;
   };
   exampleFile?: { filename: string; code: string };
   api?: readonly ApiPart[];
@@ -21,9 +23,26 @@ export interface ComponentMarkdownInput {
     description?: string;
     code?: string;
     filename?: string;
-    uses?: readonly string[];
+    uses?: ExampleDependencies;
   }[];
   reactAria?: { name: string; href: string };
+}
+
+function dependencyLine(uses?: ExampleDependencies) {
+  if (!uses) return null;
+  const parts = [
+    { noun: "registry item", names: uses.components },
+    { noun: "npm package", names: uses.packages },
+  ].flatMap(({ noun, names }) =>
+    names.length
+      ? [
+          `the ${noun}${names.length > 1 ? "s" : ""} ${names.map((name) => `\`${name}\``).join(", ")}`,
+        ]
+      : [],
+  );
+  return parts.length
+    ? `To use this example, install ${parts.join(" and ")}.`
+    : null;
 }
 
 export function buildComponentMarkdown({
@@ -39,81 +58,44 @@ export function buildComponentMarkdown({
   examples,
   reactAria,
 }: ComponentMarkdownInput): string {
-  const pageUrl = `${site}/components/${slug}`;
-  const lines: string[] = [`# ${name}`, "", description.trim()];
+  const itemUrl = cliUrl ?? `${site}/r/${slug}.json`;
+  const needsItems = [usage, ...(examples ?? [])].some(
+    (example) => example?.uses?.components.length,
+  );
+  const lines: string[] = [
+    `# ${name}`,
+    "",
+    description.trim(),
+    "",
+    "## Installation",
+    "",
+    `The component goes to \`${displayPath(manual.component)}\`. Add examples only if the user asks for them.`,
+    "",
+    ...(needsItems
+      ? [
+          `To install another registry item, use the steps below with \`${new URL(".", itemUrl)}<slug>.json\`.`,
+          "",
+        ]
+      : []),
+    `If the project has no \`components/vip-ui\` folder, do the [setup](${setupDocUrl(site)}) first. Also do it if the import alias is missing from the root \`tsconfig.json\` or, outside Next.js, from the bundler config. Then:`,
+    "",
+    ...installSteps(itemUrl),
+  ];
+
+  if (manual.note) lines.push("", "## Finish setup", "", manual.note);
 
   if (usage) {
+    lines.push("", "## Usage", "");
+    if (usage.note) lines.push(usage.note.trim(), "");
+    const install = dependencyLine(usage.uses);
+    if (install) lines.push(install, "");
     lines.push(
-      "",
       "```tsx",
       usage.code.trim(),
       "```",
       "",
       `Source: \`${usage.filename}\``,
     );
-  }
-
-  lines.push(
-    "",
-    "## Links",
-    "",
-    `- [Documentation](${pageUrl})`,
-    `- [Installation](${site}/components/installation)`,
-  );
-  lines.push(
-    `- [Registry item](${cliUrl ?? `${site}/r/${slug}.json`})`,
-    "",
-    "## Installation",
-    "",
-  );
-
-  if (usage?.uses?.length) {
-    lines.push(
-      `To run the opening example, also install ${usage.uses.join(", ")}.`,
-      "",
-    );
-  }
-
-  if (cliUrl) {
-    lines.push("```bash", `pnpm dlx shadcn@latest add ${cliUrl}`, "```", "");
-  }
-
-  lines.push(
-    "### Manual",
-    "",
-    `Complete the [one-time setup](${site}/components/installation#manual) first.`,
-  );
-  if (manual.packages.length > 0) {
-    lines.push(
-      "",
-      "Install the packages:",
-      "",
-      "```bash",
-      `pnpm add ${manual.packages.join(" ")}`,
-      "```",
-    );
-  }
-  if (manual.requires.length > 0) {
-    lines.push("", "Add the required files:", "");
-    for (const file of manual.requires) {
-      lines.push(
-        file.kind === "component"
-          ? `- [${file.name}](${site}/components/${file.slug}.md): \`${displayPath(file.file)}\``
-          : `- [\`${fileName(file.file)}\`](${site}/components/installation#file-${file.slug}): ${file.description}`,
-      );
-    }
-  }
-  lines.push(
-    "",
-    `Add \`${displayPath(manual.component)}\`:`,
-    "",
-    "```tsx",
-    manual.component.content.trim(),
-    "```",
-  );
-
-  if (usage?.note) {
-    lines.push("", "## Usage", "", usage.note.trim());
   }
 
   if (exampleFile) {
@@ -135,9 +117,8 @@ export function buildComponentMarkdown({
       if (example.description) {
         lines.push("", example.description.trim());
       }
-      if (example.uses?.length) {
-        lines.push("", `Also install: ${example.uses.join(", ")}.`);
-      }
+      const install = dependencyLine(example.uses);
+      if (install) lines.push("", install);
       if (example.code) {
         lines.push("", "```tsx", example.code.trim(), "```");
         if (example.filename) {
@@ -174,6 +155,35 @@ export function buildComponentMarkdown({
       }
     }
   }
+
+  lines.push(
+    "",
+    "## Manual installation",
+    "",
+    `Use these steps only if you cannot run the shadcn CLI. Do the [manual setup](${setupDocUrl(site)}#manual) first.`,
+  );
+  if (manual.packages.length > 0) {
+    lines.push("", `Install these packages: ${manual.packages.join(" ")}`);
+  }
+  lines.push(
+    "",
+    "Each URL returns JSON. Write `files[0].content` to the path. Keep files that already exist.",
+    "",
+  );
+  for (const file of [
+    ...manual.requires.map((required) => required.file),
+    manual.component,
+  ]) {
+    const url = new URL(`${fileSlug(file)}.json`, itemUrl);
+    lines.push(`- \`${displayPath(file)}\`: ${url}`);
+  }
+  const finish = manual.note ? "[Finish setup](#finish-setup) and " : "";
+  lines.push(
+    "",
+    `Then do ${finish}step 6 of [Installation](#installation).`,
+    "",
+    `Documentation: ${site}/components/${slug}`,
+  );
 
   return `${lines.join("\n").trimEnd()}\n`;
 }

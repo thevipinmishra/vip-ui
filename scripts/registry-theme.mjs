@@ -180,6 +180,9 @@ export function referencedVars(content) {
     return undefined;
   return {
     theme: Object.fromEntries([
+      ...used
+        .filter((name) => themeVars.light[name].startsWith("color-mix("))
+        .map((name) => [`color-${name}`, `var(--${name})`]),
       ...tokens.map((name) => [name, themeTokens[name]]),
       ...animations
         .filter((name) => themeAnimations[name].value !== undefined)

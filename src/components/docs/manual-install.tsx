@@ -10,7 +10,7 @@ import {
 import { cn } from "@/lib/utils";
 import { CodeSample } from "./code-sample";
 import { CopyCodeButton } from "./copy-code-button";
-import { TextLink } from "./guide";
+import { Code, TextLink } from "./guide";
 import { InstallStep } from "./install-step";
 import { PackageManagerCommand } from "./package-manager-command";
 
@@ -77,6 +77,21 @@ export async function ManualInstall({
       />
     ),
   });
+
+  if (plan.note) {
+    steps.push({
+      title: "Finish setup",
+      content: (
+        <p className="text-[13px] leading-6 text-muted-foreground">
+          {plan.note
+            .split("`")
+            .map((part, index) =>
+              index % 2 ? <Code key={part}>{part}</Code> : part,
+            )}
+        </p>
+      ),
+    });
+  }
 
   return (
     <div className="space-y-5">

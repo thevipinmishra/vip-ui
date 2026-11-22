@@ -166,8 +166,8 @@ function getSnapPositions(scroller: HTMLElement, axis: Axis) {
   const max = (y ? scroller.scrollHeight : scroller.scrollWidth) - size;
   const positions: number[] = [];
   for (const marker of [
-    ...scroller.children,
-    ...scroller.querySelectorAll("[data-sheet-detent]"),
+    ...Array.from(scroller.children),
+    ...Array.from(scroller.querySelectorAll("[data-sheet-detent]")),
   ]) {
     const style = getComputedStyle(marker);
     const [block, inline = block] = style.scrollSnapAlign.split(" ");

@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { AgentPrompt } from "@/components/docs/agent-prompt";
 import { CodeSample } from "@/components/docs/code-sample";
 import {
   Code,
@@ -13,6 +14,7 @@ import {
 import { InstallStep } from "@/components/docs/install-step";
 import { PackageManagerCommand } from "@/components/docs/package-manager-command";
 import { Alert } from "@/components/ui/alert";
+import { setupPrompt } from "@/lib/agent-docs";
 import {
   displayPath,
   fileName,
@@ -23,6 +25,7 @@ import {
   type SharedFileSlug,
   sharedFiles,
 } from "@/lib/registry-docs";
+import { siteUrl } from "@/lib/site-url";
 
 export const metadata = guideMetadata("/components/installation");
 
@@ -60,6 +63,14 @@ export default async function InstallationPage() {
 
   return (
     <GuidePage href="/components/installation">
+      <GuideSection id="agent" title="Set up with an agent">
+        <p>
+          Give this prompt to your coding agent. To install without an agent,
+          use the steps that follow.
+        </p>
+        <AgentPrompt prompt={setupPrompt(siteUrl())} />
+      </GuideSection>
+
       <GuideSection id="requirements" title="Requirements">
         <List>
           <li>React 19</li>
@@ -89,6 +100,13 @@ export default async function InstallationPage() {
           .
         </p>
         <PackageManagerCommand action="run" args="shadcn@latest init" />
+        <Alert variant="warning" title="Do you have a theme?">
+          <Code>init</Code> can replace it. To keep it, follow the{" "}
+          <ExternalLink href="/components/installation.md#existing-theme">
+            existing theme steps
+          </ExternalLink>{" "}
+          instead.
+        </Alert>
         <p>
           Make sure that <Code>components.json</Code> has these values. Set{" "}
           <Code>tailwind.css</Code> to the path of your global CSS file.
@@ -174,10 +192,16 @@ export default async function InstallationPage() {
             file.
           </li>
         </List>
-        <Alert variant="success" title="Safe for existing shadcn/ui projects">
+        <Alert variant="neutral" title="Existing shadcn/ui projects">
           The CLI does not change the files in your <Code>components/ui/</Code>{" "}
-          folder or your shadcn <Code>utils.ts</Code> file. It keeps the CSS
-          variable values that you already set.
+          folder or your shadcn <Code>utils.ts</Code> file. It can override CSS
+          variable values from imported files or <Code>@theme</Code>. Check the
+          changes to your CSS.
+        </Alert>
+        <Alert variant="warning" title="Did you edit vip/ui files?">
+          Commit your work first. If the CLI asks to overwrite a file that you
+          edited, answer No. The CLI can still change its imports. Check the
+          file after the install.
         </Alert>
       </GuideSection>
 
@@ -253,26 +277,24 @@ export default async function InstallationPage() {
       </GuideSection>
 
       <GuideSection id="update" title="Update a component">
-        <p>
-          Run the add command again with <Code>--overwrite</Code>. The CLI
-          replaces your file with the newest version.
-        </p>
+        <p>Commit your work first. Then see which files change.</p>
         <PackageManagerCommand
           action="run"
-          args={`shadcn@latest add ${registryNamespace}/button --overwrite`}
+          args={`shadcn@latest add ${registryNamespace}/button --dry-run`}
         />
         <p>
-          To see the changes first, use <Code>--diff</Code> in place of{" "}
-          <Code>--overwrite</Code>. The{" "}
+          To see the changes in a file, use <Code>--diff &lt;path&gt;</Code> in
+          place of <Code>--dry-run</Code>. If you did not edit the files that
+          show <Code>overwrite</Code>, use <Code>--overwrite</Code>. The{" "}
           <ExternalLink href="https://github.com/thevipinmishra/vip-ui/blob/main/CHANGELOG.md">
             changelog
           </ExternalLink>{" "}
           lists breaking changes.
         </p>
-        <Alert variant="warning" title="Your edits are replaced">
+        <Alert variant="warning" title="Keep your edits">
           <Code>--overwrite</Code> also replaces shared files, such as{" "}
-          <Code>utils.ts</Code>. Commit your work first, then add your edits
-          again.
+          <Code>utils.ts</Code>. If you edited one of these files, do not use
+          it. Copy the changes into your file instead.
         </Alert>
       </GuideSection>
 
