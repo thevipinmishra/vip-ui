@@ -174,6 +174,25 @@ function declaredDependencies(text) {
       };
 }
 
+function snippetDependencies(fences) {
+  const components = new Set();
+  const packages = new Set();
+  for (const { lines } of fences) {
+    for (const specifier of importSpecifiers(lines.join("\n"))) {
+      const component = specifier.match(/^@\/components\/vip-ui\/([\w-]+)$/);
+      if (component) {
+        components.add(component[1]);
+        continue;
+      }
+      if (specifier.startsWith("@/") || specifier.startsWith(".")) continue;
+      if (specifier === "next/link") continue;
+      const name = packageName(specifier);
+      if (!["react", "react-dom"].includes(name)) packages.add(name);
+    }
+  }
+  return { components: [...components], packages: [...packages] };
+}
+
 const compilerOptions = ts.convertCompilerOptionsFromJson(
   {
     target: "ES2023",
@@ -265,11 +284,11 @@ function compile(slug, markdown, items = registry) {
 
   for (const { title, text, snippets: fences } of readSections(markdown)) {
     if (!fences.length) continue;
-    const declared = declaredDependencies(text);
-    for (const name of declared.items)
+    const declared = snippetDependencies(fences);
+    for (const name of declared.components)
       if (!items.has(name))
         problems.push(`${slug} > ${title}: no registry item ${name}`);
-    const install = installTree([slug, ...declared.items], items);
+    const install = installTree([slug, ...declared.components], items);
     for (const name of declared.packages) install.packages.add(name);
     for (const [name, item] of install.items) all.set(name, item);
     for (const { language, lines } of fences) {
@@ -389,9 +408,6 @@ function fenced(title, code, declaration = "") {
 }
 
 const buttonImport = 'import { Button } from "@/components/vip-ui/button";';
-const buttonView = "export const View = () => <Button>Save</Button>;";
-const iconImport = 'import { CheckIcon } from "@phosphor-icons/react";';
-const iconView = "export const View = () => <CheckIcon />;";
 
 test("the snippet check finds each class of broken code", () => {
   const cases = [
@@ -402,15 +418,13 @@ test("the snippet check finds each class of broken code", () => {
     },
     {
       slug: "popover",
-      code: `${buttonImport}\n${buttonView}`,
-      fix: "To use this example, install the registry item `button`.",
-      error: /TS2307.*vip-ui\/button/,
+      code: 'import { Nope } from "@/components/vip-ui/nope";\nexport const View = () => <Nope />;',
+      error: /TS2307.*vip-ui\/nope/,
     },
     {
       slug: "popover",
-      code: `${iconImport}\n${iconView}`,
-      fix: "To use this example, install the npm package `@phosphor-icons/react@^2.1.10`.",
-      error: /TS2307.*phosphor-icons/,
+      code: 'import "missing-package";\nexport const value = 1;',
+      error: /TS2307.*missing-package/,
     },
     {
       slug: "lightbox",
@@ -428,17 +442,11 @@ test("the snippet check finds each class of broken code", () => {
       error: /TS2307.*next\/link/,
     },
   ];
-  for (const { slug, code, fix, error } of cases) {
+  for (const { slug, code, error } of cases) {
     assert.match(
       compile(slug, fenced("Usage", code)).problems.join("\n"),
       error,
     );
-    if (fix)
-      assert.deepEqual(
-        compile(slug, fenced("Usage", code, fix)).problems,
-        [],
-        `${slug} must compile after it declares its dependency`,
-      );
   }
 
   const button = registry.get("button");
@@ -486,7 +494,7 @@ test("the snippet check finds each class of broken code", () => {
   );
 });
 
-test("each component Markdown snippet compiles with its declared dependencies", async () => {
+test("each component Markdown snippet compiles with the dependencies its imports name", async () => {
   assert.ok(catalogComponents.length > 0, "The catalog has no components");
   const problems = [];
   let snippets = 0;
@@ -516,11 +524,6 @@ test("each component Markdown snippet compiles with its declared dependencies", 
       apiAt === -1 || apiAt < manualAt,
       `${slug}: API must come before Manual installation`,
     );
-    if (markdown.includes("install the registry item"))
-      assert.ok(
-        markdown.includes(`${origin}/r/<slug>.json`),
-        `${slug} must give the URL of a registry item`,
-      );
     problems.push(...result.problems);
     snippets += result.snippets;
   }
@@ -583,7 +586,7 @@ test("each block Markdown snippet compiles with its declared dependencies", asyn
   assert.equal(problems.length, 0, `\n${problems.join("\n")}`);
 });
 
-test("the block check finds an undeclared snippet dependency", async () => {
+test("the block check finds a missing snippet dependency", async () => {
   const response = await getBlockMarkdown(
     new Request(`${origin}/blocks/dashboard-01.md`),
     { params: Promise.resolve({ name: "dashboard-01" }) },
@@ -602,11 +605,11 @@ test("the block check finds an undeclared snippet dependency", async () => {
   });
   const broken = markdown.replace(
     "```tsx",
-    '```tsx\nimport { Lightbox } from "@/components/vip-ui/lightbox";',
+    '```tsx\nimport { Nope } from "@/components/vip-ui/nope";',
   );
   assert.match(
     compile("dashboard-01", broken, declaredRegistry).problems.join("\n"),
-    /TS2307.*vip-ui\/lightbox/,
+    /(?:no registry item nope|TS2307.*vip-ui\/nope)/,
   );
 });
 

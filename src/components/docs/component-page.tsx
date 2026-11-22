@@ -83,7 +83,7 @@ export async function ComponentPage({
       ).replaceAll("@/components/ui/", "@/components/vip-ui/"),
     ),
   );
-  const [previewUses, usageUses, ...exampleUses] = withoutRepeats(
+  const [previewUses] = withoutRepeats(
     await Promise.all(
       [previewSource, usage?.code ?? "", ...exampleSources].map((code) =>
         exampleDependencies(componentSlug, code),
@@ -158,7 +158,7 @@ export async function ComponentPage({
         />
       </section>
 
-      <UsageSection usage={usage} uses={usageUses} />
+      <UsageSection usage={usage} />
 
       {compositions[componentSlug] && (
         <section id="composition" className="mt-14 scroll-mt-8">
@@ -183,17 +183,9 @@ export async function ComponentPage({
           >
             {example.title}
           </SectionHeading>
-          {(example.description || hasDependencies(exampleUses[index])) && (
+          {example.description && (
             <p className="-mt-2 mb-5 max-w-167.5 text-sm leading-6 text-muted-foreground">
-              {example.description && (
-                <ExampleDescription>{example.description}</ExampleDescription>
-              )}
-              {hasDependencies(exampleUses[index]) && (
-                <>
-                  {example.description && " "}
-                  Also install <DependencyList uses={exampleUses[index]} />.
-                </>
-              )}
+              <ExampleDescription>{example.description}</ExampleDescription>
             </p>
           )}
           <PreviewPanel
@@ -254,13 +246,7 @@ export async function ComponentPage({
   );
 }
 
-function UsageSection({
-  usage,
-  uses,
-}: {
-  usage?: ComponentUsage;
-  uses: ExampleDependencies;
-}) {
+function UsageSection({ usage }: { usage?: ComponentUsage }) {
   if (!usage) return null;
   return (
     <section id="usage" className="mt-14 scroll-mt-8">
@@ -271,11 +257,6 @@ function UsageSection({
         {usage.note && (
           <p className="text-sm leading-6 text-muted-foreground">
             <ExampleDescription>{usage.note}</ExampleDescription>
-          </p>
-        )}
-        {hasDependencies(uses) && (
-          <p className="text-sm leading-6 text-muted-foreground">
-            Also install <DependencyList uses={uses} />.
           </p>
         )}
         <CodeSample code={usage.code} filename={usage.filename} />

@@ -62,9 +62,6 @@ export function buildComponentMarkdown({
   reactAria,
 }: ComponentMarkdownInput): string {
   const itemUrl = cliUrl ?? `${site}/r/${slug}.json`;
-  const needsItems = [usage, ...(examples ?? [])].some(
-    (example) => example?.uses?.components.length,
-  );
   const lines: string[] = [
     `# ${name}`,
     "",
@@ -74,12 +71,6 @@ export function buildComponentMarkdown({
     "",
     `The component goes to \`${displayPath(manual.component)}\`. Add examples only if the user asks for them.`,
     "",
-    ...(needsItems
-      ? [
-          `To install another registry item, use the steps below with \`${new URL(".", itemUrl)}<slug>.json\`.`,
-          "",
-        ]
-      : []),
     `If the project has no \`components/vip-ui\` folder, do the [setup](${setupDocUrl(site)}) first. Also do it if the import alias is missing from the root \`tsconfig.json\` or, outside Next.js, from the bundler config. Then:`,
     "",
     ...installSteps(itemUrl),
@@ -90,8 +81,6 @@ export function buildComponentMarkdown({
   if (usage) {
     lines.push("", "## Usage", "");
     if (usage.note) lines.push(usage.note.trim(), "");
-    const install = dependencyLine(usage.uses);
-    if (install) lines.push(install, "");
     lines.push(
       "```tsx",
       usage.code.trim(),
@@ -148,8 +137,6 @@ export function buildComponentMarkdown({
       if (example.description) {
         lines.push("", example.description.trim());
       }
-      const install = dependencyLine(example.uses);
-      if (install) lines.push("", install);
       if (example.code) {
         lines.push("", "```tsx", example.code.trim(), "```");
         if (example.filename) {
