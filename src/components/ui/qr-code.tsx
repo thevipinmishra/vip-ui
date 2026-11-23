@@ -132,7 +132,7 @@ export interface QrCodeFrameProps extends ComponentProps<"svg"> {
   label?: string;
 }
 
-const quietZone = 2;
+const quietZone = 4;
 
 export function QrCodeFrame({
   label = "QR code",

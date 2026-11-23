@@ -6,14 +6,14 @@
   "description": "Shows pairs of terms and details.",
   "author": "thevipinmishra <https://github.com/thevipinmishra>",
   "categories": ["display-layout"],
-  "dependencies": [],
+  "dependencies": ["tailwind-variants@^4.0.2"],
   "registryDependencies": ["https://vip-ui.dev/r/utils.json"],
   "files": [
     {
       "path": "src/components/ui/description-list.tsx",
       "type": "registry:file",
       "target": "@components/vip-ui/description-list.tsx",
-      "content": "import type { ComponentProps } from \"react\";\nimport { cn } from \"./utils\";\n\nexport function DescriptionList({ className, ...props }: ComponentProps<\"dl\">) {\n  return (\n    <dl\n      data-slot=\"description-list\"\n      className={cn(\n        \"grid items-baseline gap-x-4 gap-y-1 sm:grid-cols-[min(10rem,40%)_minmax(0,1fr)] sm:gap-y-3\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nexport function DescriptionTerm({ className, ...props }: ComponentProps<\"dt\">) {\n  return (\n    <dt\n      data-slot=\"description-term\"\n      className={cn(\n        \"min-w-0 text-sm text-muted-foreground wrap-anywhere not-first:max-sm:mt-2 sm:col-start-1\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nexport function DescriptionDetail({\n  className,\n  ...props\n}: ComponentProps<\"dd\">) {\n  return (\n    <dd\n      data-slot=\"description-detail\"\n      className={cn(\n        \"min-w-0 text-sm font-medium text-foreground wrap-anywhere sm:col-start-2\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n"
+      "content": "import type { ComponentProps } from \"react\";\nimport { tv } from \"tailwind-variants\";\nimport { cn } from \"./utils\";\n\nconst descriptionListStyles = tv({\n  base: \"@container/description-list grid min-w-0 grid-cols-[min(10rem,40%)_minmax(0,1fr)] items-baseline gap-x-4 gap-y-1\",\n  variants: {\n    layout: {\n      auto: \"\",\n      columns:\n        \"gap-y-3 [&>dd]:col-start-2 [&>dt]:col-end-2 [&>dt]:not-first:mt-0\",\n    },\n  },\n});\n\nexport function DescriptionList({\n  className,\n  layout = \"auto\",\n  ...props\n}: ComponentProps<\"dl\"> & { layout?: \"auto\" | \"columns\" }) {\n  return (\n    <dl\n      data-slot=\"description-list\"\n      className={descriptionListStyles({ layout, className })}\n      {...props}\n    />\n  );\n}\n\nexport function DescriptionTerm({ className, ...props }: ComponentProps<\"dt\">) {\n  return (\n    <dt\n      data-slot=\"description-term\"\n      className={cn(\n        \"col-start-1 col-end-3 min-w-0 text-sm text-muted-foreground wrap-anywhere not-first:mt-2 @min-[22rem]/description-list:col-end-2\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nexport function DescriptionDetail({\n  className,\n  ...props\n}: ComponentProps<\"dd\">) {\n  return (\n    <dd\n      data-slot=\"description-detail\"\n      className={cn(\n        \"col-start-1 col-end-3 min-w-0 text-sm font-medium text-foreground wrap-anywhere @min-[22rem]/description-list:col-start-2\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n"
     }
   ]
 }

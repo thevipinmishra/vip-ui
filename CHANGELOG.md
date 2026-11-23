@@ -36,6 +36,8 @@ All notable changes to vip/ui are documented in this file. The format is based o
 - Sheets nest. A SheetTrigger inside a Sheet stacks a new sheet on top; the parent scales back, rounds its corners, and follows the nested sheet's swipe. Nested sheets get a lighter backdrop. Tune the effect with `--sheet-stack-scale`, `--sheet-stack-x`, and `--sheet-stack-y`.
 - Attachment exports the type `AttachmentStatus`.
 - `motion.ts` adds `easeSheet`, `springPop`, `loop`, `maxStagger`, and `duration.reveal`.
+- Accordion and Disclosure take `headingLevel` on `AccordionTrigger` and `DisclosureHeader` to set the level of the heading around the button. The default is 3.
+- Description list takes `layout="columns"` to keep each term and detail side by side at any width.
 
 #### Registry
 
@@ -99,6 +101,8 @@ All notable changes to vip/ui are documented in this file. The format is based o
 - Skeleton, Progress bar, Agent status, Border beam, Text shimmer, Meter, Color thumb, Pagination, Password field, and Spotlight card animate with CSS keyframes, CSS transitions, the Web Animations API, or an IntersectionObserver, and do not load the Motion package.
 - Dialog and Sheet ship their scroll-edge, sheet backdrop, and sheet stack keyframes in the registry CSS instead of a style tag, so they animate on sites that block inline styles.
 - The chart frame styles TanStack `interactiveColorLegend` buttons like the other kit controls.
+- Description list stacks each term above its detail when the list is narrower than 22rem, instead of below the `sm` screen breakpoint, so it fits narrow panels on any screen.
+- QR code has a quiet zone of four modules, the size that the QR code standard requires, so codes scan more reliably.
 
 #### Registry
 
@@ -127,6 +131,7 @@ All notable changes to vip/ui are documented in this file. The format is based o
 
 ### Fixed
 
+- A Resizable panel that collapses to zero is inert, so its content leaves the tab order.
 - Charts are full width when the page loads. Before, a server-rendered chart was narrower than its frame until the page hydrated.
 - Tree rows no longer cause a hydration mismatch, and rows that expand into view animate in again.
 - After the handle, arrow keys, or a drag move a sheet, wheel and trackpad scrolling snap to a stop again.

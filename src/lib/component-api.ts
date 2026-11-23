@@ -1,4 +1,8 @@
-import type { Accordion, AccordionItem } from "@/components/ui/accordion";
+import type {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import type { AgentStep, AgentSteps } from "@/components/ui/agent-steps";
 import type { Alert } from "@/components/ui/alert";
 import type { AnimatedNumber } from "@/components/ui/animated-number";
@@ -3378,6 +3382,16 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         },
       ],
     }),
+    apiPart<typeof AccordionTrigger>({
+      name: "AccordionTrigger",
+      props: [
+        {
+          name: "headingLevel",
+          description:
+            "Sets the heading level around the trigger button. Defaults to 3.",
+        },
+      ],
+    }),
   ],
   alert: [
     apiPart<typeof Alert>({
@@ -3851,12 +3865,12 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
     apiPart<typeof ResizablePanel>({
       name: "ResizablePanel",
       description:
-        "Sets its starting share of the group. Put padding on a child so a collapsed panel can reach zero.",
+        "Sets its starting share of the group. A panel collapsed to zero keeps its content out of the tab order. Put padding on a child so the panel can reach zero.",
       props: [
         {
           name: "id",
           description:
-            "Sets the panel DOM id, so a handle points at it with aria-controls. Panels without it get a generated id.",
+            "Sets a unique DOM id for the panel. Omit it to generate an id, including when a group can appear more than once on a page.",
         },
         {
           name: "order",
@@ -5204,9 +5218,13 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
   "description-list": [
     apiPart<typeof DescriptionList>({
       name: "DescriptionList",
-      description:
-        "Shows terms and details in two columns from the sm breakpoint, and stacks them below it.",
+      description: "Shows pairs of terms and details.",
       props: [
+        {
+          name: "layout",
+          description:
+            'Stacks pairs below 22rem of list width. Use "columns" to keep each pair side by side at any width.',
+        },
         {
           name: "children",
           description: "Pairs of DescriptionTerm and DescriptionDetail.",
@@ -5223,6 +5241,11 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
         {
           name: "children",
           description: "The header text.",
+        },
+        {
+          name: "headingLevel",
+          description:
+            "Sets the heading level around the trigger button. Defaults to 3.",
         },
       ],
     }),

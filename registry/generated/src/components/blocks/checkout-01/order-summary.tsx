@@ -149,7 +149,10 @@ export function OrderSummary({
         )}
       </div>
 
-      <DescriptionList className="grid-cols-[minmax(0,1fr)_auto] gap-y-2 border-t border-border/70 pt-4 [&>dt]:not-first:mt-0">
+      <DescriptionList
+        layout="columns"
+        className="grid-cols-[minmax(0,1fr)_auto] gap-y-2 border-t border-border/70 pt-4"
+      >
         <DescriptionTerm>Subtotal</DescriptionTerm>
         <DescriptionDetail className="text-end tabular-nums">
           {formatMoney(subtotal)}

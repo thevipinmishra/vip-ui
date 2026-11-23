@@ -298,7 +298,10 @@ export function OrderDetail() {
                 </Table>
               </div>
               <div className="flex justify-end p-5">
-                <DescriptionList className="w-full max-w-xs grid-cols-[minmax(0,1fr)_auto] gap-x-0 gap-y-2 [&>dt]:pe-4 [&_[data-slot=description-term]]:mt-0">
+                <DescriptionList
+                  layout="columns"
+                  className="w-full max-w-xs grid-cols-[minmax(0,1fr)_auto] gap-x-0 gap-y-2 [&>dt]:pe-4"
+                >
                   <DescriptionTerm>Subtotal</DescriptionTerm>
                   <DescriptionDetail className="text-end tabular-nums">
                     {formatMoney(totals.subtotal)}

@@ -27,7 +27,7 @@ export function ResizableChatDemo() {
       defaultLayout={[46, 54]}
       className="h-[26rem] overflow-hidden rounded-xl border border-border bg-card"
     >
-      <ResizablePanel id="resizable-chat" minSize={30}>
+      <ResizablePanel minSize={30}>
         <div className="flex h-full min-h-0 flex-col">
           <div tabIndex={0} className="flex-1 overflow-auto p-4">
             <p className="text-xs font-medium text-muted-foreground">You</p>
@@ -48,7 +48,7 @@ export function ResizableChatDemo() {
         </div>
       </ResizablePanel>
       <ResizableHandle aria-label="Resize the chat and the code" />
-      <ResizablePanel id="resizable-code" minSize={25}>
+      <ResizablePanel minSize={25}>
         <div tabIndex={0} className="h-full overflow-auto bg-muted/30 p-3">
           <CodeBlock code={CODE} language="tsx">
             <CodeBlockHeader>

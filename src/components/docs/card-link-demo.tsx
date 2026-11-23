@@ -1,54 +1,46 @@
 "use client";
 
-import { BookOpenTextIcon, CodeIcon, PaletteIcon } from "@phosphor-icons/react";
+import { DotsThreeIcon } from "@phosphor-icons/react";
+import { Button } from "@/components/ui/button";
 import {
   Card,
+  CardAction,
   CardDescription,
   CardHeader,
   CardLink,
   CardTitle,
 } from "@/components/ui/card";
-
-const guides = [
-  {
-    href: "/components/installation",
-    title: "Installation",
-    description: "Add the CLI and your first component.",
-    icon: BookOpenTextIcon,
-  },
-  {
-    href: "/themes",
-    title: "Themes",
-    description: "Change colors, radius, and fonts.",
-    icon: PaletteIcon,
-  },
-  {
-    href: "/components/react-aria",
-    title: "React Aria",
-    description: "Use the hooks and props under each part.",
-    icon: CodeIcon,
-  },
-];
+import { Menu, MenuItem, MenuTrigger } from "@/components/ui/menu";
 
 export function CardLinkDemo() {
   return (
-    <div className="grid w-full max-w-2xl gap-3 sm:grid-cols-3">
-      {guides.map(({ href, title, description, icon: Icon }) => (
-        <Card key={href}>
-          <CardHeader>
-            <span
-              aria-hidden="true"
-              className="mb-2 grid size-9 place-items-center rounded-lg bg-muted text-foreground"
+    <Card className="w-full max-w-sm">
+      <CardHeader>
+        <CardTitle as="h4">
+          <CardLink href="/components">Component library</CardLink>
+        </CardTitle>
+        <CardDescription>
+          Shared components for the checkout and account projects.
+        </CardDescription>
+        <CardAction className="relative z-10">
+          <MenuTrigger>
+            <Button
+              variant="minimal"
+              size="sm"
+              iconOnly
+              aria-label="Component library actions"
             >
-              <Icon size={18} />
-            </span>
-            <CardTitle>
-              <CardLink href={href}>{title}</CardLink>
-            </CardTitle>
-            <CardDescription>{description}</CardDescription>
-          </CardHeader>
-        </Card>
-      ))}
-    </div>
+              <DotsThreeIcon weight="bold" aria-hidden="true" />
+            </Button>
+            <Menu aria-label="Component library actions">
+              <MenuItem href="/components/installation">
+                Installation guide
+              </MenuItem>
+              <MenuItem href="/themes">Browse themes</MenuItem>
+            </Menu>
+          </MenuTrigger>
+        </CardAction>
+      </CardHeader>
+    </Card>
   );
 }
