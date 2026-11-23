@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { AgentPrompt } from "@/components/docs/agent-prompt";
 import { CodeSample } from "@/components/docs/code-sample";
 import {
   Code,
@@ -13,16 +14,17 @@ import {
 import { InstallStep } from "@/components/docs/install-step";
 import { PackageManagerCommand } from "@/components/docs/package-manager-command";
 import { Alert } from "@/components/ui/alert";
+import { setupPrompt } from "@/lib/agent-docs";
 import {
   displayPath,
   fileName,
   readSharedFile,
   registryNamespace,
-  registryNamespaceUrl,
   registryUrl,
   type SharedFileSlug,
   sharedFiles,
 } from "@/lib/registry-docs";
+import { agentSiteUrl } from "@/lib/site-url";
 
 export const metadata = guideMetadata("/components/installation");
 
@@ -30,10 +32,6 @@ const componentsJson = `{
   "tsx": true,
   "tailwind": { "css": "src/index.css", "cssVariables": true }
 }`;
-
-function namespaceJson(url: string) {
-  return JSON.stringify({ registries: { [registryNamespace]: url } }, null, 2);
-}
 
 const usage = `import { Button } from "@/components/vip-ui/button";
 
@@ -49,7 +47,6 @@ export default async function InstallationPage() {
   const buttonUrl = registryUrl("button");
   const themeUrl = registryUrl("theme-blue");
   const scaleUrl = registryUrl("blue");
-  const namespaceUrl = registryNamespaceUrl();
   const shared = await Promise.all(
     (Object.keys(sharedFiles) as SharedFileSlug[]).map(async (slug) => ({
       slug,
@@ -60,6 +57,18 @@ export default async function InstallationPage() {
 
   return (
     <GuidePage href="/components/installation">
+      <GuideSection id="agent" title="Set up with an agent">
+        <p>
+          Give this prompt to your coding agent. To install without an agent,
+          use the steps that follow.
+        </p>
+        <AgentPrompt prompt={setupPrompt(agentSiteUrl())} />
+        <p>
+          For the vip/ui skill, the MCP server, and Markdown sources, see the{" "}
+          <TextLink href="/components/agents">Agents guide</TextLink>.
+        </p>
+      </GuideSection>
+
       <GuideSection id="requirements" title="Requirements">
         <List>
           <li>React 19</li>
@@ -89,6 +98,13 @@ export default async function InstallationPage() {
           .
         </p>
         <PackageManagerCommand action="run" args="shadcn@latest init" />
+        <Alert variant="warning" title="Do you have a theme?">
+          <Code>init</Code> can replace it. To keep it, follow the{" "}
+          <ExternalLink href="/components/installation.md#existing-theme">
+            existing theme steps
+          </ExternalLink>{" "}
+          instead.
+        </Alert>
         <p>
           Make sure that <Code>components.json</Code> has these values. Set{" "}
           <Code>tailwind.css</Code> to the path of your global CSS file.
@@ -136,23 +152,33 @@ export default async function InstallationPage() {
         )}
       </GuideSection>
 
-      <GuideSection id="add-component" title="Add a component">
+      <GuideSection id="install-by-name" title="Install by name">
         <p>
-          Copy the command from a component page, such as{" "}
-          <TextLink href="/components/button#installation">Button</TextLink>.
-          Run it from your project root.
+          Add a component by name. You do not need to add vip/ui to{" "}
+          <Code>components.json</Code> first. The CLI finds it in the public
+          registry directory.
         </p>
+        <PackageManagerCommand
+          action="run"
+          args={`shadcn@latest add ${registryNamespace}/button`}
+        />
         {buttonUrl ? (
-          <PackageManagerCommand
-            action="run"
-            args={`shadcn@latest add ${buttonUrl}`}
-          />
-        ) : (
-          <p>
-            The CLI command shows when the registry has a public URL. Until
-            then, use the <TextLink href="#manual">manual steps</TextLink>.
-          </p>
-        )}
+          <>
+            <p>
+              To install from a specific registry URL, such as a local or
+              preview deploy, use the URL instead:
+            </p>
+            <PackageManagerCommand
+              action="run"
+              args={`shadcn@latest add ${buttonUrl}`}
+            />
+          </>
+        ) : null}
+        <p>
+          The first install by name writes the vip/ui registry to{" "}
+          <Code>components.json</Code>. The shadcn MCP server reads that file,
+          so it can find vip/ui after one install.
+        </p>
         <p>The CLI does these steps:</p>
         <List>
           <li>
@@ -174,31 +200,18 @@ export default async function InstallationPage() {
             file.
           </li>
         </List>
-        <Alert variant="success" title="Safe for existing shadcn/ui projects">
+        <Alert variant="neutral" title="Existing shadcn/ui projects">
           The CLI does not change the files in your <Code>components/ui/</Code>{" "}
-          folder or your shadcn <Code>utils.ts</Code> file. It keeps the CSS
-          variable values that you already set.
+          folder or your shadcn <Code>utils.ts</Code> file. It can override CSS
+          variable values from imported files or <Code>@theme</Code>. Check the
+          changes to your CSS.
+        </Alert>
+        <Alert variant="warning" title="Did you edit vip/ui files?">
+          Commit your work first. If the CLI asks to overwrite a file that you
+          edited, answer No. The CLI can still change its imports. Check the
+          file after the install.
         </Alert>
       </GuideSection>
-
-      {namespaceUrl ? (
-        <GuideSection id="namespace" title="Add the namespace">
-          <p>
-            Add vip/ui to the <Code>registries</Code> in your{" "}
-            <Code>components.json</Code>. Keep your other values.
-          </p>
-          <CodeSample
-            code={namespaceJson(namespaceUrl)}
-            filename="components.json"
-            language="json"
-          />
-          <p>Then add items by name.</p>
-          <PackageManagerCommand
-            action="run"
-            args={`shadcn@latest add ${registryNamespace}/button`}
-          />
-        </GuideSection>
-      ) : null}
 
       <GuideSection id="manual" title="Install manually">
         <p>
@@ -253,26 +266,24 @@ export default async function InstallationPage() {
       </GuideSection>
 
       <GuideSection id="update" title="Update a component">
-        <p>
-          Run the add command again with <Code>--overwrite</Code>. The CLI
-          replaces your file with the newest version.
-        </p>
+        <p>Commit your work first. Then see which files change.</p>
         <PackageManagerCommand
           action="run"
-          args={`shadcn@latest add ${registryNamespace}/button --overwrite`}
+          args={`shadcn@latest add ${registryNamespace}/button --dry-run`}
         />
         <p>
-          To see the changes first, use <Code>--diff</Code> in place of{" "}
-          <Code>--overwrite</Code>. The{" "}
+          To see the changes in a file, use <Code>--diff &lt;path&gt;</Code> in
+          place of <Code>--dry-run</Code>. If you did not edit the files that
+          show <Code>overwrite</Code>, use <Code>--overwrite</Code>. The{" "}
           <ExternalLink href="https://github.com/thevipinmishra/vip-ui/blob/main/CHANGELOG.md">
             changelog
           </ExternalLink>{" "}
           lists breaking changes.
         </p>
-        <Alert variant="warning" title="Your edits are replaced">
+        <Alert variant="warning" title="Keep your edits">
           <Code>--overwrite</Code> also replaces shared files, such as{" "}
-          <Code>utils.ts</Code>. Commit your work first, then add your edits
-          again.
+          <Code>utils.ts</Code>. If you edited one of these files, do not use
+          it. Copy the changes into your file instead.
         </Alert>
       </GuideSection>
 

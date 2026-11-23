@@ -1,9 +1,17 @@
 import type { NextConfig } from "next";
 import blocksCatalog from "./src/lib/blocks.json";
 
+const deployOrigin =
+  process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "";
+
 const nextConfig: NextConfig = {
   reactCompiler: true,
-  env: { BUILD_DATE: new Date().toISOString().slice(0, 10) },
+  env: {
+    BUILD_DATE: new Date().toISOString().slice(0, 10),
+    NEXT_PUBLIC_DEPLOY_ORIGIN: deployOrigin,
+  },
   experimental: {
     optimizePackageImports: [
       "@phosphor-icons/react",
@@ -45,6 +53,11 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/components/ai-and-mcp/:path*",
+        destination: "/components/agents",
+        permanent: true,
+      },
+      {
         source: "/components/typography",
         destination: "/typography",
         permanent: true,
@@ -83,12 +96,32 @@ const nextConfig: NextConfig = {
     ];
   },
   async rewrites() {
-    return [
+    const beforeFiles = deployOrigin
+      ? [{ source: "/r/:item.json", destination: "/api/r/:item" }]
+      : [];
+    const afterFiles = [
       {
         source: "/components/:slug.md",
         destination: "/components/:slug/markdown",
       },
+      {
+        source: "/blocks/:block.md",
+        destination: "/api/blocks/:block/markdown",
+      },
+      {
+        source: "/charts.md",
+        destination: "/charts/markdown",
+      },
+      {
+        source: "/typography.md",
+        destination: "/typography/markdown",
+      },
+      {
+        source: "/themes.md",
+        destination: "/themes/markdown",
+      },
     ];
+    return { beforeFiles, afterFiles };
   },
   async headers() {
     const robotsTag = (value: string) => [{ key: "X-Robots-Tag", value }];
@@ -110,6 +143,38 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/components/:slug.md",
+        headers: robotsTag("noindex, nofollow"),
+      },
+      {
+        source: "/api/blocks/:name/markdown",
+        headers: robotsTag("noindex, nofollow"),
+      },
+      {
+        source: "/blocks/:block.md",
+        headers: robotsTag("noindex, nofollow"),
+      },
+      {
+        source: "/charts/markdown",
+        headers: robotsTag("noindex, nofollow"),
+      },
+      {
+        source: "/charts.md",
+        headers: robotsTag("noindex, nofollow"),
+      },
+      {
+        source: "/typography/markdown",
+        headers: robotsTag("noindex, nofollow"),
+      },
+      {
+        source: "/typography.md",
+        headers: robotsTag("noindex, nofollow"),
+      },
+      {
+        source: "/themes/markdown",
+        headers: robotsTag("noindex, nofollow"),
+      },
+      {
+        source: "/themes.md",
         headers: robotsTag("noindex, nofollow"),
       },
       {

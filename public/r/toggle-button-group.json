@@ -18,6 +18,9 @@
     "https://vip-ui.dev/r/utils.json"
   ],
   "cssVars": {
+    "theme": {
+      "color-highlight": "var(--highlight)"
+    },
     "light": {
       "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)"
     },

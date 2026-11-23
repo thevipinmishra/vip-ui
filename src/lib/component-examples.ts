@@ -2,7 +2,6 @@ export interface ComponentExampleMetadata {
   title: string;
   description?: string;
   sourcePath: string;
-  uses?: readonly string[];
   previewProps?: Readonly<Record<string, unknown>>;
 }
 
@@ -11,7 +10,6 @@ import { componentDescription } from "./catalog";
 export interface ComponentPageData {
   summary?: string;
   usage: string;
-  previewUses?: readonly string[];
   exampleFile?: string;
   description: string;
   examples: readonly ComponentExampleMetadata[];
@@ -21,7 +19,6 @@ export interface ComponentUsage {
   code: string;
   filename?: string;
   note?: string;
-  uses?: readonly string[];
 }
 
 type ComponentPageSource = Omit<ComponentPageData, "description">;
@@ -63,13 +60,13 @@ const pageSources = {
       {
         title: "Loading",
         description:
-          "Set `isPending` to block presses while keeping the button focusable. While saving, the example swaps the leading icon for a [Spinner](/components/spinner).",
+          "Set `isPending` to block presses while keeping the button focusable.",
         sourcePath: "button-loading-demo.tsx",
       },
       {
         title: "Link",
         description:
-          "With the `@vip-ui` registry configured, install `ButtonLink` with `npx shadcn@latest add @vip-ui/button-link`. Pass `as={Link}` to use Next.js routing.",
+          "Install `ButtonLink` with `npx shadcn@latest add @vip-ui/button-link`. Pass `as={Link}` to use Next.js routing.",
         sourcePath: "button-link-demo.tsx",
       },
     ],
@@ -126,7 +123,6 @@ const pageSources = {
         description:
           "Put the form around DialogBody and DialogFooter, and call close after submit.",
         sourcePath: "dialog-form-demo.tsx",
-        uses: ["form", "text-field", "text-area"],
       },
       {
         title: "Scrollable content",
@@ -143,7 +139,7 @@ const pageSources = {
   },
   accordion: {
     summary:
-      "Examples cover divided sections, multiple open panels, and disabled items.",
+      "Examples cover divided sections, form validation, and disabled items.",
     usage: "accordion-demo.tsx",
     examples: [
       {
@@ -153,9 +149,9 @@ const pageSources = {
         sourcePath: "accordion-billing-demo.tsx",
       },
       {
-        title: "Multiple open sections",
+        title: "Form validation",
         description:
-          "Set `allowsMultipleExpanded` to keep more than one section open.",
+          "Open the section with the first invalid field through `expandedKeys`. Set `allowsMultipleExpanded` to keep the other sections open.",
         sourcePath: "accordion-multiple-demo.tsx",
       },
       {
@@ -178,14 +174,12 @@ const pageSources = {
         title: "Action",
         description: "In a narrow alert, the action moves below the text.",
         sourcePath: "alert-action-demo.tsx",
-        uses: ["button-link"],
       },
       {
         title: "Dismiss",
         description:
           "Move focus to a nearby control before the alert leaves; otherwise focus is lost.",
         sourcePath: "alert-dismiss-demo.tsx",
-        uses: ["presence"],
       },
     ],
   },
@@ -195,14 +189,12 @@ const pageSources = {
       {
         title: "Digit slide",
         sourcePath: "animated-number-slide-demo.tsx",
-        uses: ["button"],
       },
       {
         title: "Number format",
         description:
           "Screen readers get the same currency format, not the raw number.",
         sourcePath: "animated-number-format-demo.tsx",
-        uses: ["button"],
       },
     ],
   },
@@ -215,7 +207,6 @@ const pageSources = {
         title: "Adding and removing files",
         description: "Check the type and size of each file before you add it.",
         sourcePath: "attachment-demo.tsx",
-        uses: ["drop-zone"],
       },
       {
         title: "Upload states",
@@ -230,7 +221,6 @@ const pageSources = {
   },
   autocomplete: {
     usage: "autocomplete-demo.tsx",
-    previewUses: ["search-field", "list-box"],
     examples: [],
   },
   avatar: {
@@ -278,14 +268,12 @@ const pageSources = {
         description:
           "Pass `items` for a path that changes; `onAction` receives the pressed breadcrumb's id.",
         sourcePath: "breadcrumbs-folders-demo.tsx",
-        uses: ["button"],
       },
       {
         title: "Collapsed path",
         description:
           "Use `BreadcrumbItem` for a crumb that is not a link, such as a menu of hidden pages.",
         sourcePath: "breadcrumbs-collapsed-demo.tsx",
-        uses: ["menu", "button"],
       },
     ],
   },
@@ -303,7 +291,6 @@ const pageSources = {
         description:
           "Wrap the second button and its menu in `MenuTrigger`. Give the icon button an `aria-label`.",
         sourcePath: "button-group-demo.tsx",
-        uses: ["menu"],
       },
       {
         title: "Sizes",
@@ -347,12 +334,11 @@ const pageSources = {
         description:
           "Put `CardMedia` before the header or after the footer so it follows the card corners.",
         sourcePath: "card-media-demo.tsx",
-        uses: ["badge"],
       },
       {
         title: "Linked card",
         description:
-          "Put `CardLink` in the title to make the whole card a link; give other buttons `relative z-10`.",
+          "Put `CardLink` in the title to make the card clickable. Give `CardAction` the `relative z-10` classes to keep the menu button above the link.",
         sourcePath: "card-link-demo.tsx",
       },
       {
@@ -360,7 +346,6 @@ const pageSources = {
         description:
           "Wrap the content and footer in a `Form` so the footer button submits.",
         sourcePath: "card-demo.tsx",
-        uses: ["form", "text-field"],
       },
     ],
   },
@@ -381,13 +366,12 @@ const pageSources = {
       {
         title: "Autoplay",
         description:
-          'Run `pnpm add embla-carousel-autoplay@^8.6.0` to install the plugin. Pass `Autoplay` in `plugins`, add a pause button, and set `aria-live="off"` on the viewport.',
+          'Pass `Autoplay` in `plugins`, add a pause button, and set `aria-live="off"` on the viewport.',
         sourcePath: "carousel-autoplay-demo.tsx",
       },
       {
         title: "Different widths",
         sourcePath: "carousel-widths-demo.tsx",
-        uses: ["badge"],
       },
       {
         title: "Right to left",
@@ -403,6 +387,7 @@ const pageSources = {
   },
   lightbox: {
     usage: "lightbox-demo.tsx",
+    exampleFile: "photo-art.tsx",
     examples: [
       {
         title: "Captions",
@@ -433,13 +418,11 @@ const pageSources = {
         title: "Required",
         description: "The error shows after the first submit.",
         sourcePath: "checkbox-required-demo.tsx",
-        uses: ["form", "button"],
       },
       {
         title: "Indeterminate",
         description: "Point aria-controls at the child options.",
         sourcePath: "checkbox-demo.tsx",
-        uses: ["checkbox-group"],
       },
       {
         title: "Card",
@@ -454,31 +437,26 @@ const pageSources = {
   },
   "checkbox-group": {
     usage: "checkbox-group-demo.tsx",
-    previewUses: ["checkbox"],
     examples: [
       {
         title: "Horizontal",
         sourcePath: "checkbox-group-horizontal-demo.tsx",
-        uses: ["checkbox"],
       },
       {
         title: "Card grid",
         description:
           "Put CheckboxGroupItems between the label and the error to lay out the options.",
         sourcePath: "checkbox-group-layout-demo.tsx",
-        uses: ["checkbox"],
       },
       {
         title: "Disabled",
         sourcePath: "checkbox-group-disabled-demo.tsx",
-        uses: ["checkbox"],
       },
       {
         title: "Required",
         description:
           "Asks for at least one option. The error shows after the first submit.",
         sourcePath: "checkbox-group-required-demo.tsx",
-        uses: ["checkbox", "form", "button"],
       },
     ],
   },
@@ -498,7 +476,6 @@ const pageSources = {
       {
         title: "Controlled value",
         sourcePath: "color-field-controlled-demo.tsx",
-        uses: ["color-swatch"],
       },
       {
         title: "Sizes",
@@ -523,7 +500,6 @@ const pageSources = {
         description:
           "Render a swatch inside the wheel to show the current color.",
         sourcePath: "color-wheel-controlled-demo.tsx",
-        uses: ["color-swatch"],
       },
       {
         title: "Size",
@@ -594,7 +570,6 @@ const pageSources = {
         description:
           "When you set items, the combo box does not filter them. Filter in your load function.",
         sourcePath: "combo-box-async-demo.tsx",
-        uses: ["spinner"],
       },
       {
         title: "Sizes",
@@ -613,7 +588,6 @@ const pageSources = {
           "When an item has an icon, set `textValue` so search can find it.",
         sourcePath: "command-palette-demo.tsx",
         previewProps: { shortcut: false },
-        uses: ["button"],
       },
     ],
   },
@@ -625,36 +599,30 @@ const pageSources = {
         title: "Grouped actions",
         description: "A disabled item is skipped by the arrow keys.",
         sourcePath: "context-menu-grouped-demo.tsx",
-        uses: ["button"],
       },
     ],
   },
   conversation: {
     usage: "conversation-demo.tsx",
-    previewUses: ["response"],
     examples: [
       {
         title: "Jump to latest",
         description:
           "Scroll up in the transcript, then select Stream replies. Select Jump to latest to return to the newest message.",
         sourcePath: "conversation-jump-demo.tsx",
-        uses: ["message", "response"],
       },
       {
         title: "Load older messages",
         sourcePath: "conversation-load-older-demo.tsx",
-        uses: ["message", "response"],
       },
       {
         title: "Empty",
         sourcePath: "conversation-empty-demo.tsx",
-        uses: ["empty-state", "prompt-input", "message", "response"],
       },
       {
         title: "With prompt input",
         description: "Call `scrollToLatest` when the user sends a message.",
         sourcePath: "conversation-prompt-demo.tsx",
-        uses: ["message", "response", "prompt-input"],
       },
     ],
   },
@@ -684,7 +652,6 @@ const pageSources = {
         title: "Streaming",
         description: "Set `isStreaming` while the code arrives.",
         sourcePath: "code-block-streaming-demo.tsx",
-        uses: ["response", "button"],
       },
     ],
   },
@@ -798,7 +765,6 @@ const pageSources = {
         description:
           "Press Alt and an arrow key to move the focused event. Press Alt, Shift, and Up or Down to resize it.",
         sourcePath: "event-calendar-keyboard-demo.tsx",
-        uses: ["kbd-code"],
       },
       {
         title: "Overlapping events",
@@ -812,7 +778,6 @@ const pageSources = {
       {
         title: "Custom event",
         sourcePath: "event-calendar-custom-demo.tsx",
-        uses: ["avatar"],
       },
     ],
   },
@@ -820,9 +785,9 @@ const pageSources = {
     usage: "description-list-demo.tsx",
     examples: [
       {
-        title: "Rich values",
+        title: "Deployment inspector",
+        description: "The metadata stacks inside a narrow panel on any screen.",
         sourcePath: "description-list-components-demo.tsx",
-        uses: ["badge", "link"],
       },
     ],
   },
@@ -865,20 +830,17 @@ const pageSources = {
         description:
           "Swipe the sheet or drag the handle toward its edge to close it.",
         sourcePath: "sheet-placement-demo.tsx",
-        uses: ["checkbox-group"],
       },
       {
         title: "Form",
         description:
           "Put the form around SheetBody and SheetFooter so the footer stays in view.",
         sourcePath: "sheet-form-demo.tsx",
-        uses: ["form", "text-field", "text-area", "select", "switch"],
       },
       {
         title: "Nested sheets",
         description: "Escape and outside clicks close the top sheet first.",
         sourcePath: "sheet-nested-demo.tsx",
-        uses: ["text-field"],
       },
     ],
   },
@@ -893,7 +855,6 @@ const pageSources = {
       {
         title: "Sections and badges",
         sourcePath: "sidebar-sections-demo.tsx",
-        uses: ["badge"],
       },
       {
         title: "Mobile sheet",
@@ -904,14 +865,12 @@ const pageSources = {
       {
         title: "Footer card",
         sourcePath: "sidebar-footer-demo.tsx",
-        uses: ["button", "progress-bar"],
       },
       {
         title: "Keyboard shortcut",
         description:
           "Mod+B toggles the sidebar. Set `shortcut` to `false` to turn it off.",
         sourcePath: "sidebar-shortcut-demo.tsx",
-        uses: ["kbd-code"],
       },
     ],
   },
@@ -938,13 +897,11 @@ const pageSources = {
         description:
           "After the clear action, move focus back to the search field.",
         sourcePath: "empty-state-search-demo.tsx",
-        uses: ["search-field", "button"],
       },
     ],
   },
   fieldset: {
     usage: "fieldset-demo.tsx",
-    previewUses: ["checkbox"],
     examples: [],
   },
   "file-trigger": {
@@ -960,21 +917,18 @@ const pageSources = {
   },
   form: {
     usage: "form-demo.tsx",
-    previewUses: ["text-field", "button"],
     examples: [
       {
         title: "Custom validation",
         description:
           "Return an error message from `validate`, or return `null` for a valid value.",
         sourcePath: "form-validation-demo.tsx",
-        uses: ["text-field", "button"],
       },
       {
         title: "Server errors",
         description:
           "Pass server errors to `validationErrors` with each field name as a key. Select Save to see a simulated error for `maya`.",
         sourcePath: "form-server-errors-demo.tsx",
-        uses: ["text-field", "button"],
       },
     ],
   },
@@ -999,47 +953,37 @@ const pageSources = {
     summary:
       "Examples cover icons, buttons, notes, sizes, and disabled or invalid states.",
     usage: "input-group-basic-demo.tsx",
-    previewUses: ["text-field"],
     examples: [
       {
         title: "Icon",
-        description: "Install `@phosphor-icons/react` for the search icon.",
         sourcePath: "input-group-icon-demo.tsx",
-        uses: ["text-field"],
       },
       {
         title: "Button",
-        description: "Install `@phosphor-icons/react` for the search icon.",
         sourcePath: "input-group-demo.tsx",
-        uses: ["form", "text-field"],
       },
       {
         title: "Text area",
         description:
           'Set align="block-end" on InputGroupAddon to add a row below the text.',
         sourcePath: "input-group-notes-demo.tsx",
-        uses: ["text-area"],
       },
       {
         title: "Disabled",
         description:
           "Set isDisabled on the TextField. InputGroup inherits the state.",
         sourcePath: "input-group-disabled-demo.tsx",
-        uses: ["text-field"],
       },
       {
         title: "Invalid",
         description:
           "Set isInvalid on the TextField. InputGroup inherits the state.",
         sourcePath: "input-group-invalid-demo.tsx",
-        uses: ["text-field"],
       },
       {
         title: "Sizes",
-        description:
-          "Set `size` on the TextField. Install `@phosphor-icons/react` for the search icon.",
+        description: "Set `size` on the TextField.",
         sourcePath: "input-group-sizes-demo.tsx",
-        uses: ["text-field"],
       },
     ],
   },
@@ -1131,14 +1075,12 @@ const pageSources = {
         description:
           "Use `autoCollapse` to close the steps when the run ends and open them when a new run starts.",
         sourcePath: "agent-steps-auto-collapse-demo.tsx",
-        uses: ["button"],
       },
       {
         title: "Step content",
         description:
           "Children of `AgentStep` show below its title, for example sources or a `ToolCall`.",
         sourcePath: "agent-steps-content-demo.tsx",
-        uses: ["badge", "tool-call"],
       },
       {
         title: "Stopped and failed",
@@ -1150,14 +1092,12 @@ const pageSources = {
     summary:
       "Examples cover both sides of a conversation and the system message that has no sender.",
     usage: "message-basic-demo.tsx",
-    previewUses: ["avatar"],
     examples: [
       {
         title: "Sides",
         description:
           "Only an incoming message shows the sender. Actions show on hover or focus.",
         sourcePath: "message-demo.tsx",
-        uses: ["avatar", "copy-button"],
       },
     ],
   },
@@ -1188,7 +1128,6 @@ const pageSources = {
         title: "Invalid selection",
         description: "Set error to show a message below the field.",
         sourcePath: "native-select-invalid-demo.tsx",
-        uses: ["form", "button"],
       },
       {
         title: "Sizes",
@@ -1298,7 +1237,6 @@ const pageSources = {
         title: "New password",
         description: 'Set autoComplete="new-password" and minLength.',
         sourcePath: "password-field-demo.tsx",
-        uses: ["form"],
       },
     ],
   },
@@ -1314,7 +1252,6 @@ const pageSources = {
       {
         title: "Invalid",
         sourcePath: "otp-input-invalid-demo.tsx",
-        uses: ["button"],
       },
       {
         title: "Letters and numbers",
@@ -1338,7 +1275,6 @@ const pageSources = {
         description:
           "`OtpInputContext` gives the machine to custom UI, such as a clear button.",
         sourcePath: "otp-input-context-demo.tsx",
-        uses: ["button"],
       },
     ],
   },
@@ -1356,14 +1292,12 @@ const pageSources = {
         description:
           "Call close from the PopoverDialog render function after the form submits.",
         sourcePath: "popover-form-demo.tsx",
-        uses: ["text-area"],
       },
       {
         title: "Hover preview",
         description:
           "Use PreviewTrigger from react-aria-components with a plain Popover, so hover does not move focus.",
         sourcePath: "popover-preview-demo.tsx",
-        uses: ["avatar", "link"],
       },
     ],
   },
@@ -1375,14 +1309,12 @@ const pageSources = {
         description:
           "Move focus to a neighbor before removing; the exiting row is inert and `aria-hidden`.",
         sourcePath: "presence-list-remove-demo.tsx",
-        uses: ["button"],
       },
       {
         title: "Reordering",
         description:
           "At either end the control is disabled; move focus to the button that remains.",
         sourcePath: "presence-list-demo.tsx",
-        uses: ["button"],
       },
     ],
   },
@@ -1425,19 +1357,16 @@ const pageSources = {
         title: "Keyboard",
         description: 'Set `submitKey="mod+enter"` so Enter adds a line.',
         sourcePath: "prompt-input-keyboard-demo.tsx",
-        uses: ["kbd-code"],
       },
       {
         title: "Attachments",
         description:
           "Set `onFilesDropped` to accept files dropped on the frame.",
         sourcePath: "prompt-input-attachments-demo.tsx",
-        uses: ["attachment", "file-trigger"],
       },
       {
         title: "Footer actions",
         sourcePath: "prompt-input-actions-demo.tsx",
-        uses: ["toggle-button", "select"],
       },
       {
         title: "Suggestions",
@@ -1449,13 +1378,11 @@ const pageSources = {
         title: "Stop while streaming",
         description: "Set `isPending` and `onStop` to change Send to Stop.",
         sourcePath: "prompt-input-stop-demo.tsx",
-        uses: ["response"],
       },
       {
         title: "Full transcript",
         description: "The second prompt fails once to show the error state.",
         sourcePath: "prompt-input-transcript-demo.tsx",
-        uses: ["message", "reasoning", "response", "copy-button"],
       },
     ],
   },
@@ -1474,7 +1401,6 @@ const pageSources = {
         title: "Required",
         description: "The error shows after the first submit.",
         sourcePath: "rating-input-required-demo.tsx",
-        uses: ["form", "button"],
       },
       {
         title: "Sizes",
@@ -1511,7 +1437,6 @@ const pageSources = {
         title: "Required",
         description: "The error shows after the first submit.",
         sourcePath: "radio-group-required-demo.tsx",
-        uses: ["form", "button"],
       },
     ],
   },
@@ -1525,7 +1450,7 @@ const pageSources = {
       {
         title: "Icons",
         description:
-          "Install `@phosphor-icons/react` for the icons. Set `aria-hidden` on each icon so the segment label stays the accessible name.",
+          "Set `aria-hidden` on each icon so the segment label stays the accessible name.",
         sourcePath: "segmented-control-icons-demo.tsx",
       },
       {
@@ -1536,7 +1461,6 @@ const pageSources = {
       },
       {
         title: "Vertical",
-        description: "Install `@phosphor-icons/react` for the icons.",
         sourcePath: "segmented-control-vertical-demo.tsx",
       },
       {
@@ -1568,14 +1492,12 @@ const pageSources = {
   },
   reasoning: {
     usage: "reasoning-demo.tsx",
-    previewUses: ["button"],
     examples: [
       {
         title: "Auto collapse",
         description:
           "The panel collapses when the run ends and expands for a new run.",
         sourcePath: "reasoning-auto-collapse-demo.tsx",
-        uses: ["button"],
       },
       {
         title: "Error",
@@ -1618,42 +1540,35 @@ const pageSources = {
       {
         title: "Chat with a preview",
         sourcePath: "resizable-chat-demo.tsx",
-        uses: ["prompt-input", "code-block"],
       },
       {
         title: "Live sizes",
         description: "`ResizableContext` gives the splitter api to custom UI.",
         sourcePath: "resizable-context-demo.tsx",
-        uses: ["button"],
       },
     ],
   },
   response: {
     usage: "response-demo.tsx",
-    previewUses: ["copy-button"],
     examples: [
       {
         title: "Actions",
         sourcePath: "response-actions-demo.tsx",
-        uses: ["copy-button"],
       },
       {
         title: "Stopped",
         description: "Select Continue to resume the response.",
         sourcePath: "response-stopped-demo.tsx",
-        uses: ["copy-button"],
       },
       {
         title: "Error",
         description:
           "Select Retry to finish the response after a simulated connection error.",
         sourcePath: "response-error-demo.tsx",
-        uses: ["button"],
       },
       {
         title: "With reasoning",
         sourcePath: "response-reasoning-demo.tsx",
-        uses: ["reasoning"],
       },
     ],
   },
@@ -1674,7 +1589,6 @@ const pageSources = {
         title: "Sizes",
         description: "Give each control in a filter bar the same size.",
         sourcePath: "search-field-sizes-demo.tsx",
-        uses: ["select", "button"],
       },
     ],
   },
@@ -1703,7 +1617,6 @@ const pageSources = {
         description:
           "Keep the same size so the layout does not move when the content arrives.",
         sourcePath: "skeleton-loading-demo.tsx",
-        uses: ["avatar"],
       },
     ],
   },
@@ -1729,8 +1642,7 @@ const pageSources = {
       },
       {
         title: "Custom layout",
-        description:
-          "Without a visible label, pass `aria-label` to Slider. Install `@phosphor-icons/react` for the icons.",
+        description: "Without a visible label, pass `aria-label` to Slider.",
         sourcePath: "slider-custom-demo.tsx",
       },
       {
@@ -1763,14 +1675,12 @@ const pageSources = {
         description:
           'Set `decorative` when adjacent text names the wait. Add `data-icon="inline-start"` for correct spacing.',
         sourcePath: "spinner-usage-demo.tsx",
-        uses: ["button"],
       },
       {
         title: "Loading overlay",
         description:
           "Set `aria-busy` on the region while it loads, and keep the old content in place.",
         sourcePath: "spinner-overlay-demo.tsx",
-        uses: ["button"],
       },
     ],
   },
@@ -1794,7 +1704,6 @@ const pageSources = {
         description:
           "`AnimatedNumber` does not announce updates; wrap the value in a live region when the change matters.",
         sourcePath: "stat-live-demo.tsx",
-        uses: ["animated-number"],
       },
     ],
   },
@@ -1832,26 +1741,22 @@ const pageSources = {
         description:
           "Keep SwitchDescription outside SwitchButton so it is read as a description.",
         sourcePath: "switch-demo.tsx",
-        uses: ["badge"],
       },
     ],
   },
   "data-table": {
     usage: "data-table-demo.tsx",
-    previewUses: ["badge"],
     examples: [
       {
         title: "Column filters",
         description:
           "Add `filter` to a column to show a filter control. The column also needs `sortValue`.",
         sourcePath: "data-table-column-filters-demo.tsx",
-        uses: ["badge"],
       },
       {
         title: "Selection actions",
         description: "Return the bulk actions from `renderSelectionActions`.",
         sourcePath: "data-table-selection-actions-demo.tsx",
-        uses: ["toolbar", "dialog"],
       },
       {
         title: "Resizable columns and row actions",
@@ -1864,7 +1769,6 @@ const pageSources = {
         description:
           "`renderFooter` replaces the row count and page controls with your own summary.",
         sourcePath: "data-table-footer-demo.tsx",
-        uses: ["button"],
       },
     ],
   },
@@ -1876,7 +1780,6 @@ const pageSources = {
         description:
           'Set `selectionMode="multiple"` to add a checkbox column. A disabled row cannot be selected.',
         sourcePath: "table-demo.tsx",
-        uses: ["checkbox", "badge"],
       },
       {
         title: "Sortable columns",
@@ -1888,7 +1791,6 @@ const pageSources = {
         title: "Filtering",
         description: "`renderEmptyState` shows the message when no rows match.",
         sourcePath: "table-filter-demo.tsx",
-        uses: ["search-field", "select", "badge"],
       },
       {
         title: "Resizable columns",
@@ -1907,14 +1809,12 @@ const pageSources = {
         description:
           "Pass `dragAndDropHooks` to add a drag handle column. To move a row with the keyboard, press Right Arrow to reach the handle, press Enter, then use the arrow keys.",
         sourcePath: "table-reorder-demo.tsx",
-        uses: ["checkbox"],
       },
       {
         title: "Load more",
         description:
           "`TableLoadMoreItem` calls `onLoadMore` when it scrolls into view. The header stays at the top of the container.",
         sourcePath: "table-load-more-demo.tsx",
-        uses: ["spinner"],
       },
       {
         title: "Footer",
@@ -2037,7 +1937,6 @@ const pageSources = {
         title: "Sizes",
         description: "Give a button next to the field the same size.",
         sourcePath: "text-field-sizes-demo.tsx",
-        uses: ["button"],
       },
     ],
   },
@@ -2049,14 +1948,12 @@ const pageSources = {
         description:
           "A word stays on one line unless it is wider than its container.",
         sourcePath: "text-reveal-characters-demo.tsx",
-        uses: ["button"],
       },
       {
         title: "Sequence",
         description:
           "`delay` counts from the start, so the title begins before the label finishes.",
         sourcePath: "text-reveal-demo.tsx",
-        uses: ["button"],
       },
     ],
   },
@@ -2066,14 +1963,12 @@ const pageSources = {
       {
         title: "Duration",
         sourcePath: "text-scramble-duration-demo.tsx",
-        uses: ["button"],
       },
       {
         title: "Glyphs",
         description:
           "Use characters of equal width; a wide glyph shifts the line while the text resolves.",
         sourcePath: "text-scramble-demo.tsx",
-        uses: ["button"],
       },
     ],
   },
@@ -2085,21 +1980,18 @@ const pageSources = {
         description:
           "Keep the live region outside `Presence`; a region that mounts with its text is often missed.",
         sourcePath: "presence-inline-demo.tsx",
-        uses: ["button"],
       },
       {
         title: "Hiding focused content",
         description:
           "Move focus to the trigger first; the exiting panel is inert and hidden from assistive technology.",
         sourcePath: "presence-focus-demo.tsx",
-        uses: ["button"],
       },
       {
         title: "Collapse",
         description:
           "Set `collapse` to animate the height, so the content below moves smoothly. Put padding on a child, not on `Presence`.",
         sourcePath: "presence-collapse-demo.tsx",
-        uses: ["alert", "button"],
       },
     ],
   },
@@ -2111,7 +2003,6 @@ const pageSources = {
         description:
           'Set `trigger="mount"` with a new `key` so filtering replays the sequence.',
         sourcePath: "stagger-group-demo.tsx",
-        uses: ["toggle-button-group"],
       },
       {
         title: "Long groups",
@@ -2129,13 +2020,11 @@ const pageSources = {
         description:
           "Keep the control outside `LayoutMorph`, so focus stays on the control.",
         sourcePath: "layout-morph-views-demo.tsx",
-        uses: ["toggle-button-group"],
       },
       {
         title: "Width",
         description: "Set `w-fit` on `LayoutMorph` to animate the width.",
         sourcePath: "layout-morph-width-demo.tsx",
-        uses: ["toggle-button-group", "spinner"],
       },
     ],
   },
@@ -2171,13 +2060,11 @@ const pageSources = {
       {
         title: "Toggle button",
         sourcePath: "icon-swap-toggle-demo.tsx",
-        uses: ["toggle-button"],
       },
       {
         title: "Loading state",
         description: "Any element can be a child, such as a `Spinner`.",
         sourcePath: "icon-swap-loading-demo.tsx",
-        uses: ["button", "spinner"],
       },
     ],
   },
@@ -2187,7 +2074,6 @@ const pageSources = {
       {
         title: "Agent steps",
         sourcePath: "text-shimmer-steps-demo.tsx",
-        uses: ["button"],
       },
       {
         title: "Color",
@@ -2217,14 +2103,12 @@ const pageSources = {
         description:
           "Call `useScrollArea` in a child to read the position and scroll.",
         sourcePath: "scroll-area-to-top-demo.tsx",
-        uses: ["button"],
       },
       {
         title: "Composition",
         description:
           "Compose the parts to place your own controls. `ScrollAreaContext` reads the progress.",
         sourcePath: "scroll-area-context-demo.tsx",
-        uses: ["button"],
       },
     ],
   },
@@ -2234,7 +2118,6 @@ const pageSources = {
       {
         title: "Horizontal",
         sourcePath: "scroll-fade-horizontal-demo.tsx",
-        uses: ["tag-group"],
       },
       {
         title: "Fade size",
@@ -2250,14 +2133,12 @@ const pageSources = {
       {
         title: "Button label",
         sourcePath: "text-swap-button-demo.tsx",
-        uses: ["button"],
       },
       {
         title: "Inline phrase",
         description:
           "The value is one box and does not wrap with the text around it. Keep it short.",
         sourcePath: "text-swap-inline-demo.tsx",
-        uses: ["button"],
       },
     ],
   },
@@ -2269,7 +2150,6 @@ const pageSources = {
         description:
           "Set `active` to false to stop the loop. Give users a way to pause a loop that runs next to other content.",
         sourcePath: "text-loop-pause-demo.tsx",
-        uses: ["toggle-button"],
       },
     ],
   },
@@ -2279,7 +2159,6 @@ const pageSources = {
       {
         title: "Variants",
         sourcePath: "highlighter-variants-demo.tsx",
-        uses: ["button"],
       },
       {
         title: "Sequence",
@@ -2296,12 +2175,10 @@ const pageSources = {
         title: "States",
         description: "Screen readers announce each change.",
         sourcePath: "tool-call-states-demo.tsx",
-        uses: ["toggle-button-group"],
       },
       {
         title: "Sequence",
         sourcePath: "tool-call-sequence-demo.tsx",
-        uses: ["button"],
       },
     ],
   },
@@ -2430,7 +2307,6 @@ const pageSources = {
         description:
           "Press Tab to enter the toolbar. Use Left Arrow and Right Arrow to move between controls.",
         sourcePath: "toolbar-demo.tsx",
-        uses: ["button", "separator"],
       },
       {
         title: "Vertical orientation",
@@ -2443,7 +2319,6 @@ const pageSources = {
         description:
           "Set `size` on the toolbar. Its buttons and toggle groups inherit that size.",
         sourcePath: "toolbar-sizes-demo.tsx",
-        uses: ["button", "separator"],
       },
     ],
   },
@@ -2471,19 +2346,16 @@ const pageSources = {
         title: "Without spotlight",
         description: "Set `spotlight` to `false` to keep the page usable.",
         sourcePath: "tour-no-spotlight-demo.tsx",
-        uses: ["button", "checkbox"],
       },
       {
         title: "Controlled step",
         sourcePath: "tour-controlled-demo.tsx",
-        uses: ["button", "stepper"],
       },
       {
         title: "Start on first visit",
         description:
           "Start the tour in an effect and save completion in `onComplete`.",
         sourcePath: "tour-first-visit-demo.tsx",
-        uses: ["button"],
       },
     ],
   },
@@ -2501,7 +2373,6 @@ const pageSources = {
         description:
           'Set `selectionMode="multiple"` to add a checkbox to each row; a disabled row cannot be selected.',
         sourcePath: "tree-selection-demo.tsx",
-        uses: ["checkbox"],
       },
       {
         title: "Sections",
@@ -2541,7 +2412,6 @@ const pageSources = {
         description:
           "Set `active` to show the beam only while work is in progress.",
         sourcePath: "border-beam-prompt-demo.tsx",
-        uses: ["prompt-input"],
       },
       {
         title: "Color and width",
@@ -2589,7 +2459,6 @@ const pageSources = {
       {
         title: "Composition",
         sourcePath: "signature-pad-composition-demo.tsx",
-        uses: ["button-link"],
       },
     ],
   },
@@ -2599,30 +2468,55 @@ const pageSources = {
       {
         title: "Logo overlay",
         description:
-          "`overlay` sets the error correction to H, so the code still scans under the logo.",
+          "`overlay` defaults to error correction level H. Keep the logo small and check that the code scans.",
         sourcePath: "qr-code-overlay-demo.tsx",
       },
       {
         title: "Download",
         description:
-          "The file has a white surface and a quiet zone, so it scans on any background.",
+          "The file includes a white background and a four-module quiet zone.",
         sourcePath: "qr-code-download-demo.tsx",
       },
       {
         title: "Dynamic value",
+        description:
+          "Validate the checkout link before you pass it to `QrCode`.",
         sourcePath: "qr-code-dynamic-demo.tsx",
-        uses: ["text-field"],
       },
     ],
   },
 } as const satisfies Record<string, ComponentPageSource>;
 
 const usageSources = {
-  "event-calendar": {
-    code: `import { CalendarDate, CalendarDateTime, toZoned } from "@internationalized/date";
-import { EventCalendar } from "@/components/vip-ui/event-calendar";
+  toast: {
+    code: `"use client";
 
-const events = [
+import { Button } from "@/components/vip-ui/button";
+import { showToast, ToastViewport } from "@/components/vip-ui/toast";
+
+export function App() {
+  return (
+    <>
+      <Button onPress={() => showToast({ title: "Draft saved" })}>
+        Save draft
+      </Button>
+      <ToastViewport />
+    </>
+  );
+}`,
+    filename: "app.tsx",
+    note: "Omit `ToastViewport` if your app already renders it.",
+  },
+  "event-calendar": {
+    code: `"use client";
+
+import { CalendarDate, CalendarDateTime, toZoned } from "@internationalized/date";
+import {
+  type CalendarEvent,
+  EventCalendar,
+} from "@/components/vip-ui/event-calendar";
+
+const events: CalendarEvent[] = [
   {
     id: "design-review",
     title: "Design review",
@@ -2837,7 +2731,9 @@ export function FileActions() {
     filename: "file-actions.tsx",
   },
   "toggle-button": {
-    code: `import { PushPinIcon } from "@phosphor-icons/react";
+    code: `"use client";
+
+import { PushPinIcon } from "@phosphor-icons/react";
 import { ToggleButton } from "@/components/vip-ui/toggle-button";
 
 export function PinButton() {
@@ -3263,7 +3159,9 @@ export function ProjectBreadcrumbs() {
     filename: "project-breadcrumbs.tsx",
   },
   pagination: {
-    code: `import {
+    code: `"use client";
+
+import {
   Pagination,
   PaginationList,
   PaginationPages,
@@ -3316,7 +3214,7 @@ export function ProjectView() {
 
 export function ProjectTabs() {
   return (
-    <Tabs defaultValue="details">
+    <Tabs defaultSelectedKey="details">
       <TabList aria-label="Project">
         <Tab id="details">Details</Tab>
         <Tab id="activity">Activity</Tab>
@@ -3329,7 +3227,9 @@ export function ProjectTabs() {
     filename: "project-tabs.tsx",
   },
   "icon-swap": {
-    code: `import { CheckIcon, CopyIcon } from "@phosphor-icons/react";
+    code: `"use client";
+
+import { CheckIcon, CopyIcon } from "@phosphor-icons/react";
 import { IconSwap } from "@/components/vip-ui/icon-swap";
 
 export function CopyIndicator({ copied }: { copied: boolean }) {
@@ -3450,7 +3350,9 @@ export function SaveStatus({ saved }: { saved: boolean }) {
     filename: "save-status.tsx",
   },
   "presence-list": {
-    code: `import { PresenceList } from "@/components/vip-ui/presence-list";
+    code: `"use client";
+
+import { PresenceList } from "@/components/vip-ui/presence-list";
 
 const steps = [
   { id: "brief", title: "Write the brief" },
@@ -3568,7 +3470,9 @@ export function FileList() {
     filename: "file-list.tsx",
   },
   tour: {
-    code: `import { Button } from "@/components/vip-ui/button";
+    code: `"use client";
+
+import { Button } from "@/components/vip-ui/button";
 import { SearchField } from "@/components/vip-ui/search-field";
 import { Tour, TourTarget, useTour } from "@/components/vip-ui/tour";
 
@@ -3679,7 +3583,9 @@ export function ProjectTable() {
     filename: "project-table.tsx",
   },
   sidebar: {
-    code: `import { HouseIcon, ReceiptIcon } from "@phosphor-icons/react";
+    code: `"use client";
+
+import { HouseIcon, ReceiptIcon } from "@phosphor-icons/react";
 import {
   Sidebar,
   SidebarContent,
@@ -3750,7 +3656,6 @@ export function Transcript() {
   );
 }`,
     filename: "transcript.tsx",
-    uses: ["response"],
   },
   "data-table": {
     code: `"use client";

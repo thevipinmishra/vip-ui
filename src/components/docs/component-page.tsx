@@ -1,7 +1,8 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { Fragment, type ReactNode } from "react";
-import { componentName, getComponent, getNeighbors } from "@/lib/catalog";
+import { componentDocUrl, componentPrompt } from "@/lib/agent-docs";
+import { getComponent, getNeighbors } from "@/lib/catalog";
 import { componentApi } from "@/lib/component-api";
 import { componentChecks } from "@/lib/component-checks";
 import {
@@ -9,9 +10,14 @@ import {
   type ComponentUsage,
   exampleAnchor,
 } from "@/lib/component-examples";
+import {
+  type ExampleDependencies,
+  exampleDependencies,
+  withoutRepeats,
+} from "@/lib/example-dependencies";
 import { allComponents } from "@/lib/navigation";
-import { registryUrl } from "@/lib/registry-docs";
-import { siteUrl } from "@/lib/site-url";
+import { registryNamespace, registryUrl } from "@/lib/registry-docs";
+import { agentSiteUrl } from "@/lib/site-url";
 import { ApiReference } from "./api-reference";
 import { CodeSample } from "./code-sample";
 import { ComponentComposition } from "./component-composition";
@@ -33,7 +39,6 @@ interface ComponentPageProps {
   description: string;
   preview: ReactNode;
   previewSourcePath: string;
-  previewUses?: readonly string[];
   exampleFile?: string;
   examples?: ComponentExample[];
   sourcePath: string;
@@ -46,7 +51,6 @@ export async function ComponentPage({
   description,
   preview,
   previewSourcePath,
-  previewUses,
   exampleFile,
   examples = [],
   sourcePath,
@@ -79,6 +83,15 @@ export async function ComponentPage({
       ).replaceAll("@/components/ui/", "@/components/vip-ui/"),
     ),
   );
+  const [previewUses] = withoutRepeats(
+    await Promise.all(
+      [previewSource, usage?.code ?? "", ...exampleSources].map((code) =>
+        exampleDependencies(componentSlug, code),
+      ),
+    ),
+  );
+  const site = agentSiteUrl();
+  const prompt = componentPrompt(site, componentSlug, name);
   const cliUrl = registryUrl(componentSlug);
   const apiParts = componentApi[componentSlug] ?? [];
   const component = getComponent(componentSlug);
@@ -91,7 +104,8 @@ export async function ComponentPage({
         name={name}
         description={description}
         primitives={component?.primitives ?? []}
-        markdownUrl={`${siteUrl()}/components/${componentSlug}.md`}
+        markdownUrl={componentDocUrl(site, componentSlug)}
+        prompt={prompt}
         axe={checks.axe}
         doctor={checks.doctor}
       />
@@ -113,8 +127,9 @@ export async function ComponentPage({
         <SectionHeading section="installation" className="mb-5">
           Installation
         </SectionHeading>
-        <PreviewDependencies slugs={previewUses} />
+        <PreviewDependencies uses={previewUses} />
         <InstallTabs
+          prompt={prompt}
           cliAvailable={Boolean(cliUrl)}
           cli={
             <div className="space-y-4">
@@ -168,17 +183,9 @@ export async function ComponentPage({
           >
             {example.title}
           </SectionHeading>
-          {(example.description || example.uses) && (
+          {example.description && (
             <p className="-mt-2 mb-5 max-w-167.5 text-sm leading-6 text-muted-foreground">
-              {example.description && (
-                <ExampleDescription>{example.description}</ExampleDescription>
-              )}
-              {example.description && example.uses && " "}
-              {example.uses && (
-                <>
-                  Also install <ComponentLinks slugs={example.uses} />.
-                </>
-              )}
+              <ExampleDescription>{example.description}</ExampleDescription>
             </p>
           )}
           <PreviewPanel
@@ -252,11 +259,6 @@ function UsageSection({ usage }: { usage?: ComponentUsage }) {
             <ExampleDescription>{usage.note}</ExampleDescription>
           </p>
         )}
-        {usage.uses?.length ? (
-          <p className="text-sm leading-6 text-muted-foreground">
-            Also install <ComponentLinks slugs={usage.uses} />.
-          </p>
-        ) : null}
         <CodeSample code={usage.code} filename={usage.filename} />
       </div>
     </section>
@@ -283,14 +285,18 @@ async function ExampleFileSection({ filename }: { filename?: string }) {
   );
 }
 
-function PreviewDependencies({ slugs }: { slugs?: readonly string[] }) {
-  if (!slugs?.length) return null;
+function PreviewDependencies({ uses }: { uses: ExampleDependencies }) {
+  if (!hasDependencies(uses)) return null;
 
   return (
     <p className="mb-4 text-sm leading-6 text-muted-foreground">
-      To run the preview, install <ComponentLinks slugs={slugs} />.
+      To run the preview, install <DependencyList uses={uses} />.
     </p>
   );
+}
+
+function hasDependencies({ components, packages }: ExampleDependencies) {
+  return components.length > 0 || packages.length > 0;
 }
 
 function ExampleDescription({ children }: { children: string }) {
@@ -321,18 +327,32 @@ function ExampleDescription({ children }: { children: string }) {
   return parts;
 }
 
-function ComponentLinks({ slugs }: { slugs: readonly string[] }) {
-  return slugs.map((slug, index) => {
-    const component = getComponent(slug);
-    return (
-      <Fragment key={slug}>
-        {index > 0 && (index === slugs.length - 1 ? " and " : ", ")}
-        {component ? (
-          <TextLink href={`/components/${slug}`}>{component.name}</TextLink>
-        ) : (
-          componentName(slug)
-        )}
-      </Fragment>
-    );
-  });
+function DependencyList({ uses }: { uses: ExampleDependencies }) {
+  const names = [...uses.components, ...uses.packages];
+  return names.map((name, index) => (
+    <Fragment key={name}>
+      {index > 0 && (index === names.length - 1 ? " and " : ", ")}
+      {index < uses.components.length ? (
+        <ComponentDependency slug={name} />
+      ) : (
+        <>
+          the <Code>{name}</Code> package
+        </>
+      )}
+    </Fragment>
+  ));
+}
+
+function ComponentDependency({ slug }: { slug: string }) {
+  const component = getComponent(slug);
+  return component ? (
+    <TextLink href={`/components/${slug}`}>{component.name}</TextLink>
+  ) : (
+    <>
+      the <Code>{`${registryNamespace}/${slug}`}</Code>{" "}
+      <TextLink href="/components/installation#install-by-name">
+        registry item
+      </TextLink>
+    </>
+  );
 }

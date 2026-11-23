@@ -21,6 +21,7 @@
   ],
   "cssVars": {
     "theme": {
+      "color-highlight": "var(--highlight)",
       "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)"
     },
     "light": {

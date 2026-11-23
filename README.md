@@ -31,30 +31,32 @@ Accessible React components that you copy into your project through a shadcn-com
 
 1. Follow the [project setup](https://vip-ui.dev/components/installation#setup).
 2. In `components.json`, set `tsx` and `tailwind.cssVariables` to `true`.
-3. Add a component:
+3. Add a component by name:
 
    ```bash
-   pnpm dlx shadcn@latest add https://vip-ui.dev/r/button.json
+   pnpm dlx shadcn@latest add @vip-ui/button
    ```
+
+The CLI finds vip/ui in the public registry directory. You do not need to add it to `components.json` first. The first install by name writes the registry entry to `components.json`.
 
 The CLI writes the files to a `vip-ui/` folder in your components alias. It does not change the files in your shadcn `components/ui/` folder.
 
-### Use the registry namespace
-
-Add vip/ui to `registries` in your `components.json`:
-
-```json
-{
-  "registries": {
-    "@vip-ui": "https://vip-ui.dev/r/{name}.json"
-  }
-}
-```
-
-Then add items by name:
+To install from a local or preview registry, use its URL in place of the name:
 
 ```bash
-pnpm dlx shadcn@latest add @vip-ui/button
+pnpm dlx shadcn@latest add http://localhost:3000/r/button.json
+```
+
+### Use an agent
+
+Give your coding agent this prompt:
+
+> Set up vip/ui in this project. Follow https://vip-ui.dev/components/installation.md. Keep my theme and edits. Make sure that the build passes, then list the changes.
+
+Add `.md` to any guide, component, or block URL to get the copy for agents, for example <https://vip-ui.dev/components/button.md>. The [Agents guide](https://vip-ui.dev/components/agents) also has the MCP server and the vip/ui skill:
+
+```bash
+pnpm dlx skills add thevipinmishra/vip-ui --skill vip-ui
 ```
 
 ### Install manually
@@ -82,14 +84,15 @@ To change the styles of an installed component, read [Styling](https://vip-ui.de
 
 ## Documentation
 
-| Page                                        | Contents                                                                      |
-| ------------------------------------------- | ----------------------------------------------------------------------------- |
-| [Components](https://vip-ui.dev/components) | Live previews, source files, install commands, and API references             |
-| [Blocks](https://vip-ui.dev/blocks)         | Dashboard, authentication, settings, AI, marketing, commerce, and other pages |
-| [Charts](https://vip-ui.dev/charts)         | A TanStack Charts gallery and a chart frame that you can use again            |
-| [Colors](https://vip-ui.dev/colors)         | Color scales with contrast checks                                             |
-| [Themes](https://vip-ui.dev/themes)         | Themes made from the color scales                                             |
-| [llms.txt](https://vip-ui.dev/llms.txt)     | A list of all docs pages for AI tools                                         |
+| Page                                           | Contents                                                                      |
+| ---------------------------------------------- | ----------------------------------------------------------------------------- |
+| [Components](https://vip-ui.dev/components)    | Live previews, source files, install commands, and API references             |
+| [Blocks](https://vip-ui.dev/blocks)            | Dashboard, authentication, settings, AI, marketing, commerce, and other pages |
+| [Charts](https://vip-ui.dev/charts)            | A TanStack Charts gallery and a chart frame that you can use again            |
+| [Colors](https://vip-ui.dev/colors)            | Color scales with contrast checks                                             |
+| [Themes](https://vip-ui.dev/themes)            | Themes made from the color scales                                             |
+| [Agents](https://vip-ui.dev/components/agents) | A setup prompt, the agent skill, the MCP server, and Markdown sources         |
+| [llms.txt](https://vip-ui.dev/llms.txt)        | A list of all docs pages for AI tools                                         |
 
 ## Development
 

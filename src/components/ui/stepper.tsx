@@ -64,7 +64,7 @@ export function Stepper({
       setScrollable(list.scrollWidth > list.clientWidth),
     );
     observer.observe(list);
-    for (const child of list.children) observer.observe(child);
+    for (const child of Array.from(list.children)) observer.observe(child);
     return () => observer.disconnect();
   }, [steps]);
 

@@ -36,3 +36,16 @@ export function siteUrl(): string {
 
   return PRODUCTION_ORIGIN;
 }
+
+export function deployOrigin(): string | null {
+  return parseOrigin(process.env.NEXT_PUBLIC_DEPLOY_ORIGIN)?.origin ?? null;
+}
+
+export function agentSiteUrl(): string {
+  return (
+    deployOrigin() ??
+    (process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : siteUrl())
+  );
+}

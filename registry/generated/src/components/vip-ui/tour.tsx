@@ -84,6 +84,8 @@ const TourContext = createContext<TourContextValue | null>(null);
 
 const glideDuration = 350;
 
+declare const process: { env: { NODE_ENV?: string } };
+
 let warned = false;
 
 function warnNoTargets() {

@@ -1,5 +1,6 @@
 import { ArrowUpRightIcon } from "@phosphor-icons/react/ssr";
 import type { ReactNode } from "react";
+import { chartUsage as usage } from "@/app/charts/chart-usage";
 import { ApiReference } from "@/components/docs/api-reference";
 import { CodeSample } from "@/components/docs/code-sample";
 import { ComponentComposition } from "@/components/docs/component-composition";
@@ -17,55 +18,12 @@ import type {
   ChartTable,
   TooltipChart,
 } from "@/components/ui/chart";
+import { itemDocPrompt } from "@/lib/agent-docs";
 import { apiPart } from "@/lib/component-api";
 import { registryUrl } from "@/lib/registry-docs";
+import { agentSiteUrl } from "@/lib/site-url";
 import { cn } from "@/lib/utils";
 import { ChartCoverage } from "./chart-coverage";
-
-const usage = `"use client";
-
-import { barY, defineChart } from "@tanstack/charts";
-import { scaleBand } from "@tanstack/charts/scales/band";
-import { scaleLinear } from "@tanstack/charts/scales/linear";
-import {
-  Chart,
-  ChartCaption,
-  ChartDescription,
-  ChartFrame,
-  ChartLegend,
-  ChartLegendItem,
-  ChartTable,
-  ChartTitle,
-} from "@/components/vip-ui/chart";
-
-const rows = [
-  { channel: "Direct", visits: 42 },
-  { channel: "Search", visits: 31 },
-];
-
-const definition = defineChart({
-  marks: [barY(rows, { x: "channel", y: "visits", key: "channel" })],
-  scales: {
-    x: { scale: scaleBand },
-    y: { scale: scaleLinear, grid: true },
-  },
-});
-
-<ChartFrame>
-  <ChartCaption>
-    <ChartTitle>Traffic sources</ChartTitle>
-    <ChartDescription>Visits in thousands</ChartDescription>
-  </ChartCaption>
-  <Chart definition={definition} height={220} ariaLabel="Visits by channel" />
-  <ChartLegend>
-    <ChartLegendItem color="var(--ts-chart-1)">Visits</ChartLegendItem>
-  </ChartLegend>
-  <ChartTable
-    caption="Visits by channel, in thousands"
-    columns={["Channel", "Visits"]}
-    rows={rows.map((row) => [row.channel, row.visits])}
-  />
-</ChartFrame>`;
 
 const motionRenderer = `import { motion } from "@tanstack/charts/motion";
 
@@ -313,6 +271,8 @@ const listClass =
 
 export async function ChartDocumentation() {
   const cliUrl = registryUrl("chart");
+  const site = agentSiteUrl();
+  const prompt = itemDocPrompt(site, "/charts.md", "Chart");
 
   return (
     <section
@@ -334,6 +294,7 @@ export async function ChartDocumentation() {
               first.
             </Note>
             <InstallTabs
+              prompt={prompt}
               cliAvailable={Boolean(cliUrl)}
               cli={
                 cliUrl ? (

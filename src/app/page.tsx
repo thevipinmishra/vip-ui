@@ -45,8 +45,12 @@ export default function Home() {
                 them with the shadcn CLI and edit the source.
               </p>
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-                <ButtonLink as={Link} href="/components/installation" size="md">
-                  Get started
+                <ButtonLink
+                  as={Link}
+                  href="/components/installation#agent"
+                  size="md"
+                >
+                  Set up with an agent
                 </ButtonLink>
                 <ButtonLink
                   as={Link}

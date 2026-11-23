@@ -2,6 +2,7 @@
 
 import { type ReactNode, useSyncExternalStore } from "react";
 import { Tab, TabList, TabPanel, Tabs } from "@/components/ui/tabs";
+import { AgentPrompt } from "./agent-prompt";
 
 type InstallMethod = "cli" | "manual";
 
@@ -41,10 +42,12 @@ function selectMethod(method: InstallMethod) {
 }
 
 export function InstallTabs({
+  prompt,
   cli,
   custom,
   cliAvailable,
 }: {
+  prompt: string;
   cli: ReactNode;
   custom: ReactNode;
   cliAvailable: boolean;
@@ -57,26 +60,32 @@ export function InstallTabs({
   );
 
   return (
-    <Tabs
-      selectedKey={selected}
-      onSelectionChange={(value) => selectMethod(value as InstallMethod)}
-    >
-      <TabList aria-label="Installation method">
-        <Tab id="cli">CLI</Tab>
-        <Tab id="manual">Manual</Tab>
-      </TabList>
-      <TabPanel
-        id="cli"
-        className="docs-tab-panel mt-5 min-w-0 rounded-none bg-transparent p-0 shadow-none ring-0"
+    <div className="min-w-0">
+      <AgentPrompt prompt={prompt} />
+      <p className="mt-8 mb-3 text-[13px] leading-6 text-muted-foreground">
+        Or install it yourself.
+      </p>
+      <Tabs
+        selectedKey={selected}
+        onSelectionChange={(value) => selectMethod(value as InstallMethod)}
       >
-        {cli}
-      </TabPanel>
-      <TabPanel
-        id="manual"
-        className="docs-tab-panel mt-5 min-w-0 rounded-none bg-transparent p-0 shadow-none ring-0"
-      >
-        {custom}
-      </TabPanel>
-    </Tabs>
+        <TabList aria-label="Installation method">
+          <Tab id="cli">CLI</Tab>
+          <Tab id="manual">Manual</Tab>
+        </TabList>
+        <TabPanel
+          id="cli"
+          className="docs-tab-panel mt-5 min-w-0 rounded-none bg-transparent p-0 shadow-none ring-0"
+        >
+          {cli}
+        </TabPanel>
+        <TabPanel
+          id="manual"
+          className="docs-tab-panel mt-5 min-w-0 rounded-none bg-transparent p-0 shadow-none ring-0"
+        >
+          {custom}
+        </TabPanel>
+      </Tabs>
+    </div>
   );
 }

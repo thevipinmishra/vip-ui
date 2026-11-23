@@ -13,6 +13,7 @@
   ],
   "cssVars": {
     "theme": {
+      "color-highlight": "var(--highlight)",
       "animate-text-shimmer": "text-shimmer-sweep var(--text-shimmer-duration, 2.1333s) ease-in-out infinite"
     },
     "light": {

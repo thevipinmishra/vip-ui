@@ -289,7 +289,7 @@ function observeHighlight({
   };
 
   const first = (selector: string) => {
-    for (const node of container.querySelectorAll(selector))
+    for (const node of Array.from(container.querySelectorAll(selector)))
       if (owned(node)) return node;
     return null;
   };

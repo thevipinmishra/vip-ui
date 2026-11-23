@@ -1,6 +1,6 @@
 import { access, readFile } from "node:fs/promises";
 import path from "node:path";
-import { catalogComponents, componentName, getComponent } from "@/lib/catalog";
+import { catalogComponents, getComponent } from "@/lib/catalog";
 import { componentApi } from "@/lib/component-api";
 import {
   type ComponentPageData,
@@ -8,19 +8,28 @@ import {
   getComponentUsage,
 } from "@/lib/component-examples";
 import { buildComponentMarkdown } from "@/lib/component-markdown";
+import { exampleDependencies } from "@/lib/example-dependencies";
+import {
+  buildGuideMarkdown,
+  guideMarkdownSlugs,
+  isGuideMarkdownSlug,
+} from "@/lib/guide-markdown";
 import {
   manualInstallPlan,
   readRegistryItem,
   registryUrl,
 } from "@/lib/registry-docs";
-import { siteUrl } from "@/lib/site-url";
+import { agentSiteUrl } from "@/lib/site-url";
 
 export const dynamic = "force-static";
 
 const demoDirectory = path.join(process.cwd(), "src/components/docs");
 
 export function generateStaticParams() {
-  return catalogComponents.map((component) => ({ slug: component.slug }));
+  return [
+    ...guideMarkdownSlugs.map((slug) => ({ slug })),
+    ...catalogComponents.map((component) => ({ slug: component.slug })),
+  ];
 }
 
 async function findUsageFile(slug: string): Promise<string | null> {
@@ -39,15 +48,18 @@ async function readDemoSource(filename: string) {
   ).replaceAll("@/components/ui/", "@/components/vip-ui/");
 }
 
-async function buildExamples(pageData: ComponentPageData) {
+async function buildExamples(slug: string, pageData: ComponentPageData) {
   return Promise.all(
-    pageData.examples.map(async (example) => ({
-      title: example.title,
-      description: example.description,
-      code: await readDemoSource(example.sourcePath),
-      filename: path.basename(example.sourcePath),
-      uses: example.uses?.map(componentName),
-    })),
+    pageData.examples.map(async (example) => {
+      const code = await readDemoSource(example.sourcePath);
+      return {
+        title: example.title,
+        description: example.description,
+        code,
+        filename: path.basename(example.sourcePath),
+        uses: await exampleDependencies(slug, code),
+      };
+    }),
   );
 }
 
@@ -56,6 +68,12 @@ export async function GET(
   { params }: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await params;
+  if (isGuideMarkdownSlug(slug)) {
+    return new Response(buildGuideMarkdown(slug, agentSiteUrl()), {
+      headers: { "Content-Type": "text/markdown; charset=utf-8" },
+    });
+  }
+
   const component = getComponent(slug);
   if (!component) return new Response("Not found", { status: 404 });
 
@@ -67,13 +85,11 @@ export async function GET(
     ? {
         ...pageUsage,
         filename: pageUsage.filename ?? `${slug}-usage.tsx`,
-        uses: pageUsage.uses?.map(componentName),
       }
     : usageFilename
       ? {
           code: await readDemoSource(usageFilename),
           filename: path.basename(usageFilename),
-          uses: pageData?.previewUses?.map(componentName),
         }
       : undefined;
 
@@ -81,10 +97,13 @@ export async function GET(
     slug,
     name: component.name,
     description: component.description,
-    site: siteUrl(),
+    site: agentSiteUrl(),
     manual: manualInstallPlan(registryItem, slug),
     cliUrl: registryUrl(slug),
-    usage,
+    usage: usage && {
+      ...usage,
+      uses: await exampleDependencies(slug, usage.code),
+    },
     exampleFile: pageData?.exampleFile
       ? {
           filename: pageData.exampleFile,
@@ -92,7 +111,7 @@ export async function GET(
         }
       : undefined,
     api: componentApi[slug],
-    examples: pageData ? await buildExamples(pageData) : undefined,
+    examples: pageData ? await buildExamples(slug, pageData) : undefined,
     reactAria: component.reactAria,
   });
 

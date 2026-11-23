@@ -16,6 +16,9 @@
     "https://vip-ui.dev/r/utils.json"
   ],
   "cssVars": {
+    "theme": {
+      "color-highlight": "var(--highlight)"
+    },
     "light": {
       "highlight": "color-mix(in oklab, var(--foreground) 6%, transparent)",
       "shadow-card": "0 1px 2px -1px oklch(0 0 0 / 0.08), 0 3px 8px -4px oklch(0 0 0 / 0.07)"

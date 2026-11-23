@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { getComponent } from "./catalog";
 import internalDescriptions from "./internal-descriptions.json";
+import { deployOrigin } from "./site-url";
 
 export interface RegistryFile {
   path: string;
@@ -13,6 +14,7 @@ export interface RegistryItem {
   name: string;
   title?: string;
   description?: string;
+  docs?: string;
   dependencies: string[];
   devDependencies?: string[];
   registryDependencies?: string[];
@@ -50,6 +52,7 @@ export type RequiredFile =
 
 export interface ManualInstallPlan {
   packages: string[];
+  note?: string;
   component: RegistryFile;
   requires: RequiredFile[];
 }
@@ -63,7 +66,7 @@ async function readItemFile(name: string): Promise<RegistryItem> {
   ) as RegistryItem;
 }
 
-function packageName(dependency: string) {
+export function packageName(dependency: string) {
   const at = dependency.indexOf("@", 1);
   return at === -1 ? dependency : dependency.slice(0, at);
 }
@@ -107,6 +110,7 @@ export const registryNamespace = "@vip-ui";
 
 function registryOrigin() {
   const base =
+    deployOrigin() ||
     process.env.NEXT_PUBLIC_REGISTRY_URL ||
     (process.env.NODE_ENV === "development" ? "http://localhost:3000" : null);
   return base ? base.replace(/\/$/, "") : null;
@@ -136,6 +140,12 @@ export function displayPath(file: RegistryFile) {
 
 function isSharedFileSlug(slug: string): slug is SharedFileSlug {
   return Object.hasOwn(sharedFiles, slug);
+}
+
+function setupNote(docs?: string) {
+  return docs
+    ?.replace(/\s*Docs: \S+$/, "")
+    .replace(/<[^<>]+>/g, (tag) => `\`${tag}\``);
 }
 
 export function manualInstallPlan(
@@ -172,6 +182,7 @@ export function manualInstallPlan(
   }
   return {
     packages: item.dependencies,
+    note: setupNote(item.docs),
     component,
     requires: [...components, ...shared],
   };

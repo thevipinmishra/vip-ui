@@ -33,7 +33,7 @@ const guideIcons: Record<Guide["href"], Icon> = {
   "/components/installation": TerminalWindowIcon,
   "/components/styling": PaintBrushIcon,
   "/components/react-aria": AtomIcon,
-  "/components/ai-and-mcp": RobotIcon,
+  "/components/agents": RobotIcon,
   "/components/rtl": ArrowsHorizontalIcon,
 };
 

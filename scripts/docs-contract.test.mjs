@@ -95,6 +95,42 @@ test("every catalog component has an API table", async () => {
   }
 });
 
+test("component Markdown puts the API before the examples", async () => {
+  // This suite does not load TS modules, so check the emission order.
+  const source = await read("src/lib/component-markdown.ts");
+  const start = source.indexOf("export function buildComponentMarkdown");
+  assert.notEqual(
+    start,
+    -1,
+    "component-markdown.ts must export buildComponentMarkdown",
+  );
+  const body = source.slice(start);
+  const order = [
+    "## Installation",
+    "## Finish setup",
+    "## Usage",
+    "## Example file",
+    "## API reference",
+    "examples.forEach",
+    "## Manual installation",
+  ];
+  const positions = order.map((marker) => {
+    const position = body.indexOf(marker);
+    assert.notEqual(
+      position,
+      -1,
+      `buildComponentMarkdown must contain "${marker}"`,
+    );
+    return position;
+  });
+  for (let index = 1; index < positions.length; index++) {
+    assert.ok(
+      positions[index] > positions[index - 1],
+      `buildComponentMarkdown must emit "${order[index - 1]}" before "${order[index]}"`,
+    );
+  }
+});
+
 test("generated API types are current and hand overrides differ from them", async () => {
   const parts = readApiParts();
   const current = JSON.parse(

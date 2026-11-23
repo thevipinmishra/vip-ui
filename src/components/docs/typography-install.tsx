@@ -1,6 +1,8 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { itemDocPrompt } from "@/lib/agent-docs";
 import { registryUrl } from "@/lib/registry-docs";
+import { agentSiteUrl } from "@/lib/site-url";
 import { CodeFrame } from "./code-frame";
 import { CodeSample } from "./code-sample";
 import { CodeSnippet } from "./code-snippet";
@@ -17,8 +19,11 @@ export async function TypographyInstall() {
     await readFile(path.join(process.cwd(), "src/app/typography.css"), "utf8")
   ).replace(/\r\n/g, "\n");
   const cliUrl = registryUrl("typography");
+  const site = agentSiteUrl();
+  const prompt = itemDocPrompt(site, "/typography.md", "Typography");
   return (
     <InstallTabs
+      prompt={prompt}
       cliAvailable={Boolean(cliUrl)}
       cli={
         <div className="space-y-4">
