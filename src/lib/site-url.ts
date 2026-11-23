@@ -37,24 +37,10 @@ export function siteUrl(): string {
   return PRODUCTION_ORIGIN;
 }
 
-/**
- * The origin of the current preview deployment, or null outside a preview.
- *
- * `next.config.ts` sets NEXT_PUBLIC_DEPLOY_ORIGIN to the Vercel URL on a
- * preview and to an empty string everywhere else, so a preview can test the
- * agent flow against itself before a release.
- */
 export function deployOrigin(): string | null {
   return parseOrigin(process.env.NEXT_PUBLIC_DEPLOY_ORIGIN)?.origin ?? null;
 }
 
-/**
- * The origin for agent-facing URLs: prompts, llms.txt, and Markdown.
- *
- * A preview deploy points at itself. Development points at localhost, whatever
- * NEXT_PUBLIC_SITE_URL says, so no local prompt sends an agent to production.
- * Production falls back to siteUrl().
- */
 export function agentSiteUrl(): string {
   return (
     deployOrigin() ??

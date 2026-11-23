@@ -1,14 +1,16 @@
 import type { NextConfig } from "next";
 import blocksCatalog from "./src/lib/blocks.json";
 
+const deployOrigin =
+  process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "";
+
 const nextConfig: NextConfig = {
   reactCompiler: true,
   env: {
     BUILD_DATE: new Date().toISOString().slice(0, 10),
-    NEXT_PUBLIC_DEPLOY_ORIGIN:
-      process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}`
-        : "",
+    NEXT_PUBLIC_DEPLOY_ORIGIN: deployOrigin,
   },
   experimental: {
     optimizePackageImports: [
@@ -48,11 +50,6 @@ const nextConfig: NextConfig = {
       {
         source: "/components/from-shadcn",
         destination: "/components/installation",
-        permanent: true,
-      },
-      {
-        source: "/components/ai-and-mcp",
-        destination: "/components/agents",
         permanent: true,
       },
       {
@@ -99,7 +96,10 @@ const nextConfig: NextConfig = {
     ];
   },
   async rewrites() {
-    return [
+    const beforeFiles = deployOrigin
+      ? [{ source: "/r/:item.json", destination: "/api/r/:item" }]
+      : [];
+    const afterFiles = [
       {
         source: "/components/:slug.md",
         destination: "/components/:slug/markdown",
@@ -121,6 +121,7 @@ const nextConfig: NextConfig = {
         destination: "/themes/markdown",
       },
     ];
+    return { beforeFiles, afterFiles };
   },
   async headers() {
     const robotsTag = (value: string) => [{ key: "X-Robots-Tag", value }];
