@@ -18,7 +18,7 @@ export function DescriptionListComponentsDemo() {
       aria-label="Production deployment"
       className="grid w-full max-w-xs gap-4 rounded-xl border border-border bg-card p-4 text-card-foreground shadow-(--shadow-card)"
     >
-      <h4 className="text-sm font-semibold">Production deployment</h4>
+      <h3 className="text-sm font-semibold">Production deployment</h3>
       <DescriptionList>
         <DescriptionTerm>Status</DescriptionTerm>
         <DescriptionDetail>
@@ -44,7 +44,7 @@ export function DescriptionListComponentsDemo() {
           <p className="text-sm font-medium">Health check failed</p>
           <TimelineTime dateTime="2025-10-18T14:32:00Z">14:32 UTC</TimelineTime>
           <Disclosure className="mt-2">
-            <DisclosureHeader headingLevel={5}>
+            <DisclosureHeader headingLevel={4}>
               Failure details
             </DisclosureHeader>
             <DisclosurePanel>

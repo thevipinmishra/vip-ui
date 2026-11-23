@@ -16,7 +16,7 @@ export function CardLinkDemo() {
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
-        <CardTitle as="h4">
+        <CardTitle>
           <CardLink href="/components">Component library</CardLink>
         </CardTitle>
         <CardDescription>

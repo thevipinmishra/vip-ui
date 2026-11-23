@@ -67,7 +67,7 @@ export function AccordionMultipleDemo() {
         onExpandedChange={setExpandedKeys}
       >
         <AccordionItem id="workspace">
-          <AccordionTrigger headingLevel={4}>Workspace</AccordionTrigger>
+          <AccordionTrigger>Workspace</AccordionTrigger>
           <AccordionContent>
             <TextField
               defaultValue="Studio North"
@@ -82,7 +82,7 @@ export function AccordionMultipleDemo() {
           </AccordionContent>
         </AccordionItem>
         <AccordionItem id="notifications">
-          <AccordionTrigger headingLevel={4}>Notifications</AccordionTrigger>
+          <AccordionTrigger>Notifications</AccordionTrigger>
           <AccordionContent>
             <TextField
               type="email"
