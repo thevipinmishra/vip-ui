@@ -42,6 +42,7 @@ import {
   ZagMark,
 } from "./brand-marks";
 import { CopyCodeButton } from "./copy-code-button";
+import { DocsEyebrow } from "./docs-eyebrow";
 import { GitHubMark } from "./github-mark";
 import { pageTitleClass, pageTitleSize } from "./page-header";
 
@@ -72,7 +73,7 @@ const assistants = [
 ];
 
 const chipClass =
-  "inline-flex h-7 min-w-0 max-w-full items-center gap-1.5 rounded-full bg-card px-2.5 text-xs font-medium text-foreground shadow-(--shadow-card) ring-1 ring-border outline-offset-2 outline-transparent transition-[background-color,outline-color] duration-150 ease-out-quint hover:bg-muted pressed:bg-muted focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring [&_svg]:shrink-0";
+  "inline-flex h-7 min-w-0 max-w-full items-center gap-1.5 rounded-full bg-card/70 px-2.5 text-xs font-medium text-foreground ring-1 ring-docs-line backdrop-blur-sm outline-offset-2 outline-transparent transition-[background-color,outline-color] duration-150 ease-out-quint hover:bg-muted pressed:bg-muted focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring [&_svg]:shrink-0";
 
 const toneClass = {
   success: "bg-success",
@@ -87,6 +88,7 @@ function issueCount(count: number) {
 export interface ComponentHeaderProps {
   slug: string;
   name: string;
+  category?: string;
   description: ReactNode;
   primitives: Primitive[];
   markdownUrl: string;
@@ -98,6 +100,7 @@ export interface ComponentHeaderProps {
 export function ComponentHeader({
   slug,
   name,
+  category,
   description,
   primitives,
   markdownUrl,
@@ -108,6 +111,9 @@ export function ComponentHeader({
   const hasChips = primitives.length > 0 || axe || doctor;
   return (
     <header>
+      <DocsEyebrow
+        trail={category ? ["Components", category] : ["Components"]}
+      />
       <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-3">
         <h1 className={cn(pageTitleClass, "min-w-0")}>{name}</h1>
         <div

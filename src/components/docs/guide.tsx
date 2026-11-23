@@ -7,9 +7,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Breadcrumb, Breadcrumbs } from "@/components/ui/breadcrumbs";
-import { type Guide, guideNeighbors, type NavLink } from "@/lib/navigation";
+import {
+  type Guide,
+  guideGroups,
+  guideNeighbors,
+  type NavLink,
+} from "@/lib/navigation";
 import { pageMetadata } from "@/lib/seo";
 import { cn } from "@/lib/utils";
+import { DocsEyebrow } from "./docs-eyebrow";
 import { pageTitleClass } from "./page-header";
 import { SectionHeading } from "./section-heading";
 
@@ -54,7 +60,11 @@ export function ExternalLink({
 }
 
 export function Code({ children }: { children: ReactNode }) {
-  return <code className="font-mono text-foreground">{children}</code>;
+  return (
+    <code className="rounded-[5px] bg-foreground/[0.045] px-1 py-px font-mono text-[0.9em] text-foreground ring-1 ring-docs-line">
+      {children}
+    </code>
+  );
 }
 
 export function List({ children }: { children: ReactNode }) {
@@ -88,13 +98,16 @@ export function DocsHeader({
   title,
   description,
   parent,
+  eyebrow,
 }: {
   title: string;
   description: ReactNode;
   parent?: NavLink;
+  eyebrow?: string[];
 }) {
   return (
     <header>
+      {eyebrow && !parent && <DocsEyebrow trail={eyebrow} />}
       {parent && (
         <nav aria-label="Breadcrumbs" className="mb-4">
           <Breadcrumbs>
@@ -112,7 +125,10 @@ export function DocsHeader({
 }
 
 const pagerLink =
-  "flex min-h-20 flex-col justify-center rounded-xl bg-card px-5 py-3 shadow-(--shadow-card) ring-1 ring-border/70 outline-offset-4 outline-transparent transition-[background-color,outline-color,outline-offset] duration-150 ease-out-quint hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2";
+  "group/pager relative flex min-h-20 flex-col justify-center overflow-hidden rounded-xl bg-card/60 px-5 py-3 ring-1 ring-docs-line outline-offset-4 outline-transparent backdrop-blur-sm transition-[background-color,box-shadow,outline-color,outline-offset] duration-200 ease-out-quint hover:bg-card hover:ring-docs-accent/40 hover:shadow-[0_0_0_1px_var(--docs-glow),0_8px_30px_-12px_var(--docs-glow)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2";
+
+const pagerArrow =
+  "transition-transform duration-200 ease-out-quint rtl:-scale-x-100";
 
 export function DocsPager({
   previous,
@@ -124,13 +140,19 @@ export function DocsPager({
   return (
     <nav
       aria-label="Previous and next pages"
-      className="mt-16 grid gap-3 sm:grid-cols-2"
+      className="mt-20 grid gap-3 border-t border-docs-line pt-8 sm:grid-cols-2"
     >
       {previous && (
         <Link href={previous.href} className={pagerLink}>
-          <span className="text-[11px] text-muted-foreground">Previous</span>
-          <span className="mt-1 inline-flex items-center gap-2 text-sm font-semibold">
-            <ArrowLeftIcon size={16} aria-hidden="true" />
+          <span className="mono-label text-[10px] text-muted-foreground">
+            Previous
+          </span>
+          <span className="mt-1.5 inline-flex items-center gap-2 text-sm font-semibold">
+            <ArrowLeftIcon
+              size={16}
+              aria-hidden="true"
+              className={`${pagerArrow} motion-safe:group-hover/pager:-translate-x-0.5`}
+            />
             {previous.label}
           </span>
         </Link>
@@ -138,12 +160,18 @@ export function DocsPager({
       {next && (
         <Link
           href={next.href}
-          className={`${pagerLink} items-end text-right sm:col-start-2`}
+          className={`${pagerLink} items-end text-end sm:col-start-2`}
         >
-          <span className="text-[11px] text-muted-foreground">Next</span>
-          <span className="mt-1 inline-flex items-center gap-2 text-sm font-semibold">
+          <span className="mono-label text-[10px] text-muted-foreground">
+            Next
+          </span>
+          <span className="mt-1.5 inline-flex items-center gap-2 text-sm font-semibold">
             {next.label}
-            <ArrowRightIcon size={16} aria-hidden="true" />
+            <ArrowRightIcon
+              size={16}
+              aria-hidden="true"
+              className={`${pagerArrow} motion-safe:group-hover/pager:translate-x-0.5`}
+            />
           </span>
         </Link>
       )}
@@ -178,9 +206,16 @@ export function GuidePage({
   children: ReactNode;
 }) {
   const { guide, previous, next } = guideNeighbors(href);
+  const group = guideGroups.find((item) =>
+    item.guides.some((entry) => entry.href === href),
+  );
   return (
     <article className="max-w-167.5">
-      <DocsHeader title={guide.label} description={guide.description} />
+      <DocsHeader
+        title={guide.label}
+        description={guide.description}
+        eyebrow={["Docs", group?.title ?? "Guides"]}
+      />
       {children}
       <DocsPager previous={previous} next={next} />
     </article>

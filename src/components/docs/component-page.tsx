@@ -102,6 +102,7 @@ export async function ComponentPage({
       <ComponentHeader
         slug={componentSlug}
         name={name}
+        category={component?.group}
         description={description}
         primitives={component?.primitives ?? []}
         markdownUrl={componentDocUrl(site, componentSlug)}

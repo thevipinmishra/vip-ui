@@ -105,6 +105,24 @@ function NavGroup({
   );
 }
 
+function NavGroupLabel({
+  index,
+  children,
+}: {
+  index: number;
+  children: ReactNode;
+}) {
+  return (
+    <p className="mono-label mb-2 flex items-center gap-2 px-3 text-muted-foreground">
+      <span aria-hidden="true" className="text-docs-accent tabular-nums">
+        {String(index + 1).padStart(2, "0")}
+      </span>
+      <span className="min-w-0 truncate">{children}</span>
+      <span aria-hidden="true" className="h-px flex-1 bg-docs-line" />
+    </p>
+  );
+}
+
 export function DocsNav({
   mobile = false,
   onNavigate,
@@ -142,7 +160,7 @@ export function DocsNav({
         aria-current={pathname === link.href ? "page" : undefined}
         className={cn(
           "group/nav-link relative isolate flex min-w-0 items-center gap-2 px-3 text-[13px] font-medium whitespace-nowrap transition-[color,background-color] duration-150 ease-out-quint hover:text-foreground focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-transparent",
-          mobile ? "min-h-10 rounded-lg" : "min-h-8 rounded-full",
+          mobile ? "min-h-10 rounded-lg" : "min-h-8 rounded-md",
           isActive ? "text-foreground" : "text-muted-foreground",
         )}
       >
@@ -153,10 +171,14 @@ export function DocsNav({
               "pointer-events-none absolute inset-0 -z-10 transition-[background-color] duration-150 ease-out-quint group-focus-visible/nav-link:bg-primary",
               mobile
                 ? "rounded-lg bg-accent"
-                : "rounded-full bg-card inset-ring inset-ring-border/70 group-focus-visible/nav-link:inset-ring-transparent",
+                : "rounded-md bg-linear-to-r from-docs-accent/12 via-docs-accent/4 to-transparent group-focus-visible/nav-link:from-primary group-focus-visible/nav-link:to-primary",
             )}
             transition={reduceMotion ? { duration: 0 } : springLayout}
-          />
+          >
+            {!mobile && (
+              <span className="absolute inset-y-1.5 inset-s-0 w-0.5 rounded-full bg-docs-accent shadow-[0_0_8px_var(--docs-accent)] forced-colors:bg-[Highlight]" />
+            )}
+          </motion.span>
         )}
         <span className="min-w-0 truncate">{link.label}</span>
         <NewBadge added={link.added} />
@@ -205,19 +227,17 @@ export function DocsNav({
       className="relative isolate grid gap-7"
     >
       <ItemHighlight placement="under" items="a" className="bg-muted/70" />
-      {guideGroups.map((group) => (
+      {guideGroups.map((group, index) => (
         <div key={group.title} className="grid gap-0.5">
-          <p className="mb-1.5 px-3 text-xs font-medium text-muted-foreground">
-            {group.title}
-          </p>
+          <NavGroupLabel index={index}>{group.title}</NavGroupLabel>
           {group.guides.map(renderLink)}
         </div>
       ))}
-      {catalogGroups.map((group) => (
+      {catalogGroups.map((group, index) => (
         <div key={group.title} className="grid gap-0.5">
-          <p className="mb-1.5 px-3 text-xs font-medium text-muted-foreground">
+          <NavGroupLabel index={guideGroups.length + index}>
             {group.title}
-          </p>
+          </NavGroupLabel>
           {group.components.map((component) =>
             renderLink({
               href: `/components/${component.slug}`,

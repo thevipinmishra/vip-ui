@@ -33,11 +33,13 @@ export function TocBar() {
   return (
     <div
       data-slot="toc-bar"
-      className="sticky top-(--header-height) z-30 -mx-5 border-b border-border/70 bg-background/85 px-3 backdrop-blur-xl sm:-mx-8 sm:px-6 lg:-ms-12 lg:-me-8 lg:ps-10 xl:hidden"
+      className="sticky top-(--header-height) z-30 -mx-5 border-b border-docs-line bg-background/80 px-3 backdrop-blur-xl sm:-mx-8 sm:px-6 lg:-ms-12 lg:-me-8 lg:ps-10 xl:hidden"
     >
       <PopoverTrigger isOpen={open} onOpenChange={setOpen}>
         <Button className="group/toc flex h-11 w-full min-w-0 cursor-pointer items-center gap-2 rounded-md px-2 text-start text-[13px] outline-transparent transition-[background-color,outline-color] duration-150 ease-out-quint focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring">
-          <span className="shrink-0 text-muted-foreground">On this page</span>
+          <span className="mono-label shrink-0 text-muted-foreground">
+            On this page
+          </span>
           <span aria-hidden="true" className="shrink-0 text-border">
             /
           </span>

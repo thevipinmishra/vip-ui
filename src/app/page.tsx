@@ -3,7 +3,17 @@ import { SiteAnnouncement } from "@/components/docs/site-announcement";
 import { SiteHeader } from "@/components/docs/site-header";
 import { HomeShowcase } from "@/components/home/home-showcase";
 import { ButtonLink } from "@/components/ui/button-link";
+import { blocks } from "@/lib/blocks";
+import { catalogComponents } from "@/lib/catalog";
 import { pageMetadata, site } from "@/lib/seo";
+import { cn } from "@/lib/utils";
+
+const stats = [
+  { value: `${catalogComponents.length}`, label: "Components" },
+  { value: `${blocks.length}`, label: "Blocks" },
+  { value: "React Aria", label: "Accessible" },
+  { value: "MIT", label: "License" },
+];
 
 export const metadata = pageMetadata({
   title: site.title,
@@ -25,10 +35,14 @@ export default function Home() {
         >
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 -top-24 -z-10 h-80 opacity-90 dark:opacity-100"
+            className="docs-grid pointer-events-none absolute inset-x-0 -top-(--header-height) -z-20 h-[44rem]"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 -top-40 -z-10 mx-auto h-[30rem] max-w-4xl"
             style={{
               background:
-                "radial-gradient(50% 100% at 50% 0%, color-mix(in oklab, var(--chart-2) 16%, transparent) 0%, transparent 75%)",
+                "radial-gradient(50% 55% at 50% 30%, var(--docs-glow) 0%, transparent 70%)",
             }}
           />
           <div className="site-container">
@@ -36,7 +50,7 @@ export default function Home() {
               <SiteAnnouncement />
               <h1
                 id="hero-title"
-                className="mt-6 text-[clamp(2.25rem,1.5rem+3vw,3.75rem)] leading-[1.06] font-semibold tracking-[-0.035em] text-balance sm:tracking-[-0.045em]"
+                className="text-gradient mt-7 pb-1 text-[clamp(2.5rem,1.4rem+4vw,4.5rem)] leading-[1.02] font-semibold tracking-[-0.04em] text-balance sm:tracking-[-0.05em]"
               >
                 Accessible React components you own.
               </h1>
@@ -61,6 +75,24 @@ export default function Home() {
                   Browse components
                 </ButtonLink>
               </div>
+              <dl className="mono-label mt-14 grid w-full max-w-2xl grid-cols-2 border-y border-docs-line text-muted-foreground sm:grid-cols-4">
+                {stats.map((stat, index) => (
+                  <div
+                    key={stat.label}
+                    className={cn(
+                      "relative flex flex-col items-center gap-1 py-4",
+                      index > 0 && "sm:border-s sm:border-docs-line",
+                      index % 2 === 1 && "border-s border-docs-line",
+                      index > 1 && "border-t border-docs-line sm:border-t-0",
+                    )}
+                  >
+                    <dt className="order-2 text-[10px]">{stat.label}</dt>
+                    <dd className="order-1 font-sans text-lg font-semibold tracking-[-0.02em] normal-case text-foreground tabular-nums">
+                      {stat.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
             </div>
           </div>
         </section>

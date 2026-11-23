@@ -56,10 +56,14 @@ export function OnThisPage() {
 
   return (
     <nav aria-label="On this page">
-      <p className="mb-2 ps-5.25 text-xs font-medium text-muted-foreground">
+      <p className="mono-label mb-3 ps-5.25 text-muted-foreground">
         On this page
       </p>
       <div ref={containerRef} className="relative">
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 inset-s-0 w-px bg-docs-line"
+        />
         {lineSpan && (
           <motion.span
             aria-hidden="true"
@@ -70,7 +74,7 @@ export function OnThisPage() {
                 ? { duration: 0 }
                 : { type: "spring", duration: 0.36, bounce: 0.16 }
             }
-            className="pointer-events-none absolute top-0 inset-s-0 w-px bg-foreground"
+            className="pointer-events-none absolute top-0 -inset-s-px w-0.5 rounded-full bg-docs-accent shadow-[0_0_8px_var(--docs-accent)] forced-colors:bg-[Highlight]"
           />
         )}
         <ul className="grid gap-0.5">

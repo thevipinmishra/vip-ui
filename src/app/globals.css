@@ -165,6 +165,8 @@
   --color-warning: var(--warning);
   --color-warning-subtle: var(--warning-subtle);
   --color-warning-foreground: var(--warning-foreground);
+  --color-docs-accent: var(--docs-accent);
+  --color-docs-line: var(--docs-line);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -320,6 +322,17 @@
   :root {
     --header-height: 3.5rem;
     --toc-bar-height: 2.75rem;
+    /* Docs-site chrome only. Not part of the registry theme. */
+    --docs-accent: oklch(0.58 0.12 192);
+    --docs-line: color-mix(in oklab, var(--foreground) 9%, transparent);
+    --docs-grid: color-mix(in oklab, var(--foreground) 5.5%, transparent);
+    --docs-glow: color-mix(in oklab, var(--docs-accent) 12%, transparent);
+  }
+  .dark {
+    --docs-accent: oklch(0.82 0.12 190);
+    --docs-line: color-mix(in oklab, var(--foreground) 10%, transparent);
+    --docs-grid: color-mix(in oklab, var(--foreground) 5%, transparent);
+    --docs-glow: color-mix(in oklab, var(--docs-accent) 14%, transparent);
   }
   html {
     scroll-padding-top: var(--header-height);
@@ -359,6 +372,55 @@
   padding-inline: 1.25rem;
   @variant sm {
     padding-inline: 2rem;
+  }
+}
+
+/* Monospace micro label: section eyebrows, nav groups, metadata. */
+@utility mono-label {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Blueprint grid that fades out toward the edges. */
+@utility docs-grid {
+  background-image:
+    linear-gradient(to right, var(--docs-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--docs-grid) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: center top;
+  mask-image: radial-gradient(
+    ellipse 60% 70% at 50% 0%,
+    black 30%,
+    transparent 100%
+  );
+}
+
+/* Hairline that brightens in the middle, for header and section edges. */
+@utility docs-beam {
+  background: linear-gradient(
+    to right,
+    transparent,
+    color-mix(in oklab, var(--docs-accent) 55%, transparent) 50%,
+    transparent
+  );
+}
+
+/* Gradient headline text with a solid fallback for forced colors. */
+@utility text-gradient {
+  background-image: linear-gradient(
+    to bottom,
+    var(--foreground) 35%,
+    color-mix(in oklab, var(--foreground) 70%, transparent)
+  );
+  background-clip: text;
+  color: transparent;
+  @media (forced-colors: active) {
+    background: none;
+    color: CanvasText;
   }
 }
 
@@ -406,11 +468,24 @@
 }
 
 .preview-canvas {
-  background-image: radial-gradient(
-    color-mix(in oklab, var(--muted-foreground) 20%, transparent) 1px,
-    transparent 1px
-  );
-  background-size: 18px 18px;
+  background-image:
+    radial-gradient(
+      ellipse 55% 60% at 50% 50%,
+      var(--docs-glow),
+      transparent 70%
+    ),
+    linear-gradient(to right, var(--docs-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--docs-grid) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    24px 24px,
+    24px 24px;
+  background-position: center;
+}
+@media (forced-colors: active) {
+  .preview-canvas {
+    background-image: none;
+  }
 }
 
 .sidebar-scroll-viewport {

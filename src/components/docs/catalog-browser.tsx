@@ -17,7 +17,7 @@ const CatalogCard = memo(function CatalogCard({
 
   return (
     <li
-      className="group/card relative flex flex-col rounded-2xl bg-card p-1 text-card-foreground shadow-(--shadow-card) ring-1 ring-border/60 transition-[box-shadow,scale] duration-200 ease-out-quint hover:shadow-(--shadow-float) hover:ring-border motion-safe:has-[a:active]:scale-[0.985] forced-colors:border"
+      className="group/card relative flex flex-col rounded-2xl bg-card p-1 text-card-foreground shadow-(--shadow-card) ring-1 ring-docs-line transition-[box-shadow,scale] duration-200 ease-out-quint hover:shadow-[var(--shadow-float),0_12px_40px_-16px_var(--docs-glow)] hover:ring-docs-accent/35 motion-safe:has-[a:active]:scale-[0.985] forced-colors:border"
       onPointerEnter={(event) => {
         if (event.pointerType === "mouse") setHovered(true);
       }}
@@ -58,6 +58,7 @@ export function CatalogBrowser({ category }: { category?: string }) {
     >
       {groups.map((group) => {
         const headingId = group.title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+        const number = catalogGroups.indexOf(group) + 1;
 
         return (
           <section
@@ -66,15 +67,23 @@ export function CatalogBrowser({ category }: { category?: string }) {
             aria-labelledby={`${headingId}-title`}
             className="scroll-mt-20"
           >
-            <div className="flex items-baseline gap-2.5">
+            <div className="flex items-center gap-3">
+              <span
+                aria-hidden="true"
+                className="mono-label text-docs-accent tabular-nums"
+              >
+                {String(number).padStart(2, "0")}
+              </span>
               <h2
                 id={`${headingId}-title`}
                 className="text-lg font-semibold tracking-[-0.03em]"
               >
                 {group.title}
               </h2>
-              <span className="text-sm tabular-nums text-muted-foreground">
+              <span aria-hidden="true" className="h-px flex-1 bg-docs-line" />
+              <span className="mono-label tabular-nums text-muted-foreground">
                 {group.components.length}
+                <span className="sr-only"> components</span>
               </span>
             </div>
             <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 lg:gap-4 xl:grid-cols-4">

@@ -42,15 +42,22 @@ export function CodeFrame({
       data-slot="code-frame"
       className={cn(
         "code-frame min-w-0 overflow-hidden bg-code text-code-foreground",
-        !embedded && "rounded-2xl shadow-(--shadow-card) ring-1 ring-border/60",
+        !embedded && "rounded-2xl shadow-(--shadow-card) ring-1 ring-docs-line",
       )}
     >
-      <div className="flex min-h-12 flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-border/70 px-3 py-2 sm:px-4">
+      <div className="flex min-h-11 flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-docs-line px-3 py-1.5 sm:px-4">
         {header ?? (
           <div className="flex min-w-0 flex-1 items-center gap-2.5">
             {filename && (
+              <span aria-hidden="true" className="flex shrink-0 gap-1">
+                <span className="size-1.5 rounded-full bg-foreground/15" />
+                <span className="size-1.5 rounded-full bg-foreground/15" />
+                <span className="size-1.5 rounded-full bg-docs-accent/70" />
+              </span>
+            )}
+            {filename && (
               <span
-                className="min-w-0 truncate font-mono text-[11px] text-code-foreground"
+                className="min-w-0 truncate font-mono text-[11px] tracking-wide text-muted-foreground"
                 title={filename}
               >
                 {filename}

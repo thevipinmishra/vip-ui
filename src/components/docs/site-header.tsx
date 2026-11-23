@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { ItemHighlight } from "@/components/ui/item-highlight";
 import { activeSection, mainNav } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
+import { siteVersion } from "@/lib/version";
 import { DocsSearch } from "./docs-search";
 import { GitHubMark, repositoryUrl } from "./github-mark";
 import { MobileNav } from "./mobile-nav";
@@ -29,7 +30,7 @@ export function SiteHeader({
       </a>
       <header
         className={cn(
-          "sticky top-0 z-40 border-b border-border/70 bg-background/80 backdrop-blur-xl backdrop-saturate-150",
+          "sticky top-0 z-40 border-b border-docs-line bg-background/75 backdrop-blur-xl backdrop-saturate-150",
           transparentAtTop && "header-settle",
         )}
       >
@@ -42,6 +43,12 @@ export function SiteHeader({
           >
             <SiteLogo />
           </Link>
+          <span
+            aria-hidden="true"
+            className="mono-label -ms-2 me-3 hidden h-5 items-center rounded-full px-2 text-[10px] tracking-[0.04em] normal-case text-muted-foreground ring-1 ring-docs-line sm:inline-flex"
+          >
+            {siteVersion}
+          </span>
           <nav
             aria-label="Main navigation"
             className="relative isolate hidden items-center gap-0.5 lg:flex"
@@ -59,13 +66,19 @@ export function SiteHeader({
                     : undefined
                 }
                 className={cn(
-                  "inline-flex h-9 items-center rounded-md px-3 text-sm font-medium transition-[color,background-color] duration-150 ease-out-quint hover:text-foreground focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-transparent",
+                  "relative inline-flex h-9 items-center rounded-md px-3 text-[13px] font-medium transition-[color,background-color] duration-150 ease-out-quint hover:text-foreground focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-transparent",
                   active === link.href
                     ? "text-foreground"
                     : "text-muted-foreground",
                 )}
               >
                 {link.label}
+                {active === link.href && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-x-3 -bottom-[calc((var(--header-height)-2.25rem)/2+1px)] h-px bg-docs-accent shadow-[0_0_10px_var(--docs-accent)] forced-colors:bg-[Highlight]"
+                  />
+                )}
               </Link>
             ))}
           </nav>
@@ -73,7 +86,7 @@ export function SiteHeader({
             <DocsSearch />
             <span
               aria-hidden="true"
-              className="mx-1.5 hidden h-5 w-px bg-border sm:block"
+              className="mx-1.5 hidden h-5 w-px bg-docs-line sm:block"
             />
             <a
               href={repositoryUrl}
@@ -89,6 +102,10 @@ export function SiteHeader({
             <MobileNav />
           </div>
         </div>
+        <span
+          aria-hidden="true"
+          className="docs-beam pointer-events-none absolute inset-x-0 -bottom-px h-px opacity-60"
+        />
       </header>
     </>
   );

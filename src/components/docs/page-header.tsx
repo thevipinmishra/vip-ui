@@ -11,13 +11,16 @@ export const sectionTitleClass =
 
 const headingSizes = {
   default: pageTitleSize,
-  lg: "text-[clamp(2.125rem,1.4rem+2.35vw,3.25rem)] leading-[1.08] tracking-[-0.04em] sm:tracking-tighter",
+  lg: "text-gradient pb-1 text-[clamp(2.25rem,1.4rem+2.8vw,3.75rem)] leading-[1.04] tracking-[-0.04em] sm:tracking-tighter",
 };
 
 export function PageHeader({ className, ...props }: ComponentProps<"header">) {
   return (
     <header
-      className={cn("flex flex-col items-start gap-4", className)}
+      className={cn(
+        "flex flex-col items-start gap-4 before:docs-grid before:pointer-events-none before:absolute before:inset-x-0 before:-top-(--header-height) before:-z-20 before:h-[36rem]",
+        className,
+      )}
       {...props}
     />
   );
