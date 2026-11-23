@@ -92,11 +92,15 @@ export function AccordionItem({
 export function AccordionTrigger({
   className,
   children,
+  headingLevel,
   ...props
-}: Omit<ButtonProps, "children"> & { children: ReactNode }) {
+}: Omit<ButtonProps, "children"> & {
+  children: ReactNode;
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+}) {
   const variant = useContext(AccordionVariantContext);
   return (
-    <Heading className="m-0 text-sm font-medium">
+    <Heading level={headingLevel} className="m-0 text-sm font-medium">
       <Button
         {...props}
         data-slot="accordion-trigger"

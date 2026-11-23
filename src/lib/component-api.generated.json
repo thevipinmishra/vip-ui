@@ -1792,6 +1792,11 @@
       "type": "string"
     }
   },
+  "AccordionTrigger": {
+    "headingLevel": {
+      "type": "1 | 2 | 3 | 4 | 5 | 6"
+    }
+  },
   "Alert": {
     "title": {
       "type": "string"
@@ -2771,6 +2776,10 @@
     }
   },
   "DescriptionList": {
+    "layout": {
+      "type": "\"auto\" | \"columns\"",
+      "default": "\"auto\""
+    },
     "children": {
       "type": "ReactNode"
     }
@@ -2779,6 +2788,9 @@
     "children": {
       "type": "ReactNode",
       "required": true
+    },
+    "headingLevel": {
+      "type": "1 | 2 | 3 | 4 | 5 | 6"
     }
   },
   "DisclosurePanel": {

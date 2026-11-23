@@ -1244,7 +1244,7 @@
       "description": "Shows pairs of terms and details.",
       "author": "thevipinmishra <https://github.com/thevipinmishra>",
       "categories": ["display-layout"],
-      "dependencies": [],
+      "dependencies": ["tailwind-variants@^4.0.2"],
       "registryDependencies": ["https://vip-ui.dev/r/utils.json"],
       "files": [
         {

@@ -37,10 +37,17 @@ export function Disclosure({
 export function DisclosureHeader({
   children,
   className,
+  headingLevel,
   ...props
-}: Omit<ButtonProps, "children"> & { children: ReactNode }) {
+}: Omit<ButtonProps, "children"> & {
+  children: ReactNode;
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+}) {
   return (
-    <Heading className="m-0 min-w-0 flex-1 text-sm font-semibold">
+    <Heading
+      level={headingLevel}
+      className="m-0 min-w-0 flex-1 text-sm font-semibold"
+    >
       <Button
         data-slot="disclosure-header"
         {...props}

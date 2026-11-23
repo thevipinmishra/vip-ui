@@ -12,7 +12,7 @@ export function ResizableNestedDemo() {
       defaultLayout={[40, 60]}
       className="h-96 overflow-hidden rounded-xl border border-border bg-card"
     >
-      <ResizablePanel id="resizable-files" minSize={18}>
+      <ResizablePanel minSize={18}>
         <div tabIndex={0} className="h-full overflow-auto p-3">
           <p className="px-1 pb-2 text-xs font-medium text-muted-foreground">
             Files
@@ -27,13 +27,13 @@ export function ResizableNestedDemo() {
         </div>
       </ResizablePanel>
       <ResizableHandle aria-label="Resize the files and the workbench" />
-      <ResizablePanel id="resizable-workbench">
+      <ResizablePanel>
         <ResizableGroup
           orientation="vertical"
           defaultLayout={[64, 36]}
           className="h-full"
         >
-          <ResizablePanel id="resizable-code">
+          <ResizablePanel>
             <div
               tabIndex={0}
               className="h-full overflow-auto bg-muted/30 p-3 font-mono text-xs leading-6"
@@ -45,7 +45,7 @@ export function ResizableNestedDemo() {
             </div>
           </ResizablePanel>
           <ResizableHandle aria-label="Resize the code and the terminal" />
-          <ResizablePanel id="resizable-terminal">
+          <ResizablePanel>
             <div
               tabIndex={0}
               className="h-full overflow-auto bg-muted/50 p-3 font-mono text-xs leading-6"

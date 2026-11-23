@@ -153,7 +153,10 @@ export function CartSheet({
               })}
             </ul>
 
-            <DescriptionList className="mt-3 grid-cols-[minmax(0,1fr)_auto] gap-y-1.5 border-t border-border/70 pt-3 [&>dt]:not-first:mt-0">
+            <DescriptionList
+              layout="columns"
+              className="mt-3 grid-cols-[minmax(0,1fr)_auto] gap-y-1.5 border-t border-border/70 pt-3"
+            >
               <DescriptionTerm>Subtotal</DescriptionTerm>
               <DescriptionDetail className="text-end tabular-nums">
                 {formatMoney(totals.subtotal)}

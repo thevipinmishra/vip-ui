@@ -61,7 +61,7 @@ export interface ResizableGroupProps
 }
 
 export interface ResizablePanelProps extends Omit<ComponentProps<"div">, "id"> {
-  /** The panel id. Also used as the panel order key. */
+  /** The panel's unique DOM id. Omit it to generate an id. */
   id?: string;
   /** The order of the panel when panels render conditionally. */
   order?: number;
@@ -310,6 +310,7 @@ export function ResizablePanel({
   collapsible = false,
   collapsedSize = 0,
   resizeBehavior,
+  inert,
   className,
   style,
   children,
@@ -388,6 +389,7 @@ export function ResizablePanel({
       ref={ref}
       data-slot="resizable-panel"
       data-collapsed={collapsed || undefined}
+      inert={inert || (collapsed && collapsedTarget === 0) || undefined}
     >
       {children}
     </div>
