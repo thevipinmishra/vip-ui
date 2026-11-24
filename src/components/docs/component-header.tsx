@@ -3,13 +3,15 @@
 import {
   ArrowSquareOutIcon,
   ArrowUpRightIcon,
+  CaretDownIcon,
   CheckIcon,
   CopyIcon,
   DotsThreeIcon,
 } from "@phosphor-icons/react";
-import { type ReactNode, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import { Link as AriaLink } from "react-aria-components";
 import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { ButtonLink } from "@/components/ui/button-link";
 import { InlineCode } from "@/components/ui/kbd-code";
 import {
@@ -47,6 +49,7 @@ import { pageTitleClass, pageTitleSize } from "./page-header";
 
 const repository = "https://github.com/thevipinmishra/vip-ui";
 const doctorCommand = "npx -y react-doctor@latest .";
+const compactHeaderPreview = process.env.NODE_ENV === "development";
 
 const assistants = [
   {
@@ -71,8 +74,12 @@ const assistants = [
   },
 ];
 
-const chipClass =
-  "inline-flex h-7 min-w-0 max-w-full items-center gap-1.5 rounded-full bg-card px-2.5 text-xs font-medium text-foreground shadow-(--shadow-card) ring-1 ring-border outline-offset-2 outline-transparent transition-[background-color,outline-color] duration-150 ease-out-quint hover:bg-muted pressed:bg-muted focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring [&_svg]:shrink-0";
+const chipClass = cn(
+  "inline-flex min-w-0 max-w-full items-center rounded-full font-medium text-foreground outline-offset-2 outline-transparent transition-[background-color,outline-color] duration-150 ease-out-quint hover:bg-muted pressed:bg-muted focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring [&_svg]:shrink-0",
+  compactHeaderPreview
+    ? "h-6.5 cursor-pointer gap-1 border border-border px-1.5 text-[11px] pointer-coarse:after:h-8 [&>svg]:size-3"
+    : "h-7 gap-1.5 bg-card px-2.5 text-xs shadow-(--shadow-card) ring-1 ring-border",
+);
 
 const toneClass = {
   success: "bg-success",
@@ -108,16 +115,31 @@ export function ComponentHeader({
   const hasChips = primitives.length > 0 || axe || doctor;
   return (
     <header>
-      <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-3">
-        <h1 className={cn(pageTitleClass, "min-w-0")}>{name}</h1>
+      <div
+        className={cn(
+          "flex items-start justify-between",
+          compactHeaderPreview ? "gap-x-2" : "flex-wrap gap-x-4 gap-y-3",
+        )}
+      >
+        <h1
+          className={cn(
+            pageTitleClass,
+            "min-w-0",
+            compactHeaderPreview && "wrap-anywhere",
+          )}
+        >
+          {name}
+        </h1>
         <div
           className={`flex h-lh shrink-0 items-center gap-2 ${pageTitleSize}`}
         >
-          <CopyCodeButton
-            code={prompt}
-            label="Copy prompt"
-            text="Copy prompt"
-          />
+          {!compactHeaderPreview && (
+            <CopyCodeButton
+              code={prompt}
+              label="Copy prompt"
+              text="Copy prompt"
+            />
+          )}
           <PageActions slug={slug} name={name} markdownUrl={markdownUrl} />
         </div>
       </div>
@@ -125,7 +147,13 @@ export function ComponentHeader({
         {description}
       </p>
       {hasChips && (
-        <ul aria-label="Details" className="mt-5 flex flex-wrap gap-2">
+        <ul
+          aria-label="Details"
+          className={cn(
+            "flex flex-wrap",
+            compactHeaderPreview ? "mt-3.5 gap-x-1.25 gap-y-2" : "mt-5 gap-2",
+          )}
+        >
           {primitives.map((primitive) => (
             <li key={primitive.href} className="flex min-w-0">
               <TooltipTrigger>
@@ -142,11 +170,13 @@ export function ComponentHeader({
                   )}
                   <span className="sr-only">{primitive.library} </span>
                   <span className="truncate">{primitive.name}</span>
-                  <ArrowUpRightIcon
-                    size={12}
-                    aria-hidden="true"
-                    className="text-muted-foreground"
-                  />
+                  {!compactHeaderPreview && (
+                    <ArrowUpRightIcon
+                      size={12}
+                      aria-hidden="true"
+                      className="text-muted-foreground"
+                    />
+                  )}
                 </AriaLink>
                 <Tooltip>Built with {primitive.library}</Tooltip>
               </TooltipTrigger>
@@ -177,13 +207,24 @@ function PageActions({
   name: string;
   markdownUrl: string;
 }) {
-  const [copied, setCopied] = useState(false);
+  const [copyStatus, setCopyStatus] = useState<
+    "idle" | "copying" | "copied" | "error"
+  >("idle");
+  const copied = copyStatus === "copied";
   const markdownPath = `/components/${slug}.md`;
   const prompt = encodeURIComponent(
     `Read ${markdownUrl}. It documents the ${name} component from vip/ui. I want to ask questions about it.`,
   );
 
+  useEffect(() => {
+    if (copyStatus !== "copied" && copyStatus !== "error") return;
+    const timer = window.setTimeout(() => setCopyStatus("idle"), 2000);
+    return () => window.clearTimeout(timer);
+  }, [copyStatus]);
+
   async function copyPage() {
+    if (copyStatus === "copying") return;
+    setCopyStatus("copying");
     try {
       const text = fetch(markdownPath).then((response) => {
         if (!response.ok) throw new Error(response.statusText);
@@ -200,37 +241,56 @@ function PageActions({
           }),
         ]);
       }
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
+      setCopyStatus("copied");
     } catch {
-      setCopied(false);
+      setCopyStatus("error");
     }
   }
 
-  return (
+  const menu = (
     <MenuTrigger>
-      <TooltipTrigger>
-        <Button variant="minimal" size="sm" iconOnly aria-label="More actions">
-          <DotsThreeIcon weight="bold" aria-hidden="true" />
+      {compactHeaderPreview ? (
+        <Button
+          variant="ghost"
+          iconOnly
+          aria-label="More page actions"
+          className="w-7"
+        >
+          <CaretDownIcon className="size-3" aria-hidden="true" />
         </Button>
-        <Tooltip>More actions</Tooltip>
-      </TooltipTrigger>
-      <MenuPopover placement="bottom end" className="min-w-56">
-        <MenuContent aria-label="More actions">
-          <MenuItem
-            shouldCloseOnSelect={false}
-            onAction={copyPage}
-            textValue="Copy page as Markdown"
+      ) : (
+        <TooltipTrigger>
+          <Button
+            variant="minimal"
+            size="sm"
+            iconOnly
+            aria-label="More actions"
           >
-            <span className="text-muted-foreground [&_svg]:size-4">
-              {copied ? (
-                <CheckIcon aria-hidden="true" />
-              ) : (
-                <CopyIcon aria-hidden="true" />
-              )}
-            </span>
-            {copied ? "Copied" : "Copy page as Markdown"}
-          </MenuItem>
+            <DotsThreeIcon weight="bold" aria-hidden="true" />
+          </Button>
+          <Tooltip>More actions</Tooltip>
+        </TooltipTrigger>
+      )}
+      <MenuPopover placement="bottom end" className="min-w-56">
+        <MenuContent
+          aria-label={compactHeaderPreview ? "Page actions" : "More actions"}
+        >
+          {!compactHeaderPreview && (
+            <MenuItem
+              shouldCloseOnSelect={false}
+              onAction={copyPage}
+              textValue="Copy page as Markdown"
+            >
+              <span className="text-muted-foreground [&_svg]:size-4">
+                {copied ? (
+                  <CheckIcon aria-hidden="true" />
+                ) : (
+                  <CopyIcon aria-hidden="true" />
+                )}
+              </span>
+              {copied ? "Copied" : "Copy page as Markdown"}
+            </MenuItem>
+          )}
           <MenuItem
             href={markdownPath}
             target="_blank"
@@ -287,6 +347,29 @@ function PageActions({
       </MenuPopover>
     </MenuTrigger>
   );
+
+  if (!compactHeaderPreview) return menu;
+
+  const failed = copyStatus === "error";
+  return (
+    <ButtonGroup size="sm" aria-label="Component page actions">
+      <Button
+        variant="ghost"
+        className="w-19 px-1.5 text-[13px]"
+        aria-label={
+          failed ? "Retry copying page as Markdown" : "Copy page as Markdown"
+        }
+        isPending={copyStatus === "copying"}
+        onPress={copyPage}
+      >
+        {copied ? "Copied" : failed ? "Retry" : "Copy page"}
+      </Button>
+      {menu}
+      <output className="sr-only" aria-live="polite">
+        {copied ? "Page copied as Markdown" : failed ? "Copy failed" : ""}
+      </output>
+    </ButtonGroup>
+  );
 }
 
 function CheckChip({
@@ -316,7 +399,14 @@ function CheckChip({
             aria-hidden="true"
             className={cn("size-1.5 rounded-full", toneClass[tone])}
           />
-          <span className="tabular-nums">{issueCount(count)}</span>
+          <span
+            className={cn(
+              "tabular-nums",
+              compactHeaderPreview && count === 0 && "sr-only",
+            )}
+          >
+            {issueCount(count)}
+          </span>
         </Button>
         <Tooltip>Checked with {label}</Tooltip>
       </TooltipTrigger>
