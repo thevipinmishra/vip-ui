@@ -6,7 +6,6 @@ import {
   CaretDownIcon,
   CheckIcon,
   CopyIcon,
-  DotsThreeIcon,
 } from "@phosphor-icons/react";
 import { type ReactNode, useEffect, useState } from "react";
 import { Link as AriaLink } from "react-aria-components";
@@ -43,13 +42,11 @@ import {
   ReactDoctorMark,
   ZagMark,
 } from "./brand-marks";
-import { CopyCodeButton } from "./copy-code-button";
 import { GitHubMark } from "./github-mark";
 import { pageTitleClass, pageTitleSize } from "./page-header";
 
 const repository = "https://github.com/thevipinmishra/vip-ui";
 const doctorCommand = "npx -y react-doctor@latest .";
-const compactHeaderPreview = process.env.NODE_ENV === "development";
 
 const assistants = [
   {
@@ -74,12 +71,8 @@ const assistants = [
   },
 ];
 
-const chipClass = cn(
-  "inline-flex min-w-0 max-w-full items-center rounded-full font-medium text-foreground outline-offset-2 outline-transparent transition-[background-color,outline-color] duration-150 ease-out-quint hover:bg-muted pressed:bg-muted focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring [&_svg]:shrink-0",
-  compactHeaderPreview
-    ? "h-6.5 cursor-pointer gap-1 border border-border px-1.5 text-[11px] pointer-coarse:after:h-8 [&>svg]:size-3"
-    : "h-7 gap-1.5 bg-card px-2.5 text-xs shadow-(--shadow-card) ring-1 ring-border",
-);
+const chipClass =
+  "inline-flex h-6.5 min-w-0 max-w-full cursor-pointer items-center gap-1 rounded-full border border-border px-1.5 font-medium text-[11px] text-foreground outline-offset-2 outline-transparent transition-[background-color,outline-color] duration-150 ease-out-quint hover:bg-muted pressed:bg-muted focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring pointer-coarse:after:h-8 [&>svg]:size-3 [&_svg]:shrink-0";
 
 const toneClass = {
   success: "bg-success",
@@ -97,7 +90,6 @@ export interface ComponentHeaderProps {
   description: ReactNode;
   primitives: Primitive[];
   markdownUrl: string;
-  prompt: string;
   axe?: AxeFinding[];
   doctor?: DoctorFinding[];
 }
@@ -108,38 +100,15 @@ export function ComponentHeader({
   description,
   primitives,
   markdownUrl,
-  prompt,
   axe,
   doctor,
 }: ComponentHeaderProps) {
   const hasChips = primitives.length > 0 || axe || doctor;
   return (
     <header>
-      <div
-        className={cn(
-          "flex items-start justify-between",
-          compactHeaderPreview ? "gap-x-2" : "flex-wrap gap-x-4 gap-y-3",
-        )}
-      >
-        <h1
-          className={cn(
-            pageTitleClass,
-            "min-w-0",
-            compactHeaderPreview && "wrap-anywhere",
-          )}
-        >
-          {name}
-        </h1>
-        <div
-          className={`flex h-lh shrink-0 items-center gap-2 ${pageTitleSize}`}
-        >
-          {!compactHeaderPreview && (
-            <CopyCodeButton
-              code={prompt}
-              label="Copy prompt"
-              text="Copy prompt"
-            />
-          )}
+      <div className="flex items-start justify-between gap-x-2">
+        <h1 className={cn(pageTitleClass, "min-w-0 wrap-anywhere")}>{name}</h1>
+        <div className={`flex h-lh shrink-0 items-center ${pageTitleSize}`}>
           <PageActions slug={slug} name={name} markdownUrl={markdownUrl} />
         </div>
       </div>
@@ -149,10 +118,7 @@ export function ComponentHeader({
       {hasChips && (
         <ul
           aria-label="Details"
-          className={cn(
-            "flex flex-wrap",
-            compactHeaderPreview ? "mt-3.5 gap-x-1.25 gap-y-2" : "mt-5 gap-2",
-          )}
+          className="mt-3.5 flex flex-wrap gap-x-1.25 gap-y-2"
         >
           {primitives.map((primitive) => (
             <li key={primitive.href} className="flex min-w-0">
@@ -170,13 +136,6 @@ export function ComponentHeader({
                   )}
                   <span className="sr-only">{primitive.library} </span>
                   <span className="truncate">{primitive.name}</span>
-                  {!compactHeaderPreview && (
-                    <ArrowUpRightIcon
-                      size={12}
-                      aria-hidden="true"
-                      className="text-muted-foreground"
-                    />
-                  )}
                 </AriaLink>
                 <Tooltip>Built with {primitive.library}</Tooltip>
               </TooltipTrigger>
@@ -247,109 +206,6 @@ function PageActions({
     }
   }
 
-  const menu = (
-    <MenuTrigger>
-      {compactHeaderPreview ? (
-        <Button
-          variant="ghost"
-          iconOnly
-          aria-label="More page actions"
-          className="w-7"
-        >
-          <CaretDownIcon className="size-3" aria-hidden="true" />
-        </Button>
-      ) : (
-        <TooltipTrigger>
-          <Button
-            variant="minimal"
-            size="sm"
-            iconOnly
-            aria-label="More actions"
-          >
-            <DotsThreeIcon weight="bold" aria-hidden="true" />
-          </Button>
-          <Tooltip>More actions</Tooltip>
-        </TooltipTrigger>
-      )}
-      <MenuPopover placement="bottom end" className="min-w-56">
-        <MenuContent
-          aria-label={compactHeaderPreview ? "Page actions" : "More actions"}
-        >
-          {!compactHeaderPreview && (
-            <MenuItem
-              shouldCloseOnSelect={false}
-              onAction={copyPage}
-              textValue="Copy page as Markdown"
-            >
-              <span className="text-muted-foreground [&_svg]:size-4">
-                {copied ? (
-                  <CheckIcon aria-hidden="true" />
-                ) : (
-                  <CopyIcon aria-hidden="true" />
-                )}
-              </span>
-              {copied ? "Copied" : "Copy page as Markdown"}
-            </MenuItem>
-          )}
-          <MenuItem
-            href={markdownPath}
-            target="_blank"
-            rel="noreferrer"
-            textValue="View as Markdown"
-          >
-            <span className="text-muted-foreground [&_svg]:size-4">
-              <MarkdownMark />
-            </span>
-            View as Markdown
-            <ArrowUpRightIcon
-              size={14}
-              aria-hidden="true"
-              className="ms-auto text-muted-foreground"
-            />
-          </MenuItem>
-          <MenuItem
-            href={`${repository}/blob/main/src/components/ui/${slug}.tsx`}
-            target="_blank"
-            rel="noreferrer"
-            textValue="View source"
-          >
-            <span className="text-muted-foreground">
-              <GitHubMark />
-            </span>
-            View source
-            <ArrowUpRightIcon
-              size={14}
-              aria-hidden="true"
-              className="ms-auto text-muted-foreground"
-            />
-          </MenuItem>
-          <MenuSeparator />
-          {assistants.map((assistant) => (
-            <MenuItem
-              key={assistant.label}
-              href={assistant.url(prompt)}
-              target="_blank"
-              rel="noreferrer"
-              textValue={`Open in ${assistant.label}`}
-            >
-              <span className="text-muted-foreground [&_svg]:size-4">
-                {assistant.icon}
-              </span>
-              Open in {assistant.label}
-              <ArrowUpRightIcon
-                size={14}
-                aria-hidden="true"
-                className="ms-auto text-muted-foreground"
-              />
-            </MenuItem>
-          ))}
-        </MenuContent>
-      </MenuPopover>
-    </MenuTrigger>
-  );
-
-  if (!compactHeaderPreview) return menu;
-
   const failed = copyStatus === "error";
   return (
     <ButtonGroup size="sm" aria-label="Component page actions">
@@ -364,7 +220,72 @@ function PageActions({
       >
         {copied ? "Copied" : failed ? "Retry" : "Copy page"}
       </Button>
-      {menu}
+      <MenuTrigger>
+        <Button
+          variant="ghost"
+          iconOnly
+          aria-label="More page actions"
+          className="w-7"
+        >
+          <CaretDownIcon className="size-3" aria-hidden="true" />
+        </Button>
+        <MenuPopover placement="bottom end" className="min-w-56">
+          <MenuContent aria-label="Page actions">
+            <MenuItem
+              href={markdownPath}
+              target="_blank"
+              rel="noreferrer"
+              textValue="View as Markdown"
+            >
+              <span className="text-muted-foreground [&_svg]:size-4">
+                <MarkdownMark />
+              </span>
+              View as Markdown
+              <ArrowUpRightIcon
+                size={14}
+                aria-hidden="true"
+                className="ms-auto text-muted-foreground"
+              />
+            </MenuItem>
+            <MenuItem
+              href={`${repository}/blob/main/src/components/ui/${slug}.tsx`}
+              target="_blank"
+              rel="noreferrer"
+              textValue="View source"
+            >
+              <span className="text-muted-foreground">
+                <GitHubMark />
+              </span>
+              View source
+              <ArrowUpRightIcon
+                size={14}
+                aria-hidden="true"
+                className="ms-auto text-muted-foreground"
+              />
+            </MenuItem>
+            <MenuSeparator />
+            {assistants.map((assistant) => (
+              <MenuItem
+                key={assistant.label}
+                href={assistant.url(prompt)}
+                target="_blank"
+                rel="noreferrer"
+                textValue={`Open in ${assistant.label}`}
+              >
+                <span className="text-muted-foreground [&_svg]:size-4">
+                  {assistant.icon}
+                </span>
+                Open in {assistant.label}
+                <ArrowUpRightIcon
+                  size={14}
+                  aria-hidden="true"
+                  className="ms-auto text-muted-foreground"
+                />
+              </MenuItem>
+            ))}
+          </MenuContent>
+        </MenuPopover>
+      </MenuTrigger>
       <output className="sr-only" aria-live="polite">
         {copied ? "Page copied as Markdown" : failed ? "Copy failed" : ""}
       </output>
@@ -399,12 +320,7 @@ function CheckChip({
             aria-hidden="true"
             className={cn("size-1.5 rounded-full", toneClass[tone])}
           />
-          <span
-            className={cn(
-              "tabular-nums",
-              compactHeaderPreview && count === 0 && "sr-only",
-            )}
-          >
+          <span className={cn("tabular-nums", count === 0 && "sr-only")}>
             {issueCount(count)}
           </span>
         </Button>

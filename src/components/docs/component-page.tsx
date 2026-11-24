@@ -105,7 +105,6 @@ export async function ComponentPage({
         description={description}
         primitives={component?.primitives ?? []}
         markdownUrl={componentDocUrl(site, componentSlug)}
-        prompt={prompt}
         axe={checks.axe}
         doctor={checks.doctor}
       />
@@ -130,6 +129,7 @@ export async function ComponentPage({
         <PreviewDependencies uses={previewUses} />
         <InstallTabs
           prompt={prompt}
+          collapsiblePrompt
           cliAvailable={Boolean(cliUrl)}
           cli={
             <div className="space-y-4">

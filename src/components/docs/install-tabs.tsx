@@ -43,11 +43,13 @@ function selectMethod(method: InstallMethod) {
 
 export function InstallTabs({
   prompt,
+  collapsiblePrompt = false,
   cli,
   custom,
   cliAvailable,
 }: {
   prompt: string;
+  collapsiblePrompt?: boolean;
   cli: ReactNode;
   custom: ReactNode;
   cliAvailable: boolean;
@@ -61,10 +63,7 @@ export function InstallTabs({
 
   return (
     <div className="min-w-0">
-      <AgentPrompt
-        prompt={prompt}
-        collapsible={process.env.NODE_ENV === "development"}
-      />
+      <AgentPrompt prompt={prompt} collapsible={collapsiblePrompt} />
       <p className="mt-8 mb-3 text-[13px] leading-6 text-muted-foreground">
         Or install it yourself.
       </p>
