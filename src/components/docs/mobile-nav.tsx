@@ -1,17 +1,6 @@
 "use client";
 
-import {
-  BookOpenIcon,
-  ChartBarIcon,
-  CubeIcon,
-  HouseIcon,
-  type Icon,
-  ListIcon,
-  PaletteIcon,
-  SquaresFourIcon,
-  SwatchesIcon,
-  TextAaIcon,
-} from "@phosphor-icons/react";
+import { ListIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -22,6 +11,7 @@ import {
   SheetBody,
   SheetClose,
   SheetHandle,
+  SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
@@ -31,18 +21,9 @@ import { DocsNav } from "./docs-nav";
 import { GitHubMark, repositoryUrl } from "./github-mark";
 import { OnUnmount, useNavigateAfterClose } from "./navigate-after-close";
 
-const icons: Record<string, Icon> = {
-  "/": HouseIcon,
-  "/components/installation": BookOpenIcon,
-  "/components": CubeIcon,
-  "/blocks": SquaresFourIcon,
-  "/charts": ChartBarIcon,
-  "/themes": PaletteIcon,
-  "/typography": TextAaIcon,
-  "/colors": SwatchesIcon,
-};
-
 const sections = [{ href: "/", label: "Home" }, ...mainNav];
+const linkClassName =
+  "flex min-h-12 min-w-0 items-center rounded-lg px-3 py-2 text-lg/6 font-medium wrap-anywhere transition-colors duration-150 ease-out-quint focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-transparent";
 
 export function MobileNav() {
   const pathname = usePathname();
@@ -69,20 +50,21 @@ export function MobileNav() {
           <ListIcon size={20} aria-hidden="true" />
         </Button>
         <Sheet>
-          <div className="relative flex shrink-0 items-center px-3">
-            <SheetHandle />
-            <SheetTitle className="sr-only">Menu</SheetTitle>
-            <SheetClose className="absolute inset-e-3" />
-          </div>
-          <SheetBody className="grid content-start gap-4 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
+          <SheetHandle />
+          <SheetHeader className="items-center px-8 pt-1 pb-2">
+            <SheetTitle level={2} className="text-2xl">
+              Menu
+            </SheetTitle>
+            <SheetClose aria-label="Close menu" />
+          </SheetHeader>
+          <SheetBody className="grid content-start gap-6 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
             <nav
               aria-label="Main navigation"
               className="relative isolate border-b border-border/70 pb-4"
             >
               <ItemHighlight placement="under" items="a" />
-              <ul className="grid grid-cols-2 gap-1">
+              <ul className="grid grid-cols-2">
                 {sections.map((link) => {
-                  const SectionIcon = icons[link.href];
                   const isActive = active === link.href;
                   return (
                     <li key={link.href} className="grid min-w-0">
@@ -97,40 +79,34 @@ export function MobileNav() {
                             : undefined
                         }
                         className={cn(
-                          "group/section flex min-h-10 min-w-0 items-center gap-2.5 rounded-lg px-3 text-[13px] font-medium transition-[color,background-color] duration-150 ease-out-quint hover:text-foreground focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-transparent",
+                          linkClassName,
                           isActive
                             ? "bg-accent text-accent-foreground"
-                            : "text-muted-foreground",
+                            : "text-foreground",
                         )}
                       >
-                        <SectionIcon
-                          size={16}
-                          aria-hidden="true"
-                          weight={isActive ? "fill" : "regular"}
-                          className={cn(
-                            "shrink-0 transition-colors duration-150 ease-out-quint group-hover/section:text-foreground group-focus-visible/section:text-primary-foreground",
-                            isActive
-                              ? "text-foreground"
-                              : "text-muted-foreground",
-                          )}
-                        />
-                        <span className="truncate">{link.label}</span>
+                        {link.label}
                       </Link>
                     </li>
                   );
                 })}
+                <li>
+                  <a
+                    href={repositoryUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn(
+                      linkClassName,
+                      "gap-2 text-muted-foreground hover:text-foreground",
+                    )}
+                  >
+                    GitHub
+                    <GitHubMark className="size-4 shrink-0" />
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                </li>
               </ul>
             </nav>
-            <a
-              href={repositoryUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex min-h-10 min-w-0 items-center gap-2.5 px-3 text-[13px] font-medium text-muted-foreground transition-[color,background-color] duration-150 ease-out-quint hover:text-foreground focus-visible:bg-primary focus-visible:text-primary-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-transparent"
-            >
-              <GitHubMark className="size-4 shrink-0" />
-              <span className="truncate">GitHub</span>
-              <span className="sr-only"> (opens in a new tab)</span>
-            </a>
             <DocsNav mobile onNavigate={onNavigate} />
             <OnUnmount onUnmount={onClosed} />
           </SheetBody>
