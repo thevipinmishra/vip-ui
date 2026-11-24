@@ -61,7 +61,10 @@ export function InstallTabs({
 
   return (
     <div className="min-w-0">
-      <AgentPrompt prompt={prompt} />
+      <AgentPrompt
+        prompt={prompt}
+        collapsible={process.env.NODE_ENV === "development"}
+      />
       <p className="mt-8 mb-3 text-[13px] leading-6 text-muted-foreground">
         Or install it yourself.
       </p>
