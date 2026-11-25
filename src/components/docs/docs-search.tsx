@@ -14,9 +14,10 @@ import {
   SquaresFourIcon,
   SwatchesIcon,
   TerminalWindowIcon,
+  TextAaIcon,
 } from "@phosphor-icons/react";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "react-aria-components";
 import {
   CommandPalette,
@@ -26,6 +27,8 @@ import {
 import { Kbd, KbdGroup } from "@/components/ui/kbd-code";
 import { catalogComponents } from "@/lib/catalog";
 import { docsGuides, type Guide } from "@/lib/navigation";
+import { componentKeywords, pageKeywords } from "@/lib/search-keywords";
+import { sortByRelevance } from "@/lib/search-rank";
 
 const shortcutTakenByDemo = new Set(["/components/command-palette"]);
 
@@ -48,6 +51,7 @@ const pages = [
   { href: "/blocks", label: "Blocks", icon: SquaresFourIcon },
   { href: "/charts", label: "Charts", icon: ChartBarIcon },
   { href: "/themes", label: "Themes", icon: PaletteIcon },
+  { href: "/typography", label: "Typography", icon: TextAaIcon },
   { href: "/colors", label: "Colors", icon: SwatchesIcon },
 ];
 
@@ -55,8 +59,32 @@ export function DocsSearch() {
   const router = useRouter();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
   const [modifier, setModifier] = useState<string>();
   const shortcut = !shortcutTakenByDemo.has(pathname);
+
+  const sortedPages = useMemo(
+    () =>
+      sortByRelevance(pages, query, (page) => ({
+        name: page.label,
+        keywords: pageKeywords[page.href],
+      })),
+    [query],
+  );
+  const sortedComponents = useMemo(
+    () =>
+      sortByRelevance(catalogComponents, query, (component) => ({
+        name: component.name,
+        keywords: componentKeywords[component.slug],
+        group: component.group,
+      })),
+    [query],
+  );
+
+  const onOpenChange = (isOpen: boolean) => {
+    setOpen(isOpen);
+    if (!isOpen) setQuery("");
+  };
 
   useEffect(() => {
     setModifier(/Mac|iPhone|iPad/.test(navigator.userAgent) ? "⌘" : "Ctrl");
@@ -76,6 +104,7 @@ export function DocsSearch() {
       if (!open && document.querySelector("[role='dialog']")) return;
       event.preventDefault();
       setOpen(!open);
+      setQuery("");
     };
     window.addEventListener("keydown", onKeyDown, true);
     return () => window.removeEventListener("keydown", onKeyDown, true);
@@ -100,17 +129,20 @@ export function DocsSearch() {
       </Button>
       <CommandPalette
         isOpen={open}
-        onOpenChange={setOpen}
+        onOpenChange={onOpenChange}
         shortcut={false}
+        inputValue={query}
+        onInputChange={setQuery}
         title="Search components and pages"
         placeholder="Search components and pages"
         emptyMessage="No components or pages match."
       >
         <CommandPaletteSection title="Pages">
-          {pages.map((page) => (
+          {sortedPages.map((page) => (
             <CommandPaletteItem
               key={page.href}
               textValue={page.label}
+              keywords={pageKeywords[page.href]}
               onAction={() => router.push(page.href)}
             >
               <page.icon
@@ -123,10 +155,14 @@ export function DocsSearch() {
           ))}
         </CommandPaletteSection>
         <CommandPaletteSection title="Components">
-          {catalogComponents.map((component) => (
+          {sortedComponents.map((component) => (
             <CommandPaletteItem
               key={component.slug}
-              textValue={`${component.name} ${component.group} ${component.description}`}
+              textValue={component.name}
+              keywords={[
+                ...(componentKeywords[component.slug] ?? []),
+                component.group,
+              ]}
               onAction={() => router.push(`/components/${component.slug}`)}
             >
               <span className="min-w-0 flex-1 truncate">{component.name}</span>

@@ -35,7 +35,7 @@ export function InputGroup({ size, className, ...props }: InputGroupProps) {
         cn(
           fieldHeight,
           fieldRadius,
-          "flex w-full min-w-0 items-center gap-x-2 border border-input bg-card ps-(--field-px,0.75rem) pe-(--field-px,0.75rem) text-foreground shadow-(--shadow-card) hover:border-primary/45 data-focus-within:border-ring data-focus-within:ring-1 data-focus-within:ring-ring data-invalid:border-destructive data-invalid:hover:border-destructive data-invalid:data-focus-within:border-destructive data-invalid:data-focus-within:ring-destructive data-disabled:bg-muted data-disabled:opacity-60 data-disabled:shadow-none data-disabled:hover:border-input has-[>[data-align=block-end]]:flex-wrap has-[>[data-align=inline]:first-child_button]:ps-(--field-inset,0.25rem) has-[>[data-align=inline]:last-child_button]:pe-(--field-inset,0.25rem)",
+          "flex w-full min-w-0 items-center gap-x-(--field-gap,0.5rem) border border-input bg-card ps-(--field-px,0.75rem) pe-(--field-px,0.75rem) text-foreground shadow-(--shadow-card) hover:border-primary/45 data-focus-within:border-ring data-focus-within:ring-1 data-focus-within:ring-ring data-invalid:border-destructive data-invalid:hover:border-destructive data-invalid:data-focus-within:border-destructive data-invalid:data-focus-within:ring-destructive data-disabled:bg-muted data-disabled:opacity-60 data-disabled:shadow-none data-disabled:hover:border-input has-[>[data-align=block-end]]:flex-wrap has-[>[data-align=inline]:first-child_button]:ps-(--field-inset,0.25rem) has-[>[data-align=inline]:last-child_button]:pe-(--field-inset,0.25rem) has-[>[data-align=inline]:last-child>kbd]:pe-[calc((var(--field-h,2.5rem)-2px-1.25rem)/2)]",
           size && fieldSizeStyles[size],
           className,
         ),
@@ -56,7 +56,7 @@ export function InputGroupInput({
         cn(
           fieldInnerHeight,
           fieldText,
-          "min-w-[min(8rem,50%)] flex-1 cursor-text bg-transparent leading-6 text-foreground outline-none placeholder:text-muted-foreground/80 disabled:cursor-not-allowed [&::-webkit-search-cancel-button]:hidden",
+          "min-w-[min(8rem,50%)] flex-1 cursor-text bg-transparent text-foreground outline-none placeholder:text-muted-foreground/80 disabled:cursor-not-allowed [&::-webkit-search-cancel-button]:hidden",
           className,
         ),
       )}
@@ -95,7 +95,8 @@ export function InputGroupAddon({
       data-slot="input-group-addon"
       data-align={align}
       className={cn(
-        "inline-flex min-w-0 items-center gap-2 text-sm text-muted-foreground [&_svg]:shrink-0 [&>svg:not([class*='size-'])]:size-(--field-icon,1rem)",
+        fieldText,
+        "inline-flex min-w-0 items-center gap-(--field-gap,0.5rem) text-muted-foreground [&_svg]:shrink-0 [&>svg:not([class*='size-'])]:size-(--field-icon,1rem)",
         align === "block-end" &&
           "w-full justify-end border-t border-border/70 py-2",
         className,

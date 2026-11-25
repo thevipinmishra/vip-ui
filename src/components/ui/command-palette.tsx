@@ -9,6 +9,7 @@ import {
   useRef,
 } from "react";
 import {
+  type AutocompleteProps,
   Collection,
   composeRenderProps,
   Header,
@@ -16,6 +17,7 @@ import {
   MenuSection,
   type MenuSectionProps,
   Text,
+  useFilter,
 } from "react-aria-components";
 import { cn } from "@/lib/utils";
 import { Autocomplete } from "./autocomplete";
@@ -31,6 +33,7 @@ import {
 export interface CommandPaletteItemProps<T extends object>
   extends MenuItemProps<T> {
   shortcut?: string;
+  keywords?: string[];
 }
 
 export function CommandPaletteItem<T extends object>({
@@ -141,7 +144,8 @@ function CommandPaletteList({
   );
 }
 
-export interface CommandPaletteProps {
+export interface CommandPaletteProps
+  extends Omit<AutocompleteProps, "children" | "slot"> {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   children: ReactNode;
@@ -161,7 +165,20 @@ export function CommandPalette({
   emptyMessage = "No matching commands.",
   shortcut = true,
   className,
+  filter,
+  ...props
 }: CommandPaletteProps) {
+  const { contains } = useFilter({ sensitivity: "base" });
+  const matchesItem: NonNullable<AutocompleteProps["filter"]> = (
+    textValue,
+    inputValue,
+    node,
+  ) =>
+    contains(textValue, inputValue) ||
+    (node.props?.keywords ?? []).some((keyword: string) =>
+      contains(keyword, inputValue),
+    );
+
   const onShortcut = useEffectEvent((event: KeyboardEvent) => {
     if (
       event.key.toLowerCase() === "k" &&
@@ -201,7 +218,7 @@ export function CommandPalette({
       }}
     >
       <DialogTitle className="sr-only">{title}</DialogTitle>
-      <Autocomplete>
+      <Autocomplete {...props} filter={filter ?? matchesItem}>
         <SearchField autoFocus aria-label={placeholder} className="shrink-0">
           {({ isEmpty }) => (
             <div className="relative flex items-center border-b border-border/70">

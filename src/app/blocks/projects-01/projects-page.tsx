@@ -296,11 +296,11 @@ export function ProjectsPage() {
   }
 
   return (
-    <div className="min-h-svh bg-muted/40 px-4 py-8 sm:px-6 lg:px-8">
-      <div className="mx-auto grid w-full max-w-[1180px] gap-6">
-        <header className="flex flex-wrap items-end justify-between gap-4">
+    <main className="min-h-svh bg-background px-4 py-6 sm:px-6 sm:py-8">
+      <div className="mx-auto grid w-full max-w-6xl gap-4">
+        <header className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
           <div className="grid gap-1">
-            <h1 className="text-2xl font-semibold tracking-[-0.04em]">
+            <h1 className="text-2xl leading-tight font-semibold tracking-tight">
               Projects
             </h1>
             <p className="text-sm text-muted-foreground">
@@ -313,7 +313,7 @@ export function ProjectsPage() {
           </Button>
         </header>
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 rounded-lg border border-border bg-card p-2">
           <SearchField
             aria-label="Search projects"
             placeholder="Project or client"
@@ -362,18 +362,24 @@ export function ProjectsPage() {
             className="ms-auto"
           >
             <SegmentedControlItem value="grid">
-              <SquaresFourIcon aria-hidden="true" />
+              <SquaresFourIcon
+                weight={view === "grid" ? "fill" : "regular"}
+                aria-hidden="true"
+              />
               <span className="sr-only">Grid</span>
             </SegmentedControlItem>
             <SegmentedControlItem value="list">
-              <ListBulletsIcon aria-hidden="true" />
+              <ListBulletsIcon
+                weight={view === "list" ? "bold" : "regular"}
+                aria-hidden="true"
+              />
               <span className="sr-only">List</span>
             </SegmentedControlItem>
           </SegmentedControl>
         </div>
 
         {visible.length === 0 ? (
-          <div className="rounded-xl bg-card p-4 ring-1 ring-border/70 sm:p-6">
+          <div className="rounded-xl border border-border bg-card p-4 sm:p-6">
             <EmptyState className="border-0">
               <EmptyStateIcon>
                 <FolderOpenIcon />
@@ -418,7 +424,7 @@ export function ProjectsPage() {
             {visible.map((project) => (
               <li
                 key={project.id}
-                className="grid gap-4 rounded-xl bg-card p-4 shadow-(--shadow-card) ring-1 ring-border/70"
+                className="grid min-w-0 gap-4 rounded-xl border border-border bg-card p-4"
               >
                 <div className="flex items-start gap-3">
                   <ProjectTile project={project} />
@@ -443,9 +449,9 @@ export function ProjectsPage() {
                   }
                   value={project.done}
                   maxValue={Math.max(project.total, 1)}
-                  className="[&_[data-slot=progress-bar-label]]:font-normal [&_[data-slot=progress-bar-label]]:text-muted-foreground"
+                  className="[--primary:var(--muted-foreground)] **:data-[slot=progress-bar-label]:font-normal **:data-[slot=progress-bar-label]:text-muted-foreground"
                 />
-                <div className="flex items-center gap-2 text-sm">
+                <div className="flex flex-wrap items-center gap-2 text-sm">
                   <Badge variant={statusBadge[project.status]} dot>
                     {statusName(project.status)}
                   </Badge>
@@ -460,7 +466,7 @@ export function ProjectsPage() {
             ))}
           </ul>
         ) : (
-          <div className="overflow-x-auto rounded-xl bg-card shadow-(--shadow-card) ring-1 ring-border/70">
+          <div className="overflow-x-auto rounded-xl border border-border bg-card">
             <Table aria-label="Projects" className="min-w-[46rem]">
               <TableHeader>
                 <Column isRowHeader>Project</Column>
@@ -496,7 +502,7 @@ export function ProjectsPage() {
                         aria-label={`${project.name} progress`}
                         value={project.done}
                         maxValue={Math.max(project.total, 1)}
-                        className="w-36"
+                        className="w-36 [--primary:var(--muted-foreground)]"
                       />
                     </Cell>
                     <Cell>
@@ -545,6 +551,6 @@ export function ProjectsPage() {
           }}
         />
       )}
-    </div>
+    </main>
   );
 }

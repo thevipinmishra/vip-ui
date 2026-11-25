@@ -121,7 +121,7 @@ export function SearchFieldInput({
         cn(
           fieldInputStyles,
           fieldTriggerInputPadding,
-          "ps-[calc(var(--field-px,0.75rem)+var(--field-icon,1rem)+0.625rem)] [&::-webkit-search-cancel-button]:hidden",
+          "ps-[calc(var(--field-px,0.75rem)+var(--field-icon,1rem)+var(--field-gap,0.5rem))] [&::-webkit-search-cancel-button]:hidden",
           className,
         ),
       )}

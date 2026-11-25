@@ -1214,6 +1214,18 @@
     "emptyMessage": {
       "type": "string",
       "default": "\"No matching commands.\""
+    },
+    "inputValue": {
+      "type": "string"
+    },
+    "defaultInputValue": {
+      "type": "string"
+    },
+    "onInputChange": {
+      "type": "(value: string) => void"
+    },
+    "filter": {
+      "type": "(textValue: string, inputValue: string, node: Node) => boolean"
     }
   },
   "CommandPaletteSection": {
@@ -1225,6 +1237,9 @@
   "CommandPaletteItem": {
     "textValue": {
       "type": "string"
+    },
+    "keywords": {
+      "type": "string[]"
     },
     "shortcut": {
       "type": "string"

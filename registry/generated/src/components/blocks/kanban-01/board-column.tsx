@@ -107,9 +107,9 @@ export function BoardColumn({
   return (
     <section
       aria-labelledby={`column-${id}`}
-      className="flex w-[17.5rem] shrink-0 snap-start flex-col gap-2 rounded-xl bg-muted/60 p-2 ring-1 ring-border/60 ring-inset lg:w-auto lg:min-w-0 lg:flex-1"
+      className="flex w-[17.5rem] shrink-0 snap-start flex-col gap-2 rounded-xl border border-border bg-muted/60 p-2 lg:w-auto lg:min-w-0 lg:flex-1"
     >
-      <header className="flex h-8 items-center gap-2 px-1.5">
+      <header className="flex min-h-8 flex-wrap items-center gap-2 px-1.5">
         <h2 id={`column-${id}`} className="text-sm font-semibold">
           {name}
         </h2>
@@ -144,10 +144,10 @@ export function BoardColumn({
             <GridListItem
               id={task.id}
               textValue={task.title}
-              className="group relative grid min-h-0 gap-2.5 rounded-lg border border-border/70 bg-card p-3 shadow-(--shadow-card) hover:border-border dragging:opacity-50"
+              className="group relative grid min-h-0 gap-2.5 rounded-lg border border-border bg-card p-3 hover:bg-accent/50 dragging:opacity-50"
             >
               <div className="flex items-start gap-2">
-                <p className="min-w-0 flex-1 text-sm leading-5 font-medium text-pretty">
+                <p className="min-w-0 flex-1 text-sm leading-5 font-medium wrap-anywhere text-pretty">
                   {task.title}
                 </p>
                 <AriaButton
@@ -174,7 +174,7 @@ export function BoardColumn({
                   ))}
                 </div>
               )}
-              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+              <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
                 <PriorityIcon priority={task.priority} />
                 <span className="sr-only">
                   {priorityName(task.priority)} priority,

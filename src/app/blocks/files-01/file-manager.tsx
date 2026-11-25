@@ -29,7 +29,6 @@ import {
   useDragAndDrop,
 } from "react-aria-components";
 import { Avatar } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Breadcrumb, Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { Button } from "@/components/ui/button";
 import { CarouselSlide } from "@/components/ui/carousel";
@@ -78,7 +77,6 @@ import {
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { SearchField } from "@/components/ui/search-field";
 import { Select } from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
 import {
   Sheet,
   SheetBody,
@@ -601,7 +599,7 @@ export function FileManager() {
               </Breadcrumbs>
             </nav>
 
-            <div className="flex flex-wrap items-end justify-between gap-3">
+            <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
                   <Button
@@ -614,39 +612,52 @@ export function FileManager() {
                   >
                     <ListIcon size={18} aria-hidden="true" />
                   </Button>
-                  <h1 className="text-2xl font-semibold tracking-[-0.04em]">
+                  <h1 className="min-w-0 text-2xl leading-tight font-semibold tracking-tight wrap-anywhere">
                     {currentName}
                   </h1>
-                  <Badge variant="outline">
-                    {inFolder.length} {inFolder.length === 1 ? "file" : "files"}
-                  </Badge>
                 </div>
-                {inFolder.length > 0 && (
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    {formatSize(totalSize)} · Updated{" "}
-                    {formatShortDate(new Date(latest).toISOString())}
-                  </p>
-                )}
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {inFolder.length} {inFolder.length === 1 ? "file" : "files"}
+                  {inFolder.length > 0 &&
+                    ` · ${formatSize(totalSize)} · Updated ${formatShortDate(new Date(latest).toISOString())}`}
+                </p>
               </div>
-              <Button
-                variant="outline"
-                size="sm"
-                onPress={() => setDialog({ mode: "folder" })}
+              <FileTrigger
+                acceptedFileTypes={[
+                  "image/*",
+                  "application/pdf",
+                  "text/*",
+                  "application/zip",
+                ]}
+                allowsMultiple
+                onSelect={(list) => {
+                  if (list) addFiles(Array.from(list));
+                }}
               >
-                <FolderSimplePlusIcon
-                  data-icon="inline-start"
-                  size={16}
-                  aria-hidden="true"
-                />
-                New folder
-              </Button>
+                <Button>
+                  <UploadSimpleIcon
+                    data-icon="inline-start"
+                    size={16}
+                    aria-hidden="true"
+                  />
+                  Upload
+                </Button>
+              </FileTrigger>
             </div>
 
             <Toolbar
               aria-label="File actions"
               size="sm"
-              className="mt-4 w-full flex-wrap gap-2"
+              className="mt-4 w-full gap-2 p-2 shadow-none"
             >
+              <SearchField
+                aria-label="Search files"
+                placeholder="Search files"
+                size="sm"
+                value={query}
+                onChange={setQuery}
+                className="w-full sm:w-64"
+              />
               <ToggleButtonGroup
                 aria-label="View"
                 selectionMode="single"
@@ -681,14 +692,20 @@ export function FileManager() {
                     data-icon="inline-start"
                     size={16}
                     aria-hidden="true"
+                    className="hidden sm:block"
                   />
-                  {sort === "name"
-                    ? "Name"
-                    : sort === "size"
-                      ? "Size"
-                      : sort === "manual"
-                        ? "Custom order"
-                        : "Last modified"}
+                  {sort === "name" ? (
+                    "Name"
+                  ) : sort === "size" ? (
+                    "Size"
+                  ) : sort === "manual" ? (
+                    "Custom order"
+                  ) : (
+                    <>
+                      <span className="sm:hidden">Modified</span>
+                      <span className="hidden sm:inline">Last modified</span>
+                    </>
+                  )}
                   <CaretDownIcon
                     data-icon="inline-end"
                     size={12}
@@ -719,43 +736,18 @@ export function FileManager() {
                 </MenuPopover>
               </MenuTrigger>
 
-              <Separator
-                orientation="vertical"
-                className="mx-1 hidden h-5 self-center sm:block"
-              />
-
-              <SearchField
-                aria-label="Search files"
-                placeholder="Search files"
-                size="sm"
-                value={query}
-                onChange={setQuery}
-                className="w-full sm:w-52"
-              />
-
-              <div className="ms-auto flex items-center gap-2">
-                <FileTrigger
-                  acceptedFileTypes={[
-                    "image/*",
-                    "application/pdf",
-                    "text/*",
-                    "application/zip",
-                  ]}
-                  allowsMultiple
-                  onSelect={(list) => {
-                    if (list) addFiles(Array.from(list));
-                  }}
-                >
-                  <Button>
-                    <UploadSimpleIcon
-                      data-icon="inline-start"
-                      size={16}
-                      aria-hidden="true"
-                    />
-                    Upload
-                  </Button>
-                </FileTrigger>
-              </div>
+              <Button
+                variant="outline"
+                className="ms-auto"
+                onPress={() => setDialog({ mode: "folder" })}
+              >
+                <FolderSimplePlusIcon
+                  data-icon="inline-start"
+                  size={16}
+                  aria-hidden="true"
+                />
+                New folder
+              </Button>
             </Toolbar>
 
             {selectedFiles.length > 0 && (

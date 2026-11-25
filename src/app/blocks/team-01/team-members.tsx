@@ -287,9 +287,9 @@ export function TeamMembers() {
   }
 
   return (
-    <Card>
+    <Card className="shadow-none">
       <CardHeader>
-        <CardTitle as="h1" className="text-xl">
+        <CardTitle as="h1" className="text-2xl leading-tight tracking-tight">
           Team members
         </CardTitle>
         <CardDescription>
@@ -297,7 +297,7 @@ export function TeamMembers() {
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-6">
-        <dl className="grid grid-cols-2 gap-x-6 gap-y-4 rounded-lg bg-muted/50 p-4 ring-1 ring-border/70 ring-inset sm:grid-cols-4">
+        <dl className="grid grid-cols-2 gap-x-4 gap-y-4 rounded-lg border border-border bg-muted/40 p-4 sm:grid-cols-4">
           <div className="grid gap-2">
             <dt className="text-xs text-muted-foreground">Seats</dt>
             <dd className="grid gap-2">
@@ -309,7 +309,7 @@ export function TeamMembers() {
                 className="h-1.5 overflow-hidden rounded-full bg-secondary"
               >
                 <span
-                  className="block h-full rounded-full bg-primary"
+                  className="block h-full rounded-full bg-muted-foreground"
                   style={{ width: `${(members.length / seatLimit) * 100}%` }}
                 />
               </span>
@@ -332,7 +332,7 @@ export function TeamMembers() {
             </dd>
           </div>
         </dl>
-        <div className="grid items-start gap-3 sm:grid-cols-[minmax(0,1fr)_10rem_auto]">
+        <div className="grid items-start gap-3 rounded-lg border border-border bg-background p-3 sm:grid-cols-[minmax(0,1fr)_10rem_auto]">
           <TokenField
             value={invites}
             onChange={(value) => {
@@ -341,9 +341,7 @@ export function TeamMembers() {
             }}
             onSubmit={() => setInvites(invites.commit())}
           >
-            <TokenFieldLabel className="sr-only">
-              Email addresses
-            </TokenFieldLabel>
+            <TokenFieldLabel>Email addresses</TokenFieldLabel>
             <TokenFieldInput placeholder="name@company.com, …">
               {(segment) => (
                 <Token
@@ -361,12 +359,13 @@ export function TeamMembers() {
             </TokenFieldDescription>
           </TokenField>
           <Select
+            label="Role"
             aria-label="Role for new members"
             options={roles.filter((item) => item.id !== "owner")}
             value={role}
             onChange={(key) => setRole(String(key))}
           />
-          <Button onPress={invite}>
+          <Button className="sm:mt-6" onPress={invite}>
             <PaperPlaneTiltIcon
               data-icon="inline-start"
               size={16}
@@ -383,14 +382,16 @@ export function TeamMembers() {
             <div className="flex w-full flex-wrap gap-2 sm:w-auto">
               <Select
                 aria-label="Filter by role"
+                size="sm"
                 options={[{ id: "all", name: "All roles" }, ...roles]}
                 value={roleFilter}
                 onChange={(key) => setRoleFilter(String(key))}
-                className="w-36"
+                className="w-28"
               />
               <SearchField
                 aria-label="Search members"
-                placeholder="Name, email, or title"
+                placeholder="Search members"
+                size="sm"
                 value={query}
                 onChange={setQuery}
                 className="min-w-0 flex-1 sm:w-64 sm:flex-none"

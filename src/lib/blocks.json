@@ -43,6 +43,18 @@
     {
       "slug": "workspace",
       "label": "Workspace"
+    },
+    {
+      "slug": "finance",
+      "label": "Finance"
+    },
+    {
+      "slug": "developer",
+      "label": "Developer"
+    },
+    {
+      "slug": "travel",
+      "label": "Travel"
     }
   ],
   "blocks": [
@@ -602,8 +614,8 @@
       "height": 716,
       "theme": {
         "color": "pink",
-        "font": "geist",
-        "radius": "0.25rem"
+        "font": "inter",
+        "radius": "0.5rem"
       },
       "added": "2026-11-21"
     },
@@ -615,8 +627,8 @@
       "height": 765,
       "theme": {
         "color": "bronze",
-        "font": "figtree",
-        "radius": "0.75rem"
+        "font": "inter",
+        "radius": "0.5rem"
       },
       "added": "2026-11-21"
     },
@@ -628,8 +640,8 @@
       "height": 800,
       "theme": {
         "color": "gold",
-        "font": "manrope",
-        "radius": "1rem"
+        "font": "inter",
+        "radius": "0.75rem"
       },
       "added": "2026-11-21"
     },
@@ -641,8 +653,8 @@
       "height": 1313,
       "theme": {
         "color": "indigo",
-        "font": "lora",
-        "radius": "0.25rem"
+        "font": "inter",
+        "radius": "0.5rem"
       },
       "added": "2026-11-21"
     },
@@ -671,6 +683,45 @@
         "radius": "0.5rem"
       },
       "added": "2026-11-03"
+    },
+    {
+      "name": "finance-01",
+      "title": "Money overview",
+      "description": "Personal finance overview with total balance, accounts, spending, transactions, a savings goal, bills, and a card.",
+      "category": "finance",
+      "height": 1650,
+      "theme": {
+        "color": "sage",
+        "font": "geist",
+        "radius": "0.75rem"
+      },
+      "added": "2026-11-24"
+    },
+    {
+      "name": "deployments-01",
+      "title": "Deployments",
+      "description": "Deployment dashboard with environments, build steps, live logs, deployment history, and project settings.",
+      "category": "developer",
+      "height": 1400,
+      "theme": {
+        "color": "slate",
+        "font": "jetbrains-mono",
+        "radius": "0.25rem"
+      },
+      "added": "2026-11-24"
+    },
+    {
+      "name": "trip-01",
+      "title": "Trip itinerary",
+      "description": "Trip planner with a day-by-day itinerary, weather, packing list, reservations, and notes.",
+      "category": "travel",
+      "height": 2270,
+      "theme": {
+        "color": "sand",
+        "font": "lora",
+        "radius": "1rem"
+      },
+      "added": "2026-11-24"
     }
   ]
 }

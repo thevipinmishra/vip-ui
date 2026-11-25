@@ -113,11 +113,11 @@ function SignField({
       onClick={() => onFill(id)}
       aria-label={label}
       className={cn(
-        "inline-flex scroll-my-24 items-center justify-center gap-1.5 rounded-md border border-dashed border-warning bg-warning-subtle text-sm font-medium text-warning-foreground outline-offset-2 outline-transparent transition-colors duration-150 ease-out-quint hover:bg-warning-subtle/70 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring",
+        "inline-flex scroll-my-24 items-center justify-center gap-1.5 rounded-md border border-dashed border-primary/70 bg-primary/10 font-sans text-sm font-medium text-foreground outline-offset-2 outline-transparent transition-colors duration-150 ease-out-quint hover:bg-primary/15 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring",
         size,
       )}
     >
-      <PenNibIcon size={16} aria-hidden="true" />
+      <PenNibIcon size={16} className="text-primary" aria-hidden="true" />
       {kind === "signature" ? "Sign" : "Initial"}
     </button>
   );
@@ -134,7 +134,7 @@ function Section({
 }) {
   return (
     <section className="grid gap-2">
-      <h2 className="text-sm font-semibold">
+      <h2 className="text-base font-semibold">
         {number}. {title}
       </h2>
       {children}
@@ -223,6 +223,11 @@ export function SignDocument() {
             <p className="truncate text-xs text-muted-foreground max-sm:hidden">
               From {agreement.sender}, {agreement.company}
             </p>
+            {status === "signing" && (
+              <p className="truncate text-xs text-muted-foreground tabular-nums sm:hidden">
+                {done} of {fields.length} fields done
+              </p>
+            )}
           </div>
         </div>
         {status === "signing" ? (
@@ -270,7 +275,7 @@ export function SignDocument() {
   if (status !== "signing") {
     const signed = status === "signed";
     return (
-      <div className="min-h-svh bg-muted/40">
+      <div className="min-h-svh bg-background">
         {header}
         <main className="mx-auto grid w-full max-w-lg gap-6 px-4 py-16 text-center sm:px-6">
           <span
@@ -344,19 +349,19 @@ export function SignDocument() {
   }
 
   return (
-    <div className="min-h-svh bg-muted/40">
+    <div className="min-h-svh bg-background">
       {header}
       <main className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-start">
         <article
           aria-label={agreement.title}
-          className="min-w-0 rounded-xl bg-card px-5 py-8 shadow-(--shadow-card) ring-1 ring-border/70 sm:px-10 sm:py-12"
+          className="min-w-0 rounded-xl border border-border bg-card px-5 py-8 sm:px-10 sm:py-12"
         >
-          <div className="mx-auto grid max-w-2xl gap-7 text-sm leading-6">
+          <div className="mx-auto grid max-w-prose gap-7 font-serif text-base leading-7">
             <div className="grid gap-1 border-b border-border/70 pb-6">
-              <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
+              <p className="font-sans text-xs font-medium tracking-wide text-muted-foreground uppercase">
                 {agreement.company}
               </p>
-              <h1 className="text-2xl font-semibold tracking-[-0.03em]">
+              <h1 className="text-3xl leading-tight font-semibold tracking-tight">
                 {agreement.title}
               </h1>
               <p className="text-muted-foreground">
@@ -395,7 +400,11 @@ export function SignDocument() {
                         scope="row"
                         className="px-3 py-2 text-start font-normal"
                       >
-                        <Checkbox isSelected={parking} onChange={setParking}>
+                        <Checkbox
+                          isSelected={parking}
+                          onChange={setParking}
+                          className="font-sans"
+                        >
                           Parking space (optional)
                         </Checkbox>
                       </th>
