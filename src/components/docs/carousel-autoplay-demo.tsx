@@ -2,7 +2,7 @@
 
 import { PauseIcon, PlayIcon } from "@phosphor-icons/react";
 import Autoplay, { type AutoplayType } from "embla-carousel-autoplay";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -40,79 +40,72 @@ const stories = [
   },
 ];
 
+function prefersReducedMotion() {
+  return (
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
+}
+
 function AutoplayToggle() {
   const { api } = useCarousel();
-  const [playing, setPlaying] = useState(false);
+  const [paused, setPaused] = useState(prefersReducedMotion);
+  const pausedRef = useRef(paused);
 
   useEffect(() => {
     if (!api) return;
-    const autoplay = api.plugins().autoplay as AutoplayType | undefined;
-    if (!autoplay) return;
-    setPlaying(autoplay.isPlaying());
-    const play = () => setPlaying(true);
-    const stop = () => setPlaying(false);
-    api.on("autoplay:play", play);
-    api.on("autoplay:stop", stop);
+    const hold = () => {
+      if (!pausedRef.current) return;
+      queueMicrotask(() => {
+        (api.plugins().autoplay as AutoplayType | undefined)?.stop();
+      });
+    };
+    api.on("autoplay:play", hold);
     return () => {
-      api.off("autoplay:play", play);
-      api.off("autoplay:stop", stop);
+      api.off("autoplay:play", hold);
     };
   }, [api]);
 
-  if (!api?.plugins().autoplay) return null;
+  const autoplay = api?.plugins().autoplay as AutoplayType | undefined;
+  if (!autoplay) return null;
 
   return (
     <Button
       variant="outline"
       size="sm"
       iconOnly
-      aria-label={playing ? "Pause slides" : "Play slides"}
+      aria-label={paused ? "Play slides" : "Pause slides"}
       onPress={() => {
-        const autoplay = api.plugins().autoplay as AutoplayType | undefined;
-        if (!autoplay) return;
-        if (autoplay.isPlaying()) autoplay.stop();
-        else autoplay.play();
+        pausedRef.current = !paused;
+        setPaused(!paused);
+        if (paused) autoplay.play();
+        else autoplay.stop();
       }}
     >
-      {playing ? (
-        <PauseIcon aria-hidden="true" />
-      ) : (
+      {paused ? (
         <PlayIcon aria-hidden="true" />
+      ) : (
+        <PauseIcon aria-hidden="true" />
       )}
     </Button>
   );
 }
 
-function useReducedMotionPreference() {
-  const [reduced, setReduced] = useState(false);
-
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReduced(query.matches);
-    update();
-    query.addEventListener("change", update);
-    return () => query.removeEventListener("change", update);
-  }, []);
-
-  return reduced;
-}
-
 export function CarouselAutoplayDemo() {
-  const reducedMotion = useReducedMotionPreference();
+  const [plugins] = useState(() => [
+    Autoplay({
+      delay: 4000,
+      playOnInit: !prefersReducedMotion(),
+      stopOnInteraction: false,
+      stopOnMouseEnter: true,
+    }),
+  ]);
 
   return (
     <Carousel
       aria-label="Trip highlights"
       opts={{ loop: true }}
-      plugins={[
-        Autoplay({
-          delay: 4000,
-          playOnInit: !reducedMotion,
-          stopOnInteraction: false,
-          stopOnMouseEnter: true,
-          stopOnFocusIn: true,
-        }),
-      ]}
+      plugins={plugins}
       className="w-full max-w-md"
     >
       <CarouselViewport aria-live="off">

@@ -2532,12 +2532,12 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
     apiPart<typeof CarouselViewport>({
       name: "CarouselViewport",
       description:
-        "The Embla viewport and its flex track. It takes focus, so the arrow keys move one slide, and it fades the edges that have more slides.",
+        "The Embla viewport and its flex track. It takes focus, so the arrow keys move one slide.",
       props: [
         {
           name: "trackClassName",
           description:
-            "Adds classes to the inner flex track, such as a different gap or alignment.",
+            "Adds classes to the inner flex track, such as a different alignment.",
         },
       ],
     }),
@@ -2566,7 +2566,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
     apiPart<typeof CarouselIndicators>({
       name: "CarouselIndicators",
       description:
-        "Shows one dot per scroll snap in a group named Slides. The current dot stretches.",
+        "Shows one dot per scroll snap. The current dot stretches and takes the tab stop.",
       props: [],
     }),
     apiPart<typeof CarouselThumbnails>({
@@ -2651,7 +2651,7 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
     apiPart<typeof LightboxContent>({
       name: "LightboxContent",
       description:
-        "Renders the modal, the image carousel, the count, the side buttons, and the close button. Its children are the slides.",
+        "Renders the modal, the image carousel, the count, the side buttons, and the close button. Its children are `CarouselSlide` elements.",
       props: [
         {
           name: "aria-label",

@@ -553,6 +553,7 @@
       ],
       "registryDependencies": [
         "https://vip-ui.dev/r/button.json",
+        "https://vip-ui.dev/r/motion.json",
         "https://vip-ui.dev/r/utils.json"
       ],
       "cssVars": {

@@ -27,7 +27,7 @@ export function CarouselSeveralDemo() {
         {stays.map((stay) => {
           const { photo } = stay;
           return (
-            <CarouselSlide key={stay.name} className="basis-1/2">
+            <CarouselSlide key={stay.name} className="basis-4/5 sm:basis-1/2">
               <div
                 role="img"
                 aria-label={photo.alt}
