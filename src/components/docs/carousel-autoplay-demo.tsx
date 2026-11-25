@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
+  type CarouselApi,
   CarouselNext,
   CarouselPrevious,
   CarouselSlide,
@@ -47,18 +48,22 @@ function prefersReducedMotion() {
   );
 }
 
+function autoplayOf(api: CarouselApi) {
+  return api.plugins().autoplay as AutoplayType | undefined;
+}
+
 function AutoplayToggle() {
   const { api } = useCarousel();
-  const [paused, setPaused] = useState(prefersReducedMotion);
-  const pausedRef = useRef(paused);
+  const [choice, setChoice] = useState<boolean | null>(null);
+  const choiceRef = useRef(choice);
 
   useEffect(() => {
     if (!api) return;
     const hold = () => {
-      if (!pausedRef.current) return;
-      queueMicrotask(() => {
-        (api.plugins().autoplay as AutoplayType | undefined)?.stop();
-      });
+      const autoplay = autoplayOf(api);
+      if (!autoplay) return;
+      if (!(choiceRef.current ?? !autoplay.options.playOnInit)) return;
+      queueMicrotask(() => autoplay.stop());
     };
     api.on("autoplay:play", hold);
     return () => {
@@ -66,8 +71,9 @@ function AutoplayToggle() {
     };
   }, [api]);
 
-  const autoplay = api?.plugins().autoplay as AutoplayType | undefined;
+  const autoplay = api ? autoplayOf(api) : undefined;
   if (!autoplay) return null;
+  const paused = choice ?? !autoplay.options.playOnInit;
 
   return (
     <Button
@@ -76,8 +82,8 @@ function AutoplayToggle() {
       iconOnly
       aria-label={paused ? "Play slides" : "Pause slides"}
       onPress={() => {
-        pausedRef.current = !paused;
-        setPaused(!paused);
+        choiceRef.current = !paused;
+        setChoice(!paused);
         if (paused) autoplay.play();
         else autoplay.stop();
       }}
