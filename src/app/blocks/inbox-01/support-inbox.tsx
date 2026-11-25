@@ -82,11 +82,18 @@ export function SupportInbox() {
   const [reply, setReply] = useState("");
   const replyRef = useRef<HTMLTextAreaElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
+  const backRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const timer = window.setTimeout(() => setInitialLoading(false), 900);
     return () => window.clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!mobileDetail) return;
+    const frame = requestAnimationFrame(() => backRef.current?.focus());
+    return () => cancelAnimationFrame(frame);
+  }, [mobileDetail]);
 
   const open = conversations.filter(
     (conversation) => conversation.status === "open",
@@ -141,6 +148,11 @@ export function SupportInbox() {
     requestAnimationFrame(() =>
       searchRef.current?.querySelector("input")?.focus(),
     );
+  }
+
+  function openConversation(id: string) {
+    setSelectedId(id);
+    setMobileDetail(true);
   }
 
   function refresh() {
@@ -330,9 +342,16 @@ export function SupportInbox() {
       </header>
 
       <main className="mx-auto max-w-360 px-4 py-5 sm:px-6 lg:py-7">
-        <div className="flex flex-wrap items-end justify-between gap-4">
+        <div
+          className={cn(
+            "flex flex-wrap items-center justify-between gap-4",
+            mobileDetail && active && "max-md:hidden",
+          )}
+        >
           <div>
-            <h1 className="text-2xl font-semibold tracking-[-0.04em]">Inbox</h1>
+            <h1 className="text-2xl leading-tight font-semibold tracking-tight">
+              Inbox
+            </h1>
             <p className="mt-1 text-sm text-muted-foreground">
               Median first reply 14 min
             </p>
@@ -374,16 +393,21 @@ export function SupportInbox() {
           </ToggleButtonGroup>
         </div>
 
-        <div className="mt-5 grid overflow-hidden rounded-xl border border-border/70 bg-card shadow-(--shadow-card) md:grid-cols-[320px_minmax(0,1fr)] xl:grid-cols-[380px_minmax(0,1fr)]">
+        <div
+          className={cn(
+            "mt-4 grid overflow-hidden rounded-xl border border-border bg-card md:grid-cols-[320px_minmax(0,1fr)] xl:grid-cols-[380px_minmax(0,1fr)]",
+            mobileDetail && active && "max-md:mt-0",
+          )}
+        >
           <section
             aria-label="Conversations"
             className={cn(
-              "flex min-w-0 flex-col border-border/70 md:border-e",
+              "flex min-w-0 flex-col border-border md:border-e",
               mobileDetail && active && "max-md:hidden",
               !active && !initialLoading && "md:col-span-2 md:border-e-0",
             )}
           >
-            <div className="border-b border-border/70 p-3" ref={searchRef}>
+            <div className="border-b border-border p-3" ref={searchRef}>
               <SearchField
                 aria-label="Search conversations"
                 placeholder="Search conversations"
@@ -452,31 +476,23 @@ export function SupportInbox() {
                   </EmptyStateActions>
                 </EmptyState>
               ) : (
-                <div
-                  className="min-w-0"
-                  onPointerDownCapture={() => setMobileDetail(true)}
+                <ListBox
+                  aria-label="Conversations"
+                  items={visible}
+                  selectionMode="single"
+                  disallowEmptySelection
+                  selectedKeys={active ? [active.id] : []}
+                  onSelectionChange={(keys) => {
+                    const next = [...keys][0];
+                    if (next) openConversation(String(next));
+                  }}
+                  onAction={(key) => openConversation(String(key))}
+                  className="max-h-none gap-0 rounded-none border-0 bg-transparent p-0 shadow-none"
                 >
-                  <ListBox
-                    aria-label="Conversations"
-                    items={visible}
-                    selectionMode="single"
-                    selectedKeys={active ? [active.id] : []}
-                    onSelectionChange={(keys) => {
-                      const next = [...keys][0];
-                      if (next) {
-                        setSelectedId(String(next));
-                        setMobileDetail(true);
-                      }
-                    }}
-                    onAction={(key) => {
-                      setSelectedId(String(key));
-                      setMobileDetail(true);
-                    }}
-                    className="max-h-none gap-0 rounded-none border-0 bg-transparent p-0 shadow-none"
-                  >
-                    {(conversation) => conversationRow(conversation)}
-                  </ListBox>
-                </div>
+                  {(conversation) =>
+                    conversationRow(conversation, openConversation)
+                  }
+                </ListBox>
               )}
             </div>
             <div className="border-t border-border/70 px-3 py-2 text-[11px] text-muted-foreground">
@@ -510,33 +526,37 @@ export function SupportInbox() {
               </div>
             ) : active ? (
               <div className="flex min-h-full flex-col">
-                <div className="border-b border-border/70 p-4 sm:p-5">
+                <div className="border-b border-border p-4 sm:p-5">
+                  <Button
+                    ref={backRef}
+                    variant="ghost"
+                    size="sm"
+                    className="-ms-2 mb-2 md:hidden"
+                    onPress={() => {
+                      setMobileDetail(false);
+                      focusListSearch();
+                    }}
+                  >
+                    <ArrowLeftIcon
+                      data-icon="inline-start"
+                      aria-hidden="true"
+                    />
+                    Back to conversations
+                  </Button>
                   <div className="flex flex-wrap items-start justify-between gap-3">
-                    <div className="flex min-w-0 items-start gap-2">
-                      <Button
-                        variant="ghost"
-                        iconOnly
-                        size="sm"
-                        aria-label="Back to conversations"
-                        className="-ms-2 md:hidden"
-                        onPress={() => setMobileDetail(false)}
+                    <div className="min-w-0">
+                      <h2 className="text-xl leading-tight font-semibold tracking-tight wrap-anywhere">
+                        {active.subject}
+                      </h2>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        {active.customer} · {active.company}
+                      </p>
+                      <Link
+                        href={`mailto:${active.email}`}
+                        className="mt-0.5 block text-xs wrap-anywhere"
                       >
-                        <ArrowLeftIcon size={18} aria-hidden="true" />
-                      </Button>
-                      <div className="min-w-0">
-                        <h2 className="text-lg font-semibold tracking-[-0.02em] [overflow-wrap:anywhere]">
-                          {active.subject}
-                        </h2>
-                        <p className="mt-1 text-sm text-muted-foreground">
-                          {active.customer} · {active.company}
-                        </p>
-                        <Link
-                          href={`mailto:${active.email}`}
-                          className="mt-0.5 block text-xs"
-                        >
-                          {active.email}
-                        </Link>
-                      </div>
+                        {active.email}
+                      </Link>
                     </div>
                     <div className="flex flex-wrap items-center gap-1.5">
                       <Badge variant={statusVariant} dot>
@@ -569,7 +589,7 @@ export function SupportInbox() {
                   <Toolbar
                     aria-label="Conversation actions"
                     size="sm"
-                    className="mt-3 w-full"
+                    className="mt-3 w-full shadow-none"
                   >
                     <TooltipTrigger>
                       <Button
@@ -742,7 +762,7 @@ export function SupportInbox() {
                   ))}
                 </div>
 
-                <div className="mt-auto border-t border-border/70 p-4 sm:p-5">
+                <div className="mt-auto border-t border-border bg-muted/30 p-4 sm:p-5">
                   <div className="flex gap-3">
                     <Avatar
                       name="Maya Chen"
@@ -798,14 +818,25 @@ export function SupportInbox() {
   );
 }
 
-function conversationRow(conversation: Conversation) {
+function conversationRow(
+  conversation: Conversation,
+  onOpen: (id: string) => void,
+) {
   const ChannelIcon = channelIcons[conversation.channel];
   return (
     <ListBoxItem
       id={conversation.id}
       textValue={`${conversation.customer} ${conversation.subject}`}
+      onKeyDown={(event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          onOpen(conversation.id);
+        } else {
+          event.continuePropagation();
+        }
+      }}
       className={cn(
-        "min-h-0 items-start rounded-none border-b border-border/60 px-3 py-2.5 last:border-b-0 [&_[data-slot=selection-mark]]:hidden",
+        "min-h-0 items-start rounded-none border-b border-s-2 border-b-border/60 border-s-transparent px-3 py-2.5 last:border-b-0 data-[selected]:border-s-primary [&_[data-slot=selection-mark]]:hidden",
         conversation.unread && "bg-accent/25",
       )}
     >

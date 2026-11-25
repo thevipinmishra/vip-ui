@@ -148,7 +148,11 @@ export function ProjectBoard() {
           </span>
           <div className="ms-auto flex items-center gap-2">
             <Button size="sm" onPress={() => setAddingIn("backlog")}>
-              <PlusIcon data-icon="inline-start" size={16} aria-hidden="true" />
+              <PlusIcon
+                data-icon="inline-start"
+                className="hidden sm:block"
+                aria-hidden="true"
+              />
               New task
             </Button>
             <Avatar name={currentUser} size="sm" />
@@ -157,9 +161,9 @@ export function ProjectBoard() {
       </header>
 
       <main className="mx-auto grid w-full max-w-360 flex-1 content-start gap-5 py-6">
-        <div className="flex flex-wrap items-end gap-x-8 gap-y-4 px-4 sm:px-6">
+        <div className="flex flex-wrap items-center gap-x-8 gap-y-4 px-4 sm:px-6">
           <div className="grid min-w-0 gap-1">
-            <h1 className="text-2xl font-semibold tracking-[-0.04em]">
+            <h1 className="text-2xl leading-tight font-semibold tracking-tight">
               {sprint.name}
             </h1>
             <p className="text-sm text-muted-foreground">
@@ -170,9 +174,9 @@ export function ProjectBoard() {
             label={`${done} of ${tasks.length} done`}
             value={done}
             maxValue={Math.max(tasks.length, 1)}
-            className="w-full max-w-56"
+            className="w-full max-w-56 [--primary:var(--muted-foreground)]"
           />
-          <div className="ms-auto grid w-full gap-3 sm:w-auto sm:grid-cols-[14rem_11rem]">
+          <div className="ms-auto grid w-full grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] gap-2 rounded-lg border border-border bg-card p-2 sm:w-auto sm:grid-cols-[14rem_11rem]">
             <SearchField
               aria-label="Search tasks"
               placeholder="Search tasks"
@@ -191,7 +195,7 @@ export function ProjectBoard() {
         </div>
 
         {filtered && visible.length === 0 ? (
-          <div className="mx-4 grid min-h-72 place-items-center rounded-xl border border-dashed border-border px-6 text-center sm:mx-6">
+          <div className="mx-4 grid min-h-72 place-items-center rounded-xl border border-border bg-card px-6 text-center sm:mx-6">
             <div className="grid justify-items-center gap-2">
               <MagnifyingGlassIcon
                 size={24}
@@ -213,7 +217,7 @@ export function ProjectBoard() {
             </div>
           </div>
         ) : (
-          <div className="flex snap-x snap-mandatory scroll-px-4 items-start gap-3 overflow-x-auto px-4 pb-2 sm:scroll-px-6 sm:px-6 lg:snap-none">
+          <div className="flex snap-x snap-mandatory scroll-px-4 items-start gap-3 overflow-x-auto overscroll-x-contain px-4 pb-2 sm:scroll-px-6 sm:px-6 lg:snap-none">
             {columns.map((column) => (
               <BoardColumn
                 key={column.id}

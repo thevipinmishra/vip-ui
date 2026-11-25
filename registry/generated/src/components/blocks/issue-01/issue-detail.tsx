@@ -416,7 +416,7 @@ export function IssueDetail() {
             </div>
           </div>
 
-          <div className="mt-4 flex flex-wrap items-start justify-between gap-3">
+          <div className="mt-3 flex flex-wrap items-start justify-between gap-3">
             <div className="min-w-0 flex-1">
               <h1 className="sr-only">
                 {issue.key}: {title}
@@ -434,12 +434,12 @@ export function IssueDetail() {
                     variant: "success",
                   });
                 }}
-                className="max-w-3xl [&>span:first-child]:hidden [&_[data-slot=inline-edit-trigger]>span:first-child]:whitespace-normal [&_[data-slot=inline-edit-trigger]>span:first-child]:overflow-visible [&_[data-slot=inline-edit-trigger]>span:first-child]:text-xl [&_[data-slot=inline-edit-trigger]>span:first-child]:font-semibold sm:[&_[data-slot=inline-edit-trigger]>span:first-child]:text-2xl"
+                className="max-w-3xl **:data-[slot=inline-edit-label]:sr-only **:data-[slot=inline-edit-trigger]:h-auto **:data-[slot=inline-edit-trigger]:min-h-10 **:data-[slot=inline-edit-trigger]:py-1 [&_[data-slot=inline-edit-trigger]>span:first-child]:overflow-visible [&_[data-slot=inline-edit-trigger]>span:first-child]:text-2xl [&_[data-slot=inline-edit-trigger]>span:first-child]:leading-tight [&_[data-slot=inline-edit-trigger]>span:first-child]:font-semibold [&_[data-slot=inline-edit-trigger]>span:first-child]:tracking-tight [&_[data-slot=inline-edit-trigger]>span:first-child]:wrap-anywhere [&_[data-slot=inline-edit-trigger]>span:first-child]:whitespace-normal"
               />
             </div>
           </div>
 
-          <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-muted-foreground">
+          <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-muted-foreground">
             <span className="flex items-center gap-1.5">
               <ClockIcon size={14} aria-hidden="true" />
               Updated{" "}
@@ -447,6 +447,12 @@ export function IssueDetail() {
                 formatActivityTime(activity.at(-1)?.at ?? issue.openedAt)}
             </span>
             <span>{issue.build}</span>
+            <a
+              href="#issue-properties"
+              className="font-medium text-foreground underline underline-offset-4 md:hidden"
+            >
+              Properties
+            </a>
           </div>
 
           <Card className="mt-5">
@@ -478,9 +484,7 @@ export function IssueDetail() {
                   </p>
                 </div>
                 <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-3">
-                  <p className="text-xs font-semibold text-destructive">
-                    Actual
-                  </p>
+                  <p className="text-xs font-semibold">Actual</p>
                   <p className="mt-1 text-sm">
                     The sender name shows two times.
                   </p>
@@ -662,7 +666,13 @@ export function IssueDetail() {
         <aside className="grid content-start gap-4 lg:order-2">
           <Card>
             <CardContent className="grid gap-3 p-3.5">
-              <h2 className="text-sm font-semibold">Properties</h2>
+              <h2
+                id="issue-properties"
+                tabIndex={-1}
+                className="scroll-mt-6 text-sm font-semibold"
+              >
+                Properties
+              </h2>
               <Select
                 label="Status"
                 size="sm"

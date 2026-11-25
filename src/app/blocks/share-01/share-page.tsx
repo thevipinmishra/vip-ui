@@ -84,10 +84,9 @@ function RoleMenu({
   return (
     <MenuTrigger>
       <Button
-        variant="ghost"
+        variant="outline"
         size="sm"
         aria-label={`Access for ${label}: ${roleName(person.role)}`}
-        className="text-muted-foreground"
       >
         {roleName(person.role)}
         <CaretDownIcon data-icon="inline-end" size={14} aria-hidden="true" />
@@ -271,7 +270,9 @@ export function SharePage() {
         overlayProps={{ isOpen: open, onOpenChange: setOpen }}
       >
         <DialogHeader>
-          <DialogTitle>Share “{documentTitle}”</DialogTitle>
+          <DialogTitle className="wrap-anywhere">
+            Share “{documentTitle}”
+          </DialogTitle>
           <DialogDescription>
             {shared.length} {shared.length === 1 ? "person has" : "people have"}{" "}
             access.
@@ -331,20 +332,17 @@ export function SharePage() {
 
           <section
             aria-labelledby="share-people"
-            className="grid grid-cols-1 gap-1"
+            className="grid grid-cols-1 gap-2"
           >
             <h3 id="share-people" className="text-sm font-medium">
               People with access
             </h3>
-            <ul className="-mx-2 grid grid-cols-1">
+            <ul className="grid grid-cols-1 divide-y divide-border">
               {people.map((person) => (
-                <li
-                  key={person.email}
-                  className="flex items-center gap-3 rounded-md px-2 py-2"
-                >
+                <li key={person.email} className="flex items-center gap-3 py-2">
                   <Avatar name={person.name ?? person.email} size="sm" />
                   <div className="min-w-0 flex-1">
-                    <p className="flex items-center gap-2 text-sm font-medium">
+                    <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-medium">
                       <span className="truncate">
                         {person.name ?? person.email}
                         {person.email === currentUser && (
@@ -381,7 +379,10 @@ export function SharePage() {
             </ul>
           </section>
 
-          <section aria-labelledby="share-general" className="grid gap-2.5">
+          <section
+            aria-labelledby="share-general"
+            className="grid gap-2.5 rounded-lg border border-border bg-background p-3"
+          >
             <h3 id="share-general" className="text-sm font-medium">
               General access
             </h3>

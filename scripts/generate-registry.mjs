@@ -455,7 +455,9 @@ function blockFilesItem(name, sources, blockFiles) {
   for (const [relative, source] of blockFiles) {
     if (relative === "page.tsx") continue;
     const location = `src/components/blocks/${name}/${relative}`;
-    let content = source.replace(/\r\n/g, "\n");
+    let content = source
+      .replace(/\r\n/g, "\n")
+      .replaceAll('"/blocks/images/', `"${registryOrigin}/blocks/images/`);
     for (const specifier of importsFrom(content)) {
       const lib = specifier.replace(/^@\/lib\//, "");
       if (specifier.startsWith("@/components/ui/")) {

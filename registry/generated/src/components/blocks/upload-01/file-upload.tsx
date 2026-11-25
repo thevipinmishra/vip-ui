@@ -178,9 +178,9 @@ export function FileUpload() {
     folders.find((item) => item.id === folder)?.name.split(" / ")[1] ?? "";
 
   return (
-    <Card>
+    <Card className="shadow-none">
       <CardHeader>
-        <CardTitle as="h1" className="text-xl">
+        <CardTitle as="h1" className="text-2xl leading-tight tracking-tight">
           Upload files
         </CardTitle>
         <CardDescription>
@@ -210,9 +210,9 @@ export function FileUpload() {
             );
             add(files);
           }}
-          className="min-h-48"
+          className="min-h-44 bg-background"
         >
-          <DropZoneIcon className="size-12 rounded-full">
+          <DropZoneIcon className="size-10 rounded-lg">
             <CloudArrowUpIcon size={24} />
           </DropZoneIcon>
           <DropZoneLabel>Drop files here</DropZoneLabel>
@@ -221,7 +221,7 @@ export function FileUpload() {
           </DropZoneDescription>
           <DropZoneTrigger
             ref={pickerRef}
-            size="sm"
+            variant="default"
             acceptedFileTypes={acceptedTypes}
             allowsMultiple
             onSelect={(files) => {
@@ -251,7 +251,10 @@ export function FileUpload() {
             value={totalBytes > 0 ? (sentBytes / totalBytes) * 100 : 0}
           />
         )}
-        <output aria-live="polite" className="text-xs text-muted-foreground">
+        <output
+          aria-live="polite"
+          className="text-xs text-muted-foreground empty:sr-only"
+        >
           {notice}
         </output>
       </CardContent>
@@ -261,6 +264,7 @@ export function FileUpload() {
           {failed > 0 ? ` · ${failed} failed` : ""}
         </p>
         <Button
+          variant="outline"
           isDisabled={uploading || done === 0}
           onPress={() => {
             showToast({
