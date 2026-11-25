@@ -2389,6 +2389,23 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           name: "emptyMessage",
           description: "Text shown when search has no results.",
         },
+        {
+          name: "inputValue",
+          description: "Controls the search query.",
+        },
+        {
+          name: "defaultInputValue",
+          description: "Search query on first render.",
+        },
+        {
+          name: "onInputChange",
+          description: "Receives the search query when it changes.",
+        },
+        {
+          name: "filter",
+          description:
+            "Decides which items match the query. By default, an item matches when its text or one of its keywords contains the query.",
+        },
       ],
     }),
     apiPart<typeof CommandPaletteSection>({
@@ -2408,6 +2425,11 @@ export const componentApi: Record<string, readonly ApiPart[]> = {
           name: "textValue",
           description:
             "Text that search matches. Without it, search uses the text children. Set it when the item has an icon or other elements.",
+        },
+        {
+          name: "keywords",
+          description:
+            "Other words that search matches, such as synonyms. They are not shown.",
         },
         {
           name: "shortcut",

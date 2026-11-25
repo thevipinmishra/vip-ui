@@ -585,7 +585,7 @@ const pageSources = {
       {
         title: "Sections, icons, and shortcuts",
         description:
-          "When an item has an icon, set `textValue` so search can find it.",
+          "When an item has an icon, set `textValue` so search can find it. Add `keywords` to match other words, such as dark mode for Change theme.",
         sourcePath: "command-palette-demo.tsx",
         previewProps: { shortcut: false },
       },

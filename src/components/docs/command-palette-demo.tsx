@@ -49,11 +49,19 @@ export function CommandPaletteDemo({
           </CommandPaletteItem>
         </CommandPaletteSection>
         <CommandPaletteSection title="Preferences">
-          <CommandPaletteItem textValue="Open settings" shortcut=",">
+          <CommandPaletteItem
+            textValue="Open settings"
+            keywords={["preferences", "account"]}
+            shortcut=","
+          >
             <GearSixIcon aria-hidden="true" />
             Open settings
           </CommandPaletteItem>
-          <CommandPaletteItem textValue="Change theme" shortcut="T">
+          <CommandPaletteItem
+            textValue="Change theme"
+            keywords={["dark mode", "appearance"]}
+            shortcut="T"
+          >
             <MoonIcon aria-hidden="true" />
             Change theme
           </CommandPaletteItem>

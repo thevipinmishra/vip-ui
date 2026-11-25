@@ -1,11 +1,11 @@
 import type { Size } from "./size";
 
 export const fieldSizeStyles = {
-  xs: "[--field-h:1.75rem] [--field-px:0.5rem] [--field-inset:0.125rem] [--field-radius:var(--radius-sm)] [--field-text:0.75rem] [--field-icon:0.875rem]",
-  sm: "[--field-h:2rem] [--field-px:0.625rem] [--field-inset:0.1875rem] [--field-radius:var(--radius-md)] [--field-text:0.875rem] [--field-icon:1rem]",
-  md: "[--field-h:2.5rem] [--field-px:0.75rem] [--field-inset:0.25rem] [--field-radius:var(--radius-lg)] [--field-text:0.875rem] [--field-icon:1rem]",
-  lg: "[--field-h:3rem] [--field-px:0.875rem] [--field-inset:0.3125rem] [--field-radius:var(--radius-lg)] [--field-text:1rem] [--field-icon:1.25rem]",
-  xl: "[--field-h:3.5rem] [--field-px:1rem] [--field-inset:0.375rem] [--field-radius:var(--radius-xl)] [--field-text:1rem] [--field-icon:1.25rem]",
+  xs: "[--field-h:1.75rem] [--field-px:0.5rem] [--field-gap:0.375rem] [--field-inset:0.125rem] [--field-radius:var(--radius-sm)] [--field-text:0.75rem] [--field-icon:0.875rem]",
+  sm: "[--field-h:2rem] [--field-px:0.625rem] [--field-gap:0.5rem] [--field-inset:0.1875rem] [--field-radius:var(--radius-md)] [--field-text:0.875rem] [--field-icon:1rem]",
+  md: "[--field-h:2.5rem] [--field-px:0.75rem] [--field-gap:0.5rem] [--field-inset:0.25rem] [--field-radius:var(--radius-lg)] [--field-text:0.875rem] [--field-icon:1rem]",
+  lg: "[--field-h:3rem] [--field-px:0.875rem] [--field-gap:0.625rem] [--field-inset:0.3125rem] [--field-radius:var(--radius-lg)] [--field-text:1rem] [--field-icon:1.25rem]",
+  xl: "[--field-h:3.5rem] [--field-px:1rem] [--field-gap:0.625rem] [--field-inset:0.375rem] [--field-radius:var(--radius-xl)] [--field-text:1rem] [--field-icon:1.25rem]",
 } satisfies Record<Size, string>;
 
 export const fieldHeight = "min-h-(--field-h,2.5rem)";
@@ -34,7 +34,7 @@ export const segmentedFieldStyles = `${fieldHeight} ${fieldRadius} flex min-w-0 
 export const fieldTriggerStyles = `${fieldIcon} group/trigger grid size-[calc(var(--field-h,2.5rem)-2px-2*var(--field-inset,0.25rem))] shrink-0 cursor-pointer place-items-center rounded-[max(0.1875rem,calc(var(--field-radius,var(--radius-lg))-1px-var(--field-inset,0.25rem)))] text-muted-foreground outline-none transition-[color,background-color,scale,opacity] duration-150 ease-out-quint hover:bg-muted hover:text-foreground pressed:bg-muted pressed:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground motion-safe:pressed:scale-[0.92] focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-ring disabled:cursor-default disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-muted-foreground`;
 
 export const fieldActionStyles =
-  "h-[calc(var(--field-h,2.5rem)-2px-2*var(--field-inset,0.25rem))] rounded-[max(0.1875rem,calc(var(--field-radius,var(--radius-lg))-1px-var(--field-inset,0.25rem)))] px-3 text-(length:--field-text,0.875rem) motion-safe:pressed:scale-[0.96] [&_svg:not([class*='size-'])]:size-(--field-icon,1rem)";
+  "h-[calc(var(--field-h,2.5rem)-2px-2*var(--field-inset,0.25rem))] rounded-[max(0.1875rem,calc(var(--field-radius,var(--radius-lg))-1px-var(--field-inset,0.25rem)))] gap-(--field-gap,0.5rem) px-(--field-px,0.75rem) text-(length:--field-text,0.875rem) leading-5 has-[>[data-icon=inline-start]]:pl-[calc(var(--field-px,0.75rem)-0.125rem)] has-[>[data-icon=inline-end]]:pr-[calc(var(--field-px,0.75rem)-0.125rem)] motion-safe:pressed:scale-[0.96] [&_svg:not([class*='size-'])]:size-(--field-icon,1rem)";
 
 export const fieldTriggerEndStyles =
   "absolute inset-y-0 inset-e-[calc(1px+var(--field-inset,0.25rem))] my-auto";
