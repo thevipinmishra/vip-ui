@@ -356,7 +356,7 @@ const pageSources = {
       {
         title: "Several slides",
         description:
-          "Set a `basis-*` class on each slide to show more than one.",
+          "Set a `basis-*` class on each slide to show more than one. Use the `--carousel-gap` CSS variable to change the space between slides.",
         sourcePath: "carousel-several-demo.tsx",
       },
       {

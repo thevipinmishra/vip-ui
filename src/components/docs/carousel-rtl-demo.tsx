@@ -43,9 +43,9 @@ export function CarouselRtlDemo() {
           ))}
         </CarouselViewport>
         <div className="flex items-center justify-between gap-3">
-          <CarouselPrevious />
+          <CarouselPrevious aria-label="الشريحة السابقة" />
           <CarouselIndicators />
-          <CarouselNext />
+          <CarouselNext aria-label="الشريحة التالية" />
         </div>
       </Carousel>
     </div>

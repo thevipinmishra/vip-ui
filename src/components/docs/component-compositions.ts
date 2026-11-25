@@ -64,20 +64,13 @@ export const compositions: Record<string, Composition> = {
           },
           {
             part: "LightboxContent",
+            note: "Renders the count, the side buttons, and the close button.",
             children: [
               {
-                part: "Carousel",
-                note: "Install separately.",
-                children: [
-                  {
-                    part: "CarouselSlide",
-                    repeats: true,
-                    children: [{ part: "LightboxImage" }],
-                  },
-                ],
+                part: "CarouselSlide",
+                repeats: true,
+                children: [{ part: "LightboxImage" }],
               },
-              { part: "LightboxCount", optional: true },
-              { part: "LightboxClose" },
             ],
           },
         ],

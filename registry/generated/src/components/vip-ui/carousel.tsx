@@ -25,6 +25,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { prefersReducedMotion } from "./motion";
 import { cn } from "./utils";
 import { Button, type ButtonProps } from "./button";
 
@@ -175,26 +176,28 @@ export function Carousel({
     const total = api.scrollSnapList().length;
     if (total === 0) return;
     const target = Math.min(Math.max(indexProp, 0), total - 1);
-    if (api.selectedScrollSnap() !== target) api.scrollTo(target);
+    if (api.selectedScrollSnap() !== target) {
+      api.scrollTo(target, prefersReducedMotion());
+    }
   }, [api, indexProp]);
 
   const scrollTo = useCallback(
     (index: number, jump?: boolean) => {
-      api?.scrollTo(index, jump);
+      api?.scrollTo(index, jump ?? prefersReducedMotion());
     },
     [api],
   );
 
   const scrollPrev = useCallback(
     (jump?: boolean) => {
-      api?.scrollPrev(jump);
+      api?.scrollPrev(jump ?? prefersReducedMotion());
     },
     [api],
   );
 
   const scrollNext = useCallback(
     (jump?: boolean) => {
-      api?.scrollNext(jump);
+      api?.scrollNext(jump ?? prefersReducedMotion());
     },
     [api],
   );
@@ -226,7 +229,10 @@ export function Carousel({
         data-slot="carousel"
         data-index={state.selectedIndex}
         data-orientation={state.axis === "y" ? "vertical" : "horizontal"}
-        className={cn("group/carousel grid min-w-0 gap-3", className)}
+        className={cn(
+          "group/carousel grid min-w-0 gap-3 [--carousel-gap:--spacing(3)]",
+          className,
+        )}
       >
         {children}
       </section>
@@ -301,8 +307,10 @@ export function CarouselViewport({
       <div
         data-slot="carousel-track"
         className={cn(
-          "flex min-w-0 items-start gap-3",
-          vertical ? "h-full min-h-0 touch-pan-x flex-col" : "touch-pan-y",
+          "flex min-w-0 items-start",
+          vertical
+            ? "-mt-(--carousel-gap) h-[calc(100%+var(--carousel-gap))] min-h-0 touch-pan-x flex-col"
+            : "-ms-(--carousel-gap) touch-pan-y",
           trackClassName,
         )}
       >
@@ -349,7 +357,9 @@ export function CarouselSlide({
       data-index={position ?? undefined}
       className={cn(
         "shrink-0 grow-0 basis-full",
-        vertical ? "min-h-0 w-full" : "min-w-0",
+        vertical
+          ? "min-h-0 w-full pt-(--carousel-gap)"
+          : "min-w-0 ps-(--carousel-gap)",
         className,
       )}
     >
@@ -358,20 +368,29 @@ export function CarouselSlide({
   );
 }
 
-export function CarouselPrevious({ className, ...props }: ButtonProps) {
+export function CarouselPrevious({
+  variant = "outline",
+  size = "sm",
+  iconOnly = true,
+  "aria-label": ariaLabel = "Previous slide",
+  onPress,
+  ...props
+}: ButtonProps) {
   const carousel = useContext(CarouselContext);
   const vertical = carousel?.axis === "y";
   return (
     <Button
       {...props}
-      variant="outline"
-      size="sm"
-      iconOnly
-      aria-label="Previous slide"
+      variant={variant}
+      size={size}
+      iconOnly={iconOnly}
+      aria-label={ariaLabel}
       isDisabled={!carousel?.canScrollPrev}
-      onPress={() => carousel?.scrollPrev()}
+      onPress={(event) => {
+        onPress?.(event);
+        carousel?.scrollPrev();
+      }}
       data-slot="carousel-previous"
-      className={className}
     >
       {vertical ? (
         <CaretUpIcon aria-hidden="true" />
@@ -382,20 +401,29 @@ export function CarouselPrevious({ className, ...props }: ButtonProps) {
   );
 }
 
-export function CarouselNext({ className, ...props }: ButtonProps) {
+export function CarouselNext({
+  variant = "outline",
+  size = "sm",
+  iconOnly = true,
+  "aria-label": ariaLabel = "Next slide",
+  onPress,
+  ...props
+}: ButtonProps) {
   const carousel = useContext(CarouselContext);
   const vertical = carousel?.axis === "y";
   return (
     <Button
       {...props}
-      variant="outline"
-      size="sm"
-      iconOnly
-      aria-label="Next slide"
+      variant={variant}
+      size={size}
+      iconOnly={iconOnly}
+      aria-label={ariaLabel}
       isDisabled={!carousel?.canScrollNext}
-      onPress={() => carousel?.scrollNext()}
+      onPress={(event) => {
+        onPress?.(event);
+        carousel?.scrollNext();
+      }}
       data-slot="carousel-next"
-      className={className}
     >
       {vertical ? (
         <CaretDownIcon aria-hidden="true" />
@@ -428,27 +456,18 @@ export function CarouselIndicators({
         onKeyDown?.(event);
         if (!carousel || event.defaultPrevented) return;
         const isRtl = getComputedStyle(event.currentTarget).direction === "rtl";
-        const nextKey = vertical
-          ? "ArrowDown"
-          : isRtl
-            ? "ArrowLeft"
-            : "ArrowRight";
-        const previousKey = vertical
-          ? "ArrowUp"
-          : isRtl
-            ? "ArrowRight"
-            : "ArrowLeft";
-        if (event.key !== nextKey && event.key !== previousKey) return;
-        const forward = event.key === nextKey;
-        if (forward ? !carousel.canScrollNext : !carousel.canScrollPrev) {
-          event.preventDefault();
-          return;
-        }
-        const target = Math.min(
-          Math.max(index + (forward ? 1 : -1), 0),
-          Math.max(0, count - 1),
-        );
+        const { next, previous } = viewportArrowKeys(vertical, isRtl);
+        const last = Math.max(0, count - 1);
+        let target: number;
+        if (event.key === "Home") target = 0;
+        else if (event.key === "End") target = last;
+        else if (event.key === next) {
+          target = carousel.canScrollNext ? Math.min(index + 1, last) : index;
+        } else if (event.key === previous) {
+          target = carousel.canScrollPrev ? Math.max(index - 1, 0) : index;
+        } else return;
         event.preventDefault();
+        if (target === index) return;
         carousel.scrollTo(target);
         buttons.current[target]?.focus();
       }}
@@ -468,6 +487,7 @@ export function CarouselIndicators({
           type="button"
           aria-label={`Show slide ${position + 1}`}
           aria-current={position === index ? "true" : undefined}
+          tabIndex={position === index ? 0 : -1}
           data-slot="carousel-indicator"
           onClick={() => carousel?.scrollTo(position)}
           className="group/indicator grid size-6 place-items-center rounded-full outline-offset-4 outline-transparent transition-[outline-color,outline-offset] duration-150 ease-out-quint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2"
@@ -475,7 +495,7 @@ export function CarouselIndicators({
           <span
             aria-hidden="true"
             className={cn(
-              "rounded-full bg-border transition-[width,height,background-color] duration-350 ease-spring motion-reduce:transition-[background-color] group-aria-[current=true]/indicator:bg-foreground forced-colors:border forced-colors:border-[CanvasText] group-aria-[current=true]/indicator:forced-colors:bg-[CanvasText]",
+              "rounded-full bg-foreground/20 transition-[width,height,background-color] duration-350 ease-spring group-hover/indicator:bg-foreground/40 motion-reduce:transition-[background-color] group-aria-[current=true]/indicator:bg-foreground forced-colors:border forced-colors:border-[CanvasText] group-aria-[current=true]/indicator:forced-colors:bg-[CanvasText]",
               position === index
                 ? vertical
                   ? "h-5 w-1.5"

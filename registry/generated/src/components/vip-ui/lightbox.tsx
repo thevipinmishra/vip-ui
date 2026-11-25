@@ -1,6 +1,6 @@
 "use client";
 
-import { CaretLeftIcon, CaretRightIcon, XIcon } from "@phosphor-icons/react";
+import { XIcon } from "@phosphor-icons/react";
 import {
   Children,
   createContext,
@@ -29,8 +29,9 @@ import { Button, type ButtonProps } from "./button";
 import {
   Carousel,
   type CarouselApi,
+  CarouselNext,
+  CarouselPrevious,
   CarouselViewport,
-  useCarousel,
 } from "./carousel";
 
 type Phase = "entering" | "idle" | "exiting";
@@ -51,7 +52,6 @@ interface LightboxContextValue {
   registerTrigger: (index: number, element: HTMLElement | null) => void;
   restoreFocus: (index: number) => void;
   originRef: RefObject<Box | null>;
-  openedIndexRef: RefObject<number>;
   triggersRef: RefObject<Map<number, HTMLElement>>;
 }
 
@@ -77,6 +77,9 @@ const zoomClasses =
 
 const motionClasses =
   "transition-[transform,translate] duration-320 ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none group-data-[phase=entering]/lightbox:transition-none group-data-[phase=exiting]/lightbox:duration-220";
+
+const sideButtonClasses =
+  "absolute top-1/2 z-10 -translate-y-1/2 text-background hover:bg-background/10 pressed:bg-background/10 focus-visible:outline-background max-sm:bg-foreground/50 max-sm:backdrop-blur-sm forced-colors:text-[CanvasText] dark:text-foreground dark:hover:bg-foreground/10 dark:pressed:bg-foreground/10 dark:focus-visible:outline-foreground dark:max-sm:bg-background/50";
 
 const exitDuration = 220;
 
@@ -138,6 +141,21 @@ function onScreen(box: Box) {
     box.x < window.innerWidth &&
     box.y < window.innerHeight
   );
+}
+
+function visibleSource(element: HTMLElement | undefined) {
+  const box = sourceBox(element ?? null);
+  if (!element || !box || !onScreen(box)) return null;
+  const x = box.x + box.width / 2;
+  const y = box.y + box.height / 2;
+  for (let node = element.parentElement; node; node = node.parentElement) {
+    if (getComputedStyle(node).overflow === "visible") continue;
+    const rect = node.getBoundingClientRect();
+    if (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom) {
+      return null;
+    }
+  }
+  return box;
 }
 
 function writeOrigin(
@@ -205,7 +223,6 @@ export function Lightbox({
   const isOpen = isOpenProp ?? openState;
   const index = indexProp ?? indexState;
   const originRef = useRef<Box | null>(null);
-  const openedIndexRef = useRef(defaultIndex);
   const triggersRef = useRef(new Map<number, HTMLElement>());
   const openerRef = useRef<HTMLElement | null>(null);
 
@@ -222,7 +239,6 @@ export function Lightbox({
 
   const openAt = (next: number, element: HTMLElement) => {
     openerRef.current = element;
-    openedIndexRef.current = next;
     originRef.current = sourceBox(element);
     setIndex(next);
     setOpen(true);
@@ -251,7 +267,6 @@ export function Lightbox({
         registerTrigger,
         restoreFocus,
         originRef,
-        openedIndexRef,
         triggersRef,
       }}
     >
@@ -322,7 +337,7 @@ export function LightboxTrigger({
       }}
       className={composeRenderProps(className, (className) =>
         cn(
-          "group/lightbox-trigger relative grid min-w-0 cursor-pointer place-items-center overflow-hidden rounded-lg bg-muted/50 ring-1 ring-border/60 outline-offset-4 outline-transparent transition-[outline-color,outline-offset,box-shadow] duration-150 ease-out-quint hover:ring-border focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2",
+          "group/lightbox-trigger relative grid min-w-0 cursor-zoom-in place-items-center overflow-hidden rounded-lg bg-muted/50 ring-1 ring-border/60 outline-offset-4 outline-transparent transition-[outline-color,outline-offset,box-shadow] duration-150 ease-out-quint hover:ring-border focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:outline-offset-2",
           className,
         ),
       )}
@@ -348,15 +363,7 @@ export function LightboxContent({
   if (!lightbox) {
     throw new Error("LightboxContent must be inside <Lightbox>.");
   }
-  const {
-    isOpen,
-    index,
-    setOpen,
-    setIndex,
-    originRef,
-    openedIndexRef,
-    triggersRef,
-  } = lightbox;
+  const { isOpen, index, setOpen, setIndex, originRef, triggersRef } = lightbox;
   const slides = Children.toArray(children);
   const count = slides.length;
   const current = Math.min(Math.max(index, 0), Math.max(0, count - 1));
@@ -444,12 +451,9 @@ export function LightboxContent({
   }, [current, isOpen, measured, originRef]);
 
   const prepareExit = () => {
-    const same = openedIndexRef.current === current;
-    const trigger = same ? triggersRef.current.get(current) : null;
-    const origin = sourceBox(trigger ?? null);
     writeOrigin(
       modalRef.current,
-      origin && onScreen(origin) ? origin : null,
+      visibleSource(triggersRef.current.get(current)),
       imageBoxAt(carouselRef.current, current),
     );
     setSettling(false);
@@ -604,16 +608,30 @@ export function LightboxContent({
                 aria-label="Images"
                 index={current}
                 onIndexChange={onCarouselIndexChange}
-                className="relative h-full min-h-0 grid-rows-[minmax(0,1fr)] gap-0"
+                className="relative h-full min-h-0 grid-rows-[minmax(0,1fr)] gap-0 [--carousel-gap:0px]"
               >
                 <CarouselViewport
                   className="h-full rounded-none"
-                  trackClassName="h-full touch-pan-x items-stretch gap-0"
+                  trackClassName="h-full touch-pan-x items-stretch"
                 >
                   {slides}
                 </CarouselViewport>
-                <LightboxPrevious className="absolute start-0 top-1/2 z-10 -translate-y-1/2 text-background hover:bg-background/10 focus-visible:outline-background dark:text-foreground dark:hover:bg-foreground/10 dark:focus-visible:outline-foreground" />
-                <LightboxNext className="absolute end-0 top-1/2 z-10 -translate-y-1/2 text-background hover:bg-background/10 focus-visible:outline-background dark:text-foreground dark:hover:bg-foreground/10 dark:focus-visible:outline-foreground" />
+                {count > 1 && (
+                  <>
+                    <CarouselPrevious
+                      variant="ghost"
+                      size="md"
+                      aria-label="Previous image"
+                      className={cn("start-0", sideButtonClasses)}
+                    />
+                    <CarouselNext
+                      variant="ghost"
+                      size="md"
+                      aria-label="Next image"
+                      className={cn("end-0", sideButtonClasses)}
+                    />
+                  </>
+                )}
               </Carousel>
               <FocusReturn />
             </LightboxViewContext.Provider>
@@ -744,6 +762,7 @@ export function LightboxImage({
       className={cn(
         "flex h-full min-h-0 touch-pan-x flex-col items-center justify-center",
         caption && "gap-3",
+        (view?.count ?? 0) > 1 && "sm:px-12",
         className,
       )}
     >
@@ -830,42 +849,6 @@ export function LightboxClose({
       )}
     >
       {children ?? <XIcon aria-hidden="true" />}
-    </Button>
-  );
-}
-
-function LightboxPrevious({ className }: { className?: string }) {
-  const carousel = useCarousel();
-  return (
-    <Button
-      variant="ghost"
-      size="md"
-      iconOnly
-      data-slot="lightbox-previous"
-      aria-label="Previous image"
-      isDisabled={!carousel.canScrollPrev}
-      onPress={() => carousel.scrollPrev()}
-      className={className}
-    >
-      <CaretLeftIcon aria-hidden="true" className="rtl:-scale-x-100" />
-    </Button>
-  );
-}
-
-function LightboxNext({ className }: { className?: string }) {
-  const carousel = useCarousel();
-  return (
-    <Button
-      variant="ghost"
-      size="md"
-      iconOnly
-      data-slot="lightbox-next"
-      aria-label="Next image"
-      isDisabled={!carousel.canScrollNext}
-      onPress={() => carousel.scrollNext()}
-      className={className}
-    >
-      <CaretRightIcon aria-hidden="true" className="rtl:-scale-x-100" />
     </Button>
   );
 }
